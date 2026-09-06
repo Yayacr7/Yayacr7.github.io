@@ -276,9 +276,12 @@
       <div class="raid">
         <div class="rinfo">
           <p class="rlead">One champion, no help, a ladder of opponents that keeps getting harder.</p>
-          <p class="rnote">Your health carries from floor to floor and you get a chunk of it back
-            between fights. Every fifth floor is a boss with a huge amount of health &mdash; you go into those at full health. After each floor you choose: go deeper for a
-            bigger pot, or bank what you have. Lose and you still keep half.</p>
+          <p class="rnote">Every third floor is a <b>sub-boss</b>, and every twentieth is the
+            <b>RAID BOSS</b> &mdash; picked from the heaviest hitters on the roster, with by far the
+            biggest health bar in the game. Bosses pay enormously: a sub-boss is worth three floors,
+            the raid boss eleven. Your health carries from floor to floor with a chunk back between
+            fights, and you go into every boss patched up to full. After each floor you choose: go
+            deeper for a bigger pot, or bank what you have. Lose and you still keep half.</p>
           <p class="rbest"><span id="rBestHero">Best with this champion: floor 0</span>
             &nbsp;&middot;&nbsp; <span id="rBestAll">Best ever: floor 0</span></p>
         </div>
@@ -1767,12 +1770,12 @@
      at:function(h){ return [prog(h).tier,4]; }},
     {id:'v2', per:1, name:'Second look',        d:'Unlock another version of this champion',cred:600, xp:120,
      at:function(h){ return [(prog(h).owned||[0]).length,2]; }},
-    {id:'r5', per:1, name:'Down five floors',    d:'Clear floor 5 of a solo raid with this champion', cred:1600, xp:400,
-     at:function(h){ return [prog(h).raid||0,5]; }},
-    {id:'r12',per:1, name:'Deep run',            d:'Clear floor 12 of a solo raid with this champion', cred:5500, xp:1300,
+    {id:'r5', per:1, name:'First sub-boss',      d:'Clear raid floor 3 with this champion — the first sub-boss', cred:1200, xp:320,
+     at:function(h){ return [prog(h).raid||0,3]; }},
+    {id:'r12',per:1, name:'Deep run',            d:'Clear raid floor 12 with this champion — four sub-bosses down', cred:5500, xp:1300,
      at:function(h){ return [prog(h).raid||0,12]; }},
     /* --- the whole roster --- */
-    {id:'gr20',per:0, name:'Raid legend',        d:'Clear floor 20 of a solo raid',         cred:9000, xp:1800,
+    {id:'gr20',per:0, name:'Raid boss down',     d:'Beat the raid boss on floor 20',        cred:14000, xp:3000,
      at:function(){ return [save.raidBest||0,20]; }},
     {id:'g5',  per:0, name:'Try the bench',     d:'Win with 5 different champions',        cred:1500, xp:300,
      at:function(){ return [heroesWonWith(),5]; }},
@@ -3412,26 +3415,58 @@
      each floor you choose: go again for more, or bank what you have. Lose
      and you still walk away with half the pot. */
   var raid=null;
-  /* every fifth floor is a boss: a huge slab of health rather than a
-     sharper fighter, and paid for accordingly */
-  var RAID_BOSS_HP=2.6, RAID_FOE_HP=0.55;
+  /* The shape of a raid: ordinary floors to chew through, a sub-boss every
+     third floor, and a main raid boss every twentieth. Bosses are slabs of
+     health rather than sharper fighters, and pay for it. */
+  var RAID_HP  ={normal:0.55, sub:1.6, main:3.2};
+  /* A boss is a wall, not a hammer. Left alone, a level-49 tier-4 fighter
+     hits for eight times what an ordinary floor does, so a boss would kill
+     you long before you chipped its bar down. Their punch is pulled back to
+     roughly an ordinary opponent's; the health bar is the whole challenge. */
+  var RAID_POW ={normal:1,    sub:0.22, main:0.075};
+  var RAID_SPD ={normal:1,    sub:0.75, main:0.52};
+  var RAID_CRED={normal:1,    sub:3,   main:11};
+  var RAID_XP  ={normal:1,    sub:2.6, main:9};
+  function raidKind(f){
+    if(f%20===0) return 'main';
+    if(f%3===0)  return 'sub';
+    return 'normal';
+  }
+  function raidLabel(k){
+    return k==='main'?'RAID BOSS':(k==='sub'?'SUB-BOSS':'FLOOR');
+  }
   function raidReward(f){
-    var boss=(f%5===0);
-    return {cred:Math.round((120+f*55)*(boss?2.8:1)),
-            xp:Math.round((90+f*32)*(boss?2.5:1)), boss:boss};
+    var k=raidKind(f);
+    return {cred:Math.round((120+f*55)*RAID_CRED[k]),
+            xp:Math.round((90+f*32)*RAID_XP[k]), kind:k, boss:(k!=='normal')};
+  }
+  /* the main boss is drawn from the heaviest hitters on the roster rather
+     than at random, so it always feels like the thing at the end */
+  var RAID_HEAVIES=null;
+  function heavies(){
+    if(!RAID_HEAVIES){
+      RAID_HEAVIES=HEROES.slice().sort(function(a,b){
+        return (b.pow*9+b.tough)-(a.pow*9+a.tough);
+      }).slice(0,24);
+    }
+    return RAID_HEAVIES;
   }
   function raidFoe(){
-    var h=HEROES[save.sel], p=prog(h), f=raid.floor, boss=(f%5===0);
-    var pool=HEROES.filter(function(x){return x.id!==h.id;});
+    var h=HEROES[save.sel], p=prog(h), f=raid.floor, k=raidKind(f);
+    var pool=(k==='main'?heavies():HEROES).filter(function(x){return x.id!==h.id;});
+    if(!pool.length) pool=HEROES.filter(function(x){return x.id!==h.id;});
     var oh=pool[Math.floor(Math.random()*pool.length)];
     var olvl=Math.max(1,Math.min(60,Math.round(p.lvl*0.5)+Math.round(f*1.3)));
-    var otier=Math.min(4,Math.floor((f-1)/6)+(boss?1:0));
+    var otier=(k==='main')?4:Math.min(4,Math.floor((f-1)/6)+(k==='sub'?1:0));
     var g=makeFighter(oh,olvl,otier,-1,620,Math.floor(Math.random()*oh.skins.length));
     /* a raid is a gauntlet, so an ordinary floor is a shorter fight than a
        normal bout — otherwise twenty floors would take an afternoon. Bosses
-       go the other way: nearly five times the health of a normal floor. */
-    g.max=Math.round(g.max*(boss?RAID_BOSS_HP:RAID_FOE_HP)); g.hp=g.max;
-    if(boss) g.isBoss=true;
+       go the other way, and the main boss goes a very long way indeed. */
+    g.max=Math.round(g.max*RAID_HP[k]); g.hp=g.max;
+    g.pow=Math.max(1,Math.round(g.pow*RAID_POW[k]));
+    g.spd=g.spd*RAID_SPD[k];
+    g.raidKind=k;
+    if(k!=='normal') g.isBoss=true;
     return g;
   }
   function beginRaidFloor(){
@@ -3445,9 +3480,12 @@
     lb.childNodes[0].nodeValue=flier?'Flying Jump':'Leap';
     lb.querySelector('small').textContent=flier?'Fly up and dive':'Jump attack';
     $('fightbar').hidden=false; $('homeUI').hidden=true; $('overlay').hidden=true;
-    floatText(512,GY-250,(raid.floor%5===0?'BOSS FLOOR ':'FLOOR ')+raid.floor,
-              raid.floor%5===0?'#FFB4A0':'#9BD3FF',true);
-    tone(raid.floor%5===0?300:520,0.2,'square',0.05,880);
+    var rk=raidKind(raid.floor);
+    floatText(512,GY-250,raidLabel(rk)+' '+raid.floor,
+              rk==='main'?'#FF8A72':(rk==='sub'?'#FFD46B':'#9BD3FF'),true);
+    tone(rk==='main'?180:(rk==='sub'?300:520),rk==='main'?0.5:0.2,'square',0.05,880);
+    if(rk==='main'){ flash=Math.max(flash,16); shake=Math.max(shake,20);
+      setTimeout(function(){ tone(140,0.6,'sawtooth',0.06,300); },260); }
   }
   function startRaid(){
     raid={floor:1,cred:0,xp:0,carryHp:null,carryMeter:0};
@@ -3493,23 +3531,32 @@
     raid.floor++;
     /* a boss is a wall of health, so you are patched all the way up before
        one — the fight should be long, not unwinnable */
-    var bossNext=(raid.floor%5===0);
+    var nk=raidKind(raid.floor), bossNext=(nk!=='normal');
     raid.carryHp=bossNext?who.max
                          :Math.min(who.max,who.hp+Math.round(who.max*0.45));
     raid.carryMeter=who.meter;
     var next=raidReward(raid.floor);
-    $('ovTitle').textContent=(r.boss?'Boss floor cleared':'Floor cleared');
-    $('ovText').textContent='Floor '+(raid.floor-1)+' down. '
-      +(bossNext
-        ? HEROES[save.sel].name+' is patched up to full for floor '+raid.floor
-          +' \u2014 it is a boss, and bosses have a huge amount of health.'
-        : HEROES[save.sel].name+' is on '+Math.round(raid.carryHp/who.max*100)
-          +'% health going into floor '+raid.floor+'.')
+    var nm=HEROES[save.sel].name;
+    $('ovTitle').textContent=(r.kind==='main'?'Raid boss down!'
+                             :(r.kind==='sub'?'Sub-boss cleared':'Floor cleared'));
+    $('ovText').textContent=
+      (r.kind==='main'
+        ? 'Floor '+(raid.floor-1)+' \u2014 the raid boss is beaten, and it paid '+r.cred+' credits on its own. '
+        : 'Floor '+(raid.floor-1)+' down. ')
+      +(nk==='main'
+        ? nm+' is patched up to full, because floor '+raid.floor
+          +' is the RAID BOSS \u2014 the biggest health bar in the game.'
+        : nk==='sub'
+          ? nm+' is patched up to full for floor '+raid.floor
+            +', which is a sub-boss with a lot of health.'
+          : nm+' is on '+Math.round(raid.carryHp/who.max*100)
+            +'% health going into floor '+raid.floor+'.')
       +' Bank now and it is all yours; lose and you keep half.';
     $('rwCred').innerHTML=raid.cred+'<span>Credits in the pot</span>';
     $('rwXp').innerHTML=raid.xp+'<span>Experience in the pot</span>';
     $('ovReward').hidden=false;
-    $('ovBtn').textContent='Floor '+raid.floor+' \u2014 +'+next.cred;
+    $('ovBtn').textContent=(nk==='main'?'RAID BOSS':(nk==='sub'?'Sub-boss':'Floor '+raid.floor))
+      +' \u2014 +'+next.cred;
     $('ovBtn2').textContent='Bank '+raid.cred;
     $('ovBtn2').hidden=false;
     $('overlay').hidden=false;
@@ -4651,15 +4698,20 @@
       if(me.isBrain) iqBar(34,74,380,me.iq/100,false);
       if(foe.isBrain) iqBar(W-414,74,380,foe.iq/100,true);
       if(raid){
-        var boss=(raid.floor%5===0);
+        var rk=raidKind(raid.floor), main=(rk==='main'), sub=(rk==='sub');
+        var rtxt=(main?'RAID BOSS \u00b7 FLOOR ':(sub?'SUB-BOSS \u00b7 FLOOR ':'RAID FLOOR '))+raid.floor;
         ctx.textAlign='center';
-        ctx.font='800 26px "Saira Condensed", sans-serif';
-        ctx.fillStyle='rgba(10,18,28,.6)';
-        ctx.fillRect(W/2-96,26,192,30);
-        ctx.strokeStyle=boss?'rgba(255,150,120,.7)':'rgba(247,201,72,.45)'; ctx.lineWidth=2;
-        ctx.strokeRect(W/2-96,26,192,30);
-        ctx.fillStyle=boss?'#FFB4A0':'#F7C948';
-        ctx.fillText((boss?'BOSS FLOOR ':'RAID FLOOR ')+raid.floor,W/2,49);
+        ctx.font='800 '+(main?28:26)+'px "Saira Condensed", sans-serif';
+        /* size the plate to whatever the label actually measures, so a long
+           one does not spill over the health bars */
+        var bw2=Math.max(190,ctx.measureText(rtxt).width+30);
+        ctx.fillStyle=main?'rgba(40,8,8,.72)':'rgba(10,18,28,.6)';
+        ctx.fillRect(W/2-bw2/2,26,bw2,30);
+        ctx.strokeStyle=main?'rgba(255,110,80,.95)':(sub?'rgba(255,200,110,.8)':'rgba(247,201,72,.45)');
+        ctx.lineWidth=main?3:2;
+        ctx.strokeRect(W/2-bw2/2,26,bw2,30);
+        ctx.fillStyle=main?'#FF8A72':(sub?'#FFD46B':'#F7C948');
+        ctx.fillText(rtxt,W/2,49);
         ctx.font='800 13px Barlow, sans-serif'; ctx.fillStyle='#9FB4CC';
         ctx.fillText(raid.cred+' in the pot',W/2,72);
       }

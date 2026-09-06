@@ -93,12 +93,28 @@ one bout. Ordinary raid opponents have 55% of normal health, because a
 gauntlet of full-length fights would take an afternoon; the difficulty is the
 ladder, not the length of each fight.
 
-**Every fifth floor is a boss, and bosses have an enormous amount of health**
-— 2.6x a normal fighter, which works out at roughly six times an ordinary
-raid floor and about the same size as your own health bar. To keep that a
-long fight rather than an unwinnable one, your champion is **patched all the
-way up to full** before a boss floor instead of the usual 45%. Bosses pay
-2.8x credits and 2.5x experience.
+A raid has a shape:
+
+- **Every third floor is a sub-boss** — six of them before the end.
+- **Floor 20 is the RAID BOSS**, drawn from the twenty-four heaviest hitters
+  on the roster rather than at random.
+
+Health, measured against a level 46 champion whose own bar is 4,738:
+
+| | Health | Times your own bar |
+| --- | --- | --- |
+| Ordinary floor | 634 – 2,935 | 0.13x – 0.62x |
+| Sub-boss | 3,006 – 8,933 | 0.63x – 1.89x |
+| **RAID BOSS** | **29,206** | **6.16x** |
+
+Rewards match: a sub-boss pays about three floors' worth, and the raid boss
+eleven — **13,420 credits and 6,570 experience** on its own.
+
+A boss that is a wall of health must not also be a hammer, or it simply
+stun-locks you and wins in five seconds. Bosses hit softer and slower than
+their stats suggest — the raid boss at 7.5% power and 52% speed — so the
+health bar is the whole challenge. You are **patched all the way up to full**
+before every boss floor.
 
 Banking the floor before a boss is a real decision.
 
