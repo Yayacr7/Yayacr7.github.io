@@ -2194,10 +2194,10 @@
   /* the ear, on the shaded side */
   function faceEar(g,hx,hy,h){
     /* on the silhouette edge, where a 3/4 view actually puts it */
-    g.fillStyle=lerpHex(h.skin,h.skinLo,0.35);
-    g.beginPath(); g.ellipse(hx-8.0,hy+0.6,1.5,2.5,0.16,0,6.283); g.fill();
-    g.fillStyle='rgba(96,58,34,.28)';
-    g.beginPath(); g.ellipse(hx-8.2,hy+0.8,0.7,1.3,0.16,0,6.283); g.fill();
+    g.fillStyle=lerpHex(h.skin,h.skinLo,0.55);
+    g.beginPath(); g.ellipse(hx-8.2,hy+0.8,1.25,2.1,0.16,0,6.283); g.fill();
+    g.fillStyle='rgba(96,58,34,.34)';
+    g.beginPath(); g.ellipse(hx-8.4,hy+1.0,0.55,1.1,0.16,0,6.283); g.fill();
   }
 
   /* ================= what a suit is made of =================
@@ -2437,16 +2437,12 @@
     g.beginPath(); g.ellipse(hx+2.6,hy-4.4,5.6,1.6,-0.08,0,6.283); g.fill();
     g.fillStyle='rgba(255,242,218,.15)';
     g.beginPath(); g.ellipse(hx+2.6,hy-7.0,4.0,1.6,-0.06,0,6.283); g.fill();
-    /* the far half of the face was reading as blank, which is what makes a
-       head look like a blob: give it a cheek, a temple and a brow of its own */
-    g.fillStyle='rgba(255,238,210,.16)';
-    g.beginPath(); g.ellipse(hx-3.6,hy-0.2,3.0,2.2,0.30,0,6.283); g.fill();
-    g.fillStyle='rgba(96,58,34,.22)';
-    g.beginPath(); g.ellipse(hx-5.6,hy-3.2,2.6,2.8,0.10,0,6.283); g.fill();
-    g.strokeStyle='rgba(30,19,11,.42)'; g.lineWidth=1.15; g.lineCap='round';
-    g.beginPath();
-    g.moveTo(hx-5.6,hy-4.2); g.quadraticCurveTo(hx-3.4,hy-5.2,hx-1.4,hy-4.8);
-    g.stroke();
+    /* the far cheek and temple, kept faint now that a real second eye and
+       brow sit on that side rather than a blank patch */
+    g.fillStyle='rgba(255,238,210,.10)';
+    g.beginPath(); g.ellipse(hx-4.0,hy+1.0,2.6,1.9,0.30,0,6.283); g.fill();
+    g.fillStyle='rgba(96,58,34,.14)';
+    g.beginPath(); g.ellipse(hx-6.2,hy-3.0,2.0,2.6,0.10,0,6.283); g.fill();
     /* age: a forehead line and a fold from the nose to the mouth */
     if(F.age>0.05){
       g.strokeStyle='rgba(96,56,32,'+(F.age*0.45).toFixed(2)+')'; g.lineWidth=0.7;
@@ -2459,129 +2455,220 @@
     g.restore();
   }
 
-  /* the eye: almond, set into its socket, with a real iris */
-  function faceEye(g,hx,hy,h,F){
+  /* ---- the eyes ----------------------------------------------------
+     There was only ever one, jammed against the edge of the head, which is
+     the main reason a face read as a blank oval with a mark on it. The head
+     is turned about twenty-five degrees now rather than fifty, so both eyes
+     show: a near one and a narrower far one the nose bridge cuts into. */
+  function oneEye(g,cx,cy,hw,hh,F,near){
+    var open=hh;
     g.save();
     g.beginPath();
-    g.moveTo(hx+3.0,hy-1.3);
-    g.quadraticCurveTo(hx+5.2,hy-3.2,hx+7.3,hy-1.5);
-    g.quadraticCurveTo(hx+5.3,hy+0.4,hx+3.0,hy-1.3);
+    g.moveTo(cx-hw,cy);
+    g.quadraticCurveTo(cx-hw*0.15,cy-open*1.5,cx+hw,cy-open*0.25);
+    g.quadraticCurveTo(cx-hw*0.10,cy+open*1.25,cx-hw,cy);
     g.closePath();
     g.clip();
-    g.fillStyle='#F1ECE4'; g.fillRect(hx+2.4,hy-4,6,5.4);
-    g.fillStyle='rgba(150,128,116,.34)';
-    g.beginPath(); g.ellipse(hx+3.4,hy-1.4,1.3,1.4,0,0,6.283); g.fill();
-    var ig=g.createRadialGradient(hx+5.3,hy-2.0,0.2,hx+5.45,hy-1.5,1.35);
-    ig.addColorStop(0,lerpHex(F.eye,'#FFFFFF',0.45));
-    ig.addColorStop(0.6,F.eye);
-    ig.addColorStop(1,lerpHex(F.eye,'#000000',0.45));
+    /* the white, shaded at the inner corner so it is never flat paper */
+    g.fillStyle='#F6F2EA'; g.fillRect(cx-hw-1,cy-open*2,hw*2+2,open*4);
+    g.fillStyle='rgba(146,124,112,.32)';
+    g.beginPath(); g.ellipse(cx-hw*0.62,cy+0.1,hw*0.55,open*0.9,0,0,6.283); g.fill();
+    /* iris: a saturated centre, a darker rim, and a hard pupil */
+    var ir=Math.min(hw*0.80,open*1.16);
+    var ig=g.createRadialGradient(cx+hw*0.16,cy-open*0.42,0.15,cx+hw*0.2,cy-0.1,ir);
+    ig.addColorStop(0,lerpHex(F.eye,'#FFFFFF',0.52));
+    ig.addColorStop(0.55,F.eye);
+    ig.addColorStop(1,lerpHex(F.eye,'#000000',0.52));
     g.fillStyle=ig;
-    g.beginPath(); g.arc(hx+5.45,hy-1.5,1.3,0,6.283); g.fill();
-    g.strokeStyle='rgba(14,22,34,.7)'; g.lineWidth=0.42;
-    g.beginPath(); g.arc(hx+5.45,hy-1.5,1.3,0,6.283); g.stroke();
-    g.fillStyle='#0E1119';
-    g.beginPath(); g.arc(hx+5.45,hy-1.5,0.56,0,6.283); g.fill();
-    g.fillStyle='rgba(255,255,255,.95)';
-    g.beginPath(); g.arc(hx+4.95,hy-2.05,0.46,0,6.283); g.fill();
-    g.fillStyle='rgba(255,255,255,.4)';
-    g.beginPath(); g.arc(hx+5.95,hy-0.95,0.26,0,6.283); g.fill();
-    g.fillStyle='rgba(70,42,26,.30)';
-    g.beginPath(); g.ellipse(hx+5.2,hy-3.3,3.0,1.4,0,0,6.283); g.fill();
+    g.beginPath(); g.arc(cx+hw*0.2,cy-0.1,ir,0,6.283); g.fill();
+    g.strokeStyle='rgba(10,16,26,.85)'; g.lineWidth=0.4;
+    g.beginPath(); g.arc(cx+hw*0.2,cy-0.1,ir,0,6.283); g.stroke();
+    g.fillStyle='#0B0E15';
+    g.beginPath(); g.arc(cx+hw*0.2,cy-0.1,ir*0.44,0,6.283); g.fill();
+    /* the catchlight is what makes an eye look wet and alive */
+    g.fillStyle='rgba(255,255,255,.98)';
+    g.beginPath(); g.arc(cx+hw*0.2-ir*0.42,cy-0.1-ir*0.44,ir*0.34,0,6.283); g.fill();
+    g.fillStyle='rgba(255,255,255,.42)';
+    g.beginPath(); g.arc(cx+hw*0.2+ir*0.42,cy-0.1+ir*0.40,ir*0.19,0,6.283); g.fill();
+    /* the upper lid casting onto the eye */
+    g.fillStyle='rgba(64,38,22,.34)';
+    g.beginPath(); g.ellipse(cx,cy-open*1.05,hw*1.25,open*0.72,0,0,6.283); g.fill();
     g.restore();
-    /* lash line, lower lid and crease */
-    g.strokeStyle='rgba(28,18,12,'+(0.8+F.lash*0.2)+')';
-    g.lineWidth=0.95+F.lash*0.7; g.lineCap='round';
+    /* lash line: the darkest, hardest line on the face, which is what makes
+       an eye still read when the head is only thirty pixels tall */
+    g.strokeStyle='rgba(20,13,9,'+(near?0.95:0.8)+')';
+    g.lineWidth=(near?1.05:0.85)+F.lash*0.55; g.lineCap='round';
     g.beginPath();
-    g.moveTo(hx+3.0,hy-1.35); g.quadraticCurveTo(hx+5.2,hy-3.3,hx+7.4,hy-1.6); g.stroke();
-    g.strokeStyle='rgba(255,236,208,.4)'; g.lineWidth=0.6;
+    g.moveTo(cx-hw,cy);
+    g.quadraticCurveTo(cx-hw*0.15,cy-open*1.55,cx+hw,cy-open*0.25);
+    g.stroke();
+    /* lower lid, lit not drawn */
+    g.strokeStyle='rgba(255,238,212,.5)'; g.lineWidth=0.55;
     g.beginPath();
-    g.moveTo(hx+3.4,hy-0.85); g.quadraticCurveTo(hx+5.3,hy+0.5,hx+7.2,hy-1.2); g.stroke();
-    g.strokeStyle='rgba(96,58,34,.28)'; g.lineWidth=0.6;
+    g.moveTo(cx-hw*0.8,cy+open*0.28);
+    g.quadraticCurveTo(cx-hw*0.1,cy+open*1.2,cx+hw*0.9,cy-open*0.1);
+    g.stroke();
+    /* the crease above it */
+    g.strokeStyle='rgba(92,55,32,.34)'; g.lineWidth=0.55;
     g.beginPath();
-    g.moveTo(hx+3.2,hy-2.5); g.quadraticCurveTo(hx+5.4,hy-4.1,hx+7.7,hy-2.5); g.stroke();
-    /* a lit iris for the ones whose eyes burn */
+    g.moveTo(cx-hw*0.86,cy-open*1.15);
+    g.quadraticCurveTo(cx-hw*0.1,cy-open*2.1,cx+hw*0.98,cy-open*1.1);
+    g.stroke();
     if(F.glow){
       g.globalCompositeOperation='lighter';
-      var gg=g.createRadialGradient(hx+5.4,hy-1.5,0.4,hx+5.4,hy-1.5,4.4);
+      var gg=g.createRadialGradient(cx+hw*0.2,cy,0.4,cx+hw*0.2,cy,ir*3.4);
       gg.addColorStop(0,F.glow); gg.addColorStop(1,'rgba(0,0,0,0)');
-      g.fillStyle=gg; g.beginPath(); g.arc(hx+5.4,hy-1.5,4.4,0,6.283); g.fill();
+      g.fillStyle=gg; g.beginPath(); g.arc(cx+hw*0.2,cy,ir*3.4,0,6.283); g.fill();
       g.globalCompositeOperation='source-over';
     }
   }
+  function faceEye(g,hx,hy,h,F){
+    /* socket shadows first, so the eyes sit in a skull */
+    g.fillStyle='rgba(92,56,32,.20)';
+    g.beginPath(); g.ellipse(hx+3.9,hy-1.5,3.5,2.5,-0.05,0,6.283); g.fill();
+    g.beginPath(); g.ellipse(hx-2.7,hy-1.8,2.9,2.3,0.05,0,6.283); g.fill();
+    oneEye(g,hx-2.7,hy-1.8,2.05,1.05,F,false);
+    oneEye(g,hx+3.9,hy-1.5,2.65,1.20,F,true);
+  }
 
-  /* the brow does most of the work of an expression */
-  function faceBrow(g,hx,hy,h,F){
-    var b=F.brow;
-    g.strokeStyle='rgba(30,19,11,'+(b==='thin'?0.62:0.8)+')'; g.lineCap='round';
+  /* the brows do most of the work of an expression, so there are two */
+  function oneBrow(g,cx,cy,hw,F,near){
+    var b=F.brow, a=near?1:0.72;
+    g.strokeStyle='rgba(26,17,10,'+((b==='thin'?0.66:0.88)*a).toFixed(2)+')';
+    g.lineCap='round';
     if(b==='heavy'){
-      g.lineWidth=1.85;
-      g.beginPath(); g.moveTo(hx+2.4,hy-4.6); g.quadraticCurveTo(hx+4.8,hy-5.6,hx+6.5,hy-5.0); g.stroke();
-      g.lineWidth=1.05;
-      g.beginPath(); g.moveTo(hx+6.5,hy-5.0); g.quadraticCurveTo(hx+7.6,hy-4.7,hx+8.1,hy-3.9); g.stroke();
+      g.lineWidth=1.9*(near?1:0.82);
+      g.beginPath();
+      g.moveTo(cx-hw,cy+0.5); g.quadraticCurveTo(cx,cy-0.7,cx+hw*0.72,cy-0.35); g.stroke();
+      g.lineWidth=1.1*(near?1:0.82);
+      g.beginPath();
+      g.moveTo(cx+hw*0.72,cy-0.35); g.quadraticCurveTo(cx+hw*1.05,cy-0.05,cx+hw*1.2,cy+0.6); g.stroke();
     }else if(b==='thin'){
-      g.lineWidth=0.85;
-      g.beginPath(); g.moveTo(hx+2.8,hy-5.0); g.quadraticCurveTo(hx+5.2,hy-6.0,hx+8.0,hy-4.6); g.stroke();
+      g.lineWidth=0.9*(near?1:0.82);
+      g.beginPath();
+      g.moveTo(cx-hw,cy+0.2); g.quadraticCurveTo(cx,cy-1.1,cx+hw*1.15,cy+0.5); g.stroke();
     }else if(b==='arch'){
-      g.lineWidth=1.15;
-      g.beginPath(); g.moveTo(hx+2.6,hy-4.8); g.quadraticCurveTo(hx+5.4,hy-6.6,hx+8.0,hy-4.4); g.stroke();
+      g.lineWidth=1.2*(near?1:0.82);
+      g.beginPath();
+      g.moveTo(cx-hw,cy+0.5); g.quadraticCurveTo(cx,cy-1.7,cx+hw*1.15,cy+0.5); g.stroke();
     }else if(b==='angry'){
-      g.lineWidth=1.7;
-      g.beginPath(); g.moveTo(hx+2.2,hy-3.6); g.quadraticCurveTo(hx+5.2,hy-5.6,hx+8.0,hy-5.2); g.stroke();
+      g.lineWidth=1.75*(near?1:0.82);
+      g.beginPath();
+      g.moveTo(cx-hw,cy+1.5); g.quadraticCurveTo(cx,cy-0.6,cx+hw*1.15,cy-0.5); g.stroke();
     }else{
-      g.lineWidth=1.45;
-      g.beginPath(); g.moveTo(hx+2.6,hy-4.7); g.quadraticCurveTo(hx+5.2,hy-5.7,hx+8.0,hy-4.4); g.stroke();
+      g.lineWidth=1.5*(near?1:0.82);
+      g.beginPath();
+      g.moveTo(cx-hw,cy+0.4); g.quadraticCurveTo(cx,cy-1.0,cx+hw*1.15,cy+0.4); g.stroke();
+    }
+  }
+  function faceBrow(g,hx,hy,h,F){
+    oneBrow(g,hx-2.7,hy-5.0,2.3,F,false);
+    oneBrow(g,hx+3.9,hy-4.7,2.9,F,true);
+    /* the frown between them, which is most of what an angry face is */
+    if(F.brow==='angry'||F.mood==='grim'||F.mood==='snarl'){
+      g.strokeStyle='rgba(92,55,32,.34)'; g.lineWidth=0.6;
+      g.beginPath(); g.moveTo(hx+0.2,hy-4.4); g.lineTo(hx+0.5,hy-2.6); g.stroke();
+      g.beginPath(); g.moveTo(hx+1.4,hy-4.4); g.lineTo(hx+1.2,hy-2.6); g.stroke();
     }
   }
 
-  /* a nose reads as a lit edge beside a shadow line, never as a blob */
+  /* A nose is a wedge with a lit ridge, a shadowed side, a ball at the tip
+     and two nostrils. Drawn as one soft smudge it disappears, which is what
+     it used to be. */
   function faceNose(g,hx,hy,h,F,masked){
-    var top=masked?-0.4:-2.2;
-    g.strokeStyle='rgba(255,250,236,.6)'; g.lineWidth=1.1; g.lineCap='round';
+    var top=masked?-1.2:-3.6;
+    var bx=hx+0.9;                       /* the bridge runs down the centre */
+    /* the shadowed side of the wedge */
+    g.fillStyle='rgba(94,54,29,.26)';
     g.beginPath();
-    g.moveTo(hx+4.3,hy+top); g.quadraticCurveTo(hx+5.1,hy-0.2,hx+5.2,hy+1.7); g.stroke();
-    g.strokeStyle='rgba(92,52,28,.45)'; g.lineWidth=0.85;
+    g.moveTo(bx-0.4,hy+top);
+    g.quadraticCurveTo(bx-1.9,hy+0.6,bx-2.2,hy+2.6);
+    g.lineTo(bx+1.3,hy+2.8);
+    g.quadraticCurveTo(bx+0.9,hy+0.4,bx+0.4,hy+top);
+    g.closePath(); g.fill();
+    /* the lit ridge */
+    g.strokeStyle='rgba(255,250,234,.34)'; g.lineWidth=0.9; g.lineCap='round';
     g.beginPath();
-    g.moveTo(hx+3.7,hy+top+0.4); g.quadraticCurveTo(hx+4.2,hy+0.1,hx+4.2,hy+1.9); g.stroke();
-    g.fillStyle='rgba(255,250,232,.55)';
-    g.beginPath(); g.arc(hx+5.0,hy+2.1,0.85,0,6.283); g.fill();
-    g.strokeStyle='rgba(78,44,24,.55)'; g.lineWidth=0.85;
-    g.beginPath();
-    g.moveTo(hx+3.4,hy+2.7); g.quadraticCurveTo(hx+4.6,hy+3.3,hx+5.7,hy+2.6); g.stroke();
-    g.fillStyle='rgba(52,28,15,.7)';
-    g.beginPath(); g.ellipse(hx+3.9,hy+2.6,0.48,0.32,0.28,0,6.283); g.fill();
+    g.moveTo(bx+0.7,hy+Math.max(top,-2.0)); g.quadraticCurveTo(bx+1.2,hy+0.4,bx+1.4,hy+2.0);
+    g.stroke();
+    /* the ball of the tip */
+    g.fillStyle='rgba(255,248,228,.55)';
+    g.beginPath(); g.ellipse(bx+0.8,hy+2.5,1.35,1.0,0,0,6.283); g.fill();
+    /* the shadow it throws onto the lip */
+    g.fillStyle='rgba(74,40,20,.34)';
+    g.beginPath(); g.ellipse(bx+0.3,hy+3.8,2.6,0.85,0.03,0,6.283); g.fill();
+    /* both nostrils — the pair is what makes it read as a nose */
+    g.fillStyle='rgba(44,23,12,.78)';
+    g.beginPath(); g.ellipse(bx-1.5,hy+3.1,0.62,0.40,0.34,0,6.283); g.fill();
+    g.beginPath(); g.ellipse(bx+2.2,hy+3.0,0.55,0.36,-0.30,0,6.283); g.fill();
+    /* the wings either side of them */
+    g.strokeStyle='rgba(94,54,29,.42)'; g.lineWidth=0.6;
+    g.beginPath(); g.arc(bx-1.4,hy+2.7,1.25,0.5,2.5); g.stroke();
+    g.beginPath(); g.arc(bx+2.1,hy+2.6,1.15,0.7,2.7); g.stroke();
   }
 
-  /* two lips, and the line where they meet doing the expression */
+  /* A mouth is an upper lip in shadow, a lower lip catching light, a hard
+     line where they meet, and two corners set into the cheeks. */
   function faceMouth(g,hx,hy,h,F){
-    var full=(F.lips==='full'), thin=(F.lips==='thin');
-    var up=full?4.0:(thin?4.3:4.1), dn=full?6.0:(thin?5.2:5.6);
-    g.fillStyle='rgba(140,74,56,'+(full?0.5:0.4)+')';
+    var mx=hx+1.0, full=(F.lips==='full'), thin=(F.lips==='thin');
+    var w=full?3.5:(thin?2.9:3.15);
+    var upH=full?1.35:(thin?0.85:1.05);
+    var loH=full?1.65:(thin?0.95:1.25);
+    var y=hy+5.4;
+    /* the philtrum above it */
+    g.strokeStyle='rgba(120,72,44,.26)'; g.lineWidth=0.6; g.lineCap='round';
+    g.beginPath(); g.moveTo(mx-0.1,y-2.4); g.lineTo(mx+0.1,y-1.0); g.stroke();
+    /* upper lip, always in shadow, with the dip in the middle */
+    g.fillStyle='rgba(150,84,64,'+(full?0.44:0.34)+')';
     g.beginPath();
-    g.moveTo(hx+2.6,hy+4.5);
-    g.quadraticCurveTo(hx+4.6,hy+up,hx+6.8,hy+4.4);
-    g.quadraticCurveTo(hx+4.7,hy+4.8,hx+2.6,hy+4.5);
+    g.moveTo(mx-w,y);
+    g.quadraticCurveTo(mx-w*0.5,y-upH,mx-0.15,y-upH*0.45);
+    g.quadraticCurveTo(mx+0.15,y-upH*0.9,mx+w*0.55,y-upH*0.7);
+    g.quadraticCurveTo(mx+w*0.9,y-upH*0.2,mx+w,y);
+    g.quadraticCurveTo(mx,y+0.5,mx-w,y);
     g.closePath(); g.fill();
-    g.strokeStyle='rgba(78,34,24,.92)'; g.lineWidth=1.15; g.lineCap='round';
+    /* lower lip, catching the light */
+    g.fillStyle='rgba(206,140,116,'+(full?0.58:0.44)+')';
+    g.beginPath();
+    g.moveTo(mx-w*0.88,y+0.15);
+    g.quadraticCurveTo(mx,y+loH*1.5,mx+w*0.88,y+0.15);
+    g.quadraticCurveTo(mx,y+0.7,mx-w*0.88,y+0.15);
+    g.closePath(); g.fill();
+    g.strokeStyle='rgba(255,232,210,.55)'; g.lineWidth=0.7;
+    g.beginPath();
+    g.moveTo(mx-w*0.5,y+loH*0.95); g.quadraticCurveTo(mx+0.2,y+loH*1.25,mx+w*0.55,y+loH*0.8);
+    g.stroke();
+    /* the line where the lips meet — the hardest edge in the lower face,
+       and the one that carries the expression */
+    g.strokeStyle='rgba(80,36,24,.82)'; g.lineWidth=0.9; g.lineCap='round';
     g.beginPath();
     if(F.mood==='smirk'){
-      g.moveTo(hx+2.7,hy+5.0); g.quadraticCurveTo(hx+4.9,hy+5.1,hx+7.0,hy+3.9);
+      g.moveTo(mx-w,y+0.5); g.quadraticCurveTo(mx,y+0.3,mx+w,y-0.9);
     }else if(F.mood==='grim'){
-      g.moveTo(hx+2.7,hy+4.4); g.quadraticCurveTo(hx+4.7,hy+5.3,hx+6.8,hy+4.7);
+      g.moveTo(mx-w,y-0.2); g.quadraticCurveTo(mx,y+0.9,mx+w,y-0.2);
     }else if(F.mood==='snarl'){
-      g.moveTo(hx+2.7,hy+5.0); g.quadraticCurveTo(hx+4.9,hy+3.9,hx+7.0,hy+4.9);
+      g.moveTo(mx-w,y+0.6); g.quadraticCurveTo(mx,y-0.8,mx+w,y+0.6);
     }else{
-      g.moveTo(hx+2.7,hy+4.6); g.quadraticCurveTo(hx+4.7,hy+5.0,hx+6.8,hy+4.4);
+      g.moveTo(mx-w,y+0.1); g.quadraticCurveTo(mx,y+0.55,mx+w,y+0.1);
     }
     g.stroke();
     if(F.mood==='snarl'){
-      g.fillStyle='rgba(250,248,242,.85)';
-      g.fillRect(hx+3.4,hy+4.2,3.2,0.9);
+      g.fillStyle='rgba(250,248,242,.9)';
+      g.beginPath();
+      g.moveTo(mx-w*0.7,y+0.1); g.lineTo(mx+w*0.7,y+0.1);
+      g.lineTo(mx+w*0.6,y+1.0); g.lineTo(mx-w*0.6,y+1.0);
+      g.closePath(); g.fill();
     }
-    g.strokeStyle='rgba(255,226,204,.5)'; g.lineWidth=0.8;
-    g.beginPath();
-    g.moveTo(hx+3.2,hy+dn); g.quadraticCurveTo(hx+4.8,hy+dn+0.3,hx+6.4,hy+dn-0.3); g.stroke();
+    /* the corners, set back into the cheek */
+    g.fillStyle='rgba(90,44,28,.42)';
+    g.beginPath(); g.arc(mx-w,y+0.2,0.55,0,6.283); g.fill();
+    g.beginPath(); g.arc(mx+w,y+0.1,0.55,0,6.283); g.fill();
+    /* the shadow under the lower lip that seats the chin */
+    g.fillStyle='rgba(96,54,32,.26)';
+    g.beginPath(); g.ellipse(mx,y+loH*1.9,w*0.66,0.7,0,0,6.283); g.fill();
+    /* and the shadow the jaw throws onto the neck */
     g.fillStyle='rgba(70,42,24,.20)';
-    g.beginPath(); g.ellipse(hx-0.8,hy+9.2,5.0,1.6,0.05,0,6.283); g.fill();
+    g.beginPath(); g.ellipse(hx-0.4,hy+9.2,5.0,1.6,0.05,0,6.283); g.fill();
   }
 
   /* facial hair, in whatever colour that character's hair is */
@@ -2922,11 +3009,14 @@
      Drawing the whole body that way first, then again in colour, gives one clean
      comic outline instead of a pile of separate discs. */
   var PASS_INK=false, INKC='#0B0A14';
+  /* how heavy the comic outline is. The head is drawn at a smaller scale and
+     is where all the detail is, so it gets a finer line than the body. */
+  var INKW=4.6, INK_BODY=4.6, INK_HEAD=2.6;
   /* fine shading costs real time; only the large arena figures get it */
   var DETAIL=true;
   function done(g,fill){
     if(PASS_INK){
-      g.fillStyle=INKC; g.strokeStyle=INKC; g.lineWidth=4.6; g.lineJoin='round'; g.lineCap='round';
+      g.fillStyle=INKC; g.strokeStyle=INKC; g.lineWidth=INKW; g.lineJoin='round'; g.lineCap='round';
       g.fill(); g.stroke(); return true;
     }
     g.fillStyle=fill; g.fill(); return false;
@@ -3438,6 +3528,7 @@
       var hd=P0.head, hx=hd[0], hy=hd[1];
       g.save();
       g.translate(hx,hy); g.scale(HEAD_S,HEAD_S); g.translate(-hx,-hy);
+      INKW=INK_HEAD;
       blob(g,hx,hy,8.1,9.1,0.06,skinHi,skinLo,f.tier);
 
       /* ---- headgear silhouette: drawn in BOTH passes so it gets an outline ---- */
@@ -3715,7 +3806,7 @@
         done(g,h.hair);
       }
 
-      if(PASS_INK){ g.restore(); return; }
+      if(PASS_INK){ INKW=INK_BODY; g.restore(); return; }
 
       /* ---- faces, colour pass only ----
          One anatomy engine for everyone, differentiated by that character's
@@ -3897,6 +3988,7 @@
         g.beginPath(); g.ellipse(hx+1.4,hy-2.6,7.4,4.6,0,0,6.283); g.fill();
         g.fillStyle='#EAF2FF'; g.beginPath(); g.arc(hx+5,hy-2.4,1.3,0,6.283); g.fill();
       }
+      INKW=INK_BODY;
       g.restore();
     })();
 

@@ -222,11 +222,30 @@ cinematic comic-realist look rather than a photograph.
 
 ### Faces
 
-Every character has a face of their own. One anatomy engine draws it — jaw
-and cheekbone structure, an ear on the silhouette edge, an almond eye with a
-limbal ring and two catchlights, a lash line and crease, a shaped brow, a
-nose drawn as a lit edge beside a shadow line, two lips, facial hair and age
-lines — and a table of 142 rows tells it what each character looks like:
+Every character has a face of their own, and **two eyes**. The head used to
+be turned about fifty degrees, so every face had one eye crammed against the
+edge and a blank oval beside it. It is turned about twenty-five degrees now
+and both eyes are drawn — a near one and a narrower far one.
+
+Each eye is an almond with a shaded inner corner, an iris built from a lit
+centre through a saturated middle to a dark rim, a hard pupil, a bright
+catchlight and a dimmer bounce, the upper lid casting across the top, a lash
+line, a lit lower lid and a crease. The lash line is the hardest, darkest
+line on the face on purpose — it is what still reads when the whole head is
+thirty pixels tall.
+
+The **nose** is a wedge: a shadowed side, a lit ridge, a ball at the tip, the
+shadow it throws onto the lip, both nostrils and the wings around them. Two
+nostrils rather than one is most of what makes it read as a nose.
+
+The **mouth** is an upper lip in shadow with the dip in the middle, a lower
+lip catching light, a hard line where they meet carrying the expression, two
+corners set back into the cheek, a philtrum above and the shadow below that
+seats the chin.
+
+Around that, one anatomy engine draws jaw and cheekbone structure, an ear on
+the silhouette edge, paired brows, facial hair and age lines — and a table of
+142 rows tells it what each character looks like:
 
 | | |
 | --- | --- |
