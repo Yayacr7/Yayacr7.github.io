@@ -2222,23 +2222,77 @@
     nezuko:'gi', zenitsu:'gi', inosuke:'gi', rengoku:'gi', kenshin:'gi',
     inuyasha:'gi', sesshomaru:'gi', luffy:'gi', zoro:'gi', shanks:'gi'
   };
+  /* Where the chest is, as a fraction down the torso. The emblem and the
+     seam layout both read this, so they can never drift apart. */
+  function chestAt(n,pv,lean,th){
+    var t=0.36;
+    return {x:(n[0]+lean)*(1-t)+pv[0]*t, y:n[1]+th*t, r:11.0};
+  }
+  /* the centre line and half-width of the torso at any height down it */
+  function torsoMid(n,pv,lean,t){ return (n[0]+lean)*(1-t)+pv[0]*t; }
+  function torsoHalf(t){ return (14.0*(1-t)+7.2*t)*(1+0.07*Math.sin(t*Math.PI)); }
+
+  /* The construction every costume shares: a shoulder yoke, side seams that
+     follow the taper, a centre seam and a waist line. Symmetric about the
+     body's own centre line, and bowed so they read as wrapping a chest
+     rather than being painted flat across it. */
+  function suitSeams(g,h,n,pv,lean,th){
+    var ink='rgba(4,6,12,.26)', lit='rgba(255,252,238,.20)';
+    function seam(t,bow,a1,a2){
+      var mid=torsoMid(n,pv,lean,t), hw=torsoHalf(t), y=n[1]+th*t;
+      g.strokeStyle=a1; g.lineWidth=1.15; g.lineCap='round';
+      g.beginPath(); g.moveTo(mid-hw,y); g.quadraticCurveTo(mid,y+bow,mid+hw,y); g.stroke();
+      g.strokeStyle=a2; g.lineWidth=0.8;
+      g.beginPath(); g.moveTo(mid-hw,y-1.2); g.quadraticCurveTo(mid,y+bow-1.2,mid+hw,y-1.2); g.stroke();
+    }
+    /* the yoke across the shoulders, and the waist */
+    seam(0.13,3.2,ink,lit);
+    seam(0.78,2.6,ink,lit);
+    /* side seams, following the silhouette down both flanks */
+    g.strokeStyle='rgba(4,6,12,.20)'; g.lineWidth=1.0;
+    for(var sgn=-1;sgn<=1;sgn+=2){
+      g.beginPath();
+      for(var i=0;i<=8;i++){
+        var t=i/8, mid=torsoMid(n,pv,lean,t), x=mid+sgn*(torsoHalf(t)-1.6), y=n[1]+th*t;
+        if(i===0) g.moveTo(x,y); else g.lineTo(x,y);
+      }
+      g.stroke();
+    }
+    /* the centre seam, broken where the emblem sits so nothing crosses it */
+    var c=chestAt(n,pv,lean,th);
+    g.strokeStyle='rgba(4,6,12,.22)'; g.lineWidth=1.0;
+    g.beginPath();
+    g.moveTo(torsoMid(n,pv,lean,0.05),n[1]+th*0.05);
+    g.lineTo(c.x,c.y-c.r);
+    g.stroke();
+    g.beginPath();
+    g.moveTo(c.x,c.y+c.r);
+    g.lineTo(torsoMid(n,pv,lean,0.92),n[1]+th*0.92);
+    g.stroke();
+  }
+
   function suitMaterial(g,h,n,pv,lean,th,cx0,cy0,T){
     var m=MATS[h.id]||'weave';
     var top=n[1], bot=pv[1]+4, L=n[0]-18+lean, R=n[0]+18+lean;
     if(m==='plate'||m==='chrome'){
       /* hard panel seams with a lit upper edge, the way stamped armour reads */
-      var rows=4;
-      for(var i=0;i<rows;i++){
-        var y=top+th*(0.16+i*0.20);
+      var rows=[0.22,0.42,0.60,0.72];
+      for(var i=0;i<rows.length;i++){
+        var t=rows[i], mid=torsoMid(n,pv,lean,t), hw=torsoHalf(t), y=top+th*t;
         g.strokeStyle='rgba(4,6,12,.34)'; g.lineWidth=1.2; g.lineCap='round';
-        g.beginPath(); g.moveTo(L,y); g.quadraticCurveTo(cx0,y+3.0,R,y-1.0); g.stroke();
+        g.beginPath(); g.moveTo(mid-hw,y); g.quadraticCurveTo(mid,y+2.8,mid+hw,y); g.stroke();
         g.strokeStyle='rgba(255,252,236,.26)'; g.lineWidth=0.85;
-        g.beginPath(); g.moveTo(L,y-1.3); g.quadraticCurveTo(cx0,y+1.7,R,y-2.3); g.stroke();
+        g.beginPath(); g.moveTo(mid-hw,y-1.3); g.quadraticCurveTo(mid,y+1.5,mid+hw,y-1.3); g.stroke();
       }
-      /* the shoulder plates, and a vertical split down the chest */
+      /* matching shoulder plates, mirrored about the centre line */
       g.strokeStyle='rgba(4,6,12,.28)'; g.lineWidth=1.1;
-      g.beginPath(); g.moveTo(cx0-11,top+2); g.quadraticCurveTo(cx0-8,top+th*0.20,cx0-9,top+th*0.34); g.stroke();
-      g.beginPath(); g.moveTo(cx0+11,top+2); g.quadraticCurveTo(cx0+8,top+th*0.20,cx0+9,top+th*0.34); g.stroke();
+      for(var sp2=-1;sp2<=1;sp2+=2){
+        var m0=torsoMid(n,pv,lean,0.02), m1=torsoMid(n,pv,lean,0.30);
+        g.beginPath();
+        g.moveTo(m0+sp2*11.4,top+2);
+        g.quadraticCurveTo(m1+sp2*8.4,top+th*0.18,m1+sp2*9.6,top+th*0.32);
+        g.stroke();
+      }
       /* a tight specular band, which is what makes metal look like metal */
       var sp=g.createLinearGradient(cx0+2,top,cx0+13,bot);
       sp.addColorStop(0,'rgba(255,255,255,0)');
@@ -2254,9 +2308,9 @@
       g.fillStyle=lg2; g.fillRect(L-6,top-8,(R-L)+12,th+20);
       g.strokeStyle='rgba(4,6,12,.20)'; g.lineWidth=0.9; g.lineCap='round';
       for(var c=0;c<3;c++){
-        var cy2=top+th*(0.34+c*0.17);
+        var t3=0.44+c*0.15, m3=torsoMid(n,pv,lean,t3), hw3=torsoHalf(t3)-2.4, cy2=top+th*t3;
         g.beginPath();
-        g.moveTo(cx0-8.4,cy2); g.quadraticCurveTo(cx0-1,cy2+3.4,cx0+8.0,cy2-1.2);
+        g.moveTo(m3-hw3,cy2); g.quadraticCurveTo(m3,cy2+3.2,m3+hw3,cy2);
         g.stroke();
       }
     }else if(m==='formal'){
@@ -2305,19 +2359,21 @@
       g.beginPath(); g.ellipse(cx0+5.0,cy0+th*0.44,3.4,th*0.07,-0.1,0,6.283); g.fill();
     }else{
       /* the default: a fine weave, only visible up close, plus a soft sheen */
+      /* the weave runs over the whole garment; the clip keeps it inside */
       g.save();
-      g.globalAlpha=0.10;
-      g.strokeStyle='#FFFFFF'; g.lineWidth=0.5;
-      for(var w=-9;w<9;w+=2.6){
+      var span=(bot+6)-(top-6);
+      g.globalAlpha=0.05;
+      g.strokeStyle='#FFFFFF'; g.lineWidth=0.42;
+      for(var w=-34;w<34;w+=3.4){
         g.beginPath();
-        g.moveTo(cx0+w-5,top+2); g.lineTo(cx0+w+6,bot-1);
+        g.moveTo(cx0+w,top-6); g.lineTo(cx0+w+span,bot+6);
         g.stroke();
       }
-      g.globalAlpha=0.07;
+      g.globalAlpha=0.035;
       g.strokeStyle='#000000';
-      for(var w2=-9;w2<9;w2+=2.6){
+      for(var w2=-34;w2<34;w2+=3.4){
         g.beginPath();
-        g.moveTo(cx0+w2+5,top+2); g.lineTo(cx0+w2-6,bot-1);
+        g.moveTo(cx0+w2+span,top-6); g.lineTo(cx0+w2,bot+6);
         g.stroke();
       }
       g.restore();
@@ -3091,8 +3147,25 @@
       var kl=g.createLinearGradient(pv[0]+16,0,pv[0]-2,0);
       kl.addColorStop(0,'rgba(255,244,214,.20)'); kl.addColorStop(1,'rgba(255,244,214,0)');
       g.fillStyle=kl; g.fillRect(pv[0]-2,n[1]-6,26,th+16);
-      /* what the suit is actually made of */
+      /* the construction every costume shares, then what it is made of */
+      suitSeams(g,h,n,pv,lean,th);
       suitMaterial(g,h,n,pv,lean,th,cx0,cy0,T);
+      /* Wipe the chest back to clean suit where the emblem goes. Seams,
+         weave and folds all stop at its edge instead of running over it. */
+      (function(){
+        var c=chestAt(n,pv,lean,th);
+        var pg=g.createRadialGradient(c.x+2.6,c.y-3.4,1,c.x,c.y,c.r*1.5);
+        pg.addColorStop(0,lerpHex(suitHi,'#FFFFFF',0.10));
+        pg.addColorStop(0.62,h.suit);
+        pg.addColorStop(1,suitLo);
+        g.fillStyle=pg;
+        g.beginPath(); g.ellipse(c.x,c.y,c.r*1.02,c.r*1.02,0,0,6.283); g.fill();
+        /* a soft seam ringing the plate, so it reads as set into the suit */
+        g.strokeStyle='rgba(4,6,12,.16)'; g.lineWidth=0.9;
+        g.beginPath(); g.ellipse(c.x,c.y,c.r*1.02,c.r*1.02,0,0,6.283); g.stroke();
+        g.strokeStyle='rgba(255,252,238,.14)'; g.lineWidth=0.8;
+        g.beginPath(); g.ellipse(c.x,c.y-0.9,c.r*0.98,c.r*0.98,0,Math.PI*1.06,Math.PI*1.94); g.stroke();
+      })();
       g.restore();
       /* trunks over the hips, where the costume has them */
       if(h.trunks){
@@ -3115,12 +3188,17 @@
         for(var pch=0;pch<3;pch++) g.fillRect(pv[0]-7+pch*6,pv[1]-6,4,5);
       }
 
-      /* chest emblem */
-      var ex=(sf[0]+pv[0])/2+1, ey=(n[1]+pv[1])/2-4;
+      /* chest emblem — anchored to the torso's own centre line at chest
+         height. It used to hang off the front shoulder, so it slid sideways
+         every time the arm swung and sat lower the longer the torso got. */
+      var _c=chestAt(n,pv,lean,pv[1]-n[1]);
+      var ex=_c.x, ey=_c.y;
       g.save(); g.translate(ex,ey);
       /* the whole figure is mirrored when facing left; undo that here so every
          emblem reads the right way round and sits perfectly upright */
       if(face<0) g.scale(-1,1);
+      /* sized to the chest it sits on rather than to the old wider torso */
+      g.scale(0.78,0.78);
       if(h.emblem==='shield'){
         /* the diamond shield: crisp red border, gold field, clean S, glass highlight */
         var sp=function(k){

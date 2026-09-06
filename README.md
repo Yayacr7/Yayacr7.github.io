@@ -199,6 +199,20 @@ to one of six treatments:
 | bare | no fabric, so muscle definition instead |
 | weave | the default: a fine crosshatch under a soft sheen |
 
+**Construction.** Before its material, every costume gets the same set of
+seams: a shoulder yoke, a waist seam, side seams tracing the silhouette down
+both flanks, and a centre seam. They are symmetric about the body's centre
+line, placed by the torso's half-width at each height so they follow the taper
+from shoulder to waist, and bowed downward in the middle so they read as
+wrapping a chest rather than painted flat across it.
+
+**Emblems.** The chest emblem used to hang off the front shoulder, so it slid
+sideways whenever that arm swung — up to 5.9 units off centre during a punch.
+It and the seam layout now read the same function for the torso's centre line
+at chest height, so it is exactly centred on every frame. After the material
+is drawn the chest is wiped back to clean suit in a disc behind it, so no
+panel line, weave or fold crosses the emblem on any character.
+
 **Anatomy.** Pectorals, three rows of abdominals, an oblique running to the
 hip, a collar shadow and lit and shaded flanks, all placed as fractions of the
 torso's real length.
