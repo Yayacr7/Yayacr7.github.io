@@ -66,20 +66,39 @@ Riddler, Darkseid, Solomon Grundy.
 Every character carries their civilian name, a signature Super Move, and a
 **trait** — a passive power that changes how they fight.
 
-### Traits
+### Passives
 
-| Trait kind | What it does |
+Every one of the sixty-six characters has its own passive — sixty-six distinct
+names, no two sharing the same effect at the same strength. Between them they
+draw on thirty-three different mechanics:
+
+| Mechanic | What it does |
 | --- | --- |
-| Momentum | More damage while above half health |
-| Berserk | More damage once badly hurt |
-| Power | Flat damage bonus on every hit |
-| Tough | Takes less damage from everything |
-| Guardian | Guarding blocks far more than usual |
-| Charge | Super meter fills faster |
-| Regen | Slowly repairs damage during a fight |
-| Double | Chance for a strike to land twice |
-| First strike | The first hit of a fight is a critical |
-| Intellect | Reads the opponent — Batman and Lex Luthor |
+| Power / Momentum / Berserk | Flat damage, damage while healthy, damage while hurt |
+| Duelist / Opener / Closer | Damage while behind, early in a fight, late in a fight |
+| Execute | Extra damage against a badly hurt opponent |
+| Crit | A chance to land a doubled critical hit |
+| Combo / Finisher | Each combo hit builds, or the third hit pays off |
+| Double | A chance a strike lands twice |
+| First strike | The opening hit of a fight is a critical |
+| Airmaster / Giant | Leaps and heavies, or super moves, hit far harder |
+| Lifesteal | Heals for a share of the damage dealt |
+| Bleed / Chill / Stunner | Poison that keeps working, a slowed opponent, or a stun |
+| Guardbreak | Attacks punch through a guard |
+| Tough / Stubborn / Adapt | Flat damage soak, soak while hurt, soak that grows all fight |
+| Guardian | A guard that blocks far more than usual |
+| Evade | A chance to slip a blow completely |
+| Thorns | Sends a share of every hit back at the attacker |
+| Regen | Heals steadily throughout the fight |
+| Charge / Primed / Cheap super | Faster meter, a meter that starts part-full, a cheaper super |
+| Spite | Taking a hit floods the meter |
+| Last stand | Once per fight, refuses to go down |
+| Intellect | Reads the opponent — the Intellect bar |
+
+They are written to fit the character. Wolverine heals fastest, Nightcrawler is
+the hardest to hit, Hulk gets angriest, Thanos punishes the wounded, Black
+Panther throws hits back, Deadpool gets up again, and Silver Surfer starts
+every fight with half a meter.
 
 ### Versions
 
