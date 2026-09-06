@@ -2481,23 +2481,23 @@
     ig.addColorStop(1,lerpHex(F.eye,'#000000',0.52));
     g.fillStyle=ig;
     g.beginPath(); g.arc(cx+hw*0.2,cy-0.1,ir,0,6.283); g.fill();
-    g.strokeStyle='rgba(10,16,26,.85)'; g.lineWidth=0.4;
+    g.strokeStyle='rgba(8,13,22,.95)'; g.lineWidth=0.45;
     g.beginPath(); g.arc(cx+hw*0.2,cy-0.1,ir,0,6.283); g.stroke();
-    g.fillStyle='#0B0E15';
-    g.beginPath(); g.arc(cx+hw*0.2,cy-0.1,ir*0.44,0,6.283); g.fill();
+    g.fillStyle='#07090E';
+    g.beginPath(); g.arc(cx+hw*0.2,cy-0.1,ir*0.46,0,6.283); g.fill();
     /* the catchlight is what makes an eye look wet and alive */
     g.fillStyle='rgba(255,255,255,.98)';
     g.beginPath(); g.arc(cx+hw*0.2-ir*0.42,cy-0.1-ir*0.44,ir*0.34,0,6.283); g.fill();
     g.fillStyle='rgba(255,255,255,.42)';
     g.beginPath(); g.arc(cx+hw*0.2+ir*0.42,cy-0.1+ir*0.40,ir*0.19,0,6.283); g.fill();
     /* the upper lid casting onto the eye */
-    g.fillStyle='rgba(64,38,22,.34)';
-    g.beginPath(); g.ellipse(cx,cy-open*1.05,hw*1.25,open*0.72,0,0,6.283); g.fill();
+    g.fillStyle='rgba(64,38,22,.30)';
+    g.beginPath(); g.ellipse(cx,cy-open*1.18,hw*1.25,open*0.62,0,0,6.283); g.fill();
     g.restore();
     /* lash line: the darkest, hardest line on the face, which is what makes
        an eye still read when the head is only thirty pixels tall */
-    g.strokeStyle='rgba(20,13,9,'+(near?0.95:0.8)+')';
-    g.lineWidth=(near?1.05:0.85)+F.lash*0.55; g.lineCap='round';
+    g.strokeStyle='rgba(16,10,7,'+(near?0.98:0.84)+')';
+    g.lineWidth=(near?0.85:0.68)+F.lash*0.5; g.lineCap='round';
     g.beginPath();
     g.moveTo(cx-hw,cy);
     g.quadraticCurveTo(cx-hw*0.15,cy-open*1.55,cx+hw,cy-open*0.25);
@@ -2523,12 +2523,13 @@
     }
   }
   function faceEye(g,hx,hy,h,F){
-    /* socket shadows first, so the eyes sit in a skull */
-    g.fillStyle='rgba(92,56,32,.20)';
-    g.beginPath(); g.ellipse(hx+3.9,hy-1.5,3.5,2.5,-0.05,0,6.283); g.fill();
-    g.beginPath(); g.ellipse(hx-2.7,hy-1.8,2.9,2.3,0.05,0,6.283); g.fill();
-    oneEye(g,hx-2.7,hy-1.8,2.05,1.05,F,false);
-    oneEye(g,hx+3.9,hy-1.5,2.65,1.20,F,true);
+    /* Socket shadows first, so the eyes sit in a skull rather than on it.
+       Kept tight — a wide smudge is what made them look soft. */
+    g.fillStyle='rgba(92,56,32,.17)';
+    g.beginPath(); g.ellipse(hx+3.7,hy-1.6,2.9,1.9,-0.05,0,6.283); g.fill();
+    g.beginPath(); g.ellipse(hx-2.5,hy-1.8,2.4,1.75,0.05,0,6.283); g.fill();
+    oneEye(g,hx-2.5,hy-1.8,1.85,0.92,F,false);
+    oneEye(g,hx+3.7,hy-1.6,2.35,1.05,F,true);
   }
 
   /* the brows do most of the work of an expression, so there are two */
@@ -2575,97 +2576,118 @@
   /* A nose is a wedge with a lit ridge, a shadowed side, a ball at the tip
      and two nostrils. Drawn as one soft smudge it disappears, which is what
      it used to be. */
+  /* A nose sits in the middle third of a face and is about a fifth of its
+     width. The old one started at the brow and ran nearly to the mouth,
+     which is what made it look long and pasted on. */
   function faceNose(g,hx,hy,h,F,masked){
-    var top=masked?-1.2:-3.6;
-    var bx=hx+0.9;                       /* the bridge runs down the centre */
+    var top=masked?-0.6:-1.7;            /* starts between the eyes, not at the brow */
+    var bx=hx+0.9, base=hy+2.1;          /* and ends well clear of the lip */
     /* the shadowed side of the wedge */
-    g.fillStyle='rgba(94,54,29,.26)';
+    g.fillStyle='rgba(94,54,29,.22)';
     g.beginPath();
-    g.moveTo(bx-0.4,hy+top);
-    g.quadraticCurveTo(bx-1.9,hy+0.6,bx-2.2,hy+2.6);
-    g.lineTo(bx+1.3,hy+2.8);
-    g.quadraticCurveTo(bx+0.9,hy+0.4,bx+0.4,hy+top);
+    g.moveTo(bx-0.3,hy+top);
+    g.quadraticCurveTo(bx-1.3,hy+0.5,bx-1.7,base);
+    g.lineTo(bx+1.1,base+0.1);
+    g.quadraticCurveTo(bx+0.7,hy+0.3,bx+0.3,hy+top);
     g.closePath(); g.fill();
-    /* the lit ridge */
-    g.strokeStyle='rgba(255,250,234,.34)'; g.lineWidth=0.9; g.lineCap='round';
+    /* the lit ridge, short and soft */
+    g.strokeStyle='rgba(255,250,234,.30)'; g.lineWidth=0.8; g.lineCap='round';
     g.beginPath();
-    g.moveTo(bx+0.7,hy+Math.max(top,-2.0)); g.quadraticCurveTo(bx+1.2,hy+0.4,bx+1.4,hy+2.0);
+    g.moveTo(bx+0.6,hy+top+0.3); g.quadraticCurveTo(bx+1.0,hy+0.4,bx+1.1,base-0.4);
     g.stroke();
     /* the ball of the tip */
-    g.fillStyle='rgba(255,248,228,.55)';
-    g.beginPath(); g.ellipse(bx+0.8,hy+2.5,1.35,1.0,0,0,6.283); g.fill();
+    g.fillStyle='rgba(255,248,228,.48)';
+    g.beginPath(); g.ellipse(bx+0.6,base-0.1,1.05,0.75,0,0,6.283); g.fill();
     /* the shadow it throws onto the lip */
-    g.fillStyle='rgba(74,40,20,.34)';
-    g.beginPath(); g.ellipse(bx+0.3,hy+3.8,2.6,0.85,0.03,0,6.283); g.fill();
-    /* both nostrils — the pair is what makes it read as a nose */
-    g.fillStyle='rgba(44,23,12,.78)';
-    g.beginPath(); g.ellipse(bx-1.5,hy+3.1,0.62,0.40,0.34,0,6.283); g.fill();
-    g.beginPath(); g.ellipse(bx+2.2,hy+3.0,0.55,0.36,-0.30,0,6.283); g.fill();
-    /* the wings either side of them */
-    g.strokeStyle='rgba(94,54,29,.42)'; g.lineWidth=0.6;
-    g.beginPath(); g.arc(bx-1.4,hy+2.7,1.25,0.5,2.5); g.stroke();
-    g.beginPath(); g.arc(bx+2.1,hy+2.6,1.15,0.7,2.7); g.stroke();
+    g.fillStyle='rgba(74,40,20,.26)';
+    g.beginPath(); g.ellipse(bx+0.2,base+1.0,1.9,0.6,0.03,0,6.283); g.fill();
+    /* both nostrils, close together the way a real pair sit */
+    g.fillStyle='rgba(44,23,12,.72)';
+    g.beginPath(); g.ellipse(bx-1.05,base+0.45,0.46,0.30,0.34,0,6.283); g.fill();
+    g.beginPath(); g.ellipse(bx+1.65,base+0.38,0.42,0.28,-0.30,0,6.283); g.fill();
+    /* the wings either side */
+    g.strokeStyle='rgba(94,54,29,.36)'; g.lineWidth=0.55;
+    g.beginPath(); g.arc(bx-0.95,base+0.1,0.95,0.5,2.5); g.stroke();
+    g.beginPath(); g.arc(bx+1.6,base+0.02,0.88,0.7,2.7); g.stroke();
   }
 
-  /* A mouth is an upper lip in shadow, a lower lip catching light, a hard
-     line where they meet, and two corners set into the cheeks. */
+  /* A real upper lip is two lobes with a dip between them — a cupid's bow —
+     and the lower lip is a fuller, rounder shape that catches the light. The
+     old one was a single arc that read as a slot, and it sat too low for the
+     smaller head. */
   function faceMouth(g,hx,hy,h,F){
-    var mx=hx+1.0, full=(F.lips==='full'), thin=(F.lips==='thin');
-    var w=full?3.5:(thin?2.9:3.15);
-    var upH=full?1.35:(thin?0.85:1.05);
-    var loH=full?1.65:(thin?0.95:1.25);
-    var y=hy+5.4;
-    /* the philtrum above it */
-    g.strokeStyle='rgba(120,72,44,.26)'; g.lineWidth=0.6; g.lineCap='round';
-    g.beginPath(); g.moveTo(mx-0.1,y-2.4); g.lineTo(mx+0.1,y-1.0); g.stroke();
-    /* upper lip, always in shadow, with the dip in the middle */
-    g.fillStyle='rgba(150,84,64,'+(full?0.44:0.34)+')';
+    var mx=hx+0.9, full=(F.lips==='full'), thin=(F.lips==='thin');
+    var w=full?3.1:(thin?2.5:2.8);
+    var upH=full?1.1:(thin?0.7:0.88);
+    var loH=full?1.35:(thin?0.8:1.05);
+    var y=hy+4.9;
+
+    /* the philtrum, and the two ridges either side of it */
+    g.strokeStyle='rgba(120,72,44,.22)'; g.lineWidth=0.5; g.lineCap='round';
+    g.beginPath(); g.moveTo(mx-0.45,y-1.9); g.lineTo(mx-0.30,y-upH*0.7); g.stroke();
+    g.beginPath(); g.moveTo(mx+0.45,y-1.9); g.lineTo(mx+0.30,y-upH*0.7); g.stroke();
+
+    /* upper lip: two lobes with the bow between them */
+    g.fillStyle='rgba(158,92,72,'+(full?0.40:0.31)+')';
     g.beginPath();
-    g.moveTo(mx-w,y);
-    g.quadraticCurveTo(mx-w*0.5,y-upH,mx-0.15,y-upH*0.45);
-    g.quadraticCurveTo(mx+0.15,y-upH*0.9,mx+w*0.55,y-upH*0.7);
-    g.quadraticCurveTo(mx+w*0.9,y-upH*0.2,mx+w,y);
-    g.quadraticCurveTo(mx,y+0.5,mx-w,y);
+    g.moveTo(mx-w,y+0.10);
+    g.quadraticCurveTo(mx-w*0.62,y-upH*0.95,mx-w*0.26,y-upH*0.55);
+    g.quadraticCurveTo(mx,y-upH*0.12,mx+w*0.26,y-upH*0.55);
+    g.quadraticCurveTo(mx+w*0.62,y-upH*0.95,mx+w,y+0.10);
+    g.quadraticCurveTo(mx,y+0.42,mx-w,y+0.10);
     g.closePath(); g.fill();
-    /* lower lip, catching the light */
-    g.fillStyle='rgba(206,140,116,'+(full?0.58:0.44)+')';
+    /* a soft light along the top of the bow */
+    g.strokeStyle='rgba(255,226,206,.34)'; g.lineWidth=0.5;
     g.beginPath();
-    g.moveTo(mx-w*0.88,y+0.15);
-    g.quadraticCurveTo(mx,y+loH*1.5,mx+w*0.88,y+0.15);
-    g.quadraticCurveTo(mx,y+0.7,mx-w*0.88,y+0.15);
-    g.closePath(); g.fill();
-    g.strokeStyle='rgba(255,232,210,.55)'; g.lineWidth=0.7;
-    g.beginPath();
-    g.moveTo(mx-w*0.5,y+loH*0.95); g.quadraticCurveTo(mx+0.2,y+loH*1.25,mx+w*0.55,y+loH*0.8);
+    g.moveTo(mx-w*0.60,y-upH*0.80);
+    g.quadraticCurveTo(mx,y-upH*0.28,mx+w*0.60,y-upH*0.80);
     g.stroke();
-    /* the line where the lips meet — the hardest edge in the lower face,
-       and the one that carries the expression */
-    g.strokeStyle='rgba(80,36,24,.82)'; g.lineWidth=0.9; g.lineCap='round';
+
+    /* lower lip: rounder and fuller, lit from above */
+    var lg3=g.createLinearGradient(0,y+0.2,0,y+loH*1.6);
+    lg3.addColorStop(0,'rgba(196,124,102,'+(full?0.50:0.38)+')');
+    lg3.addColorStop(0.55,'rgba(214,148,126,'+(full?0.46:0.34)+')');
+    lg3.addColorStop(1,'rgba(168,96,74,'+(full?0.34:0.24)+')');
+    g.fillStyle=lg3;
+    g.beginPath();
+    g.moveTo(mx-w*0.86,y+0.18);
+    g.quadraticCurveTo(mx,y+loH*1.55,mx+w*0.86,y+0.18);
+    g.quadraticCurveTo(mx,y+0.62,mx-w*0.86,y+0.18);
+    g.closePath(); g.fill();
+    /* the highlight that makes a lip look soft rather than painted */
+    g.strokeStyle='rgba(255,236,216,.52)'; g.lineWidth=0.62;
+    g.beginPath();
+    g.moveTo(mx-w*0.42,y+loH*0.88);
+    g.quadraticCurveTo(mx+0.1,y+loH*1.16,mx+w*0.46,y+loH*0.74);
+    g.stroke();
+
+    /* the line where the lips meet, carrying the expression */
+    g.strokeStyle='rgba(86,40,28,.78)'; g.lineWidth=0.8; g.lineCap='round';
     g.beginPath();
     if(F.mood==='smirk'){
-      g.moveTo(mx-w,y+0.5); g.quadraticCurveTo(mx,y+0.3,mx+w,y-0.9);
+      g.moveTo(mx-w,y+0.42); g.quadraticCurveTo(mx,y+0.30,mx+w,y-0.70);
     }else if(F.mood==='grim'){
-      g.moveTo(mx-w,y-0.2); g.quadraticCurveTo(mx,y+0.9,mx+w,y-0.2);
+      g.moveTo(mx-w,y-0.14); g.quadraticCurveTo(mx,y+0.76,mx+w,y-0.14);
     }else if(F.mood==='snarl'){
-      g.moveTo(mx-w,y+0.6); g.quadraticCurveTo(mx,y-0.8,mx+w,y+0.6);
+      g.moveTo(mx-w,y+0.50); g.quadraticCurveTo(mx,y-0.62,mx+w,y+0.50);
     }else{
-      g.moveTo(mx-w,y+0.1); g.quadraticCurveTo(mx,y+0.55,mx+w,y+0.1);
+      g.moveTo(mx-w,y+0.10); g.quadraticCurveTo(mx,y+0.46,mx+w,y+0.10);
     }
     g.stroke();
     if(F.mood==='snarl'){
-      g.fillStyle='rgba(250,248,242,.9)';
+      g.fillStyle='rgba(250,248,242,.88)';
       g.beginPath();
-      g.moveTo(mx-w*0.7,y+0.1); g.lineTo(mx+w*0.7,y+0.1);
-      g.lineTo(mx+w*0.6,y+1.0); g.lineTo(mx-w*0.6,y+1.0);
+      g.moveTo(mx-w*0.66,y+0.06); g.lineTo(mx+w*0.66,y+0.06);
+      g.lineTo(mx+w*0.56,y+0.82); g.lineTo(mx-w*0.56,y+0.82);
       g.closePath(); g.fill();
     }
     /* the corners, set back into the cheek */
-    g.fillStyle='rgba(90,44,28,.42)';
-    g.beginPath(); g.arc(mx-w,y+0.2,0.55,0,6.283); g.fill();
-    g.beginPath(); g.arc(mx+w,y+0.1,0.55,0,6.283); g.fill();
+    g.fillStyle='rgba(90,44,28,.36)';
+    g.beginPath(); g.arc(mx-w,y+0.18,0.44,0,6.283); g.fill();
+    g.beginPath(); g.arc(mx+w,y+0.10,0.44,0,6.283); g.fill();
     /* the shadow under the lower lip that seats the chin */
-    g.fillStyle='rgba(96,54,32,.26)';
-    g.beginPath(); g.ellipse(mx,y+loH*1.9,w*0.66,0.7,0,0,6.283); g.fill();
+    g.fillStyle='rgba(96,54,32,.22)';
+    g.beginPath(); g.ellipse(mx,y+loH*1.85,w*0.62,0.55,0,0,6.283); g.fill();
     /* and the shadow the jaw throws onto the neck */
     g.fillStyle='rgba(70,42,24,.20)';
     g.beginPath(); g.ellipse(hx-0.4,hy+9.2,5.0,1.6,0.05,0,6.283); g.fill();

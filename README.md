@@ -234,14 +234,16 @@ line, a lit lower lid and a crease. The lash line is the hardest, darkest
 line on the face on purpose — it is what still reads when the whole head is
 thirty pixels tall.
 
-The **nose** is a wedge: a shadowed side, a lit ridge, a ball at the tip, the
-shadow it throws onto the lip, both nostrils and the wings around them. Two
-nostrils rather than one is most of what makes it read as a nose.
+The **nose** sits in the middle third of the face, starting between the eyes
+rather than at the brow: a shadowed side, a short lit ridge, a ball at the
+tip, the shadow it throws onto the lip, and both nostrils close together the
+way a real pair sit. Two nostrils rather than one is most of what makes it
+read as a nose.
 
-The **mouth** is an upper lip in shadow with the dip in the middle, a lower
-lip catching light, a hard line where they meet carrying the expression, two
-corners set back into the cheek, a philtrum above and the shadow below that
-seats the chin.
+The **mouth** is an upper lip of two lobes with a cupid's bow between them,
+the ridges of the philtrum above it, a rounder lower lip shaded top to bottom
+with a highlight across it, a line where they meet carrying the expression,
+two corners set back into the cheek, and the shadow below that seats the chin.
 
 Around that, one anatomy engine draws jaw and cheekbone structure, an ear on
 the silhouette edge, paired brows, facial hair and age lines — and a table of
