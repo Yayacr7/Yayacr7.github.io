@@ -4,7 +4,7 @@ Things I'm making with Claude Code.
 
 ## Yahya.games.com — Skyforge Champions
 
-Thirty-four DC characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
+Forty-six characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
 and forge their armour into brighter and brighter finishes.
 
 **To play:** open `index.html` in any web browser.
@@ -31,9 +31,19 @@ is mid-animation or on cooldown it is buffered and fires the moment they are
 free, and a move you cannot afford falls back to a plain strike rather than
 being swallowed. Mashing a button is never a dead input.
 
+### Arenas
+
+Six places to fight, chosen on the home screen. Each has its own sky ramp,
+light source, cloud tint and deck colours:
+
+**Sky Arena** above the clouds · **Metropolis** rooftops at noon ·
+**Gotham City** after dark, stars and a cold moon over a lit skyline ·
+**Themyscira** on the Amazon coast at sunset · **Apokolips**, a burning red
+sky over the fire pits · **The Watchtower** in orbit, with Earth below.
+
 ### The roster
 
-Thirty-four DC characters, each drawn to their own costume. This is not every
+Forty-six characters, each drawn to their own costume. This is not every
 DC character — DC has thousands, and each one here is hand-written drawing
 code — but it covers the Justice League, the Bat-family, and a bench of
 villains.
@@ -185,3 +195,25 @@ The torso is clipped and shaded on top of its base gradient: a shadow under the
 collar, two pectorals with a highlight on the lit one, a centre seam down to
 the waist, two rib lines, and a soft shadow along the flank facing away from
 the sun.
+
+### Levelling
+
+Levels matter a great deal now. Each one adds 16% to every stat (up from 11%),
+and it no longer stops at raw numbers:
+
+- **Super moves** gain 3% damage per level, so a signature move on a level 30
+  champion hits close to twice as hard as at level 1.
+- **Traits** sharpen by 2.2% per level, so Hulk's rage, Wolverine's healing and
+  Batman's intellect all grow with him.
+
+Experience requirements are gentler, bouts pay about a third more experience,
+and training costs less, so a champion climbs at a satisfying pace.
+
+### Performance
+
+The arena sky — gradient, sun, light shafts, stars, skyline and haze — is
+painted once into an offscreen canvas and blitted each frame, rather than
+being rebuilt sixty times a second. Roster portraits are painted once each and
+only the selected champion keeps animating, and they stop entirely during a
+fight. The fine per-limb shading is limited to the large arena figures. A
+fight now runs at a steady 59 fps.

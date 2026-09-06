@@ -144,6 +144,15 @@
     color:var(--gold);flex:none}
   .price i{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 32% 30%,#FFF0B8,#F7C948 46%,#A87A08)}
   .fight{width:100%}
+  .arenas{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(148px,1fr))}
+  .arena{font:inherit;cursor:pointer;text-align:left;color:var(--ice);overflow:hidden;
+    background:var(--panel);border:2px solid var(--edge);border-radius:12px;padding:0}
+  .arena canvas{display:block;width:100%;aspect-ratio:16/7;background:#0B1220}
+  .arena .t{display:block;padding:7px 10px 2px;font-family:"Saira Condensed",sans-serif;
+    font-weight:800;font-size:.86rem;text-transform:uppercase;line-height:1.05}
+  .arena .w{display:block;padding:0 10px 8px;font-size:.68rem;color:var(--dim)}
+  .arena.on{border-color:var(--gold);box-shadow:0 0 0 3px rgba(247,201,72,.2)}
+  .arena.on .t{color:var(--gold)}
   .skins{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
   .skin{position:relative;font:inherit;cursor:pointer;text-align:left;color:var(--ice);
     background:var(--panel);border:2px solid var(--edge);border-radius:12px;padding:8px;
@@ -183,7 +192,7 @@
     <p class="brand">Yahya<span>.games</span><b>.com</b></p>
     <p class="eyebrow">Sky arena &middot; High noon</p>
     <h1>Skyforge Champions</h1>
-    <p class="sub">Thirty-four DC characters fight on a sunlit platform above the clouds. Win bouts to earn credits and experience, level your champions up, and forge their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
+    <p class="sub">Forty-six characters from DC, Marvel and the X-Men fight across six arenas. Win bouts to earn credits and experience, level your champions up, and forge their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
   </header>
 
   <div class="topbar">
@@ -224,6 +233,11 @@
     <section class="sec">
       <h3>Your champions</h3>
       <div class="roster" id="roster"></div>
+    </section>
+
+    <section class="sec" style="margin-top:14px">
+      <h3>Choose your arena</h3>
+      <div class="arenas" id="arenas"></div>
     </section>
 
     <section class="sec" style="margin-top:14px">
@@ -616,9 +630,17 @@
      trait:{name:'God of Tyranny',kind:'power',v:0.24,desc:'+24% damage on every hit'},
      pow:36,tough:150,spd:0.74,superName:'Omega Beams',
      superDesc:'Two red beams that follow wherever they run',
-     skins:[SK({name:'Classic',suit:'#2E6EA8',suitLo:'#12385E',trim:'#C8A21C',trimLo:'#7A5E06',
+     skins:[
+       SK({name:'Classic',suit:'#2E6EA8',suitLo:'#12385E',trim:'#C8A21C',trimLo:'#7A5E06',
            leg:'#26597F',boot:'#123048',hair:'#3A4A56',
-           skin:'#8A9098',skinLo:'#4E545C',fore:'#8A9098',foreLo:'#4E545C'})]},
+           skin:'#8A9098',skinLo:'#4E545C',fore:'#8A9098',foreLo:'#4E545C'}),
+       SK({name:'Purple Tyrant',cost:11000,suit:'#5E2C96',suitLo:'#2C1150',trim:'#C8A21C',trimLo:'#7A5E06',
+           leg:'#4E2480',boot:'#2A1048',hair:'#3A2A56',
+           skin:'#8A7E98',skinLo:'#4E4460',fore:'#8A7E98',foreLo:'#4E4460'}),
+       SK({name:'Dread Sovereign',cost:26000,suit:'#3A1670',suitLo:'#1A0838',trim:'#E8503A',trimLo:'#8E2214',
+           leg:'#301058',boot:'#180628',hair:'#2A1A46',
+           skin:'#7E7290',skinLo:'#463C58',fore:'#7E7290',foreLo:'#463C58'})
+     ]},
     {id:'grundy',name:'Solomon Grundy',real:'Cyrus Gold',cls:'Born on a Monday',
      emblem:'none',head:'short',
      trait:{name:'Cannot Stay Dead',kind:'regen',v:3.4,desc:'Heals himself faster than anyone'},
@@ -627,6 +649,92 @@
      skins:[SK({name:'Classic',suit:'#3E3A34',suitLo:'#1C1A16',trim:'#6E6858',trimLo:'#332F28',
            leg:'#2A2822',boot:'#191712',hair:'#D8DCE0',
            skin:'#C6CBD2',skinLo:'#828892',fore:'#C6CBD2',foreLo:'#828892'})]},
+    {id:'spider',name:'Spider-Man',real:'Peter Parker',cls:'The Friendly Neighbour',
+     emblem:'spider',head:'flashmask',
+     trait:{name:'Spider-Sense',kind:'counter',v:0.38,desc:'Guarding often snaps straight into a counter'},
+     pow:24,tough:96,spd:1.34,superName:'Web Slam',
+     superDesc:'Webs them up and swings them into the floor',
+     skins:[SK({name:'Classic',suit:'#C8202C',suitLo:'#78101A',trim:'#1E48A8',trimLo:'#0C2060',
+           leg:'#1E48A8',boot:'#C8202C',hair:'#3A2412'})]},
+    {id:'ironman',name:'Iron Man',real:'Tony Stark',cls:'The Armoured Avenger',
+     emblem:'core',head:'domehelm',
+     trait:{name:'Mark Armour',kind:'tough',v:0.2,desc:'Takes 20% less damage from everything'},
+     pow:28,tough:126,spd:0.96,superName:'Unibeam',
+     superDesc:'Dumps the whole reactor into one beam',
+     skins:[SK({name:'Classic',suit:'#B01F22',suitLo:'#661012',trim:'#D8A82C',trimLo:'#8A6608',
+           leg:'#9E1A1E',boot:'#D8A82C',hair:'#2A1C10'})]},
+    {id:'cap',name:'Captain America',real:'Steve Rogers',cls:'The First Avenger',
+     emblem:'star',head:'domehelm',
+     trait:{name:'I Can Do This All Day',kind:'guardian',v:0.5,desc:'Guarding blocks far more than usual'},
+     pow:26,tough:130,spd:1.04,superName:'Shield Barrage',
+     superDesc:'The shield comes back off three walls',
+     skins:[SK({name:'Classic',suit:'#1E48A8',suitLo:'#0C2060',trim:'#E4E8F0',trimLo:'#98A2B2',
+           leg:'#1A3E92',boot:'#8A1418',hair:'#C8A868'})]},
+    {id:'thor',name:'Thor',real:'Thor Odinson',cls:'God of Thunder',
+     emblem:'none',head:'longhair',
+     trait:{name:'Worthy',kind:'power',v:0.22,desc:'+22% damage on every hit'},
+     pow:33,tough:134,spd:0.92,superName:'Call the Storm',
+     superDesc:'Pulls the lightning down through the hammer',
+     skins:[SK({name:'Classic',suit:'#2A3A56',suitLo:'#121A2A',trim:'#B8442C',trimLo:'#6A1E10',
+           cape:'#B8442C',capeLo:'#661808',leg:'#1E2A3E',boot:'#12181F',hair:'#C8A868',beard:true})]},
+    {id:'hulk',name:'Hulk',real:'Bruce Banner',cls:'The Strongest There Is',
+     emblem:'none',head:'short',
+     trait:{name:'Angrier',kind:'berserk',v:0.75,desc:'+75% damage once badly hurt'},
+     pow:38,tough:160,spd:0.68,superName:'Thunder Clap',
+     superDesc:'Claps once, and the air does the rest',
+     skins:[SK({name:'Classic',suit:'#5E2C96',suitLo:'#2C1150',trim:'#4A2278',trimLo:'#1E0C3E',
+           leg:'#5E2C96',boot:'#2C1150',hair:'#1E3A16',
+           skin:'#4EA83E',skinLo:'#256420',fore:'#4EA83E',foreLo:'#256420'})]},
+    {id:'panther',name:'Black Panther',real:"T'Challa",cls:'King of Wakanda',
+     emblem:'none',head:'catcowl',
+     trait:{name:'Vibranium Weave',kind:'tough',v:0.19,desc:'Takes 19% less damage from everything'},
+     pow:28,tough:112,spd:1.26,superName:'Kinetic Release',
+     superDesc:'Gives back every hit the suit absorbed, at once',
+     skins:[SK({name:'Classic',suit:'#141620',suitLo:'#07080D',trim:'#6E4EC4',trimLo:'#341E68',
+           leg:'#141620',boot:'#0A0B10',hair:'#0A0B10',fore:'#141620',foreLo:'#07080D'})]},
+    {id:'wolverine',name:'Wolverine',real:'James Howlett',cls:'The Best There Is',
+     emblem:'none',head:'catcowl',
+     trait:{name:'Healing Factor',kind:'regen',v:4.2,desc:'Heals faster than anyone alive'},
+     pow:31,tough:118,spd:1.16,superName:'Berserker Barrage',
+     superDesc:'Claws out, and no more thinking',
+     skins:[SK({name:'Classic',suit:'#E8C424',suitLo:'#96780A',trim:'#1E48A8',trimLo:'#0C2060',
+           leg:'#1E48A8',boot:'#8A6608',hair:'#2A1C10'})]},
+    {id:'cyclops',name:'Cyclops',real:'Scott Summers',cls:'Field Leader',
+     emblem:'none',head:'domino',
+     trait:{name:'Optic Precision',kind:'firststrike',v:2.2,desc:'His first hit of a fight is a critical'},
+     pow:27,tough:100,spd:1.1,superName:'Full Optic Blast',
+     superDesc:'Visor open, everything in the way gone',
+     skins:[SK({name:'Classic',suit:'#1E48A8',suitLo:'#0C2060',trim:'#E8C424',trimLo:'#96780A',
+           leg:'#1A3E92',boot:'#E8C424',hair:'#5A3418'})]},
+    {id:'storm',name:'Storm',real:'Ororo Munroe',cls:'The Weather Goddess',
+     emblem:'none',head:'longhair',
+     trait:{name:'Riding the Wind',kind:'charge',v:0.5,desc:'Meter charges 50% faster'},
+     pow:29,tough:98,spd:1.18,superName:'Hurricane',
+     superDesc:'Calls a storm down inside the arena',
+     skins:[SK({name:'Classic',suit:'#141620',suitLo:'#07080D',trim:'#C8CDD8',trimLo:'#7A8090',
+           cape:'#1A1D28',capeLo:'#0A0C12',leg:'#141620',boot:'#0A0B10',hair:'#EFF2F6',
+           skin:'#8A5E3E',skinLo:'#563820',fore:'#8A5E3E',foreLo:'#563820'})]},
+    {id:'magneto',name:'Magneto',real:'Erik Lehnsherr',cls:'Master of Magnetism',
+     emblem:'none',head:'domehelm',
+     trait:{name:'Magnetic Field',kind:'guardian',v:0.52,desc:'Guarding blocks far more than usual'},
+     pow:32,tough:120,spd:0.9,superName:'Iron Storm',
+     superDesc:'Every scrap of metal in the arena, at once',
+     skins:[SK({name:'Classic',suit:'#8E1A2A',suitLo:'#4A0A14',trim:'#5E2C96',trimLo:'#2C1150',
+           cape:'#5E2C96',capeLo:'#2C1150',leg:'#7A1622',boot:'#4A0A14',hair:'#E4E8F0'})]},
+    {id:'deadpool',name:'Deadpool',real:'Wade Wilson',cls:'The Merc with a Mouth',
+     emblem:'none',head:'flashmask',
+     trait:{name:'Cannot Die',kind:'regen',v:3.8,desc:'Puts himself back together mid-fight'},
+     pow:29,tough:104,spd:1.22,superName:'Maximum Effort',
+     superDesc:'Two katanas and absolutely no plan',
+     skins:[SK({name:'Classic',suit:'#B01F22',suitLo:'#661012',trim:'#141620',trimLo:'#07080D',
+           leg:'#141620',boot:'#0A0B10',hair:'#2A1C10'})]},
+    {id:'venom',name:'Venom',real:'Eddie Brock',cls:'The Symbiote',
+     emblem:'spider',head:'flashmask',
+     trait:{name:'Symbiote',kind:'double',v:0.24,desc:'24% chance every strike lands twice'},
+     pow:34,tough:138,spd:1.0,superName:'Tendril Frenzy',
+     superDesc:'The suit stops asking permission',
+     skins:[SK({name:'Classic',suit:'#121319',suitLo:'#050609',trim:'#E8ECF2',trimLo:'#9AA2AE',
+           leg:'#121319',boot:'#070810',hair:'#050609',fore:'#121319',foreLo:'#050609'})]},
     {id:'lex',name:'Lex Luthor',real:'Alexander Luthor',cls:'The Smartest Man Alive',
      emblem:'core',head:'bald',
      trait:{name:'Twelfth Level Intellect',kind:'iq',v:0.6,desc:'Reads his opponent — see the Intellect bar'},
@@ -691,12 +799,12 @@
       hair:sk.hair,trunks:sk.trunks,superName:h.superName,trait:h.trait};
   }
   function stats(h){
-    var p=prog(h), t=TIERS[p.tier].mul, g=1+(p.lvl-1)*0.11;
-    return {pow:Math.round(h.pow*g*t), tough:Math.round(h.tough*g*t*HP_SCALE), spd:+(h.spd*(1+(p.lvl-1)*0.012)).toFixed(2)};
+    var p=prog(h), t=TIERS[p.tier].mul, g=1+(p.lvl-1)*0.16;
+    return {pow:Math.round(h.pow*g*t), tough:Math.round(h.tough*g*t*HP_SCALE), spd:+(h.spd*(1+(p.lvl-1)*0.016)).toFixed(2)};
   }
   function power(h){ var s=stats(h); return Math.round(s.pow*9+s.tough*0.8+s.spd*120); }
-  function xpNeed(lvl){ return Math.round(90*Math.pow(lvl,1.32)); }
-  function trainCost(h){ var p=prog(h); return Math.round(140*Math.pow(p.lvl,1.22)); }
+  function xpNeed(lvl){ return Math.round(78*Math.pow(lvl,1.24)); }
+  function trainCost(h){ var p=prog(h); return Math.round(120*Math.pow(p.lvl,1.16)); }
 
   /* ================= pose rig ================= */
   var JOINTS=['head','neck','pelvis','shF','elF','haF','shB','elB','haB','hiF','knF','ftF','hiB','knB','ftB'];
@@ -781,11 +889,13 @@
   /* ================= fighter ================= */
   function makeFighter(h,lvl,tier,facing,x,skinIdx){
     var p={lvl:lvl,tier:tier};
-    var t=TIERS[tier].mul, g=1+(lvl-1)*0.11;
+    var t=TIERS[tier].mul, g=1+(lvl-1)*0.16;
     var mx=Math.round(h.tough*g*t*HP_SCALE);
-    return {h:look(h,skinIdx),base:h,trait:h.trait||null,firstHit:true,
+    var tr=h.trait?{name:h.trait.name,kind:h.trait.kind,desc:h.trait.desc,
+      v:h.trait.v*(1+(lvl-1)*0.022)}:null;
+    return {h:look(h,skinIdx),base:h,trait:tr,firstHit:true,
       lvl:lvl,tier:tier,facing:facing,x:x,baseX:x,
-      pow:Math.round(h.pow*g*t),hp:mx,max:mx,spd:h.spd*(1+(lvl-1)*0.012),
+      pow:Math.round(h.pow*g*t),hp:mx,max:mx,spd:h.spd*(1+(lvl-1)*0.016),
       pose:clonePose(POSE.idle),anim:null,guard:false,meter:0,combo:0,comboT:0,
       cd:0,stun:0,lunge:0,flash:0,aiT:90,dead:false,ph:Math.random()*6.28,air:0,vAir:0,
       dx:0,leap:false,leapVX:0,buffer:null,iq:0,iqStep:0,isBrain:(h.trait&&h.trait.kind==='iq')};
@@ -815,7 +925,7 @@
   var clouds=[];
   function makeClouds(){
     clouds.length=0;
-    for(var i=0;i<26;i++){
+    for(var i=0;i<17;i++){
       var band=i<9?0:(i<18?1:2);
       var puffs=[],n=4+Math.floor(Math.random()*4);
       for(var j=0;j<n;j++) puffs.push({dx:(j-n/2)*26+(Math.random()-0.5)*16,dy:(Math.random()-0.5)*16,r:24+Math.random()*30});
@@ -826,38 +936,120 @@
   makeClouds();
   var SUN={x:812,y:98};
 
-  function drawSky(t){
-    var g=ctx.createLinearGradient(0,0,0,GY+70);
-    g.addColorStop(0,'#1C6FD0'); g.addColorStop(0.34,'#4FA1E8');
-    g.addColorStop(0.68,'#95CDF2'); g.addColorStop(1,'#DDF0FB');
-    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  /* Each arena is data: a sky ramp, where the light sits, what floats in the
+     sky, and the colours of the deck you fight on. */
+  var ARENAS=[
+    {id:'sky',name:'Sky Arena',where:'Above the clouds',
+     sky:['#1C6FD0','#4FA1E8','#95CDF2','#DDF0FB'],sun:{x:812,y:98,c:'255,228,150',r:330,core:'255,253,240'},
+     shafts:8,clouds:'day',haze:'236,246,253',
+     deck:{lo:'#6E6656',mid:'#565040',a:'#B8AD94',b:'#E4DCC4',c:'#FBF6E4',ring:'247,201,72'}},
+    {id:'metropolis',name:'Metropolis',where:'Rooftops at noon',
+     sky:['#1E64C8','#4E96E4','#9CCBF0','#E6F1FA'],sun:{x:240,y:86,c:'255,240,190',r:290,core:'255,255,248'},
+     shafts:5,clouds:'day',haze:'226,240,252',skyline:{c:'#8FA8C4',c2:'#B6C8DC',n:16},
+     deck:{lo:'#5E6470',mid:'#464C58',a:'#9AA4B4',b:'#C6CFDC',c:'#E6ECF4',ring:'79,168,245'}},
+    {id:'gotham',name:'Gotham City',where:'Rooftops after dark',
+     sky:['#080C1A','#111A34','#1E2A4E','#33405E'],sun:{x:790,y:96,c:'210,224,255',r:190,core:'238,244,255'},
+     shafts:0,clouds:'night',haze:'40,52,80',stars:true,skyline:{c:'#0E1424',c2:'#1A2338',n:20,lit:'247,201,72'},
+     deck:{lo:'#23262E',mid:'#171A20',a:'#3A3E48',b:'#4E5460',c:'#666D7A',ring:'247,201,72'}},
+    {id:'themyscira',name:'Themyscira',where:'The Amazon coast',
+     sky:['#2E4E9E','#7A6EC0','#E08A6E','#FFD3A0'],sun:{x:180,y:190,c:'255,190,120',r:340,core:'255,244,214'},
+     shafts:7,clouds:'dusk',haze:'250,222,196',sea:true,
+     deck:{lo:'#8A7E68','mid':'#6E6250',a:'#D6CBAE',b:'#F0E7CE',c:'#FFF8E6',ring:'232,180,48'}},
+    {id:'apokolips',name:'Apokolips',where:'The fire pits',
+     sky:['#1A0808','#4A1108','#8E2A06','#D8600E'],sun:{x:520,y:250,c:'255,120,30',r:400,core:'255,214,150'},
+     shafts:0,clouds:'ash',haze:'120,44,12',embers:true,
+     deck:{lo:'#2A1410',mid:'#180C0A',a:'#4A2A20',b:'#5E362A',c:'#7A4632',ring:'255,120,40'}},
+    {id:'watchtower',name:'The Watchtower',where:'In orbit',
+     sky:['#02030A','#050914','#0A1024','#101A34'],sun:null,
+     shafts:0,clouds:'none',haze:'20,30,60',stars:true,earth:true,
+     deck:{lo:'#2A3340',mid:'#182028',a:'#4E5A6A',b:'#6E7C8E',c:'#93A2B4',ring:'99,224,208'}}
+  ];
+  function arena(){ return ARENAS[Math.min(ARENAS.length-1,Math.max(0,save.arena||0))]; }
 
-    /* sun bloom */
-    var bg=ctx.createRadialGradient(SUN.x,SUN.y,8,SUN.x,SUN.y,330);
-    bg.addColorStop(0,'rgba(255,252,232,.95)');
-    bg.addColorStop(0.12,'rgba(255,240,180,.62)');
-    bg.addColorStop(0.4,'rgba(255,228,150,.22)');
-    bg.addColorStop(1,'rgba(255,228,150,0)');
-    ctx.fillStyle=bg; ctx.beginPath(); ctx.arc(SUN.x,SUN.y,330,0,6.283); ctx.fill();
+  var skyCache=null, skyCacheId='';
+  function buildSky(){
+    var A=arena();
+    var c=document.createElement('canvas'); c.width=W; c.height=H;
+    var q=c.getContext('2d');
+    var g=q.createLinearGradient(0,0,0,GY+70);
+    g.addColorStop(0,A.sky[0]); g.addColorStop(0.34,A.sky[1]);
+    g.addColorStop(0.68,A.sky[2]); g.addColorStop(1,A.sky[3]);
+    q.fillStyle=g; q.fillRect(0,0,W,H);
 
-    /* light shafts */
-    ctx.save();
-    ctx.globalCompositeOperation='lighter';
-    ctx.translate(SUN.x,SUN.y);
-    for(var i=0;i<11;i++){
-      var a=i*0.571+ (reduce?0:t*0.0016);
-      ctx.save(); ctx.rotate(a);
-      var lg=ctx.createLinearGradient(0,0,600,0);
-      lg.addColorStop(0,'rgba(255,246,208,.13)'); lg.addColorStop(1,'rgba(255,246,208,0)');
-      ctx.fillStyle=lg;
-      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(600,-34); ctx.lineTo(600,34); ctx.closePath(); ctx.fill();
-      ctx.restore();
+    if(A.stars){
+      for(var st=0;st<150;st++){
+        var sx=Math.random()*W, sy=Math.random()*(GY-40), sr=Math.random()*1.3+0.3;
+        q.fillStyle='rgba(226,238,255,'+(0.25+Math.random()*0.65).toFixed(2)+')';
+        q.beginPath(); q.arc(sx,sy,sr,0,6.283); q.fill();
+      }
     }
-    ctx.restore();
+    if(A.earth){
+      var eg=q.createRadialGradient(190,470,20,190,470,320);
+      eg.addColorStop(0,'#3E86D8'); eg.addColorStop(0.55,'#1E4E96'); eg.addColorStop(1,'#0A1E44');
+      q.fillStyle=eg; q.beginPath(); q.arc(190,470,300,0,6.283); q.fill();
+      q.fillStyle='rgba(255,255,255,.18)';
+      q.beginPath(); q.ellipse(150,380,120,34,-0.4,0,6.283); q.fill();
+      q.beginPath(); q.ellipse(280,470,90,26,0.3,0,6.283); q.fill();
+    }
+    if(A.sun){
+      var bg=q.createRadialGradient(A.sun.x,A.sun.y,8,A.sun.x,A.sun.y,A.sun.r);
+      bg.addColorStop(0,'rgba('+A.sun.core+',.95)');
+      bg.addColorStop(0.12,'rgba('+A.sun.c+',.62)');
+      bg.addColorStop(0.4,'rgba('+A.sun.c+',.22)');
+      bg.addColorStop(1,'rgba('+A.sun.c+',0)');
+      q.fillStyle=bg; q.beginPath(); q.arc(A.sun.x,A.sun.y,A.sun.r,0,6.283); q.fill();
+      if(A.shafts>0){
+        q.save(); q.globalCompositeOperation='lighter'; q.translate(A.sun.x,A.sun.y);
+        for(var i=0;i<A.shafts;i++){
+          q.save(); q.rotate(i*(6.283/A.shafts));
+          var lg=q.createLinearGradient(0,0,600,0);
+          lg.addColorStop(0,'rgba('+A.sun.core+',.13)'); lg.addColorStop(1,'rgba('+A.sun.core+',0)');
+          q.fillStyle=lg;
+          q.beginPath(); q.moveTo(0,0); q.lineTo(600,-34); q.lineTo(600,34); q.closePath(); q.fill();
+          q.restore();
+        }
+        q.restore();
+      }
+      q.fillStyle='rgba('+A.sun.core+',.98)';
+      q.beginPath(); q.arc(A.sun.x,A.sun.y,A.id==='gotham'?26:34,0,6.283); q.fill();
+    }
+    if(A.sea){
+      var sg=q.createLinearGradient(0,GY-120,0,GY+40);
+      sg.addColorStop(0,'#2E6E9E'); sg.addColorStop(1,'#1A4A72');
+      q.fillStyle=sg; q.fillRect(0,GY-120,W,170);
+      q.fillStyle='rgba(255,214,170,.34)';
+      for(var w2=0;w2<26;w2++) q.fillRect(Math.random()*W,GY-116+Math.random()*100,26+Math.random()*60,2);
+    }
+    if(A.skyline){
+      var x2=0;
+      while(x2<W){
+        var bw=26+Math.random()*54, bh=70+Math.random()*180;
+        q.fillStyle=Math.random()<0.5?A.skyline.c:A.skyline.c2;
+        q.fillRect(x2,GY-bh,bw,bh);
+        if(A.skyline.lit){
+          q.fillStyle='rgba('+A.skyline.lit+',.5)';
+          for(var wy=GY-bh+10;wy<GY-12;wy+=15)
+            for(var wx=x2+5;wx<x2+bw-7;wx+=12)
+              if(Math.random()<0.35) q.fillRect(wx,wy,4,6);
+        }
+        x2+=bw+4+Math.random()*14;
+      }
+    }
+    var hz=q.createLinearGradient(0,GY-190,0,GY+30);
+    hz.addColorStop(0,'rgba('+A.haze+',0)'); hz.addColorStop(1,'rgba('+A.haze+',.8)');
+    q.fillStyle=hz; q.fillRect(0,GY-190,W,220);
+    return c;
+  }
 
-    /* sun core */
-    ctx.fillStyle='rgba(255,253,240,.98)';
-    ctx.beginPath(); ctx.arc(SUN.x,SUN.y,34,0,6.283); ctx.fill();
+  function drawSky(t){
+    var A=arena();
+    if(!skyCache||skyCacheId!==A.id){ skyCache=buildSky(); skyCacheId=A.id; }
+    ctx.drawImage(skyCache,0,0);
+    if(A.clouds==='none') return;
+    var tint=A.clouds==='night'?'62,74,102':(A.clouds==='ash'?'70,34,20':
+             (A.clouds==='dusk'?'255,214,180':'252,253,255'));
+    var shade=A.clouds==='night'?'22,28,44':(A.clouds==='ash'?'30,12,8':'150,186,220');
+    var crown=A.clouds==='night'?'90,104,140':(A.clouds==='ash'?'190,80,20':'255,250,226');
 
     /* clouds, lit from the sun side */
     for(var c=0;c<clouds.length;c++){
@@ -865,47 +1057,44 @@
       var cx=((cl.x-t*cl.sp)%1500+1500)%1500-260;
       ctx.save(); ctx.translate(cx,cl.y); ctx.scale(cl.s,cl.s);
       /* shaded underside */
-      ctx.fillStyle='rgba(150,186,220,'+(cl.a*0.5).toFixed(3)+')';
+      ctx.fillStyle='rgba('+shade+','+(cl.a*0.5).toFixed(3)+')';
       for(var p1=0;p1<cl.puffs.length;p1++){ var pf=cl.puffs[p1];
         ctx.beginPath(); ctx.arc(pf.dx,pf.dy+9,pf.r,0,6.283); ctx.fill(); }
       /* body */
-      ctx.fillStyle='rgba(252,253,255,'+cl.a.toFixed(3)+')';
+      ctx.fillStyle='rgba('+tint+','+cl.a.toFixed(3)+')';
       for(var p2=0;p2<cl.puffs.length;p2++){ var pg=cl.puffs[p2];
         ctx.beginPath(); ctx.arc(pg.dx,pg.dy,pg.r,0,6.283); ctx.fill(); }
       /* sunlit crown */
-      ctx.fillStyle='rgba(255,250,226,'+(cl.a*0.72).toFixed(3)+')';
+      ctx.fillStyle='rgba('+crown+','+(cl.a*0.72).toFixed(3)+')';
       for(var p3=0;p3<cl.puffs.length;p3++){ var ph=cl.puffs[p3];
         ctx.beginPath(); ctx.arc(ph.dx+7,ph.dy-8,ph.r*0.66,0,6.283); ctx.fill(); }
       ctx.restore();
     }
 
-    /* horizon haze */
-    var hz=ctx.createLinearGradient(0,GY-190,0,GY+30);
-    hz.addColorStop(0,'rgba(226,242,252,0)'); hz.addColorStop(1,'rgba(236,246,253,.82)');
-    ctx.fillStyle=hz; ctx.fillRect(0,GY-190,W,220);
   }
 
   function drawArena(){
-    /* the platform: warm stone, lit from upper right */
+    var A=arena();
+    /* the platform, coloured by the arena you chose */
     var cx=W/2, top=GY, w=430;
     ctx.save();
     /* under-glow haze */
     ctx.fillStyle='rgba(160,196,224,.5)';
     ctx.beginPath(); ctx.ellipse(cx,top+24,w+62,40,0,0,6.283); ctx.fill();
     /* thickness */
-    ctx.fillStyle='#6E6656';
+    ctx.fillStyle=A.deck.lo;
     ctx.beginPath(); ctx.ellipse(cx,top+22,w,40,0,0,6.283); ctx.fill();
-    ctx.fillStyle='#565040';
+    ctx.fillStyle=A.deck.mid;
     ctx.beginPath(); ctx.ellipse(cx,top+30,w-16,34,0,0,6.283); ctx.fill();
     /* deck */
     var dg=ctx.createLinearGradient(cx-w,top-30,cx+w,top+40);
-    dg.addColorStop(0,'#B8AD94'); dg.addColorStop(0.52,'#E4DCC4'); dg.addColorStop(1,'#FBF6E4');
+    dg.addColorStop(0,A.deck.a); dg.addColorStop(0.52,A.deck.b); dg.addColorStop(1,A.deck.c);
     ctx.fillStyle=dg;
     ctx.beginPath(); ctx.ellipse(cx,top,w,44,0,0,6.283); ctx.fill();
     /* inlaid rings */
     ctx.strokeStyle='rgba(120,110,88,.32)'; ctx.lineWidth=3;
     ctx.beginPath(); ctx.ellipse(cx,top,w-38,36,0,0,6.283); ctx.stroke();
-    ctx.strokeStyle='rgba(247,201,72,.5)'; ctx.lineWidth=5;
+    ctx.strokeStyle='rgba('+A.deck.ring+',.5)'; ctx.lineWidth=5;
     ctx.beginPath(); ctx.ellipse(cx,top,w-92,28,0,0,6.283); ctx.stroke();
     ctx.strokeStyle='rgba(120,110,88,.2)'; ctx.lineWidth=2;
     ctx.beginPath(); ctx.ellipse(cx,top,w-176,18,0,0,6.283); ctx.stroke();
@@ -1268,6 +1457,29 @@
           g.beginPath(); g.moveTo(d[0],d[1]-4.4); g.lineTo(d[0]+3.4,d[1]);
           g.lineTo(d[0],d[1]+4.4); g.lineTo(d[0]-3.4,d[1]); g.closePath(); g.fill();
         });
+      }else if(h.emblem==='spider'){
+        g.fillStyle=trimHi;
+        g.beginPath(); g.ellipse(0,1.4,3.2,4.6,0,0,6.283); g.fill();
+        g.beginPath(); g.ellipse(0,-4.6,2.4,2.6,0,0,6.283); g.fill();
+        g.strokeStyle=trimHi; g.lineWidth=1.5; g.lineCap='round';
+        for(var lg2=0;lg2<4;lg2++){
+          var ang=0.5+lg2*0.42;
+          g.beginPath(); g.moveTo(-2,-1); g.quadraticCurveTo(-8,-6+lg2*3,-11,-3+lg2*4.4); g.stroke();
+          g.beginPath(); g.moveTo(2,-1); g.quadraticCurveTo(8,-6+lg2*3,11,-3+lg2*4.4); g.stroke();
+        }
+      }else if(h.emblem==='star'){
+        g.fillStyle=trimHi;
+        g.beginPath(); g.arc(0,0,10,0,6.283); g.fill();
+        g.fillStyle=h.suit;
+        g.beginPath(); g.arc(0,0,7.6,0,6.283); g.fill();
+        g.fillStyle=trimHi;
+        g.beginPath();
+        for(var sp2=0;sp2<10;sp2++){
+          var r2=(sp2%2===0)?7:3, a2=-Math.PI/2+sp2*Math.PI/5;
+          if(sp2===0) g.moveTo(Math.cos(a2)*r2,Math.sin(a2)*r2);
+          else g.lineTo(Math.cos(a2)*r2,Math.sin(a2)*r2);
+        }
+        g.closePath(); g.fill();
       }else if(h.emblem==='gem'){
         g.fillStyle='#D8202F';
         g.beginPath(); g.moveTo(0,-8.4); g.lineTo(5.4,-1.4); g.lineTo(0,8.4); g.lineTo(-5.4,-1.4); g.closePath(); g.fill();
@@ -1726,7 +1938,7 @@
     if(win){
       p.wins++;
       cred=Math.round((110+foe.lvl*34)*(1+foe.tier*0.22));
-      xp=Math.round(70+foe.lvl*20);
+      xp=Math.round(95+foe.lvl*26);
     }else{
       cred=Math.round(28+foe.lvl*7); xp=Math.round(20+foe.lvl*6);
     }
@@ -1762,6 +1974,8 @@
 
   function hitLand(att,def,mul,kind){
     if(def.dead||att.dead) return;
+    /* signature moves grow with the champion, not just their raw stats */
+    if(kind==='special') mul*=1+(att.lvl-1)*0.03;
     /* Nocturne fights with his head: the longer he reads an opponent, the
        harder he hits, and a full read lands a predicted counter. */
     var brain=1, predicted=false;
@@ -2463,7 +2677,10 @@
     var guard=0;
     while(acc>=STEP&&guard<8){ update(); acc-=STEP; guard++; }
     if(guard>=8) acc=0;
-    render(); drawCards(); drawSkinCards();
+    render();
+    /* portraits are static art. Paint each once, keep only the selected one
+       breathing, and stop entirely during a fight. Biggest saving in the loop. */
+    if(screen==='home'&&(tick%4)===0){ drawCards(); drawSkinCards(); }
     if(screen==='fight'&&me){
       var sb=$('bSpecial');
       if(me.meter>=100){ sb.classList.add('ready'); sb.querySelector('small').textContent=me.h.superName; }
@@ -2497,15 +2714,18 @@
         save.sel=i; store();
         [].forEach.call(wrap.children,function(x,j){ x.className='card'+(j===i?' on':''); x.setAttribute('aria-pressed',String(j===i)); });
         tone(760,0.07,'triangle',0.035,1050);
-        buildSkins(); renderUI();
+        markCardsDirty(); buildSkins(); renderUI();
       });
       wrap.appendChild(b);
       var cc=c.getContext('2d'); cc.setTransform(2,0,0,2,0,0);
       cards.push({ctx:cc,h:h,lv:lv,pw:pw,pips:pips});
     });
   }
+  var skinDrawn={};
   function drawSkinCards(){
     for(var i=0;i<skinCards.length;i++){
+      if(skinDrawn[i]) continue;
+      skinDrawn[i]=1;
       var C=skinCards[i], g=C.ctx;
       g.clearRect(0,0,46,46);
       var sg=g.createLinearGradient(0,0,0,46);
@@ -2519,8 +2739,12 @@
     }
   }
 
+  var cardDrawn={};
+  function markCardsDirty(){ cardDrawn={}; skinDrawn={}; }
   function drawCards(){
     for(var i=0;i<cards.length;i++){
+      if(i!==save.sel&&cardDrawn[i]) continue;
+      cardDrawn[i]=1;
       var C=cards[i], g=C.ctx, h=C.h, p=prog(h);
       g.clearRect(0,0,130,130);
       var sg=g.createLinearGradient(0,0,0,130);
@@ -2540,10 +2764,51 @@
       g.restore();
     }
   }
+  var arenaCards=[];
+  function buildArenas(){
+    var wrap=$('arenas'); if(!wrap) return;
+    wrap.innerHTML=''; arenaCards.length=0;
+    ARENAS.forEach(function(A,i){
+      var b=document.createElement('button');
+      b.className='arena'+((save.arena||0)===i?' on':'');
+      var c=document.createElement('canvas'); c.width=320; c.height=140;
+      var t=document.createElement('span'); t.className='t'; t.textContent=A.name;
+      var w=document.createElement('span'); w.className='w'; w.textContent=A.where;
+      b.appendChild(c); b.appendChild(t); b.appendChild(w);
+      b.addEventListener('click',function(){
+        if(screen!=='home') return;
+        save.arena=i; store(); skyCache=null;
+        [].forEach.call(wrap.children,function(x,j){ x.className='arena'+(j===i?' on':''); });
+        tone(520,0.09,'triangle',0.04,760);
+        drawArenaCards();
+      });
+      wrap.appendChild(b);
+      arenaCards.push({ctx:c.getContext('2d'),i:i});
+    });
+    drawArenaCards();
+  }
+  /* each thumbnail is the real arena sky, scaled down and painted once */
+  function drawArenaCards(){
+    var keep=save.arena||0;
+    for(var k=0;k<arenaCards.length;k++){
+      var C=arenaCards[k], g=C.ctx;
+      save.arena=C.i;
+      var img=buildSky();
+      g.clearRect(0,0,320,140);
+      g.drawImage(img,0,0,W,GY+40,0,0,320,140);
+      var A=ARENAS[C.i];
+      g.fillStyle=A.deck.b;
+      g.beginPath(); g.ellipse(160,132,120,16,0,0,6.283); g.fill();
+      g.strokeStyle='rgba('+A.deck.ring+',.6)'; g.lineWidth=2;
+      g.beginPath(); g.ellipse(160,132,88,11,0,0,6.283); g.stroke();
+    }
+    save.arena=keep; skyCache=null;
+  }
+
   var skinCards=[];
   function buildSkins(){
     var h=HEROES[save.sel], p=prog(h), wrap=$('skins');
-    wrap.innerHTML=''; skinCards.length=0;
+    wrap.innerHTML=''; skinCards.length=0; skinDrawn={};
     $('vName').textContent=h.name;
     h.skins.forEach(function(sk,i){
       var owned=p.owned.indexOf(i)>=0;
@@ -2566,7 +2831,7 @@
           tone(320,0.28,'sawtooth',0.05,900);
           setTimeout(function(){tone(1180,0.26,'triangle',0.05,1600);},150);
         } else { tone(760,0.07,'triangle',0.035,1050); }
-        pp.skin=i; store(); me=null; buildSkins(); renderUI();
+        pp.skin=i; store(); me=null; markCardsDirty(); buildSkins(); renderUI();
       });
       wrap.appendChild(b);
       var cc=c.getContext('2d'); cc.setTransform(2,0,0,2,0,0);
@@ -2618,7 +2883,7 @@
     }
     $('owned').textContent=HEROES.length;
   }
-  buildRoster(); buildSkins(); renderUI();
+  buildRoster(); buildArenas(); buildSkins(); renderUI();
 
   function flashMsg(t){ $('msg').textContent=t; setTimeout(function(){ if($('msg').textContent===t) $('msg').textContent=''; },2600); }
 
@@ -2635,7 +2900,7 @@
     if(p.tier>=4) return;
     var c=FORGE_COST[p.tier];
     if(save.credits<c||p.lvl<FORGE_LVL[p.tier]) return;
-    save.credits-=c; p.tier++; store(); renderUI();
+    save.credits-=c; p.tier++; store(); markCardsDirty(); renderUI();
     me=null;
     flashMsg(h.name+' forged to '+TIERS[p.tier].name+'!');
     tone(300,0.3,'sawtooth',0.05,900);
