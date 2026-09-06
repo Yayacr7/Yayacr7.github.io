@@ -172,12 +172,41 @@ one in pays 1.7x credits and 1.45x experience.
 The troopers are kept out of the roster on purpose — they have no card, no
 versions and no missions. The only way to meet one is to put Lex on the ropes.
 
-### Superman's face
+### Faces
 
-Superman is drawn with a face of his own rather than the generic one every
-other character shares: jaw and cheekbone structure, an ear, an almond eye
-with a limbal ring and two catchlights, a lash line and crease, a low tapered
-brow, a nose drawn as a lit edge beside a shadow line, and two lips.
+Every character has a face of their own. One anatomy engine draws it — jaw
+and cheekbone structure, an ear on the silhouette edge, an almond eye with a
+limbal ring and two catchlights, a lash line and crease, a shaped brow, a
+nose drawn as a lit edge beside a shadow line, two lips, facial hair and age
+lines — and a table of 142 rows tells it what each character looks like:
+
+| | |
+| --- | --- |
+| iris colour | blue, brown, green, red, gold, white, or a lit glow |
+| brow | heavy, normal, thin, arched, angry |
+| jaw | square, oval, narrow |
+| lips | full, normal, thin |
+| facial hair | stubble, goatee, full beard, chin, moustache, mutton chops |
+| age | forehead lines and a fold from nose to mouth |
+| expression | set, grim, smirk, snarl |
+
+So Superman keeps his spit curl and square jaw, Batman gets the heavy brow
+and stubble under the cowl, Lex is bald with a thin brow and forehead lines,
+Thor and Aquaman have full beards, Tony Stark has the goatee, Wolverine has
+the mutton chops, and Cyclops, Darkseid, Ghost Rider and Sukuna have eyes
+that glow.
+
+Hair gets a hairline shadow onto the forehead, strands over the crown and a
+thin specular sweep, instead of being one flat colour.
+
+Headgear is drawn on top and says which parts of the face it hides, so a
+masked character still shows the jaw, nose and mouth underneath. The helmet
+worn by eight characters is a faceplate with two lit slits and a vent; the
+cowl slit is an eye shape in a shadowed band.
+
+These are stylised comic and anime faces drawn in code — every pixel is still
+canvas drawing with no images anywhere — but each character is recognisably
+themselves.
 
 **Heroes:** Superman, Batman, Wonder Woman, The Flash, Green Lantern, Cyborg,
 Aquaman, Shazam, Green Arrow, Supergirl, Batgirl, Nightwing, Robin, Martian

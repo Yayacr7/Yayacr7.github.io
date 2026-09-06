@@ -1941,6 +1941,479 @@
     }
   }
 
+  /* One row per character, set from how they look on screen. Anything left
+     out falls back to FACE_DEF, so a new character still gets a real face. */
+  var FACES={
+    /* --- DC --- */
+    superman:{eye:'#3F6489',brow:'heavy',jaw:'square',lips:'full'},
+    batman:{eye:'#4E6E8E',brow:'heavy',jaw:'square',lips:'thin',mood:'grim',beard:'stubble'},
+    wonderwoman:{eye:'#4A7A5E',brow:'arch',jaw:'oval',lips:'full',lash:1},
+    flash:{eye:'#3E6A96',brow:'norm',jaw:'oval'},
+    lantern:{eye:'#3A6E4E',brow:'norm',jaw:'square'},
+    cyborg:{eye:'#8E4A2E',brow:'heavy',jaw:'square',beard:'stubble'},
+    aquaman:{eye:'#3E7A8E',brow:'heavy',jaw:'square',beard:'full',mood:'grim'},
+    shazam:{eye:'#3E6A96',brow:'norm',jaw:'square',lips:'full',mood:'smirk'},
+    greenarrow:{eye:'#4A7A5E',brow:'norm',jaw:'narrow',beard:'goatee'},
+    supergirl:{eye:'#3F6489',brow:'arch',jaw:'oval',lips:'full',lash:1},
+    batgirl:{eye:'#4A7A5E',brow:'arch',jaw:'oval',lips:'full',lash:1},
+    nightwing:{eye:'#3E6A96',brow:'norm',jaw:'square',mood:'smirk'},
+    robin:{eye:'#4A6E5E',brow:'norm',jaw:'narrow'},
+    martian:{eye:'#C4202C',brow:'heavy',jaw:'square',glow:'rgba(255,60,60,.5)'},
+    hawkgirl:{eye:'#4A7A5E',brow:'arch',jaw:'oval',lips:'full',lash:1},
+    zatanna:{eye:'#3E5A82',brow:'arch',jaw:'oval',lips:'full',lash:1},
+    peacemaker:{eye:'#3E6A96',brow:'heavy',jaw:'square'},
+    raven:{eye:'#6E4A96',brow:'thin',jaw:'narrow',lips:'thin',lash:1},
+    starfire:{eye:'#2FA84C',brow:'arch',jaw:'oval',lips:'full',lash:1,glow:'rgba(90,240,130,.45)'},
+    beastboy:{eye:'#2FA84C',brow:'norm',jaw:'narrow',mood:'smirk'},
+    redhood:{eye:'#4A6E5E',brow:'heavy',jaw:'square',beard:'stubble'},
+    ivy:{eye:'#2FA84C',brow:'arch',jaw:'oval',lips:'full',lash:1},
+    freeze:{eye:'#7CE8FF',brow:'thin',jaw:'square',lips:'thin',age:0.5,glow:'rgba(120,230,255,.5)'},
+    riddler:{eye:'#3E7A4E',brow:'arch',jaw:'narrow',lips:'thin',mood:'smirk'},
+    darkseid:{eye:'#F04030',brow:'heavy',jaw:'square',mood:'grim',glow:'rgba(255,70,50,.6)'},
+    joker:{eye:'#3E6A4E',brow:'arch',jaw:'narrow',lips:'full'},
+    harley:{eye:'#3E6A96',brow:'arch',jaw:'oval',lips:'full',lash:1},
+    catwoman:{eye:'#3E7A5E',brow:'arch',jaw:'oval',lips:'full',lash:1},
+    deathstroke:{eye:'#3E6A96',brow:'heavy',jaw:'square',age:0.35},
+    bane:{eye:'#4A5E78',brow:'heavy',jaw:'square'},
+    blackadam:{eye:'#3A2A18',brow:'heavy',jaw:'square',beard:'stubble',mood:'grim'},
+    grundy:{eye:'#E8ECF2',brow:'heavy',jaw:'square',mood:'snarl',glow:'rgba(220,240,255,.35)'},
+    lex:{eye:'#4A6E5E',brow:'thin',jaw:'square',lips:'thin',age:0.3,mood:'smirk'},
+    twoface:{eye:'#3E6A96',brow:'heavy',jaw:'square',mood:'grim',age:0.3},
+    scarecrow:{eye:'#8A9098',brow:'thin',jaw:'narrow',lips:'thin'},
+    penguin:{eye:'#4A5E78',brow:'thin',jaw:'oval',beard:'mus',age:0.45},
+    stewart:{eye:'#3A2A18',brow:'heavy',jaw:'square',beard:'stubble'},
+    static:{eye:'#3A2A18',brow:'norm',jaw:'narrow',mood:'smirk'},
+    reverseflash:{eye:'#C4202C',brow:'angry',jaw:'narrow',mood:'snarl',glow:'rgba(255,60,60,.5)'},
+
+    /* --- Marvel and the X-Men --- */
+    ironman:{eye:'#4A3A2A',brow:'norm',jaw:'square',beard:'goatee',mood:'smirk'},
+    cap:{eye:'#3F6489',brow:'heavy',jaw:'square'},
+    thor:{eye:'#3F6489',brow:'heavy',jaw:'square',beard:'full'},
+    hulk:{eye:'#2FA84C',brow:'heavy',jaw:'square',mood:'snarl',glow:'rgba(90,240,120,.4)'},
+    spider:{eye:'#4A7A5E',brow:'norm',jaw:'narrow'},
+    strange:{eye:'#4A6E5E',brow:'arch',jaw:'narrow',beard:'goatee',age:0.3},
+    widow:{eye:'#3E7A5E',brow:'arch',jaw:'oval',lips:'full',lash:1},
+    hawkeye:{eye:'#4A6E5E',brow:'norm',jaw:'square',beard:'stubble'},
+    loki:{eye:'#3E7A5E',brow:'arch',jaw:'narrow',lips:'thin',mood:'smirk'},
+    thanos:{eye:'#3E5A82',brow:'heavy',jaw:'square',mood:'grim',age:0.3},
+    antman:{eye:'#4A6E5E',brow:'norm',jaw:'oval',mood:'smirk'},
+    wanda:{eye:'#4A3A2A',brow:'arch',jaw:'oval',lips:'full',lash:1,glow:'rgba(255,60,60,.4)'},
+    vision:{eye:'#F0C41E',brow:'norm',jaw:'square',glow:'rgba(255,210,80,.5)'},
+    ghostrider:{eye:'#F08A18',brow:'heavy',jaw:'square',glow:'rgba(255,150,30,.6)'},
+    surfer:{eye:'#E8ECF2',brow:'norm',jaw:'narrow',glow:'rgba(220,240,255,.45)'},
+    deadpool:{eye:'#3E6A96',brow:'norm',jaw:'oval',mood:'smirk'},
+    venom:{eye:'#F4F6FA',brow:'angry',jaw:'square',mood:'snarl',glow:'rgba(240,250,255,.4)'},
+    magneto:{eye:'#3E5A82',brow:'heavy',jaw:'square',age:0.55,mood:'grim'},
+    wolverine:{eye:'#4A6E5E',brow:'angry',jaw:'square',beard:'chops',mood:'snarl'},
+    storm:{eye:'#D8ECF8',brow:'arch',jaw:'oval',lips:'full',lash:1,glow:'rgba(200,235,255,.45)'},
+    jean:{eye:'#2FA84C',brow:'arch',jaw:'oval',lips:'full',lash:1},
+    cyclops:{eye:'#C4202C',brow:'heavy',jaw:'square',glow:'rgba(255,60,50,.55)'},
+    nightcrawler:{eye:'#F0C41E',brow:'arch',jaw:'narrow',mood:'smirk',glow:'rgba(255,210,90,.4)'},
+    rogue:{eye:'#3E7A5E',brow:'arch',jaw:'oval',lips:'full',lash:1},
+    beast:{eye:'#3E5A82',brow:'heavy',jaw:'square',beard:'full'},
+    gambit:{eye:'#C4202C',brow:'arch',jaw:'narrow',beard:'stubble',mood:'smirk',glow:'rgba(255,70,60,.4)'},
+
+    /* --- anime --- */
+    goku:{eye:'#3A2A18',brow:'norm',jaw:'square',mood:'smirk'},
+    vegeta:{eye:'#3A2A18',brow:'angry',jaw:'narrow',lips:'thin',mood:'grim'},
+    gohan:{eye:'#3A2A18',brow:'norm',jaw:'oval'},
+    piccolo:{eye:'#C4202C',brow:'angry',jaw:'square',mood:'grim',glow:'rgba(255,70,60,.4)'},
+    frieza:{eye:'#C4202C',brow:'thin',jaw:'narrow',lips:'thin',mood:'smirk',glow:'rgba(255,60,60,.5)'},
+    naruto:{eye:'#3EC4F2',brow:'norm',jaw:'oval',mood:'smirk',glow:'rgba(90,200,255,.35)'},
+    sasuke:{eye:'#1A1E2A',brow:'angry',jaw:'narrow',lips:'thin',mood:'grim'},
+    kakashi:{eye:'#1A1E2A',brow:'norm',jaw:'narrow'},
+    ichigo:{eye:'#5E4428',brow:'angry',jaw:'square',mood:'grim'},
+    luffy:{eye:'#1A1E2A',brow:'norm',jaw:'oval',mood:'smirk'},
+    zoro:{eye:'#1A1E2A',brow:'angry',jaw:'square',mood:'grim'},
+    saitama:{eye:'#2A2A2A',brow:'thin',jaw:'oval',lips:'thin'},
+    tanjiro:{eye:'#8E2A18',brow:'norm',jaw:'oval',glow:'rgba(230,110,60,.3)'},
+    nezuko:{eye:'#E86A9E',brow:'arch',jaw:'oval',lips:'full',lash:1,glow:'rgba(255,130,180,.4)'},
+    zenitsu:{eye:'#F0C41E',brow:'arch',jaw:'oval',glow:'rgba(255,220,90,.35)'},
+    levi:{eye:'#3E5A82',brow:'angry',jaw:'narrow',lips:'thin',mood:'grim'},
+    eren:{eye:'#3E7A6E',brow:'angry',jaw:'square',mood:'snarl'},
+    mikasa:{eye:'#1A1E2A',brow:'angry',jaw:'oval',lips:'thin',lash:1,mood:'grim'},
+    edward:{eye:'#F0C41E',brow:'angry',jaw:'narrow',mood:'smirk'},
+    gon:{eye:'#3E7A4E',brow:'norm',jaw:'oval',mood:'smirk'},
+    killua:{eye:'#3EC4F2',brow:'norm',jaw:'narrow',mood:'smirk'},
+    allmight:{eye:'#3E5A82',brow:'heavy',jaw:'square',mood:'smirk'},
+    deku:{eye:'#2FA84C',brow:'norm',jaw:'oval'},
+    bakugo:{eye:'#C4202C',brow:'angry',jaw:'square',mood:'snarl',glow:'rgba(255,80,50,.4)'},
+    todoroki:{eye:'#3EC4F2',brow:'norm',jaw:'square',lips:'thin'},
+    gojo:{eye:'#3EC4F2',brow:'arch',jaw:'narrow',mood:'smirk',glow:'rgba(120,220,255,.5)'},
+    yuji:{eye:'#8E4A2E',brow:'norm',jaw:'square',mood:'smirk'},
+    sukuna:{eye:'#C4202C',brow:'angry',jaw:'square',mood:'snarl',glow:'rgba(255,70,60,.5)'},
+    meliodas:{eye:'#3E7A4E',brow:'norm',jaw:'oval',mood:'smirk'},
+    asta:{eye:'#3E7A4E',brow:'angry',jaw:'oval',mood:'snarl'},
+    denji:{eye:'#F0C41E',brow:'norm',jaw:'oval',mood:'smirk'},
+    inuyasha:{eye:'#F0C41E',brow:'angry',jaw:'square',mood:'snarl',glow:'rgba(255,210,90,.35)'},
+    yusuke:{eye:'#5E3A20',brow:'angry',jaw:'square',mood:'smirk'},
+    jotaro:{eye:'#3E5A82',brow:'angry',jaw:'square',lips:'thin',mood:'grim'},
+    dio:{eye:'#C4202C',brow:'angry',jaw:'square',mood:'smirk',glow:'rgba(255,70,60,.45)'},
+    kenshin:{eye:'#8E4A6E',brow:'norm',jaw:'narrow',lips:'thin'},
+    guts:{eye:'#3A2A18',brow:'angry',jaw:'square',beard:'stubble',mood:'snarl',age:0.3},
+    sailormoon:{eye:'#3EC4F2',brow:'arch',jaw:'oval',lips:'full',lash:1},
+    kaneki:{eye:'#C4202C',brow:'norm',jaw:'narrow',lips:'thin',glow:'rgba(255,60,60,.45)'},
+    astroboy:{eye:'#1A1E2A',brow:'norm',jaw:'oval',mood:'smirk'},
+    broly:{eye:'#2FA84C',brow:'angry',jaw:'square',mood:'snarl',glow:'rgba(120,240,110,.4)'},
+    trunks:{eye:'#3E5A82',brow:'norm',jaw:'narrow'},
+    beerus:{eye:'#F0C41E',brow:'angry',jaw:'narrow',age:0.4,mood:'grim',glow:'rgba(255,215,80,.45)'},
+    cell:{eye:'#F0C41E',brow:'angry',jaw:'square',mood:'smirk',glow:'rgba(255,215,80,.4)'},
+    majinbuu:{eye:'#1A1E2A',brow:'thin',jaw:'oval',mood:'smirk'},
+    sakura:{eye:'#3E7A4E',brow:'arch',jaw:'oval',lips:'full',lash:1},
+    itachi:{eye:'#C4202C',brow:'norm',jaw:'narrow',lips:'thin',mood:'grim',glow:'rgba(255,70,60,.45)'},
+    madara:{eye:'#8E2A96',brow:'angry',jaw:'square',mood:'grim',glow:'rgba(190,90,255,.4)'},
+    rocklee:{eye:'#1A1E2A',brow:'heavy',jaw:'oval'},
+    rukia:{eye:'#5E4A8E',brow:'arch',jaw:'oval',lips:'thin',lash:1},
+    aizen:{eye:'#5E4428',brow:'thin',jaw:'square',lips:'thin',mood:'smirk'},
+    sanji:{eye:'#3E5A82',brow:'arch',jaw:'narrow',beard:'goatee',mood:'smirk'},
+    nami:{eye:'#8E5A2E',brow:'arch',jaw:'oval',lips:'full',lash:1,mood:'smirk'},
+    ace:{eye:'#1A1E2A',brow:'norm',jaw:'square',mood:'smirk'},
+    shanks:{eye:'#3A2A18',brow:'norm',jaw:'square',beard:'stubble',age:0.25,mood:'smirk'},
+    genos:{eye:'#F0C41E',brow:'norm',jaw:'square',glow:'rgba(255,210,80,.5)'},
+    inosuke:{eye:'#3EC4F2',brow:'angry',jaw:'square',mood:'snarl'},
+    rengoku:{eye:'#F0C41E',brow:'heavy',jaw:'square',mood:'smirk',glow:'rgba(255,200,70,.4)'},
+    muzan:{eye:'#C4202C',brow:'thin',jaw:'narrow',lips:'thin',mood:'grim',glow:'rgba(255,50,50,.5)'},
+    armin:{eye:'#3EC4F2',brow:'thin',jaw:'oval',lips:'thin'},
+    reiner:{eye:'#3E7A6E',brow:'heavy',jaw:'square',mood:'grim'},
+    alphonse:{eye:'#F0C41E',brow:'norm',jaw:'square',glow:'rgba(255,210,90,.55)'},
+    hisoka:{eye:'#F0C41E',brow:'arch',jaw:'narrow',lips:'full',mood:'smirk',glow:'rgba(255,200,90,.4)'},
+    kurapika:{eye:'#C4202C',brow:'norm',jaw:'oval',lips:'thin',glow:'rgba(255,70,60,.45)'},
+    uraraka:{eye:'#8E5A2E',brow:'arch',jaw:'oval',lips:'full',lash:1,mood:'smirk'},
+    shigaraki:{eye:'#C4202C',brow:'angry',jaw:'narrow',lips:'thin',mood:'snarl',glow:'rgba(255,60,50,.45)'},
+    megumi:{eye:'#3E5A82',brow:'angry',jaw:'narrow',lips:'thin',mood:'grim'},
+    nobara:{eye:'#8E5A2E',brow:'arch',jaw:'oval',lips:'full',lash:1,mood:'smirk'},
+    escanor:{eye:'#F0C41E',brow:'heavy',jaw:'square',beard:'mus',mood:'smirk',glow:'rgba(255,210,80,.45)'},
+    yami:{eye:'#3A2A18',brow:'angry',jaw:'square',beard:'stubble',mood:'snarl'},
+    sesshomaru:{eye:'#F0C41E',brow:'thin',jaw:'narrow',lips:'thin',mood:'grim',glow:'rgba(255,215,90,.4)'},
+    hiei:{eye:'#C4202C',brow:'angry',jaw:'narrow',lips:'thin',mood:'grim',glow:'rgba(255,60,60,.45)'},
+    giorno:{eye:'#3E7A4E',brow:'arch',jaw:'narrow',mood:'smirk'},
+    rimuru:{eye:'#F0C41E',brow:'arch',jaw:'oval',lips:'full',glow:'rgba(255,215,90,.4)'},
+    vash:{eye:'#3E7A4E',brow:'arch',jaw:'narrow',mood:'smirk'},
+    spike:{eye:'#5E3A20',brow:'norm',jaw:'narrow',lips:'thin',mood:'smirk'},
+    lexguard:{eye:'#4A5E78',brow:'heavy',jaw:'square'}
+  };
+
+  /* ================= faces =================
+     Every character's face comes out of the same anatomy engine and is told
+     apart by one row of data: iris colour, brow shape, jaw shape, lips,
+     facial hair, age and expression, set to match how that character looks
+     on screen. Headgear is drawn over the top and declares which parts of
+     the face it hides. */
+  var FACE_DEF={eye:'#4A5E78',brow:'norm',jaw:'oval',lips:'norm',
+                beard:'none',age:0,mood:'set',glow:null,lash:0};
+  function faceOf(h){
+    var o=FACES[h.id]||{}, r={};
+    for(var k in FACE_DEF) r[k]=(o[k]!==undefined)?o[k]:FACE_DEF[k];
+    return r;
+  }
+  /* what each piece of headgear leaves showing */
+  var FV_ALL={eyes:1,brow:1,nose:1,mouth:1,beard:1,ear:1,form:1};
+  var FACEVIS={
+    cowl:      {eyes:0,brow:0,nose:1,mouth:1,beard:1,ear:0,form:1},
+    flashmask: {eyes:0,brow:0,nose:1,mouth:1,beard:0,ear:0,form:1},
+    helmet:    {eyes:0,brow:0,nose:0,mouth:0,beard:0,ear:0,form:0},
+    glassdome: {eyes:1,brow:1,nose:1,mouth:1,beard:0,ear:0,form:1},
+    domehelm:  {eyes:0,brow:0,nose:0,mouth:0,beard:0,ear:0,form:0},
+    blindfold: {eyes:0,brow:0,nose:1,mouth:1,beard:0,ear:0,form:1},
+    boarmask:  {eyes:0,brow:0,nose:0,mouth:0,beard:0,ear:0,form:0},
+    omegahelm: {eyes:0,brow:0,nose:1,mouth:1,beard:0,ear:0,form:1},
+    skull:     {eyes:0,brow:0,nose:0,mouth:0,beard:0,ear:0,form:0},
+    strokemask:{eyes:0,brow:0,nose:0,mouth:1,beard:0,ear:0,form:1},
+    hawkhelm:  {eyes:0,brow:0,nose:1,mouth:1,beard:0,ear:0,form:1},
+    luchador:  {eyes:0,brow:0,nose:0,mouth:1,beard:0,ear:0,form:1},
+    catcowl:   {eyes:0,brow:0,nose:1,mouth:1,beard:1,ear:0,form:1},
+    cyborg:    {eyes:0,brow:0,nose:1,mouth:1,beard:1,ear:0,form:1},
+    martian:   {eyes:0,brow:1,nose:0,mouth:1,beard:0,ear:0,form:1},
+    clown:     {eyes:1,brow:1,nose:1,mouth:0,beard:0,ear:1,form:1},
+    harley:    {eyes:1,brow:1,nose:1,mouth:0,beard:0,ear:1,form:1},
+    hood:      {eyes:0,brow:0,nose:0,mouth:1,beard:1,ear:0,form:1},
+    domino:    {eyes:0,brow:0,nose:1,mouth:1,beard:1,ear:1,form:1}
+  };
+  function faceVis(head){ return FACEVIS[head]||FV_ALL; }
+
+  /* Hair was a flat slab of one colour on every character. A hairline
+     shadow, a few strands and one specular sweep is the difference between
+     a wig and hair. */
+  var HAIRY={longhair:1,spiky:1,ponytail:1,braid:1,short:1,spitcurl:1,
+             blindfold:1,bandana:1,strawhat:1,peakcap:1,twoface:1,hood:0};
+  function hairSheen(g,hx,hy,h,head){
+    if(!HAIRY[head]) return;
+    /* a broad bright line reads as a headband, so keep the sheen close to
+       the hair's own colour and thin */
+    var lo=lerpHex(h.hair,'#000000',0.34), hi=lerpHex(h.hair,'#FFFFFF',0.20);
+    g.save();
+    g.beginPath(); g.ellipse(hx-0.4,hy-3.4,11.6,11.0,0,0,6.283); g.clip();
+    /* the hairline throws a shadow onto the forehead */
+    g.fillStyle='rgba(24,16,10,.22)';
+    g.beginPath(); g.ellipse(hx+0.6,hy-7.4,7.6,1.9,-0.05,0,6.283); g.fill();
+    /* strands following the crown */
+    g.strokeStyle=lo; g.lineWidth=0.9; g.lineCap='round';
+    for(var i=0;i<4;i++){
+      var off=-6.4+i*3.2;
+      g.beginPath();
+      g.moveTo(hx+off,hy-12.6);
+      g.quadraticCurveTo(hx+off-3.0,hy-8.4,hx+off-4.6,hy-3.4);
+      g.stroke();
+    }
+    /* one bright sweep where the sun catches it */
+    g.strokeStyle=hi; g.lineWidth=1.3;
+    g.beginPath();
+    g.moveTo(hx-5.0,hy-9.8); g.quadraticCurveTo(hx+0.6,hy-12.4,hx+5.8,hy-8.8);
+    g.stroke();
+    g.strokeStyle='rgba(255,255,255,.12)'; g.lineWidth=0.7;
+    g.beginPath();
+    g.moveTo(hx-4.0,hy-10.4); g.quadraticCurveTo(hx+0.6,hy-12.6,hx+4.8,hy-9.6);
+    g.stroke();
+    g.restore();
+  }
+
+  /* the ear, on the shaded side */
+  function faceEar(g,hx,hy,h){
+    /* on the silhouette edge, where a 3/4 view actually puts it */
+    g.fillStyle=lerpHex(h.skin,h.skinLo,0.35);
+    g.beginPath(); g.ellipse(hx-8.0,hy+0.6,1.5,2.5,0.16,0,6.283); g.fill();
+    g.fillStyle='rgba(96,58,34,.28)';
+    g.beginPath(); g.ellipse(hx-8.2,hy+0.8,0.7,1.3,0.16,0,6.283); g.fill();
+  }
+
+  /* bone structure: the jaw shape is what separates a Batman from a Robin */
+  function faceForm(g,hx,hy,h,F){
+    g.save();
+    g.beginPath(); g.ellipse(hx,hy,8.1,9.1,0.06,0,6.283); g.clip();
+    var sh=g.createLinearGradient(hx-9,hy,hx+7,hy);
+    sh.addColorStop(0,'rgba(96,58,34,.30)'); sh.addColorStop(1,'rgba(96,58,34,0)');
+    g.fillStyle=sh; g.fillRect(hx-10,hy-11,20,22);
+
+    var sq=(F.jaw==='square'), nar=(F.jaw==='narrow');
+    /* the jaw, and the light along the top of it */
+    g.fillStyle='rgba(92,54,32,'+(sq?0.17:0.12)+')';
+    g.beginPath(); g.ellipse(hx-2.4,hy+6.4,sq?6.0:(nar?4.6:5.4),sq?2.7:2.2,0.04,0,6.283); g.fill();
+    g.fillStyle='rgba(255,240,214,.22)';
+    g.beginPath(); g.ellipse(hx+3.0,hy+5.6,sq?2.9:2.3,1.5,-0.06,0,6.283); g.fill();
+    /* chin */
+    g.fillStyle='rgba(255,242,220,.18)';
+    g.beginPath(); g.ellipse(hx+2.6,hy+7.0,sq?2.3:1.7,1.2,0,0,6.283); g.fill();
+    if(sq){
+      g.strokeStyle='rgba(120,72,44,.20)'; g.lineWidth=0.7; g.lineCap='round';
+      g.beginPath(); g.moveTo(hx+2.2,hy+6.0); g.lineTo(hx+2.2,hy+7.2); g.stroke();
+    }
+    /* cheekbone, and the hollow under it on a lean face */
+    g.fillStyle='rgba(255,240,214,'+(nar?0.30:0.26)+')';
+    g.beginPath(); g.ellipse(hx+3.6,hy-0.6,3.4,2.0,-0.32,0,6.283); g.fill();
+    if(nar){
+      g.fillStyle='rgba(112,64,38,.13)';
+      g.beginPath(); g.ellipse(hx+2.0,hy+2.6,2.6,1.3,-0.1,0,6.283); g.fill();
+    }
+    /* brow ridge and forehead */
+    g.fillStyle='rgba(70,42,24,'+(F.brow==='heavy'?0.24:0.18)+')';
+    g.beginPath(); g.ellipse(hx+2.6,hy-4.4,5.6,1.6,-0.08,0,6.283); g.fill();
+    g.fillStyle='rgba(255,242,218,.15)';
+    g.beginPath(); g.ellipse(hx+2.6,hy-7.0,4.0,1.6,-0.06,0,6.283); g.fill();
+    /* age: a forehead line and a fold from the nose to the mouth */
+    if(F.age>0.05){
+      g.strokeStyle='rgba(96,56,32,'+(F.age*0.45).toFixed(2)+')'; g.lineWidth=0.7;
+      g.beginPath(); g.moveTo(hx-2.6,hy-6.4); g.quadraticCurveTo(hx+2.6,hy-7.4,hx+7.0,hy-6.0); g.stroke();
+      if(F.age>0.4){
+        g.beginPath(); g.moveTo(hx-2.0,hy-4.6); g.quadraticCurveTo(hx+2.6,hy-5.6,hx+6.6,hy-4.4); g.stroke();
+      }
+      g.beginPath(); g.moveTo(hx+2.4,hy+2.2); g.quadraticCurveTo(hx+1.8,hy+4.2,hx+2.8,hy+5.4); g.stroke();
+    }
+    g.restore();
+  }
+
+  /* the eye: almond, set into its socket, with a real iris */
+  function faceEye(g,hx,hy,h,F){
+    g.save();
+    g.beginPath();
+    g.moveTo(hx+3.0,hy-1.3);
+    g.quadraticCurveTo(hx+5.2,hy-3.2,hx+7.3,hy-1.5);
+    g.quadraticCurveTo(hx+5.3,hy+0.4,hx+3.0,hy-1.3);
+    g.closePath();
+    g.clip();
+    g.fillStyle='#F1ECE4'; g.fillRect(hx+2.4,hy-4,6,5.4);
+    g.fillStyle='rgba(150,128,116,.34)';
+    g.beginPath(); g.ellipse(hx+3.4,hy-1.4,1.3,1.4,0,0,6.283); g.fill();
+    var ig=g.createRadialGradient(hx+5.3,hy-2.0,0.2,hx+5.45,hy-1.5,1.35);
+    ig.addColorStop(0,lerpHex(F.eye,'#FFFFFF',0.45));
+    ig.addColorStop(0.6,F.eye);
+    ig.addColorStop(1,lerpHex(F.eye,'#000000',0.45));
+    g.fillStyle=ig;
+    g.beginPath(); g.arc(hx+5.45,hy-1.5,1.3,0,6.283); g.fill();
+    g.strokeStyle='rgba(14,22,34,.7)'; g.lineWidth=0.42;
+    g.beginPath(); g.arc(hx+5.45,hy-1.5,1.3,0,6.283); g.stroke();
+    g.fillStyle='#0E1119';
+    g.beginPath(); g.arc(hx+5.45,hy-1.5,0.56,0,6.283); g.fill();
+    g.fillStyle='rgba(255,255,255,.95)';
+    g.beginPath(); g.arc(hx+4.95,hy-2.05,0.46,0,6.283); g.fill();
+    g.fillStyle='rgba(255,255,255,.4)';
+    g.beginPath(); g.arc(hx+5.95,hy-0.95,0.26,0,6.283); g.fill();
+    g.fillStyle='rgba(70,42,26,.30)';
+    g.beginPath(); g.ellipse(hx+5.2,hy-3.3,3.0,1.4,0,0,6.283); g.fill();
+    g.restore();
+    /* lash line, lower lid and crease */
+    g.strokeStyle='rgba(28,18,12,'+(0.8+F.lash*0.2)+')';
+    g.lineWidth=0.95+F.lash*0.7; g.lineCap='round';
+    g.beginPath();
+    g.moveTo(hx+3.0,hy-1.35); g.quadraticCurveTo(hx+5.2,hy-3.3,hx+7.4,hy-1.6); g.stroke();
+    g.strokeStyle='rgba(255,236,208,.4)'; g.lineWidth=0.6;
+    g.beginPath();
+    g.moveTo(hx+3.4,hy-0.85); g.quadraticCurveTo(hx+5.3,hy+0.5,hx+7.2,hy-1.2); g.stroke();
+    g.strokeStyle='rgba(96,58,34,.28)'; g.lineWidth=0.6;
+    g.beginPath();
+    g.moveTo(hx+3.2,hy-2.5); g.quadraticCurveTo(hx+5.4,hy-4.1,hx+7.7,hy-2.5); g.stroke();
+    /* a lit iris for the ones whose eyes burn */
+    if(F.glow){
+      g.globalCompositeOperation='lighter';
+      var gg=g.createRadialGradient(hx+5.4,hy-1.5,0.4,hx+5.4,hy-1.5,4.4);
+      gg.addColorStop(0,F.glow); gg.addColorStop(1,'rgba(0,0,0,0)');
+      g.fillStyle=gg; g.beginPath(); g.arc(hx+5.4,hy-1.5,4.4,0,6.283); g.fill();
+      g.globalCompositeOperation='source-over';
+    }
+  }
+
+  /* the brow does most of the work of an expression */
+  function faceBrow(g,hx,hy,h,F){
+    var b=F.brow;
+    g.strokeStyle='rgba(30,19,11,'+(b==='thin'?0.62:0.8)+')'; g.lineCap='round';
+    if(b==='heavy'){
+      g.lineWidth=1.85;
+      g.beginPath(); g.moveTo(hx+2.4,hy-4.6); g.quadraticCurveTo(hx+4.8,hy-5.6,hx+6.5,hy-5.0); g.stroke();
+      g.lineWidth=1.05;
+      g.beginPath(); g.moveTo(hx+6.5,hy-5.0); g.quadraticCurveTo(hx+7.6,hy-4.7,hx+8.1,hy-3.9); g.stroke();
+    }else if(b==='thin'){
+      g.lineWidth=0.85;
+      g.beginPath(); g.moveTo(hx+2.8,hy-5.0); g.quadraticCurveTo(hx+5.2,hy-6.0,hx+8.0,hy-4.6); g.stroke();
+    }else if(b==='arch'){
+      g.lineWidth=1.15;
+      g.beginPath(); g.moveTo(hx+2.6,hy-4.8); g.quadraticCurveTo(hx+5.4,hy-6.6,hx+8.0,hy-4.4); g.stroke();
+    }else if(b==='angry'){
+      g.lineWidth=1.7;
+      g.beginPath(); g.moveTo(hx+2.2,hy-3.6); g.quadraticCurveTo(hx+5.2,hy-5.6,hx+8.0,hy-5.2); g.stroke();
+    }else{
+      g.lineWidth=1.45;
+      g.beginPath(); g.moveTo(hx+2.6,hy-4.7); g.quadraticCurveTo(hx+5.2,hy-5.7,hx+8.0,hy-4.4); g.stroke();
+    }
+  }
+
+  /* a nose reads as a lit edge beside a shadow line, never as a blob */
+  function faceNose(g,hx,hy,h,F,masked){
+    var top=masked?-0.4:-2.2;
+    g.strokeStyle='rgba(255,250,236,.6)'; g.lineWidth=1.1; g.lineCap='round';
+    g.beginPath();
+    g.moveTo(hx+4.3,hy+top); g.quadraticCurveTo(hx+5.1,hy-0.2,hx+5.2,hy+1.7); g.stroke();
+    g.strokeStyle='rgba(92,52,28,.45)'; g.lineWidth=0.85;
+    g.beginPath();
+    g.moveTo(hx+3.7,hy+top+0.4); g.quadraticCurveTo(hx+4.2,hy+0.1,hx+4.2,hy+1.9); g.stroke();
+    g.fillStyle='rgba(255,250,232,.55)';
+    g.beginPath(); g.arc(hx+5.0,hy+2.1,0.85,0,6.283); g.fill();
+    g.strokeStyle='rgba(78,44,24,.55)'; g.lineWidth=0.85;
+    g.beginPath();
+    g.moveTo(hx+3.4,hy+2.7); g.quadraticCurveTo(hx+4.6,hy+3.3,hx+5.7,hy+2.6); g.stroke();
+    g.fillStyle='rgba(52,28,15,.7)';
+    g.beginPath(); g.ellipse(hx+3.9,hy+2.6,0.48,0.32,0.28,0,6.283); g.fill();
+  }
+
+  /* two lips, and the line where they meet doing the expression */
+  function faceMouth(g,hx,hy,h,F){
+    var full=(F.lips==='full'), thin=(F.lips==='thin');
+    var up=full?4.0:(thin?4.3:4.1), dn=full?6.0:(thin?5.2:5.6);
+    g.fillStyle='rgba(140,74,56,'+(full?0.5:0.4)+')';
+    g.beginPath();
+    g.moveTo(hx+2.6,hy+4.5);
+    g.quadraticCurveTo(hx+4.6,hy+up,hx+6.8,hy+4.4);
+    g.quadraticCurveTo(hx+4.7,hy+4.8,hx+2.6,hy+4.5);
+    g.closePath(); g.fill();
+    g.strokeStyle='rgba(78,34,24,.92)'; g.lineWidth=1.15; g.lineCap='round';
+    g.beginPath();
+    if(F.mood==='smirk'){
+      g.moveTo(hx+2.7,hy+5.0); g.quadraticCurveTo(hx+4.9,hy+5.1,hx+7.0,hy+3.9);
+    }else if(F.mood==='grim'){
+      g.moveTo(hx+2.7,hy+4.4); g.quadraticCurveTo(hx+4.7,hy+5.3,hx+6.8,hy+4.7);
+    }else if(F.mood==='snarl'){
+      g.moveTo(hx+2.7,hy+5.0); g.quadraticCurveTo(hx+4.9,hy+3.9,hx+7.0,hy+4.9);
+    }else{
+      g.moveTo(hx+2.7,hy+4.6); g.quadraticCurveTo(hx+4.7,hy+5.0,hx+6.8,hy+4.4);
+    }
+    g.stroke();
+    if(F.mood==='snarl'){
+      g.fillStyle='rgba(250,248,242,.85)';
+      g.fillRect(hx+3.4,hy+4.2,3.2,0.9);
+    }
+    g.strokeStyle='rgba(255,226,204,.5)'; g.lineWidth=0.8;
+    g.beginPath();
+    g.moveTo(hx+3.2,hy+dn); g.quadraticCurveTo(hx+4.8,hy+dn+0.3,hx+6.4,hy+dn-0.3); g.stroke();
+    g.fillStyle='rgba(70,42,24,.20)';
+    g.beginPath(); g.ellipse(hx-0.8,hy+9.2,5.0,1.6,0.05,0,6.283); g.fill();
+  }
+
+  /* facial hair, in whatever colour that character's hair is */
+  function faceBeard(g,hx,hy,h,F){
+    var b=F.beard; if(b==='none') return;
+    var col=h.hair||'#141826';
+    if(b==='stubble'){
+      g.save();
+      g.beginPath(); g.ellipse(hx,hy,8.1,9.1,0.06,0,6.283); g.clip();
+      g.fillStyle='rgba(30,24,20,.22)';
+      g.beginPath();
+      g.moveTo(hx-7.6,hy+1.6);
+      g.quadraticCurveTo(hx-3.4,hy+9.6,hx+3.0,hy+9.4);
+      g.quadraticCurveTo(hx+8.0,hy+8.0,hx+8.6,hy+2.6);
+      g.lineTo(hx+8.6,hy+11); g.lineTo(hx-7.6,hy+11);
+      g.closePath(); g.fill();
+      g.restore();
+      return;
+    }
+    g.fillStyle=col;
+    if(b==='goatee'){
+      g.beginPath();
+      g.moveTo(hx+1.6,hy+4.0);
+      g.quadraticCurveTo(hx+0.6,hy+8.6,hx+3.2,hy+9.2);
+      g.quadraticCurveTo(hx+6.4,hy+8.4,hx+6.6,hy+3.8);
+      g.quadraticCurveTo(hx+4.2,hy+6.0,hx+1.6,hy+4.0);
+      g.closePath(); g.fill();
+      g.fillRect(hx+2.6,hy+3.2,4.6,1.3);
+    }else if(b==='chin'){
+      g.beginPath(); g.ellipse(hx+2.8,hy+7.4,2.4,1.9,0,0,6.283); g.fill();
+    }else if(b==='mus'){
+      g.beginPath();
+      g.moveTo(hx+2.0,hy+3.6); g.quadraticCurveTo(hx+4.8,hy+2.8,hx+7.4,hy+3.6);
+      g.quadraticCurveTo(hx+4.8,hy+4.8,hx+2.0,hy+3.6);
+      g.closePath(); g.fill();
+    }else if(b==='chops'){
+      g.beginPath();
+      g.moveTo(hx-7.6,hy-3.4); g.quadraticCurveTo(hx-9.0,hy+4.4,hx-4.4,hy+6.6);
+      g.quadraticCurveTo(hx-4.0,hy+1.0,hx-5.4,hy-3.0);
+      g.closePath(); g.fill();
+      g.beginPath();
+      g.moveTo(hx+6.4,hy-3.6); g.quadraticCurveTo(hx+8.8,hy+3.4,hx+5.2,hy+6.4);
+      g.quadraticCurveTo(hx+5.0,hy+0.6,hx+5.0,hy-3.2);
+      g.closePath(); g.fill();
+    }else{ /* full */
+      g.save();
+      /* kept inside the head, or it swallows the whole face */
+      g.beginPath(); g.ellipse(hx-0.4,hy+0.6,8.0,9.4,0.06,0,6.283); g.clip();
+      g.beginPath();
+      g.moveTo(hx-7.2,hy+1.2);
+      g.quadraticCurveTo(hx-6.0,hy+8.6,hx+1.0,hy+10.0);
+      g.quadraticCurveTo(hx+7.4,hy+8.2,hx+8.0,hy+1.0);
+      g.quadraticCurveTo(hx+5.6,hy+5.0,hx+2.6,hy+4.4);
+      g.quadraticCurveTo(hx-2.0,hy+5.4,hx-7.2,hy+1.2);
+      g.closePath(); g.fill();
+      g.fillStyle=lerpHex(col,'#FFFFFF',0.18);
+      g.beginPath();
+      g.moveTo(hx-1.0,hy+6.6); g.quadraticCurveTo(hx+2.2,hy+9.2,hx+5.6,hy+6.2);
+      g.quadraticCurveTo(hx+2.2,hy+7.8,hx-1.0,hy+6.6);
+      g.closePath(); g.fill();
+      g.restore();
+      /* a moustache over the top lip */
+      g.fillStyle=col;
+      g.beginPath();
+      g.moveTo(hx+1.6,hy+3.6); g.quadraticCurveTo(hx+4.6,hy+2.6,hx+7.6,hy+3.6);
+      g.quadraticCurveTo(hx+4.6,hy+4.8,hx+1.6,hy+3.6);
+      g.closePath(); g.fill();
+    }
+  }
+
   /* ================= fighter ================= */
   /* ---- Lex Luthor's Lexcorp security detail -------------------------
      A trooper is a fighter like any other, but it is deliberately kept
@@ -2944,173 +3417,137 @@
 
       if(PASS_INK) return;
 
-      /* ---- faces, colour pass only ---- */
-      /* form: brow ridge, cheekbone, jaw and the shaded side of the face */
-      var sh=g.createLinearGradient(hx-9,hy,hx+7,hy);
-      sh.addColorStop(0,'rgba(96,58,34,.30)'); sh.addColorStop(1,'rgba(96,58,34,0)');
-      g.save();
-      g.beginPath(); g.ellipse(hx,hy,8.1,9.1,0.06,0,6.283); g.clip();
-      g.fillStyle=sh; g.fillRect(hx-10,hy-11,20,22);
-      /* Superman paints his own bone structure below; everyone else gets
-         this generic set, and layering both just makes mud */
-      if(h.head!=='spitcurl'){
-        /* cheekbone catch-light on the sunward side */
-        g.fillStyle='rgba(255,236,206,.26)';
-        g.beginPath(); g.ellipse(hx+3.6,hy-0.4,3.6,2.4,-0.3,0,6.283); g.fill();
-        /* brow ridge shadow */
-        g.fillStyle='rgba(70,42,24,.24)';
-        g.beginPath(); g.ellipse(hx+2.4,hy-4.2,6,1.8,-0.08,0,6.283); g.fill();
-        /* jaw and chin */
-        g.fillStyle='rgba(96,58,34,.20)';
-        g.beginPath(); g.ellipse(hx-2.6,hy+5.4,5.6,2.8,0,0,6.283); g.fill();
-        g.fillStyle='rgba(255,236,206,.18)';
-        g.beginPath(); g.ellipse(hx+3.4,hy+5.2,2.2,1.4,0,0,6.283); g.fill();
-        /* nose: a bridge highlight and a shadow beneath it */
-        g.fillStyle='rgba(255,238,210,.22)';
-        g.beginPath(); g.ellipse(hx+4.4,hy-0.6,1.3,3,0.18,0,6.283); g.fill();
-        g.fillStyle='rgba(84,50,28,.26)';
-        g.beginPath(); g.ellipse(hx+4.2,hy+2.4,1.9,1,0,0,6.283); g.fill();
-      }
-      g.restore();
+      /* ---- faces, colour pass only ----
+         One anatomy engine for everyone, differentiated by that character's
+         row in FACES. Headgear goes on top and declares what it covers. */
+      var F=faceOf(h), FV=faceVis(h.head);
+      hairSheen(g,hx,hy,h,h.head);
+      if(FV.form) faceForm(g,hx,hy,h,F);
+      if(FV.ear)  faceEar(g,hx,hy,h);
+      if(FV.beard)faceBeard(g,hx,hy,h,F);
+      if(FV.eyes) faceEye(g,hx,hy,h,F);
+      if(FV.brow) faceBrow(g,hx,hy,h,F);
+      if(FV.nose) faceNose(g,hx,hy,h,F,!FV.eyes);
+      if(FV.mouth)faceMouth(g,hx,hy,h,F);
 
+      /* ---- headgear over the top ---- */
       if(h.head==='cowl'){
-        g.fillStyle='#E8F2FF'; g.fillRect(hx+2.2,hy-4.2,7,3.2);
-        g.strokeStyle='rgba(40,26,16,.55)'; g.lineWidth=1.2; g.lineCap='round';
-        g.beginPath(); g.moveTo(hx+5.4,hy+4); g.lineTo(hx+7.6,hy+3.8); g.stroke();
+        /* the white slit of the cowl, and a jaw shadow under it */
+        g.fillStyle='rgba(10,14,22,.42)';
+        g.beginPath(); g.ellipse(hx+1.0,hy-2.4,8.2,3.0,0,0,6.283); g.fill();
+        g.fillStyle='#E8F2FF';
+        g.beginPath();
+        g.moveTo(hx+2.4,hy-2.0);
+        g.quadraticCurveTo(hx+5.2,hy-4.6,hx+8.2,hy-2.6);
+        g.quadraticCurveTo(hx+5.4,hy-1.0,hx+2.4,hy-2.0);
+        g.closePath(); g.fill();
+        g.fillStyle='rgba(255,255,255,.5)';
+        g.beginPath(); g.ellipse(hx+5.0,hy-3.0,1.8,0.6,-0.16,0,6.283); g.fill();
       }else if(h.head==='helmet'){
-        /* dark visor band with a dove stencil */
         g.fillStyle='#1A2230';
         g.beginPath(); g.ellipse(hx+3.4,hy-2.6,6.4,4.2,0,0,6.283); g.fill();
         g.fillStyle='rgba(190,225,255,.55)';
         g.beginPath(); g.ellipse(hx+5,hy-4,2.4,1.4,-0.4,0,6.283); g.fill();
         g.fillStyle='#D42030'; g.fillRect(hx-9.6,hy-9,18,2);
-      }else if(h.head==='longhair'){
-        g.fillStyle=trimHi; g.fillRect(hx-5.6,hy-7.6,14,3);
+      }else if(h.head==='longhair'&&h.id==='wonderwoman'){
+        /* the tiara belongs to Diana and nobody else */
+        /* sits on the hairline, clear of the brow */
+        g.fillStyle=trimHi; g.fillRect(hx-5.6,hy-9.8,14,2.6);
+        g.fillStyle='rgba(255,255,255,.3)'; g.fillRect(hx-5.6,hy-9.8,14,0.8);
         g.fillStyle='#D8202F';
-        g.beginPath(); g.moveTo(hx+2.4,hy-11.4); g.lineTo(hx+4,hy-7.8); g.lineTo(hx+0.8,hy-7.8); g.closePath(); g.fill();
-        g.fillStyle='#1B2233'; g.beginPath(); g.arc(hx+4.8,hy-1.4,1.7,0,6.283); g.fill();
-        g.fillStyle='#B01F2B'; g.fillRect(hx+3,hy+4,5,1.8);
+        g.beginPath(); g.moveTo(hx+2.0,hy-13.6); g.lineTo(hx+3.8,hy-9.9); g.lineTo(hx+0.2,hy-9.9); g.closePath(); g.fill();
       }else if(h.head==='flashmask'){
         g.fillStyle='#FAFBFF';
         g.beginPath(); g.ellipse(hx+4.6,hy-2.2,3.4,2.4,-0.2,0,6.283); g.fill();
-        g.fillStyle='#C4785A'; g.fillRect(hx+3,hy+4,5,1.6);
+        g.fillStyle='rgba(180,205,235,.7)';
+        g.beginPath(); g.ellipse(hx+5.4,hy-3.0,1.6,1.0,-0.3,0,6.283); g.fill();
       }else if(h.head==='cyborg'){
-        g.fillStyle='#FF3B30';
-        g.beginPath(); g.arc(hx+4.8,hy-1.8,2.5,0,6.283); g.fill();
-        g.fillStyle='#FFD7D2';
-        g.beginPath(); g.arc(hx+4.8,hy-1.8,1.1,0,6.283); g.fill();
-        g.strokeStyle=trimHi; g.lineWidth=1.2;
-        g.beginPath(); g.moveTo(hx-1,hy-9); g.lineTo(hx-1,hy+5); g.stroke();
-        g.fillStyle='rgba(200,236,255,.8)'; g.fillRect(hx+1,hy-7.4,6,1.4);
+        g.fillStyle='#C4202C';
+        g.beginPath(); g.ellipse(hx+4.8,hy-2,2.2,1.5,0,0,6.283); g.fill();
+        g.fillStyle='#FFD2C8';
+        g.beginPath(); g.arc(hx+4.8,hy-2,0.8,0,6.283); g.fill();
+        g.strokeStyle='rgba(160,180,200,.7)'; g.lineWidth=0.9;
+        g.beginPath(); g.moveTo(hx+1.4,hy-6.4); g.lineTo(hx+1.4,hy+5.4); g.stroke();
       }else if(h.head==='lantern'||h.head==='domino'){
-        g.fillStyle=(h.id==='catwoman')?'#0E1015':h.suit;
-        g.fillRect(hx-4.4,hy-4.2,13.4,3.6);
-        g.fillStyle='#EAF2FF'; g.beginPath(); g.arc(hx+4.8,hy-2.4,1.5,0,6.283); g.fill();
-        g.fillStyle='#B0704A'; g.fillRect(hx+3,hy+4,5,1.6);
+        /* the little domino mask, eyes as white slits */
+        g.fillStyle='rgba(10,14,22,.72)';
+        g.beginPath();
+        g.moveTo(hx-3.4,hy-4.6); g.quadraticCurveTo(hx+2.6,hy-6.2,hx+8.6,hy-4.4);
+        g.lineTo(hx+8.4,hy-0.2); g.quadraticCurveTo(hx+2.6,hy-1.2,hx-3.4,hy-1.0);
+        g.closePath(); g.fill();
+        g.fillStyle='#F2F6FB';
+        g.beginPath(); g.ellipse(hx+5,hy-2.4,2.4,1.4,-0.1,0,6.283); g.fill();
       }else if(h.head==='martian'){
-        g.fillStyle='#C42028'; g.beginPath(); g.arc(hx+4.6,hy-2.2,2.2,0,6.283); g.fill();
-        g.fillStyle='#FF8A8A'; g.beginPath(); g.arc(hx+4.6,hy-2.2,0.9,0,6.283); g.fill();
-        g.strokeStyle='rgba(10,60,30,.5)'; g.lineWidth=1.2;
-        g.beginPath(); g.moveTo(hx+2.4,hy+4); g.lineTo(hx+7.4,hy+3.6); g.stroke();
+        g.fillStyle='#C4202C';
+        g.beginPath(); g.ellipse(hx+4.8,hy-2.2,2.4,1.7,0,0,6.283); g.fill();
+        g.beginPath(); g.ellipse(hx-2.6,hy-2.0,1.8,1.4,0,0,6.283); g.fill();
+        g.fillStyle='rgba(255,120,110,.5)';
+        g.beginPath(); g.arc(hx+5.0,hy-2.4,3.4,0,6.283); g.fill();
       }else if(h.head==='clown'||h.head==='harley'){
-        g.fillStyle='#12141B'; g.beginPath(); g.arc(hx+4.8,hy-1.6,1.7,0,6.283); g.fill();
-        g.strokeStyle=(h.head==='clown')?'#C4202C':'#12141B'; g.lineWidth=1.6; g.lineCap='round';
-        g.beginPath(); g.moveTo(hx+1.4,hy+3); g.quadraticCurveTo(hx+5,hy+6.4,hx+8.2,hy+2.6); g.stroke();
+        /* the painted grin */
+        g.strokeStyle=(h.head==='clown')?'#C4202C':'#12141B'; g.lineWidth=1.7; g.lineCap='round';
+        g.beginPath();
+        g.moveTo(hx+0.6,hy+3.4); g.quadraticCurveTo(hx+4.4,hy+7.4,hx+8.2,hy+3.0); g.stroke();
         if(h.head==='harley'){
-          g.fillStyle='#12141B';
-          g.beginPath(); g.moveTo(hx+3.4,hy+0.6); g.lineTo(hx+5,hy+2.6); g.lineTo(hx+3.4,hy+2.6); g.closePath(); g.fill();
+          g.fillStyle='rgba(10,14,22,.75)';
+          g.beginPath(); g.ellipse(hx+4.9,hy-1.6,3.0,2.2,0,0,6.283); g.fill();
+          g.fillStyle='#F2F6FB';
+          g.beginPath(); g.arc(hx+5.2,hy-1.6,1.1,0,6.283); g.fill();
         }
       }else if(h.head==='catcowl'){
         g.fillStyle='#C8CFDA'; g.fillRect(hx-3.4,hy-4.2,12,3.4);
+        g.fillStyle='rgba(255,255,255,.4)'; g.fillRect(hx-3.4,hy-4.2,12,1);
         g.fillStyle='#1B2233'; g.beginPath(); g.arc(hx+4.8,hy-2.4,1.4,0,6.283); g.fill();
-        g.fillStyle='#C4202C'; g.fillRect(hx+3,hy+4,5,1.8);
       }else if(h.head==='strokemask'){
         g.fillStyle='#F2F6FB'; g.beginPath(); g.arc(hx+5,hy-2.2,2,0,6.283); g.fill();
+        g.fillStyle='rgba(200,215,235,.8)'; g.beginPath(); g.arc(hx+5.4,hy-2.8,0.8,0,6.283); g.fill();
       }else if(h.head==='luchador'){
         g.fillStyle='#F2F6FB'; g.beginPath(); g.ellipse(hx+4.6,hy-2.4,2.6,2,0,0,6.283); g.fill();
         g.fillStyle='#1B2233'; g.beginPath(); g.arc(hx+5,hy-2.4,1.2,0,6.283); g.fill();
         g.strokeStyle='rgba(200,210,225,.6)'; g.lineWidth=1;
         for(var tb=0;tb<3;tb++){ g.beginPath(); g.moveTo(hx-2+tb*3.4,hy+1); g.lineTo(hx-2+tb*3.4,hy+5); g.stroke(); }
       }else if(h.head==='domehelm'){
-        /* a sealed combat helmet */
-        g.beginPath(); g.ellipse(hx-0.4,hy-2,10.8,10.4,0,0,6.283); g.closePath();
-        done(g,PASS_INK?null:(function(){
-          var q=g.createLinearGradient(hx+8,hy-12,hx-9,hy+7);
-          q.addColorStop(0,lerpHex(h.trim,'#FFFFFF',0.4)); q.addColorStop(0.5,h.trim); q.addColorStop(1,h.trimLo);
-          return q; })());
-      }else if(h.head==='glassdome'){
-        /* a clear cryo dome over the head */
-        g.beginPath(); g.ellipse(hx-0.4,hy-3,12,12.4,0,0,6.283); g.closePath();
-        done(g,PASS_INK?null:'rgba(170,220,240,.34)');
-        g.beginPath(); g.ellipse(hx-0.4,hy+8.4,9.4,3.4,0,0,6.283); g.closePath();
-        done(g,h.suitLo);
-      }else if(h.head==='bowler'){
-        g.beginPath(); g.arc(hx,hy-3.4,9,Math.PI*0.96,Math.PI*2.06); g.closePath();
-        done(g,h.hair);
-        g.beginPath(); g.rect(hx-6.4,hy-19,13,10); g.closePath();
-        done(g,h.suit);
-        g.beginPath(); g.ellipse(hx,hy-9,12,2.6,0,0,6.283); g.closePath();
-        done(g,h.suit);
-      }else if(h.head==='omegahelm'){
-        /* the ridged headpiece */
+        /* a faceplate with two lit slits reads as a helmet; a dark blob does not */
+        g.fillStyle='rgba(12,16,22,.88)';
         g.beginPath();
-        g.arc(hx-0.4,hy-2,10.4,Math.PI*0.8,Math.PI*2.16);
-        g.lineTo(hx+8,hy+5); g.lineTo(hx-8,hy+4);
-        g.closePath();
-        done(g,h.suit);
-        g.beginPath(); g.moveTo(hx-8,hy-8); g.lineTo(hx-11,hy-17); g.lineTo(hx-2,hy-11); g.closePath();
-        done(g,h.suit);
-        g.beginPath(); g.moveTo(hx+5,hy-9); g.lineTo(hx+9,hy-17); g.lineTo(hx+10,hy-6); g.closePath();
-        done(g,h.suit);
-      }else if(h.head==='horns'){
-        g.beginPath(); g.arc(hx,hy-2,9.4,Math.PI*0.86,Math.PI*2.12); g.closePath();
-        done(g,h.trim);
-        g.beginPath(); g.moveTo(hx-6,hy-8); g.quadraticCurveTo(hx-16,hy-20,hx-9,hy-26);
-        g.quadraticCurveTo(hx-9,hy-16,hx-1,hy-10); g.closePath();
-        done(g,h.trim);
-        g.beginPath(); g.moveTo(hx+4,hy-9); g.quadraticCurveTo(hx+13,hy-21,hx+7,hy-27);
-        g.quadraticCurveTo(hx+8,hy-17,hx+9,hy-7); g.closePath();
-        done(g,h.trim);
-      }else if(h.head==='skull'){
-        g.beginPath(); g.arc(hx,hy-2,9,Math.PI*0.9,Math.PI*2.1); g.closePath();
-        done(g,h.skin);
-        g.beginPath(); g.ellipse(hx-1,hy+5,6.4,4.4,0,0,6.283); g.closePath();
-        done(g,h.skin);
-      }else if(h.head==='twoface'){
-        g.beginPath(); g.arc(hx,hy-3.4,9,Math.PI*0.96,Math.PI*1.5); g.closePath();
-        done(g,h.hair);
-        g.beginPath(); g.arc(hx,hy-3.4,9,Math.PI*1.5,Math.PI*2.06); g.closePath();
-        done(g,'#7E5A2E');
-      }else if(h.head==='hawkhelm'){
-        g.fillStyle='#12141B'; g.beginPath(); g.arc(hx+4.8,hy-1.4,1.6,0,6.283); g.fill();
-        g.fillStyle='#C4785A'; g.fillRect(hx+3,hy+4,5,1.6);
-      }else if(h.head==='domehelm'){
-        g.fillStyle='#101319';
-        g.beginPath(); g.ellipse(hx+3.4,hy-2.4,6.4,4.2,0,0,6.283); g.fill();
-        g.fillStyle='rgba(200,225,255,.42)';
-        g.beginPath(); g.ellipse(hx+5,hy-4.2,2.4,1.4,-0.4,0,6.283); g.fill();
+        g.moveTo(hx-6.6,hy-5.4);
+        g.quadraticCurveTo(hx+1.2,hy-7.6,hx+8.8,hy-4.8);
+        g.lineTo(hx+8.4,hy+1.8);
+        g.quadraticCurveTo(hx+1.2,hy+3.2,hx-6.6,hy+1.2);
+        g.closePath(); g.fill();
+        var slit=lerpHex(h.trim,'#FFFFFF',0.55);
+        g.fillStyle=slit;
+        g.beginPath(); g.ellipse(hx+5.4,hy-2.2,2.5,0.95,-0.08,0,6.283); g.fill();
+        g.beginPath(); g.ellipse(hx-2.6,hy-2.6,1.7,0.8,-0.08,0,6.283); g.fill();
+        g.globalCompositeOperation='lighter';
+        var qg=g.createRadialGradient(hx+5.4,hy-2.2,0.5,hx+5.4,hy-2.2,5.2);
+        qg.addColorStop(0,'rgba(210,242,255,.5)'); qg.addColorStop(1,'rgba(0,0,0,0)');
+        g.fillStyle=qg; g.beginPath(); g.arc(hx+5.4,hy-2.2,5.2,0,6.283); g.fill();
+        g.globalCompositeOperation='source-over';
+        /* centre seam and the vent where a mouth would be */
+        g.strokeStyle='rgba(255,255,255,.18)'; g.lineWidth=0.8;
+        g.beginPath(); g.moveTo(hx+1.2,hy-6.8); g.lineTo(hx+1.2,hy+2.6); g.stroke();
+        g.fillStyle='rgba(255,255,255,.13)';
+        g.fillRect(hx+0.2,hy+3.6,6.6,1.1);
+        g.fillStyle='rgba(255,255,255,.22)';
+        g.beginPath(); g.ellipse(hx+2.0,hy-6.0,5.0,1.0,-0.06,0,6.283); g.fill();
       }else if(h.head==='glassdome'){
-        g.fillStyle='#C8DCE6';
-        g.beginPath(); g.ellipse(hx+1,hy-2.4,6.4,6.8,0,0,6.283); g.fill();
+        /* the cryo dome sits over a face you can still see through it */
+        g.fillStyle='rgba(170,220,240,.30)';
+        g.beginPath(); g.ellipse(hx-0.4,hy-3,12,12.4,0,0,6.283); g.fill();
+        g.strokeStyle='rgba(220,245,255,.7)'; g.lineWidth=1.4;
+        g.beginPath(); g.arc(hx-1,hy-4,10.4,Math.PI*1.08,Math.PI*1.62); g.stroke();
         g.fillStyle='#E03B4A';
-        g.beginPath(); g.arc(hx+4.8,hy-3,2,0,6.283); g.fill();
-        g.strokeStyle='rgba(255,255,255,.6)'; g.lineWidth=1.6;
-        g.beginPath(); g.arc(hx-1,hy-4,8.4,Math.PI*1.1,Math.PI*1.6); g.stroke();
+        g.beginPath(); g.arc(hx+7.4,hy-8.4,1.5,0,6.283); g.fill();
       }else if(h.head==='bowler'){
-        g.fillStyle=h.trim; g.fillRect(hx-4,hy-4.2,13,3.4);
-        g.fillStyle='#12141B'; g.beginPath(); g.arc(hx+4.8,hy-2.4,1.4,0,6.283); g.fill();
-        g.fillStyle='#B0704A'; g.fillRect(hx+3,hy+4,5,1.6);
+        g.fillStyle=h.trim; g.fillRect(hx-4,hy-10.4,13,1.6);
       }else if(h.head==='omegahelm'){
         g.fillStyle='#F04030';
         g.beginPath(); g.ellipse(hx+4.6,hy-1.8,2.6,1.9,0,0,6.283); g.fill();
         g.fillStyle='#FFD0C0';
         g.beginPath(); g.ellipse(hx+4.6,hy-1.8,1.1,0.9,0,0,6.283); g.fill();
-        g.strokeStyle='rgba(20,16,14,.5)'; g.lineWidth=1.3;
-        g.beginPath(); g.moveTo(hx+2,hy+4.4); g.lineTo(hx+8,hy+4); g.stroke();
-      }else if(h.head==='horns'){
-        g.fillStyle='#1B2233'; g.beginPath(); g.arc(hx+4.8,hy-1.4,1.6,0,6.283); g.fill();
-        g.strokeStyle='rgba(40,26,14,.6)'; g.lineWidth=1.4;
-        g.beginPath(); g.moveTo(hx+2.6,hy+4.2); g.lineTo(hx+7.4,hy+3.9); g.stroke();
+        g.fillStyle='rgba(255,80,60,.4)';
+        g.beginPath(); g.arc(hx+4.6,hy-1.8,4.6,0,6.283); g.fill();
       }else if(h.head==='skull'){
         /* flame-lit sockets and a grin */
         g.fillStyle='#12100E';
@@ -3125,22 +3562,22 @@
         g.fillStyle='rgba(240,140,24,.28)';
         g.beginPath(); g.arc(hx,hy-4,13,0,6.283); g.fill();
       }else if(h.head==='twoface'){
-        g.fillStyle='#1B2233'; g.beginPath(); g.arc(hx+4.8,hy-1.4,1.6,0,6.283); g.fill();
-        /* the ruined half */
-        g.fillStyle='rgba(150,60,50,.42)';
+        /* the ruined half, drawn over a face that is otherwise whole */
+        g.fillStyle='rgba(150,60,50,.44)';
         g.beginPath(); g.ellipse(hx-3.4,hy-0.6,4.6,7,0,0,6.283); g.fill();
         g.strokeStyle='rgba(110,40,34,.6)'; g.lineWidth=1;
         for(var sc=0;sc<3;sc++){
           g.beginPath(); g.moveTo(hx-6.4,hy-4+sc*3.4); g.lineTo(hx-0.6,hy-3+sc*3.4); g.stroke();
         }
+        g.fillStyle='#F0F4FA';
+        g.beginPath(); g.ellipse(hx-3.0,hy-2.0,1.7,1.4,0,0,6.283); g.fill();
+        g.fillStyle='#C4202C';
+        g.beginPath(); g.arc(hx-3.0,hy-2.0,0.8,0,6.283); g.fill();
       }else if(h.head==='blindfold'){
-        /* nothing but the band and a calm mouth */
         g.fillStyle='rgba(255,255,255,.22)';
         g.beginPath(); g.ellipse(hx+2.6,hy-4.8,5.4,1,-0.06,0,6.283); g.fill();
         g.strokeStyle='rgba(255,255,255,.16)'; g.lineWidth=1;
         g.beginPath(); g.moveTo(hx-9.4,hy-1.4); g.lineTo(hx+8.8,hy-2); g.stroke();
-        g.strokeStyle='rgba(120,62,44,.6)'; g.lineWidth=1.4; g.lineCap='round';
-        g.beginPath(); g.moveTo(hx+2.6,hy+4.4); g.lineTo(hx+7.2,hy+4.1); g.stroke();
       }else if(h.head==='boarmask'){
         g.fillStyle='#100E0C';
         g.beginPath(); g.ellipse(hx+4.6,hy-2.4,2.4,1.9,-0.1,0,6.283); g.fill();
@@ -3151,176 +3588,13 @@
         g.beginPath(); g.ellipse(hx+0.6,hy+3.6,4.4,2.2,0,0,6.283); g.fill();
         g.fillStyle='#2A2018';
         g.beginPath(); g.ellipse(hx+0.4,hy+2.2,1.5,1,0,0,6.283); g.fill();
-      }else if(h.head==='strawhat'||h.head==='bandana'||h.head==='peakcap'){
-        g.fillStyle='#F2EDE6';
-        g.beginPath(); g.ellipse(hx+4.9,hy-0.6,2.5,1.7,0,0,6.283); g.fill();
-        g.fillStyle='#3A2A18';
-        g.beginPath(); g.arc(hx+5.5,hy-0.6,1.5,0,6.283); g.fill();
-        g.fillStyle='#151A24';
-        g.beginPath(); g.arc(hx+5.6,hy-0.6,0.7,0,6.283); g.fill();
-        g.fillStyle='rgba(255,255,255,.9)';
-        g.beginPath(); g.arc(hx+4.9,hy-1.3,0.5,0,6.283); g.fill();
-        g.strokeStyle='rgba(120,62,44,.72)'; g.lineWidth=1.4; g.lineCap='round';
-        g.beginPath(); g.moveTo(hx+2.6,hy+4.6); g.lineTo(hx+7.2,hy+4.3); g.stroke();
+      }else if(h.head==='hawkhelm'){
+        g.fillStyle='#12141B'; g.beginPath(); g.arc(hx+4.8,hy-1.4,1.6,0,6.283); g.fill();
+        g.fillStyle='rgba(230,240,255,.6)'; g.beginPath(); g.arc(hx+5.2,hy-1.9,0.6,0,6.283); g.fill();
       }else if(h.head==='hood'){
         g.fillStyle='rgba(8,20,12,.55)';
         g.beginPath(); g.ellipse(hx+1.4,hy-2.6,7.4,4.6,0,0,6.283); g.fill();
         g.fillStyle='#EAF2FF'; g.beginPath(); g.arc(hx+5,hy-2.4,1.3,0,6.283); g.fill();
-        g.fillStyle='#B08A34'; g.fillRect(hx+2.4,hy+4,5.4,1.8);
-      }else if(h.head==='spitcurl'){
-        /* ---- Superman: the one face in the game drawn properly ----
-           Bone structure first, then the features on top of it, then the
-           light. Everything is kept small: at this size the difference
-           between a face and a smudge is a couple of units. */
-
-        /* the ear, tucked behind the jaw on the shaded side */
-        g.fillStyle=h.skin;
-        g.beginPath(); g.ellipse(hx-7.4,hy+0.4,1.7,2.7,0.14,0,6.283); g.fill();
-        g.strokeStyle=lerpHex(h.skinLo,'#000000',0.22); g.lineWidth=0.6;
-        g.beginPath(); g.ellipse(hx-7.4,hy+0.6,0.8,1.5,0.14,0,6.283); g.stroke();
-
-        g.save();
-        g.beginPath(); g.ellipse(hx,hy,8.1,9.1,0.06,0,6.283); g.clip();
-        /* the square jaw, and the light along the top of it */
-        g.fillStyle='rgba(92,54,32,.13)';
-        g.beginPath(); g.ellipse(hx-2.6,hy+6.6,5.6,2.4,0.04,0,6.283); g.fill();
-        g.fillStyle='rgba(255,240,214,.22)';
-        g.beginPath(); g.ellipse(hx+3.0,hy+5.6,2.6,1.5,-0.06,0,6.283); g.fill();
-        /* chin ball, lit, with a soft cleft down it */
-        g.fillStyle='rgba(255,242,220,.18)';
-        g.beginPath(); g.ellipse(hx+2.6,hy+7.0,2.0,1.2,0,0,6.283); g.fill();
-        g.strokeStyle='rgba(120,72,44,.20)'; g.lineWidth=0.7; g.lineCap='round';
-        g.beginPath(); g.moveTo(hx+2.2,hy+6.0); g.lineTo(hx+2.2,hy+7.2); g.stroke();
-        /* cheekbone: the high plane that catches the sun */
-        g.fillStyle='rgba(255,240,214,.26)';
-        g.beginPath(); g.ellipse(hx+3.6,hy-0.6,3.4,2.0,-0.32,0,6.283); g.fill();
-        /* brow ridge */
-        g.fillStyle='rgba(70,42,24,.20)';
-        g.beginPath(); g.ellipse(hx+2.6,hy-4.4,5.6,1.6,-0.08,0,6.283); g.fill();
-        /* forehead light */
-        g.fillStyle='rgba(255,242,218,.16)';
-        g.beginPath(); g.ellipse(hx+2.6,hy-7.0,4.0,1.6,-0.06,0,6.283); g.fill();
-        g.restore();
-
-        /* ---- the eye: small, almond, set into the socket ---- */
-        g.save();
-        g.beginPath();
-        g.moveTo(hx+3.0,hy-1.3);
-        g.quadraticCurveTo(hx+5.2,hy-3.2,hx+7.3,hy-1.5);
-        g.quadraticCurveTo(hx+5.3,hy+0.4,hx+3.0,hy-1.3);
-        g.closePath();
-        g.clip();
-        g.fillStyle='#F1ECE4'; g.fillRect(hx+2.4,hy-4,6,5.4);
-        g.fillStyle='rgba(150,128,116,.34)';
-        g.beginPath(); g.ellipse(hx+3.4,hy-1.4,1.3,1.4,0,0,6.283); g.fill();
-        /* iris, with a darker limbal ring the way a real one reads */
-        var ig=g.createRadialGradient(hx+5.3,hy-2.0,0.2,hx+5.45,hy-1.5,1.35);
-        ig.addColorStop(0,'#86AECE'); ig.addColorStop(0.6,'#3F6489'); ig.addColorStop(1,'#213850');
-        g.fillStyle=ig;
-        g.beginPath(); g.arc(hx+5.45,hy-1.5,1.3,0,6.283); g.fill();
-        g.strokeStyle='rgba(14,22,34,.7)'; g.lineWidth=0.42;
-        g.beginPath(); g.arc(hx+5.45,hy-1.5,1.3,0,6.283); g.stroke();
-        g.fillStyle='#0E1119';
-        g.beginPath(); g.arc(hx+5.45,hy-1.5,0.56,0,6.283); g.fill();
-        /* two catchlights: the sun, and the bounce off the deck */
-        g.fillStyle='rgba(255,255,255,.95)';
-        g.beginPath(); g.arc(hx+4.95,hy-2.05,0.46,0,6.283); g.fill();
-        g.fillStyle='rgba(255,255,255,.4)';
-        g.beginPath(); g.arc(hx+5.95,hy-0.95,0.26,0,6.283); g.fill();
-        /* the upper lid throws a shadow across the top of the eye */
-        g.fillStyle='rgba(70,42,26,.30)';
-        g.beginPath(); g.ellipse(hx+5.2,hy-3.3,3.0,1.4,0,0,6.283); g.fill();
-        g.restore();
-        /* lash line along the top lid */
-        g.strokeStyle='rgba(28,18,12,.8)'; g.lineWidth=0.95; g.lineCap='round';
-        g.beginPath();
-        g.moveTo(hx+3.0,hy-1.35);
-        g.quadraticCurveTo(hx+5.2,hy-3.3,hx+7.4,hy-1.6);
-        g.stroke();
-        /* lower lid: a light edge, never a hard line */
-        g.strokeStyle='rgba(255,236,208,.4)'; g.lineWidth=0.6;
-        g.beginPath();
-        g.moveTo(hx+3.4,hy-0.85); g.quadraticCurveTo(hx+5.3,hy+0.5,hx+7.2,hy-1.2);
-        g.stroke();
-        /* the crease above it */
-        g.strokeStyle='rgba(96,58,34,.28)'; g.lineWidth=0.6;
-        g.beginPath();
-        g.moveTo(hx+3.2,hy-2.5); g.quadraticCurveTo(hx+5.4,hy-4.1,hx+7.7,hy-2.5);
-        g.stroke();
-
-        /* brow: heavy at the inner end, tapering out, and set low — which
-           is what reads as determined rather than surprised */
-        g.strokeStyle='rgba(30,19,11,.8)'; g.lineCap='round';
-        g.lineWidth=1.6;
-        g.beginPath();
-        g.moveTo(hx+2.6,hy-4.7); g.quadraticCurveTo(hx+4.8,hy-5.6,hx+6.4,hy-5.1);
-        g.stroke();
-        g.lineWidth=0.95;
-        g.beginPath();
-        g.moveTo(hx+6.4,hy-5.1); g.quadraticCurveTo(hx+7.5,hy-4.8,hx+8.0,hy-4.0);
-        g.stroke();
-
-        /* ---- the nose ---- at this size only crisp edges read, so the
-           bridge is a lit edge with a drawn shadow line beside it */
-        g.strokeStyle='rgba(255,250,236,.6)'; g.lineWidth=1.1; g.lineCap='round';
-        g.beginPath();
-        g.moveTo(hx+4.3,hy-2.2); g.quadraticCurveTo(hx+5.1,hy-0.2,hx+5.2,hy+1.7);
-        g.stroke();
-        g.strokeStyle='rgba(92,52,28,.45)'; g.lineWidth=0.85;
-        g.beginPath();
-        g.moveTo(hx+3.7,hy-1.8); g.quadraticCurveTo(hx+4.2,hy+0.1,hx+4.2,hy+1.9);
-        g.stroke();
-        /* the ball of the tip, lit */
-        g.fillStyle='rgba(255,250,232,.55)';
-        g.beginPath(); g.arc(hx+5.0,hy+2.1,0.85,0,6.283); g.fill();
-        /* the shadow it throws, and one nostril */
-        g.strokeStyle='rgba(78,44,24,.55)'; g.lineWidth=0.85;
-        g.beginPath();
-        g.moveTo(hx+3.4,hy+2.7); g.quadraticCurveTo(hx+4.6,hy+3.3,hx+5.7,hy+2.6);
-        g.stroke();
-        g.fillStyle='rgba(52,28,15,.7)';
-        g.beginPath(); g.ellipse(hx+3.9,hy+2.6,0.48,0.32,0.28,0,6.283); g.fill();
-
-        /* ---- the mouth: two lips, not one line ---- */
-        /* the line where the lips meet is the only hard edge; the lips
-           themselves are a shadow above it and a highlight below */
-        g.fillStyle='rgba(140,74,56,.44)';
-        g.beginPath();
-        g.moveTo(hx+2.6,hy+4.5);
-        g.quadraticCurveTo(hx+4.6,hy+3.9,hx+6.8,hy+4.4);
-        g.quadraticCurveTo(hx+4.7,hy+4.8,hx+2.6,hy+4.5);
-        g.closePath(); g.fill();
-        g.strokeStyle='rgba(78,34,24,.92)'; g.lineWidth=1.15; g.lineCap='round';
-        g.beginPath();
-        g.moveTo(hx+2.7,hy+4.6); g.quadraticCurveTo(hx+4.7,hy+5.0,hx+6.8,hy+4.4);
-        g.stroke();
-        g.strokeStyle='rgba(255,226,204,.5)'; g.lineWidth=0.8;
-        g.beginPath();
-        g.moveTo(hx+3.2,hy+5.5); g.quadraticCurveTo(hx+4.8,hy+5.8,hx+6.4,hy+5.2);
-        g.stroke();
-
-        /* the shadow the jaw throws down onto the neck */
-        g.fillStyle='rgba(70,42,24,.20)';
-        g.beginPath(); g.ellipse(hx-0.8,hy+9.2,5.0,1.6,0.05,0,6.283); g.fill();
-      }else{
-        /* eye white, iris, pupil, catchlight, then the lid over the top */
-        g.fillStyle='#F2EDE6';
-        g.beginPath(); g.ellipse(hx+4.9,hy-1.4,2.5,1.7,0,0,6.283); g.fill();
-        g.fillStyle='#4A5E78';
-        g.beginPath(); g.arc(hx+5.5,hy-1.4,1.5,0,6.283); g.fill();
-        g.fillStyle='#151A24';
-        g.beginPath(); g.arc(hx+5.6,hy-1.4,0.7,0,6.283); g.fill();
-        g.fillStyle='rgba(255,255,255,.9)';
-        g.beginPath(); g.arc(hx+4.9,hy-2.1,0.5,0,6.283); g.fill();
-        g.fillStyle=lerpHex(h.skinLo,'#000000',0.12);
-        g.beginPath(); g.ellipse(hx+4.9,hy-3.1,2.7,1.2,0,0,6.283); g.fill();
-        /* brow */
-        g.strokeStyle='rgba(38,24,14,.72)'; g.lineWidth=1.5; g.lineCap='round';
-        g.beginPath(); g.moveTo(hx+2.2,hy-4.4); g.quadraticCurveTo(hx+5,hy-5.2,hx+7.6,hy-4);
-        g.stroke();
-        /* mouth */
-        g.strokeStyle='rgba(120,62,44,.72)'; g.lineWidth=1.4;
-        g.beginPath(); g.moveTo(hx+2.6,hy+4.4); g.lineTo(hx+7.2,hy+4.1); g.stroke();
       }
     })();
 
