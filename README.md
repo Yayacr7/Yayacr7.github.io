@@ -4,7 +4,7 @@ Things I'm making with Claude Code.
 
 ## Yahya.games.com — Skyforge Champions
 
-A hundred and forty-two characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
+A hundred and forty-eight characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
 and forge their armour into brighter and brighter finishes.
 
 **To play:** open `index.html` in any web browser.
@@ -43,7 +43,7 @@ sky over the fire pits · **The Watchtower** in orbit, with Earth below.
 
 ### The roster
 
-A hundred and forty-two characters, each drawn to their own costume. This is
+A hundred and forty-eight characters, each drawn to their own costume. This is
 not every character from anywhere — each one here is hand-written drawing code
 — but it covers the Justice League, the Bat-family, a bench of villains, a
 Marvel and X-Men wing, and seventy-six anime fighters.
@@ -291,7 +291,7 @@ Every character carries their civilian name, a signature Super Move, and a
 
 ### Passives
 
-Every one of the sixty-six characters has its own passive, and no two share a
+Every character has its own passive, and no two share a
 name. Thirty-five of them are not bonuses at all — they are the character's
 actual power, going off by itself during the fight, with its own effect drawn
 on screen and its own damage:
@@ -326,10 +326,45 @@ Arrow's hood, the Joker's purple coat — and the bright comic palettes are
 among the unlocks, alongside things like Superman's Black Suit, Batman Beyond,
 CW Scarlet and Future Flash.
 
-Unlocks are deliberately a long haul: they cost between 7,500 and 26,000
-credits **and** require that character at a minimum level (6, 12 or 18
-depending on the version). A version changes the palette only, so it is a look
-rather than an advantage.
+Unlocks used to be a long haul. They are now **less than half the price** —
+between 2,900 and 16,200 credits — and the level gates came down with them, to
+level 4, 7 or 11 depending on the version. A version changes the palette only,
+so it is a look rather than an advantage.
+
+### Legendary champions and the Legendary Event
+
+Six champions are **legendary** and are not simply there for the taking:
+**Doomsday, Brainiac, Galactus, Apocalypse, Jiren** and **Kaguya**. Their
+roster cards carry a gold LEGENDARY tag, sit dimmed, and refuse to enter a
+fight or a raid until they are earned.
+
+The way to earn one is the **Legendary Event** on the home screen. One
+legendary is the challenger each week and the panel names them, draws their
+portrait, and counts how many are still to win. Beat the week's challenger and
+they are yours permanently — the card unlocks the moment you walk back to the
+home screen, not on the next page load.
+
+The challenger is not a pushover. They arrive six levels above you (capped at
+60), fully forged, with 15% extra health on top. Their damage and speed are
+pulled down so the fight is a long one rather than a short brutal one: a maxed
+champion needs about 0.90x of its own health bar to get through, so it is close
+enough to lose and fair enough to win.
+
+The rotation moves on a weekly cycle, so a legendary you miss comes back around.
+
+### The Owner's Key
+
+The home screen carries an admin panel for the person who owns the game:
+
+- **Unlock every version** — all 58 alternate costumes across the roster.
+- **Unlock every legendary** — all six, without playing the events.
+- **1,000,000 credits** — a pile to spend however you like.
+- **Max this champion** — the selected champion to level 60, Legendary armour
+  and every one of their versions.
+- **Wipe the save** — start again from nothing. It asks first.
+
+Everything the panel does is written straight to the save, so it survives a
+reload.
 
 ### Super move cutscenes
 

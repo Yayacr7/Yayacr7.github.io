@@ -148,6 +148,27 @@
     color:var(--gold);flex:none}
   .price i{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 32% 30%,#FFF0B8,#F7C948 46%,#A87A08)}
   .fight{width:100%}
+  .legend{display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+    background:linear-gradient(180deg,rgba(247,201,72,.13),rgba(247,201,72,.03));
+    border:2px solid rgba(247,201,72,.55);border-radius:12px;padding:12px 15px}
+  .legend canvas{width:96px;height:96px;flex:none;border-radius:10px;
+    background:linear-gradient(180deg,#1B2740,#0E1626);border:1px solid var(--edge)}
+  .legend .linfo{flex:1;min-width:210px}
+  .legend .lname{font-family:"Saira Condensed",sans-serif;font-weight:800;font-size:1.3rem;
+    text-transform:uppercase;line-height:1.05;color:var(--gold)}
+  .legend .lsub{font-size:.78rem;color:var(--ice);margin-top:3px}
+  .legend .lnote{font-size:.74rem;color:var(--dim);line-height:1.4;margin-top:5px}
+  .legend .btn{flex:none}
+  .owner{background:var(--panel-2);border:2px solid var(--edge);border-radius:12px;padding:12px 14px}
+  .owner .onote{font-size:.76rem;color:var(--dim);line-height:1.4;margin-bottom:10px}
+  .obtns{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(214px,1fr))}
+  .buy.danger{border-color:rgba(255,110,90,.5)}
+  .buy.danger:hover:not(:disabled){border-color:#FF6E5A}
+  .card.locked{opacity:.55}
+  .card.locked .nm{color:var(--gold)}
+  .card .lockTag{position:absolute;top:6px;left:6px;font-family:"Saira Condensed",sans-serif;
+    font-size:.6rem;font-weight:800;letter-spacing:.08em;background:var(--gold);color:#25200A;
+    border-radius:6px;padding:1px 6px}
   .raid{display:flex;gap:14px;align-items:center;flex-wrap:wrap;
     background:var(--panel-2);border:2px solid var(--edge);border-radius:12px;padding:13px 15px}
   .raid .rinfo{flex:1;min-width:230px}
@@ -269,6 +290,40 @@
     <section class="sec">
       <h3>Your champions</h3>
       <div class="roster" id="roster"></div>
+    </section>
+
+    <section class="sec" style="margin-top:14px">
+      <h3>Legendary event <span class="mReady" id="lTag" hidden></span></h3>
+      <div class="legend" id="legendPanel">
+        <canvas id="lCanvas" width="200" height="200"></canvas>
+        <div class="linfo">
+          <p class="lname" id="lName">&mdash;</p>
+          <p class="lsub" id="lSub"></p>
+          <p class="lnote" id="lNote"></p>
+        </div>
+        <button class="btn" id="bLegend">Take the challenge</button>
+      </div>
+    </section>
+
+    <section class="sec" style="margin-top:14px">
+      <h3>Owner&rsquo;s key</h3>
+      <div class="owner">
+        <p class="onote">This is your game, so these are your buttons. They change your
+          saved progress straight away.</p>
+        <div class="obtns">
+          <button class="buy" id="bAllSkins"><span><span class="t">Unlock every version</span>
+            <span class="d">Every costume on all champions</span></span></button>
+          <button class="buy" id="bAllLegends"><span><span class="t">Unlock every legendary</span>
+            <span class="d" id="dAllLegends">All six, no event needed</span></span></button>
+          <button class="buy" id="bCredits"><span><span class="t">Give a million credits</span>
+            <span class="d">Spend it on whatever you like</span></span></button>
+          <button class="buy" id="bMaxOne"><span><span class="t">Max this champion</span>
+            <span class="d" id="dMaxOne">Level 60, Legendary armour, every version</span></span></button>
+          <button class="buy danger" id="bWipe"><span><span class="t">Start again</span>
+            <span class="d">Wipes everything back to a fresh save</span></span></button>
+        </div>
+        <p class="msg" id="oMsg"></p>
+      </div>
     </section>
 
     <section class="sec" style="margin-top:14px">
@@ -402,9 +457,12 @@
   /* ================= roster ================= */
   /* A skin is one version of a character: its palette, and what it costs to
      unlock. Skin 0 is always free. */
+  /* Versions used to cost a grind. They are roughly half price now, and the
+     level you need for one is lower too. */
+  var UNLOCK_MUL=0.45;
   function SK(o){
-    o.cost=o.cost||0;
-    o.lvl=o.lvl||(o.cost?(o.cost>7000?18:(o.cost>4000?12:6)):1);
+    o.cost=Math.round((o.cost||0)*UNLOCK_MUL);
+    o.lvl=o.lvl||(o.cost?(o.cost>4000?11:(o.cost>2000?7:4)):1);
     o.skin=o.skin||'#F0C49C'; o.skinLo=o.skinLo||'#C08A5E';
     o.fore=o.fore||o.suit; o.foreLo=o.foreLo||o.suitLo;
     o.leg=o.leg||o.suit; o.boot=o.boot||o.trim;
@@ -1677,7 +1735,58 @@
      superDesc:'He does not rush. He just finishes it.',
      skins:[SK({name:'Blue Suit',suit:'#2E4E8E',suitLo:'#122448',trim:'#F0C41E',trimLo:'#96780A',
            leg:'#2E4E8E',boot:'#16181F',hair:'#2A5E3E',
-           fore:'#F0F2F6',foreLo:'#A8B0BC'})]}
+           fore:'#F0F2F6',foreLo:'#A8B0BC'})]},
+    /* ---- LEGENDARY champions ----
+       These six are the only ones you cannot simply pick. Each is won by
+       clearing its Legendary Event, one of which runs each week. */
+    {id:'doomsday',name:'Doomsday',real:'The Ultimate Weapon',cls:'The One Who Killed Superman',
+     emblem:'none',head:'horns',legend:true,
+     trait:{name:'Evolve',kind:'adapt',v:0.42,desc:'Whatever kills him once never works twice'},
+     pow:42,tough:180,spd:0.86,superName:'Bone Spike Barrage',
+     superDesc:'Everything on him is a weapon and he uses all of it at once',
+     skins:[SK({name:'Grey Horror',suit:'#8A9098',suitLo:'#4A5058',trim:'#C8CDD8',trimLo:'#7A8090',
+           leg:'#7A8088',boot:'#3E444C',hair:'#C8CDD8',
+           skin:'#A8AEB6',skinLo:'#606670',fore:'#A8AEB6',foreLo:'#606670'})]},
+    {id:'brainiac',name:'Brainiac',real:'Vril Dox',cls:'Collector of Worlds',
+     emblem:'core',head:'bald',legend:true,
+     trait:{name:'Tenth Level Intelligence',kind:'iq',v:0.85,desc:'Reads his opponent faster than anyone alive'},
+     pow:36,tough:156,spd:1.06,superName:'Shrink Ray',
+     superDesc:'Bottles the arena and everything standing in it',
+     skins:[SK({name:'Coluan Green',suit:'#2E7C4A',suitLo:'#124A26',trim:'#8AD44E',trimLo:'#3E7A18',
+           leg:'#26663C',boot:'#12401E',hair:'#3E7A4E',
+           skin:'#7ECC8E',skinLo:'#3E7A4E',fore:'#7ECC8E',foreLo:'#3E7A4E'})]},
+    {id:'galactus',name:'Galactus',real:'Galan',cls:'Devourer of Worlds',
+     emblem:'core',head:'omegahelm',legend:true,
+     trait:{name:'The Power Cosmic',kind:'auto',every:250,dmg:1.7,fx:'cosmic',v:0,desc:'The hunger reaches out and takes what it needs'},
+     pow:46,tough:190,spd:0.78,superName:'World Hunger',
+     superDesc:'He stops holding back, and the sky goes out',
+     skins:[SK({name:'Purple Titan',suit:'#5E2C96',suitLo:'#2C1150',trim:'#3EC4F2',trimLo:'#0E6E96',
+           leg:'#4E2480',boot:'#2A1048',hair:'#3EC4F2',
+           skin:'#8A7EC8',skinLo:'#4A4078',fore:'#8A7EC8',foreLo:'#4A4078'})]},
+    {id:'apocalypse',name:'Apocalypse',real:'En Sabah Nur',cls:'The First Mutant',
+     emblem:'core',head:'domehelm',legend:true,
+     trait:{name:'Shift',kind:'auto',every:255,dmg:1.5,fx:'nuke',v:0,desc:'His body rebuilds itself into whatever wins'},
+     pow:41,tough:178,spd:0.92,superName:'Age of Apocalypse',
+     superDesc:'He grows until the arena is too small for anyone else',
+     skins:[SK({name:'Blue Pharaoh',suit:'#2E4E8E',suitLo:'#122448',trim:'#8A9098',trimLo:'#4E545C',
+           leg:'#2E4E8E',boot:'#1A2A4E',hair:'#3A4756',
+           skin:'#6E86C4',skinLo:'#3A4A78',fore:'#6E86C4',foreLo:'#3A4A78'})]},
+    {id:'jiren',name:'Jiren',real:'Jiren the Grey',cls:'Pride Trooper',
+     emblem:'none',head:'bald',legend:true,
+     trait:{name:'Unmoving',kind:'guardian',v:0.62,desc:'He does not dodge. Nothing gets through anyway'},
+     pow:44,tough:172,spd:1.08,superName:'Power Impact',
+     superDesc:'One punch thrown so hard the air arrives before the fist',
+     skins:[SK({name:'Pride Trooper',suit:'#C4202C',suitLo:'#78101A',trim:'#1E2430',trimLo:'#0A0C12',
+           leg:'#1E2430',boot:'#0E1016',hair:'#1A1E2A',
+           skin:'#8A8E96',skinLo:'#4A4E56',fore:'#8A8E96',foreLo:'#4A4E56'})]},
+    {id:'kaguya',name:'Kaguya',real:'Kaguya Otsutsuki',cls:'The Rabbit Goddess',
+     emblem:'crescent',head:'longhair',legend:true,
+     trait:{name:'All-Killing Ash Bones',kind:'auto',every:245,dmg:1.6,fx:'psi',v:0,desc:'Bone dust that ends whatever it touches'},
+     pow:40,tough:168,spd:1.16,superName:'Infinite Tsukuyomi',
+     superDesc:'The moon opens an eye and everyone stops fighting',
+     skins:[SK({name:'White Goddess',suit:'#F4F6FA',suitLo:'#AEB6C2',trim:'#8E4EC4',trimLo:'#4E2472',
+           cape:'#E8ECF2',capeLo:'#98A2B0',leg:'#F4F6FA',boot:'#D8DEE8',hair:'#F4F6FA',
+           skin:'#F0E4E8',skinLo:'#B49CA6',fore:'#F0E4E8',foreLo:'#B49CA6'})]}
   ];
   var HP_SCALE=2.8;   /* fights last far longer now */
   var TIERS=[
@@ -1697,6 +1806,7 @@
   function missionState(){
     if(!save.done||typeof save.done!=='object') save.done={};
     if(!save.arenaWins||typeof save.arenaWins!=='object') save.arenaWins={};
+    if(!save.legends||typeof save.legends!=='object') save.legends={};
   }
   function loadSave(){
     try{
@@ -4085,7 +4195,7 @@
     raid=null;
     var h=HEROES[save.sel], p=prog(h);
     me=makeFighter(h,p.lvl,p.tier,1,404,p.skin);
-    var pool=HEROES.filter(function(x){return x.id!==h.id;});
+    var pool=HEROES.filter(function(x){return x.id!==h.id&&!x.legend;});
     var oh=pool[Math.floor(Math.random()*pool.length)];
     var olvl=Math.max(1,p.lvl+(Math.random()<0.5?0:1));
     var otier=Math.min(4,Math.max(0,p.tier+(Math.random()<0.35?1:0)));
@@ -4098,6 +4208,52 @@
     $('fightbar').hidden=false; $('homeUI').hidden=true; $('overlay').hidden=true;
     tone(520,0.16,'square',0.05,880);
   }
+  /* ================= legendary event =================
+     Six champions cannot simply be picked. One of them is the legend of the
+     week — beat it at full strength and it is yours for good. The week is
+     worked out from the date, so the event rotates on its own. */
+  var LEGENDS=HEROES.filter(function(h){ return h.legend; });
+  function legendOwned(h){ return !h.legend || !!save.legends[h.id]; }
+  function legendWeek(){ return Math.floor(Date.now()/(7*86400000)); }
+  function legendOfWeek(){ return LEGENDS.length?LEGENDS[legendWeek()%LEGENDS.length]:null; }
+  function legendsOwnedCount(){
+    var n=0; for(var i=0;i<LEGENDS.length;i++) if(save.legends[LEGENDS[i].id]) n++;
+    return n;
+  }
+  function daysLeftInEvent(){
+    var per=7*86400000, end=(legendWeek()+1)*per;
+    return Math.max(1,Math.ceil((end-Date.now())/86400000));
+  }
+  var legendBout=null;
+  function startLegendFight(){
+    var L=legendOfWeek(); if(!L) return;
+    raid=null; legendBout=L.id;
+    var h=HEROES[save.sel], p=prog(h);
+    me=makeFighter(h,p.lvl,p.tier,1,404,p.skin);
+    /* the legend turns up at full strength — this is meant to be the hardest
+       single fight in the game outside a raid boss */
+    var lv=Math.max(20,Math.min(60,p.lvl+6));
+    foe=makeFighter(L,lv,4,-1,620,0);
+    /* A legend already has enormous base stats, and tier 4 at a high level
+       multiplies them again. Left alone it out-damages anything you can
+       bring and stun-locks you, so — same rule as a raid boss — it is a
+       wall of health rather than a hammer. */
+    foe.max=Math.round(foe.max*1.15); foe.hp=foe.max;
+    foe.pow=Math.max(1,Math.round(foe.pow*0.065));
+    foe.spd=foe.spd*0.66;
+    foe.isLegend=true;
+    floats.length=0; sparks.length=0; fx.length=0; endT=0;
+    screen='fight';
+    var lb=$('bLeap'), flier=(h.id==='superman');
+    lb.childNodes[0].nodeValue=flier?'Flying Jump':'Leap';
+    lb.querySelector('small').textContent=flier?'Fly up and dive':'Jump attack';
+    $('fightbar').hidden=false; $('homeUI').hidden=true; $('overlay').hidden=true;
+    floatText(512,GY-250,'LEGENDARY EVENT','#FFD46B',true);
+    flash=Math.max(flash,16); shake=Math.max(shake,18);
+    tone(200,0.5,'square',0.05,700);
+    setTimeout(function(){ tone(320,0.4,'triangle',0.05,1100); },240);
+  }
+
   /* ================= solo raid =================
      One champion, alone, against a ladder of opponents that keeps getting
      harder. Health carries between floors with only a small recovery, so
@@ -4143,7 +4299,8 @@
   }
   function raidFoe(){
     var h=HEROES[save.sel], p=prog(h), f=raid.floor, k=raidKind(f);
-    var pool=(k==='main'?heavies():HEROES).filter(function(x){return x.id!==h.id;});
+    var pool=(k==='main'?heavies():HEROES.filter(function(x){return !x.legend;}))
+              .filter(function(x){return x.id!==h.id;});
     if(!pool.length) pool=HEROES.filter(function(x){return x.id!==h.id;});
     var oh=pool[Math.floor(Math.random()*pool.length)];
     var olvl=Math.max(1,Math.min(60,Math.round(p.lvl*0.5)+Math.round(f*1.3)));
@@ -4259,6 +4416,11 @@
     cine=null;
     screen='over'; endT=0;
     if(raid){ if(win) raidCleared(); else raidBank(false); return; }
+    var wonLegend=null;
+    if(legendBout){
+      if(win&&!save.legends[legendBout]){ save.legends[legendBout]=1; wonLegend=legendBout; rosterDirty=true; }
+      legendBout=null;
+    }
     var h=HEROES[save.sel], p=prog(h);
     var cred=0,xp=0,freeLvl=0;
     if(win){
@@ -4283,7 +4445,9 @@
     var got=missionsReady();
     $('ovTitle').textContent=win?'Victory':'Defeated';
     $('ovText').textContent=win
-      ? h.name+' beat '+foe.h.name+' (level '+foe.lvl+').'
+      ? (wonLegend?'LEGENDARY UNLOCKED. ':'')
+        +h.name+' beat '+foe.h.name+' (level '+foe.lvl+').'
+        +(wonLegend?' '+foe.h.name+' is yours for good — pick them any time.':'')
         +(foe.usedGuard?' Through the security detail and all — big bonus.':'')
         +(ups?' Levelled up to '+p.lvl+'!':'')
         +(freeLvl?' Win '+p.wins+' — every third win is a free level.':'')
@@ -4300,11 +4464,12 @@
   }
   function toHome(){
     cine=null; cam.z=1; cam.x=0; cam.y=0;
-    raid=null;
+    raid=null; legendBout=null;
     screen='home'; me=null; foe=null;
     $('ovBtn2').hidden=true;
     $('fightbar').hidden=true; $('homeUI').hidden=false; $('overlay').hidden=true;
-    buildMissions(); renderUI();
+    if(rosterDirty){ markCardsDirty(); buildRoster(); }
+    buildMissions(); buildLegend(); renderUI();
   }
 
   function floatText(x,y,txt,col,big){ floats.push({x:x,y:y,t:txt,c:col,life:56,big:!!big}); }
@@ -5487,14 +5652,21 @@
   requestAnimationFrame(frame);
 
   /* ================= roster UI ================= */
-  var cards=[];
+  var cards=[], rosterDirty=false;
   function buildRoster(){
+    rosterDirty=false;
     var wrap=$('roster');
     wrap.innerHTML=''; cards.length=0;
     HEROES.forEach(function(h,i){
       var b=document.createElement('button');
-      b.className='card'+(i===save.sel?' on':'');
+      var lock=(h.legend&&!legendOwned(h));
+      b.className='card'+(i===save.sel?' on':'')+(lock?' locked':'');
       b.setAttribute('aria-pressed',String(i===save.sel));
+      if(h.legend){
+        var lt=document.createElement('span'); lt.className='lockTag';
+        lt.textContent=lock?'LEGENDARY':'LEGEND';
+        b.appendChild(lt);
+      }
       var c=document.createElement('canvas'); c.width=260; c.height=260;
       var nm=document.createElement('span'); nm.className='nm'; nm.textContent=h.name;
       var row=document.createElement('span'); row.className='row';
@@ -5508,7 +5680,7 @@
         save.sel=i; store();
         [].forEach.call(wrap.children,function(x,j){ x.className='card'+(j===i?' on':''); x.setAttribute('aria-pressed',String(j===i)); });
         tone(760,0.07,'triangle',0.035,1050);
-        markCardsDirty(); buildSkins(); buildMissions(); renderUI();
+        markCardsDirty(); buildSkins(); buildMissions(); buildLegend(); renderUI();
       });
       wrap.appendChild(b);
       var cc=c.getContext('2d'); cc.setTransform(2,0,0,2,0,0);
@@ -5600,6 +5772,36 @@
   }
 
   var skinCards=[];
+  /* the legend of the week, drawn into its own little canvas */
+  function buildLegend(){
+    var L=legendOfWeek(), owned=L&&!!save.legends[L.id];
+    var tag=$('lTag');
+    var left=LEGENDS.length-legendsOwnedCount();
+    tag.hidden=(left===0);
+    tag.textContent=left+' still to win';
+    if(!L){ $('lName').textContent='—'; return; }
+    $('lName').textContent=L.name;
+    $('lSub').textContent=L.real+' · '+L.cls;
+    $('lNote').textContent=owned
+      ? 'Already won. '+L.name+' is in your roster for good, and a different legend takes over next week.'
+      : L.name+' turns up eight levels above your champion, fully forged, with a third more health again. '
+        +'Beat them and they are yours permanently. '+daysLeftInEvent()
+        +(daysLeftInEvent()===1?' day':' days')+' left, then the next legend takes over.';
+    var btn=$('bLegend');
+    btn.textContent=owned?'Already won':'Take the challenge';
+    btn.disabled=owned;
+    /* portrait */
+    var c=$('lCanvas'), cc=c.getContext('2d');
+    cc.setTransform(1,0,0,1,0,0);
+    cc.clearRect(0,0,200,200);
+    cc.setTransform(2,0,0,2,0,0);
+    var fg=makeFighter(L,40,4,1,50,0);
+    fg.pose=clonePose(POSE.idle);
+    var oldGY=GY;
+    try{ drawFighter(cc,fg,tick,0.86); }catch(e){}
+    GY=oldGY;
+  }
+
   function buildMissions(){
     var h=HEROES[save.sel], wrap=$('missions');
     wrap.innerHTML='';
@@ -5724,11 +5926,18 @@
       for(var k=0;k<5;k++) ph+='<i class="'+(k<=cp.tier?'lit':'')+'"></i>';
       cards[i].pips.innerHTML=ph;
     }
+    /* a legendary you have not won yet can be looked at but not fought with */
+    var lockedPick=(h.legend&&!legendOwned(h));
+    var fb=$('bFight'), rb=$('bRaid');
+    fb.disabled=lockedPick; rb.disabled=lockedPick;
+    fb.textContent=lockedPick?'Locked — win the Legendary Event':'Enter the arena';
+    $('dMaxOne').textContent='Level 60, Legendary armour, every version — for '+h.name;
+    $('dAllLegends').textContent=legendsOwnedCount()+' of '+LEGENDS.length+' won so far';
     $('rBestHero').textContent='Best with this champion: floor '+(p.raid||0);
     $('rBestAll').textContent='Best ever: floor '+(save.raidBest||0);
     $('owned').textContent=HEROES.length;
   }
-  buildRoster(); buildArenas(); buildSkins(); buildMissions(); renderUI();
+  buildRoster(); buildArenas(); buildSkins(); buildMissions(); buildLegend(); renderUI();
 
   function flashMsg(t){ $('msg').textContent=t; setTimeout(function(){ if($('msg').textContent===t) $('msg').textContent=''; },2600); }
 
@@ -5761,6 +5970,67 @@
   $('bRaid').addEventListener('click',function(){
     startRaid();
     tone(300,0.2,'square',0.05,700);
+  });
+  $('bLegend').addEventListener('click',function(){ startLegendFight(); });
+
+  /* ---- the owner's key ----------------------------------------------
+     This is a single-player game that lives in one browser, so these just
+     rewrite the local save. Nothing here talks to anyone else's anything. */
+  function ownerMsg(t){
+    var el=$('oMsg'); el.textContent=t;
+    clearTimeout(ownerMsg.t);
+    ownerMsg.t=setTimeout(function(){ el.textContent=''; },4200);
+  }
+  function ownerRefresh(){
+    store(); markCardsDirty(); buildRoster();
+    buildSkins(); buildMissions(); buildLegend(); renderUI();
+  }
+  $('bAllSkins').addEventListener('click',function(){
+    var n=0;
+    HEROES.forEach(function(h){
+      var g=prog(h);
+      for(var i=0;i<h.skins.length;i++) if(g.owned.indexOf(i)<0){ g.owned.push(i); n++; }
+    });
+    ownerRefresh();
+    ownerMsg(n?('Unlocked '+n+' version'+(n===1?'':'s')+'. Every costume in the game is yours.')
+              :'You already own every version.');
+    tone(880,0.14,'triangle',0.05,1320);
+    setTimeout(function(){ tone(1180,0.24,'triangle',0.05,1560); },130);
+  });
+  $('bAllLegends').addEventListener('click',function(){
+    var n=0;
+    LEGENDS.forEach(function(L){ if(!save.legends[L.id]){ save.legends[L.id]=1; n++; } });
+    ownerRefresh();
+    ownerMsg(n?('Unlocked '+n+' legendary champion'+(n===1?'':'s')+'.')
+              :'You already own every legendary.');
+    tone(220,0.3,'square',0.05,760);
+    setTimeout(function(){ tone(520,0.34,'triangle',0.05,1320); },200);
+  });
+  $('bCredits').addEventListener('click',function(){
+    save.credits+=1000000;
+    ownerRefresh();
+    ownerMsg('Added 1,000,000 credits.');
+    tone(760,0.12,'triangle',0.05,1150);
+  });
+  $('bMaxOne').addEventListener('click',function(){
+    var h=HEROES[save.sel], g=prog(h);
+    g.lvl=60; g.xp=0; g.tier=4;
+    for(var i=0;i<h.skins.length;i++) if(g.owned.indexOf(i)<0) g.owned.push(i);
+    if(h.legend) save.legends[h.id]=1;
+    me=null;
+    ownerRefresh();
+    ownerMsg(h.name+' is level 60, Legendary armour, every version unlocked.');
+    tone(300,0.28,'sawtooth',0.05,900);
+    setTimeout(function(){ tone(900,0.3,'triangle',0.05,1400); },200);
+  });
+  $('bWipe').addEventListener('click',function(){
+    if(!window.confirm('Start again? This wipes every level, credit, version and legendary.')) return;
+    save={credits:600,sel:0,arena:0,h:{},done:{},arenaWins:{},legends:{},raidBest:0};
+    for(var i=0;i<HEROES.length;i++) save.h[HEROES[i].id]=blank();
+    raid=null; legendBout=null; me=null;
+    ownerRefresh();
+    ownerMsg('Save wiped. Everything is back to the start.');
+    tone(180,0.5,'sawtooth',0.05,90);
   });
 
   /* fight controls */
