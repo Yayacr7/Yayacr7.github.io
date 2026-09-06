@@ -192,7 +192,7 @@
     <p class="brand">Yahya<span>.games</span><b>.com</b></p>
     <p class="eyebrow">Sky arena &middot; High noon</p>
     <h1>Skyforge Champions</h1>
-    <p class="sub">Forty-six characters from DC, Marvel and the X-Men fight across six arenas. Win bouts to earn credits and experience, level your champions up, and forge their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
+    <p class="sub">Sixty-six characters from DC, Marvel and the X-Men fight across six arenas. Win bouts to earn credits and experience, level your champions up, and forge their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
   </header>
 
   <div class="topbar">
@@ -297,8 +297,13 @@
 
   var hasAspect=!!(window.CSS&&CSS.supports&&CSS.supports('aspect-ratio','16 / 9'));
   function fit(){
-    var dpr=Math.min(window.devicePixelRatio||1,2);
-    cvs.width=W*dpr; cvs.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    /* A 3x phone screen would mean nine times the pixels for no visible gain.
+       Cap by how wide the arena is actually drawn. */
+    var shown=cvs.clientWidth||cvs.offsetWidth||W;
+    var cap=shown>820?1.5:2;
+    var dpr=Math.min(window.devicePixelRatio||1,cap);
+    cvs.width=Math.round(W*dpr); cvs.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
     /* older Safari has no aspect-ratio, so hold the shape by hand */
     if(!hasAspect){
       var w=cvs.clientWidth||cvs.offsetWidth;
@@ -735,6 +740,155 @@
      superDesc:'The suit stops asking permission',
      skins:[SK({name:'Classic',suit:'#121319',suitLo:'#050609',trim:'#E8ECF2',trimLo:'#9AA2AE',
            leg:'#121319',boot:'#070810',hair:'#050609',fore:'#121319',foreLo:'#050609'})]},
+    {id:'strange',name:'Doctor Strange',real:'Stephen Strange',cls:'Master of the Mystic Arts',
+     emblem:'gem',head:'short',
+     trait:{name:'Mirror Dimension',kind:'guardian',v:0.54,desc:'Guarding blocks far more than usual'},
+     pow:30,tough:104,spd:1.06,superName:'Crimson Bands',
+     superDesc:'Binds them in place and closes the trap',
+     skins:[SK({name:'Classic',suit:'#1E4A6E',suitLo:'#0A2438',trim:'#C8A21C',trimLo:'#7A5E06',
+           cape:'#B8202C',capeLo:'#66101A',leg:'#183A56',boot:'#0E2434',hair:'#4A4038',beard:true})]},
+    {id:'widow',name:'Black Widow',real:'Natasha Romanoff',cls:'The Spy',
+     emblem:'none',head:'longhair',
+     trait:{name:'Widow Bite',kind:'double',v:0.24,desc:'24% chance every strike lands twice'},
+     pow:25,tough:96,spd:1.30,superName:'Takedown Chain',
+     superDesc:'Three throws before they hit the floor once',
+     skins:[SK({name:'Classic',suit:'#16181F',suitLo:'#08090C',trim:'#B8202C',trimLo:'#66101A',
+           leg:'#16181F',boot:'#0A0B10',hair:'#A8441E',fore:'#16181F',foreLo:'#08090C'})]},
+    {id:'hawkeye',name:'Hawkeye',real:'Clint Barton',cls:'Never Misses',
+     emblem:'arrow',head:'domino',
+     trait:{name:'Perfect Shot',kind:'firststrike',v:2.3,desc:'His first hit of a fight is a critical'},
+     pow:26,tough:98,spd:1.18,superName:'Trick Arrow Volley',
+     superDesc:'Every arrow in the quiver has a different surprise',
+     skins:[SK({name:'Classic',suit:'#4A2A6E',suitLo:'#221038',trim:'#141620',trimLo:'#07080D',
+           leg:'#3A2056',boot:'#141620',hair:'#8A6A3A'})]},
+    {id:'loki',name:'Loki',real:'Loki Laufeyson',cls:'God of Mischief',
+     emblem:'none',head:'horns',
+     trait:{name:'Illusions',kind:'counter',v:0.36,desc:'Guarding often snaps straight into a counter'},
+     pow:28,tough:100,spd:1.16,superName:'Hall of Mirrors',
+     superDesc:'A dozen of him, and only one is real',
+     skins:[SK({name:'Classic',suit:'#1E5A34',suitLo:'#0A2E18',trim:'#C8A21C',trimLo:'#7A5E06',
+           cape:'#2A6E3E',capeLo:'#123420',leg:'#184A2C',boot:'#0E2E1A',hair:'#141620'})]},
+    {id:'thanos',name:'Thanos',real:'Thanos of Titan',cls:'The Mad Titan',
+     emblem:'gem',head:'short',
+     trait:{name:'Inevitable',kind:'power',v:0.26,desc:'+26% damage on every hit'},
+     pow:37,tough:158,spd:0.72,superName:'Gauntlet Snap',
+     superDesc:'Closes his fist, and the arena buckles',
+     skins:[SK({name:'Classic',suit:'#C8A21C',suitLo:'#7A5E06',trim:'#2E5A9E',trimLo:'#122E58',
+           leg:'#2E5A9E',boot:'#122E58',hair:'#3A2A56',
+           skin:'#9A7EC4',skinLo:'#5E4880',fore:'#9A7EC4',foreLo:'#5E4880'})]},
+    {id:'antman',name:'Ant-Man',real:'Scott Lang',cls:'The Small One',
+     emblem:'none',head:'domehelm',
+     trait:{name:'Size Shift',kind:'double',v:0.26,desc:'26% chance every strike lands twice'},
+     pow:24,tough:100,spd:1.28,superName:'Giant-Man Stomp',
+     superDesc:'Grows to the size of a building and steps',
+     skins:[SK({name:'Classic',suit:'#B8202C',suitLo:'#66101A',trim:'#C8CDD8',trimLo:'#7A8090',
+           leg:'#8A1620',boot:'#4E5A68',hair:'#5A3418'})]},
+    {id:'wanda',name:'Scarlet Witch',real:'Wanda Maximoff',cls:'The Scarlet Witch',
+     emblem:'none',head:'longhair',
+     trait:{name:'Chaos Magic',kind:'charge',v:0.58,desc:'Meter charges 58% faster'},
+     pow:32,tough:96,spd:1.10,superName:'Reality Warp',
+     superDesc:'Rewrites the rules for a moment, and it hurts',
+     skins:[SK({name:'Classic',suit:'#8E1420',suitLo:'#4A060E',trim:'#C8202C',trimLo:'#78101A',
+           cape:'#6E101A',capeLo:'#380608',leg:'#7A1018',boot:'#4A060E',hair:'#8A3A18'})]},
+    {id:'vision',name:'Vision',real:'The Vision',cls:'The Synthezoid',
+     emblem:'gem',head:'domehelm',
+     trait:{name:'Phase Density',kind:'tough',v:0.23,desc:'Takes 23% less damage from everything'},
+     pow:31,tough:128,spd:1.0,superName:'Mind Stone Beam',
+     superDesc:'The stone opens and does not stop',
+     skins:[SK({name:'Classic',suit:'#B8202C',suitLo:'#66101A',trim:'#C8A21C',trimLo:'#7A5E06',
+           cape:'#E8B430',capeLo:'#8A6608',leg:'#1E7A3E',boot:'#0E4A24',hair:'#C8A21C',
+           skin:'#C4444E',skinLo:'#7E2028',fore:'#B8202C',foreLo:'#66101A'})]},
+    {id:'ghostrider',name:'Ghost Rider',real:'Johnny Blaze',cls:'The Spirit of Vengeance',
+     emblem:'none',head:'skull',
+     trait:{name:'Penance Stare',kind:'berserk',v:0.72,desc:'+72% damage once badly hurt'},
+     pow:34,tough:110,spd:1.08,superName:'Hellfire Chain',
+     superDesc:'The chain lights up and finds them anywhere',
+     skins:[SK({name:'Classic',suit:'#1A1A1E',suitLo:'#0A0A0C',trim:'#E8720E',trimLo:'#8A3E04',
+           leg:'#16161A',boot:'#0A0A0C',hair:'#F09020',
+           skin:'#E8E2D4',skinLo:'#A89E88',fore:'#1A1A1E',foreLo:'#0A0A0C'})]},
+    {id:'surfer',name:'Silver Surfer',real:'Norrin Radd',cls:'The Herald',
+     emblem:'none',head:'bald',
+     trait:{name:'Power Cosmic',kind:'charge',v:0.6,desc:'Meter charges 60% faster'},
+     pow:33,tough:118,spd:1.20,superName:'Cosmic Wave',
+     superDesc:'A slice of a dying star, thrown by hand',
+     skins:[SK({name:'Classic',suit:'#C4CCD6',suitLo:'#7A8290',trim:'#E8EEF6',trimLo:'#A2AAB8',
+           leg:'#B4BCC8',boot:'#8A929E',hair:'#C4CCD6',
+           skin:'#D2DAE4',skinLo:'#8A929E',fore:'#D2DAE4',foreLo:'#8A929E'})]},
+    {id:'jean',name:'Jean Grey',real:'Jean Grey',cls:'The Phoenix',
+     emblem:'none',head:'longhair',
+     trait:{name:'Phoenix Force',kind:'momentum',v:0.24,desc:'+24% damage while above half health'},
+     pow:33,tough:100,spd:1.12,superName:'Phoenix Rising',
+     superDesc:'A bird of fire opens its wings over the arena',
+     skins:[SK({name:'Classic',suit:'#1E7A3E',suitLo:'#0A4220',trim:'#E8B430',trimLo:'#96700A',
+           leg:'#186034',boot:'#0E4020',hair:'#C4451E'})]},
+    {id:'nightcrawler',name:'Nightcrawler',real:'Kurt Wagner',cls:'The Teleporter',
+     emblem:'none',head:'short',
+     trait:{name:'Bamf',kind:'counter',v:0.4,desc:'Guarding often snaps straight into a counter'},
+     pow:26,tough:94,spd:1.36,superName:'Teleport Rush',
+     superDesc:'Hits from six places at once and is gone',
+     skins:[SK({name:'Classic',suit:'#141620',suitLo:'#07080D',trim:'#B8202C',trimLo:'#66101A',
+           leg:'#141620',boot:'#0A0B10',hair:'#1A1030',
+           skin:'#3A4A9E',skinLo:'#1E2858',fore:'#3A4A9E',foreLo:'#1E2858'})]},
+    {id:'rogue',name:'Rogue',real:'Anna Marie',cls:'The Untouchable',
+     emblem:'none',head:'longhair',
+     trait:{name:'Absorb',kind:'regen',v:3.2,desc:'Takes strength from whoever she touches'},
+     pow:31,tough:126,spd:1.06,superName:'Power Drain',
+     superDesc:'Takes everything they have and uses it',
+     skins:[SK({name:'Classic',suit:'#1E7A3E',suitLo:'#0A4220',trim:'#E8B430',trimLo:'#96700A',
+           leg:'#186034',boot:'#0E4020',hair:'#8A5A2A'})]},
+    {id:'beast',name:'Beast',real:'Hank McCoy',cls:'The Scientist',
+     emblem:'none',head:'short',
+     trait:{name:'Brilliant',kind:'iq',v:0.5,desc:'Reads his opponent — see the Intellect bar'},
+     pow:30,tough:132,spd:1.04,superName:'Primal Rush',
+     superDesc:'Stops being polite about it',
+     skins:[SK({name:'Classic',suit:'#1E3A7E',suitLo:'#0A1A42',trim:'#C8CDD8',trimLo:'#7A8090',
+           leg:'#18306A',boot:'#0A1A42',hair:'#2A4EA8',
+           skin:'#3A5EC4',skinLo:'#1E326E',fore:'#3A5EC4',foreLo:'#1E326E'})]},
+    {id:'gambit',name:'Gambit',real:'Remy LeBeau',cls:'The Cajun',
+     emblem:'none',head:'hood',
+     trait:{name:'Kinetic Charge',kind:'power',v:0.19,desc:'+19% damage on every hit'},
+     pow:28,tough:102,spd:1.20,superName:'Full Deck',
+     superDesc:'Fifty-two charged cards, all at once',
+     skins:[SK({name:'Classic',suit:'#4A2A18',suitLo:'#221008',trim:'#B8202C',trimLo:'#66101A',
+           leg:'#141620',boot:'#0A0B10',hair:'#8A5A2A'})]},
+    {id:'stewart',name:'John Stewart',real:'John Stewart',cls:'The Marine',
+     emblem:'lantern',head:'domino',
+     trait:{name:'Iron Will',kind:'guardian',v:0.5,desc:'Guarding blocks far more than usual'},
+     pow:32,tough:114,spd:0.94,superName:'Fortress Construct',
+     superDesc:'Builds a wall, then throws it',
+     skins:[SK({name:'Classic',suit:'#0E7A3E',suitLo:'#053E1E',trim:'#EEF6F0',trimLo:'#B8C4BC',
+           leg:'#0A5E2E',boot:'#063A1C',hair:'#1A1208',
+           skin:'#6E4A2E',skinLo:'#3E2818',fore:'#0E7A3E',foreLo:'#053E1E'})]},
+    {id:'static',name:'Static Shock',real:'Virgil Hawkins',cls:'The Bang Baby',
+     emblem:'bolt',head:'domino',
+     trait:{name:'Overcharge',kind:'charge',v:0.52,desc:'Meter charges 52% faster'},
+     pow:26,tough:96,spd:1.28,superName:'Overload',
+     superDesc:'Dumps the whole charge through the floor',
+     skins:[SK({name:'Classic',suit:'#1E2A6E',suitLo:'#0A1234',trim:'#E8C424',trimLo:'#96780A',
+           cape:'#E8C424',capeLo:'#8A6608',leg:'#182258',boot:'#0E1434',hair:'#141018',
+           skin:'#7E5638',skinLo:'#4A3020',fore:'#7E5638',foreLo:'#4A3020'})]},
+    {id:'twoface',name:'Two-Face',real:'Harvey Dent',cls:'The Coin Flip',
+     emblem:'none',head:'twoface',
+     trait:{name:'Chance',kind:'double',v:0.3,desc:'30% chance every strike lands twice'},
+     pow:29,tough:104,spd:1.02,superName:'Call It',
+     superDesc:'Flips the coin, and it never lands well for you',
+     skins:[SK({name:'Classic',suit:'#2E3444',suitLo:'#141820',trim:'#C8CDD8',trimLo:'#7A8090',
+           leg:'#242A38',boot:'#12161E',hair:'#8A6A3A'})]},
+    {id:'scarecrow',name:'Scarecrow',real:'Jonathan Crane',cls:'The Master of Fear',
+     emblem:'none',head:'hood',
+     trait:{name:'Fear Toxin',kind:'berserk',v:0.65,desc:'+65% damage once badly hurt'},
+     pow:27,tough:92,spd:1.14,superName:'Fear Gas',
+     superDesc:'Shows them the thing they least want to see',
+     skins:[SK({name:'Classic',suit:'#6A5A2E',suitLo:'#342A12',trim:'#3A2E18',trimLo:'#1A1408',
+           leg:'#4A3E20',boot:'#241C0E',hair:'#8A7A42'})]},
+    {id:'penguin',name:'The Penguin',real:'Oswald Cobblepot',cls:'The Gentleman of Crime',
+     emblem:'none',head:'tophat',
+     trait:{name:'Always Armed',kind:'firststrike',v:2.1,desc:'His first hit of a fight is a critical'},
+     pow:27,tough:120,spd:0.86,superName:'Umbrella Gun',
+     superDesc:'It was never just an umbrella',
+     skins:[SK({name:'Classic',suit:'#16181F',suitLo:'#08090C',trim:'#E8ECF2',trimLo:'#9AA2AE',
+           leg:'#1E2028',boot:'#0A0B10',hair:'#141620',
+           skin:'#E4C0A0',skinLo:'#A8845E',fore:'#16181F',foreLo:'#08090C'})]},
     {id:'lex',name:'Lex Luthor',real:'Alexander Luthor',cls:'The Smartest Man Alive',
      emblem:'core',head:'bald',
      trait:{name:'Twelfth Level Intellect',kind:'iq',v:0.6,desc:'Reads his opponent — see the Intellect bar'},
@@ -1647,6 +1801,25 @@
         done(g,h.suit);
         g.beginPath(); g.moveTo(hx+5,hy-9); g.lineTo(hx+9,hy-17); g.lineTo(hx+10,hy-6); g.closePath();
         done(g,h.suit);
+      }else if(h.head==='horns'){
+        g.beginPath(); g.arc(hx,hy-2,9.4,Math.PI*0.86,Math.PI*2.12); g.closePath();
+        done(g,h.trim);
+        g.beginPath(); g.moveTo(hx-6,hy-8); g.quadraticCurveTo(hx-16,hy-20,hx-9,hy-26);
+        g.quadraticCurveTo(hx-9,hy-16,hx-1,hy-10); g.closePath();
+        done(g,h.trim);
+        g.beginPath(); g.moveTo(hx+4,hy-9); g.quadraticCurveTo(hx+13,hy-21,hx+7,hy-27);
+        g.quadraticCurveTo(hx+8,hy-17,hx+9,hy-7); g.closePath();
+        done(g,h.trim);
+      }else if(h.head==='skull'){
+        g.beginPath(); g.arc(hx,hy-2,9,Math.PI*0.9,Math.PI*2.1); g.closePath();
+        done(g,h.skin);
+        g.beginPath(); g.ellipse(hx-1,hy+5,6.4,4.4,0,0,6.283); g.closePath();
+        done(g,h.skin);
+      }else if(h.head==='twoface'){
+        g.beginPath(); g.arc(hx,hy-3.4,9,Math.PI*0.96,Math.PI*1.5); g.closePath();
+        done(g,h.hair);
+        g.beginPath(); g.arc(hx,hy-3.4,9,Math.PI*1.5,Math.PI*2.06); g.closePath();
+        done(g,'#7E5A2E');
       }else if(h.head==='hawkhelm'){
         g.beginPath();
         g.arc(hx,hy-2,9.6,Math.PI*0.86,Math.PI*2.1);
@@ -1793,6 +1966,25 @@
         done(g,h.suit);
         g.beginPath(); g.moveTo(hx+5,hy-9); g.lineTo(hx+9,hy-17); g.lineTo(hx+10,hy-6); g.closePath();
         done(g,h.suit);
+      }else if(h.head==='horns'){
+        g.beginPath(); g.arc(hx,hy-2,9.4,Math.PI*0.86,Math.PI*2.12); g.closePath();
+        done(g,h.trim);
+        g.beginPath(); g.moveTo(hx-6,hy-8); g.quadraticCurveTo(hx-16,hy-20,hx-9,hy-26);
+        g.quadraticCurveTo(hx-9,hy-16,hx-1,hy-10); g.closePath();
+        done(g,h.trim);
+        g.beginPath(); g.moveTo(hx+4,hy-9); g.quadraticCurveTo(hx+13,hy-21,hx+7,hy-27);
+        g.quadraticCurveTo(hx+8,hy-17,hx+9,hy-7); g.closePath();
+        done(g,h.trim);
+      }else if(h.head==='skull'){
+        g.beginPath(); g.arc(hx,hy-2,9,Math.PI*0.9,Math.PI*2.1); g.closePath();
+        done(g,h.skin);
+        g.beginPath(); g.ellipse(hx-1,hy+5,6.4,4.4,0,0,6.283); g.closePath();
+        done(g,h.skin);
+      }else if(h.head==='twoface'){
+        g.beginPath(); g.arc(hx,hy-3.4,9,Math.PI*0.96,Math.PI*1.5); g.closePath();
+        done(g,h.hair);
+        g.beginPath(); g.arc(hx,hy-3.4,9,Math.PI*1.5,Math.PI*2.06); g.closePath();
+        done(g,'#7E5A2E');
       }else if(h.head==='hawkhelm'){
         g.fillStyle='#12141B'; g.beginPath(); g.arc(hx+4.8,hy-1.4,1.6,0,6.283); g.fill();
         g.fillStyle='#C4785A'; g.fillRect(hx+3,hy+4,5,1.6);
@@ -1819,6 +2011,32 @@
         g.beginPath(); g.ellipse(hx+4.6,hy-1.8,1.1,0.9,0,0,6.283); g.fill();
         g.strokeStyle='rgba(20,16,14,.5)'; g.lineWidth=1.3;
         g.beginPath(); g.moveTo(hx+2,hy+4.4); g.lineTo(hx+8,hy+4); g.stroke();
+      }else if(h.head==='horns'){
+        g.fillStyle='#1B2233'; g.beginPath(); g.arc(hx+4.8,hy-1.4,1.6,0,6.283); g.fill();
+        g.strokeStyle='rgba(40,26,14,.6)'; g.lineWidth=1.4;
+        g.beginPath(); g.moveTo(hx+2.6,hy+4.2); g.lineTo(hx+7.4,hy+3.9); g.stroke();
+      }else if(h.head==='skull'){
+        /* flame-lit sockets and a grin */
+        g.fillStyle='#12100E';
+        g.beginPath(); g.ellipse(hx+4.4,hy-2,2.8,2.4,0,0,6.283); g.fill();
+        g.fillStyle='#F08A18';
+        g.beginPath(); g.arc(hx+4.4,hy-2,1.5,0,6.283); g.fill();
+        g.strokeStyle='#12100E'; g.lineWidth=1.2;
+        g.beginPath(); g.moveTo(hx+0.4,hy+4.6); g.lineTo(hx+8,hy+4.2); g.stroke();
+        for(var tt=0;tt<4;tt++){
+          g.beginPath(); g.moveTo(hx+1+tt*2.2,hy+2.6); g.lineTo(hx+1+tt*2.2,hy+6.2); g.stroke();
+        }
+        g.fillStyle='rgba(240,140,24,.28)';
+        g.beginPath(); g.arc(hx,hy-4,13,0,6.283); g.fill();
+      }else if(h.head==='twoface'){
+        g.fillStyle='#1B2233'; g.beginPath(); g.arc(hx+4.8,hy-1.4,1.6,0,6.283); g.fill();
+        /* the ruined half */
+        g.fillStyle='rgba(150,60,50,.42)';
+        g.beginPath(); g.ellipse(hx-3.4,hy-0.6,4.6,7,0,0,6.283); g.fill();
+        g.strokeStyle='rgba(110,40,34,.6)'; g.lineWidth=1;
+        for(var sc=0;sc<3;sc++){
+          g.beginPath(); g.moveTo(hx-6.4,hy-4+sc*3.4); g.lineTo(hx-0.6,hy-3+sc*3.4); g.stroke();
+        }
       }else if(h.head==='hood'){
         g.fillStyle='rgba(8,20,12,.55)';
         g.beginPath(); g.ellipse(hx+1.4,hy-2.6,7.4,4.6,0,0,6.283); g.fill();

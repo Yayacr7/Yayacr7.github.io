@@ -4,7 +4,7 @@ Things I'm making with Claude Code.
 
 ## Yahya.games.com — Skyforge Champions
 
-Forty-six characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
+Sixty-six characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
 and forge their armour into brighter and brighter finishes.
 
 **To play:** open `index.html` in any web browser.
@@ -43,10 +43,16 @@ sky over the fire pits · **The Watchtower** in orbit, with Earth below.
 
 ### The roster
 
-Forty-six characters, each drawn to their own costume. This is not every
+Sixty-six characters, each drawn to their own costume. This is not every
 DC character — DC has thousands, and each one here is hand-written drawing
 code — but it covers the Justice League, the Bat-family, and a bench of
 villains.
+
+Twenty more joined the roster: Doctor Strange, Black Widow, Hawkeye, Loki,
+Thanos, Ant-Man, Scarlet Witch, Vision, Ghost Rider, Silver Surfer, Jean Grey,
+Nightcrawler, Rogue, Beast, Gambit, John Stewart, Static Shock, Two-Face,
+Scarecrow and The Penguin — with horned, flaming-skull and split-face head
+treatments drawn for Loki, Ghost Rider and Two-Face.
 
 **Heroes:** Superman, Batman, Wonder Woman, The Flash, Green Lantern, Cyborg,
 Aquaman, Shazam, Green Arrow, Supergirl, Batgirl, Nightwing, Robin, Martian
@@ -216,4 +222,8 @@ painted once into an offscreen canvas and blitted each frame, rather than
 being rebuilt sixty times a second. Roster portraits are painted once each and
 only the selected champion keeps animating, and they stop entirely during a
 fight. The fine per-limb shading is limited to the large arena figures. A
-fight now runs at a steady 59 fps.
+fight now runs at a steady 61 fps with all sixty-six characters loaded.
+
+The arena canvas also picks its own pixel ratio: on a large, high-resolution
+screen it caps at 1.5x rather than 2x, since nine times the pixels buys
+nothing visible. That alone took a 2x display from 32 fps to 44.
