@@ -172,6 +172,40 @@ one in pays 1.7x credits and 1.45x experience.
 The troopers are kept out of the roster on purpose — they have no card, no
 versions and no missions. The only way to meet one is to put Lex on the ropes.
 
+### How the fighters are built
+
+**Proportions.** The rig was drawn at about five heads tall, which is the
+classic cartoon build. Every pose is now stretched once when the game loads —
+the skeleton scales away from the ground and the head is re-seated on a real
+neck — putting the figures at about **7.6 heads tall**, which is heroic-adult.
+The head is drawn inside its own transform so all the face work keeps working
+at the smaller size, and the limbs are slimmer to match.
+
+**Lighting.** The sun is up and to the right. Every limb gets a warm key edge
+facing it, a cool bounce off the sky on the shadow side, and a hard rim along
+the lit edge. The rim's side is worked out from the light direction, so it
+always lands on the side actually facing the sun.
+
+**Materials.** Each suit is made of something. A table sends every character
+to one of six treatments:
+
+| | |
+| --- | --- |
+| plate | panel seams with lit upper edges, shoulder plates, a tight specular band |
+| chrome | the same, with a harder highlight |
+| leather | a broad soft sheen and fold creases |
+| formal | shirt, lapels and tie |
+| gi | a wrap across the chest with folds hanging from it |
+| bare | no fabric, so muscle definition instead |
+| weave | the default: a fine crosshatch under a soft sheen |
+
+**Anatomy.** Pectorals, three rows of abdominals, an oblique running to the
+hip, a collar shadow and lit and shaded flanks, all placed as fractions of the
+torso's real length.
+
+Everything is still drawn with canvas paths — no images, no 3D — so this is a
+cinematic comic-realist look rather than a photograph.
+
 ### Faces
 
 Every character has a face of their own. One anatomy engine draws it — jaw

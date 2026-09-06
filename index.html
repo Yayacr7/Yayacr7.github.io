@@ -1818,6 +1818,27 @@
   /* ================= pose rig ================= */
   var JOINTS=['head','neck','pelvis','shF','elF','haF','shB','elB','haB','hiF','knF','ftF','hiB','knB','ftB'];
   function P(o){ return o; }
+  /* ---- proportions -------------------------------------------------
+     The rig was authored at about five heads tall, which is the classic
+     stylised-cartoon build. A grown, heroic figure is nearer eight. Rather
+     than re-author twenty-two poses by hand, every pose is stretched once
+     at load: the whole skeleton is scaled away from the ground, the head
+     is re-seated on top of a real neck, and the head itself is drawn at
+     HEAD_S so all the hair and face work stays in its own coordinates. */
+  var TALL=1.17, HEAD_S=0.78, LIMB_S=0.93;
+  function proportion(P){
+    for(var k in P){
+      var pose=P[k];
+      for(var i=0;i<JOINTS.length;i++){
+        var j=JOINTS[i];
+        pose[j][1]=pose[j][1]*TALL;
+        pose[j][0]=pose[j][0]*1.02;
+      }
+      /* sit the head on the neck rather than letting the stretch float it */
+      pose.head[1]=pose.neck[1]-12.2;
+    }
+    return P;
+  }
   var POSE={
     idle:P({head:[3,-92],neck:[0,-77],pelvis:[0,-45],
       shF:[6,-74],elF:[20,-62],haF:[22,-74],shB:[-7,-74],elB:[-15,-62],haB:[-3,-70],
@@ -1886,6 +1907,8 @@
       shF:[-16,-24],elF:[-26,-14],haF:[-38,-6],shB:[-20,-20],elB:[-30,-10],haB:[-40,-3],
       hiF:[4,-16],knF:[20,-12],ftF:[34,-3],hiB:[2,-14],knB:[18,-6],ftB:[32,-2]})
   };
+  proportion(POSE);
+
   function clonePose(p){ var o={}; for(var i=0;i<JOINTS.length;i++){ var k=JOINTS[i]; o[k]=[p[k][0],p[k][1]]; } return o; }
   function lerpPose(a,b,k){
     var o={};
@@ -1894,6 +1917,7 @@
     return o;
   }
   function ease(k){ return k<0.5?2*k*k:1-Math.pow(-2*k+2,2)/2; }
+
 
   /* ---- drawing between simulation steps -----------------------------
      The fight is simulated on a fixed 1/60s step, which is what every
@@ -2176,6 +2200,154 @@
     g.beginPath(); g.ellipse(hx-8.2,hy+0.8,0.7,1.3,0.16,0,6.283); g.fill();
   }
 
+  /* ================= what a suit is made of =================
+     A colour on its own reads as paint. Armour wants panel lines and a hard
+     specular, a fabric suit wants a weave, leather wants a broad soft sheen
+     and creases, a gi wants folds. Anything not listed wears the weave. */
+  var MATS={
+    ironman:'plate', cyborg:'plate', vision:'plate', genos:'plate',
+    alphonse:'plate', darkseid:'plate', magneto:'plate', peacemaker:'plate',
+    lex:'plate', deathstroke:'plate', antman:'plate', cap:'plate',
+    freeze:'plate', hawkgirl:'plate', wonderwoman:'plate', blackadam:'plate',
+    reiner:'plate', surfer:'chrome', grundy:'bare', hulk:'bare',
+    sukuna:'bare', bane:'bare', saitama:'weave', broly:'bare',
+    batman:'leather', catwoman:'leather', widow:'leather', nightwing:'leather',
+    redhood:'leather', batgirl:'leather', gambit:'leather', levi:'leather',
+    mikasa:'leather', eren:'leather', armin:'leather', jotaro:'leather',
+    riddler:'formal', penguin:'formal', joker:'formal', aizen:'formal',
+    strange:'formal', sanji:'formal', spike:'formal', muzan:'formal',
+    goku:'gi', vegeta:'gi', gohan:'gi', piccolo:'gi', trunks:'gi',
+    naruto:'gi', sasuke:'gi', kakashi:'gi', sakura:'gi', itachi:'gi',
+    madara:'gi', rocklee:'gi', ichigo:'gi', rukia:'gi', tanjiro:'gi',
+    nezuko:'gi', zenitsu:'gi', inosuke:'gi', rengoku:'gi', kenshin:'gi',
+    inuyasha:'gi', sesshomaru:'gi', luffy:'gi', zoro:'gi', shanks:'gi'
+  };
+  function suitMaterial(g,h,n,pv,lean,th,cx0,cy0,T){
+    var m=MATS[h.id]||'weave';
+    var top=n[1], bot=pv[1]+4, L=n[0]-18+lean, R=n[0]+18+lean;
+    if(m==='plate'||m==='chrome'){
+      /* hard panel seams with a lit upper edge, the way stamped armour reads */
+      var rows=4;
+      for(var i=0;i<rows;i++){
+        var y=top+th*(0.16+i*0.20);
+        g.strokeStyle='rgba(4,6,12,.34)'; g.lineWidth=1.2; g.lineCap='round';
+        g.beginPath(); g.moveTo(L,y); g.quadraticCurveTo(cx0,y+3.0,R,y-1.0); g.stroke();
+        g.strokeStyle='rgba(255,252,236,.26)'; g.lineWidth=0.85;
+        g.beginPath(); g.moveTo(L,y-1.3); g.quadraticCurveTo(cx0,y+1.7,R,y-2.3); g.stroke();
+      }
+      /* the shoulder plates, and a vertical split down the chest */
+      g.strokeStyle='rgba(4,6,12,.28)'; g.lineWidth=1.1;
+      g.beginPath(); g.moveTo(cx0-11,top+2); g.quadraticCurveTo(cx0-8,top+th*0.20,cx0-9,top+th*0.34); g.stroke();
+      g.beginPath(); g.moveTo(cx0+11,top+2); g.quadraticCurveTo(cx0+8,top+th*0.20,cx0+9,top+th*0.34); g.stroke();
+      /* a tight specular band, which is what makes metal look like metal */
+      var sp=g.createLinearGradient(cx0+2,top,cx0+13,bot);
+      sp.addColorStop(0,'rgba(255,255,255,0)');
+      sp.addColorStop(0.42,'rgba(255,255,255,'+(m==='chrome'?0.42:0.24)+')');
+      sp.addColorStop(0.56,'rgba(255,255,255,0)');
+      g.fillStyle=sp; g.fillRect(L-6,top-8,(R-L)+12,th+20);
+    }else if(m==='leather'){
+      /* a broad soft sheen and a few creases where it folds */
+      var lg2=g.createLinearGradient(cx0+14,top-4,cx0-10,bot);
+      lg2.addColorStop(0,'rgba(255,250,236,.20)');
+      lg2.addColorStop(0.5,'rgba(255,250,236,.05)');
+      lg2.addColorStop(1,'rgba(255,250,236,0)');
+      g.fillStyle=lg2; g.fillRect(L-6,top-8,(R-L)+12,th+20);
+      g.strokeStyle='rgba(4,6,12,.20)'; g.lineWidth=0.9; g.lineCap='round';
+      for(var c=0;c<3;c++){
+        var cy2=top+th*(0.34+c*0.17);
+        g.beginPath();
+        g.moveTo(cx0-8.4,cy2); g.quadraticCurveTo(cx0-1,cy2+3.4,cx0+8.0,cy2-1.2);
+        g.stroke();
+      }
+    }else if(m==='formal'){
+      /* a shirt and lapels turn a block of colour into a suit */
+      g.fillStyle='rgba(246,248,252,.92)';
+      g.beginPath();
+      g.moveTo(cx0-3.4,top+1); g.lineTo(cx0+3.4,top+1);
+      g.lineTo(cx0+1.6,top+th*0.46); g.lineTo(cx0-1.6,top+th*0.46);
+      g.closePath(); g.fill();
+      g.fillStyle=lerpHex(h.suitLo,'#000000',0.25);
+      g.beginPath();
+      g.moveTo(cx0-3.6,top+0.5); g.lineTo(cx0-11.4,top+2.4);
+      g.lineTo(cx0-4.4,top+th*0.42); g.closePath(); g.fill();
+      g.beginPath();
+      g.moveTo(cx0+3.6,top+0.5); g.lineTo(cx0+11.4,top+2.0);
+      g.lineTo(cx0+4.4,top+th*0.42); g.closePath(); g.fill();
+      g.fillStyle=h.trim;
+      g.beginPath();
+      g.moveTo(cx0-1.7,top+3.4); g.lineTo(cx0+1.7,top+3.4);
+      g.lineTo(cx0+1.0,top+th*0.44); g.lineTo(cx0-1.0,top+th*0.44);
+      g.closePath(); g.fill();
+    }else if(m==='gi'){
+      /* loose cloth: a wrap across the chest and folds hanging off it */
+      g.strokeStyle='rgba(4,6,12,.24)'; g.lineWidth=1.3; g.lineCap='round';
+      g.beginPath();
+      g.moveTo(cx0-11.0,top+2.0); g.quadraticCurveTo(cx0,top+th*0.30,cx0+11.0,top+th*0.10);
+      g.stroke();
+      g.strokeStyle='rgba(255,250,236,.14)'; g.lineWidth=1.0;
+      g.beginPath();
+      g.moveTo(cx0-11.0,top+3.4); g.quadraticCurveTo(cx0,top+th*0.32,cx0+11.0,top+th*0.12);
+      g.stroke();
+      g.strokeStyle='rgba(4,6,12,.16)'; g.lineWidth=1.0;
+      for(var fd=0;fd<3;fd++){
+        var fx2=cx0-7.0+fd*7.0;
+        g.beginPath();
+        g.moveTo(fx2,top+th*(0.38+fd*0.04));
+        g.quadraticCurveTo(fx2-2.4,top+th*0.66,fx2-0.6,bot-2);
+        g.stroke();
+      }
+    }else if(m==='bare'){
+      /* no suit to texture, so lean harder on the muscle instead */
+      g.fillStyle='rgba(6,5,12,.14)';
+      g.beginPath(); g.ellipse(cx0+8.4,cy0+th*0.30,4.6,th*0.10,-0.25,0,6.283); g.fill();
+      g.beginPath(); g.ellipse(cx0-8.4,cy0+th*0.30,4.6,th*0.10,0.25,0,6.283); g.fill();
+      g.fillStyle='rgba(255,250,236,.10)';
+      g.beginPath(); g.ellipse(cx0+5.0,cy0+th*0.44,3.4,th*0.07,-0.1,0,6.283); g.fill();
+    }else{
+      /* the default: a fine weave, only visible up close, plus a soft sheen */
+      g.save();
+      g.globalAlpha=0.10;
+      g.strokeStyle='#FFFFFF'; g.lineWidth=0.5;
+      for(var w=-9;w<9;w+=2.6){
+        g.beginPath();
+        g.moveTo(cx0+w-5,top+2); g.lineTo(cx0+w+6,bot-1);
+        g.stroke();
+      }
+      g.globalAlpha=0.07;
+      g.strokeStyle='#000000';
+      for(var w2=-9;w2<9;w2+=2.6){
+        g.beginPath();
+        g.moveTo(cx0+w2+5,top+2); g.lineTo(cx0+w2-6,bot-1);
+        g.stroke();
+      }
+      g.restore();
+      var wg=g.createLinearGradient(cx0+12,top-4,cx0-8,bot);
+      wg.addColorStop(0,'rgba(255,250,236,.16)');
+      wg.addColorStop(1,'rgba(255,250,236,0)');
+      g.fillStyle=wg; g.fillRect(L-6,top-8,(R-L)+12,th+20);
+    }
+  }
+
+  /* a shaved head is a skull, and a skull has a crown, temples and a nape */
+  function faceCranium(g,hx,hy,h){
+    g.save();
+    g.beginPath(); g.ellipse(hx,hy,8.1,9.1,0.06,0,6.283); g.clip();
+    var cg=g.createRadialGradient(hx+1.4,hy-8.6,1,hx+0.6,hy-5.0,11.5);
+    cg.addColorStop(0,'rgba(255,248,228,.42)');
+    cg.addColorStop(0.45,'rgba(255,238,210,.10)');
+    cg.addColorStop(1,'rgba(70,42,24,0)');
+    g.fillStyle=cg; g.fillRect(hx-10,hy-12,20,14);
+    /* the temple hollow, and the ridge above the ear */
+    g.fillStyle='rgba(88,52,30,.24)';
+    g.beginPath(); g.ellipse(hx-5.0,hy-4.0,2.8,3.4,0.16,0,6.283); g.fill();
+    g.fillStyle='rgba(255,240,214,.14)';
+    g.beginPath(); g.ellipse(hx-2.2,hy-7.6,4.4,1.8,-0.10,0,6.283); g.fill();
+    /* where the skull turns away on the shaded side */
+    g.fillStyle='rgba(70,42,24,.20)';
+    g.beginPath(); g.ellipse(hx-7.6,hy-1.4,2.4,6.4,0.06,0,6.283); g.fill();
+    g.restore();
+  }
+
   /* bone structure: the jaw shape is what separates a Batman from a Robin */
   function faceForm(g,hx,hy,h,F){
     g.save();
@@ -2209,6 +2381,16 @@
     g.beginPath(); g.ellipse(hx+2.6,hy-4.4,5.6,1.6,-0.08,0,6.283); g.fill();
     g.fillStyle='rgba(255,242,218,.15)';
     g.beginPath(); g.ellipse(hx+2.6,hy-7.0,4.0,1.6,-0.06,0,6.283); g.fill();
+    /* the far half of the face was reading as blank, which is what makes a
+       head look like a blob: give it a cheek, a temple and a brow of its own */
+    g.fillStyle='rgba(255,238,210,.16)';
+    g.beginPath(); g.ellipse(hx-3.6,hy-0.2,3.0,2.2,0.30,0,6.283); g.fill();
+    g.fillStyle='rgba(96,58,34,.22)';
+    g.beginPath(); g.ellipse(hx-5.6,hy-3.2,2.6,2.8,0.10,0,6.283); g.fill();
+    g.strokeStyle='rgba(30,19,11,.42)'; g.lineWidth=1.15; g.lineCap='round';
+    g.beginPath();
+    g.moveTo(hx-5.6,hy-4.2); g.quadraticCurveTo(hx-3.4,hy-5.2,hx-1.4,hy-4.8);
+    g.stroke();
     /* age: a forehead line and a fold from the nose to the mouth */
     if(F.age>0.05){
       g.strokeStyle='rgba(96,56,32,'+(F.age*0.45).toFixed(2)+')'; g.lineWidth=0.7;
@@ -2697,6 +2879,9 @@
   function limb(g,a,b,w1,w2,hi,lo,tier){
     var dx=b[0]-a[0], dy=b[1]-a[1], len=Math.sqrt(dx*dx+dy*dy)||1;
     var nx=-dy/len, ny=dx/len;
+    /* the sun is up and to the right; flip the normal so the lit side is
+       always the side facing it, whichever way this limb happens to point */
+    if(nx*0.74+ny*-0.67<0){ nx=-nx; ny=-ny; }
     g.beginPath();
     g.moveTo(a[0]+nx*w1,a[1]+ny*w1);
     g.lineTo(b[0]+nx*w2,b[1]+ny*w2);
@@ -2712,15 +2897,34 @@
     lg.addColorStop(1,lo);
     if(done(g,lg)) return;
     var T=TIERS[tier];
+    g.save(); g.clip();
+    /* The sun is up and to the right and the sky bounces cold light back
+       from the left, so every limb gets a warm key edge and a cool fill
+       even before any armour finish adds gloss on top. */
+    var kg=g.createLinearGradient(mx+nx*mw*1.1,my+ny*mw*1.1,mx-nx*mw*1.1,my-ny*mw*1.1);
+    kg.addColorStop(0,'rgba(255,244,214,.30)');
+    kg.addColorStop(0.38,'rgba(255,240,206,.06)');
+    kg.addColorStop(0.78,'rgba(70,110,170,.10)');
+    kg.addColorStop(1,'rgba(90,140,200,.20)');
+    g.fillStyle=kg; g.fill();
     if(T.gloss>0.05){
-      g.save(); g.clip();
       var sg=g.createLinearGradient(mx+nx*mw,my+ny*mw,mx-nx*mw*0.1,my-ny*mw*0.1);
       sg.addColorStop(0,'rgba(255,255,255,'+(T.gloss*0.55).toFixed(3)+')');
       sg.addColorStop(0.45,'rgba(255,255,255,'+(T.gloss*0.16).toFixed(3)+')');
       sg.addColorStop(1,'rgba(255,255,255,0)');
       g.fillStyle=sg; g.fill();
-      g.restore();
     }
+    g.restore();
+    /* a hard rim along the sunward edge is what separates a figure from
+       the background and reads as a photograph rather than a drawing */
+    g.save();
+    g.strokeStyle='rgba(255,246,220,.34)';
+    g.lineWidth=Math.max(0.8,mw*0.20); g.lineCap='round';
+    g.beginPath();
+    g.moveTo(a[0]+nx*w1*0.92,a[1]+ny*w1*0.92);
+    g.lineTo(b[0]+nx*w2*0.92,b[1]+ny*w2*0.92);
+    g.stroke();
+    g.restore();
     if(!DETAIL) return;
     /* ambient occlusion where this limb sockets into the one before it —
        it does more for the sense of depth than anything else here */
@@ -2808,15 +3012,15 @@
     }
 
     /* far limbs */
-    limb(g,P0.hiB,P0.knB,8,6,legLo,lerpHex(legLo,'#000000',0.28),f.tier);
-    limb(g,P0.knB,P0.ftB,6,4.4,legLo,lerpHex(legLo,'#000000',0.3),f.tier);
-    limb(g,P0.shB,P0.elB,6.4,5.2,lerpHex(suitLo,'#000000',0.1),lerpHex(suitLo,'#000000',0.34),f.tier);
-    limb(g,P0.elB,P0.haB,5,4,lerpHex(foreLo,'#000000',0.1),lerpHex(foreLo,'#000000',0.3),f.tier);
+    limb(g,P0.hiB,P0.knB,7.4,5.6,legLo,lerpHex(legLo,'#000000',0.28),f.tier);
+    limb(g,P0.knB,P0.ftB,5.6,4.1,legLo,lerpHex(legLo,'#000000',0.3),f.tier);
+    limb(g,P0.shB,P0.elB,5.9,4.8,lerpHex(suitLo,'#000000',0.1),lerpHex(suitLo,'#000000',0.34),f.tier);
+    limb(g,P0.elB,P0.haB,4.6,3.7,lerpHex(foreLo,'#000000',0.1),lerpHex(foreLo,'#000000',0.3),f.tier);
     blob(g,P0.haB[0],P0.haB[1],4.6,4.3,0,lerpHex(trimLo,'#FFFFFF',0.1),trimLo,f.tier);
 
     /* near leg */
-    limb(g,P0.hiF,P0.knF,9,6.8,legHi,legLo,f.tier);
-    limb(g,P0.knF,P0.ftF,6.8,4.8,legHi,legLo,f.tier);
+    limb(g,P0.hiF,P0.knF,8.3,6.3,legHi,legLo,f.tier);
+    limb(g,P0.knF,P0.ftF,6.3,4.5,legHi,legLo,f.tier);
     /* boots */
     limb(g,[P0.ftF[0]-4,P0.ftF[1]-1],[P0.ftF[0]+7,P0.ftF[1]-1],4.6,3.8,bootHi,bootLo,f.tier);
     limb(g,[P0.ftB[0]-3,P0.ftB[1]-1],[P0.ftB[0]+6,P0.ftB[1]-1],4,3.4,lerpHex(bootLo,'#000000',0.14),lerpHex(bootLo,'#000000',0.3),f.tier);
@@ -2848,31 +3052,47 @@
       if(!DETAIL) return;
       /* anatomy: chest, ribs and a centre seam, all clipped to the torso */
       g.save(); g.clip();
-      var cx0=(n[0]+lean+pv[0])/2, cy0=n[1]+9, wy=pv[1]-4;
+      /* The torso is a lot longer than it used to be, so the anatomy is
+         placed as fractions of its actual length rather than fixed offsets. */
+      var th=pv[1]-n[1];                       /* torso length */
+      var cx0=(n[0]+lean+pv[0])/2;
+      var cy0=n[1]+th*0.20;                    /* the line of the pectorals */
+      var wy=pv[1]-th*0.08;
       /* shadow under the collar */
-      var col=g.createLinearGradient(0,n[1]-2,0,n[1]+13);
+      var col=g.createLinearGradient(0,n[1]-2,0,n[1]+th*0.32);
       col.addColorStop(0,'rgba(6,5,12,.34)'); col.addColorStop(1,'rgba(6,5,12,0)');
-      g.fillStyle=col; g.fillRect(n[0]-20+lean,n[1]-3,40,17);
+      g.fillStyle=col; g.fillRect(n[0]-22+lean,n[1]-3,44,th*0.36);
       /* pectorals */
-      g.fillStyle='rgba(8,6,16,.16)';
-      g.beginPath(); g.ellipse(cx0+7,cy0+3,8.4,5.4,-0.22,0,6.283); g.fill();
-      g.beginPath(); g.ellipse(cx0-7,cy0+3,8.4,5.4,0.22,0,6.283); g.fill();
-      g.fillStyle='rgba(255,250,236,.13)';
-      g.beginPath(); g.ellipse(cx0+7,cy0+0.5,7,3.6,-0.22,0,6.283); g.fill();
-      /* centre seam and waist taper */
-      g.strokeStyle='rgba(6,5,12,.22)'; g.lineWidth=1.2; g.lineCap='round';
-      g.beginPath(); g.moveTo(cx0,cy0+7); g.lineTo((cx0+pv[0])/2,wy); g.stroke();
-      g.strokeStyle='rgba(6,5,12,.14)'; g.lineWidth=1;
-      for(var rb=0;rb<2;rb++){
-        var ry2=cy0+11+rb*6;
+      g.fillStyle='rgba(8,6,16,.17)';
+      g.beginPath(); g.ellipse(cx0+7,cy0+2.4,8.6,th*0.115,-0.22,0,6.283); g.fill();
+      g.beginPath(); g.ellipse(cx0-7,cy0+2.4,8.6,th*0.115,0.22,0,6.283); g.fill();
+      g.fillStyle='rgba(255,250,236,.14)';
+      g.beginPath(); g.ellipse(cx0+7.4,cy0-0.4,7.2,th*0.075,-0.22,0,6.283); g.fill();
+      /* the line down the middle, and a real set of abdominals under it */
+      g.strokeStyle='rgba(6,5,12,.24)'; g.lineWidth=1.15; g.lineCap='round';
+      g.beginPath(); g.moveTo(cx0,cy0+th*0.14); g.lineTo((cx0+pv[0])/2,wy); g.stroke();
+      g.strokeStyle='rgba(6,5,12,.15)'; g.lineWidth=1;
+      for(var rb=0;rb<3;rb++){
+        var ry2=cy0+th*(0.24+rb*0.14);
         g.beginPath();
-        g.moveTo(cx0-7,ry2); g.quadraticCurveTo(cx0,ry2+2.4,cx0+7,ry2);
+        g.moveTo(cx0-7.4,ry2); g.quadraticCurveTo(cx0,ry2+2.6,cx0+7.4,ry2);
         g.stroke();
       }
-      /* the shaded flank away from the sun */
+      /* the oblique running down to the hip */
+      g.strokeStyle='rgba(6,5,12,.13)'; g.lineWidth=1.1;
+      g.beginPath();
+      g.moveTo(cx0+9.4,cy0+th*0.24);
+      g.quadraticCurveTo(cx0+7.0,cy0+th*0.52,pv[0]+4.6,wy);
+      g.stroke();
+      /* the shaded flank away from the sun, and a warm key down the lit one */
       var fl=g.createLinearGradient(pv[0]-16,0,pv[0]+2,0);
       fl.addColorStop(0,'rgba(6,5,12,.28)'); fl.addColorStop(1,'rgba(6,5,12,0)');
-      g.fillStyle=fl; g.fillRect(n[0]-22+lean,n[1]-6,26,(pv[1]-n[1])+14);
+      g.fillStyle=fl; g.fillRect(n[0]-24+lean,n[1]-6,28,th+16);
+      var kl=g.createLinearGradient(pv[0]+16,0,pv[0]-2,0);
+      kl.addColorStop(0,'rgba(255,244,214,.20)'); kl.addColorStop(1,'rgba(255,244,214,0)');
+      g.fillStyle=kl; g.fillRect(pv[0]-2,n[1]-6,26,th+16);
+      /* what the suit is actually made of */
+      suitMaterial(g,h,n,pv,lean,th,cx0,cy0,T);
       g.restore();
       /* trunks over the hips, where the costume has them */
       if(h.trunks){
@@ -3134,10 +3354,12 @@
     })();
 
     /* head */
+    /* the neck belongs to the body, so it is drawn before the head shrinks */
+    limb(g,P0.neck,[P0.head[0]-1,P0.head[1]+7.4],5.0,4.4,skinHi,skinLo,f.tier);
     (function(){
       var hd=P0.head, hx=hd[0], hy=hd[1];
-      /* neck */
-      limb(g,P0.neck,[hx-1,hy+6],4.8,4.4,skinHi,skinLo,f.tier);
+      g.save();
+      g.translate(hx,hy); g.scale(HEAD_S,HEAD_S); g.translate(-hx,-hy);
       blob(g,hx,hy,8.1,9.1,0.06,skinHi,skinLo,f.tier);
 
       /* ---- headgear silhouette: drawn in BOTH passes so it gets an outline ---- */
@@ -3415,13 +3637,14 @@
         done(g,h.hair);
       }
 
-      if(PASS_INK) return;
+      if(PASS_INK){ g.restore(); return; }
 
       /* ---- faces, colour pass only ----
          One anatomy engine for everyone, differentiated by that character's
          row in FACES. Headgear goes on top and declares what it covers. */
       var F=faceOf(h), FV=faceVis(h.head);
       hairSheen(g,hx,hy,h,h.head);
+      if(h.head==='bald') faceCranium(g,hx,hy,h);
       if(FV.form) faceForm(g,hx,hy,h,F);
       if(FV.ear)  faceEar(g,hx,hy,h);
       if(FV.beard)faceBeard(g,hx,hy,h,F);
@@ -3596,11 +3819,12 @@
         g.beginPath(); g.ellipse(hx+1.4,hy-2.6,7.4,4.6,0,0,6.283); g.fill();
         g.fillStyle='#EAF2FF'; g.beginPath(); g.arc(hx+5,hy-2.4,1.3,0,6.283); g.fill();
       }
+      g.restore();
     })();
 
     /* near arm, drawn last */
-    limb(g,P0.shF,P0.elF,7.2,5.6,suitHi,suitLo,f.tier);
-    limb(g,P0.elF,P0.haF,5.6,4.4,foreHi,foreLo,f.tier);
+    limb(g,P0.shF,P0.elF,6.7,5.2,suitHi,suitLo,f.tier);
+    limb(g,P0.elF,P0.haF,5.2,4.1,foreHi,foreLo,f.tier);
     blob(g,P0.haF[0],P0.haF[1],5.2,4.9,0,trimHi,trimLo,f.tier);
     if(h.bracers){
       var bw=[P0.elF,P0.haF], bx2=bw[0][0]+(bw[1][0]-bw[0][0])*0.68, by2=bw[0][1]+(bw[1][1]-bw[0][1])*0.68;
