@@ -83,6 +83,26 @@ different champions, win 50 fights in total, win at least once in every arena,
 unlock ten versions, and forge anyone to Legendary. Each shows how far along
 you are and pays credits and experience when you collect it.
 
+### Solo raid
+
+One champion, no help, a ladder of opponents that keeps getting harder.
+
+Your health **carries from floor to floor** — you only get 45% of it back
+between fights — so getting deep is about surviving a whole run, not winning
+one bout. Every fifth floor is a boss. Raid opponents have 55% of normal
+health (110% for bosses), because a gauntlet of full-length fights would take
+an afternoon; the difficulty is the ladder, not the length of each fight.
+
+After every floor the run pauses on a choice:
+
+- **Go deeper** — the next floor is harder and pays more into the pot.
+- **Bank it** — take the whole pot and walk away.
+
+Lose and you still keep **half** the pot, so a run is never wasted. The
+deepest floor you have cleared is saved for each champion and overall, and
+three missions hang off it: floor 5 and floor 12 with a single champion, and
+floor 20 across the whole roster.
+
 ### Frame rate
 
 The fight is simulated on a fixed 1/60s step — every animation length,
@@ -113,8 +133,9 @@ The FPS number in the top bar shows what you are actually getting — green at
 
 ### Lex Luthor's security detail
 
-Lex does not fight fair. From **level 10** he stops going down the first time:
-at the moment he would fall, his Lexcorp security detail takes over. Three
+Lex does not fight fair. From **level 10**, the moment his health drops into
+the red — a quarter of his bar — his Lexcorp security detail steps in for him
+while he is still standing. Three
 troopers step in one at a time, each arriving at **full health** in a **fully
 forged Legendary warsuit**. Beat all three and **Lex comes back at full health
 himself** — only then can the fight end.

@@ -148,6 +148,14 @@
     color:var(--gold);flex:none}
   .price i{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 32% 30%,#FFF0B8,#F7C948 46%,#A87A08)}
   .fight{width:100%}
+  .raid{display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+    background:var(--panel-2);border:2px solid var(--edge);border-radius:12px;padding:13px 15px}
+  .raid .rinfo{flex:1;min-width:230px}
+  .raid .rlead{font-family:"Saira Condensed",sans-serif;font-weight:800;font-size:1.05rem;
+    text-transform:uppercase;line-height:1.1;color:var(--ice)}
+  .raid .rnote{font-size:.76rem;color:var(--dim);line-height:1.4;margin-top:5px}
+  .raid .rbest{font-size:.74rem;color:var(--sky);margin-top:7px;font-weight:700}
+  .raid .btn{flex:none;width:auto}
   .missions{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(232px,1fr))}
   .mission{display:flex;flex-direction:column;gap:7px;font:inherit;text-align:left;color:var(--ice);
     background:var(--panel-2);border:2px solid var(--edge);border-radius:11px;padding:10px 12px}
@@ -242,6 +250,7 @@
           <div id="rwXp">0<span>Experience</span></div>
         </div>
         <button class="btn" id="ovBtn">Continue</button>
+        <button class="btn ghost" id="ovBtn2" hidden>Bank it</button>
       </div>
     </div>
     <div class="pad" id="fightbar" hidden>
@@ -260,6 +269,21 @@
     <section class="sec">
       <h3>Your champions</h3>
       <div class="roster" id="roster"></div>
+    </section>
+
+    <section class="sec" style="margin-top:14px">
+      <h3>Solo raid</h3>
+      <div class="raid">
+        <div class="rinfo">
+          <p class="rlead">One champion, no help, a ladder of opponents that keeps getting harder.</p>
+          <p class="rnote">Your health carries from floor to floor and you get a chunk of it back
+            between fights. Every fifth floor is a boss. After each floor you choose: go deeper for a
+            bigger pot, or bank what you have. Lose and you still keep half.</p>
+          <p class="rbest"><span id="rBestHero">Best with this champion: floor 0</span>
+            &nbsp;&middot;&nbsp; <span id="rBestAll">Best ever: floor 0</span></p>
+        </div>
+        <button class="btn fight" id="bRaid">Start a solo raid</button>
+      </div>
     </section>
 
     <section class="sec" style="margin-top:14px">
@@ -1665,7 +1689,7 @@
 
   /* ================= save ================= */
   var save={credits:600,sel:0,h:{}};
-  function blank(){ return {lvl:1,xp:0,tier:0,wins:0,skin:0,owned:[0]}; }
+  function blank(){ return {lvl:1,xp:0,tier:0,wins:0,skin:0,owned:[0],raid:0}; }
   /* missions the player has already collected, and the arenas won in */
   function missionState(){
     if(!save.done||typeof save.done!=='object') save.done={};
@@ -1681,12 +1705,14 @@
       if(!save.h[k]) save.h[k]=blank();
       var g=save.h[k];
       if(typeof g.skin!=='number') g.skin=0;
+      if(typeof g.raid!=='number') g.raid=0;
       if(!g.owned||!g.owned.length) g.owned=[0];
       if(g.owned.indexOf(g.skin)<0) g.skin=0;
     }
     if(save.sel>=HEROES.length) save.sel=0;
     if(typeof save.credits!=='number') save.credits=600;
     if(typeof save.sel!=='number') save.sel=0;
+    if(typeof save.raidBest!=='number') save.raidBest=0;
     missionState();
   }
   function store(){ try{ localStorage.setItem('skyforge.v1',JSON.stringify(save)); }catch(e){} }
@@ -1741,7 +1767,13 @@
      at:function(h){ return [prog(h).tier,4]; }},
     {id:'v2', per:1, name:'Second look',        d:'Unlock another version of this champion',cred:600, xp:120,
      at:function(h){ return [(prog(h).owned||[0]).length,2]; }},
+    {id:'r5', per:1, name:'Down five floors',    d:'Clear floor 5 of a solo raid with this champion', cred:1600, xp:400,
+     at:function(h){ return [prog(h).raid||0,5]; }},
+    {id:'r12',per:1, name:'Deep run',            d:'Clear floor 12 of a solo raid with this champion', cred:5500, xp:1300,
+     at:function(h){ return [prog(h).raid||0,12]; }},
     /* --- the whole roster --- */
+    {id:'gr20',per:0, name:'Raid legend',        d:'Clear floor 20 of a solo raid',         cred:9000, xp:1800,
+     at:function(){ return [save.raidBest||0,20]; }},
     {id:'g5',  per:0, name:'Try the bench',     d:'Win with 5 different champions',        cred:1500, xp:300,
      at:function(){ return [heroesWonWith(),5]; }},
     {id:'g20', per:0, name:'Roster deep',       d:'Win with 20 different champions',       cred:6000, xp:900,
@@ -1911,6 +1943,8 @@
      A trooper is a fighter like any other, but it is deliberately kept
      out of HEROES so it never turns up in the roster or the missions —
      the only way to meet one is to put Lex on the ropes. */
+  /* how low his health has to get before the detail steps in */
+  var GUARD_AT=0.25;
   var GUARD_UNIT={
     id:'lexguard',name:'Lexcorp Trooper',real:'Lexcorp Security',cls:'Warsuit Trooper',
     emblem:'core',head:'domehelm',isGuard:true,
@@ -3355,6 +3389,7 @@
   }
 
   function startFight(){
+    raid=null;
     var h=HEROES[save.sel], p=prog(h);
     me=makeFighter(h,p.lvl,p.tier,1,404,p.skin);
     var pool=HEROES.filter(function(x){return x.id!==h.id;});
@@ -3370,10 +3405,112 @@
     $('fightbar').hidden=false; $('homeUI').hidden=true; $('overlay').hidden=true;
     tone(520,0.16,'square',0.05,880);
   }
+  /* ================= solo raid =================
+     One champion, alone, against a ladder of opponents that keeps getting
+     harder. Health carries between floors with only a small recovery, so
+     how deep you get is about surviving, not about one good fight. After
+     each floor you choose: go again for more, or bank what you have. Lose
+     and you still walk away with half the pot. */
+  var raid=null;
+  function raidReward(f){
+    var boss=(f%5===0);
+    return {cred:Math.round((120+f*55)*(boss?2.2:1)),
+            xp:Math.round((90+f*32)*(boss?2:1)), boss:boss};
+  }
+  function raidFoe(){
+    var h=HEROES[save.sel], p=prog(h), f=raid.floor, boss=(f%5===0);
+    var pool=HEROES.filter(function(x){return x.id!==h.id;});
+    var oh=pool[Math.floor(Math.random()*pool.length)];
+    var olvl=Math.max(1,Math.min(60,Math.round(p.lvl*0.5)+Math.round(f*1.3)));
+    var otier=Math.min(4,Math.floor((f-1)/6)+(boss?1:0));
+    var g=makeFighter(oh,olvl,otier,-1,620,Math.floor(Math.random()*oh.skins.length));
+    /* a raid is a gauntlet, so each floor is a shorter fight than a normal
+       bout — otherwise twenty floors would take an afternoon */
+    g.max=Math.round(g.max*(boss?1.1:0.55)); g.hp=g.max;
+    if(boss) g.isBoss=true;
+    return g;
+  }
+  function beginRaidFloor(){
+    var h=HEROES[save.sel], p=prog(h);
+    me=makeFighter(h,p.lvl,p.tier,1,404,p.skin);
+    if(raid.carryHp!==null){ me.hp=Math.max(1,Math.min(me.max,raid.carryHp)); me.meter=raid.carryMeter||0; }
+    foe=raidFoe();
+    floats.length=0; sparks.length=0; fx.length=0; endT=0;
+    screen='fight';
+    var lb=$('bLeap'), flier=(h.id==='superman');
+    lb.childNodes[0].nodeValue=flier?'Flying Jump':'Leap';
+    lb.querySelector('small').textContent=flier?'Fly up and dive':'Jump attack';
+    $('fightbar').hidden=false; $('homeUI').hidden=true; $('overlay').hidden=true;
+    floatText(512,GY-250,(raid.floor%5===0?'BOSS FLOOR ':'FLOOR ')+raid.floor,
+              raid.floor%5===0?'#FFB4A0':'#9BD3FF',true);
+    tone(raid.floor%5===0?300:520,0.2,'square',0.05,880);
+  }
+  function startRaid(){
+    raid={floor:1,cred:0,xp:0,carryHp:null,carryMeter:0};
+    beginRaidFloor();
+  }
+  function raidBank(quit){
+    var h=HEROES[save.sel], p=prog(h);
+    var keep=quit?1:0.5;
+    var cred=Math.round(raid.cred*keep), xp=Math.round(raid.xp*keep);
+    /* raid.floor is the one being attempted, so everything below it is cleared */
+    var reached=raid.floor-1;
+    var wasBest=save.raidBest||0;
+    if(reached>p.raid) p.raid=reached;
+    if(reached>save.raidBest) save.raidBest=reached;
+    save.credits+=cred; p.xp+=xp;
+    var ups=0;
+    while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; ups++; }
+    store();
+    var got=missionsReady();
+    $('ovTitle').textContent=quit?'Raid banked':'Raid over';
+    $('ovText').textContent=(quit
+      ? h.name+' walked out after clearing '+reached+' floor'+(reached===1?'':'s')+'.'
+      : foe.h.name+' ended the run on floor '+raid.floor+'. You cleared '+reached
+        +' floor'+(reached===1?'':'s')+' and keep half the pot.')
+      +(reached>wasBest?' Best raid yet.':'')
+      +(ups?' Levelled up to '+p.lvl+'!':'')
+      +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'');
+    $('rwCred').innerHTML=cred+'<span>Credits</span>';
+    $('rwXp').innerHTML=xp+'<span>Experience</span>';
+    $('ovReward').hidden=false;
+    $('ovBtn').textContent='Back to champions';
+    $('ovBtn2').hidden=true;
+    $('overlay').hidden=false;
+    raid=null;
+    if(quit){ tone(660,0.14,'triangle',0.05,990); setTimeout(function(){tone(990,0.24,'triangle',0.05,1400);},140); }
+    else tone(240,0.5,'sawtooth',0.05,90);
+  }
+  function raidCleared(){
+    var r=raidReward(raid.floor);
+    raid.cred+=r.cred; raid.xp+=r.xp;
+    /* Lex may be standing behind his detail when the floor ends */
+    var who=(me.isGuard&&me.guardHost)?me.guardHost:me;
+    raid.carryHp=Math.min(who.max,who.hp+Math.round(who.max*0.45));
+    raid.carryMeter=who.meter;
+    raid.floor++;
+    var next=raidReward(raid.floor);
+    $('ovTitle').textContent=(r.boss?'Boss floor cleared':'Floor cleared');
+    $('ovText').textContent='Floor '+(raid.floor-1)+' down. '+HEROES[save.sel].name
+      +' is on '+Math.round(raid.carryHp/who.max*100)+'% health going into floor '+raid.floor
+      +(raid.floor%5===0?', and floor '+raid.floor+' is a boss.':'.')
+      +' Bank now and it is all yours; lose and you keep half.';
+    $('rwCred').innerHTML=raid.cred+'<span>Credits in the pot</span>';
+    $('rwXp').innerHTML=raid.xp+'<span>Experience in the pot</span>';
+    $('ovReward').hidden=false;
+    $('ovBtn').textContent='Floor '+raid.floor+' \u2014 +'+next.cred;
+    $('ovBtn2').textContent='Bank '+raid.cred;
+    $('ovBtn2').hidden=false;
+    $('overlay').hidden=false;
+    tone(660,0.12,'triangle',0.05,990);
+    setTimeout(function(){tone(880,0.22,'triangle',0.05,1320);},130);
+  }
+
   function endFight(win){
     if(screen==='over') return;
     cine=null;
     screen='over'; endT=0;
+    if(raid){ if(win) raidCleared(); else raidBank(false); return; }
     var h=HEROES[save.sel], p=prog(h);
     var cred=0,xp=0,freeLvl=0;
     if(win){
@@ -3415,7 +3552,9 @@
   }
   function toHome(){
     cine=null; cam.z=1; cam.x=0; cam.y=0;
+    raid=null;
     screen='home'; me=null; foe=null;
+    $('ovBtn2').hidden=true;
     $('fightbar').hidden=true; $('homeUI').hidden=false; $('overlay').hidden=true;
     buildMissions(); renderUI();
   }
@@ -3547,6 +3686,9 @@
       var extra=Math.max(1,Math.round(dmg*0.72));
       def.hp-=extra; spark(hx,hy,'#FFD46B',9);
     }
+    /* Lex does not wait to be knocked out. The moment his health drops
+       into the red his detail steps in for him, while he is still up. */
+    if(def.guardLeft>0&&!def.isGuard&&def.hp<=def.max*GUARD_AT&&catchFall(def)) return;
     if(def.hp<=0){
       def.hp=0;
       if(catchFall(def)) return;
@@ -3916,7 +4058,8 @@
         if(f.trait&&f.trait.kind==='regen'&&!f.dead&&f.hp<f.max) f.hp=Math.min(f.max,f.hp+f.trait.v/60);
         if(f.bleed>0&&!f.dead){ f.hp-=f.bleed/120; f.bleed*=0.992;
           if(f.bleed<0.4) f.bleed=0;
-          if(f.hp<=0){ f.hp=0;
+          if(f.guardLeft>0&&!f.isGuard&&f.hp<=f.max*GUARD_AT) catchFall(f);
+          else if(f.hp<=0){ f.hp=0;
             if(!catchFall(f)){ f.dead=true; play(f,[{p:POSE.down,d:22}]);
               setTimeout(function(){ endFight(f===foe); },900); } } }
         if(f.chill>0) f.chill--;
@@ -4496,6 +4639,19 @@
       meter(W-414,62,380,foe.meter/100,true);
       if(me.isBrain) iqBar(34,74,380,me.iq/100,false);
       if(foe.isBrain) iqBar(W-414,74,380,foe.iq/100,true);
+      if(raid){
+        var boss=(raid.floor%5===0);
+        ctx.textAlign='center';
+        ctx.font='800 26px "Saira Condensed", sans-serif';
+        ctx.fillStyle='rgba(10,18,28,.6)';
+        ctx.fillRect(W/2-96,26,192,30);
+        ctx.strokeStyle=boss?'rgba(255,150,120,.7)':'rgba(247,201,72,.45)'; ctx.lineWidth=2;
+        ctx.strokeRect(W/2-96,26,192,30);
+        ctx.fillStyle=boss?'#FFB4A0':'#F7C948';
+        ctx.fillText((boss?'BOSS FLOOR ':'RAID FLOOR ')+raid.floor,W/2,49);
+        ctx.font='800 13px Barlow, sans-serif'; ctx.fillStyle='#9FB4CC';
+        ctx.fillText(raid.cred+' in the pot',W/2,72);
+      }
       if(me.combo>1){
         ctx.fillStyle='#FFE9A8'; ctx.font='800 30px "Saira Condensed", sans-serif'; ctx.textAlign='left';
         ctx.fillText(me.combo+' HIT COMBO',36,116);
@@ -4773,11 +4929,11 @@
     var guardLine='';
     if(h.guard){
       guardLine=(p.lvl>=h.guard.lvl)
-        ? '<br><b style="color:#8AD44E">Security detail &mdash; ready:</b> the moment he would go down, '
+        ? '<br><b style="color:#8AD44E">Security detail &mdash; ready:</b> the moment his health drops into the red, '
           +h.guard.count+' troopers step in one at a time, each in fully forged armour at full health. '
           +'Beat all '+h.guard.count+' and he comes back at full health himself.'
         : '<br><b style="color:#8AD44E">Security detail &mdash; locked:</b> reaches level '+h.guard.lvl
-          +' (he is '+p.lvl+') and '+h.guard.count+' troopers will step in when he would go down.';
+          +' (he is '+p.lvl+') and '+h.guard.count+' troopers will step in the moment his health drops into the red.';
     }
     $('dSpecial').innerHTML='<b style="color:var(--gold)">'+h.superName+'</b> &mdash; '+h.superDesc+'.<br>'+
       'Real name '+h.real+'. '+h.cls+'. Power rating '+power(h)+'.'+guardLine;
@@ -4815,6 +4971,8 @@
       for(var k=0;k<5;k++) ph+='<i class="'+(k<=cp.tier?'lit':'')+'"></i>';
       cards[i].pips.innerHTML=ph;
     }
+    $('rBestHero').textContent='Best with this champion: floor '+(p.raid||0);
+    $('rBestAll').textContent='Best ever: floor '+(save.raidBest||0);
     $('owned').textContent=HEROES.length;
   }
   buildRoster(); buildArenas(); buildSkins(); buildMissions(); renderUI();
@@ -4841,7 +4999,16 @@
     setTimeout(function(){tone(1100,0.3,'triangle',0.05,1600);},160);
   });
   $('bFight').addEventListener('click',startFight);
-  $('ovBtn').addEventListener('click',toHome);
+  $('ovBtn').addEventListener('click',function(){
+    /* mid-raid this button is "go one floor deeper", otherwise it goes home */
+    if(raid&&raid.floor>1){ beginRaidFloor(); return; }
+    toHome();
+  });
+  $('ovBtn2').addEventListener('click',function(){ if(raid) raidBank(true); });
+  $('bRaid').addEventListener('click',function(){
+    startRaid();
+    tone(300,0.2,'square',0.05,700);
+  });
 
   /* fight controls */
   function press(el,down,up){
