@@ -357,7 +357,7 @@
   var HEROES=[
     {id:'superman',name:'Superman',real:'Clark Kent',cls:'The Man of Steel',
      emblem:'shield',head:'spitcurl',
-     trait:{name:'Kryptonian Might',kind:'momentum',v:0.22,desc:'+22% damage while above half health'},
+     trait:{name:'Heat Vision',kind:'auto',every:250,dmg:1.15,fx:'repulsor',v:0,desc:'His eyes burn them between punches'},
      pow:24,tough:114,spd:1.06,superName:'Heat Vision Uppercut',
      superDesc:'Burns them with heat vision, then launches them into the sky',
      skins:[
@@ -409,7 +409,7 @@
      ]},
     {id:'lantern',name:'Green Lantern',real:'Hal Jordan',cls:'The Ringbearer',
      emblem:'lantern',head:'domino',
-     trait:{name:'Willpower',kind:'charge',v:0.45,desc:'Super meter charges 45% faster'},
+     trait:{name:'Ring Constructs',kind:'auto',every:240,dmg:1.05,fx:'repulsor',v:0,desc:'The ring builds and fires without being told'},
      pow:31,tough:92,spd:0.9,superName:'Giant Fist Construct',
      superDesc:'Forges an enormous fist of green light and slams it down',
      skins:[
@@ -420,7 +420,7 @@
      ]},
     {id:'cyborg',name:'Cyborg',real:'Victor Stone',cls:'Half Man, Half Machine',
      emblem:'core',head:'cyborg',panels:true,
-     trait:{name:'Self Repair',kind:'regen',v:2.4,desc:'Repairs his own damage all fight long'},
+     trait:{name:'Auto Repair',kind:'auto',every:230,dmg:0.08,fx:'heal',v:0,desc:'His systems patch the damage as it happens'},
      pow:26,tough:136,spd:0.86,superName:'Sonic Cannon',
      superDesc:'Folds one arm into a cannon and fires a beam across the arena',
      skins:[
@@ -442,14 +442,14 @@
      ]},
     {id:'aquaman',name:'Aquaman',real:'Arthur Curry',cls:'King of Atlantis',
      emblem:'trident',head:'longhair',
-     trait:{name:'Tides of Atlantis',kind:'tough',v:0.16,desc:'Takes 16% less damage from everything'},
+     trait:{name:'Tide Surge',kind:'auto',every:260,dmg:1.1,fx:'nuke',v:0,desc:'The sea answers him even this far from it'},
      pow:26,tough:124,spd:0.96,superName:'Trident Surge',
      superDesc:'Calls the ocean up through the arena floor',
      skins:[SK({name:'Scale Mail',suit:'#1E7A4A',suitLo:'#0A4226',trim:'#C89A2E',trimLo:'#7A5A08',
            leg:'#14563A',boot:'#0E3A26',hair:'#6B4A22',skin:'#E0AE84',skinLo:'#A8764C',beard:true})]},
     {id:'shazam',name:'Shazam',real:'Billy Batson',cls:'The Champion',
      emblem:'shazam',head:'short',
-     trait:{name:'Living Lightning',kind:'stunner',v:0.2,desc:'Hits can leave the opponent stunned'},
+     trait:{name:'Living Lightning',kind:'auto',every:290,dmg:1.35,fx:'bolt',v:0,desc:'The lightning that made him keeps striking for him'},
      pow:28,tough:110,spd:1.04,superName:'Thunderclap',
      superDesc:'Pulls a bolt out of the sky and drives it down',
      skins:[SK({name:'Film Suit',suit:'#A81C24',suitLo:'#5A0A10',trim:'#D8A82C',trimLo:'#7E5C08',
@@ -463,7 +463,7 @@
            leg:'#123018',boot:'#0C2412',hair:'#8A6A2A',beard:true})]},
     {id:'supergirl',name:'Supergirl',real:'Kara Zor-El',cls:'The Girl of Steel',
      emblem:'shield',head:'longhair',
-     trait:{name:'Solar Battery',kind:'lifesteal',v:0.2,desc:'Heals for a fifth of the damage she deals'},
+     trait:{name:'Solar Vision',kind:'auto',every:240,dmg:1.05,fx:'repulsor',v:0,desc:'Her eyes flare between punches'},
      pow:23,tough:106,spd:1.14,superName:'Solar Dive',
      superDesc:'Climbs into the sun and comes down like a comet',
      skins:[SK({name:'TV Suit',suit:'#1A4C9E',suitLo:'#0A2A5E',trim:'#A81826',trimLo:'#5E0A12',
@@ -492,7 +492,7 @@
            cape:'#1E7A34',capeLo:'#0C4418',leg:'#1E7A34',boot:'#0F5222',hair:'#12141B'})]},
     {id:'martian',name:'Martian Manhunter',real:"J'onn J'onzz",cls:'The Last Martian',
      emblem:'straps',head:'martian',
-     trait:{name:'Shapeshifter',kind:'tough',v:0.2,desc:'Takes 20% less damage from everything'},
+     trait:{name:'Psychic Grip',kind:'auto',every:260,dmg:1.1,fx:'psi',v:0,desc:'Reaches into their head uninvited'},
      pow:29,tough:126,spd:0.92,superName:'Phase Strike',
      superDesc:'Goes intangible, then solid inside their guard',
      skins:[SK({name:'Classic',suit:'#1E9A54',suitLo:'#0A5A2C',trim:'#C4202C',trimLo:'#78101A',
@@ -500,7 +500,7 @@
            skin:'#2FB264',skinLo:'#136A34',fore:'#2FB264',foreLo:'#136A34'})]},
     {id:'blackadam',name:'Black Adam',real:'Teth-Adam',cls:'The Man in Black',
      emblem:'shazam',head:'short',
-     trait:{name:'Ruthless',kind:'execute',v:0.55,desc:'+55% damage against a badly hurt opponent'},
+     trait:{name:'Black Lightning',kind:'auto',every:280,dmg:1.5,fx:'bolt',v:0,desc:'The storm of Kahndaq answers him unprompted'},
      pow:32,tough:120,spd:0.94,superName:'Storm of Kahndaq',
      superDesc:'Black lightning, called down without mercy',
      skins:[SK({name:'Classic',suit:'#141721',suitLo:'#07080D',trim:'#E8C424',trimLo:'#96780A',
@@ -571,7 +571,7 @@
      ]},
     {id:'reverseflash',name:'Reverse-Flash',real:'Eobard Thawne',cls:'The Man in Yellow',
      emblem:'bolt',head:'flashmask',
-     trait:{name:'Negative Speed Force',kind:'double',v:0.3,desc:'30% chance a strike lands twice'},
+     trait:{name:'Speed Steal',kind:'auto',every:230,dmg:1.0,fx:'psi',v:0,desc:'Takes speed straight out of them from across the arena'},
      pow:24,tough:92,spd:1.40,superName:'Time Robbery',
      superDesc:'Rewinds the moment and lands every hit at once',
      skins:[SK({name:'Classic',suit:'#C8A21C',suitLo:'#7A5E06',trim:'#B01F2B',trimLo:'#620A12',
@@ -585,7 +585,7 @@
            leg:'#1E2028',boot:'#141620',hair:'#12141B'})]},
     {id:'raven',name:'Raven',real:'Rachel Roth',cls:'Daughter of Trigon',
      emblem:'gem',head:'hood',
-     trait:{name:'Soul Self',kind:'spite',v:0.9,desc:'Every hit she takes floods her meter'},
+     trait:{name:'Soul Self',kind:'auto',every:250,dmg:1.2,fx:'shadow',v:0,desc:'Her shadow rises from the floor and grabs them'},
      pow:28,tough:90,spd:1.04,superName:'Azarath Metrion Zinthos',
      superDesc:'Opens a shadow beneath them and lets it close',
      skins:[SK({name:'Classic',suit:'#3A2E6E',suitLo:'#1A1338',trim:'#C4202C',trimLo:'#78101A',
@@ -593,7 +593,7 @@
            skin:'#D8CBD6',skinLo:'#9E90A0',fore:'#D8CBD6',foreLo:'#9E90A0'})]},
     {id:'starfire',name:'Starfire',real:'Koriandr',cls:'Princess of Tamaran',
      emblem:'none',head:'longhair',
-     trait:{name:'Starbolts',kind:'power',v:0.15,desc:'+15% damage on every hit'},
+     trait:{name:'Starbolts',kind:'auto',every:220,dmg:1.0,fx:'repulsor',v:0,desc:'Starbolts leave her hands on their own'},
      pow:27,tough:104,spd:1.12,superName:'Solar Barrage',
      superDesc:'Both hands blazing until nothing is left standing',
      skins:[SK({name:'Classic',suit:'#5E2A8E',suitLo:'#2E1248',trim:'#C8A21C',trimLo:'#7A5E06',
@@ -609,7 +609,7 @@
            skin:'#5EC46E',skinLo:'#2E7A3A',fore:'#5EC46E',foreLo:'#2E7A3A'})]},
     {id:'ivy',name:'Poison Ivy',real:'Pamela Isley',cls:'The Green',
      emblem:'leaf',head:'longhair',
-     trait:{name:'Toxin',kind:'bleed',v:0.55,desc:'Her hits leave a poison that keeps working'},
+     trait:{name:'Strangling Vines',kind:'auto',every:240,dmg:1.05,fx:'vines',v:0,desc:'Vines burst through the floor and take hold of them'},
      pow:24,tough:104,spd:1.06,superName:'Choking Vines',
      superDesc:'The arena floor grows through them',
      skins:[SK({name:'Classic',suit:'#1E7A3E',suitLo:'#0A4220',trim:'#8AD44E',trimLo:'#3E7A18',
@@ -617,7 +617,7 @@
            skin:'#8ED49A',skinLo:'#4A8A58',fore:'#8ED49A',foreLo:'#4A8A58'})]},
     {id:'freeze',name:'Mr. Freeze',real:'Victor Fries',cls:'The Cold Man',
      emblem:'core',head:'glassdome',
-     trait:{name:'Sub-Zero',kind:'chill',v:1,desc:'Her opponent is slowed after every hit he lands'},
+     trait:{name:'Flash Freeze',kind:'auto',every:250,dmg:1.1,fx:'ice',v:0,desc:'Ice crystallises around them out of the air'},
      pow:26,tough:138,spd:0.8,superName:'Absolute Zero',
      superDesc:'Freezes them where they stand, then shatters it',
      skins:[SK({name:'Classic',suit:'#4A5A6E',suitLo:'#212B38',trim:'#6ED8F0',trimLo:'#1E7A96',
@@ -632,7 +632,7 @@
            leg:'#226034',boot:'#12401E',hair:'#8A6A2A'})]},
     {id:'darkseid',name:'Darkseid',real:'Uxas',cls:'Lord of Apokolips',
      emblem:'omega',head:'omegahelm',
-     trait:{name:'God of Tyranny',kind:'power',v:0.24,desc:'+24% damage on every hit'},
+     trait:{name:'Omega Beams',kind:'auto',every:290,dmg:1.55,fx:'repulsor',v:0,desc:'The beams find them wherever they are standing'},
      pow:36,tough:150,spd:0.74,superName:'Omega Beams',
      superDesc:'Two red beams that follow wherever they run',
      skins:[
@@ -648,7 +648,7 @@
      ]},
     {id:'grundy',name:'Solomon Grundy',real:'Cyrus Gold',cls:'Born on a Monday',
      emblem:'none',head:'short',
-     trait:{name:'Cannot Stay Dead',kind:'regen',v:3.4,desc:'Knits himself back together faster than anyone'},
+     trait:{name:'Cannot Stay Dead',kind:'auto',every:240,dmg:0.1,fx:'heal',v:0,desc:'Whatever you do to him just closes up again'},
      pow:33,tough:154,spd:0.7,superName:'Grave Slam',
      superDesc:'Picks them up and puts them through the floor',
      skins:[SK({name:'Classic',suit:'#3E3A34',suitLo:'#1C1A16',trim:'#6E6858',trimLo:'#332F28',
@@ -656,14 +656,14 @@
            skin:'#C6CBD2',skinLo:'#828892',fore:'#C6CBD2',foreLo:'#828892'})]},
     {id:'spider',name:'Spider-Man',real:'Peter Parker',cls:'The Friendly Neighbour',
      emblem:'spider',head:'flashmask',
-     trait:{name:'Spider-Sense',kind:'evade',v:0.2,desc:'20% chance to slip a blow entirely'},
+     trait:{name:'Web Snare',kind:'auto',every:230,dmg:0.9,fx:'web',v:0,desc:'Webs their guard shut without breaking rhythm'},
      pow:24,tough:96,spd:1.34,superName:'Web Slam',
      superDesc:'Webs them up and swings them into the floor',
      skins:[SK({name:'Classic',suit:'#C8202C',suitLo:'#78101A',trim:'#1E48A8',trimLo:'#0C2060',
            leg:'#1E48A8',boot:'#C8202C',hair:'#3A2412'})]},
     {id:'ironman',name:'Iron Man',real:'Tony Stark',cls:'The Armoured Avenger',
      emblem:'core',head:'domehelm',
-     trait:{name:'Mark Armour',kind:'adapt',v:0.06,desc:'The suit learns — damage drops as the fight goes on'},
+     trait:{name:'Repulsors',kind:'auto',every:210,dmg:0.85,fx:'repulsor',v:0,desc:'The gauntlets fire on their own targeting system'},
      pow:28,tough:126,spd:0.96,superName:'Unibeam',
      superDesc:'Dumps the whole reactor into one beam',
      skins:[SK({name:'Classic',suit:'#B01F22',suitLo:'#661012',trim:'#D8A82C',trimLo:'#8A6608',
@@ -677,14 +677,14 @@
            leg:'#1A3E92',boot:'#8A1418',hair:'#C8A868'})]},
     {id:'thor',name:'Thor',real:'Thor Odinson',cls:'God of Thunder',
      emblem:'none',head:'longhair',
-     trait:{name:'Worthy',kind:'stunner',v:0.24,desc:'His hammer blows leave them stunned'},
+     trait:{name:'Call of Thunder',kind:'auto',every:300,dmg:1.4,fx:'bolt',v:0,desc:'Lightning falls out of the sky onto them, on its own'},
      pow:33,tough:134,spd:0.92,superName:'Call the Storm',
      superDesc:'Pulls the lightning down through the hammer',
      skins:[SK({name:'Classic',suit:'#2A3A56',suitLo:'#121A2A',trim:'#B8442C',trimLo:'#6A1E10',
            cape:'#B8442C',capeLo:'#661808',leg:'#1E2A3E',boot:'#12181F',hair:'#C8A868',beard:true})]},
     {id:'hulk',name:'Hulk',real:'Bruce Banner',cls:'The Strongest There Is',
      emblem:'none',head:'short',
-     trait:{name:'Angrier',kind:'berserk',v:0.75,desc:'+75% damage once badly hurt — the maddest in the game'},
+     trait:{name:'Thunder Clap',kind:'auto',every:300,dmg:1.45,fx:'nuke',v:0,desc:'He claps, and the air does the damage'},
      pow:38,tough:160,spd:0.68,superName:'Thunder Clap',
      superDesc:'Claps once, and the air does the rest',
      skins:[SK({name:'Classic',suit:'#5E2C96',suitLo:'#2C1150',trim:'#4A2278',trimLo:'#1E0C3E',
@@ -692,28 +692,28 @@
            skin:'#4EA83E',skinLo:'#256420',fore:'#4EA83E',foreLo:'#256420'})]},
     {id:'panther',name:'Black Panther',real:"T'Challa",cls:'King of Wakanda',
      emblem:'none',head:'catcowl',
-     trait:{name:'Kinetic Absorption',kind:'thorns',v:0.28,desc:'The suit throws back a share of every hit'},
+     trait:{name:'Kinetic Discharge',kind:'auto',every:250,dmg:1.15,fx:'nuke',v:0,desc:'The suit dumps everything it has absorbed at once'},
      pow:28,tough:112,spd:1.26,superName:'Kinetic Release',
      superDesc:'Gives back every hit the suit absorbed, at once',
      skins:[SK({name:'Classic',suit:'#141620',suitLo:'#07080D',trim:'#6E4EC4',trimLo:'#341E68',
            leg:'#141620',boot:'#0A0B10',hair:'#0A0B10',fore:'#141620',foreLo:'#07080D'})]},
     {id:'wolverine',name:'Wolverine',real:'James Howlett',cls:'The Best There Is',
      emblem:'none',head:'catcowl',
-     trait:{name:'Healing Factor',kind:'regen',v:4.2,desc:'Heals faster than anything alive'},
+     trait:{name:'Healing Factor',kind:'auto',every:210,dmg:0.09,fx:'heal',v:0,desc:'Knits himself back together in the middle of a fight'},
      pow:31,tough:118,spd:1.16,superName:'Berserker Barrage',
      superDesc:'Claws out, and no more thinking',
      skins:[SK({name:'Classic',suit:'#E8C424',suitLo:'#96780A',trim:'#1E48A8',trimLo:'#0C2060',
            leg:'#1E48A8',boot:'#8A6608',hair:'#2A1C10'})]},
     {id:'cyclops',name:'Cyclops',real:'Scott Summers',cls:'Field Leader',
      emblem:'none',head:'domino',
-     trait:{name:'Optic Precision',kind:'finisher',v:0.75,desc:'The third hit of his combo does far more'},
+     trait:{name:'Optic Blast',kind:'auto',every:230,dmg:1.1,fx:'repulsor',v:0,desc:'The visor leaks a beam whether he wants it to or not'},
      pow:27,tough:100,spd:1.1,superName:'Full Optic Blast',
      superDesc:'Visor open, everything in the way gone',
      skins:[SK({name:'Classic',suit:'#1E48A8',suitLo:'#0C2060',trim:'#E8C424',trimLo:'#96780A',
            leg:'#1A3E92',boot:'#E8C424',hair:'#5A3418'})]},
     {id:'storm',name:'Storm',real:'Ororo Munroe',cls:'The Weather Goddess',
      emblem:'none',head:'longhair',
-     trait:{name:'Riding the Wind',kind:'charge',v:0.5,desc:'Super meter charges 50% faster'},
+     trait:{name:'Weather Front',kind:'auto',every:260,dmg:1.2,fx:'bolt',v:0,desc:'She keeps calling lightning down without lifting a finger'},
      pow:29,tough:98,spd:1.18,superName:'Hurricane',
      superDesc:'Calls a storm down inside the arena',
      skins:[SK({name:'Classic',suit:'#141620',suitLo:'#07080D',trim:'#C8CDD8',trimLo:'#7A8090',
@@ -721,7 +721,7 @@
            skin:'#8A5E3E',skinLo:'#563820',fore:'#8A5E3E',foreLo:'#563820'})]},
     {id:'magneto',name:'Magneto',real:'Erik Lehnsherr',cls:'Master of Magnetism',
      emblem:'none',head:'domehelm',
-     trait:{name:'Magnetic Field',kind:'guardian',v:0.52,desc:'His guard blocks far more than usual'},
+     trait:{name:'Magnetic Nuke',kind:'auto',every:270,dmg:1.5,fx:'nuke',v:0,desc:'Drags every scrap of metal in and detonates it in their face'},
      pow:32,tough:120,spd:0.9,superName:'Iron Storm',
      superDesc:'Every scrap of metal in the arena, at once',
      skins:[SK({name:'Classic',suit:'#8E1A2A',suitLo:'#4A0A14',trim:'#5E2C96',trimLo:'#2C1150',
@@ -735,14 +735,14 @@
            leg:'#141620',boot:'#0A0B10',hair:'#2A1C10'})]},
     {id:'venom',name:'Venom',real:'Eddie Brock',cls:'The Symbiote',
      emblem:'spider',head:'flashmask',
-     trait:{name:'Symbiote',kind:'lifesteal',v:0.24,desc:'Feeds on the damage he deals'},
+     trait:{name:'Tendrils',kind:'auto',every:230,dmg:1.05,fx:'shadow',v:0,desc:'The symbiote lashes out whether Eddie asked or not'},
      pow:34,tough:138,spd:1.0,superName:'Tendril Frenzy',
      superDesc:'The suit stops asking permission',
      skins:[SK({name:'Classic',suit:'#121319',suitLo:'#050609',trim:'#E8ECF2',trimLo:'#9AA2AE',
            leg:'#121319',boot:'#070810',hair:'#050609',fore:'#121319',foreLo:'#050609'})]},
     {id:'strange',name:'Doctor Strange',real:'Stephen Strange',cls:'Master of the Mystic Arts',
      emblem:'gem',head:'short',
-     trait:{name:'Mirror Dimension',kind:'thorns',v:0.24,desc:'Sends part of every blow back where it came from'},
+     trait:{name:'Bolts of Balthakk',kind:'auto',every:240,dmg:1.1,fx:'psi',v:0,desc:'Mystic bolts fire off while he holds the spell'},
      pow:30,tough:104,spd:1.06,superName:'Crimson Bands',
      superDesc:'Binds them in place and closes the trap',
      skins:[SK({name:'Classic',suit:'#1E4A6E',suitLo:'#0A2438',trim:'#C8A21C',trimLo:'#7A5E06',
@@ -770,7 +770,7 @@
            cape:'#2A6E3E',capeLo:'#123420',leg:'#184A2C',boot:'#0E2E1A',hair:'#141620'})]},
     {id:'thanos',name:'Thanos',real:'Thanos of Titan',cls:'The Mad Titan',
      emblem:'gem',head:'short',
-     trait:{name:'Inevitable',kind:'execute',v:0.7,desc:'+70% damage against a badly hurt opponent'},
+     trait:{name:'Power Stone',kind:'auto',every:300,dmg:1.6,fx:'nuke',v:0,desc:'The gauntlet goes off by itself, and the floor cracks'},
      pow:37,tough:158,spd:0.72,superName:'Gauntlet Snap',
      superDesc:'Closes his fist, and the arena buckles',
      skins:[SK({name:'Classic',suit:'#C8A21C',suitLo:'#7A5E06',trim:'#2E5A9E',trimLo:'#122E58',
@@ -785,14 +785,14 @@
            leg:'#8A1620',boot:'#4E5A68',hair:'#5A3418'})]},
     {id:'wanda',name:'Scarlet Witch',real:'Wanda Maximoff',cls:'The Scarlet Witch',
      emblem:'none',head:'longhair',
-     trait:{name:'Chaos Magic',kind:'cheapsuper',v:0.35,desc:'Her super move costs only 65% meter'},
+     trait:{name:'Chaos Hex',kind:'auto',every:250,dmg:1.2,fx:'psi',v:0,desc:'Reality bends around them for no reason at all'},
      pow:32,tough:96,spd:1.10,superName:'Reality Warp',
      superDesc:'Rewrites the rules for a moment, and it hurts',
      skins:[SK({name:'Classic',suit:'#8E1420',suitLo:'#4A060E',trim:'#C8202C',trimLo:'#78101A',
            cape:'#6E101A',capeLo:'#380608',leg:'#7A1018',boot:'#4A060E',hair:'#8A3A18'})]},
     {id:'vision',name:'Vision',real:'The Vision',cls:'The Synthezoid',
      emblem:'gem',head:'domehelm',
-     trait:{name:'Phase Density',kind:'tough',v:0.23,desc:'Takes 23% less damage from everything'},
+     trait:{name:'Mind Stone',kind:'auto',every:260,dmg:1.2,fx:'repulsor',v:0,desc:'The stone opens on its own and burns'},
      pow:31,tough:128,spd:1.0,superName:'Mind Stone Beam',
      superDesc:'The stone opens and does not stop',
      skins:[SK({name:'Classic',suit:'#B8202C',suitLo:'#66101A',trim:'#C8A21C',trimLo:'#7A5E06',
@@ -800,7 +800,7 @@
            skin:'#C4444E',skinLo:'#7E2028',fore:'#B8202C',foreLo:'#66101A'})]},
     {id:'ghostrider',name:'Ghost Rider',real:'Johnny Blaze',cls:'The Spirit of Vengeance',
      emblem:'none',head:'skull',
-     trait:{name:'Penance Stare',kind:'closer',v:0.55,desc:'The longer the fight runs, the more he hurts'},
+     trait:{name:'Hellfire',kind:'auto',every:240,dmg:1.2,fx:'fire',v:0,desc:'Hellfire climbs out of the ground where they stand'},
      pow:34,tough:110,spd:1.08,superName:'Hellfire Chain',
      superDesc:'The chain lights up and finds them anywhere',
      skins:[SK({name:'Classic',suit:'#1A1A1E',suitLo:'#0A0A0C',trim:'#E8720E',trimLo:'#8A3E04',
@@ -808,7 +808,7 @@
            skin:'#E8E2D4',skinLo:'#A89E88',fore:'#1A1A1E',foreLo:'#0A0A0C'})]},
     {id:'surfer',name:'Silver Surfer',real:'Norrin Radd',cls:'The Herald',
      emblem:'none',head:'bald',
-     trait:{name:'Power Cosmic',kind:'primed',v:0.5,desc:'Starts every fight with half a meter already charged'},
+     trait:{name:'Power Cosmic',kind:'auto',every:260,dmg:1.25,fx:'cosmic',v:0,desc:'Cosmic energy rolls off the board in waves'},
      pow:33,tough:118,spd:1.20,superName:'Cosmic Wave',
      superDesc:'A slice of a dying star, thrown by hand',
      skins:[SK({name:'Classic',suit:'#C4CCD6',suitLo:'#7A8290',trim:'#E8EEF6',trimLo:'#A2AAB8',
@@ -816,7 +816,7 @@
            skin:'#D2DAE4',skinLo:'#8A929E',fore:'#D2DAE4',foreLo:'#8A929E'})]},
     {id:'jean',name:'Jean Grey',real:'Jean Grey',cls:'The Phoenix',
      emblem:'none',head:'longhair',
-     trait:{name:'Phoenix Force',kind:'giant',v:0.6,desc:'Her super move hits far harder than anyone else in the game'},
+     trait:{name:'Telekinesis',kind:'auto',every:240,dmg:1.15,fx:'psi',v:0,desc:'Crushes them with her mind while she fights'},
      pow:33,tough:100,spd:1.12,superName:'Phoenix Rising',
      superDesc:'A bird of fire opens its wings over the arena',
      skins:[SK({name:'Classic',suit:'#1E7A3E',suitLo:'#0A4220',trim:'#E8B430',trimLo:'#96700A',
@@ -853,7 +853,7 @@
            leg:'#141620',boot:'#0A0B10',hair:'#8A5A2A'})]},
     {id:'stewart',name:'John Stewart',real:'John Stewart',cls:'The Marine',
      emblem:'lantern',head:'domino',
-     trait:{name:'Iron Will',kind:'guardian',v:0.5,desc:'His guard blocks far more than usual'},
+     trait:{name:'Sentry Construct',kind:'auto',every:250,dmg:1.1,fx:'repulsor',v:0,desc:'He leaves a construct behind to keep firing'},
      pow:32,tough:114,spd:0.94,superName:'Fortress Construct',
      superDesc:'Builds a wall, then throws it',
      skins:[SK({name:'Classic',suit:'#0E7A3E',suitLo:'#053E1E',trim:'#EEF6F0',trimLo:'#B8C4BC',
@@ -861,7 +861,7 @@
            skin:'#6E4A2E',skinLo:'#3E2818',fore:'#0E7A3E',foreLo:'#053E1E'})]},
     {id:'static',name:'Static Shock',real:'Virgil Hawkins',cls:'The Bang Baby',
      emblem:'bolt',head:'domino',
-     trait:{name:'Overcharge',kind:'charge',v:0.52,desc:'Super meter charges 52% faster'},
+     trait:{name:'Live Wire',kind:'auto',every:250,dmg:1.1,fx:'bolt',v:0,desc:'Arcs jump from him and earth themselves through his opponent'},
      pow:26,tough:96,spd:1.28,superName:'Overload',
      superDesc:'Dumps the whole charge through the floor',
      skins:[SK({name:'Classic',suit:'#1E2A6E',suitLo:'#0A1234',trim:'#E8C424',trimLo:'#96780A',
@@ -876,7 +876,7 @@
            leg:'#242A38',boot:'#12161E',hair:'#8A6A3A'})]},
     {id:'scarecrow',name:'Scarecrow',real:'Jonathan Crane',cls:'The Master of Fear',
      emblem:'none',head:'hood',
-     trait:{name:'Fear Toxin',kind:'bleed',v:0.48,desc:'His hits leave fear working away at them'},
+     trait:{name:'Fear Gas',kind:'auto',every:250,dmg:1.0,fx:'shadow',v:0,desc:'The gas is always leaking, and it always works'},
      pow:27,tough:92,spd:1.14,superName:'Fear Gas',
      superDesc:'Shows them the thing they least want to see',
      skins:[SK({name:'Classic',suit:'#6A5A2E',suitLo:'#342A12',trim:'#3A2E18',trimLo:'#1A1408',
@@ -1054,7 +1054,7 @@
       pose:clonePose(POSE.idle),anim:null,guard:false,meter:0,combo:0,comboT:0,
       meter:startMeter,cd:0,stun:0,lunge:0,flash:0,aiT:90,dead:false,ph:Math.random()*6.28,air:0,vAir:0,
       meterStart:(h.trait&&h.trait.kind==='primed')?h.trait.v*100:0,
-      dx:0,leap:false,leapVX:0,buffer:null,bleed:0,chill:0,adapt:0,usedStand:false,fightStart:tick,iq:0,iqStep:0,isBrain:(h.trait&&h.trait.kind==='iq')};
+      dx:0,leap:false,leapVX:0,buffer:null,bleed:0,chill:0,adapt:0,autoT:undefined,usedStand:false,fightStart:tick,iq:0,iqStep:0,isBrain:(h.trait&&h.trait.kind==='iq')};
   }
   function play(f,frames){
     f.anim={frames:frames,i:0,t:0,from:clonePose(f.pose)};
@@ -2506,6 +2506,25 @@
     }
     return true;
   }
+  /* Some passives are not quiet bonuses — they are the character's actual
+     power going off by itself, with its own effect on screen. */
+  function autoFire(f,other){
+    var tr=f.trait;
+    if(!tr||!other||other.dead||f.dead) return;
+    floatText(f.x,GY-218,tr.name.toUpperCase(),'#9BD3FF');
+    fx.push({k:tr.fx,a:f,b:other,life:tr.fx==='heal'?42:52,max:tr.fx==='heal'?42:52});
+    if(tr.fx==='heal'){
+      var h2=Math.round(f.max*tr.dmg);
+      f.hp=Math.min(f.max,f.hp+h2);
+      floatText(f.x,GY-160,'+'+h2,'#8BE8A8');
+      tone(720,0.16,'sine',0.04,1080);
+      return;
+    }
+    hitLand(f,other,tr.dmg,'auto');
+    shake=Math.max(shake,9);
+    tone(tr.fx==='nuke'?150:520,0.2,tr.fx==='ice'?'sine':'sawtooth',0.05,tr.fx==='nuke'?70:900);
+  }
+
   /* Nocturne studying his opponent — his intellect is the superpower */
   var IQ_STEPS=[{at:34,t:'STANCE READ'},{at:68,t:'WEAKNESS FOUND'},{at:100,t:'COUNTER READY'}];
   function study(f,amt){
@@ -2639,6 +2658,11 @@
         f.lunge+=(want-f.lunge)*0.3;
         if(!f.dead&&f.guard) f.meter=Math.min(100,f.meter+0.16);
         if(f.isBrain&&!f.dead) study(f,0.09);
+        if(f.trait&&f.trait.kind==='auto'&&!f.dead&&screen==='fight'){
+          if(f.autoT===undefined) f.autoT=Math.round(f.trait.every*0.55);
+          f.autoT--;
+          if(f.autoT<=0){ f.autoT=f.trait.every; autoFire(f,(f===me)?foe:me); }
+        }
         if(f.trait&&f.trait.kind==='regen'&&!f.dead&&f.hp<f.max) f.hp=Math.min(f.max,f.hp+f.trait.v/60);
         if(f.bleed>0&&!f.dead){ f.hp-=f.bleed/120; f.bleed*=0.992;
           if(f.bleed<0.4) f.bleed=0;
@@ -2803,6 +2827,136 @@
         }
         ctx.fillStyle='rgba(255,255,255,'+((1-k)*0.3).toFixed(3)+')';
         ctx.beginPath(); ctx.arc(px2,py2,26*(1-k),0,6.283); ctx.fill();
+      }else if(e.k==='nuke'){
+        /* scrap metal drags in from everywhere, then detonates */
+        var tx3=e.b.x+(e.b.dx||0), ty3=GY-(e.b.air||0)-84;
+        if(k<0.62){
+          var pull=k/0.62;
+          ctx.fillStyle='#9AA6B8';
+          for(var m2=0;m2<14;m2++){
+            var ang3=m2*0.449+tick*0.02, rad3=(1-pull)*230+16;
+            var mx3=tx3+Math.cos(ang3)*rad3, my3=ty3+Math.sin(ang3)*rad3*0.6;
+            ctx.save(); ctx.translate(mx3,my3); ctx.rotate(ang3*2);
+            ctx.fillRect(-5,-2,10,4); ctx.restore();
+          }
+        } else {
+          var bl=(k-0.62)/0.38;
+          ctx.globalCompositeOperation='lighter';
+          var ng=ctx.createRadialGradient(tx3,ty3,4,tx3,ty3,40+bl*150);
+          ng.addColorStop(0,'rgba(255,255,255,'+((1-bl)*0.9).toFixed(2)+')');
+          ng.addColorStop(0.4,'rgba(150,190,255,'+((1-bl)*0.6).toFixed(2)+')');
+          ng.addColorStop(1,'rgba(90,130,220,0)');
+          ctx.fillStyle=ng; ctx.beginPath(); ctx.arc(tx3,ty3,40+bl*150,0,6.283); ctx.fill();
+          ctx.strokeStyle='rgba(210,230,255,'+((1-bl)*0.8).toFixed(2)+')'; ctx.lineWidth=5*(1-bl);
+          ctx.beginPath(); ctx.arc(tx3,ty3,bl*190,0,6.283); ctx.stroke();
+        }
+      }else if(e.k==='bolt'){
+        /* a strike out of the sky */
+        var bx3=e.b.x+(e.b.dx||0), by3=GY-(e.b.air||0)-70;
+        ctx.globalCompositeOperation='lighter';
+        ctx.strokeStyle='rgba(230,244,255,'+((1-k)*0.95).toFixed(2)+')'; ctx.lineWidth=7*(1-k)+1.5;
+        ctx.beginPath(); ctx.moveTo(bx3,0);
+        for(var z=1;z<=6;z++) ctx.lineTo(bx3+(z%2?18:-18)*(1-z/8),by3*z/6);
+        ctx.stroke();
+        ctx.strokeStyle='rgba(160,210,255,'+((1-k)*0.5).toFixed(2)+')'; ctx.lineWidth=15*(1-k);
+        ctx.stroke();
+        ctx.fillStyle='rgba(240,250,255,'+((1-k)*0.5).toFixed(2)+')';
+        ctx.beginPath(); ctx.ellipse(bx3,by3,60*k,16*k,0,0,6.283); ctx.fill();
+      }else if(e.k==='vines'){
+        var vx=e.b.x+(e.b.dx||0);
+        ctx.strokeStyle='rgba(46,168,76,'+((1-k)*0.95).toFixed(2)+')'; ctx.lineWidth=6; ctx.lineCap='round';
+        for(var v2=0;v2<5;v2++){
+          var off=(v2-2)*20, hgt=Math.min(1,k*2)*(120+v2*14);
+          ctx.beginPath(); ctx.moveTo(vx+off,GY);
+          ctx.quadraticCurveTo(vx+off+Math.sin(v2+tick*0.05)*22,GY-hgt*0.6,vx+off*0.5,GY-hgt);
+          ctx.stroke();
+          ctx.fillStyle='rgba(120,220,120,'+((1-k)*0.9).toFixed(2)+')';
+          ctx.beginPath(); ctx.ellipse(vx+off*0.5,GY-hgt,7,4,v2,0,6.283); ctx.fill();
+        }
+      }else if(e.k==='ice'){
+        var ix=e.b.x+(e.b.dx||0), iy=GY-(e.b.air||0)-80;
+        ctx.fillStyle='rgba(170,225,245,'+((1-k)*0.6).toFixed(2)+')';
+        for(var c3=0;c3<9;c3++){
+          var a3=c3*0.7+tick*0.01, r3=26+((c3%3)*16)+k*24;
+          ctx.save(); ctx.translate(ix+Math.cos(a3)*r3,iy+Math.sin(a3)*r3*0.8); ctx.rotate(a3);
+          ctx.beginPath(); ctx.moveTo(0,-11); ctx.lineTo(5,0); ctx.lineTo(0,11); ctx.lineTo(-5,0);
+          ctx.closePath(); ctx.fill(); ctx.restore();
+        }
+        ctx.strokeStyle='rgba(220,245,255,'+((1-k)*0.7).toFixed(2)+')'; ctx.lineWidth=3;
+        ctx.beginPath(); ctx.arc(ix,iy,34+k*36,0,6.283); ctx.stroke();
+      }else if(e.k==='fire'){
+        var fx3=e.b.x+(e.b.dx||0);
+        ctx.globalCompositeOperation='lighter';
+        for(var fl2=0;fl2<12;fl2++){
+          var fa=fl2*0.52+tick*0.06, fr=20+fl2*7, rise=k*130;
+          var g3=ctx.createRadialGradient(fx3+Math.cos(fa)*fr,GY-rise-fl2*5,2,
+                                          fx3+Math.cos(fa)*fr,GY-rise-fl2*5,26);
+          g3.addColorStop(0,'rgba(255,220,120,'+((1-k)*0.8).toFixed(2)+')');
+          g3.addColorStop(1,'rgba(220,60,10,0)');
+          ctx.fillStyle=g3;
+          ctx.beginPath(); ctx.arc(fx3+Math.cos(fa)*fr,GY-rise-fl2*5,26,0,6.283); ctx.fill();
+        }
+      }else if(e.k==='repulsor'){
+        var rx=e.a.x+(e.a.dx||0)+e.a.facing*30, ry=GY-(e.a.air||0)-96;
+        var tx4=e.b.x+(e.b.dx||0);
+        ctx.globalCompositeOperation='lighter';
+        for(var s4=0;s4<3;s4++){
+          var pr=Math.min(1,Math.max(0,k*1.6-s4*0.18));
+          var px3=rx+(tx4-rx)*pr;
+          var rg2=ctx.createRadialGradient(px3,ry,1,px3,ry,17);
+          rg2.addColorStop(0,'rgba(240,250,255,.95)'); rg2.addColorStop(1,'rgba(110,190,255,0)');
+          ctx.fillStyle=rg2; ctx.beginPath(); ctx.arc(px3,ry,17,0,6.283); ctx.fill();
+        }
+      }else if(e.k==='psi'){
+        var px4=e.b.x+(e.b.dx||0), py4=GY-(e.b.air||0)-110;
+        ctx.globalCompositeOperation='lighter';
+        for(var w4=0;w4<4;w4++){
+          var kk=Math.max(0,Math.min(1,k*1.4-w4*0.16));
+          ctx.strokeStyle='rgba(255,150,220,'+((1-kk)*0.7).toFixed(2)+')';
+          ctx.lineWidth=Math.max(1,5*(1-kk));
+          ctx.beginPath(); ctx.ellipse(px4,py4,kk*110,kk*70,0,0,6.283); ctx.stroke();
+        }
+      }else if(e.k==='web'){
+        var wx=e.a.x+(e.a.dx||0)+e.a.facing*26, wy=GY-(e.a.air||0)-100;
+        var wtx=e.b.x+(e.b.dx||0), wty=GY-(e.b.air||0)-90;
+        ctx.strokeStyle='rgba(245,250,255,'+((1-k)*0.9).toFixed(2)+')'; ctx.lineWidth=2.4;
+        for(var st4=-2;st4<=2;st4++){
+          ctx.beginPath(); ctx.moveTo(wx,wy);
+          ctx.quadraticCurveTo((wx+wtx)/2,wy+st4*16,wtx,wty+st4*7); ctx.stroke();
+        }
+        ctx.strokeStyle='rgba(245,250,255,'+((1-k)*0.6).toFixed(2)+')'; ctx.lineWidth=1.6;
+        for(var rr4=1;rr4<=3;rr4++){ ctx.beginPath(); ctx.arc(wtx,wty,rr4*11,0,6.283); ctx.stroke(); }
+      }else if(e.k==='cosmic'){
+        var cx4=e.a.x+(e.a.dx||0), cy4=GY-(e.a.air||0)-92;
+        ctx.globalCompositeOperation='lighter';
+        var cg2=ctx.createRadialGradient(cx4,cy4,6,cx4,cy4,60+k*220);
+        cg2.addColorStop(0,'rgba(230,240,255,'+((1-k)*0.55).toFixed(2)+')');
+        cg2.addColorStop(1,'rgba(150,190,255,0)');
+        ctx.fillStyle=cg2; ctx.beginPath(); ctx.arc(cx4,cy4,60+k*220,0,6.283); ctx.fill();
+        ctx.strokeStyle='rgba(220,235,255,'+((1-k)*0.75).toFixed(2)+')'; ctx.lineWidth=6*(1-k);
+        ctx.beginPath(); ctx.arc(cx4,cy4,k*240,0,6.283); ctx.stroke();
+      }else if(e.k==='shadow'){
+        var sx4=e.b.x+(e.b.dx||0);
+        ctx.fillStyle='rgba(24,14,44,'+((1-k)*0.72).toFixed(2)+')';
+        for(var td=0;td<7;td++){
+          var ta=td*0.9+tick*0.03, th=Math.min(1,k*1.8)*(90+td*12);
+          ctx.beginPath();
+          ctx.moveTo(sx4-30+td*10,GY+6);
+          ctx.quadraticCurveTo(sx4-30+td*10+Math.sin(ta)*26,GY-th*0.6,sx4-24+td*9,GY-th);
+          ctx.lineTo(sx4-18+td*9,GY-th+10);
+          ctx.quadraticCurveTo(sx4-24+td*10,GY-th*0.5,sx4-22+td*10,GY+6);
+          ctx.closePath(); ctx.fill();
+        }
+      }else if(e.k==='heal'){
+        var hx4=e.a.x+(e.a.dx||0), hy4=GY-(e.a.air||0)-70;
+        ctx.globalCompositeOperation='lighter';
+        for(var sp5=0;sp5<12;sp5++){
+          var sa=sp5*0.52+tick*0.08, sr5=20+((sp5*7)%40);
+          ctx.fillStyle='rgba(140,240,170,'+((1-k)*0.85).toFixed(2)+')';
+          ctx.beginPath();
+          ctx.arc(hx4+Math.cos(sa)*sr5,hy4+Math.sin(sa)*sr5*0.8-k*46,2.6,0,6.283);
+          ctx.fill();
+        }
       }else if(e.k==='scan'){
         /* detective read-out bracketing the opponent */
         var ox=e.b.x+(e.b.dx||0), oy=GY-(e.b.air||0)-118, hw=62, hh=104;

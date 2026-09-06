@@ -68,37 +68,31 @@ Every character carries their civilian name, a signature Super Move, and a
 
 ### Passives
 
-Every one of the sixty-six characters has its own passive — sixty-six distinct
-names, no two sharing the same effect at the same strength. Between them they
-draw on thirty-three different mechanics:
+Every one of the sixty-six characters has its own passive, and no two share a
+name. Thirty-five of them are not bonuses at all — they are the character's
+actual power, going off by itself during the fight, with its own effect drawn
+on screen and its own damage:
 
-| Mechanic | What it does |
-| --- | --- |
-| Power / Momentum / Berserk | Flat damage, damage while healthy, damage while hurt |
-| Duelist / Opener / Closer | Damage while behind, early in a fight, late in a fight |
-| Execute | Extra damage against a badly hurt opponent |
-| Crit | A chance to land a doubled critical hit |
-| Combo / Finisher | Each combo hit builds, or the third hit pays off |
-| Double | A chance a strike lands twice |
-| First strike | The opening hit of a fight is a critical |
-| Airmaster / Giant | Leaps and heavies, or super moves, hit far harder |
-| Lifesteal | Heals for a share of the damage dealt |
-| Bleed / Chill / Stunner | Poison that keeps working, a slowed opponent, or a stun |
-| Guardbreak | Attacks punch through a guard |
-| Tough / Stubborn / Adapt | Flat damage soak, soak while hurt, soak that grows all fight |
-| Guardian | A guard that blocks far more than usual |
-| Evade | A chance to slip a blow completely |
-| Thorns | Sends a share of every hit back at the attacker |
-| Regen | Heals steadily throughout the fight |
-| Charge / Primed / Cheap super | Faster meter, a meter that starts part-full, a cheaper super |
-| Spite | Taking a hit floods the meter |
-| Last stand | Once per fight, refuses to go down |
-| Intellect | Reads the opponent — the Intellect bar |
+| Character | Passive | What you see |
+| --- | --- | --- |
+| Magneto | Magnetic Nuke | Scrap metal drags in from all sides, then detonates |
+| Thor, Storm, Static Shock, Shazam, Black Adam | Lightning | A bolt falls out of the sky onto the opponent |
+| Poison Ivy | Strangling Vines | Vines burst up through the arena floor |
+| Mr. Freeze | Flash Freeze | Ice crystals form in a ring around them |
+| Ghost Rider | Hellfire | Fire climbs out of the ground where they stand |
+| Iron Man, Cyclops, Superman, Darkseid, Green Lantern | Beams | Repulsors and optic blasts fire on their own |
+| Jean Grey, Martian Manhunter, Scarlet Witch | Psychic force | Rings of force close on the opponent |
+| Raven, Venom, Scarecrow | Shadow | Tendrils rise from the floor |
+| Spider-Man | Web Snare | Web strands shoot across and wrap them |
+| Silver Surfer | Power Cosmic | A cosmic wave rolls out from the board |
+| Hulk, Thanos, Aquaman, Black Panther | Shockwave | A detonation centred on the opponent |
+| Wolverine, Cyborg, Solomon Grundy | Healing | Green sparks spiral up as the damage closes |
 
-They are written to fit the character. Wolverine heals fastest, Nightcrawler is
-the hardest to hit, Hulk gets angriest, Thanos punishes the wounded, Black
-Panther throws hits back, Deadpool gets up again, and Silver Surfer starts
-every fight with half a meter.
+The remaining thirty-one are quieter powers that suit their character —
+Batman's intellect, Captain America's endurance, Nightcrawler's evasion,
+Deadpool's refusal to stay down, Deathstroke's precision — using twenty-two
+mechanics including crits, execute damage, lifesteal, bleed, chill, stuns,
+thorns, adaptive armour, guard-breaking and a once-per-fight last stand.
 
 ### Versions
 
