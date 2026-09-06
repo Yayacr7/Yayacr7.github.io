@@ -4,7 +4,7 @@ Things I'm making with Claude Code.
 
 ## Yahya.games.com — Skyforge Champions
 
-Twenty-four DC characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
+Thirty-four DC characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
 and forge their armour into brighter and brighter finishes.
 
 **To play:** open `index.html` in any web browser.
@@ -23,17 +23,19 @@ Landing hits fills the meter fastest; guarding fills it slowly.
 
 ### The roster
 
-Twenty-four DC characters, each drawn to their own costume. This is not every
+Thirty-four DC characters, each drawn to their own costume. This is not every
 DC character — DC has thousands, and each one here is hand-written drawing
 code — but it covers the Justice League, the Bat-family, and a bench of
 villains.
 
 **Heroes:** Superman, Batman, Wonder Woman, The Flash, Green Lantern, Cyborg,
 Aquaman, Shazam, Green Arrow, Supergirl, Batgirl, Nightwing, Robin, Martian
-Manhunter, Hawkgirl, Zatanna, Peacemaker.
+Manhunter, Hawkgirl, Zatanna, Peacemaker, Raven, Starfire, Beast Boy,
+Red Hood.
 
 **Villains and anti-heroes:** Black Adam, Catwoman, Deathstroke, Bane, Harley
-Quinn, The Joker, Lex Luthor.
+Quinn, The Joker, Lex Luthor, Reverse-Flash, Poison Ivy, Mr. Freeze, The
+Riddler, Darkseid, Solomon Grundy.
 
 Every character carries their civilian name, a signature Super Move, and a
 **trait** — a passive power that changes how they fight.
@@ -160,3 +162,16 @@ updates it automatically, including the Sunday updates.
 
 If buying a domain later, a `CNAME` file at the repository root pointing at it
 is all Pages needs to serve the game from that name instead.
+
+### How the figures are shaded
+
+Each limb is a tapered capsule lit across its width, then given an ambient
+occlusion pool where it sockets into the limb before it — that one detail does
+more for the sense of depth than anything else here. A dark seam runs down the
+shaded side of every limb and a light one down the lit side, which reads as the
+panel edges of a real suit.
+
+The torso is clipped and shaded on top of its base gradient: a shadow under the
+collar, two pectorals with a highlight on the lit one, a centre seam down to
+the waist, two rib lines, and a soft shadow along the flank facing away from
+the sun.
