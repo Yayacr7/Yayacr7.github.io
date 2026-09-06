@@ -144,6 +144,27 @@
     color:var(--gold);flex:none}
   .price i{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 32% 30%,#FFF0B8,#F7C948 46%,#A87A08)}
   .fight{width:100%}
+  .missions{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(232px,1fr))}
+  .mission{display:flex;flex-direction:column;gap:7px;font:inherit;text-align:left;color:var(--ice);
+    background:var(--panel-2);border:2px solid var(--edge);border-radius:11px;padding:10px 12px}
+  .mission.ready{border-color:var(--gold);background:linear-gradient(180deg,rgba(247,201,72,.12),rgba(247,201,72,.03))}
+  .mission.claimed{opacity:.46}
+  .mission .mt{font-family:"Saira Condensed",sans-serif;font-weight:800;font-size:.95rem;
+    text-transform:uppercase;line-height:1.05;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+  .mission .mt em{font-style:normal;color:var(--gold);font-size:.9rem;flex:none}
+  .mission .md{font-size:.72rem;color:var(--dim);line-height:1.3}
+  .mission .mbar{height:8px;border-radius:99px;background:#0B131E;border:1px solid var(--edge);overflow:hidden}
+  .mission .mbar i{display:block;height:100%;border-radius:99px;
+    background:linear-gradient(90deg,#4FA8F5,#7FD4FF)}
+  .mission.ready .mbar i{background:linear-gradient(90deg,#F7C948,#FFF0B8)}
+  .mission .mfoot{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .mission .mnum{font-size:.72rem;color:var(--dim)}
+  .mclaim{font:inherit;font-family:"Saira Condensed",sans-serif;font-weight:800;font-size:.78rem;
+    text-transform:uppercase;letter-spacing:.04em;cursor:pointer;border-radius:8px;padding:5px 11px;
+    background:var(--gold);border:0;color:#25200A}
+  .mclaim:disabled{background:transparent;border:1px solid var(--edge);color:var(--dim);cursor:default}
+  .mReady{font-family:"Saira Condensed",sans-serif;font-size:.8rem;color:#25200A;background:var(--gold);
+    border-radius:99px;padding:2px 9px;margin-left:8px;vertical-align:middle;letter-spacing:.04em}
   .arenas{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(148px,1fr))}
   .arena{font:inherit;cursor:pointer;text-align:left;color:var(--ice);overflow:hidden;
     background:var(--panel);border:2px solid var(--edge);border-radius:12px;padding:0}
@@ -192,7 +213,7 @@
     <p class="brand">Yahya<span>.games</span><b>.com</b></p>
     <p class="eyebrow">Sky arena &middot; High noon</p>
     <h1>Skyforge Champions</h1>
-    <p class="sub">A hundred and six characters &mdash; DC, Marvel, the X-Men and forty anime fighters &mdash; battle across six arenas. Win bouts to earn credits and experience, level your champions up, and forge their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
+    <p class="sub">A hundred and forty-two characters &mdash; DC, Marvel, the X-Men and seventy-six anime fighters &mdash; battle across six arenas. Winning is how you get stronger: every win pays experience, every third win is a free level, and missions pay out credits on top. Spend those on training, on new versions of a champion, and on forging their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
   </header>
 
   <div class="topbar">
@@ -233,6 +254,11 @@
     <section class="sec">
       <h3>Your champions</h3>
       <div class="roster" id="roster"></div>
+    </section>
+
+    <section class="sec" style="margin-top:14px">
+      <h3>Missions <span class="mReady" id="mReady" hidden></span></h3>
+      <div class="missions" id="missions"></div>
     </section>
 
     <section class="sec" style="margin-top:14px">
@@ -1334,7 +1360,287 @@
      superDesc:'Jets out of his heels, straight up, with them held above him',
      skins:[SK({name:'Red Boots',suit:'#16181F',suitLo:'#08090C',trim:'#C4202C',trimLo:'#78101A',
            leg:'#16181F',boot:'#C4202C',hair:'#161820',
-           fore:'#F4DCC8',foreLo:'#C09A80'})]}
+           fore:'#F4DCC8',foreLo:'#C09A80'})]},
+    /* ---- second wave of anime champions ---- */
+    {id:'broly',name:'Broly',real:'Broly',cls:'The Legendary Super Saiyan',
+     emblem:'none',head:'spiky',
+     trait:{name:'Wrath Aura',kind:'auto',every:265,dmg:1.4,fx:'aura',v:0,desc:'His rage burns off him and scorches whoever is nearest'},
+     pow:38,tough:152,spd:1.02,superName:'Gigantic Roar',
+     superDesc:'A green wave of pure fury that flattens the whole arena',
+     skins:[
+       SK({name:'Torn Gi',suit:'#2E6E4A',suitLo:'#123A24',trim:'#C4202C',trimLo:'#78101A',
+           leg:'#E2701A',boot:'#1E2430',hair:'#14161E'}),
+       SK({name:'Legendary',cost:30000,suit:'#2E6E4A',suitLo:'#123A24',trim:'#8AD44E',trimLo:'#3E7A18',
+           leg:'#E2701A',boot:'#1E2430',hair:'#8AD44E'})
+     ]},
+    {id:'trunks',name:'Trunks',real:'Trunks Briefs',cls:'The Boy from the Future',
+     emblem:'none',head:'ponytail',
+     trait:{name:'Burning Attack',kind:'auto',every:250,dmg:1.25,fx:'kibeam',v:0,desc:'Hands weaving, then a golden ball fired straight down the arena'},
+     pow:31,tough:120,spd:1.2,superName:'Heat Dome Attack',
+     superDesc:'One hand raised, and everything under it stops existing',
+     skins:[SK({name:'Capsule Corp',suit:'#2E4E8E',suitLo:'#122448',trim:'#E8B41E',trimLo:'#8E6A04',
+           leg:'#3A3E4E',boot:'#1E2430',hair:'#9E7ED8'})]},
+    {id:'beerus',name:'Beerus',real:'Beerus',cls:'God of Destruction',
+     emblem:'none',head:'horns',
+     trait:{name:'Hakai',kind:'auto',every:290,dmg:1.65,fx:'sphere',v:0,desc:'A sphere of erasure that simply removes what it touches'},
+     pow:40,tough:148,spd:1.16,superName:'Sphere of Destruction',
+     superDesc:'One finger, one purple sphere, and the fight is over',
+     skins:[SK({name:'Destroyer Robes',suit:'#E8A81E',suitLo:'#8E6004',trim:'#5E2C96',trimLo:'#2C1150',
+           leg:'#5E2C96',boot:'#3A1A60',hair:'#8E4EC4',
+           skin:'#B48ED8',skinLo:'#6E4A96',fore:'#B48ED8',foreLo:'#6E4A96'})]},
+    {id:'cell',name:'Cell',real:'Cell',cls:'The Perfect Being',
+     emblem:'core',head:'horns',
+     trait:{name:'Absorption',kind:'lifesteal',v:0.24,desc:'Every hit he lands feeds him back some health'},
+     pow:35,tough:144,spd:1.08,superName:'Solar Kamehameha',
+     superDesc:'A beam charged in orbit and dropped straight down',
+     skins:[SK({name:'Perfect Form',suit:'#3E7A4E',suitLo:'#183A22',trim:'#1E1E2E',trimLo:'#0A0A14',
+           leg:'#3E7A4E',boot:'#1E1E2E',hair:'#1E1E2E',
+           skin:'#7ECC8E',skinLo:'#3E7A4E',fore:'#7ECC8E',foreLo:'#3E7A4E'})]},
+    {id:'majinbuu',name:'Majin Buu',real:'Majin Buu',cls:'The Djinn',
+     emblem:'none',head:'domehelm',
+     trait:{name:'Regeneration',kind:'auto',every:260,dmg:0.09,fx:'heal',v:0,desc:'Blow a piece off him and it crawls back on'},
+     pow:34,tough:170,spd:0.9,superName:'Human Extinction Attack',
+     superDesc:'A hundred beams thrown into the sky at once',
+     skins:[SK({name:'Pink Djinn',suit:'#E86A9E',suitLo:'#8E2A56',trim:'#F0C41E',trimLo:'#96780A',
+           leg:'#2A2E3C',boot:'#16181F',hair:'#E86A9E',
+           skin:'#F0A0C0',skinLo:'#A85E80',fore:'#F0A0C0',foreLo:'#A85E80'})]},
+    {id:'sakura',name:'Sakura',real:'Sakura Haruno',cls:'The Medical Ninja',
+     emblem:'swirl',head:'longhair',
+     trait:{name:'Byakugo Seal',kind:'auto',every:255,dmg:0.1,fx:'heal',v:0,desc:'Chakra stored for years pours back into her wounds'},
+     pow:30,tough:126,spd:1.12,superName:'Cherry Blossom Impact',
+     superDesc:'One chakra-loaded fist and the floor stops being a floor',
+     skins:[SK({name:'Medic Red',suit:'#C4202C',suitLo:'#78101A',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           leg:'#2A2E3C',boot:'#16181F',hair:'#F0A0B8',
+           fore:'#F4DCC8',foreLo:'#C09A80',skin:'#F4DCC8',skinLo:'#C09A80'})]},
+    {id:'itachi',name:'Itachi',real:'Itachi Uchiha',cls:'The Crow',
+     emblem:'fang',head:'ponytail',
+     trait:{name:'Tsukuyomi',kind:'auto',every:255,dmg:1.3,fx:'psi',v:0,desc:'Three days of torture in one second of eye contact'},
+     pow:32,tough:114,spd:1.24,superName:'Susanoo',
+     superDesc:'A giant of red light rises behind him and swings',
+     skins:[SK({name:'Akatsuki Cloak',suit:'#16181F',suitLo:'#08090C',trim:'#C4202C',trimLo:'#78101A',
+           cape:'#1A1C24',capeLo:'#0A0B0F',leg:'#16181F',boot:'#0C0E12',hair:'#1A1E2A'})]},
+    {id:'madara',name:'Madara',real:'Madara Uchiha',cls:'The Ghost of the Uchiha',
+     emblem:'fang',head:'longhair',
+     trait:{name:'Perfect Susanoo',kind:'guardian',v:0.5,desc:'A wall of blue light stands between him and everything'},
+     pow:37,tough:146,spd:1.1,superName:'Meteor Drop',
+     superDesc:'Pulls something enormous out of the sky and lets it land',
+     skins:[SK({name:'Crimson Armour',suit:'#8E1418',suitLo:'#4A0709',trim:'#1E1E2E',trimLo:'#0A0A14',
+           cape:'#6E1014',capeLo:'#380608',leg:'#1E1E2E',boot:'#0E0E18',hair:'#1A1E2A'})]},
+    {id:'rocklee',name:'Rock Lee',real:'Rock Lee',cls:'The Hard Worker',
+     emblem:'none',head:'short',
+     trait:{name:'Eight Gates',kind:'berserk',v:0.85,desc:'The lower his health, the more terrifying he gets'},
+     pow:33,tough:106,spd:1.44,superName:'Primary Lotus',
+     superDesc:'Spins them into the ground from the top of the arena',
+     skins:[SK({name:'Green Jumpsuit',suit:'#2E9E4A',suitLo:'#125024',trim:'#E2701A',trimLo:'#8E3E04',
+           leg:'#2E9E4A',boot:'#F0F2F6',hair:'#161820'})]},
+    {id:'rukia',name:'Rukia',real:'Rukia Kuchiki',cls:'The Snow Blade',
+     emblem:'none',head:'short',
+     trait:{name:'Some No Mai',kind:'auto',every:245,dmg:1.2,fx:'ice',v:0,desc:'A white circle on the floor, and everything in it freezes'},
+     pow:29,tough:112,spd:1.22,superName:'Sode no Shirayuki',
+     superDesc:'Three dances of white ice, the last one final',
+     skins:[SK({name:'Shinigami White',suit:'#16181F',suitLo:'#08090C',trim:'#E8F2FA',trimLo:'#9EB0C0',
+           leg:'#16181F',boot:'#0C0E12',hair:'#1A1E2A',
+           fore:'#F4DCC8',foreLo:'#C09A80',skin:'#F4DCC8',skinLo:'#C09A80'})]},
+    {id:'aizen',name:'Aizen',real:'Sosuke Aizen',cls:'The Deceiver',
+     emblem:'none',head:'short',
+     trait:{name:'Complete Hypnosis',kind:'evade',v:0.26,desc:'You are not fighting where you think he is standing'},
+     pow:35,tough:138,spd:1.18,superName:'Kyoka Suigetsu',
+     superDesc:'You never see the strike that lands, only the result',
+     skins:[SK({name:'White Coat',suit:'#F0F2F6',suitLo:'#A8B0BC',trim:'#2A2E3C',trimLo:'#101219',
+           cape:'#F0F2F6',capeLo:'#A8B0BC',leg:'#F0F2F6',boot:'#D8DEE8',hair:'#5E4428'})]},
+    {id:'sanji',name:'Sanji',real:'Vinsmoke Sanji',cls:'The Black Leg',
+     emblem:'none',head:'short',
+     trait:{name:'Diable Jambe',kind:'auto',every:245,dmg:1.25,fx:'fire',v:0,desc:'He spins until his leg catches fire, then kicks'},
+     pow:31,tough:118,spd:1.28,superName:'Diable Jambe',
+     superDesc:'A leg burning white hot, swung once',
+     skins:[SK({name:'Black Suit',suit:'#16181F',suitLo:'#08090C',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           leg:'#16181F',boot:'#0C0E12',hair:'#F6DC4A',
+           fore:'#F0F2F6',foreLo:'#A8B0BC'})]},
+    {id:'nami',name:'Nami',real:'Nami',cls:'The Navigator',
+     emblem:'none',head:'longhair',
+     trait:{name:'Thunderbolt Tempo',kind:'auto',every:240,dmg:1.15,fx:'bolt',v:0,desc:'She builds a small storm and points it at them'},
+     pow:26,tough:106,spd:1.3,superName:'Thunderbolt Tempo',
+     superDesc:'A cloud, a bubble, and a bolt straight down',
+     skins:[SK({name:'Orange Top',suit:'#E2701A',suitLo:'#8E3E04',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           leg:'#2E5EA8',boot:'#1A2028',hair:'#E2701A',
+           fore:'#F4DCC8',foreLo:'#C09A80',skin:'#F4DCC8',skinLo:'#C09A80'})]},
+    {id:'ace',name:'Ace',real:'Portgas D. Ace',cls:'Fire Fist',
+     emblem:'none',head:'short',
+     trait:{name:'Fire Fist',kind:'auto',every:245,dmg:1.3,fx:'fire',v:0,desc:'His whole arm turns to flame and throws it'},
+     pow:33,tough:122,spd:1.16,superName:'Flame Commandment',
+     superDesc:'A pillar of fire the height of the arena',
+     skins:[SK({name:'Open Shirt',suit:'#E8843A',suitLo:'#8E4408',trim:'#F0C41E',trimLo:'#96780A',
+           leg:'#16181F',boot:'#0C0E12',hair:'#161820',
+           fore:'#E8B48C',foreLo:'#B0784E'})]},
+    {id:'shanks',name:'Shanks',real:'Red-Haired Shanks',cls:'Emperor of the Sea',
+     emblem:'none',head:'short',
+     trait:{name:'Conquerors Haki',kind:'stunner',v:0.3,desc:'His presence alone staggers whoever he is looking at'},
+     pow:36,tough:140,spd:1.14,superName:'Divine Departure',
+     superDesc:'One draw of the blade, and the sky splits',
+     skins:[SK({name:'Captain Cloak',suit:'#16181F',suitLo:'#08090C',trim:'#C4202C',trimLo:'#78101A',
+           cape:'#1E2028',capeLo:'#0A0B10',leg:'#2A2E3C',boot:'#16181F',hair:'#C4451E',
+           fore:'#F0F2F6',foreLo:'#A8B0BC'})]},
+    {id:'genos',name:'Genos',real:'Genos',cls:'The Demon Cyborg',
+     emblem:'core',head:'cyborg',
+     trait:{name:'Incinerate',kind:'auto',every:240,dmg:1.35,fx:'fire',v:0,desc:'Both forearms open and vent fire at them'},
+     pow:33,tough:132,spd:1.18,superName:'Machine Gun Blows',
+     superDesc:'More punches per second than the eye can count, then a burn',
+     skins:[SK({name:'Combat Chassis',suit:'#20242E',suitLo:'#0C0E14',trim:'#E8B41E',trimLo:'#8E6A04',
+           leg:'#20242E',boot:'#16181F',hair:'#F6DC4A',
+           fore:'#8A9098',foreLo:'#4E545C'})]},
+    {id:'inosuke',name:'Inosuke',real:'Inosuke Hashibira',cls:'Beast Breathing',
+     emblem:'fang',head:'boarmask',
+     trait:{name:'Beast Sense',kind:'evade',v:0.22,desc:'He feels an attack coming before he sees it'},
+     pow:31,tough:120,spd:1.3,superName:'Beast Fang Slash',
+     superDesc:'Two jagged blades, no technique, all speed',
+     skins:[SK({name:'Boar Head',suit:'#20242E',suitLo:'#0C0E14',trim:'#5E9EC4',trimLo:'#1E5A7E',
+           leg:'#2A2E3C',boot:'#16181F',hair:'#3E4652',
+           fore:'#E8B48C',foreLo:'#B0784E'})]},
+    {id:'rengoku',name:'Rengoku',real:'Kyojuro Rengoku',cls:'The Flame Hashira',
+     emblem:'flame',head:'spiky',
+     trait:{name:'Flame Breathing',kind:'auto',every:250,dmg:1.35,fx:'fire',v:0,desc:'Every swing of his blade leaves fire hanging in the air'},
+     pow:35,tough:136,spd:1.16,superName:'Rengoku Ninth Form',
+     superDesc:'Purgatory — one strike, and it does not stop for anything',
+     skins:[SK({name:'Flame Haori',suit:'#20242E',suitLo:'#0C0E14',trim:'#E8503A',trimLo:'#8E2214',
+           cape:'#F0C41E',capeLo:'#96780A',leg:'#2A2E3C',boot:'#16181F',hair:'#F0C41E'})]},
+    {id:'muzan',name:'Muzan',real:'Muzan Kibutsuji',cls:'The First Demon',
+     emblem:'none',head:'longhair',
+     trait:{name:'Blood Whips',kind:'auto',every:245,dmg:1.4,fx:'shadow',v:0,desc:'Whips of blood come out of his back and lash from every angle'},
+     pow:38,tough:150,spd:1.2,superName:'Demon King Form',
+     superDesc:'A hundred mouths and a hundred whips, all at once',
+     skins:[SK({name:'White Suit',suit:'#F0F2F6',suitLo:'#A8B0BC',trim:'#8E1418',trimLo:'#4A0709',
+           leg:'#F0F2F6',boot:'#C8CDD8',hair:'#161820',
+           fore:'#EFE0DC',foreLo:'#B4A29E',skin:'#EFE0DC',skinLo:'#B4A29E'})]},
+    {id:'armin',name:'Armin',real:'Armin Arlert',cls:'The Strategist',
+     emblem:'wings',head:'short',
+     trait:{name:'Read The Field',kind:'iq',v:0.55,desc:'Reads his opponent — watch the Intellect bar fill'},
+     pow:26,tough:110,spd:1.18,superName:'Colossal Blast',
+     superDesc:'The steam alone takes the arena apart',
+     skins:[SK({name:'Survey Corps',suit:'#5E4E2E',suitLo:'#2E2412',trim:'#2E6E4A',trimLo:'#123A24',
+           cape:'#2E6E4A',capeLo:'#123A24',leg:'#F0F2F6',boot:'#3E2E18',hair:'#F0C41E'})]},
+    {id:'reiner',name:'Reiner',real:'Reiner Braun',cls:'The Armoured Titan',
+     emblem:'wings',head:'short',
+     trait:{name:'Hardened Plating',kind:'guardian',v:0.52,desc:'Armour plate under the skin turns most of it aside'},
+     pow:34,tough:158,spd:0.92,superName:'Armoured Charge',
+     superDesc:'Lowers his head and runs straight through whatever is there',
+     skins:[SK({name:'Survey Corps',suit:'#8E7A4A',suitLo:'#4E4020',trim:'#2E6E4A',trimLo:'#123A24',
+           leg:'#F0F2F6',boot:'#5E4428',hair:'#C8A868'})]},
+    {id:'alphonse',name:'Alphonse',real:'Alphonse Elric',cls:'The Soul in the Armour',
+     emblem:'crescent',head:'domehelm',
+     trait:{name:'Hollow Armour',kind:'stubborn',v:0.35,desc:'There is nothing inside to hurt'},
+     pow:29,tough:162,spd:0.96,superName:'Transmuted Fist',
+     superDesc:'Claps, touches the ground, and a stone fist comes up under them',
+     skins:[SK({name:'Steel Body',suit:'#8A94A2',suitLo:'#4A525C',trim:'#C4202C',trimLo:'#78101A',
+           leg:'#8A94A2',boot:'#5E6670',hair:'#8A94A2',
+           fore:'#8A94A2',foreLo:'#4A525C'})]},
+    {id:'hisoka',name:'Hisoka',real:'Hisoka Morow',cls:'The Magician',
+     emblem:'diamonds',head:'spiky',
+     trait:{name:'Bungee Gum',kind:'counter',v:0.42,desc:'His aura is both rubber and gum — blocks come straight back'},
+     pow:32,tough:118,spd:1.26,superName:'Texture Surprise',
+     superDesc:'The card was in your chest before you saw his hand move',
+     skins:[SK({name:'Jester Suit',suit:'#E86A9E',suitLo:'#8E2A56',trim:'#F0C41E',trimLo:'#96780A',
+           leg:'#E86A9E',boot:'#8E2A56',hair:'#C4451E',
+           fore:'#F4DCC8',foreLo:'#C09A80'})]},
+    {id:'kurapika',name:'Kurapika',real:'Kurapika',cls:'The Last Kurta',
+     emblem:'none',head:'short',
+     trait:{name:'Chain Jail',kind:'auto',every:255,dmg:1.25,fx:'vines',v:0,desc:'A chain of light shoots out and wraps them where they stand'},
+     pow:31,tough:114,spd:1.22,superName:'Emperor Time',
+     superDesc:'Scarlet eyes, and a chain through the heart',
+     skins:[SK({name:'Blue Tabard',suit:'#2E4E8E',suitLo:'#122448',trim:'#F0C41E',trimLo:'#96780A',
+           leg:'#F0F2F6',boot:'#3A3E4E',hair:'#F0C41E',
+           fore:'#F4DCC8',foreLo:'#C09A80'})]},
+    {id:'uraraka',name:'Uraraka',real:'Ochaco Uraraka',cls:'Zero Gravity',
+     emblem:'none',head:'short',
+     trait:{name:'Zero Gravity',kind:'airmaster',v:0.4,desc:'Nothing weighs anything — her jump attacks hit far harder'},
+     pow:27,tough:112,spd:1.26,superName:'Meteor Fafrotskies',
+     superDesc:'Everything she floated comes down at once',
+     skins:[SK({name:'Hero Costume',suit:'#E86A9E',suitLo:'#8E2A56',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           leg:'#2A2E3C',boot:'#E86A9E',hair:'#C4784E',
+           fore:'#F4DCC8',foreLo:'#C09A80',skin:'#F4DCC8',skinLo:'#C09A80'})]},
+    {id:'shigaraki',name:'Shigaraki',real:'Tomura Shigaraki',cls:'Decay',
+     emblem:'none',head:'longhair',
+     trait:{name:'Decay',kind:'auto',every:250,dmg:1.4,fx:'shadow',v:0,desc:'Five fingers, and whatever they touch crumbles outward'},
+     pow:36,tough:132,spd:1.14,superName:'Total Decay',
+     superDesc:'One hand to the floor and the arena begins to come apart',
+     skins:[SK({name:'Hand Coat',suit:'#16181F',suitLo:'#08090C',trim:'#8A6A5E',trimLo:'#4A342C',
+           cape:'#1E2028',capeLo:'#0A0B10',leg:'#16181F',boot:'#0C0E12',hair:'#B8C0CC',
+           fore:'#D8CFCA',foreLo:'#9A908C',skin:'#D8CFCA',skinLo:'#9A908C'})]},
+    {id:'megumi',name:'Megumi',real:'Megumi Fushiguro',cls:'The Ten Shadows',
+     emblem:'none',head:'spiky',
+     trait:{name:'Divine Dogs',kind:'auto',every:250,dmg:1.25,fx:'shadow',v:0,desc:'Two shadow wolves come out of the floor and run them down'},
+     pow:30,tough:122,spd:1.2,superName:'Chimera Shadow Garden',
+     superDesc:'The floor becomes shadow, and everything in it is his',
+     skins:[SK({name:'School Uniform',suit:'#16181F',suitLo:'#08090C',trim:'#3A4756',trimLo:'#1A222C',
+           leg:'#16181F',boot:'#0C0E12',hair:'#1A1E2A',
+           fore:'#F0C49C',foreLo:'#C08A5E'})]},
+    {id:'nobara',name:'Nobara',real:'Nobara Kugisaki',cls:'Straw Doll',
+     emblem:'none',head:'longhair',
+     trait:{name:'Resonance',kind:'auto',every:245,dmg:1.3,fx:'nuke',v:0,desc:'Hammer, nail, straw doll — and the damage lands on them'},
+     pow:29,tough:114,spd:1.2,superName:'Hairpin',
+     superDesc:'Nails in a circle, and then all of them go off',
+     skins:[SK({name:'Cursed Uniform',suit:'#16181F',suitLo:'#08090C',trim:'#C4784E',trimLo:'#7E4828',
+           leg:'#16181F',boot:'#0C0E12',hair:'#C4784E',
+           fore:'#F4DCC8',foreLo:'#C09A80',skin:'#F4DCC8',skinLo:'#C09A80'})]},
+    {id:'escanor',name:'Escanor',real:'Escanor',cls:'The Lion Sin of Pride',
+     emblem:'flame',head:'short',
+     trait:{name:'The One',kind:'auto',every:270,dmg:1.55,fx:'aura',v:0,desc:'At noon he is the strongest thing alive and the air burns'},
+     pow:39,tough:142,spd:1.06,superName:'Cruel Sun',
+     superDesc:'Holds a sun over his head and drops it',
+     skins:[SK({name:'Sacred Axe',suit:'#E8A81E',suitLo:'#8E6004',trim:'#F4E08C',trimLo:'#A8901E',
+           cape:'#C4202C',capeLo:'#78101A',leg:'#8E7A4A',boot:'#5E4428',hair:'#E8843A'})]},
+    {id:'yami',name:'Yami',real:'Yami Sukehiro',cls:'Captain of the Black Bulls',
+     emblem:'none',head:'short',
+     trait:{name:'Dark Cloaked Slash',kind:'auto',every:255,dmg:1.4,fx:'slash',v:0,desc:'A black blade that cuts the space in front of it'},
+     pow:36,tough:142,spd:1.06,superName:'Dimension Slash',
+     superDesc:'He cuts the gap between here and there, and they are in it',
+     skins:[SK({name:'Bull Coat',suit:'#2A2E3C',suitLo:'#101219',trim:'#8E7A4A',trimLo:'#4E4020',
+           cape:'#20242E',capeLo:'#0C0E14',leg:'#2A2E3C',boot:'#16181F',hair:'#161820'})]},
+    {id:'sesshomaru',name:'Sesshomaru',real:'Sesshomaru',cls:'Lord of the West',
+     emblem:'crescent',head:'longhair',
+     trait:{name:'Poison Claws',kind:'auto',every:250,dmg:1.35,fx:'vines',v:0,desc:'Green poison drips from his hand and eats through anything'},
+     pow:35,tough:134,spd:1.22,superName:'Dragon Strike',
+     superDesc:'Lightning gathered in the blade and thrown as a dragon',
+     skins:[SK({name:'White Silk',suit:'#F0F2F6',suitLo:'#A8B0BC',trim:'#C4202C',trimLo:'#78101A',
+           cape:'#E8ECF2',capeLo:'#98A2B0',leg:'#F0F2F6',boot:'#C8CDD8',hair:'#F4F6FA',
+           fore:'#F4DCC8',foreLo:'#C09A80',skin:'#F4DCC8',skinLo:'#C09A80'})]},
+    {id:'hiei',name:'Hiei',real:'Hiei',cls:'The Forbidden Child',
+     emblem:'none',head:'spiky',
+     trait:{name:'Dragon of the Darkness Flame',kind:'auto',every:265,dmg:1.5,fx:'fire',v:0,desc:'A black dragon of fire wrapped around his arm, then released'},
+     pow:35,tough:116,spd:1.36,superName:'Dragon of the Darkness Flame',
+     superDesc:'He unwraps his arm and lets the dragon go',
+     skins:[SK({name:'Black Cloak',suit:'#16181F',suitLo:'#08090C',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           cape:'#1A1C24',capeLo:'#0A0B0F',leg:'#16181F',boot:'#0C0E12',hair:'#1A1E2A'})]},
+    {id:'giorno',name:'Giorno',real:'Giorno Giovanna',cls:'Gold Experience',
+     emblem:'none',head:'braid',
+     trait:{name:'Gold Experience',kind:'auto',every:250,dmg:0.11,fx:'heal',v:0,desc:'He turns damage back into life, over and over'},
+     pow:31,tough:128,spd:1.2,superName:'Golden Requiem',
+     superDesc:'The strike never reaches him, and theirs never finishes',
+     skins:[SK({name:'Gold Suit',suit:'#E8B41E',suitLo:'#8E6A04',trim:'#F4E08C',trimLo:'#A8901E',
+           leg:'#E8B41E',boot:'#B08A0E',hair:'#F6DC4A',
+           fore:'#F4DCC8',foreLo:'#C09A80'})]},
+    {id:'rimuru',name:'Rimuru',real:'Rimuru Tempest',cls:'The Slime Lord',
+     emblem:'gem',head:'longhair',
+     trait:{name:'Predator',kind:'adapt',v:0.34,desc:'He copies whatever hits him and it stops working'},
+     pow:33,tough:140,spd:1.18,superName:'Megiddo',
+     superDesc:'A thousand points of focused sunlight, all at once',
+     skins:[SK({name:'Blue Coat',suit:'#2E6EA8',suitLo:'#12385E',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           cape:'#2E6EA8',capeLo:'#12385E',leg:'#20242E',boot:'#16181F',hair:'#5EC4E8',
+           fore:'#F4DCC8',foreLo:'#C09A80',skin:'#F4DCC8',skinLo:'#C09A80'})]},
+    {id:'vash',name:'Vash',real:'Vash the Stampede',cls:'The Humanoid Typhoon',
+     emblem:'none',head:'spiky',
+     trait:{name:'Angel Arm',kind:'auto',every:275,dmg:1.55,fx:'kibeam',v:0,desc:'His arm unfolds into something that was never a gun'},
+     pow:34,tough:124,spd:1.24,superName:'Angel Arm',
+     superDesc:'The arm opens, and the horizon changes shape',
+     skins:[SK({name:'Red Coat',suit:'#C4202C',suitLo:'#78101A',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           cape:'#C4202C',capeLo:'#78101A',leg:'#8E1A20',boot:'#2A2E3C',hair:'#F6DC4A'})]},
+    {id:'spike',name:'Spike',real:'Spike Spiegel',cls:'The Bounty Hunter',
+     emblem:'none',head:'spiky',
+     trait:{name:'Jeet Kune Do',kind:'combo',v:0.3,desc:'Every landed hit makes the next one land faster'},
+     pow:30,tough:116,spd:1.28,superName:'Bang',
+     superDesc:'He does not rush. He just finishes it.',
+     skins:[SK({name:'Blue Suit',suit:'#2E4E8E',suitLo:'#122448',trim:'#F0C41E',trimLo:'#96780A',
+           leg:'#2E4E8E',boot:'#16181F',hair:'#2A5E3E',
+           fore:'#F0F2F6',foreLo:'#A8B0BC'})]}
   ];
   var HP_SCALE=2.8;   /* fights last far longer now */
   var TIERS=[
@@ -1344,12 +1650,17 @@
     {name:'Energised',     gloss:0.46,rim:0.86,aura:0.52,spark:2,mul:2.05},
     {name:'Legendary',     gloss:0.56,rim:1.10,aura:0.95,spark:3,mul:2.65}
   ];
-  var FORGE_COST=[900,2600,6800,16000];
-  var FORGE_LVL =[4,9,15,22];
+  var FORGE_COST=[500,1500,3800,8500];
+  var FORGE_LVL =[3,6,11,17];
 
   /* ================= save ================= */
   var save={credits:600,sel:0,h:{}};
   function blank(){ return {lvl:1,xp:0,tier:0,wins:0,skin:0,owned:[0]}; }
+  /* missions the player has already collected, and the arenas won in */
+  function missionState(){
+    if(!save.done||typeof save.done!=='object') save.done={};
+    if(!save.arenaWins||typeof save.arenaWins!=='object') save.arenaWins={};
+  }
   function loadSave(){
     try{
       var v=JSON.parse(localStorage.getItem('skyforge.v1'));
@@ -1366,6 +1677,7 @@
     if(save.sel>=HEROES.length) save.sel=0;
     if(typeof save.credits!=='number') save.credits=600;
     if(typeof save.sel!=='number') save.sel=0;
+    missionState();
   }
   function store(){ try{ localStorage.setItem('skyforge.v1',JSON.stringify(save)); }catch(e){} }
   loadSave();
@@ -1386,8 +1698,77 @@
     return {pow:Math.round(h.pow*g*t), tough:Math.round(h.tough*g*t*HP_SCALE), spd:+(h.spd*(1+(p.lvl-1)*0.016)).toFixed(2)};
   }
   function power(h){ var s=stats(h); return Math.round(s.pow*9+s.tough*0.8+s.spd*120); }
-  function xpNeed(lvl){ return Math.round(78*Math.pow(lvl,1.24)); }
-  function trainCost(h){ var p=prog(h); return Math.round(120*Math.pow(p.lvl,1.16)); }
+
+  /* ================= missions =================
+     Jobs to go and do, each paying credits and experience. Some are about
+     the champion you have selected, some are about the whole roster.
+     `at(h)` returns [how far you are, what you need]. */
+  function totalWins(){ var n=0; for(var k in save.h) n+=save.h[k].wins||0; return n; }
+  function heroesWonWith(){ var n=0; for(var k in save.h) if(save.h[k].wins>0) n++; return n; }
+  function versionsOwned(){ var n=0; for(var k in save.h) n+=(save.h[k].owned||[0]).length-1; return n; }
+  function arenasWon(){ var n=0; for(var k in save.arenaWins) if(save.arenaWins[k]) n++; return n; }
+  function bestTier(){ var b=0; for(var k in save.h) if(save.h[k].tier>b) b=save.h[k].tier; return b; }
+
+  var MISSIONS=[
+    /* --- the champion you have picked --- */
+    {id:'w1', per:1, name:'First blood',        d:'Win a fight with this champion',        cred:250,  xp:60,
+     at:function(h){ return [prog(h).wins,1]; }},
+    {id:'w5', per:1, name:'Getting good',       d:'Win 5 fights with this champion',       cred:800,  xp:180,
+     at:function(h){ return [prog(h).wins,5]; }},
+    {id:'w15',per:1, name:'Veteran',            d:'Win 15 fights with this champion',      cred:2200, xp:500,
+     at:function(h){ return [prog(h).wins,15]; }},
+    {id:'w30',per:1, name:'Champion of the deck',d:'Win 30 fights with this champion',     cred:5000, xp:1200,
+     at:function(h){ return [prog(h).wins,30]; }},
+    {id:'l5', per:1, name:'Trained up',         d:'Get this champion to level 5',          cred:400,  xp:0,
+     at:function(h){ return [prog(h).lvl,5]; }},
+    {id:'l12',per:1, name:'Seasoned',           d:'Get this champion to level 12',         cred:1400, xp:0,
+     at:function(h){ return [prog(h).lvl,12]; }},
+    {id:'l25',per:1, name:'Powerhouse',         d:'Get this champion to level 25',         cred:4000, xp:0,
+     at:function(h){ return [prog(h).lvl,25]; }},
+    {id:'t2', per:1, name:'Polished',           d:'Forge this champion to Chrome',         cred:900,  xp:200,
+     at:function(h){ return [prog(h).tier,2]; }},
+    {id:'t4', per:1, name:'Legendary finish',   d:'Forge this champion all the way',       cred:4500, xp:900,
+     at:function(h){ return [prog(h).tier,4]; }},
+    {id:'v2', per:1, name:'Second look',        d:'Unlock another version of this champion',cred:600, xp:120,
+     at:function(h){ return [(prog(h).owned||[0]).length,2]; }},
+    /* --- the whole roster --- */
+    {id:'g5',  per:0, name:'Try the bench',     d:'Win with 5 different champions',        cred:1500, xp:300,
+     at:function(){ return [heroesWonWith(),5]; }},
+    {id:'g20', per:0, name:'Roster deep',       d:'Win with 20 different champions',       cred:6000, xp:900,
+     at:function(){ return [heroesWonWith(),20]; }},
+    {id:'gw50',per:0, name:'Fifty fights won',  d:'Win 50 fights in total',                cred:4000, xp:800,
+     at:function(){ return [totalWins(),50]; }},
+    {id:'gar', per:0, name:'Tour the world',    d:'Win at least once in every arena',      cred:2500, xp:600,
+     at:function(){ return [arenasWon(),ARENAS.length]; }},
+    {id:'gv10',per:0, name:'Collector',         d:'Unlock 10 versions across the roster',  cred:3500, xp:700,
+     at:function(){ return [versionsOwned(),10]; }},
+    {id:'gt4', per:0, name:'One of a kind',     d:'Forge any champion to Legendary',       cred:3000, xp:600,
+     at:function(){ return [bestTier(),4]; }}
+  ];
+  /* a per-champion mission is tracked separately for each champion */
+  function mkey(m,h){ return m.per? (m.id+':'+h.id) : m.id; }
+  function mDone(m,h){ return !!save.done[mkey(m,h)]; }
+  function mReady(m,h){ var a=m.at(h); return !mDone(m,h)&&a[0]>=a[1]; }
+  function missionsReady(){
+    var h=HEROES[save.sel],n=0;
+    for(var i=0;i<MISSIONS.length;i++) if(mReady(MISSIONS[i],h)) n++;
+    return n;
+  }
+  function claimMission(m){
+    var h=HEROES[save.sel];
+    if(!mReady(m,h)) return false;
+    save.done[mkey(m,h)]=1;
+    save.credits+=m.cred;
+    if(m.xp){
+      var p=prog(h); p.xp+=m.xp;
+      while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; }
+    }
+    store(); return true;
+  }
+  /* Levelling is deliberately generous: a champion should feel like it is
+     getting stronger every couple of fights, not every twenty. */
+  function xpNeed(lvl){ return Math.round(48*Math.pow(lvl,1.12)); }
+  function trainCost(h){ var p=prog(h); return Math.round(70*Math.pow(p.lvl,1.05)); }
 
   /* ================= pose rig ================= */
   var JOINTS=['head','neck','pelvis','shF','elF','haF','shB','elB','haB','hiF','knF','ftF','hiB','knB','ftB'];
@@ -2392,6 +2773,26 @@
         g.lineTo(hx+9.2,hy+0.8); g.lineTo(hx-10.2,hy+1.4);
         g.closePath();
         done(g,lerpHex(h.suitLo,'#000000',0.25));
+      }else if(h.head==='boarmask'){
+        /* the boar head he wears instead of a helmet */
+        g.beginPath(); g.arc(hx,hy-2.6,9.1,Math.PI*0.94,Math.PI*2.06); g.closePath();
+        done(g,h.hair);
+        g.beginPath();
+        g.moveTo(hx-9.6,hy-6.4);
+        g.quadraticCurveTo(hx,hy-13.6,hx+9.4,hy-6.4);
+        g.quadraticCurveTo(hx+11.4,hy+2.4,hx+6.4,hy+7.6);
+        g.quadraticCurveTo(hx,hy+10.6,hx-6.6,hy+6.4);
+        g.quadraticCurveTo(hx-11,hy+1.4,hx-9.6,hy-6.4);
+        g.closePath();
+        done(g,'#C9C1AE');
+        g.beginPath(); g.moveTo(hx-8,hy-7.4); g.lineTo(hx-12.6,hy-16.6); g.lineTo(hx-3.4,hy-10.4);
+        g.closePath(); done(g,'#C9C1AE');
+        g.beginPath(); g.moveTo(hx+3.4,hy-10.4); g.lineTo(hx+11.4,hy-15.4); g.lineTo(hx+8.4,hy-6.4);
+        g.closePath(); done(g,'#C9C1AE');
+        g.beginPath(); g.moveTo(hx+2.4,hy+6.4); g.quadraticCurveTo(hx+8.6,hy+8.6,hx+7.4,hy+2.4);
+        g.quadraticCurveTo(hx+6,hy+6.4,hx+2.4,hy+6.4); g.closePath(); done(g,'#F0EDE2');
+        g.beginPath(); g.moveTo(hx-3.6,hy+6.6); g.quadraticCurveTo(hx-9.6,hy+8.6,hx-8.4,hy+2.4);
+        g.quadraticCurveTo(hx-7,hy+6.4,hx-3.6,hy+6.6); g.closePath(); done(g,'#F0EDE2');
       }else if(h.head==='peakcap'){
         g.beginPath(); g.arc(hx,hy-2.6,9.1,Math.PI*0.94,Math.PI*2.06); g.closePath();
         done(g,h.hair);
@@ -2434,22 +2835,26 @@
       g.save();
       g.beginPath(); g.ellipse(hx,hy,8.1,9.1,0.06,0,6.283); g.clip();
       g.fillStyle=sh; g.fillRect(hx-10,hy-11,20,22);
-      /* cheekbone catch-light on the sunward side */
-      g.fillStyle='rgba(255,236,206,.26)';
-      g.beginPath(); g.ellipse(hx+3.6,hy-0.4,3.6,2.4,-0.3,0,6.283); g.fill();
-      /* brow ridge shadow */
-      g.fillStyle='rgba(70,42,24,.24)';
-      g.beginPath(); g.ellipse(hx+2.4,hy-4.2,6,1.8,-0.08,0,6.283); g.fill();
-      /* jaw and chin */
-      g.fillStyle='rgba(96,58,34,.20)';
-      g.beginPath(); g.ellipse(hx-2.6,hy+5.4,5.6,2.8,0,0,6.283); g.fill();
-      g.fillStyle='rgba(255,236,206,.18)';
-      g.beginPath(); g.ellipse(hx+3.4,hy+5.2,2.2,1.4,0,0,6.283); g.fill();
-      /* nose: a bridge highlight and a shadow beneath it */
-      g.fillStyle='rgba(255,238,210,.22)';
-      g.beginPath(); g.ellipse(hx+4.4,hy-0.6,1.3,3,0.18,0,6.283); g.fill();
-      g.fillStyle='rgba(84,50,28,.26)';
-      g.beginPath(); g.ellipse(hx+4.2,hy+2.4,1.9,1,0,0,6.283); g.fill();
+      /* Superman paints his own bone structure below; everyone else gets
+         this generic set, and layering both just makes mud */
+      if(h.head!=='spitcurl'){
+        /* cheekbone catch-light on the sunward side */
+        g.fillStyle='rgba(255,236,206,.26)';
+        g.beginPath(); g.ellipse(hx+3.6,hy-0.4,3.6,2.4,-0.3,0,6.283); g.fill();
+        /* brow ridge shadow */
+        g.fillStyle='rgba(70,42,24,.24)';
+        g.beginPath(); g.ellipse(hx+2.4,hy-4.2,6,1.8,-0.08,0,6.283); g.fill();
+        /* jaw and chin */
+        g.fillStyle='rgba(96,58,34,.20)';
+        g.beginPath(); g.ellipse(hx-2.6,hy+5.4,5.6,2.8,0,0,6.283); g.fill();
+        g.fillStyle='rgba(255,236,206,.18)';
+        g.beginPath(); g.ellipse(hx+3.4,hy+5.2,2.2,1.4,0,0,6.283); g.fill();
+        /* nose: a bridge highlight and a shadow beneath it */
+        g.fillStyle='rgba(255,238,210,.22)';
+        g.beginPath(); g.ellipse(hx+4.4,hy-0.6,1.3,3,0.18,0,6.283); g.fill();
+        g.fillStyle='rgba(84,50,28,.26)';
+        g.beginPath(); g.ellipse(hx+4.2,hy+2.4,1.9,1,0,0,6.283); g.fill();
+      }
       g.restore();
 
       if(h.head==='cowl'){
@@ -2620,6 +3025,16 @@
         g.beginPath(); g.moveTo(hx-9.4,hy-1.4); g.lineTo(hx+8.8,hy-2); g.stroke();
         g.strokeStyle='rgba(120,62,44,.6)'; g.lineWidth=1.4; g.lineCap='round';
         g.beginPath(); g.moveTo(hx+2.6,hy+4.4); g.lineTo(hx+7.2,hy+4.1); g.stroke();
+      }else if(h.head==='boarmask'){
+        g.fillStyle='#100E0C';
+        g.beginPath(); g.ellipse(hx+4.6,hy-2.4,2.4,1.9,-0.1,0,6.283); g.fill();
+        g.beginPath(); g.ellipse(hx-2.8,hy-2.2,1.9,1.6,0.1,0,6.283); g.fill();
+        g.fillStyle='rgba(255,255,255,.5)';
+        g.beginPath(); g.arc(hx+5,hy-2.7,0.6,0,6.283); g.fill();
+        g.fillStyle='rgba(70,52,36,.32)';
+        g.beginPath(); g.ellipse(hx+0.6,hy+3.6,4.4,2.2,0,0,6.283); g.fill();
+        g.fillStyle='#2A2018';
+        g.beginPath(); g.ellipse(hx+0.4,hy+2.2,1.5,1,0,0,6.283); g.fill();
       }else if(h.head==='strawhat'||h.head==='bandana'||h.head==='peakcap'){
         g.fillStyle='#F2EDE6';
         g.beginPath(); g.ellipse(hx+4.9,hy-0.6,2.5,1.7,0,0,6.283); g.fill();
@@ -2636,6 +3051,141 @@
         g.beginPath(); g.ellipse(hx+1.4,hy-2.6,7.4,4.6,0,0,6.283); g.fill();
         g.fillStyle='#EAF2FF'; g.beginPath(); g.arc(hx+5,hy-2.4,1.3,0,6.283); g.fill();
         g.fillStyle='#B08A34'; g.fillRect(hx+2.4,hy+4,5.4,1.8);
+      }else if(h.head==='spitcurl'){
+        /* ---- Superman: the one face in the game drawn properly ----
+           Bone structure first, then the features on top of it, then the
+           light. Everything is kept small: at this size the difference
+           between a face and a smudge is a couple of units. */
+
+        /* the ear, tucked behind the jaw on the shaded side */
+        g.fillStyle=h.skin;
+        g.beginPath(); g.ellipse(hx-7.4,hy+0.4,1.7,2.7,0.14,0,6.283); g.fill();
+        g.strokeStyle=lerpHex(h.skinLo,'#000000',0.22); g.lineWidth=0.6;
+        g.beginPath(); g.ellipse(hx-7.4,hy+0.6,0.8,1.5,0.14,0,6.283); g.stroke();
+
+        g.save();
+        g.beginPath(); g.ellipse(hx,hy,8.1,9.1,0.06,0,6.283); g.clip();
+        /* the square jaw, and the light along the top of it */
+        g.fillStyle='rgba(92,54,32,.13)';
+        g.beginPath(); g.ellipse(hx-2.6,hy+6.6,5.6,2.4,0.04,0,6.283); g.fill();
+        g.fillStyle='rgba(255,240,214,.22)';
+        g.beginPath(); g.ellipse(hx+3.0,hy+5.6,2.6,1.5,-0.06,0,6.283); g.fill();
+        /* chin ball, lit, with a soft cleft down it */
+        g.fillStyle='rgba(255,242,220,.18)';
+        g.beginPath(); g.ellipse(hx+2.6,hy+7.0,2.0,1.2,0,0,6.283); g.fill();
+        g.strokeStyle='rgba(120,72,44,.20)'; g.lineWidth=0.7; g.lineCap='round';
+        g.beginPath(); g.moveTo(hx+2.2,hy+6.0); g.lineTo(hx+2.2,hy+7.2); g.stroke();
+        /* cheekbone: the high plane that catches the sun */
+        g.fillStyle='rgba(255,240,214,.26)';
+        g.beginPath(); g.ellipse(hx+3.6,hy-0.6,3.4,2.0,-0.32,0,6.283); g.fill();
+        /* brow ridge */
+        g.fillStyle='rgba(70,42,24,.20)';
+        g.beginPath(); g.ellipse(hx+2.6,hy-4.4,5.6,1.6,-0.08,0,6.283); g.fill();
+        /* forehead light */
+        g.fillStyle='rgba(255,242,218,.16)';
+        g.beginPath(); g.ellipse(hx+2.6,hy-7.0,4.0,1.6,-0.06,0,6.283); g.fill();
+        g.restore();
+
+        /* ---- the eye: small, almond, set into the socket ---- */
+        g.save();
+        g.beginPath();
+        g.moveTo(hx+3.0,hy-1.3);
+        g.quadraticCurveTo(hx+5.2,hy-3.2,hx+7.3,hy-1.5);
+        g.quadraticCurveTo(hx+5.3,hy+0.4,hx+3.0,hy-1.3);
+        g.closePath();
+        g.clip();
+        g.fillStyle='#F1ECE4'; g.fillRect(hx+2.4,hy-4,6,5.4);
+        g.fillStyle='rgba(150,128,116,.34)';
+        g.beginPath(); g.ellipse(hx+3.4,hy-1.4,1.3,1.4,0,0,6.283); g.fill();
+        /* iris, with a darker limbal ring the way a real one reads */
+        var ig=g.createRadialGradient(hx+5.3,hy-2.0,0.2,hx+5.45,hy-1.5,1.35);
+        ig.addColorStop(0,'#86AECE'); ig.addColorStop(0.6,'#3F6489'); ig.addColorStop(1,'#213850');
+        g.fillStyle=ig;
+        g.beginPath(); g.arc(hx+5.45,hy-1.5,1.3,0,6.283); g.fill();
+        g.strokeStyle='rgba(14,22,34,.7)'; g.lineWidth=0.42;
+        g.beginPath(); g.arc(hx+5.45,hy-1.5,1.3,0,6.283); g.stroke();
+        g.fillStyle='#0E1119';
+        g.beginPath(); g.arc(hx+5.45,hy-1.5,0.56,0,6.283); g.fill();
+        /* two catchlights: the sun, and the bounce off the deck */
+        g.fillStyle='rgba(255,255,255,.95)';
+        g.beginPath(); g.arc(hx+4.95,hy-2.05,0.46,0,6.283); g.fill();
+        g.fillStyle='rgba(255,255,255,.4)';
+        g.beginPath(); g.arc(hx+5.95,hy-0.95,0.26,0,6.283); g.fill();
+        /* the upper lid throws a shadow across the top of the eye */
+        g.fillStyle='rgba(70,42,26,.30)';
+        g.beginPath(); g.ellipse(hx+5.2,hy-3.3,3.0,1.4,0,0,6.283); g.fill();
+        g.restore();
+        /* lash line along the top lid */
+        g.strokeStyle='rgba(28,18,12,.8)'; g.lineWidth=0.95; g.lineCap='round';
+        g.beginPath();
+        g.moveTo(hx+3.0,hy-1.35);
+        g.quadraticCurveTo(hx+5.2,hy-3.3,hx+7.4,hy-1.6);
+        g.stroke();
+        /* lower lid: a light edge, never a hard line */
+        g.strokeStyle='rgba(255,236,208,.4)'; g.lineWidth=0.6;
+        g.beginPath();
+        g.moveTo(hx+3.4,hy-0.85); g.quadraticCurveTo(hx+5.3,hy+0.5,hx+7.2,hy-1.2);
+        g.stroke();
+        /* the crease above it */
+        g.strokeStyle='rgba(96,58,34,.28)'; g.lineWidth=0.6;
+        g.beginPath();
+        g.moveTo(hx+3.2,hy-2.5); g.quadraticCurveTo(hx+5.4,hy-4.1,hx+7.7,hy-2.5);
+        g.stroke();
+
+        /* brow: heavy at the inner end, tapering out, and set low — which
+           is what reads as determined rather than surprised */
+        g.strokeStyle='rgba(30,19,11,.8)'; g.lineCap='round';
+        g.lineWidth=1.6;
+        g.beginPath();
+        g.moveTo(hx+2.6,hy-4.7); g.quadraticCurveTo(hx+4.8,hy-5.6,hx+6.4,hy-5.1);
+        g.stroke();
+        g.lineWidth=0.95;
+        g.beginPath();
+        g.moveTo(hx+6.4,hy-5.1); g.quadraticCurveTo(hx+7.5,hy-4.8,hx+8.0,hy-4.0);
+        g.stroke();
+
+        /* ---- the nose ---- at this size only crisp edges read, so the
+           bridge is a lit edge with a drawn shadow line beside it */
+        g.strokeStyle='rgba(255,250,236,.6)'; g.lineWidth=1.1; g.lineCap='round';
+        g.beginPath();
+        g.moveTo(hx+4.3,hy-2.2); g.quadraticCurveTo(hx+5.1,hy-0.2,hx+5.2,hy+1.7);
+        g.stroke();
+        g.strokeStyle='rgba(92,52,28,.45)'; g.lineWidth=0.85;
+        g.beginPath();
+        g.moveTo(hx+3.7,hy-1.8); g.quadraticCurveTo(hx+4.2,hy+0.1,hx+4.2,hy+1.9);
+        g.stroke();
+        /* the ball of the tip, lit */
+        g.fillStyle='rgba(255,250,232,.55)';
+        g.beginPath(); g.arc(hx+5.0,hy+2.1,0.85,0,6.283); g.fill();
+        /* the shadow it throws, and one nostril */
+        g.strokeStyle='rgba(78,44,24,.55)'; g.lineWidth=0.85;
+        g.beginPath();
+        g.moveTo(hx+3.4,hy+2.7); g.quadraticCurveTo(hx+4.6,hy+3.3,hx+5.7,hy+2.6);
+        g.stroke();
+        g.fillStyle='rgba(52,28,15,.7)';
+        g.beginPath(); g.ellipse(hx+3.9,hy+2.6,0.48,0.32,0.28,0,6.283); g.fill();
+
+        /* ---- the mouth: two lips, not one line ---- */
+        /* the line where the lips meet is the only hard edge; the lips
+           themselves are a shadow above it and a highlight below */
+        g.fillStyle='rgba(140,74,56,.44)';
+        g.beginPath();
+        g.moveTo(hx+2.6,hy+4.5);
+        g.quadraticCurveTo(hx+4.6,hy+3.9,hx+6.8,hy+4.4);
+        g.quadraticCurveTo(hx+4.7,hy+4.8,hx+2.6,hy+4.5);
+        g.closePath(); g.fill();
+        g.strokeStyle='rgba(78,34,24,.92)'; g.lineWidth=1.15; g.lineCap='round';
+        g.beginPath();
+        g.moveTo(hx+2.7,hy+4.6); g.quadraticCurveTo(hx+4.7,hy+5.0,hx+6.8,hy+4.4);
+        g.stroke();
+        g.strokeStyle='rgba(255,226,204,.5)'; g.lineWidth=0.8;
+        g.beginPath();
+        g.moveTo(hx+3.2,hy+5.5); g.quadraticCurveTo(hx+4.8,hy+5.8,hx+6.4,hy+5.2);
+        g.stroke();
+
+        /* the shadow the jaw throws down onto the neck */
+        g.fillStyle='rgba(70,42,24,.20)';
+        g.beginPath(); g.ellipse(hx-0.8,hy+9.2,5.0,1.6,0.05,0,6.283); g.fill();
       }else{
         /* eye white, iris, pupil, catchlight, then the lid over the top */
         g.fillStyle='#F2EDE6';
@@ -2746,22 +3296,33 @@
     cine=null;
     screen='over'; endT=0;
     var h=HEROES[save.sel], p=prog(h);
-    var cred=0,xp=0;
+    var cred=0,xp=0,freeLvl=0;
     if(win){
       p.wins++;
-      cred=Math.round((110+foe.lvl*34)*(1+foe.tier*0.22));
-      xp=Math.round(95+foe.lvl*26);
+      cred=Math.round((150+foe.lvl*38)*(1+foe.tier*0.22));
+      /* the veteran bonus: the more this champion has won, the more each
+         new win is worth, so winning is the main way you level up */
+      xp=Math.round(150+foe.lvl*30+p.wins*8);
+      /* and every third win is a free level on top of the experience */
+      if(p.wins%3===0){ freeLvl=1; }
     }else{
-      cred=Math.round(28+foe.lvl*7); xp=Math.round(20+foe.lvl*6);
+      cred=Math.round(45+foe.lvl*9); xp=Math.round(40+foe.lvl*8);
     }
     save.credits+=cred; p.xp+=xp;
     var ups=0;
     while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; ups++; }
+    if(freeLvl&&p.lvl<60){ p.lvl++; ups++; }
+    if(win) save.arenaWins[arena().id]=true;
     store();
+    var got=missionsReady();
     $('ovTitle').textContent=win?'Victory':'Defeated';
     $('ovText').textContent=win
-      ? h.name+' beat '+foe.h.name+' (level '+foe.lvl+').'+(ups?' Levelled up to '+p.lvl+'!':'')
-      : foe.h.name+' (level '+foe.lvl+') was too strong. You still earned something for trying.';
+      ? h.name+' beat '+foe.h.name+' (level '+foe.lvl+').'
+        +(ups?' Levelled up to '+p.lvl+'!':'')
+        +(freeLvl?' Win '+p.wins+' — every third win is a free level.':'')
+        +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'')
+      : foe.h.name+' (level '+foe.lvl+') was too strong. You still earned something for trying.'
+        +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'');
     $('rwCred').innerHTML=cred+'<span>Credits</span>';
     $('rwXp').innerHTML=xp+'<span>Experience</span>';
     $('ovReward').hidden=false;
@@ -2774,7 +3335,7 @@
     cine=null; cam.z=1; cam.x=0; cam.y=0;
     screen='home'; me=null; foe=null;
     $('fightbar').hidden=true; $('homeUI').hidden=false; $('overlay').hidden=true;
-    renderUI();
+    buildMissions(); renderUI();
   }
 
   function floatText(x,y,txt,col,big){ floats.push({x:x,y:y,t:txt,c:col,life:56,big:!!big}); }
@@ -3842,7 +4403,7 @@
         save.sel=i; store();
         [].forEach.call(wrap.children,function(x,j){ x.className='card'+(j===i?' on':''); x.setAttribute('aria-pressed',String(j===i)); });
         tone(760,0.07,'triangle',0.035,1050);
-        markCardsDirty(); buildSkins(); renderUI();
+        markCardsDirty(); buildSkins(); buildMissions(); renderUI();
       });
       wrap.appendChild(b);
       var cc=c.getContext('2d'); cc.setTransform(2,0,0,2,0,0);
@@ -3934,6 +4495,46 @@
   }
 
   var skinCards=[];
+  function buildMissions(){
+    var h=HEROES[save.sel], wrap=$('missions');
+    wrap.innerHTML='';
+    MISSIONS.forEach(function(m){
+      var a=m.at(h), have=Math.min(a[0],a[1]), need=a[1];
+      var done=mDone(m,h), ready=mReady(m,h);
+      var el=document.createElement('div');
+      el.className='mission'+(ready?' ready':'')+(done?' claimed':'');
+
+      var t=document.createElement('div'); t.className='mt';
+      t.innerHTML='<span>'+m.name+'</span><em>'+m.cred+(m.xp?' + '+m.xp+' xp':'')+'</em>';
+      var d=document.createElement('div'); d.className='md';
+      d.textContent=m.d+(m.per?'':' (whole roster)');
+      var bar=document.createElement('div'); bar.className='mbar';
+      var fill=document.createElement('i');
+      fill.style.width=Math.round(have/need*100)+'%';
+      bar.appendChild(fill);
+
+      var foot=document.createElement('div'); foot.className='mfoot';
+      var num=document.createElement('span'); num.className='mnum';
+      num.textContent=done?'Collected':(have+' / '+need);
+      var btn=document.createElement('button'); btn.className='mclaim';
+      btn.textContent=done?'Done':(ready?'Collect':'Locked');
+      btn.disabled=!ready;
+      btn.addEventListener('click',function(){
+        if(!claimMission(m)) return;
+        tone(880,0.14,'triangle',0.05,1320);
+        setTimeout(function(){ tone(1180,0.2,'triangle',0.05,1500); },120);
+        buildMissions(); renderUI();
+      });
+      foot.appendChild(num); foot.appendChild(btn);
+
+      el.appendChild(t); el.appendChild(d); el.appendChild(bar); el.appendChild(foot);
+      wrap.appendChild(el);
+    });
+    var n=missionsReady(), tag=$('mReady');
+    tag.hidden=(n===0);
+    tag.textContent=n+' ready';
+  }
+
   function buildSkins(){
     var h=HEROES[save.sel], p=prog(h), wrap=$('skins');
     wrap.innerHTML=''; skinCards.length=0; skinDrawn={};
@@ -3959,7 +4560,7 @@
           tone(320,0.28,'sawtooth',0.05,900);
           setTimeout(function(){tone(1180,0.26,'triangle',0.05,1600);},150);
         } else { tone(760,0.07,'triangle',0.035,1050); }
-        pp.skin=i; store(); me=null; markCardsDirty(); buildSkins(); renderUI();
+        pp.skin=i; store(); me=null; markCardsDirty(); buildSkins(); buildMissions(); renderUI();
       });
       wrap.appendChild(b);
       var cc=c.getContext('2d'); cc.setTransform(2,0,0,2,0,0);
@@ -4011,14 +4612,14 @@
     }
     $('owned').textContent=HEROES.length;
   }
-  buildRoster(); buildArenas(); buildSkins(); renderUI();
+  buildRoster(); buildArenas(); buildSkins(); buildMissions(); renderUI();
 
   function flashMsg(t){ $('msg').textContent=t; setTimeout(function(){ if($('msg').textContent===t) $('msg').textContent=''; },2600); }
 
   $('bTrain').addEventListener('click',function(){
     var h=HEROES[save.sel],p=prog(h),c=trainCost(h);
     if(save.credits<c||p.lvl>=60) return;
-    save.credits-=c; p.lvl++; p.xp=0; store(); renderUI();
+    save.credits-=c; p.lvl++; p.xp=0; store(); buildMissions(); renderUI();
     flashMsg(h.name+' trained to level '+p.lvl+'.');
     tone(700,0.1,'triangle',0.05,1050);
     setTimeout(function(){tone(950,0.16,'triangle',0.05,1300);},110);
@@ -4028,7 +4629,7 @@
     if(p.tier>=4) return;
     var c=FORGE_COST[p.tier];
     if(save.credits<c||p.lvl<FORGE_LVL[p.tier]) return;
-    save.credits-=c; p.tier++; store(); markCardsDirty(); renderUI();
+    save.credits-=c; p.tier++; store(); markCardsDirty(); buildMissions(); renderUI();
     me=null;
     flashMsg(h.name+' forged to '+TIERS[p.tier].name+'!');
     tone(300,0.3,'sawtooth',0.05,900);

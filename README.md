@@ -4,7 +4,7 @@ Things I'm making with Claude Code.
 
 ## Yahya.games.com — Skyforge Champions
 
-A hundred and six characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
+A hundred and forty-two characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
 and forge their armour into brighter and brighter finishes.
 
 **To play:** open `index.html` in any web browser.
@@ -43,10 +43,10 @@ sky over the fire pits · **The Watchtower** in orbit, with Earth below.
 
 ### The roster
 
-A hundred and six characters, each drawn to their own costume. This is not
-every character from anywhere — each one here is hand-written drawing code —
-but it covers the Justice League, the Bat-family, a bench of villains, a
-Marvel and X-Men wing, and forty anime fighters.
+A hundred and forty-two characters, each drawn to their own costume. This is
+not every character from anywhere — each one here is hand-written drawing code
+— but it covers the Justice League, the Bat-family, a bench of villains, a
+Marvel and X-Men wing, and seventy-six anime fighters.
 
 Twenty more joined the roster: Doctor Strange, Black Widow, Hawkeye, Loki,
 Thanos, Ant-Man, Scarlet Witch, Vision, Ghost Rider, Silver Surfer, Jean Grey,
@@ -54,13 +54,41 @@ Nightcrawler, Rogue, Beast, Gambit, John Stewart, Static Shock, Two-Face,
 Scarecrow and The Penguin — with horned, flaming-skull and split-face head
 treatments drawn for Loki, Ghost Rider and Two-Face.
 
-**Anime (forty fighters):** Goku, Vegeta, Gohan, Piccolo, Frieza, Naruto,
+**Anime (seventy-six fighters):** Goku, Vegeta, Gohan, Piccolo, Frieza, Naruto,
 Sasuke, Kakashi, Ichigo, Luffy, Zoro, Saitama, Tanjiro, Nezuko, Zenitsu,
 Levi, Eren, Mikasa, Edward Elric, Gon, Killua, All Might, Deku, Bakugo,
 Todoroki, Gojo, Yuji, Sukuna, Meliodas, Asta, Denji, Inuyasha, Yusuke,
 Jotaro, DIO, Kenshin, Guts, Sailor Moon, Kaneki and Astro Boy — with new
 head shapes for spiked hair, ponytails, braids, a straw hat, a bandana,
-a blindfold and a peaked cap.
+a blindfold, a peaked cap and a boar mask.
+
+A second wave joined them: Broly, Trunks, Beerus, Cell, Majin Buu, Sakura,
+Itachi, Madara, Rock Lee, Rukia, Aizen, Sanji, Nami, Ace, Shanks, Genos,
+Inosuke, Rengoku, Muzan, Armin, Reiner, Alphonse, Hisoka, Kurapika, Uraraka,
+Shigaraki, Megumi, Nobara, Escanor, Yami, Sesshomaru, Hiei, Giorno, Rimuru,
+Vash and Spike.
+
+### Levelling and missions
+
+Winning is the main way a champion gets stronger. Every win pays credits and
+experience, the experience grows with how many times that champion has won,
+and **every third win is a free level** on top of it. Training, forging and
+new versions are all cheaper than they used to be.
+
+The missions board on the home screen holds sixteen objectives. Ten are about
+the champion you have selected — win one fight, win five, win fifteen, win
+thirty, reach level 5, 12 and 25, forge to Chrome, forge to Legendary, unlock
+a second version. Six are about the whole roster — win with 5 and with 20
+different champions, win 50 fights in total, win at least once in every arena,
+unlock ten versions, and forge anyone to Legendary. Each shows how far along
+you are and pays credits and experience when you collect it.
+
+### Superman's face
+
+Superman is drawn with a face of his own rather than the generic one every
+other character shares: jaw and cheekbone structure, an ear, an almond eye
+with a limbal ring and two catchlights, a lash line and crease, a low tapered
+brow, a nose drawn as a lit edge beside a shadow line, and two lips.
 
 **Heroes:** Superman, Batman, Wonder Woman, The Flash, Green Lantern, Cyborg,
 Aquaman, Shazam, Green Arrow, Supergirl, Batgirl, Nightwing, Robin, Martian
