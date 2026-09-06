@@ -944,6 +944,10 @@
     {id:'lex',name:'Lex Luthor',real:'Alexander Luthor',cls:'The Smartest Man Alive',
      emblem:'core',head:'bald',
      trait:{name:'Twelfth Level Intellect',kind:'iq',v:0.55,desc:'Reads his opponent — watch the Intellect bar fill'},
+     /* Lex does not fight fair. From level 10 he keeps a security detail in
+        reserve: three troopers who only step in at the moment he would go
+        down, each in a fully forged warsuit at full health. */
+     guard:{lvl:10,count:3},
      pow:28,tough:132,spd:0.8,superName:'Warsuit Barrage',
      superDesc:'Every weapon in the warsuit, fired at once',
      skins:[
@@ -1851,6 +1855,21 @@
   function ease(k){ return k<0.5?2*k*k:1-Math.pow(-2*k+2,2)/2; }
 
   /* ================= fighter ================= */
+  /* ---- Lex Luthor's Lexcorp security detail -------------------------
+     A trooper is a fighter like any other, but it is deliberately kept
+     out of HEROES so it never turns up in the roster or the missions —
+     the only way to meet one is to put Lex on the ropes. */
+  var GUARD_UNIT={
+    id:'lexguard',name:'Lexcorp Trooper',real:'Lexcorp Security',cls:'Warsuit Trooper',
+    emblem:'core',head:'domehelm',isGuard:true,
+    trait:{name:'Warsuit Plating',kind:'guardian',v:0.26,desc:'Lexcorp plating turns most of a hit aside'},
+    pow:24,tough:70,spd:1.02,superName:'Warsuit Volley',
+    superDesc:'Everything the warsuit carries, fired at once',
+    skins:[SK({name:'Lexcorp Green',suit:'#2E7C4A',suitLo:'#124A26',trim:'#8E4EC4',trimLo:'#4E2472',
+          leg:'#2A6E42',boot:'#164A28',hair:'#3A4756',
+          fore:'#3A4756',foreLo:'#1A222C'})]
+  };
+
   function makeFighter(h,lvl,tier,facing,x,skinIdx){
     var p={lvl:lvl,tier:tier};
     var t=TIERS[tier].mul, g=1+(lvl-1)*0.16;
@@ -1862,13 +1881,21 @@
       every:h.trait.every,fx:h.trait.fx,
       dmg:(h.trait.dmg||0)*(1+(lvl-1)*0.022),
       v:h.trait.v*(1+(lvl-1)*0.022)}:null;
-    return {h:look(h,skinIdx),base:h,trait:tr,firstHit:true,
+    var fg={h:look(h,skinIdx),base:h,trait:tr,firstHit:true,
       lvl:lvl,tier:tier,facing:facing,x:x,baseX:x,
       pow:Math.round(h.pow*g*t),hp:mx,max:mx,spd:h.spd*(1+(lvl-1)*0.016),
       pose:clonePose(POSE.idle),anim:null,guard:false,meter:0,combo:0,comboT:0,
       meter:startMeter,cd:0,stun:0,lunge:0,flash:0,aiT:90,dead:false,ph:Math.random()*6.28,air:0,vAir:0,
       meterStart:(h.trait&&h.trait.kind==='primed')?h.trait.v*100:0,
       dx:0,leap:false,leapVX:0,buffer:null,bleed:0,chill:0,adapt:0,autoT:undefined,usedStand:false,fightStart:tick,iq:0,iqStep:0,isBrain:(h.trait&&h.trait.kind==='iq')};
+    /* how many of his detail this champion still has in reserve */
+    fg.guardLeft=(h.guard&&lvl>=h.guard.lvl)?h.guard.count:0;
+    fg.guardTotal=fg.guardLeft;
+    fg.isGuard=!!h.isGuard;
+    fg.guardHost=null;
+    fg.usedGuard=false;
+    fg.inv=0;
+    return fg;
   }
   function play(f,frames){
     f.anim={frames:frames,i:0,t:0,from:clonePose(f.pose)};
@@ -3303,6 +3330,8 @@
       /* the veteran bonus: the more this champion has won, the more each
          new win is worth, so winning is the main way you level up */
       xp=Math.round(150+foe.lvl*30+p.wins*8);
+      /* getting through a security detail is two fights, and pays like it */
+      if(foe.usedGuard){ cred=Math.round(cred*1.7); xp=Math.round(xp*1.45); }
       /* and every third win is a free level on top of the experience */
       if(p.wins%3===0){ freeLvl=1; }
     }else{
@@ -3318,6 +3347,7 @@
     $('ovTitle').textContent=win?'Victory':'Defeated';
     $('ovText').textContent=win
       ? h.name+' beat '+foe.h.name+' (level '+foe.lvl+').'
+        +(foe.usedGuard?' Through the security detail and all — big bonus.':'')
         +(ups?' Levelled up to '+p.lvl+'!':'')
         +(freeLvl?' Win '+p.wins+' — every third win is a free level.':'')
         +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'')
@@ -3346,7 +3376,19 @@
   }
 
   function hitLand(att,def,mul,kind){
-    if(def.dead||att.dead) return;
+    /* A multi-hit super can still be landing when its target is swapped out
+       (Lex stepping behind his detail). Anything the retired fighter had
+       queued stops, and the rest of the combo goes to whoever replaced it. */
+    if(att!==me&&att!==foe) return;
+    if(def!==me&&def!==foe) def=(att===me)?foe:me;
+    if(!def||def.dead||att.dead) return;
+    /* a moment of cover right after getting back up, so a champion who
+       just refused to go down is not deleted by the very next punch */
+    if(def.inv>0){
+      spark(def.x-def.facing*26,GY-72,'#9BD3FF',6);
+      tone(420,0.05,'square',0.02,240);
+      return;
+    }
     /* signature moves grow with the champion, not just their raw stats */
     if(kind==='special') mul*=1+(att.lvl-1)*0.03;
     /* Nocturne fights with his head: the longer he reads an opponent, the
@@ -3411,7 +3453,7 @@
         var back=Math.max(1,Math.round(dmg*dtr.v));
         att.hp=Math.max(0,att.hp-back);
         floatText(def.x-def.facing*40,GY-170,'-'+back,'#FF9AA8');
-        if(att.hp<=0&&!att.dead){ att.hp=0; att.dead=true;
+        if(att.hp<=0&&!att.dead&&!catchFall(att)){ att.hp=0; att.dead=true;
           play(att,[{p:POSE.hurt,d:8},{p:POSE.down,d:22}]);
           setTimeout(function(){ endFight(att===foe); },900); }
       }
@@ -3454,7 +3496,9 @@
       def.hp-=extra; spark(hx,hy,'#FFD46B',9);
     }
     if(def.hp<=0){
-      def.hp=0; def.dead=true; def.guard=false;
+      def.hp=0;
+      if(catchFall(def)) return;
+      def.dead=true; def.guard=false;
       play(def,[{p:POSE.hurt,d:8},{p:POSE.down,d:22}]);
       spark(def.x,GY-60,'#FFD98A',28);
       setTimeout(function(){ endFight(def===foe); },900);
@@ -3806,6 +3850,7 @@
       [me,foe].forEach(function(f){
         if(!f) return;
         if(f.flash>0) f.flash--;
+        if(f.inv>0) f.inv--;
         if(f.comboT>0){ f.comboT--; if(f.comboT===0) f.combo=0; }
         var want=(f.anim&&f.anim.i===1)?26:0;
         f.lunge+=(want-f.lunge)*0.3;
@@ -3819,8 +3864,9 @@
         if(f.trait&&f.trait.kind==='regen'&&!f.dead&&f.hp<f.max) f.hp=Math.min(f.max,f.hp+f.trait.v/60);
         if(f.bleed>0&&!f.dead){ f.hp-=f.bleed/120; f.bleed*=0.992;
           if(f.bleed<0.4) f.bleed=0;
-          if(f.hp<=0){ f.hp=0; f.dead=true; play(f,[{p:POSE.down,d:22}]);
-            setTimeout(function(){ endFight(f===foe); },900); } }
+          if(f.hp<=0){ f.hp=0;
+            if(!catchFall(f)){ f.dead=true; play(f,[{p:POSE.down,d:22}]);
+              setTimeout(function(){ endFight(f===foe); },900); } } }
         if(f.chill>0) f.chill--;
         if(f.trait&&f.trait.kind==='charge'&&f.guard&&!f.dead) f.meter=Math.min(100,f.meter+0.1*f.trait.v);
         if(f.air>0||f.vAir>0){
@@ -3847,6 +3893,78 @@
       }
       stepAnim(me);
     }
+  }
+
+  /* ---- deploying and losing the security detail ---------------------
+     A trooper takes over the slot its host was standing in — the health
+     bar, the AI and the controls all read `me`/`foe` fresh every frame,
+     so swapping the object is all it takes. */
+  function spawnGuard(host,n,total){
+    /* tier 4 is the Legendary finish: they arrive in fully forged armour */
+    var m=makeFighter(GUARD_UNIT,host.lvl,4,host.facing,host.baseX,0);
+    m.x=host.x; m.isGuard=true; m.guardHost=host;
+    /* sized against Lex rather than off the stat curve, so three of them
+       is a real second phase and not an hour of chipping at armour */
+    m.max=Math.max(1,Math.round(host.max*0.28));
+    m.hp=m.max;                        /* every trooper arrives at full health */
+    m.pow=Math.max(1,Math.round(host.pow*0.78));
+    m.meter=0; m.inv=34;
+    m.h.name='Lexcorp Trooper '+n+'/'+total;
+    return m;
+  }
+  function guardEntrance(m,title){
+    floatText(m.x,GY-214,title,'#9BF0B4',true);
+    fx.push({k:'impact',x:m.x,y:GY-70,life:30,max:30,c:'#8AD44E'});
+    spark(m.x,GY-70,'#8AD44E',26);
+    flash=Math.max(flash,12); shake=Math.max(shake,16);
+    tone(190,0.26,'square',0.05,520);
+    setTimeout(function(){ tone(300,0.22,'square',0.05,700); },140);
+  }
+  /* Returns true when a fall was caught, so the caller must not kill anyone. */
+  function catchFall(f){
+    if(!f||screen!=='fight') return false;
+    var slot=(f===me)?'me':((f===foe)?'foe':null);
+    if(!slot) return false;
+
+    /* the champion is going down and still has a detail in reserve */
+    if(f.guardLeft>0&&!f.isGuard){
+      var host=f, total=host.guardTotal||host.guardLeft, left=host.guardLeft;
+      host.hp=host.max;                /* he comes back at full health later */
+      host.dead=false; host.anim=null; host.stun=0; host.cd=0;
+      host.buffer=null; host.guard=false; host.bleed=0; host.air=0; host.vAir=0;
+      host.guardLeft=0; host.usedGuard=true;
+      var m=spawnGuard(host,total-left+1,total);
+      m.guardLeft=left;
+      if(slot==='me') me=m; else foe=m;
+      guardEntrance(m,'LEXCORP SECURITY');
+      return true;
+    }
+
+    /* a trooper has fallen */
+    if(f.isGuard&&f.guardHost){
+      var host2=f.guardHost, total2=host2.guardTotal||1, rest=f.guardLeft-1;
+      if(rest>0){
+        var m2=spawnGuard(host2,total2-rest+1,total2);
+        m2.guardLeft=rest;
+        if(slot==='me') me=m2; else foe=m2;
+        guardEntrance(m2,'NEXT TROOPER');
+        return true;
+      }
+      /* the last one is down, so Lex walks back on — at full health */
+      host2.x=f.x; host2.dx=0; host2.air=0; host2.vAir=0;
+      host2.hp=host2.max; host2.meter=0; host2.dead=false; host2.guard=false;
+      host2.anim=null; host2.stun=0; host2.cd=0; host2.buffer=null;
+      host2.bleed=0; host2.chill=0; host2.inv=64; host2.usedStand=false;
+      if(slot==='me') me=host2; else foe=host2;
+      floatText(host2.x,GY-214,host2.h.name.toUpperCase()+' RETURNS','#FFE08A',true);
+      fx.push({k:'impact',x:host2.x,y:GY-70,life:34,max:34,c:'#FFE08A'});
+      spark(host2.x,GY-70,'#FFE08A',34);
+      flash=Math.max(flash,18); shake=Math.max(shake,22);
+      tone(150,0.4,'sawtooth',0.06,420);
+      setTimeout(function(){ tone(520,0.3,'triangle',0.05,1100); },200);
+      return true;
+    }
+    return false;
   }
 
   function bar(x,y,w,f,label,lvl,tier,flip){
@@ -4574,8 +4692,17 @@
     $('dName').innerHTML=h.name+' <span class="tierTag">'+TIERS[p.tier].name+'</span>'+
       '<span class="tierTag">'+h.skins[p.skin].name+'</span>';
     $('dTrait').innerHTML='<b>Trait — '+h.trait.name+':</b> '+h.trait.desc+'.';
+    var guardLine='';
+    if(h.guard){
+      guardLine=(p.lvl>=h.guard.lvl)
+        ? '<br><b style="color:#8AD44E">Security detail &mdash; ready:</b> the moment he would go down, '
+          +h.guard.count+' troopers step in one at a time, each in fully forged armour at full health. '
+          +'Beat all '+h.guard.count+' and he comes back at full health himself.'
+        : '<br><b style="color:#8AD44E">Security detail &mdash; locked:</b> reaches level '+h.guard.lvl
+          +' (he is '+p.lvl+') and '+h.guard.count+' troopers will step in when he would go down.';
+    }
     $('dSpecial').innerHTML='<b style="color:var(--gold)">'+h.superName+'</b> &mdash; '+h.superDesc+'.<br>'+
-      'Real name '+h.real+'. '+h.cls+'. Power rating '+power(h)+'.';
+      'Real name '+h.real+'. '+h.cls+'. Power rating '+power(h)+'.'+guardLine;
     $('vPow').textContent=s.pow; $('fPow').style.width=Math.min(100,s.pow/2.2)+'%';
     $('vTough').textContent=s.tough; $('fTough').style.width=Math.min(100,s.tough/26)+'%';
     $('vSpd').textContent=s.spd.toFixed(2); $('fSpd').style.width=Math.min(100,s.spd*44)+'%';

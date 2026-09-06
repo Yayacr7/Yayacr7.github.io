@@ -83,6 +83,21 @@ different champions, win 50 fights in total, win at least once in every arena,
 unlock ten versions, and forge anyone to Legendary. Each shows how far along
 you are and pays credits and experience when you collect it.
 
+### Lex Luthor's security detail
+
+Lex does not fight fair. From **level 10** he stops going down the first time:
+at the moment he would fall, his Lexcorp security detail takes over. Three
+troopers step in one at a time, each arriving at **full health** in a **fully
+forged Legendary warsuit**. Beat all three and **Lex comes back at full health
+himself** — only then can the fight end.
+
+It works whichever side he is on: fight him and you have to get through the
+detail, pick him and the detail covers for you. Beating a champion who called
+one in pays 1.7x credits and 1.45x experience.
+
+The troopers are kept out of the roster on purpose — they have no card, no
+versions and no missions. The only way to meet one is to put Lex on the ropes.
+
 ### Superman's face
 
 Superman is drawn with a face of his own rather than the generic one every
