@@ -70,11 +70,20 @@
   .btn.ghost{background:var(--panel-2);color:var(--ice);box-shadow:0 5px 0 #0D1622}
 
   /* fight controls */
-  .fightbar{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(132px,1fr))}
-  .fbtn{font-family:"Saira Condensed",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
-    font-size:1.05rem;padding:17px 8px;border-radius:12px;border:2px solid var(--edge);background:var(--panel-2);
-    color:var(--ice);cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;line-height:1.1}
-  .fbtn small{display:block;font-family:Barlow;font-weight:700;font-size:.6rem;letter-spacing:.12em;color:var(--dim);margin-top:3px}
+  .pad{position:absolute;right:12px;bottom:12px;z-index:4;
+    display:grid;gap:7px;grid-template-columns:repeat(2,minmax(0,1fr));width:min(46%,320px)}
+  .pad .wide{grid-column:1 / -1}
+  @media (max-width:620px){ .pad{right:7px;bottom:7px;gap:5px;width:52%} }
+  .fbtn{font-family:"Saira Condensed",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.04em;
+    font-size:clamp(.66rem,1.7vw,.92rem);padding:9px 6px;border-radius:10px;
+    border:2px solid rgba(150,195,245,.34);background:rgba(14,22,36,.74);backdrop-filter:blur(3px);
+    -webkit-backdrop-filter:blur(3px);
+    color:var(--ice);cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;line-height:1.05}
+  .fbtn small{display:block;font-family:Barlow;font-weight:700;font-size:clamp(.44rem,1vw,.56rem);
+    letter-spacing:.08em;color:var(--dim);margin-top:2px}
+  .fbtn.flash{border-color:var(--gold);background:rgba(52,42,12,.86)}
+  #bKick{border-color:rgba(255,107,74,.44)}
+  #bGrab{border-color:rgba(247,201,72,.4)}
   .fbtn:active,.fbtn.held{background:#2B3E57}
   #bStrike{border-color:rgba(255,107,74,.5)} #bStrike:active{background:#40251E}
   #bLeap{border-color:rgba(79,168,245,.5)} #bLeap:active{background:#16324D}
@@ -174,7 +183,7 @@
     <p class="brand">Yahya<span>.games</span><b>.com</b></p>
     <p class="eyebrow">Sky arena &middot; High noon</p>
     <h1>Skyforge Champions</h1>
-    <p class="sub">Twenty-four DC characters fight on a sunlit platform above the clouds. Win bouts to earn credits and experience, level your champions up, and forge their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
+    <p class="sub">Thirty-four DC characters fight on a sunlit platform above the clouds. Win bouts to earn credits and experience, level your champions up, and forge their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
   </header>
 
   <div class="topbar">
@@ -199,15 +208,17 @@
         <button class="btn" id="ovBtn">Continue</button>
       </div>
     </div>
+    <div class="pad" id="fightbar" hidden>
+      <button class="fbtn" id="bStrike">Strike<small>Tap fast to combo</small></button>
+      <button class="fbtn" id="bKick">Kick<small>Slower, hits harder</small></button>
+      <button class="fbtn" id="bGrab">Grab<small>Beats a guard</small></button>
+      <button class="fbtn" id="bLeap">Leap<small>Jump attack</small></button>
+      <button class="fbtn" id="bGuard">Guard<small>Hold to block</small></button>
+      <button class="fbtn" id="bHeavy">Super Punch<small>Costs 25%</small></button>
+      <button class="fbtn wide" id="bSpecial">Super Move<small>Charging</small></button>
+    </div>
   </div>
 
-  <div class="fightbar" id="fightbar" hidden>
-    <button class="fbtn" id="bStrike">Strike<small>Tap fast to combo</small></button>
-    <button class="fbtn" id="bHeavy">Super Punch<small>Costs 25%</small></button>
-    <button class="fbtn" id="bLeap">Leap<small>Jump attack</small></button>
-    <button class="fbtn" id="bGuard">Guard<small>Hold to block</small></button>
-    <button class="fbtn" id="bSpecial">Super Move<small>Charging</small></button>
-  </div>
 
   <div id="homeUI">
     <section class="sec">
@@ -249,6 +260,8 @@
     <ul class="keys" style="margin-top:14px">
       <li><kbd>A</kbd><span>Strike &mdash; tap fast for a 3-hit combo</span></li>
       <li><kbd>F</kbd><span>Super Punch &mdash; double damage, costs 25% meter</span></li>
+      <li><kbd>K</kbd><span>Kick &mdash; slower, but hits harder</span></li>
+      <li><kbd>G</kbd><span>Grab &mdash; goes straight through a guard</span></li>
       <li><kbd>W</kbd><span>Leap &mdash; a jump attack. Superman flies</span></li>
       <li><kbd>S</kbd><span>Guard &mdash; hold to block most damage</span></li>
       <li><kbd>D</kbd><span>Super Move &mdash; needs a full meter</span></li>
@@ -619,8 +632,18 @@
      trait:{name:'Twelfth Level Intellect',kind:'iq',v:0.6,desc:'Reads his opponent — see the Intellect bar'},
      pow:28,tough:132,spd:0.8,superName:'Warsuit Barrage',
      superDesc:'Every weapon in the warsuit, fired at once',
-     skins:[SK({name:'Warsuit',suit:'#2E7C4A',suitLo:'#124A26',trim:'#8E4EC4',trimLo:'#4E2472',
-           leg:'#2A6E42',boot:'#164A28',hair:'#E8C8A8'})]}
+     skins:[
+       SK({name:'Warsuit',suit:'#2E7C4A',suitLo:'#124A26',trim:'#8E4EC4',trimLo:'#4E2472',
+           leg:'#2A6E42',boot:'#164A28',hair:'#E8C8A8'}),
+       SK({name:'Business Suit',cost:7500,suit:'#20242E',suitLo:'#0D0F14',trim:'#C8CDD8',trimLo:'#7A8090',
+           leg:'#1A1D25',boot:'#0E1014',hair:'#E8C8A8'}),
+       SK({name:'Prison Orange',cost:11000,suit:'#D8721C',suitLo:'#8A4206',trim:'#F0A050',trimLo:'#96600A',
+           leg:'#C4650E',boot:'#7A3C04',hair:'#E8C8A8'}),
+       SK({name:'Lexcorp Titan',cost:16000,suit:'#3A4756',suitLo:'#1A222C',trim:'#4FA8F5',trimLo:'#14649E',
+           leg:'#2E3946',boot:'#161C24',hair:'#E8C8A8'}),
+       SK({name:'Kryptonite Core',cost:26000,suit:'#1E6E3E',suitLo:'#0A3A1E',trim:'#9BF06A',trimLo:'#4A9020',
+           leg:'#186034',boot:'#0C3A1C',hair:'#E8C8A8'})
+     ]}
   ];
   var HP_SCALE=2.8;   /* fights last far longer now */
   var TIERS=[
@@ -715,6 +738,15 @@
     dive:P({head:[9,-90],neck:[5,-76],pelvis:[-2,-46],
       shF:[10,-73],elF:[25,-62],haF:[39,-43],shB:[-6,-73],elB:[-19,-64],haB:[-27,-71],
       hiF:[0,-46],knF:[-11,-32],ftF:[-21,-22],hiB:[-5,-44],knB:[-17,-28],ftB:[-27,-18]}),
+    kickwind:P({head:[-4,-92],neck:[-4,-77],pelvis:[-4,-46],
+      shF:[1,-74],elF:[-11,-66],haF:[-3,-78],shB:[-11,-74],elB:[-21,-64],haB:[-13,-52],
+      hiF:[-1,-46],knF:[6,-32],ftF:[2,-18],hiB:[-8,-46],knB:[-14,-24],ftB:[-20,-1]}),
+    kick:P({head:[4,-93],neck:[1,-78],pelvis:[-2,-47],
+      shF:[6,-75],elF:[-8,-70],haF:[-20,-62],shB:[-8,-75],elB:[-20,-66],haB:[-30,-58],
+      hiF:[2,-47],knF:[22,-52],ftF:[44,-58],hiB:[-6,-45],knB:[-10,-24],ftB:[-16,-1]}),
+    grab:P({head:[8,-91],neck:[5,-76],pelvis:[2,-45],
+      shF:[9,-73],elF:[26,-70],haF:[44,-64],shB:[-4,-73],elB:[12,-72],haB:[34,-70],
+      hiF:[8,-45],knF:[17,-25],ftF:[22,-1],hiB:[-5,-45],knB:[-15,-25],ftB:[-23,-1]}),
     bigwind:P({head:[-9,-92],neck:[-9,-77],pelvis:[-7,-45],
       shF:[-3,-74],elF:[-20,-72],haF:[-34,-63],shB:[-15,-74],elB:[-26,-60],haB:[-18,-47],
       hiF:[-1,-45],knF:[6,-24],ftF:[8,-1],hiB:[-12,-45],knB:[-18,-24],ftB:[-25,-1]}),
@@ -756,7 +788,7 @@
       pow:Math.round(h.pow*g*t),hp:mx,max:mx,spd:h.spd*(1+(lvl-1)*0.012),
       pose:clonePose(POSE.idle),anim:null,guard:false,meter:0,combo:0,comboT:0,
       cd:0,stun:0,lunge:0,flash:0,aiT:90,dead:false,ph:Math.random()*6.28,air:0,vAir:0,
-      dx:0,leap:false,leapVX:0,iq:0,iqStep:0,isBrain:(h.trait&&h.trait.kind==='iq')};
+      dx:0,leap:false,leapVX:0,buffer:null,iq:0,iqStep:0,isBrain:(h.trait&&h.trait.kind==='iq')};
   }
   function play(f,frames){
     f.anim={frames:frames,i:0,t:0,from:clonePose(f.pose)};
@@ -904,6 +936,8 @@
      Drawing the whole body that way first, then again in colour, gives one clean
      comic outline instead of a pile of separate discs. */
   var PASS_INK=false, INKC='#0B0A14';
+  /* fine shading costs real time; only the large arena figures get it */
+  var DETAIL=true;
   function done(g,fill){
     if(PASS_INK){
       g.fillStyle=INKC; g.strokeStyle=INKC; g.lineWidth=4.6; g.lineJoin='round'; g.lineCap='round';
@@ -939,8 +973,9 @@
       g.fillStyle=sg; g.fill();
       g.restore();
     }
+    if(!DETAIL) return;
     /* ambient occlusion where this limb sockets into the one before it —
-       cheap, and it does more for the sense of depth than anything else here */
+       it does more for the sense of depth than anything else here */
     var ao=g.createRadialGradient(a[0],a[1],w1*0.15,a[0],a[1],w1*2.2);
     ao.addColorStop(0,'rgba(8,6,16,.34)');
     ao.addColorStop(0.55,'rgba(8,6,16,.13)');
@@ -976,6 +1011,7 @@
 
   function drawFighter(g,f,t,scale){
     var h=f.h, P0=f.pose, T=TIERS[f.tier], face=f.facing;
+    DETAIL=(scale>1.2);
     g.save();
     g.translate(f.x+(f.lunge||0)*face+(f.dx||0), GY-(f.air||0));
     g.scale(face*scale,scale);
@@ -1054,6 +1090,7 @@
       }
       if(PASS_INK) return;
 
+      if(!DETAIL) return;
       /* anatomy: chest, ribs and a centre seam, all clipped to the torso */
       g.save(); g.clip();
       var cx0=(n[0]+lean+pv[0])/2, cy0=n[1]+9, wy=pv[1]-4;
@@ -1431,8 +1468,29 @@
       if(PASS_INK) return;
 
       /* ---- faces, colour pass only ---- */
-      g.fillStyle='rgba(120,78,48,.16)';
-      g.beginPath(); g.ellipse(hx-3,hy+4,6,3.4,0,0,6.283); g.fill();
+      /* form: brow ridge, cheekbone, jaw and the shaded side of the face */
+      var sh=g.createLinearGradient(hx-9,hy,hx+7,hy);
+      sh.addColorStop(0,'rgba(96,58,34,.30)'); sh.addColorStop(1,'rgba(96,58,34,0)');
+      g.save();
+      g.beginPath(); g.ellipse(hx,hy,8.1,9.1,0.06,0,6.283); g.clip();
+      g.fillStyle=sh; g.fillRect(hx-10,hy-11,20,22);
+      /* cheekbone catch-light on the sunward side */
+      g.fillStyle='rgba(255,236,206,.26)';
+      g.beginPath(); g.ellipse(hx+3.6,hy-0.4,3.6,2.4,-0.3,0,6.283); g.fill();
+      /* brow ridge shadow */
+      g.fillStyle='rgba(70,42,24,.24)';
+      g.beginPath(); g.ellipse(hx+2.4,hy-4.2,6,1.8,-0.08,0,6.283); g.fill();
+      /* jaw and chin */
+      g.fillStyle='rgba(96,58,34,.20)';
+      g.beginPath(); g.ellipse(hx-2.6,hy+5.4,5.6,2.8,0,0,6.283); g.fill();
+      g.fillStyle='rgba(255,236,206,.18)';
+      g.beginPath(); g.ellipse(hx+3.4,hy+5.2,2.2,1.4,0,0,6.283); g.fill();
+      /* nose: a bridge highlight and a shadow beneath it */
+      g.fillStyle='rgba(255,238,210,.22)';
+      g.beginPath(); g.ellipse(hx+4.4,hy-0.6,1.3,3,0.18,0,6.283); g.fill();
+      g.fillStyle='rgba(84,50,28,.26)';
+      g.beginPath(); g.ellipse(hx+4.2,hy+2.4,1.9,1,0,0,6.283); g.fill();
+      g.restore();
 
       if(h.head==='cowl'){
         g.fillStyle='#E8F2FF'; g.fillRect(hx+2.2,hy-4.2,7,3.2);
@@ -1555,10 +1613,24 @@
         g.fillStyle='#EAF2FF'; g.beginPath(); g.arc(hx+5,hy-2.4,1.3,0,6.283); g.fill();
         g.fillStyle='#B08A34'; g.fillRect(hx+2.4,hy+4,5.4,1.8);
       }else{
-        g.fillStyle='#1B2233'; g.beginPath(); g.arc(hx+4.8,hy-1.4,1.7,0,6.283); g.fill();
-        g.strokeStyle='rgba(48,30,18,.6)'; g.lineWidth=1.3; g.lineCap='round';
-        g.beginPath(); g.moveTo(hx+2.2,hy-3.4); g.lineTo(hx+7,hy-2.8); g.stroke();
-        g.fillStyle='#C4785A'; g.fillRect(hx+3,hy+4,5,1.6);
+        /* eye white, iris, pupil, catchlight, then the lid over the top */
+        g.fillStyle='#F2EDE6';
+        g.beginPath(); g.ellipse(hx+4.9,hy-1.4,2.5,1.7,0,0,6.283); g.fill();
+        g.fillStyle='#4A5E78';
+        g.beginPath(); g.arc(hx+5.5,hy-1.4,1.5,0,6.283); g.fill();
+        g.fillStyle='#151A24';
+        g.beginPath(); g.arc(hx+5.6,hy-1.4,0.7,0,6.283); g.fill();
+        g.fillStyle='rgba(255,255,255,.9)';
+        g.beginPath(); g.arc(hx+4.9,hy-2.1,0.5,0,6.283); g.fill();
+        g.fillStyle=lerpHex(h.skinLo,'#000000',0.12);
+        g.beginPath(); g.ellipse(hx+4.9,hy-3.1,2.7,1.2,0,0,6.283); g.fill();
+        /* brow */
+        g.strokeStyle='rgba(38,24,14,.72)'; g.lineWidth=1.5; g.lineCap='round';
+        g.beginPath(); g.moveTo(hx+2.2,hy-4.4); g.quadraticCurveTo(hx+5,hy-5.2,hx+7.6,hy-4);
+        g.stroke();
+        /* mouth */
+        g.strokeStyle='rgba(120,62,44,.72)'; g.lineWidth=1.4;
+        g.beginPath(); g.moveTo(hx+2.6,hy+4.4); g.lineTo(hx+7.2,hy+4.1); g.stroke();
       }
     })();
 
@@ -1756,8 +1828,8 @@
   }
 
   function doStrike(f,other){
-    if(f.dead||f.stun>0||f.anim||screen!=='fight') return;
-    if(f.cd>0) return;
+    if(f.dead||f.stun>0||f.anim||screen!=='fight') return false;
+    if(f.cd>0) return false;
     study(other,9);
     f.guard=false;
     f.comboT=42; f.combo=(f.combo%3)+1;
@@ -1773,11 +1845,12 @@
     ]);
     f.cd=Math.round(20*sp);
     tone(c===3?200:340,0.06,'square',0.025,120);
+    return true;
   }
   /* ---------- the Super Punch: costs a quarter meter, hits like a truck ---------- */
   function doHeavy(f,other){
-    if(f.dead||f.stun>0||f.anim||screen!=='fight') return;
-    if(f.cd>0||f.meter<25) return;
+    if(f.dead||f.stun>0||f.anim||screen!=='fight') return false;
+    if(f.cd>0||f.meter<25) return false;
     study(other,16);
     f.meter-=25; f.guard=false; f.combo=0;
     var sp=Math.max(0.6,1/f.spd);
@@ -1791,11 +1864,56 @@
     ]);
     f.cd=Math.round(30*sp);
     tone(150,0.14,'square',0.04,80);
+    return true;
+  }
+
+  /* ---------- a heavy kick: slower than a strike, and it hurts ---------- */
+  function doKick(f,other){
+    if(f.dead||f.stun>0||f.anim||screen!=='fight') return false;
+    if(f.cd>0) return false;
+    study(other,11);
+    f.guard=false; f.combo=0;
+    var sp=Math.max(0.6,1/f.spd);
+    play(f,[
+      {p:POSE.kickwind,d:Math.round(9*sp)},
+      {p:POSE.kick,d:Math.round(8*sp),hit:function(){
+        hitLand(f,other,1.7,'heavy');
+        fx.push({k:'impact',x:other.x-other.facing*26,y:GY-90,life:18,max:18,c:f.h.trim});
+      }},
+      {p:POSE.idle,d:Math.round(15*sp)}
+    ]);
+    f.cd=Math.round(26*sp);
+    tone(240,0.08,'square',0.03,140);
+    return true;
+  }
+
+  /* ---------- a grab: modest damage, but a guard barely helps ---------- */
+  function doGrab(f,other){
+    if(f.dead||f.stun>0||f.anim||screen!=='fight') return false;
+    if(f.cd>0) return false;
+    study(other,13);
+    f.guard=false; f.combo=0;
+    var sp=Math.max(0.6,1/f.spd);
+    play(f,[
+      {p:POSE.grab,d:Math.round(10*sp),hit:function(){
+        var wasGuarding=other.guard;
+        other.guard=false;                 /* a throw goes through a block */
+        hitLand(f,other,1.35,'heavy');
+        other.vAir=6; other.stun=Math.max(other.stun,26);
+        if(wasGuarding) floatText(other.x,GY-176,'GUARD BROKEN','#FFD46B');
+        fx.push({k:'impact',x:other.x,y:GY-70,life:20,max:20,c:'#FFD46B'});
+      }},
+      {p:POSE.bigwind,d:Math.round(7*sp)},
+      {p:POSE.idle,d:Math.round(16*sp)}
+    ]);
+    f.cd=Math.round(34*sp);
+    thud(0.2,0.1);
+    return true;
   }
 
   /* ---------- signature super moves, one per champion ---------- */
   function doSuper(f,other){
-    if(f.dead||f.stun>0||f.anim||f.meter<100||screen!=='fight') return;
+    if(f.dead||f.stun>0||f.anim||f.meter<100||screen!=='fight') return false;
     f.meter=0; f.guard=false; f.combo=0;
     study(other,26);
     var id=f.h.id;
@@ -1905,6 +2023,7 @@
         {p:POSE.idle,d:18}
       ]);
     }
+    return true;
   }
   /* Nocturne studying his opponent — his intellect is the superpower */
   var IQ_STEPS=[{at:34,t:'STANCE READ'},{at:68,t:'WEAKNESS FOUND'},{at:100,t:'COUNTER READY'}];
@@ -1923,8 +2042,8 @@
 
   /* ---------- flight: Solaris really flies, everyone else leaps ---------- */
   function doLeap(f,other){
-    if(f.dead||f.stun>0||f.anim||f.leap||f.air>0||screen!=='fight') return;
-    if(f.cd>0) return;
+    if(f.dead||f.stun>0||f.anim||f.leap||f.air>0||screen!=='fight') return false;
+    if(f.cd>0) return false;
     study(other,7);
     var flier=(f.h.id==='superman');
     f.guard=false; f.combo=0; f.leap=true;
@@ -1941,6 +2060,7 @@
     ]);
     f.cd=flier?44:38;
     tone(flier?520:420,0.22,'triangle',0.04,flier?900:700);
+    return true;
   }
   function land(f,other){
     f.leap=false; f.air=0; f.vAir=0;
@@ -1953,6 +2073,41 @@
       if(flier){ other.vAir=5; }
     }
     thud(0.26,0.12);
+  }
+
+  /* ---------- one entry point for every move ----------
+     A press ALWAYS produces something: it fires now if the fighter is free,
+     otherwise it is buffered and fires the instant the current move ends, and
+     a move you cannot afford falls back to a plain strike rather than
+     swallowing the input. */
+  var MOVES={
+    strike:doStrike, kick:doKick, grab:doGrab,
+    heavy:doHeavy, leap:doLeap, superm:doSuper
+  };
+  function canAfford(f,kind){
+    if(kind==='heavy') return f.meter>=25;
+    if(kind==='superm') return f.meter>=100;
+    return true;
+  }
+  function request(f,other,kind){
+    if(!f||!other||f.dead||screen!=='fight') return;
+    /* not enough meter? do the thing you can do instead of nothing */
+    if(!canAfford(f,kind)){
+      floatText(f.x,GY-200,kind==='superm'?'NOT CHARGED':'NEED 25%','#9BD3FF');
+      kind='strike';
+    }
+    var busy=(f.anim||f.stun>0||f.cd>0);
+    if(!busy&&MOVES[kind](f,other)){ f.buffer=null; return; }
+    f.buffer={kind:kind,t:26};
+  }
+  function runBuffer(f,other){
+    if(!f.buffer) return;
+    f.buffer.t--;
+    if(f.buffer.t<=0){ f.buffer=null; return; }
+    if(f.anim||f.stun>0||f.cd>0||f.dead) return;
+    var kind=f.buffer.kind;
+    if(!canAfford(f,kind)) kind='strike';
+    if(MOVES[kind](f,other)) f.buffer=null;
   }
 
   /* a translucent copy of the fighter left behind mid-move */
@@ -1973,7 +2128,9 @@
     f.guard=false;
     if(f.meter>=100){ doSuper(f,other); f.aiT=Math.round(150/f.spd); return; }
     if(f.meter>=25&&Math.random()<0.27){ doHeavy(f,other); f.aiT=Math.round(70/f.spd); return; }
-    if(Math.random()<0.13){ doLeap(f,other); f.aiT=Math.round(96/f.spd); return; }
+    if(Math.random()<0.11){ doLeap(f,other); f.aiT=Math.round(96/f.spd); return; }
+    if(other.guard&&Math.random()<0.4){ doGrab(f,other); f.aiT=Math.round(80/f.spd); return; }
+    if(Math.random()<0.24){ doKick(f,other); f.aiT=Math.round(62/f.spd); return; }
     doStrike(f,other);
     f.aiT=Math.round((36+Math.random()*46)/f.spd);
   }
@@ -2013,6 +2170,7 @@
       });
       if(me&&me.cd>0) me.cd--;
       if(me&&me.stun>0) me.stun--;
+      if(screen==='fight'&&me&&foe) runBuffer(me,foe);
       if(screen==='fight'&&foe&&me) aiStep(foe,me);
     }else{
       /* showcase: the selected champion idles on the platform */
@@ -2493,23 +2651,30 @@
     el.addEventListener('pointercancel',function(){ if(up) up(); });
     el.addEventListener('pointerleave',function(){ if(up) up(); });
   }
-  press($('bStrike'),function(){ if(me&&foe) doStrike(me,foe); });
+  function tap(id,kind){
+    var el=$(id);
+    press(el,function(){
+      request(me,foe,kind);
+      el.classList.add('flash'); setTimeout(function(){ el.classList.remove('flash'); },120);
+    });
+  }
+  tap('bStrike','strike'); tap('bKick','kick'); tap('bGrab','grab');
   press($('bGuard'),
     function(){ if(me&&!me.dead){ me.guard=true; $('bGuard').classList.add('held'); } },
     function(){ if(me) me.guard=false; $('bGuard').classList.remove('held'); });
-  press($('bHeavy'),function(){ if(me&&foe) doHeavy(me,foe); });
-  press($('bLeap'),function(){ if(me&&foe) doLeap(me,foe); });
-  press($('bSpecial'),function(){ if(me&&foe) doSuper(me,foe); });
+  tap('bHeavy','heavy'); tap('bLeap','leap'); tap('bSpecial','superm');
 
   window.addEventListener('keydown',function(e){
     if(e.target&&e.target.tagName==='BUTTON') return;
     if(e.repeat) return;
     if(screen!=='fight') return;
-    if(e.code==='KeyA'){ e.preventDefault(); if(me&&foe) doStrike(me,foe); }
+    if(e.code==='KeyA'){ e.preventDefault(); request(me,foe,'strike'); }
+    else if(e.code==='KeyK'){ e.preventDefault(); request(me,foe,'kick'); }
+    else if(e.code==='KeyG'){ e.preventDefault(); request(me,foe,'grab'); }
     else if(e.code==='KeyS'){ e.preventDefault(); if(me&&!me.dead){ me.guard=true; $('bGuard').classList.add('held'); } }
-    else if(e.code==='KeyD'){ e.preventDefault(); if(me&&foe) doSuper(me,foe); }
-    else if(e.code==='KeyF'){ e.preventDefault(); if(me&&foe) doHeavy(me,foe); }
-    else if(e.code==='KeyW'||e.code==='Space'){ e.preventDefault(); if(me&&foe) doLeap(me,foe); }
+    else if(e.code==='KeyD'){ e.preventDefault(); request(me,foe,'superm'); }
+    else if(e.code==='KeyF'){ e.preventDefault(); request(me,foe,'heavy'); }
+    else if(e.code==='KeyW'||e.code==='Space'){ e.preventDefault(); request(me,foe,'leap'); }
   });
   window.addEventListener('keyup',function(e){
     if(e.code==='KeyS'&&me){ me.guard=false; $('bGuard').classList.remove('held'); }

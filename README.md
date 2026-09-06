@@ -15,11 +15,21 @@ and forge their armour into brighter and brighter finishes.
 | --- | --- | --- |
 | `A` | Strike | Punch. Tap in rhythm for a 3-hit combo — the third hit is the heavy one |
 | `F` | Super Punch | Roughly double damage. Costs 25% of the meter |
+| `K` | Kick | Slower than a strike and hits considerably harder |
+| `G` | Grab | Modest damage, but a guard barely helps against it |
 | `W` | Leap | A jump attack. Solaris flies instead — higher, further, and harder |
 | `S` | Guard | Hold to block. Cuts incoming damage to about a sixth |
 | `D` | Super Move | That champion's signature move. Needs a full meter |
 
 Landing hits fills the meter fastest; guarding fills it slowly.
+
+The controls sit in the bottom-right corner of the arena itself, over the
+action, rather than below it.
+
+**A press always does something.** If a move is requested while the champion
+is mid-animation or on cooldown it is buffered and fires the moment they are
+free, and a move you cannot afford falls back to a plain strike rather than
+being swallowed. Mashing a button is never a dead input.
 
 ### The roster
 
