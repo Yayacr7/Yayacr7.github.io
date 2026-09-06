@@ -83,6 +83,34 @@ different champions, win 50 fights in total, win at least once in every arena,
 unlock ten versions, and forge anyone to Legendary. Each shows how far along
 you are and pays credits and experience when you collect it.
 
+### Frame rate
+
+The fight is simulated on a fixed 1/60s step — every animation length,
+cooldown and effect lifetime in the game is written in those units. A 120Hz
+screen fires twice per step, so the loop used to draw the same state twice and
+a 120Hz phone saw 60 distinct images a second.
+
+Now each fighter remembers where it was one step ago and is drawn part-way
+between then and now, so the screen gets as many distinct frames as it can
+show. Counting rendered frames that differ from the one before, over two
+seconds of a real fight:
+
+| Screen | Before | After |
+| --- | --- | --- |
+| 60Hz | 59 fps | 59 fps |
+| 120Hz | 60 fps | **120 fps** |
+| 144Hz | 60 fps | **144 fps** |
+| 240Hz | 60 fps | **240 fps** |
+
+Interpolating costs one simulation step of input lag, so it only switches on
+when the screen is genuinely faster than the simulation. On a 60Hz screen the
+loop behaves exactly as it always did.
+
+A browser can never draw more frames than the screen refreshes, so on a 60Hz
+monitor or an ordinary phone the readout will say 60 and that is the ceiling.
+The FPS number in the top bar shows what you are actually getting — green at
+100 or more, blue at 50 or more.
+
 ### Lex Luthor's security detail
 
 Lex does not fight fair. From **level 10** he stops going down the first time:

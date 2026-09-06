@@ -43,6 +43,10 @@
   .coin i{width:19px;height:19px;border-radius:50%;flex:none;
     background:radial-gradient(circle at 32% 30%,#FFF0B8,#F7C948 46%,#A87A08);box-shadow:0 0 10px rgba(247,201,72,.5)}
   .topbar .lab{font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+  .coin.fps{min-width:2.6ch;justify-content:center}
+  .coin.fps.hi{color:#8AE8B4}
+  .coin.fps.ok{color:var(--sky)}
+  .coin.fps.lo{color:#FFA07A}
   .spacer{flex:1}
   .sound{font:inherit;font-weight:800;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
     background:var(--panel-2);color:var(--dim);border:2px solid var(--edge);border-radius:99px;padding:6px 13px;cursor:pointer}
@@ -222,6 +226,8 @@
     <span class="spacer"></span>
     <span class="lab">Champions owned</span>
     <div class="coin" style="color:var(--sky)"><span id="owned">24</span></div>
+    <span class="lab">FPS</span>
+    <div class="coin fps ok" id="fpsWrap"><span id="fps">—</span></div>
     <button class="sound" id="sound" aria-pressed="true">Sound on</button>
   </div>
 
@@ -1853,6 +1859,52 @@
     return o;
   }
   function ease(k){ return k<0.5?2*k*k:1-Math.pow(-2*k+2,2)/2; }
+
+  /* ---- drawing between simulation steps -----------------------------
+     The fight is simulated on a fixed 1/60s step, which is what every
+     animation length, cooldown and timer in the game is written in — so
+     that stays exactly as it is. On a 120Hz screen the loop would
+     otherwise draw each simulated step twice and look identical to 60.
+     Instead every fighter remembers where it was one step ago, and the
+     renderer draws it part of the way between then and now. A 60Hz
+     simulation then fills as many distinct frames as the screen offers. */
+  var LERPF=['x','dx','air','lunge'];
+  function snapFighter(f){
+    if(!f) return;
+    var p=f.prev||(f.prev={});
+    for(var i=0;i<LERPF.length;i++) p[LERPF[i]]=f[LERPF[i]];
+    p.pose=clonePose(f.pose);
+    p.ok=true;
+  }
+  function snapAll(){ snapFighter(me); snapFighter(foe); }
+  function applyInterp(k){
+    if(k<=0) return;
+    var list=[me,foe];
+    for(var n=0;n<list.length;n++){
+      var f=list[n];
+      if(!f||!f.prev||!f.prev.ok) continue;
+      /* a fighter that was teleported (a cutscene, or Lex stepping back in
+         for his detail) must not slide across the deck to its new spot */
+      if(Math.abs(f.x-f.prev.x)>200){ f.prev.ok=false; continue; }
+      var sv={pose:f.pose};
+      for(var i=0;i<LERPF.length;i++){
+        var key=LERPF[i]; sv[key]=f[key];
+        f[key]=f.prev[key]+(f[key]-f.prev[key])*k;
+      }
+      f.pose=lerpPose(f.prev.pose,f.pose,k);
+      f.hold=sv;
+    }
+  }
+  function clearInterp(){
+    var list=[me,foe];
+    for(var n=0;n<list.length;n++){
+      var f=list[n];
+      if(!f||!f.hold) continue;
+      f.pose=f.hold.pose;
+      for(var i=0;i<LERPF.length;i++) f[LERPF[i]]=f.hold[LERPF[i]];
+      f.hold=null;
+    }
+  }
 
   /* ================= fighter ================= */
   /* ---- Lex Luthor's Lexcorp security detail -------------------------
@@ -4473,7 +4525,24 @@
     if(flash>0){ ctx.fillStyle='rgba(255,250,220,'+(flash/16*0.5).toFixed(3)+')'; ctx.fillRect(0,0,W,H); }
   }
 
-  var last=0,acc=0;
+  /* a plain frames-per-second readout, averaged over half a second */
+  var fpsN=0,fpsT=0,fpsShown=0;
+  function fpsCount(t){
+    fpsN++;
+    if(!fpsT){ fpsT=t; return; }
+    if(t-fpsT>=500){
+      var v=Math.round(fpsN*1000/(t-fpsT));
+      fpsN=0; fpsT=t;
+      if(v!==fpsShown){
+        fpsShown=v;
+        var el=$('fps'); if(el) el.textContent=v;
+        var w=$('fpsWrap');
+        if(w) w.className='coin fps'+(v>=100?' hi':(v>=50?' ok':' lo'));
+      }
+    }
+  }
+
+  var last=0,acc=0,smoothDt=STEP;
   function frame(t){
     requestAnimationFrame(frame);
     if(!last){ last=t; return; }
@@ -4482,9 +4551,18 @@
     if(slow>0) dt*=0.4;
     acc+=dt;
     var guard=0;
-    while(acc>=STEP&&guard<8){ update(); acc-=STEP; guard++; }
+    while(acc>=STEP&&guard<8){ snapAll(); update(); acc-=STEP; guard++; }
     if(guard>=8) acc=0;
+    /* Interpolating costs one simulation step of input lag, so it is only
+       worth doing when the screen is genuinely faster than the simulation.
+       On a 60Hz screen this is skipped and the loop behaves exactly as it
+       always has; on a 120Hz+ screen it fills in the in-between frames. */
+    smoothDt+=(dt-smoothDt)*0.1;
+    var fast=(smoothDt<STEP*0.85);
+    if(fast) applyInterp(acc/STEP);
     render();
+    if(fast) clearInterp();
+    fpsCount(t);
     /* portraits are static art. Paint each once, keep only the selected one
        breathing, and stop entirely during a fight. Biggest saving in the loop. */
     if(screen==='home'&&(tick%4)===0){ drawCards(); drawSkinCards(); }
