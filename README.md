@@ -89,9 +89,18 @@ One champion, no help, a ladder of opponents that keeps getting harder.
 
 Your health **carries from floor to floor** — you only get 45% of it back
 between fights — so getting deep is about surviving a whole run, not winning
-one bout. Every fifth floor is a boss. Raid opponents have 55% of normal
-health (110% for bosses), because a gauntlet of full-length fights would take
-an afternoon; the difficulty is the ladder, not the length of each fight.
+one bout. Ordinary raid opponents have 55% of normal health, because a
+gauntlet of full-length fights would take an afternoon; the difficulty is the
+ladder, not the length of each fight.
+
+**Every fifth floor is a boss, and bosses have an enormous amount of health**
+— 2.6x a normal fighter, which works out at roughly six times an ordinary
+raid floor and about the same size as your own health bar. To keep that a
+long fight rather than an unwinnable one, your champion is **patched all the
+way up to full** before a boss floor instead of the usual 45%. Bosses pay
+2.8x credits and 2.5x experience.
+
+Banking the floor before a boss is a real decision.
 
 After every floor the run pauses on a choice:
 
