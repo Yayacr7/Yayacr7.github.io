@@ -192,7 +192,7 @@
     <p class="brand">Yahya<span>.games</span><b>.com</b></p>
     <p class="eyebrow">Sky arena &middot; High noon</p>
     <h1>Skyforge Champions</h1>
-    <p class="sub">Sixty-six characters from DC, Marvel and the X-Men fight across six arenas. Win bouts to earn credits and experience, level your champions up, and forge their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
+    <p class="sub">A hundred and six characters &mdash; DC, Marvel, the X-Men and forty anime fighters &mdash; battle across six arenas. Win bouts to earn credits and experience, level your champions up, and forge their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
   </header>
 
   <div class="topbar">
@@ -366,7 +366,19 @@
        SK({name:'Comic Classic',cost:7500,suit:'#1C63D4',suitLo:'#0D3A8E',trim:'#D8202F',trimLo:'#8A0E1A',
            cape:'#C8151F',capeLo:'#750A11',boot:'#C8151F',trunks:'#C8151F',hair:'#12141F'}),
        SK({name:'Black Suit',cost:24000,suit:'#1A1E28',suitLo:'#0B0E14',trim:'#C4CCD8',trimLo:'#78808C',
-           cape:'#12151C',capeLo:'#06080C',boot:'#20242E',hair:'#0D1018'})
+           cape:'#12151C',capeLo:'#06080C',boot:'#20242E',hair:'#0D1018'}),
+       SK({name:'Kingdom Come',cost:13000,suit:'#14294E',suitLo:'#081428',trim:'#C8CDD8',trimLo:'#7A8290',
+           cape:'#101C34',capeLo:'#060C18',boot:'#101C34',hair:'#8E96A4'}),
+       SK({name:'Red Son',cost:16000,suit:'#8E1418',suitLo:'#4A0709',trim:'#E8C424',trimLo:'#96780A',
+           cape:'#A81A1E',capeLo:'#560A0C',boot:'#6E1012',trunks:'#6E1012',hair:'#0E1018'}),
+       SK({name:'Solar Flare',cost:28000,suit:'#E8A81E',suitLo:'#8E6004',trim:'#FFF4C8',trimLo:'#B49A3A',
+           cape:'#F0BE30',capeLo:'#96700A',boot:'#F0BE30',hair:'#F4E08C',
+           skin:'#FFE6B4',skinLo:'#C4A050',fore:'#E8A81E',foreLo:'#8E6004'}),
+       SK({name:'Regime',cost:31000,suit:'#161A24',suitLo:'#080A0F',trim:'#4FA8F5',trimLo:'#14649E',
+           cape:'#101318',capeLo:'#050709',boot:'#1A1E28',hair:'#0D1018'}),
+       SK({name:'Bizarro',cost:36000,suit:'#2E3448',suitLo:'#141824',trim:'#8A9098',trimLo:'#4E545C',
+           cape:'#3A2028',capeLo:'#1A0C10',boot:'#2A2E3C',hair:'#0D1018',
+           skin:'#C8CFD4',skinLo:'#8A9298',fore:'#2E3448',foreLo:'#141824'})
      ]},
     {id:'batman',name:'Batman',real:'Bruce Wayne',cls:'The Dark Knight',
      emblem:'bat',head:'cowl',
@@ -620,9 +632,23 @@
      trait:{name:'Flash Freeze',kind:'auto',every:250,dmg:1.1,fx:'ice',v:0,desc:'Ice crystallises around them out of the air'},
      pow:26,tough:138,spd:0.8,superName:'Absolute Zero',
      superDesc:'Freezes them where they stand, then shatters it',
-     skins:[SK({name:'Classic',suit:'#4A5A6E',suitLo:'#212B38',trim:'#6ED8F0',trimLo:'#1E7A96',
+     skins:[
+       SK({name:'Classic',suit:'#4A5A6E',suitLo:'#212B38',trim:'#6ED8F0',trimLo:'#1E7A96',
            leg:'#3A4756',boot:'#1E2832',hair:'#C8D8E0',
-           skin:'#BFD8E4',skinLo:'#7E98A8',fore:'#4A5A6E',foreLo:'#212B38'})]},
+           skin:'#BFD8E4',skinLo:'#7E98A8',fore:'#4A5A6E',foreLo:'#212B38'}),
+       SK({name:'Arctic Armour',cost:6500,suit:'#26384A',suitLo:'#0E1824',trim:'#4FC8F5',trimLo:'#0E5E88',
+           leg:'#1E2E3E',boot:'#101A24',hair:'#C8D8E0',
+           skin:'#B4D0E0',skinLo:'#728EA0',fore:'#26384A',foreLo:'#0E1824'}),
+       SK({name:'Cryo Prototype',cost:12000,suit:'#E4EEF4',suitLo:'#A0B2BE',trim:'#2EC4E8',trimLo:'#0A5E7A',
+           leg:'#CFDCE6',boot:'#8EA4B2',hair:'#EAF4FA',
+           skin:'#D4E8F2',skinLo:'#8EAABA',fore:'#E4EEF4',foreLo:'#A0B2BE'}),
+       SK({name:'Glacier Silver',cost:18000,suit:'#9AA8B4',suitLo:'#5A6672',trim:'#BFE8F8',trimLo:'#4E8CA4',
+           leg:'#8A98A4',boot:'#5E6A76',hair:'#DCE8F0',
+           skin:'#C4DCE8',skinLo:'#7E96A4',fore:'#9AA8B4',foreLo:'#5A6672'}),
+       SK({name:'Absolute Zero',cost:30000,suit:'#101822',suitLo:'#05090E',trim:'#7CF0FF',trimLo:'#1A8EA8',
+           leg:'#0E141C',boot:'#060A0F',hair:'#B8DCEA',
+           skin:'#9EC8DC',skinLo:'#5A7E92',fore:'#101822',foreLo:'#05090E'})
+     ]},
     {id:'riddler',name:'The Riddler',real:'Edward Nygma',cls:'The Puzzle Maker',
      emblem:'letter',mark:'?',head:'bowler',
      trait:{name:'Riddle Me This',kind:'iq',v:0.45,desc:'Reads his opponent — watch the Intellect bar fill'},
@@ -905,7 +931,410 @@
            leg:'#2E3946',boot:'#161C24',hair:'#E8C8A8'}),
        SK({name:'Kryptonite Core',cost:26000,suit:'#1E6E3E',suitLo:'#0A3A1E',trim:'#9BF06A',trimLo:'#4A9020',
            leg:'#186034',boot:'#0C3A1C',hair:'#E8C8A8'})
-     ]}
+     ]},
+    /* ================= anime champions ================= */
+    {id:'goku',name:'Goku',real:'Son Goku',cls:'The Saiyan',
+     emblem:'orb',head:'spiky',
+     trait:{name:'Kamehameha',kind:'auto',every:250,dmg:1.35,fx:'kibeam',v:0,desc:'A blue wave of ki that crosses the whole arena'},
+     pow:31,tough:126,spd:1.16,superName:'Spirit Bomb',
+     superDesc:'Raises both hands and drops the light of a whole world on them',
+     skins:[
+       SK({name:'Orange Gi',suit:'#E2701A',suitLo:'#8E3E04',trim:'#1E4EA8',trimLo:'#0A2458',
+           leg:'#E2701A',boot:'#1E2430',hair:'#14161E'}),
+       SK({name:'Super Saiyan',cost:7000,suit:'#E2701A',suitLo:'#8E3E04',trim:'#1E4EA8',trimLo:'#0A2458',
+           leg:'#E2701A',boot:'#1E2430',hair:'#F6DC4A'}),
+       SK({name:'Super Saiyan Blue',cost:17000,suit:'#E2701A',suitLo:'#8E3E04',trim:'#1E4EA8',trimLo:'#0A2458',
+           leg:'#E2701A',boot:'#1E2430',hair:'#3EC4F2'}),
+       SK({name:'Ultra Instinct',cost:32000,suit:'#2A2E3C',suitLo:'#101219',trim:'#B8C4D4',trimLo:'#6E7888',
+           leg:'#2A2E3C',boot:'#14161E',hair:'#D8E4F0'})
+     ]},
+    {id:'vegeta',name:'Vegeta',real:'Prince Vegeta',cls:'Prince of All Saiyans',
+     emblem:'none',head:'spiky',
+     trait:{name:'Galick Gun',kind:'auto',every:260,dmg:1.3,fx:'kibeam',v:0,desc:'A violet beam fired from both palms'},
+     pow:32,tough:120,spd:1.14,superName:'Final Flash',
+     superDesc:'Charges everything he has into one blinding gold beam',
+     skins:[
+       SK({name:'Battle Armour',suit:'#1C4E9E',suitLo:'#0A2450',trim:'#E8ECF2',trimLo:'#98A2B0',
+           leg:'#1C4E9E',boot:'#E8ECF2',hair:'#14161E'}),
+       SK({name:'Super Saiyan',cost:7500,suit:'#1C4E9E',suitLo:'#0A2450',trim:'#E8ECF2',trimLo:'#98A2B0',
+           leg:'#1C4E9E',boot:'#E8ECF2',hair:'#F6DC4A'}),
+       SK({name:'Super Saiyan Blue',cost:18000,suit:'#20242E',suitLo:'#0C0E14',trim:'#E8ECF2',trimLo:'#98A2B0',
+           leg:'#20242E',boot:'#E8ECF2',hair:'#3EC4F2'}),
+       SK({name:'Majin Vegeta',cost:30000,suit:'#3A1E5E',suitLo:'#180A30',trim:'#E8ECF2',trimLo:'#98A2B0',
+           leg:'#3A1E5E',boot:'#E8ECF2',hair:'#F6DC4A'})
+     ]},
+    {id:'gohan',name:'Gohan',real:'Son Gohan',cls:'The Half Saiyan',
+     emblem:'none',head:'spiky',
+     trait:{name:'Masenko',kind:'auto',every:255,dmg:1.2,fx:'kibeam',v:0,desc:'A yellow beam thrown down with both hands'},
+     pow:30,tough:118,spd:1.15,superName:'Father-Son Kamehameha',
+     superDesc:'One beam, two fighters, nothing left standing',
+     skins:[
+       SK({name:'Cell Games Gi',suit:'#1E58B0',suitLo:'#0A2758',trim:'#E2701A',trimLo:'#8E3E04',
+           leg:'#1E58B0',boot:'#1E2430',hair:'#14161E'}),
+       SK({name:'Super Saiyan 2',cost:12000,suit:'#1E58B0',suitLo:'#0A2758',trim:'#E2701A',trimLo:'#8E3E04',
+           leg:'#1E58B0',boot:'#1E2430',hair:'#F6DC4A'}),
+       SK({name:'Great Saiyaman',cost:20000,suit:'#1E7A4E',suitLo:'#0A3A24',trim:'#E8322C',trimLo:'#8A1210',
+           leg:'#F0F2F6',boot:'#E8322C',hair:'#14161E'})
+     ]},
+    {id:'piccolo',name:'Piccolo',real:'Piccolo Junior',cls:'The Namekian',
+     emblem:'none',head:'bald',
+     trait:{name:'Special Beam Cannon',kind:'auto',every:275,dmg:1.45,fx:'kibeam',v:0,desc:'Two fingers to the forehead, then a drilling beam'},
+     pow:29,tough:134,spd:1.0,superName:'Hellzone Grenade',
+     superDesc:'Surrounds them with light and closes the circle',
+     skins:[SK({name:'Weighted Cape',suit:'#4A2E7A',suitLo:'#20123A',trim:'#D8DEE8',trimLo:'#8A94A2',
+           cape:'#D8DEE8',capeLo:'#8A94A2',leg:'#4A2E7A',boot:'#3A2460',hair:'#1E7A3E',
+           skin:'#5EC46E',skinLo:'#2E7A3A',fore:'#5EC46E',foreLo:'#2E7A3A'})]},
+    {id:'frieza',name:'Frieza',real:'Emperor Frieza',cls:'Emperor of the Universe',
+     emblem:'none',head:'bald',
+     trait:{name:'Death Beam',kind:'auto',every:230,dmg:1.25,fx:'repulsor',v:0,desc:'One finger, one thin beam, no warning'},
+     pow:33,tough:124,spd:1.18,superName:'Supernova',
+     superDesc:'Balances a small sun on one fingertip and lets it fall',
+     skins:[
+       SK({name:'Final Form',suit:'#F0F2F6',suitLo:'#A8B0BC',trim:'#8E2FA8',trimLo:'#4A1258',
+           leg:'#F0F2F6',boot:'#8E2FA8',hair:'#E8ECF2',
+           skin:'#F0F2F6',skinLo:'#A8B0BC',fore:'#F0F2F6',foreLo:'#A8B0BC'}),
+       SK({name:'Golden Frieza',cost:24000,suit:'#E8B41E',suitLo:'#8E6A04',trim:'#8E2FA8',trimLo:'#4A1258',
+           leg:'#E8B41E',boot:'#8E2FA8',hair:'#F4DC8A',
+           skin:'#F4D96A',skinLo:'#A88E1E',fore:'#F4D96A',foreLo:'#A88E1E'})
+     ]},
+    {id:'naruto',name:'Naruto',real:'Naruto Uzumaki',cls:'The Seventh Hokage',
+     emblem:'swirl',head:'spiky',
+     trait:{name:'Rasengan',kind:'auto',every:245,dmg:1.25,fx:'sphere',v:0,desc:'A spinning ball of chakra driven straight into them'},
+     pow:29,tough:124,spd:1.2,superName:'Rasenshuriken',
+     superDesc:'A shuriken of wind chakra that tears the air apart',
+     skins:[
+       SK({name:'Genin Orange',suit:'#E2701A',suitLo:'#8E3E04',trim:'#1E2430',trimLo:'#0A0C12',
+           leg:'#E2701A',boot:'#1E2430',hair:'#F6DC4A'}),
+       SK({name:'Sage Mode',cost:8000,suit:'#E2701A',suitLo:'#8E3E04',trim:'#C4202C',trimLo:'#78101A',
+           cape:'#F0F2F6',capeLo:'#A8B0BC',leg:'#E2701A',boot:'#1E2430',hair:'#F6DC4A'}),
+       SK({name:'Kurama Chakra',cost:19000,suit:'#F2B41E',suitLo:'#96690A',trim:'#1E2430',trimLo:'#0A0C12',
+           leg:'#F2B41E',boot:'#1E2430',hair:'#F8E06A'}),
+       SK({name:'Hokage Cloak',cost:31000,suit:'#F0F2F6',suitLo:'#A8B0BC',trim:'#C4202C',trimLo:'#78101A',
+           cape:'#F0F2F6',capeLo:'#A8B0BC',leg:'#1E2430',boot:'#0E1016',hair:'#F6DC4A'})
+     ]},
+    {id:'sasuke',name:'Sasuke',real:'Sasuke Uchiha',cls:'The Last Uchiha',
+     emblem:'fang',head:'spiky',
+     trait:{name:'Chidori',kind:'auto',every:240,dmg:1.3,fx:'bolt',v:0,desc:'A thousand birds of lightning gathered in one hand'},
+     pow:31,tough:112,spd:1.26,superName:'Amaterasu',
+     superDesc:'Black flame that does not stop until there is nothing left',
+     skins:[
+       SK({name:'Leaf Exile',suit:'#20242E',suitLo:'#0C0E14',trim:'#8E2FA8',trimLo:'#4A1258',
+           leg:'#20242E',boot:'#12141B',hair:'#1A1E2A'}),
+       SK({name:'Curse Mark',cost:8000,suit:'#3A2A50',suitLo:'#180F26',trim:'#C4202C',trimLo:'#78101A',
+           leg:'#3A2A50',boot:'#12141B',hair:'#C8CDD8'}),
+       SK({name:'Rinnegan',cost:24000,suit:'#1A1E2A',suitLo:'#080A0F',trim:'#8E2FA8',trimLo:'#4A1258',
+           cape:'#2A1E3E',capeLo:'#120A1C',leg:'#1A1E2A',boot:'#0C0E14',hair:'#1A1E2A'})
+     ]},
+    {id:'kakashi',name:'Kakashi',real:'Kakashi Hatake',cls:'The Copy Ninja',
+     emblem:'swirl',head:'spiky',
+     trait:{name:'Sharingan Copy',kind:'adapt',v:0.3,desc:'Every hit he takes teaches him — he gets stronger all fight'},
+     pow:27,tough:114,spd:1.22,superName:'Lightning Blade',
+     superDesc:'Runs the length of the arena with lightning in his fist',
+     skins:[SK({name:'Jonin Vest',suit:'#1E3A5E',suitLo:'#0A1830',trim:'#2E6E4A',trimLo:'#123A24',
+           leg:'#1E3A5E',boot:'#12141B',hair:'#D8DEE8'})]},
+    {id:'ichigo',name:'Ichigo',real:'Ichigo Kurosaki',cls:'The Substitute Soul Reaper',
+     emblem:'none',head:'spiky',
+     trait:{name:'Getsuga Tensho',kind:'auto',every:250,dmg:1.35,fx:'slash',v:0,desc:'A crescent of blue-black energy thrown off his blade'},
+     pow:32,tough:120,spd:1.14,superName:'Bankai',
+     superDesc:'Releases the true shape of his sword and closes the distance instantly',
+     skins:[
+       SK({name:'Shinigami Robes',suit:'#16181F',suitLo:'#08090C',trim:'#E8ECF2',trimLo:'#98A2B0',
+           leg:'#16181F',boot:'#0C0E12',hair:'#E2701A'}),
+       SK({name:'Bankai',cost:9000,suit:'#101218',suitLo:'#050609',trim:'#C4202C',trimLo:'#78101A',
+           cape:'#12141B',capeLo:'#06070A',leg:'#101218',boot:'#08090C',hair:'#E2701A'}),
+       SK({name:'Hollow Mask',cost:26000,suit:'#101218',suitLo:'#050609',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           cape:'#12141B',capeLo:'#06070A',leg:'#101218',boot:'#08090C',hair:'#F0A03A'})
+     ]},
+    {id:'luffy',name:'Luffy',real:'Monkey D. Luffy',cls:'Captain of the Straw Hats',
+     emblem:'none',head:'strawhat',
+     trait:{name:'Gum-Gum Pistol',kind:'auto',every:230,dmg:1.1,fx:'blast',v:0,desc:'His arm stretches the length of the arena and snaps back'},
+     pow:30,tough:132,spd:1.12,superName:'Red Hawk',
+     superDesc:'Sets his fist on fire and throws it from across the arena',
+     skins:[
+       SK({name:'Straw Hat',suit:'#C4202C',suitLo:'#78101A',trim:'#F0C24A',trimLo:'#96780A',
+           leg:'#2E5EA8',boot:'#1A2028',hair:'#14161E',
+           fore:'#E8B48C',foreLo:'#B0784E'}),
+       SK({name:'Gear Four',cost:10000,suit:'#C4202C',suitLo:'#78101A',trim:'#E8322C',trimLo:'#8A1210',
+           leg:'#8E2A2A',boot:'#1A2028',hair:'#14161E',
+           fore:'#E8322C',foreLo:'#8A1210'}),
+       SK({name:'Gear Five',cost:30000,suit:'#F4F6FA',suitLo:'#AEB6C2',trim:'#F0C24A',trimLo:'#96780A',
+           leg:'#F4F6FA',boot:'#D8DEE8',hair:'#F4F6FA',
+           fore:'#F4F6FA',foreLo:'#AEB6C2'})
+     ]},
+    {id:'zoro',name:'Zoro',real:'Roronoa Zoro',cls:'The Three-Sword Swordsman',
+     emblem:'none',head:'bandana',
+     trait:{name:'Three-Sword Style',kind:'auto',every:255,dmg:1.3,fx:'slash',v:0,desc:'Three blades cross the arena at once'},
+     pow:33,tough:126,spd:1.06,superName:'Three Thousand Worlds',
+     superDesc:'Three blades spinning at once and one clean cut',
+     skins:[
+       SK({name:'Green Haramaki',suit:'#1E7A3E',suitLo:'#0A3E1E',trim:'#16181F',trimLo:'#08090C',
+           leg:'#16181F',boot:'#0C0E12',hair:'#2FA84C',
+           fore:'#E8B48C',foreLo:'#B0784E'}),
+       SK({name:'Wano Coat',cost:14000,suit:'#20242E',suitLo:'#0C0E14',trim:'#C4202C',trimLo:'#78101A',
+           cape:'#20242E',capeLo:'#0C0E14',leg:'#16181F',boot:'#0C0E12',hair:'#2FA84C',
+           fore:'#E8B48C',foreLo:'#B0784E'})
+     ]},
+    {id:'saitama',name:'Saitama',real:'Saitama',cls:'The Bald Cape',
+     emblem:'none',head:'bald',
+     trait:{name:'One Punch',kind:'crit',v:0.36,desc:'Any punch can be the one that ends it'},
+     pow:38,tough:150,spd:1.0,superName:'Serious Punch',
+     superDesc:'He stops joking, and the air itself gets out of the way',
+     skins:[
+       SK({name:'Hero Suit',suit:'#F0C41E',suitLo:'#96780A',trim:'#C4202C',trimLo:'#78101A',
+           cape:'#F0F2F6',capeLo:'#A8B0BC',leg:'#C4202C',boot:'#C4202C',hair:'#F0C49C'}),
+       SK({name:'Serious Mode',cost:22000,suit:'#E8ECF2',suitLo:'#98A2B0',trim:'#20242E',trimLo:'#0C0E14',
+           cape:'#C8CDD8',capeLo:'#7A8290',leg:'#20242E',boot:'#20242E',hair:'#F0C49C'})
+     ]},
+    {id:'tanjiro',name:'Tanjiro',real:'Tanjiro Kamado',cls:'Demon Slayer',
+     emblem:'none',head:'bandana',
+     trait:{name:'Water Breathing',kind:'auto',every:250,dmg:1.15,fx:'slash',v:0,desc:'His blade leaves a running wave behind it'},
+     pow:28,tough:118,spd:1.18,superName:'Hinokami Kagura',
+     superDesc:'The sun dance — a spinning arc of fire from his blade',
+     skins:[
+       SK({name:'Corps Uniform',suit:'#20242E',suitLo:'#0C0E14',trim:'#1E7A6E',trimLo:'#0A3A34',
+           leg:'#2A2E3C',boot:'#16181F',hair:'#8E2A18',
+           fore:'#E8B48C',foreLo:'#B0784E'}),
+       SK({name:'Hinokami Kagura',cost:13000,suit:'#20242E',suitLo:'#0C0E14',trim:'#E8503A',trimLo:'#8E2214',
+           leg:'#2A2E3C',boot:'#16181F',hair:'#C4451E',
+           fore:'#E8B48C',foreLo:'#B0784E'}),
+       SK({name:'Demon Slayer Mark',cost:27000,suit:'#161820',suitLo:'#080A0E',trim:'#F0A03A',trimLo:'#96600A',
+           leg:'#20242E',boot:'#0E1015',hair:'#E2701A',
+           fore:'#E8B48C',foreLo:'#B0784E'})
+     ]},
+    {id:'nezuko',name:'Nezuko',real:'Nezuko Kamado',cls:'The Demon Who Protects',
+     emblem:'none',head:'longhair',
+     trait:{name:'Blood Demon Art',kind:'auto',every:245,dmg:1.2,fx:'fire',v:0,desc:'Pink flame that burns demons and nothing else'},
+     pow:27,tough:122,spd:1.24,superName:'Exploding Blood',
+     superDesc:'Her blood catches fire in the air around them',
+     skins:[SK({name:'Pink Kimono',suit:'#E86A9E',suitLo:'#8E2A56',trim:'#D8C44A',trimLo:'#8A7A0A',
+           leg:'#E86A9E',boot:'#8E2A56',hair:'#1A1218',
+           fore:'#F4D2C0',foreLo:'#C09880',skin:'#F4D2C0',skinLo:'#C09880'})]},
+    {id:'zenitsu',name:'Zenitsu',real:'Zenitsu Agatsuma',cls:'Thunder Breathing',
+     emblem:'bolt',head:'spiky',
+     trait:{name:'Thunderclap and Flash',kind:'auto',every:235,dmg:1.2,fx:'bolt',v:0,desc:'One step so fast it arrives as lightning'},
+     pow:27,tough:104,spd:1.38,superName:'Thunderclap Sixfold',
+     superDesc:'Six strikes in the time it takes to blink once',
+     skins:[SK({name:'Yellow Haori',suit:'#F0C41E',suitLo:'#96780A',trim:'#E8ECF2',trimLo:'#98A2B0',
+           leg:'#20242E',boot:'#16181F',hair:'#F6DC4A',
+           fore:'#F0C49C',foreLo:'#C08A5E'})]},
+    {id:'levi',name:'Levi',real:'Levi Ackerman',cls:'Humanity Strongest Soldier',
+     emblem:'wings',head:'short',
+     trait:{name:'Spinning Blades',kind:'auto',every:240,dmg:1.25,fx:'slash',v:0,desc:'He spins through the air and the blades never stop'},
+     pow:31,tough:110,spd:1.32,superName:'Blade Cyclone',
+     superDesc:'A full spin at the end of a grapple line, edges out',
+     skins:[SK({name:'Survey Corps',suit:'#8E7A4A',suitLo:'#4E4020',trim:'#2E6E4A',trimLo:'#123A24',
+           cape:'#2E6E4A',capeLo:'#123A24',leg:'#F0F2F6',boot:'#5E4428',hair:'#1A1E2A'})]},
+    {id:'eren',name:'Eren',real:'Eren Yeager',cls:'The Attack Titan',
+     emblem:'wings',head:'ponytail',
+     trait:{name:'Titan Regeneration',kind:'auto',every:270,dmg:0.1,fx:'heal',v:0,desc:'Steam rises off him and the wounds close by themselves'},
+     pow:33,tough:146,spd:0.98,superName:'Titan Shift',
+     superDesc:'Bites his hand, and something very large steps out of the lightning',
+     skins:[
+       SK({name:'Cadet Jacket',suit:'#8E7A4A',suitLo:'#4E4020',trim:'#2E6E4A',trimLo:'#123A24',
+           leg:'#F0F2F6',boot:'#5E4428',hair:'#4A3020'}),
+       SK({name:'Survey Corps',cost:10000,suit:'#5E4E2E',suitLo:'#2E2412',trim:'#2E6E4A',trimLo:'#123A24',
+           cape:'#2E6E4A',capeLo:'#123A24',leg:'#F0F2F6',boot:'#3E2E18',hair:'#4A3020'}),
+       SK({name:'Attack Titan',cost:28000,suit:'#8E4A2E',suitLo:'#4A2010',trim:'#E8503A',trimLo:'#8E2214',
+           leg:'#8E4A2E',boot:'#5E2E18',hair:'#3A2414',
+           skin:'#C4784E',skinLo:'#7E4828',fore:'#C4784E',foreLo:'#7E4828'})
+     ]},
+    {id:'mikasa',name:'Mikasa',real:'Mikasa Ackerman',cls:'The Last Ackerman',
+     emblem:'wings',head:'longhair',
+     trait:{name:'Blade Flurry',kind:'auto',every:250,dmg:1.2,fx:'slash',v:0,desc:'Steel comes at them from three directions at once'},
+     pow:30,tough:114,spd:1.26,superName:'Vertical Assault',
+     superDesc:'Drops out of the sky on a grapple line, both blades leading',
+     skins:[SK({name:'Red Scarf',suit:'#8E7A4A',suitLo:'#4E4020',trim:'#C4202C',trimLo:'#78101A',
+           cape:'#C4202C',capeLo:'#78101A',leg:'#F0F2F6',boot:'#5E4428',hair:'#161820',
+           fore:'#F0D2BC',foreLo:'#BC9678',skin:'#F0D2BC',skinLo:'#BC9678'})]},
+    {id:'edward',name:'Edward Elric',real:'Edward Elric',cls:'The Fullmetal Alchemist',
+     emblem:'crescent',head:'braid',
+     trait:{name:'Transmutation',kind:'auto',every:255,dmg:1.2,fx:'nuke',v:0,desc:'He claps, touches the ground, and spikes of stone rise under them'},
+     pow:27,tough:118,spd:1.16,superName:'Automail Blade',
+     superDesc:'Turns his own arm into a blade and closes the gap',
+     skins:[SK({name:'Red Coat',suit:'#C4202C',suitLo:'#78101A',trim:'#16181F',trimLo:'#08090C',
+           cape:'#C4202C',capeLo:'#78101A',leg:'#16181F',boot:'#0C0E12',hair:'#F0C41E'})]},
+    {id:'gon',name:'Gon',real:'Gon Freecss',cls:'The Rookie Hunter',
+     emblem:'none',head:'spiky',
+     trait:{name:'Jajanken Rock',kind:'auto',every:260,dmg:1.3,fx:'blast',v:0,desc:'Rock, paper, scissors — and rock is a cannon'},
+     pow:29,tough:116,spd:1.2,superName:'First Comes Rock',
+     superDesc:'Everything he has, poured into one fist',
+     skins:[SK({name:'Green Jacket',suit:'#2E9E4A',suitLo:'#125024',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           leg:'#2E9E4A',boot:'#1A5E2A',hair:'#161820',
+           fore:'#E8B48C',foreLo:'#B0784E'})]},
+    {id:'killua',name:'Killua',real:'Killua Zoldyck',cls:'The Assassin Heir',
+     emblem:'bolt',head:'spiky',
+     trait:{name:'Godspeed',kind:'auto',every:225,dmg:1.15,fx:'bolt',v:0,desc:'His nerves run on lightning and so does he'},
+     pow:28,tough:104,spd:1.4,superName:'Thunderbolt',
+     superDesc:'Lightning down his arm and out through his palm',
+     skins:[SK({name:'Purple Shirt',suit:'#8E4EC4',suitLo:'#4A2472',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           leg:'#2A2E3C',boot:'#16181F',hair:'#E8ECF2',
+           fore:'#F4DCC8',foreLo:'#C09A80'})]},
+    {id:'allmight',name:'All Might',real:'Toshinori Yagi',cls:'The Symbol of Peace',
+     emblem:'none',head:'spiky',
+     trait:{name:'One For All',kind:'auto',every:265,dmg:1.5,fx:'blast',v:0,desc:'A punch so hard the wind behind it does the damage'},
+     pow:36,tough:148,spd:1.04,superName:'United States of Smash',
+     superDesc:'Everything left in him, thrown at once',
+     skins:[SK({name:'Silver Age',suit:'#1E4EA8',suitLo:'#0A2458',trim:'#C4202C',trimLo:'#78101A',
+           leg:'#1E4EA8',boot:'#C4202C',hair:'#F6DC4A'})]},
+    {id:'deku',name:'Deku',real:'Izuku Midoriya',cls:'The Ninth Holder',
+     emblem:'none',head:'spiky',
+     trait:{name:'Blackwhip',kind:'auto',every:245,dmg:1.15,fx:'vines',v:0,desc:'Black tendrils shoot out of his arm and hold them still'},
+     pow:29,tough:118,spd:1.24,superName:'Detroit Smash',
+     superDesc:'One hundred percent, straight through',
+     skins:[
+       SK({name:'Gamma Costume',suit:'#2E6E4A',suitLo:'#123A24',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           leg:'#2E6E4A',boot:'#C4202C',hair:'#2FA84C'}),
+       SK({name:'Full Cowl',cost:9000,suit:'#1E7A6E',suitLo:'#0A3A34',trim:'#2EE0C4',trimLo:'#0A7A6A',
+           leg:'#1E7A6E',boot:'#C4202C',hair:'#2FA84C'}),
+       SK({name:'Vigilante Hood',cost:22000,suit:'#20242E',suitLo:'#0C0E14',trim:'#2EE0C4',trimLo:'#0A7A6A',
+           cape:'#2A2E3C',capeLo:'#101219',leg:'#20242E',boot:'#16181F',hair:'#2FA84C'})
+     ]},
+    {id:'bakugo',name:'Bakugo',real:'Katsuki Bakugo',cls:'The Explosive Hero',
+     emblem:'none',head:'spiky',
+     trait:{name:'Explosion',kind:'auto',every:235,dmg:1.25,fx:'blast',v:0,desc:'His sweat is nitroglycerin and his palms are the fuse'},
+     pow:32,tough:110,spd:1.24,superName:'Howitzer Impact',
+     superDesc:'Spins into a tornado of his own blasts and lands on them',
+     skins:[SK({name:'Grenadier Gear',suit:'#20242E',suitLo:'#0C0E14',trim:'#E2701A',trimLo:'#8E3E04',
+           leg:'#20242E',boot:'#16181F',hair:'#F6DC4A'})]},
+    {id:'todoroki',name:'Todoroki',real:'Shoto Todoroki',cls:'Half Cold Half Hot',
+     emblem:'none',head:'twoface',
+     trait:{name:'Flashfreeze Heatwave',kind:'auto',every:250,dmg:1.25,fx:'ice',v:0,desc:'Ice up one arm, fire down the other, both at them'},
+     pow:30,tough:126,spd:1.1,superName:'Flashfreeze Heatwave',
+     superDesc:'A glacier and a firestorm from the same body',
+     skins:[SK({name:'Hero Costume',suit:'#E8F2FA',suitLo:'#A0B4C4',trim:'#C4202C',trimLo:'#78101A',
+           leg:'#20242E',boot:'#16181F',hair:'#E8ECF2',
+           fore:'#F0D2BC',foreLo:'#BC9678'})]},
+    {id:'gojo',name:'Gojo',real:'Satoru Gojo',cls:'The Strongest Sorcerer',
+     emblem:'none',head:'blindfold',
+     trait:{name:'Cursed Technique Blue',kind:'auto',every:250,dmg:1.4,fx:'sphere',v:0,desc:'A point of gravity that pulls everything into it'},
+     pow:34,tough:130,spd:1.22,superName:'Hollow Purple',
+     superDesc:'Blue and red pressed together into something that erases what it touches',
+     skins:[
+       SK({name:'Blindfold',suit:'#16181F',suitLo:'#08090C',trim:'#E8ECF2',trimLo:'#98A2B0',
+           leg:'#16181F',boot:'#0C0E12',hair:'#F0F4FA'}),
+       SK({name:'Unsealed',cost:18000,suit:'#101218',suitLo:'#050609',trim:'#3EC4F2',trimLo:'#0E6E96',
+           leg:'#101218',boot:'#08090C',hair:'#F0F4FA'}),
+       SK({name:'Domain Expansion',cost:34000,suit:'#1A1030',suitLo:'#0A0618',trim:'#8E4EC4',trimLo:'#4A2472',
+           cape:'#160C2A',capeLo:'#080414',leg:'#1A1030',boot:'#0C0618',hair:'#F0F4FA'})
+     ]},
+    {id:'yuji',name:'Yuji',real:'Yuji Itadori',cls:'Vessel of the King of Curses',
+     emblem:'none',head:'spiky',
+     trait:{name:'Divergent Fist',kind:'auto',every:240,dmg:1.2,fx:'blast',v:0,desc:'The punch lands, and then it lands again'},
+     pow:31,tough:124,spd:1.2,superName:'Black Flash',
+     superDesc:'Cursed energy and fist arriving at the exact same instant',
+     skins:[SK({name:'School Uniform',suit:'#16181F',suitLo:'#08090C',trim:'#E8ECF2',trimLo:'#98A2B0',
+           leg:'#16181F',boot:'#0C0E12',hair:'#F0A0A8',
+           fore:'#F0C49C',foreLo:'#C08A5E'})]},
+    {id:'sukuna',name:'Sukuna',real:'Ryomen Sukuna',cls:'The King of Curses',
+     emblem:'fang',head:'spiky',
+     trait:{name:'Dismantle',kind:'auto',every:250,dmg:1.45,fx:'slash',v:0,desc:'Invisible cuts that arrive before the hand finishes moving'},
+     pow:36,tough:138,spd:1.14,superName:'Malevolent Shrine',
+     superDesc:'Opens a shrine of bone and lets it cut everything inside',
+     skins:[SK({name:'Marked Vessel',suit:'#EAC0A4',suitLo:'#A8785C',trim:'#C4202C',trimLo:'#78101A',
+           leg:'#16181F',boot:'#0C0E12',hair:'#F0A0A8',
+           fore:'#EAC0A4',foreLo:'#B4866A',skin:'#EAC0A4',skinLo:'#B4866A'})]},
+    {id:'meliodas',name:'Meliodas',real:'Meliodas',cls:'The Dragon Sin of Wrath',
+     emblem:'none',head:'spiky',
+     trait:{name:'Full Counter',kind:'counter',v:0.5,desc:'Blocks send the hit straight back, harder'},
+     pow:33,tough:128,spd:1.18,superName:'Revenge Counter',
+     superDesc:'Takes everything they have and hands all of it back at once',
+     skins:[SK({name:'Sins Coat',suit:'#20242E',suitLo:'#0C0E14',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           leg:'#20242E',boot:'#16181F',hair:'#F6DC4A',
+           fore:'#F0F2F6',foreLo:'#A8B0BC'})]},
+    {id:'asta',name:'Asta',real:'Asta',cls:'The Anti-Magic Knight',
+     emblem:'fang',head:'spiky',
+     trait:{name:'Anti-Magic',kind:'guardbreak',v:0.34,desc:'His sword eats magic — guards mean nothing to it'},
+     pow:32,tough:124,spd:1.16,superName:'Black Divider',
+     superDesc:'A sword that cuts the spell as well as the caster',
+     skins:[
+       SK({name:'Black Bull',suit:'#20242E',suitLo:'#0C0E14',trim:'#8E7A4A',trimLo:'#4E4020',
+           cape:'#2A2E3C',capeLo:'#101219',leg:'#20242E',boot:'#16181F',hair:'#F0F4FA'}),
+       SK({name:'Demon Form',cost:24000,suit:'#161820',suitLo:'#080A0E',trim:'#C4202C',trimLo:'#78101A',
+           cape:'#101218',capeLo:'#050609',leg:'#161820',boot:'#0C0E12',hair:'#F0F4FA'})
+     ]},
+    {id:'denji',name:'Denji',real:'Denji',cls:'The Chainsaw Devil',
+     emblem:'none',head:'spiky',
+     trait:{name:'Chainsaw Arms',kind:'auto',every:240,dmg:1.3,fx:'slash',v:0,desc:'He pulls the cord and both arms become saws'},
+     pow:33,tough:132,spd:1.1,superName:'Pull The Cord',
+     superDesc:'Everything spins up at once and he walks straight through them',
+     skins:[SK({name:'Devil Hunter',suit:'#20242E',suitLo:'#0C0E14',trim:'#C4202C',trimLo:'#78101A',
+           leg:'#2A2E3C',boot:'#16181F',hair:'#F0C41E',
+           fore:'#F0C49C',foreLo:'#C08A5E'})]},
+    {id:'inuyasha',name:'Inuyasha',real:'Inuyasha',cls:'The Half Demon',
+     emblem:'fang',head:'longhair',
+     trait:{name:'Wind Scar',kind:'auto',every:255,dmg:1.35,fx:'slash',v:0,desc:'He finds the seam between two winds and cuts it'},
+     pow:32,tough:130,spd:1.12,superName:'Backlash Wave',
+     superDesc:'Catches their own attack in his blade and sends it back doubled',
+     skins:[SK({name:'Red Robe',suit:'#C4202C',suitLo:'#78101A',trim:'#F0C41E',trimLo:'#96780A',
+           leg:'#C4202C',boot:'#8E1A20',hair:'#F0F4FA',
+           fore:'#F0C49C',foreLo:'#C08A5E'})]},
+    {id:'yusuke',name:'Yusuke',real:'Yusuke Urameshi',cls:'The Spirit Detective',
+     emblem:'none',head:'short',
+     trait:{name:'Spirit Gun',kind:'auto',every:245,dmg:1.3,fx:'repulsor',v:0,desc:'One finger, all of his spirit energy, straight down the range'},
+     pow:31,tough:122,spd:1.16,superName:'Spirit Shotgun',
+     superDesc:'Spreads his whole spirit energy across the arena at once',
+     skins:[SK({name:'Green Uniform',suit:'#1E7A4E',suitLo:'#0A3A24',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           leg:'#1E7A4E',boot:'#16181F',hair:'#161820',
+           fore:'#F0C49C',foreLo:'#C08A5E'})]},
+    {id:'jotaro',name:'Jotaro',real:'Jotaro Kujo',cls:'Star Platinum',
+     emblem:'star',head:'peakcap',
+     trait:{name:'Star Platinum Barrage',kind:'auto',every:240,dmg:1.3,fx:'psi',v:0,desc:'A stand nobody else can see throwing a hundred punches'},
+     pow:33,tough:134,spd:1.14,superName:'Star Finger',
+     superDesc:'Time stops, the punches land, and then time starts again',
+     skins:[SK({name:'Long Coat',suit:'#1A2A3E',suitLo:'#08121E',trim:'#F0C41E',trimLo:'#96780A',
+           cape:'#1A2A3E',capeLo:'#08121E',leg:'#1A2A3E',boot:'#0C1420',hair:'#161820'})]},
+    {id:'dio',name:'DIO',real:'Dio Brando',cls:'The World',
+     emblem:'none',head:'spiky',
+     trait:{name:'Time Stop',kind:'auto',every:270,dmg:1.4,fx:'psi',v:0,desc:'The world holds still and the damage is already done'},
+     pow:34,tough:132,spd:1.2,superName:'Road Roller',
+     superDesc:'Stops time, drops something enormous, and lets time start again',
+     skins:[SK({name:'Yellow Trim',suit:'#F0C41E',suitLo:'#96780A',trim:'#C4202C',trimLo:'#78101A',
+           cape:'#F0C41E',capeLo:'#96780A',leg:'#F0C41E',boot:'#B08A0E',hair:'#F6DC4A',
+           fore:'#F4DCC8',foreLo:'#C09A80'})]},
+    {id:'kenshin',name:'Kenshin',real:'Himura Kenshin',cls:'The Wanderer',
+     emblem:'none',head:'ponytail',
+     trait:{name:'Battojutsu',kind:'firststrike',v:1.9,desc:'The first strike of the fight is drawn faster than the eye'},
+     pow:30,tough:112,spd:1.34,superName:'Amakakeru Ryu no Hirameki',
+     superDesc:'A draw so fast the vacuum behind it pulls them into the blade',
+     skins:[SK({name:'Red Gi',suit:'#C4202C',suitLo:'#78101A',trim:'#F0F2F6',trimLo:'#A8B0BC',
+           leg:'#F0F2F6',boot:'#8E7A4A',hair:'#C4451E',
+           fore:'#F4DCC8',foreLo:'#C09A80'})]},
+    {id:'guts',name:'Guts',real:'Guts',cls:'The Black Swordsman',
+     emblem:'none',head:'short',
+     trait:{name:'Dragonslayer',kind:'auto',every:265,dmg:1.5,fx:'slash',v:0,desc:'A sword too big to be a sword, swung anyway'},
+     pow:37,tough:144,spd:0.94,superName:'Cannon Arm',
+     superDesc:'Sword first, then the cannon bolted where his arm used to be',
+     skins:[SK({name:'Black Armour',suit:'#16181F',suitLo:'#08090C',trim:'#8E2A2A',trimLo:'#4A1010',
+           cape:'#20242E',capeLo:'#0C0E14',leg:'#16181F',boot:'#0C0E12',hair:'#161820'})]},
+    {id:'sailormoon',name:'Sailor Moon',real:'Usagi Tsukino',cls:'Champion of the Moon',
+     emblem:'crescent',head:'ponytail',
+     trait:{name:'Moon Tiara',kind:'auto',every:245,dmg:1.15,fx:'cosmic',v:0,desc:'A ring of moonlight thrown flat across the arena'},
+     pow:27,tough:120,spd:1.18,superName:'Moon Healing Escalation',
+     superDesc:'A wave of moonlight that mends her and undoes them',
+     skins:[
+       SK({name:'Sailor Suit',suit:'#F0F2F6',suitLo:'#A8B0BC',trim:'#1E4EA8',trimLo:'#0A2458',
+           leg:'#1E4EA8',boot:'#C4202C',hair:'#F6DC4A',
+           fore:'#F4DCC8',foreLo:'#C09A80',skin:'#F4DCC8',skinLo:'#C09A80'}),
+       SK({name:'Eternal',cost:20000,suit:'#F4F6FA',suitLo:'#AEB6C2',trim:'#E86A9E',trimLo:'#8E2A56',
+           cape:'#E8ECF2',capeLo:'#98A2B0',leg:'#8E4EC4',boot:'#F0F2F6',hair:'#F6DC4A',
+           fore:'#F4DCC8',foreLo:'#C09A80',skin:'#F4DCC8',skinLo:'#C09A80'})
+     ]},
+    {id:'kaneki',name:'Kaneki',real:'Ken Kaneki',cls:'The One-Eyed Ghoul',
+     emblem:'none',head:'short',
+     trait:{name:'Kagune',kind:'auto',every:250,dmg:1.3,fx:'shadow',v:0,desc:'Red tendrils unfold out of his back and reach for them'},
+     pow:32,tough:126,spd:1.18,superName:'Kakuja',
+     superDesc:'The kagune wraps him completely and stops holding back',
+     skins:[SK({name:'Black Bodysuit',suit:'#16181F',suitLo:'#08090C',trim:'#C4202C',trimLo:'#78101A',
+           leg:'#16181F',boot:'#0C0E12',hair:'#F0F4FA',
+           fore:'#EFE0DC',foreLo:'#B4A29E',skin:'#EFE0DC',skinLo:'#B4A29E'})]},
+    {id:'astroboy',name:'Astro Boy',real:'Atom',cls:'The Mighty Atom',
+     emblem:'none',head:'spiky',
+     trait:{name:'Arm Cannon',kind:'auto',every:240,dmg:1.15,fx:'repulsor',v:0,desc:'His forearm opens and fires without a word'},
+     pow:28,tough:126,spd:1.26,superName:'Rocket Ascent',
+     superDesc:'Jets out of his heels, straight up, with them held above him',
+     skins:[SK({name:'Red Boots',suit:'#16181F',suitLo:'#08090C',trim:'#C4202C',trimLo:'#78101A',
+           leg:'#16181F',boot:'#C4202C',hair:'#161820',
+           fore:'#F4DCC8',foreLo:'#C09A80'})]}
   ];
   var HP_SCALE=2.8;   /* fights last far longer now */
   var TIERS=[
@@ -1046,7 +1475,11 @@
     var t=TIERS[tier].mul, g=1+(lvl-1)*0.16;
     var mx=Math.round(h.tough*g*t*HP_SCALE);
     var startMeter=(h.trait&&h.trait.kind==='primed')?Math.round(h.trait.v*100):0;
+    /* carry the whole trait through, not just its name — the auto-firing
+       powers need every/dmg/fx, and both v and dmg sharpen as you level up */
     var tr=h.trait?{name:h.trait.name,kind:h.trait.kind,desc:h.trait.desc,
+      every:h.trait.every,fx:h.trait.fx,
+      dmg:(h.trait.dmg||0)*(1+(lvl-1)*0.022),
       v:h.trait.v*(1+(lvl-1)*0.022)}:null;
     return {h:look(h,skinIdx),base:h,trait:tr,firstHit:true,
       lvl:lvl,tier:tier,facing:facing,x:x,baseX:x,
@@ -1382,6 +1815,13 @@
     var foreHi=lerpHex(h.fore||h.skin,'#FFFFFF',T.gloss*0.2), foreLo=h.foreLo||h.skinLo;
     var trimHi=lerpHex(h.trim,'#FFFFFF',T.gloss*0.3), trimLo=h.trimLo;
     if(f.tier>=4){ suitHi=lerpHex(suitHi,'#FFE9A8',0.28); trimHi=lerpHex(trimHi,'#FFF6D0',0.4); }
+    /* trousers and boots get their own colours so a costume can have, say,
+       blue shorts over a red shirt instead of one flat body colour */
+    var legBase=h.leg||h.suit, legLoBase=(h.leg&&h.leg!==h.suit)?lerpHex(h.leg,'#000000',0.42):h.suitLo;
+    var legHi=lerpHex(legBase,'#FFFFFF',T.gloss*0.22), legLo=legLoBase;
+    var bootBase=h.boot||h.trim, bootLoBase=(h.boot&&h.boot!==h.trim)?lerpHex(h.boot,'#000000',0.42):h.trimLo;
+    var bootHi=lerpHex(bootBase,'#FFFFFF',T.gloss*0.3), bootLo=bootLoBase;
+    if(f.tier>=4){ legHi=lerpHex(legHi,'#FFE9A8',0.28); bootHi=lerpHex(bootHi,'#FFF6D0',0.4); }
 
     /* cape behind everything */
     if(h.cape){
@@ -1398,18 +1838,18 @@
     }
 
     /* far limbs */
-    limb(g,P0.hiB,P0.knB,8,6,suitLo,lerpHex(suitLo,'#000000',0.28),f.tier);
-    limb(g,P0.knB,P0.ftB,6,4.4,suitLo,lerpHex(suitLo,'#000000',0.3),f.tier);
+    limb(g,P0.hiB,P0.knB,8,6,legLo,lerpHex(legLo,'#000000',0.28),f.tier);
+    limb(g,P0.knB,P0.ftB,6,4.4,legLo,lerpHex(legLo,'#000000',0.3),f.tier);
     limb(g,P0.shB,P0.elB,6.4,5.2,lerpHex(suitLo,'#000000',0.1),lerpHex(suitLo,'#000000',0.34),f.tier);
     limb(g,P0.elB,P0.haB,5,4,lerpHex(foreLo,'#000000',0.1),lerpHex(foreLo,'#000000',0.3),f.tier);
     blob(g,P0.haB[0],P0.haB[1],4.6,4.3,0,lerpHex(trimLo,'#FFFFFF',0.1),trimLo,f.tier);
 
     /* near leg */
-    limb(g,P0.hiF,P0.knF,9,6.8,suitHi,suitLo,f.tier);
-    limb(g,P0.knF,P0.ftF,6.8,4.8,suitHi,suitLo,f.tier);
+    limb(g,P0.hiF,P0.knF,9,6.8,legHi,legLo,f.tier);
+    limb(g,P0.knF,P0.ftF,6.8,4.8,legHi,legLo,f.tier);
     /* boots */
-    limb(g,[P0.ftF[0]-4,P0.ftF[1]-1],[P0.ftF[0]+7,P0.ftF[1]-1],4.6,3.8,trimHi,trimLo,f.tier);
-    limb(g,[P0.ftB[0]-3,P0.ftB[1]-1],[P0.ftB[0]+6,P0.ftB[1]-1],4,3.4,lerpHex(trimLo,'#000000',0.14),lerpHex(trimLo,'#000000',0.3),f.tier);
+    limb(g,[P0.ftF[0]-4,P0.ftF[1]-1],[P0.ftF[0]+7,P0.ftF[1]-1],4.6,3.8,bootHi,bootLo,f.tier);
+    limb(g,[P0.ftB[0]-3,P0.ftB[1]-1],[P0.ftB[0]+6,P0.ftB[1]-1],4,3.4,lerpHex(bootLo,'#000000',0.14),lerpHex(bootLo,'#000000',0.3),f.tier);
 
     /* torso: shoulders down to pelvis */
     (function(){
@@ -1660,6 +2100,55 @@
         g.fillStyle=h.suit;
         g.font='800 13px "Saira Condensed", sans-serif'; g.textAlign='center';
         g.save(); g.scale(1,1); g.fillText(h.mark||'R',0,4.6); g.restore();
+      }else if(h.emblem==='swirl'){
+        g.strokeStyle=trimHi; g.lineWidth=2.8; g.lineCap='round'; g.lineJoin='round';
+        g.beginPath();
+        for(var sw=0;sw<=44;sw++){
+          var sa9=sw*0.30, sr7=0.8+sw*0.205;
+          var SX=Math.cos(sa9)*sr7, SY=Math.sin(sa9)*sr7;
+          if(sw===0) g.moveTo(SX,SY); else g.lineTo(SX,SY);
+        }
+        g.stroke();
+      }else if(h.emblem==='flame'){
+        g.fillStyle=trimHi;
+        g.beginPath(); g.moveTo(0,-10.4);
+        g.quadraticCurveTo(7.6,-2.4,4.6,4.6);
+        g.quadraticCurveTo(2.4,9.2,0,9.6);
+        g.quadraticCurveTo(-2.6,9.2,-4.8,4.6);
+        g.quadraticCurveTo(-7.6,-2.4,0,-10.4);
+        g.closePath(); g.fill();
+        g.fillStyle=lerpHex(trimHi,'#FFFFFF',0.55);
+        g.beginPath(); g.moveTo(0,-3.6);
+        g.quadraticCurveTo(3.2,1,1.4,5.4);
+        g.quadraticCurveTo(-2.6,3.4,0,-3.6);
+        g.closePath(); g.fill();
+      }else if(h.emblem==='crescent'){
+        g.fillStyle=trimHi;
+        g.beginPath(); g.arc(-0.6,0,8.8,0,6.283); g.fill();
+        g.fillStyle=h.suit;
+        g.beginPath(); g.arc(3.4,-1.8,7.8,0,6.283); g.fill();
+      }else if(h.emblem==='fang'){
+        g.fillStyle=trimHi;
+        g.beginPath(); g.moveTo(-8.4,-6.6); g.lineTo(-3.6,7.8); g.lineTo(-0.6,-5.2); g.closePath(); g.fill();
+        g.beginPath(); g.moveTo(1.4,-6.2); g.lineTo(4.8,8.2); g.lineTo(8.6,-6.8); g.closePath(); g.fill();
+      }else if(h.emblem==='orb'){
+        var og=g.createRadialGradient(-3,-3.4,1,0,0,10);
+        og.addColorStop(0,'#FFE8A8'); og.addColorStop(0.5,'#F2A81E'); og.addColorStop(1,'#B06A06');
+        g.fillStyle=og;
+        g.beginPath(); g.arc(0,0,9.2,0,6.283); g.fill();
+        g.fillStyle='#C4202C';
+        var ST9=[[-3.6,-3.6],[3.6,-3.6],[-3.6,3.6],[3.6,3.6]];
+        for(var so9=0;so9<4;so9++){
+          g.beginPath();
+          for(var pp9=0;pp9<10;pp9++){
+            var rq9=(pp9%2===0)?3.1:1.35, aq9=-Math.PI/2+pp9*Math.PI/5;
+            var XQ=ST9[so9][0]+Math.cos(aq9)*rq9, YQ=ST9[so9][1]+Math.sin(aq9)*rq9;
+            if(pp9===0) g.moveTo(XQ,YQ); else g.lineTo(XQ,YQ);
+          }
+          g.closePath(); g.fill();
+        }
+        g.fillStyle='rgba(255,255,255,.45)';
+        g.beginPath(); g.ellipse(-3.4,-4.4,3,1.8,-0.5,0,6.283); g.fill();
       }else if(h.emblem==='none'){
         /* no chest mark on this costume */
       }else{
@@ -1830,6 +2319,90 @@
         done(g,h.trim);
         g.beginPath(); g.moveTo(hx-2,hy-11); g.lineTo(hx+1,hy-22); g.lineTo(hx+5,hy-9); g.closePath();
         done(g,h.trim);
+      }else if(h.head==='spiky'){
+        /* anime spiked hair: a cap of hair with big blades of it standing up */
+        g.beginPath(); g.arc(hx,hy-3.2,9.1,Math.PI*0.92,Math.PI*2.08); g.closePath();
+        done(g,h.hair);
+        var SPK=[[-8.2,-5.4,-14.6,-18.4,-4.2,-10.2],
+                 [-4.4,-9.2,-8.4,-24.6,0.4,-11.4],
+                 [0.8,-10.6,2.8,-26.2,6.2,-10.4],
+                 [5.4,-9.0,12.4,-21.4,8.8,-7.0],
+                 [8.4,-6.0,15.8,-13.0,9.4,-3.0]];
+        for(var sk1=0;sk1<SPK.length;sk1++){
+          var s1=SPK[sk1];
+          g.beginPath(); g.moveTo(hx+s1[0],hy+s1[1]);
+          g.lineTo(hx+s1[2],hy+s1[3]); g.lineTo(hx+s1[4],hy+s1[5]);
+          g.closePath(); done(g,h.hair);
+        }
+      }else if(h.head==='ponytail'){
+        g.beginPath(); g.arc(hx,hy-2.6,9.1,Math.PI*0.94,Math.PI*2.06); g.closePath();
+        done(g,h.hair);
+        g.beginPath(); g.moveTo(hx-7.4,hy-4.4);
+        g.quadraticCurveTo(hx-21,hy+1.4,hx-16.4,hy+21);
+        g.quadraticCurveTo(hx-11.4,hy+6,hx-5,hy+1.4);
+        g.closePath(); done(g,h.hair);
+      }else if(h.head==='braid'){
+        g.beginPath(); g.arc(hx,hy-3,9.1,Math.PI*0.94,Math.PI*2.06); g.closePath();
+        done(g,h.hair);
+        g.beginPath(); g.moveTo(hx-7.6,hy-3.4);
+        g.quadraticCurveTo(hx-15.4,hy+8,hx-11.4,hy+23);
+        g.quadraticCurveTo(hx-6.2,hy+9,hx-4.2,hy+1);
+        g.closePath(); done(g,h.hair);
+        g.beginPath(); g.moveTo(hx+1.4,hy-10); g.lineTo(hx+0.6,hy-20.4); g.lineTo(hx+6.4,hy-9.2);
+        g.closePath(); done(g,h.hair);
+      }else if(h.head==='strawhat'){
+        g.beginPath(); g.arc(hx,hy-2.6,9.1,Math.PI*0.94,Math.PI*2.06); g.closePath();
+        done(g,h.hair);
+        g.beginPath(); g.ellipse(hx-0.6,hy-8.6,16.6,4.4,-0.04,0,6.283); g.closePath();
+        done(g,'#E4C471');
+        g.beginPath(); g.ellipse(hx-0.6,hy-12.4,7.8,5.6,0,0,6.283); g.closePath();
+        done(g,'#EDD189');
+        if(!PASS_INK){
+          g.fillStyle='#B4202C';
+          g.beginPath(); g.ellipse(hx-0.6,hy-10.4,7.6,2.4,0,0,6.283); g.fill();
+        }
+      }else if(h.head==='bandana'){
+        g.beginPath(); g.arc(hx,hy-2.8,9.1,Math.PI*0.94,Math.PI*2.06); g.closePath();
+        done(g,h.hair);
+        g.beginPath();
+        g.moveTo(hx-9.6,hy-4.4); g.lineTo(hx+9.4,hy-6.6);
+        g.lineTo(hx+9,hy-1.4); g.lineTo(hx-9.4,hy+0.6);
+        g.closePath(); done(g,h.trim);
+        g.beginPath();
+        g.moveTo(hx-8.6,hy-3); g.lineTo(hx-18.4,hy+4.6);
+        g.lineTo(hx-16.4,hy+9.4); g.lineTo(hx-7.4,hy+0.8);
+        g.closePath(); done(g,h.trim);
+      }else if(h.head==='blindfold'){
+        /* swept-back hair, then the band across the eyes */
+        g.beginPath(); g.arc(hx,hy-3.4,9.1,Math.PI*0.92,Math.PI*2.06); g.closePath();
+        done(g,h.hair);
+        var BSPK=[[-8.4,-5.8,-15.4,-14.6,-4.6,-10.2],
+                  [-4.6,-9.4,-9.6,-19.4,0.2,-11.4],
+                  [0.6,-10.8,1.8,-20.6,5.8,-10.6],
+                  [5.2,-9.2,11.6,-17.4,8.6,-7.2],
+                  [8.4,-6.2,14.6,-11.4,9.4,-3.4]];
+        for(var bk1=0;bk1<BSPK.length;bk1++){
+          var b1=BSPK[bk1];
+          g.beginPath(); g.moveTo(hx+b1[0],hy+b1[1]);
+          g.lineTo(hx+b1[2],hy+b1[3]); g.lineTo(hx+b1[4],hy+b1[5]);
+          g.closePath(); done(g,h.hair);
+        }
+        g.beginPath();
+        g.moveTo(hx-10.2,hy-6.2); g.lineTo(hx+9.6,hy-6.8);
+        g.lineTo(hx+9.2,hy+0.8); g.lineTo(hx-10.2,hy+1.4);
+        g.closePath();
+        done(g,lerpHex(h.suitLo,'#000000',0.25));
+      }else if(h.head==='peakcap'){
+        g.beginPath(); g.arc(hx,hy-2.6,9.1,Math.PI*0.94,Math.PI*2.06); g.closePath();
+        done(g,h.hair);
+        g.beginPath();
+        g.arc(hx-0.4,hy-5.4,9.8,Math.PI*0.98,Math.PI*2.04);
+        g.lineTo(hx+9.4,hy-3.4); g.lineTo(hx-9.6,hy-3);
+        g.closePath(); done(g,h.suit);
+        g.beginPath();
+        g.moveTo(hx+4.4,hy-4.6); g.lineTo(hx+15.4,hy-3.2);
+        g.lineTo(hx+15,hy-0.6); g.lineTo(hx+4.4,hy-1.4);
+        g.closePath(); done(g,h.suitLo);
       }else{
         /* Superman: black hair with the spit curl */
         g.beginPath(); g.arc(hx,hy-3.6,9,Math.PI*0.94,Math.PI*2.08); g.closePath();
@@ -2039,6 +2612,25 @@
         for(var sc=0;sc<3;sc++){
           g.beginPath(); g.moveTo(hx-6.4,hy-4+sc*3.4); g.lineTo(hx-0.6,hy-3+sc*3.4); g.stroke();
         }
+      }else if(h.head==='blindfold'){
+        /* nothing but the band and a calm mouth */
+        g.fillStyle='rgba(255,255,255,.22)';
+        g.beginPath(); g.ellipse(hx+2.6,hy-4.8,5.4,1,-0.06,0,6.283); g.fill();
+        g.strokeStyle='rgba(255,255,255,.16)'; g.lineWidth=1;
+        g.beginPath(); g.moveTo(hx-9.4,hy-1.4); g.lineTo(hx+8.8,hy-2); g.stroke();
+        g.strokeStyle='rgba(120,62,44,.6)'; g.lineWidth=1.4; g.lineCap='round';
+        g.beginPath(); g.moveTo(hx+2.6,hy+4.4); g.lineTo(hx+7.2,hy+4.1); g.stroke();
+      }else if(h.head==='strawhat'||h.head==='bandana'||h.head==='peakcap'){
+        g.fillStyle='#F2EDE6';
+        g.beginPath(); g.ellipse(hx+4.9,hy-0.6,2.5,1.7,0,0,6.283); g.fill();
+        g.fillStyle='#3A2A18';
+        g.beginPath(); g.arc(hx+5.5,hy-0.6,1.5,0,6.283); g.fill();
+        g.fillStyle='#151A24';
+        g.beginPath(); g.arc(hx+5.6,hy-0.6,0.7,0,6.283); g.fill();
+        g.fillStyle='rgba(255,255,255,.9)';
+        g.beginPath(); g.arc(hx+4.9,hy-1.3,0.5,0,6.283); g.fill();
+        g.strokeStyle='rgba(120,62,44,.72)'; g.lineWidth=1.4; g.lineCap='round';
+        g.beginPath(); g.moveTo(hx+2.6,hy+4.6); g.lineTo(hx+7.2,hy+4.3); g.stroke();
       }else if(h.head==='hood'){
         g.fillStyle='rgba(8,20,12,.55)';
         g.beginPath(); g.ellipse(hx+1.4,hy-2.6,7.4,4.6,0,0,6.283); g.fill();
@@ -2957,6 +3549,113 @@
           ctx.arc(hx4+Math.cos(sa)*sr5,hy4+Math.sin(sa)*sr5*0.8-k*46,2.6,0,6.283);
           ctx.fill();
         }
+      }else if(e.k==='kibeam'){
+        /* a wide energy beam thrown the length of the arena */
+        var bx1=e.a.x+(e.a.dx||0)+e.a.facing*34, by1=GY-(e.a.air||0)-96;
+        var bx2=e.b.x+(e.b.dx||0);
+        var grow=Math.min(1,(1-k)*3.2);              /* fires out fast */
+        var ba=Math.min(1,(1-k)*2.0);                /* stays bright, then fades */
+        var bex=bx1+(bx2-bx1)*grow;
+        var bw=16+30*grow;
+        /* the solid body of the beam first, so it reads against a bright sky */
+        ctx.lineCap='round';
+        ctx.strokeStyle='rgba(24,96,210,'+(ba*0.62).toFixed(2)+')';
+        ctx.lineWidth=bw*1.55;
+        ctx.beginPath(); ctx.moveTo(bx1,by1); ctx.lineTo(bex,by1); ctx.stroke();
+        ctx.strokeStyle='rgba(96,196,255,'+(ba*0.95).toFixed(2)+')';
+        ctx.lineWidth=bw;
+        ctx.beginPath(); ctx.moveTo(bx1,by1); ctx.lineTo(bex,by1); ctx.stroke();
+        ctx.strokeStyle='rgba(255,255,255,'+ba.toFixed(2)+')';
+        ctx.lineWidth=bw*0.42;
+        ctx.beginPath(); ctx.moveTo(bx1,by1); ctx.lineTo(bex,by1); ctx.stroke();
+        /* then the glow on top */
+        ctx.globalCompositeOperation='lighter';
+        ctx.strokeStyle='rgba(70,170,255,'+(ba*0.4).toFixed(2)+')';
+        ctx.lineWidth=bw*1.9;
+        ctx.beginPath(); ctx.moveTo(bx1,by1); ctx.lineTo(bex,by1); ctx.stroke();
+        /* the ball at the hands it comes out of */
+        var cg9=ctx.createRadialGradient(bx1,by1,2,bx1,by1,bw*1.5);
+        cg9.addColorStop(0,'rgba(255,255,255,'+ba.toFixed(2)+')');
+        cg9.addColorStop(0.5,'rgba(140,215,255,'+(ba*0.7).toFixed(2)+')');
+        cg9.addColorStop(1,'rgba(60,150,255,0)');
+        ctx.fillStyle=cg9; ctx.beginPath(); ctx.arc(bx1,by1,bw*1.5,0,6.283); ctx.fill();
+        /* the flare where it lands */
+        var fg9=ctx.createRadialGradient(bex,by1,2,bex,by1,bw*2.1);
+        fg9.addColorStop(0,'rgba(255,255,255,'+ba.toFixed(2)+')');
+        fg9.addColorStop(1,'rgba(90,190,255,0)');
+        ctx.fillStyle=fg9; ctx.beginPath(); ctx.arc(bex,by1,bw*2.1,0,6.283); ctx.fill();
+        /* rings running down the beam */
+        ctx.strokeStyle='rgba(255,255,255,'+(ba*0.5).toFixed(2)+')'; ctx.lineWidth=3;
+        for(var bri=0;bri<4;bri++){
+          var brx=bx1+(bex-bx1)*(((tick*0.05+bri*0.25)%1));
+          ctx.beginPath(); ctx.ellipse(brx,by1,bw*0.22,bw*0.72,0,0,6.283); ctx.stroke();
+        }
+      }else if(e.k==='sphere'){
+        /* a spinning orb of energy that flies over and bursts */
+        var sx9=e.a.x+(e.a.dx||0)+e.a.facing*28, sy9=GY-(e.a.air||0)-98;
+        var tx9=e.b.x+(e.b.dx||0), ty9=GY-(e.b.air||0)-96;
+        var p9=Math.min(1,(1-k)*1.6);
+        var ox9=sx9+(tx9-sx9)*p9, oy9=sy9+(ty9-sy9)*p9;
+        var rr9=(p9<1)?17:17+(1-k-0.625)*180;
+        ctx.globalCompositeOperation='lighter';
+        var sg9=ctx.createRadialGradient(ox9,oy9,2,ox9,oy9,rr9);
+        sg9.addColorStop(0,'rgba(255,255,255,.95)');
+        sg9.addColorStop(0.45,'rgba(120,205,255,.72)');
+        sg9.addColorStop(1,'rgba(60,140,255,0)');
+        ctx.fillStyle=sg9; ctx.beginPath(); ctx.arc(ox9,oy9,rr9,0,6.283); ctx.fill();
+        ctx.strokeStyle='rgba(205,238,255,'+((1-k)*0.85).toFixed(2)+')'; ctx.lineWidth=2.4;
+        for(var sr9=0;sr9<3;sr9++){
+          ctx.beginPath();
+          ctx.ellipse(ox9,oy9,rr9*0.82,rr9*0.3,tick*0.22+sr9*1.05,0,6.283);
+          ctx.stroke();
+        }
+      }else if(e.k==='slash'){
+        /* long sword arcs drawn across the opponent */
+        var lx9=e.b.x+(e.b.dx||0), ly9=GY-(e.b.air||0)-100;
+        ctx.globalCompositeOperation='lighter';
+        for(var sl9=0;sl9<3;sl9++){
+          var kp9=Math.max(0,Math.min(1,(1-k)*2.4-sl9*0.4));
+          if(kp9<=0) continue;
+          var an8=-0.75+sl9*0.72, ln9=54+58*kp9;
+          ctx.strokeStyle='rgba(226,246,255,'+(kp9*0.9).toFixed(2)+')';
+          ctx.lineWidth=8*kp9; ctx.lineCap='round';
+          ctx.beginPath();
+          ctx.moveTo(lx9-Math.cos(an8)*ln9,ly9-Math.sin(an8)*ln9);
+          ctx.lineTo(lx9+Math.cos(an8)*ln9,ly9+Math.sin(an8)*ln9);
+          ctx.stroke();
+          ctx.strokeStyle='rgba(255,255,255,'+(kp9*0.7).toFixed(2)+')';
+          ctx.lineWidth=2.6*kp9;
+          ctx.beginPath();
+          ctx.moveTo(lx9-Math.cos(an8)*ln9,ly9-Math.sin(an8)*ln9);
+          ctx.lineTo(lx9+Math.cos(an8)*ln9,ly9+Math.sin(an8)*ln9);
+          ctx.stroke();
+        }
+      }else if(e.k==='blast'){
+        /* a shockwave detonation at the opponent */
+        var ex9=e.b.x+(e.b.dx||0), ey9=GY-(e.b.air||0)-92;
+        ctx.globalCompositeOperation='lighter';
+        var rg9=ctx.createRadialGradient(ex9,ey9,4,ex9,ey9,34+k*150);
+        rg9.addColorStop(0,'rgba(255,248,214,'+((1-k)*0.92).toFixed(2)+')');
+        rg9.addColorStop(0.42,'rgba(255,172,64,'+((1-k)*0.6).toFixed(2)+')');
+        rg9.addColorStop(1,'rgba(200,60,20,0)');
+        ctx.fillStyle=rg9; ctx.beginPath(); ctx.arc(ex9,ey9,34+k*150,0,6.283); ctx.fill();
+        ctx.strokeStyle='rgba(255,242,206,'+((1-k)*0.8).toFixed(2)+')';
+        ctx.lineWidth=Math.max(1,7*(1-k));
+        ctx.beginPath(); ctx.arc(ex9,ey9,k*190,0,6.283); ctx.stroke();
+      }else if(e.k==='aura'){
+        /* ki flaring off the fighter */
+        var ax9=e.a.x+(e.a.dx||0), ay9=GY-(e.a.air||0)-84;
+        ctx.globalCompositeOperation='lighter';
+        for(var fa9=0;fa9<14;fa9++){
+          var an9=fa9*0.45+tick*0.05, rb9=24+((fa9*11)%38);
+          ctx.fillStyle='rgba(255,216,96,'+((1-k)*0.65).toFixed(2)+')';
+          ctx.beginPath();
+          ctx.ellipse(ax9+Math.cos(an9)*rb9*0.7,ay9-k*110+Math.sin(an9)*12,4,15,0,0,6.283);
+          ctx.fill();
+        }
+        ctx.strokeStyle='rgba(255,238,158,'+((1-k)*0.6).toFixed(2)+')';
+        ctx.lineWidth=Math.max(1,6*(1-k));
+        ctx.beginPath(); ctx.ellipse(ax9,ay9,38+k*90,68+k*110,0,0,6.283); ctx.stroke();
       }else if(e.k==='scan'){
         /* detective read-out bracketing the opponent */
         var ox=e.b.x+(e.b.dx||0), oy=GY-(e.b.air||0)-118, hw=62, hh=104;

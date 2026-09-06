@@ -4,7 +4,7 @@ Things I'm making with Claude Code.
 
 ## Yahya.games.com — Skyforge Champions
 
-Sixty-six characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
+A hundred and six characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
 and forge their armour into brighter and brighter finishes.
 
 **To play:** open `index.html` in any web browser.
@@ -43,16 +43,24 @@ sky over the fire pits · **The Watchtower** in orbit, with Earth below.
 
 ### The roster
 
-Sixty-six characters, each drawn to their own costume. This is not every
-DC character — DC has thousands, and each one here is hand-written drawing
-code — but it covers the Justice League, the Bat-family, and a bench of
-villains.
+A hundred and six characters, each drawn to their own costume. This is not
+every character from anywhere — each one here is hand-written drawing code —
+but it covers the Justice League, the Bat-family, a bench of villains, a
+Marvel and X-Men wing, and forty anime fighters.
 
 Twenty more joined the roster: Doctor Strange, Black Widow, Hawkeye, Loki,
 Thanos, Ant-Man, Scarlet Witch, Vision, Ghost Rider, Silver Surfer, Jean Grey,
 Nightcrawler, Rogue, Beast, Gambit, John Stewart, Static Shock, Two-Face,
 Scarecrow and The Penguin — with horned, flaming-skull and split-face head
 treatments drawn for Loki, Ghost Rider and Two-Face.
+
+**Anime (forty fighters):** Goku, Vegeta, Gohan, Piccolo, Frieza, Naruto,
+Sasuke, Kakashi, Ichigo, Luffy, Zoro, Saitama, Tanjiro, Nezuko, Zenitsu,
+Levi, Eren, Mikasa, Edward Elric, Gon, Killua, All Might, Deku, Bakugo,
+Todoroki, Gojo, Yuji, Sukuna, Meliodas, Asta, Denji, Inuyasha, Yusuke,
+Jotaro, DIO, Kenshin, Guts, Sailor Moon, Kaneki and Astro Boy — with new
+head shapes for spiked hair, ponytails, braids, a straw hat, a bandana,
+a blindfold and a peaked cap.
 
 **Heroes:** Superman, Batman, Wonder Woman, The Flash, Green Lantern, Cyborg,
 Aquaman, Shazam, Green Arrow, Supergirl, Batgirl, Nightwing, Robin, Martian
