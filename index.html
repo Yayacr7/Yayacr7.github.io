@@ -177,6 +177,24 @@
   .raid .rnote{font-size:.76rem;color:var(--dim);line-height:1.4;margin-top:5px}
   .raid .rbest{font-size:.74rem;color:var(--sky);margin-top:7px;font-weight:700}
   .raid .btn{flex:none;width:auto}
+  .squad{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+  .squad label{display:flex;flex-direction:column;gap:3px;font-size:.66rem;color:var(--dim);
+    font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+  .squad select{font:inherit;font-size:.8rem;font-weight:700;color:var(--ice);
+    background:var(--panel);border:2px solid var(--edge);border-radius:8px;padding:6px 8px;min-width:148px}
+  .toggles{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(214px,1fr));margin-top:8px}
+  .tog{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;font:inherit;
+    cursor:pointer;text-align:left;color:var(--ice);background:var(--panel-2);
+    border:2px solid var(--edge);border-radius:11px;padding:9px 11px}
+  .tog .t{font-weight:800;font-size:.82rem;display:block}
+  .tog .d{font-size:.7rem;color:var(--dim);display:block;margin-top:2px}
+  .tog .pip{flex:none;width:34px;height:19px;border-radius:11px;background:#2A3647;position:relative;
+    border:2px solid var(--edge)}
+  .tog .pip::after{content:"";position:absolute;top:1px;left:1px;width:13px;height:13px;border-radius:50%;
+    background:var(--dim);transition:left .13s,background .13s}
+  .tog.on{border-color:var(--gold)}
+  .tog.on .pip{background:rgba(247,201,72,.32);border-color:var(--gold)}
+  .tog.on .pip::after{left:16px;background:var(--gold)}
   .missions{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(232px,1fr))}
   .mission{display:flex;flex-direction:column;gap:7px;font:inherit;text-align:left;color:var(--ice);
     background:var(--panel-2);border:2px solid var(--edge);border-radius:11px;padding:10px 12px}
@@ -319,8 +337,24 @@
             <span class="d">Spend it on whatever you like</span></span></button>
           <button class="buy" id="bMaxOne"><span><span class="t">Max this champion</span>
             <span class="d" id="dMaxOne">Level 60, Legendary armour, every version</span></span></button>
+          <button class="buy" id="bMaxAll"><span><span class="t">Max every champion</span>
+            <span class="d" id="dMaxAll">All of them, level 60, Legendary</span></span></button>
           <button class="buy danger" id="bWipe"><span><span class="t">Start again</span>
             <span class="d">Wipes everything back to a fresh save</span></span></button>
+        </div>
+        <p class="onote" style="margin-top:11px">Switches. These stay on until you turn them
+          off, and the arena shows a gold <b>OWNER</b> badge whenever any of them is running, so
+          you always know a win was yours and not the switch&rsquo;s.</p>
+        <div class="toggles">
+          <button class="tog" id="tGod"><span><span class="t">Can&rsquo;t be beaten</span>
+            <span class="d">You take a tenth of all damage</span></span><span class="pip"></span></button>
+          <button class="tog" id="tPunch"><span><span class="t">One-punch mode</span>
+            <span class="d">Your hits land ten times harder</span></span><span class="pip"></span></button>
+          <button class="tog" id="tMeter"><span><span class="t">Super move always ready</span>
+            <span class="d">Your meter refills the moment you spend it</span></span><span class="pip"></span></button>
+        </div>
+        <div class="squad">
+          <label>Always fight<select id="oFoe"></select></label>
         </div>
         <p class="msg" id="oMsg"></p>
       </div>
@@ -341,6 +375,42 @@
             &nbsp;&middot;&nbsp; <span id="rBestAll">Best ever: floor 0</span></p>
         </div>
         <button class="btn fight" id="bRaid">Start a solo raid</button>
+      </div>
+    </section>
+
+    <section class="sec" style="margin-top:14px">
+      <h3>Team battle <span class="mReady" id="tmTag" hidden></span></h3>
+      <div class="raid">
+        <div class="rinfo">
+          <p class="rlead">Three champions each. When one falls the next steps in.</p>
+          <p class="rnote">Pick a squad of three. You fight one at a time, and whoever is
+            still standing <b>keeps the damage they have taken</b> &mdash; the next champion in
+            comes on fresh. Beat all three of theirs before they beat all three of yours.
+            Every knockout pays, and clearing the whole squad pays a large bonus on top.</p>
+          <div class="squad">
+            <label>First out<select id="tm0"></select></label>
+            <label>Second<select id="tm1"></select></label>
+            <label>Third<select id="tm2"></select></label>
+          </div>
+          <p class="rbest"><span id="tmBest">Squads beaten: 0</span></p>
+        </div>
+        <button class="btn fight" id="bTeam">Start a team battle</button>
+      </div>
+    </section>
+
+    <section class="sec" style="margin-top:14px">
+      <h3>Tournament <span class="mReady" id="trTag" hidden></span></h3>
+      <div class="raid">
+        <div class="rinfo">
+          <p class="rlead">Eight fighters. Three rounds. One champion.</p>
+          <p class="rnote">A straight knockout bracket: <b>quarter-final</b>, <b>semi-final</b>,
+            <b>final</b>. You are healed to full between rounds, but each opponent is tougher
+            than the last and the final is a real fight. Lose at any point and you are out with
+            a small consolation. Win all three and you take the trophy and the whole purse.</p>
+          <p class="rbest"><span id="trBest">Trophies: 0</span>
+            &nbsp;&middot;&nbsp; <span id="trFar">Best round reached: none</span></p>
+        </div>
+        <button class="btn fight" id="bTour">Enter the tournament</button>
       </div>
     </section>
 
@@ -1826,6 +1896,16 @@
     if(typeof save.credits!=='number') save.credits=600;
     if(typeof save.sel!=='number') save.sel=0;
     if(typeof save.raidBest!=='number') save.raidBest=0;
+    if(typeof save.teamWins!=='number') save.teamWins=0;
+    if(typeof save.tourWins!=='number') save.tourWins=0;
+    if(typeof save.tourFar!=='number') save.tourFar=0;
+    if(!save.team||save.team.length!==3) save.team=[save.sel,-1,-1];
+    if(!save.owner||typeof save.owner!=='object') save.owner={};
+    var ow=save.owner;
+    if(typeof ow.god!=='number') ow.god=0;
+    if(typeof ow.punch!=='number') ow.punch=0;
+    if(typeof ow.meter!=='number') ow.meter=0;
+    if(typeof ow.foe!=='string') ow.foe='';
     missionState();
   }
   function store(){ try{ localStorage.setItem('skyforge.v1',JSON.stringify(save)); }catch(e){} }
@@ -4307,9 +4387,17 @@
     me=makeFighter(h,p.lvl,p.tier,1,404,p.skin);
     var pool=HEROES.filter(function(x){return x.id!==h.id&&!x.legend;});
     var oh=pool[Math.floor(Math.random()*pool.length)];
+    if(save.owner&&save.owner.foe){
+      for(var oi=0;oi<HEROES.length;oi++)
+        if(HEROES[oi].id===save.owner.foe&&HEROES[oi].id!==h.id) oh=HEROES[oi];
+    }
     var olvl=Math.max(1,p.lvl+(Math.random()<0.5?0:1));
     var otier=Math.min(4,Math.max(0,p.tier+(Math.random()<0.35?1:0)));
     foe=makeFighter(oh,olvl,otier,-1,620,Math.floor(Math.random()*oh.skins.length));
+    enterArena(h);
+  }
+  /* everything every mode has to do to get from the home screen into a bout */
+  function enterArena(h){
     floats.length=0; sparks.length=0; fx.length=0; endT=0;
     screen='fight';
     var lb=$('bLeap'), flier=(h.id==='superman');
@@ -4521,10 +4609,202 @@
     setTimeout(function(){tone(880,0.22,'triangle',0.05,1320);},130);
   }
 
+  /* ================= team battle =================
+     Three champions a side, one at a time. Whoever is left standing keeps the
+     damage they have taken; the next one in arrives fresh. It is the oldest
+     idea in tag fighting and it turns a single bout into a campaign. */
+  var team=null;
+  function pickable(){ return HEROES.filter(function(h){ return legendOwned(h); }); }
+  function teamIds(){
+    var out=[], t=save.team||[];
+    for(var i=0;i<3;i++){
+      var idx=t[i];
+      if(typeof idx!=='number'||idx<0||idx>=HEROES.length||!legendOwned(HEROES[idx])) idx=-1;
+      out.push(idx);
+    }
+    if(out[0]<0) out[0]=save.sel;
+    /* empty slots are filled with someone the player is not already fielding */
+    for(var j=0;j<3;j++){
+      if(out[j]>=0) continue;
+      var pool=pickable();
+      for(var k=0;k<pool.length;k++){
+        var gi=HEROES.indexOf(pool[k]);
+        if(out.indexOf(gi)<0){ out[j]=gi; break; }
+      }
+    }
+    return out;
+  }
+  function makeFromIdx(idx,facing,x){
+    var h=HEROES[idx], p=prog(h);
+    return makeFighter(h,p.lvl,p.tier,facing,x,p.skin);
+  }
+  function startTeam(){
+    raid=null; tour=null; legendBout=null;
+    var mine=teamIds();
+    /* The other squad is built around the AVERAGE of yours, not its leader.
+       Scaling off the leader punished anyone whose second and third champions
+       were not levelled -- a squad of one star and two rookies drew three
+       opponents at the star's level and was hopeless before it started. */
+    var sumL=0, sumT=0;
+    for(var q=0;q<3;q++){ var pq=prog(HEROES[mine[q]]); sumL+=pq.lvl; sumT+=pq.tier; }
+    var avgL=Math.max(1,Math.round(sumL/3)), avgT=Math.round(sumT/3);
+    var pool=HEROES.filter(function(h){ return !h.legend && mine.indexOf(HEROES.indexOf(h))<0; });
+    var theirs=[];
+    for(var i=0;i<3;i++){
+      var h=pool[Math.floor(Math.random()*pool.length)];
+      pool=pool.filter(function(x){ return x!==h; });
+      theirs.push({h:h,
+        lvl:Math.max(1,avgL+(i-1)),
+        tier:Math.min(4,Math.max(0,avgT+(i===2?1:0))),
+        skin:Math.floor(Math.random()*h.skins.length)});
+    }
+    team={mine:mine,theirs:theirs,mi:0,ti:0,cred:0,xp:0,beat:0};
+    me=makeFromIdx(mine[0],1,404);
+    var t0=theirs[0];
+    foe=makeFighter(t0.h,t0.lvl,t0.tier,-1,620,t0.skin);
+    enterArena(HEROES[mine[0]]);
+  }
+  /* returns true when the battle carries on with a fresh fighter */
+  function teamAdvance(win){
+    if(win){
+      team.beat++;
+      var r=Math.round(120+foe.lvl*30);
+      team.cred+=r; team.xp+=Math.round(110+foe.lvl*26);
+      team.ti++;
+      if(team.ti>=3) return false;
+      var t=team.theirs[team.ti];
+      foe=makeFighter(t.h,t.lvl,t.tier,-1,620,t.skin);
+      tagIn(foe,me);
+      return true;
+    }
+    team.mi++;
+    if(team.mi>=3) return false;
+    me=makeFromIdx(team.mine[team.mi],1,404);
+    tagIn(me,foe);
+    return true;
+  }
+  function tagIn(fresh,survivor){
+    fx.length=0; floats.length=0; sparks.length=0;
+    fresh.inv=42;
+    survivor.dead=false; survivor.stun=0; survivor.anim=null;
+    floatText(fresh.x,GY-200,fresh.h.name.toUpperCase()+' IN','#FFE9A8',true);
+    shake=Math.max(shake,14); flash=Math.max(flash,10);
+    tone(720,0.16,'triangle',0.05,1080);
+  }
+  function teamOver(win){
+    var mine=team.mine, cred=team.cred, xp=team.xp;
+    if(win){ cred=Math.round(cred*1.9); xp=Math.round(xp*1.6); save.teamWins++; }
+    else { cred=Math.round(cred*0.5); xp=Math.round(xp*0.5); }
+    /* the whole squad shares the experience, which is the point of fielding one */
+    var ups=0, names=[];
+    for(var i=0;i<3;i++){
+      var p=save.h[HEROES[mine[i]].id];
+      p.xp+=Math.round(xp/3);
+      while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; ups++; }
+      names.push(HEROES[mine[i]].name);
+    }
+    if(win) save.h[HEROES[mine[0]].id].wins++;
+    save.credits+=cred;
+    store();
+    var got=missionsReady();
+    $('ovTitle').textContent=win?'Squad wiped out!':'Your squad is down';
+    $('ovText').textContent=(win
+      ? names.join(', ')+' took all three down.'
+      : 'They got through all three of yours. You beat '+team.beat+' of them and keep half.')
+      +' Experience is shared across the whole squad.'
+      +(ups?' '+ups+' level'+(ups>1?'s':'')+' between them!':'')
+      +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'');
+    $('rwCred').innerHTML=cred+'<span>Credits</span>';
+    $('rwXp').innerHTML=xp+'<span>Experience</span>';
+    $('ovReward').hidden=false;
+    $('ovBtn').textContent='Back to champions';
+    $('ovBtn2').hidden=true;
+    $('overlay').hidden=false;
+    team=null; rosterDirty=true;
+    if(win){ tone(660,0.12,'triangle',0.05,990); setTimeout(function(){tone(990,0.26,'triangle',0.05,1400);},140); }
+    else tone(240,0.5,'sawtooth',0.05,90);
+  }
+
+  /* ================= tournament =================
+     Eight fighters, three rounds, healed to full between them. A raid is
+     attrition; this is three clean fights that get harder each time. */
+  var tour=null;
+  var TOUR_NAME=['','Quarter-final','Semi-final','FINAL'];
+  function tourReward(r){ return {cred:Math.round(420*r*r*0.9+320), xp:Math.round(300*r+220)}; }
+  function startTour(){
+    raid=null; team=null; legendBout=null;
+    tour={round:1,cred:0,xp:0};
+    beginTourRound();
+  }
+  function beginTourRound(){
+    var h=HEROES[save.sel], p=prog(h);
+    me=makeFighter(h,p.lvl,p.tier,1,404,p.skin);
+    var pool=HEROES.filter(function(x){return x.id!==h.id&&!x.legend;});
+    var oh=pool[Math.floor(Math.random()*pool.length)];
+    /* each round is a step up, and the final is a genuine wall */
+    var lvl=Math.max(1,p.lvl+tour.round);
+    var tier=Math.min(4,p.tier+(tour.round>=3?1:0));
+    foe=makeFighter(oh,lvl,tier,-1,620,Math.floor(Math.random()*oh.skins.length));
+    if(tour.round>=3){ foe.max=Math.round(foe.max*1.25); foe.hp=foe.max; }
+    enterArena(h);
+  }
+  function tourCleared(){
+    var r=tourReward(tour.round);
+    tour.cred+=r.cred; tour.xp+=r.xp;
+    if(tour.round>save.tourFar) save.tourFar=tour.round;
+    tour.round++;
+    if(tour.round>3){ tourEnd(true); return; }
+    store();
+    $('ovTitle').textContent=TOUR_NAME[tour.round-1]+' won';
+    $('ovText').textContent=HEROES[save.sel].name+' is healed to full for the '
+      +TOUR_NAME[tour.round].toLowerCase()+'. The next one is harder.'
+      +(tour.round===3?' This is the last fight — the final pays more than the other two together.':'');
+    $('rwCred').innerHTML=tour.cred+'<span>Credits so far</span>';
+    $('rwXp').innerHTML=tour.xp+'<span>Experience so far</span>';
+    $('ovReward').hidden=false;
+    $('ovBtn').textContent=TOUR_NAME[tour.round]+' — +'+tourReward(tour.round).cred;
+    $('ovBtn2').hidden=true;
+    $('overlay').hidden=false;
+    tone(660,0.12,'triangle',0.05,990);
+    setTimeout(function(){tone(880,0.22,'triangle',0.05,1320);},130);
+  }
+  function tourEnd(won){
+    var h=HEROES[save.sel], p=prog(h);
+    var cred=won?tour.cred:Math.round(tour.cred*0.4);
+    var xp=won?tour.xp:Math.round(tour.xp*0.4);
+    if(won){ save.tourWins++; p.wins++; }
+    save.credits+=cred; p.xp+=xp;
+    var ups=0;
+    while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; ups++; }
+    store();
+    var got=missionsReady();
+    $('ovTitle').textContent=won?'TOURNAMENT CHAMPION':'Knocked out';
+    $('ovText').textContent=(won
+      ? h.name+' won all three rounds and takes the trophy. That is '+save.tourWins
+        +' now.'
+      : foe.h.name+' ended the run in the '+TOUR_NAME[tour.round].toLowerCase()
+        +'. You keep part of the purse.')
+      +(ups?' Levelled up to '+p.lvl+'!':'')
+      +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'');
+    $('rwCred').innerHTML=cred+'<span>Credits</span>';
+    $('rwXp').innerHTML=xp+'<span>Experience</span>';
+    $('ovReward').hidden=false;
+    $('ovBtn').textContent='Back to champions';
+    $('ovBtn2').hidden=true;
+    $('overlay').hidden=false;
+    tour=null;
+    if(won){ tone(660,0.12,'triangle',0.05,990); setTimeout(function(){tone(1050,0.3,'triangle',0.05,1500);},150); }
+    else tone(240,0.5,'sawtooth',0.05,90);
+  }
+
   function endFight(win){
     if(screen==='over') return;
     cine=null;
+    /* a team battle is not over until one side has run out of champions */
+    if(team&&teamAdvance(win)) return;
     screen='over'; endT=0;
+    if(team){ teamOver(win); return; }
+    if(tour){ if(win) tourCleared(); else tourEnd(false); return; }
     if(raid){ if(win) raidCleared(); else raidBank(false); return; }
     var wonLegend=null;
     if(legendBout){
@@ -4574,12 +4854,12 @@
   }
   function toHome(){
     cine=null; cam.z=1; cam.x=0; cam.y=0;
-    raid=null; legendBout=null;
+    raid=null; legendBout=null; team=null; tour=null;
     screen='home'; me=null; foe=null;
     $('ovBtn2').hidden=true;
     $('fightbar').hidden=true; $('homeUI').hidden=false; $('overlay').hidden=true;
     if(rosterDirty){ markCardsDirty(); buildRoster(); }
-    buildMissions(); buildLegend(); renderUI();
+    buildMissions(); buildLegend(); buildSquadPickers(); renderUI();
   }
 
   function floatText(x,y,txt,col,big){ floats.push({x:x,y:y,t:txt,c:col,life:56,big:!!big}); }
@@ -4648,6 +4928,12 @@
     }
     if(att.trait&&att.trait.kind==='guardbreak'&&blocked) blockMul=Math.min(1,blockMul+att.trait.v);
     var dmg=Math.max(1,Math.round(raw*soak*(blocked?blockMul:1)));
+    /* the owner's switches. Only ever in your favour, and only in your hands --
+       the same switch never helps whoever you are fighting. */
+    if(save.owner){
+      if(save.owner.punch&&att===me) dmg=Math.round(dmg*10);
+      if(save.owner.god&&def===me) dmg=Math.max(1,Math.round(dmg*0.1));
+    }
     def.hp-=dmg; def.flash=10;
     if(crit) floatText(att.x+att.facing*40,GY-186,'CRITICAL','#FFD46B');
     if(tr){
@@ -5057,6 +5343,7 @@
   function update(){
     tick++;
     updateCine();
+    if(save.owner&&save.owner.meter&&me&&!me.dead&&screen==='fight') me.meter=100;
     if(shake>0) shake*=0.86;
     if(camKick>0.0002) camKick*=0.86; else camKick=0;
     if(flash>0) flash--;
@@ -5750,6 +6037,21 @@
     else { qLow=0; qHigh=0; }
   }
 
+  /* three lozenges a side: filled for a champion still to come, hollow for
+     one already knocked out */
+  function squadPips(x,y,left,right){
+    var w=17, gap=5;
+    for(var i=0;i<3;i++){
+      var px=right?(x-(i+1)*w-i*gap):(x+i*(w+gap));
+      ctx.fillStyle=(i<left)?'#F7C948':'rgba(247,201,72,.18)';
+      ctx.beginPath();
+      if(ctx.roundRect) { ctx.roundRect(px,y,w,7,3); }
+      else ctx.rect(px,y,w,7);
+      ctx.fill();
+      ctx.strokeStyle='rgba(247,201,72,.55)'; ctx.lineWidth=1.4; ctx.stroke();
+    }
+  }
+
   function render(){
     if(postOn){
       ensureBuffers();
@@ -5795,6 +6097,36 @@
       meter(W-414,62,380,foe.meter/100,true);
       if(me.isBrain) iqBar(34,74,380,me.iq/100,false);
       if(foe.isBrain) iqBar(W-414,74,380,foe.iq/100,true);
+      /* a team battle shows how many champions each side has left, which is
+         the only thing you actually need to know that the bars do not say */
+      if(team){ squadPips(34,92,3-team.mi,false); squadPips(W-34,92,3-team.ti,true); }
+      if(tour){
+        ctx.textAlign='center';
+        ctx.font='800 22px "Saira Condensed", sans-serif';
+        var tt=TOUR_NAME[tour.round].toUpperCase();
+        var tw2=Math.max(150,ctx.measureText(tt).width+30);
+        ctx.fillStyle=tour.round>=3?'rgba(48,34,4,.74)':'rgba(10,18,28,.6)';
+        ctx.fillRect(W/2-tw2/2,26,tw2,28);
+        ctx.strokeStyle=tour.round>=3?'rgba(255,214,110,.95)':'rgba(247,201,72,.45)';
+        ctx.lineWidth=tour.round>=3?3:2;
+        ctx.strokeRect(W/2-tw2/2,26,tw2,28);
+        ctx.fillStyle=tour.round>=3?'#FFD46B':'#F7C948';
+        ctx.fillText(tt,W/2,47);
+      }
+      /* and a badge whenever one of the owner's switches is on, so a win is
+         never quietly a switch's win */
+      var ow=save.owner;
+      if(ow&&(ow.god||ow.punch||ow.meter)){
+        ctx.textAlign='left';
+        ctx.font='800 14px "Saira Condensed", sans-serif';
+        ctx.fillStyle='rgba(247,201,72,.22)';
+        ctx.fillRect(26,H-42,104,23);
+        ctx.strokeStyle='rgba(247,201,72,.7)'; ctx.lineWidth=2;
+        ctx.strokeRect(26,H-42,104,23);
+        ctx.fillStyle='#F7C948';
+        ctx.fillText('OWNER MODE',36,H-26);
+        ctx.textAlign='center';
+      }
       if(raid){
         var rk=raidKind(raid.floor), main=(rk==='main'), sub=(rk==='sub');
         var rtxt=(main?'RAID BOSS \u00b7 FLOOR ':(sub?'SUB-BOSS \u00b7 FLOOR ':'RAID FLOOR '))+raid.floor;
@@ -6123,6 +6455,14 @@
   function renderUI(){
     var h=HEROES[save.sel], p=prog(h), s=stats(h);
     $('credits').textContent=save.credits;
+    $('tmBest').textContent='Squads beaten: '+(save.teamWins||0);
+    $('trBest').textContent='Trophies: '+(save.tourWins||0);
+    $('trFar').textContent='Best round reached: '+
+      (save.tourFar?TOUR_NAME[save.tourFar].toLowerCase():'none');
+    var tmT=$('tmTag'), trT=$('trTag');
+    tmT.textContent=(save.teamWins||0)+' won'; tmT.hidden=!save.teamWins;
+    trT.textContent=(save.tourWins||0)+(save.tourWins===1?' trophy':' trophies');
+    trT.hidden=!save.tourWins;
     $('dName').innerHTML=h.name+' <span class="tierTag">'+TIERS[p.tier].name+'</span>'+
       '<span class="tierTag">'+h.skins[p.skin].name+'</span>';
     $('dTrait').innerHTML='<b>Trait — '+h.trait.name+':</b> '+h.trait.desc+'.';
@@ -6182,7 +6522,8 @@
     $('rBestAll').textContent='Best ever: floor '+(save.raidBest||0);
     $('owned').textContent=HEROES.length;
   }
-  buildRoster(); buildArenas(); buildSkins(); buildMissions(); buildLegend(); renderUI();
+  buildRoster(); buildArenas(); buildSkins(); buildMissions(); buildLegend();
+  buildSquadPickers(); ownerLights(); renderUI();
 
   function flashMsg(t){ $('msg').textContent=t; setTimeout(function(){ if($('msg').textContent===t) $('msg').textContent=''; },2600); }
 
@@ -6209,6 +6550,7 @@
   $('ovBtn').addEventListener('click',function(){
     /* mid-raid this button is "go one floor deeper", otherwise it goes home */
     if(raid&&raid.floor>1){ beginRaidFloor(); return; }
+    if(tour){ beginTourRound(); return; }
     toHome();
   });
   $('ovBtn2').addEventListener('click',function(){ if(raid) raidBank(true); });
@@ -6217,6 +6559,27 @@
     tone(300,0.2,'square',0.05,700);
   });
   $('bLegend').addEventListener('click',function(){ startLegendFight(); });
+  $('bTeam').addEventListener('click',function(){ startTeam(); tone(300,0.2,'square',0.05,700); });
+  $('bTour').addEventListener('click',function(){ startTour(); tone(300,0.2,'square',0.05,700); });
+  for(var ti=0;ti<3;ti++)(function(i){
+    $('tm'+i).addEventListener('change',function(){
+      save.team[i]=parseInt(this.value,10); store(); buildSquadPickers();
+    });
+  })(ti);
+  $('oFoe').addEventListener('change',function(){
+    save.owner.foe=this.value; store(); ownerMsg(this.value
+      ? 'Every fight is now against '+(HEROES.filter(function(h){return h.id===save.owner.foe;})[0]||{name:'?'}).name+'.'
+      : 'Opponents are random again.');
+  });
+  function ownerToggle(id,key,onTxt,offTxt){
+    $(id).addEventListener('click',function(){
+      save.owner[key]=save.owner[key]?0:1; store();
+      ownerRefresh(); ownerMsg(save.owner[key]?onTxt:offTxt);
+    });
+  }
+  ownerToggle('tGod','god','You now take a tenth of all damage.','Damage is back to normal.');
+  ownerToggle('tPunch','punch','Your hits land ten times harder.','Your damage is back to normal.');
+  ownerToggle('tMeter','meter','Your super move is always ready.','The meter fills normally again.');
 
   /* ---- the owner's key ----------------------------------------------
      This is a single-player game that lives in one browser, so these just
@@ -6226,9 +6589,34 @@
     clearTimeout(ownerMsg.t);
     ownerMsg.t=setTimeout(function(){ el.textContent=''; },4200);
   }
+  /* the three squad slots and the "always fight" list. Rebuilt whenever the
+     roster can have changed, because winning a legendary adds to both. */
+  function fillPicker(sel,chosen,blankLabel){
+    var list=pickable(), html=blankLabel?('<option value="">'+blankLabel+'</option>'):'';
+    for(var i=0;i<list.length;i++){
+      var gi=HEROES.indexOf(list[i]);
+      var val=blankLabel?list[i].id:gi;
+      var on=blankLabel?(chosen===list[i].id):(chosen===gi);
+      html+='<option value="'+val+'"'+(on?' selected':'')+'>'+list[i].name+'</option>';
+    }
+    sel.innerHTML=html;
+  }
+  function buildSquadPickers(){
+    var ids=teamIds();
+    save.team=ids;
+    for(var i=0;i<3;i++) fillPicker($('tm'+i),ids[i],null);
+    fillPicker($('oFoe'),save.owner.foe,'Anyone (random)');
+  }
   function ownerRefresh(){
     store(); markCardsDirty(); buildRoster();
-    buildSkins(); buildMissions(); buildLegend(); renderUI();
+    buildSkins(); buildMissions(); buildLegend(); buildSquadPickers(); renderUI();
+    ownerLights();
+  }
+  function ownerLights(){
+    var ow=save.owner;
+    $('tGod').className='tog'+(ow.god?' on':'');
+    $('tPunch').className='tog'+(ow.punch?' on':'');
+    $('tMeter').className='tog'+(ow.meter?' on':'');
   }
   $('bAllSkins').addEventListener('click',function(){
     var n=0;
@@ -6268,11 +6656,28 @@
     tone(300,0.28,'sawtooth',0.05,900);
     setTimeout(function(){ tone(900,0.3,'triangle',0.05,1400); },200);
   });
+  $('bMaxAll').addEventListener('click',function(){
+    if(!window.confirm('Max out all '+HEROES.length+' champions? Every one goes to level 60 in '
+                       +'Legendary armour with every version unlocked.')) return;
+    HEROES.forEach(function(h){
+      var g=prog(h);
+      g.lvl=60; g.xp=0; g.tier=4;
+      for(var i=0;i<h.skins.length;i++) if(g.owned.indexOf(i)<0) g.owned.push(i);
+      if(h.legend) save.legends[h.id]=1;
+    });
+    me=null;
+    ownerRefresh();
+    ownerMsg('All '+HEROES.length+' champions are level 60 in Legendary armour, every version unlocked.');
+    tone(300,0.3,'sawtooth',0.05,900);
+    setTimeout(function(){ tone(900,0.3,'triangle',0.05,1400); },200);
+    setTimeout(function(){ tone(1250,0.34,'triangle',0.05,1700); },400);
+  });
   $('bWipe').addEventListener('click',function(){
     if(!window.confirm('Start again? This wipes every level, credit, version and legendary.')) return;
-    save={credits:600,sel:0,arena:0,h:{},done:{},arenaWins:{},legends:{},raidBest:0};
+    save={credits:600,sel:0,arena:0,h:{},done:{},arenaWins:{},legends:{},raidBest:0,
+          teamWins:0,tourWins:0,tourFar:0,team:[0,-1,-1],owner:{god:0,punch:0,meter:0,foe:''}};
     for(var i=0;i<HEROES.length;i++) save.h[HEROES[i].id]=blank();
-    raid=null; legendBout=null; me=null;
+    raid=null; legendBout=null; team=null; tour=null; me=null;
     ownerRefresh();
     ownerMsg('Save wiped. Everything is back to the start.');
     tone(180,0.5,'sawtooth',0.05,90);

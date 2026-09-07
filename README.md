@@ -68,6 +68,32 @@ Inosuke, Rengoku, Muzan, Armin, Reiner, Alphonse, Hisoka, Kurapika, Uraraka,
 Shigaraki, Megumi, Nobara, Escanor, Yami, Sesshomaru, Hiei, Giorno, Rimuru,
 Vash and Spike.
 
+### Team battle
+
+Three champions a side, one at a time. Pick a squad of three; when one falls the
+next steps in, and **whoever is left standing keeps the damage they have taken**
+while the champion coming on arrives fresh. Beat all three of theirs before they
+beat all three of yours. Three lozenges under each health bar show how many are
+left on each side.
+
+Every knockout pays, clearing the whole squad pays nearly double on top, and the
+**experience is shared across all three**, which is the point of fielding a squad
+rather than one star.
+
+The other squad is built around the **average** of yours, not its leader. Scaling
+it off the leader was the first thing tried and it was quietly brutal: a squad of
+one champion at level 40 and two rookies at level 1 drew three opponents at level
+40 and was hopeless before it started.
+
+### Tournament
+
+Eight fighters, three rounds, one champion: **quarter-final**, **semi-final**,
+**final**. You are healed to full between rounds, but each opponent is a level
+higher than the last, the final opponent moves up an armour finish and carries a
+quarter more health again, and the purse grows with the rounds. Lose at any point
+and you are out with part of the purse. Win all three and you take the trophy,
+which is counted on the home screen.
+
 ### Levelling and missions
 
 Winning is the main way a champion gets stronger. Every win pays credits and
@@ -464,7 +490,23 @@ The home screen carries an admin panel for the person who owns the game:
 - **1,000,000 credits** — a pile to spend however you like.
 - **Max this champion** — the selected champion to level 60, Legendary armour
   and every one of their versions.
+- **Max every champion** — all 148 at once, level 60, Legendary armour, every
+  version. It asks first.
 - **Wipe the save** — start again from nothing. It asks first.
+
+And four switches that stay on until you turn them off:
+
+| | |
+| --- | --- |
+| Can't be beaten | you take a tenth of all damage |
+| One-punch mode | your hits land ten times harder |
+| Super move always ready | your meter refills the moment you spend it |
+| Always fight | pick one champion to face every time instead of a random one |
+
+The switches only ever work in your favour -- the same switch never helps
+whoever you are fighting. And whenever any of them is running the arena shows a
+gold **OWNER** badge in the corner, so a win is never quietly a switch's win
+rather than yours.
 
 Everything the panel does is written straight to the save, so it survives a
 reload.
