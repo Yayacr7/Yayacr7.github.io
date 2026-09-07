@@ -242,6 +242,17 @@ filled with canvas paths instead of triangles. Watch the legs: side-on they
 overlap, and as the body squares up to the camera they separate. Nothing draws
 that; it falls out of the perspective.
 
+Depth does not only move a joint, it decides how thick the limb hanging off it
+is drawn. A near arm is not merely closer, it is **bigger** -- and a far arm
+thinner. That was the last thing making the figures read flat. Each joint
+carries the scale its projection gave it, so all thirteen places that draw a
+limb inherit it without a single one of them changing.
+
+The head turns too. The face is a fixed three-quarter view built from dozens of
+hand-cut paths, so rather than re-cut every one of them it is scaled across the
+turn: more face when the champion squares up, less when they turn away behind a
+guard.
+
 Three rules keep it safe:
 
 - **Arms and legs inherit the depth of the shoulder or hip they hang off.** A
@@ -277,6 +288,14 @@ chain a film goes through:
 already cached once per arena, so softening it when that cache is built costs
 nothing per frame and leaves the deck and the fighters razor sharp. Your eye
 goes to the fighters because they are the only sharp thing on screen.
+
+**The camera flinches.** A landed hit punches the view in and rolls it slightly
+away from the blow, then settles over the next tenth of a second. It rides
+alongside the camera rather than through its usual slow glide, so it snaps on
+the exact frame of the hit. The push-in is deliberately capped below the point
+where the game hides the health bars, so a hit never costs you the HUD --
+measured across seventy impact frames, the bar never once dropped out. The roll
+is small enough that the push-in always covers the corners of the arena.
 
 **Hit stop** is why a punch feels like it weighs something. The whole game
 freezes for a few hundredths of a second when something lands: 28ms on a

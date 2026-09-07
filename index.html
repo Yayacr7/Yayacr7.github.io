@@ -3172,7 +3172,15 @@
     g.fillStyle=fill; g.fill(); return false;
   }
   /* a tapered, shaded limb between two joints */
+  /* a point offset from a foot, keeping that foot's depth so the boot is
+     drawn at the same thickness as the leg standing in it */
+  function shod(ft,dx){ var p=[ft[0]+dx,ft[1]-1]; p.s=ft.s; return p; }
+
   function limb(g,a,b,w1,w2,hi,lo,tier){
+    /* joints carry the depth scale the projection gave them; anything built
+       by hand from a joint has none and simply draws at its stated width */
+    if(a.s) w1*=a.s;
+    if(b.s) w2*=b.s;
     var dx=b[0]-a[0], dy=b[1]-a[1], len=Math.sqrt(dx*dx+dy*dy)||1;
     var nx=-dy/len, ny=dx/len;
     /* the sun is up and to the right; flip the normal so the lit side is
@@ -3301,9 +3309,9 @@
     var nx=P.neck[0], px=P.pelvis[0], O=projPose, j, i, dx, z, dx2, z2, p;
     /* the spine keeps the centre line, so the head, the chest emblem and every
        seam that reads off neck and pelvis stay exactly where they were */
-    O.head[0]=P.head[0];   O.head[1]=P.head[1];
-    O.neck[0]=P.neck[0];   O.neck[1]=P.neck[1];
-    O.pelvis[0]=P.pelvis[0]; O.pelvis[1]=P.pelvis[1];
+    O.head[0]=P.head[0];   O.head[1]=P.head[1];   O.head.s=1;
+    O.neck[0]=P.neck[0];   O.neck[1]=P.neck[1];   O.neck.s=1;
+    O.pelvis[0]=P.pelvis[0]; O.pelvis[1]=P.pelvis[1]; O.pelvis.s=1;
     for(i=0;i<12;i++){
       var arm=(i<6), set=arm?ARMJ:LEGJ;
       j=set[i%6];
@@ -3317,12 +3325,18 @@
       p=CAMZ/(CAMZ+z2);
       O[j][0]=cx+dx2*p;
       O[j][1]=EYEY+(P[j][1]-EYEY)*p;
+      /* the same factor that moved this joint also decides how thick the limb
+         hanging off it is drawn -- a near arm is not merely closer, it is
+         bigger, and that was the last thing making the figures read flat */
+      O[j].s=p;
     }
     return O;
   }
 
   function drawFighter(g,f,t,scale){
-    var h=f.h, P0=project3d(f.pose,turnOf(f,t)), T=TIERS[f.tier], face=f.facing;
+    var h=f.h, T=TIERS[f.tier], face=f.facing;
+    f.turnNow=turnOf(f,t);
+    var P0=project3d(f.pose,f.turnNow);
     DETAIL=(scale>1.2);
     g.save();
     g.translate(f.x+(f.lunge||0)*face+(f.dx||0), GY-(f.air||0));
@@ -3382,8 +3396,8 @@
     limb(g,P0.hiF,P0.knF,8.3,6.3,legHi,legLo,f.tier);
     limb(g,P0.knF,P0.ftF,6.3,4.5,legHi,legLo,f.tier);
     /* boots */
-    limb(g,[P0.ftF[0]-4,P0.ftF[1]-1],[P0.ftF[0]+7,P0.ftF[1]-1],4.6,3.8,bootHi,bootLo,f.tier);
-    limb(g,[P0.ftB[0]-3,P0.ftB[1]-1],[P0.ftB[0]+6,P0.ftB[1]-1],4,3.4,lerpHex(bootLo,'#000000',0.14),lerpHex(bootLo,'#000000',0.3),f.tier);
+    limb(g,shod(P0.ftF,-4),shod(P0.ftF,7),4.6,3.8,bootHi,bootLo,f.tier);
+    limb(g,shod(P0.ftB,-3),shod(P0.ftB,6),4,3.4,lerpHex(bootLo,'#000000',0.14),lerpHex(bootLo,'#000000',0.3),f.tier);
 
     /* torso: shoulders down to pelvis */
     (function(){
@@ -3741,7 +3755,9 @@
     (function(){
       var hd=P0.head, hx=hd[0], hy=hd[1];
       g.save();
-      g.translate(hx,hy); g.scale(HEAD_S,HEAD_S); g.translate(-hx,-hy);
+      var hw=1+(f.turnNow||0)*0.17;
+      if(hw<0.93) hw=0.93; else if(hw>1.09) hw=1.09;
+      g.translate(hx,hy); g.scale(HEAD_S*hw,HEAD_S); g.translate(-hx,-hy);
       INKW=INK_HEAD;
       blob(g,hx,hy,8.1,9.1,0.06,skinHi,skinLo,f.tier);
 
@@ -4250,8 +4266,14 @@
      something lands. It is why a fighting game punch feels like it weighs
      something -- the freeze is the impact. Held in seconds rather than frames
      so it is the same length on a 60Hz screen and a 120Hz one. */
-  var hitStop=0;
-  function impact(sec){ if(sec>hitStop) hitStop=sec; }
+  var hitStop=0, camKick=0, camTiltDir=1;
+  function impact(sec,dir){
+    if(sec>hitStop) hitStop=sec;
+    /* the camera flinches with the punch. It is deliberately kept under the
+       threshold that hides the health bars, so a hit never costs you the HUD. */
+    var k=sec*0.35; if(k>0.045) k=0.045;
+    if(k>camKick){ camKick=k; if(dir) camTiltDir=dir<0?-1:1; }
+  }
   var me=null, foe=null, floats=[], sparks=[], fx=[], endT=0;
   /* the super-move cutscene: a camera push, letterbox bars and a title card */
   var cam={z:1,x:0,y:0,tz:1,tx:0,ty:0};
@@ -4679,7 +4701,7 @@
       floatText(hx,hy-10,'-'+dmg,heavy?'#FFE08A':'#FF8B6B',heavy);
       spark(hx,hy,heavy?'#FFE08A':'#FFC48A',kind==='special'?30:(heavy?20:14));
       shake=Math.max(shake,kind==='special'?20:(heavy?15:8));
-      impact(kind==='special'?0.105:(heavy?0.062:0.028));
+      impact(kind==='special'?0.105:(heavy?0.062:0.028),att.facing);
       thud(heavy?0.32:0.14,heavy?0.15:0.09);
       if(kind==='special'){ flash=16; slow=26; }
     }
@@ -5036,6 +5058,7 @@
     tick++;
     updateCine();
     if(shake>0) shake*=0.86;
+    if(camKick>0.0002) camKick*=0.86; else camKick=0;
     if(flash>0) flash--;
     if(slow>0) slow--;
     for(var i=floats.length-1;i>=0;i--){ var fl=floats[i]; fl.y-=1.1; fl.life--; if(fl.life<=0) floats.splice(i,1); }
@@ -5740,8 +5763,14 @@
   function renderScene(){
     ctx.save();
     if(shake>0.4) ctx.translate((Math.random()-0.5)*shake,(Math.random()-0.5)*shake);
-    if(cam.z>1.001||Math.abs(cam.x)>0.5||Math.abs(cam.y)>0.5){
-      ctx.translate(W/2,H/2); ctx.scale(cam.z,cam.z); ctx.translate(-W/2,-H/2);
+    var cz=cam.z+camKick;
+    if(cz>1.001||Math.abs(cam.x)>0.5||Math.abs(cam.y)>0.5){
+      ctx.translate(W/2,H/2);
+      ctx.scale(cz,cz);
+      /* a slight roll away from the punch. The push-in is always more than
+         enough overscan to keep the corners of the arena off screen. */
+      if(camKick>0.0005) ctx.rotate(camKick*0.30*camTiltDir);
+      ctx.translate(-W/2,-H/2);
       ctx.translate(cam.x,cam.y);
     }
     drawSky(tick);
@@ -5759,7 +5788,7 @@
     }else{
       if(foe) drawFighter(ctx,foe,tick,2.45);
       if(me) drawFighter(ctx,me,tick,2.45);
-      if(!cine&&cam.z<1.06){
+      if(!cine&&cz<1.06){
       bar(34,26,380,me.hp/me.max,me.h.name,me.lvl,me.tier,false);
       bar(W-414,26,380,foe.hp/foe.max,foe.h.name,foe.lvl,foe.tier,true);
       meter(34,62,380,me.meter/100,false);
