@@ -3057,9 +3057,27 @@
     return c;
   }
 
+  /* Depth of field, for free. The far background -- sky, skyline, stars --
+     is cached per arena, so softening it once when that cache is built costs
+     nothing per frame and leaves the deck and the fighters razor sharp. It is
+     the cheapest thing in this whole file and it does the most: your eye goes
+     straight to the fighters because they are the only sharp thing on screen. */
+  function soften(src){
+    if(!POST_OK) return src;
+    try{
+      var c=document.createElement('canvas'); c.width=src.width; c.height=src.height;
+      var q=c.getContext('2d');
+      q.filter='blur(2.6px)';
+      /* draw it a touch oversized, or the blur pulls transparent edges in */
+      q.drawImage(src,-4,-4,src.width+8,src.height+8);
+      q.filter='none';
+      return c;
+    }catch(e){ return src; }
+  }
+
   function drawSky(t){
     var A=arena();
-    if(!skyCache||skyCacheId!==A.id){ skyCache=buildSky(); skyCacheId=A.id; }
+    if(!skyCache||skyCacheId!==A.id){ skyCache=soften(buildSky()); skyCacheId=A.id; }
     ctx.drawImage(skyCache,0,0);
     if(A.clouds==='none') return;
     var tint=A.clouds==='night'?'62,74,102':(A.clouds==='ash'?'70,34,20':
@@ -3239,8 +3257,72 @@
     g.restore();
   }
 
+  /* ---- turning the rig in space ---------------------------------------
+     The poses are flat pairs of numbers, but they are not a flat *body*: the
+     gap between the front shoulder and the back shoulder only exists because
+     the figure is already standing at an angle to the camera. That gap is a
+     projection, and a projection can be run backwards.
+
+     If the pose sits at TURN0 degrees, then a joint offset dx from the body's
+     centre line has a real depth of -dx/tan(TURN0). So every joint's z comes
+     out of the art that is already there -- no depth table, no new numbers to
+     keep in sync with 148 characters.
+
+     Arms and legs inherit the depth of the shoulder or hip they hang off,
+     rather than deriving their own. A punch travels along the fighting axis,
+     not toward the camera, so an extended hand must not be dragged forward
+     out of the screen.
+
+     With the depths known the body can be spun about its own vertical axis
+     and projected back down, which is real 3D geometry -- just filled with
+     canvas paths instead of triangles. A turn of zero reproduces the old
+     drawing exactly apart from the perspective, so nothing is lost. */
+  var TURN0=0.489;                 /* the angle the poses were drawn at, 28 deg */
+  var TAN0=Math.tan(TURN0);
+  var CAMZ=260;                    /* how strongly depth changes size */
+  var EYEY=-70;                    /* the camera sits at about chest height */
+  var ARMJ=['shF','elF','haF','shB','elB','haB'];
+  var LEGJ=['hiF','knF','ftF','hiB','knB','ftB'];
+
+  /* How far round the fighter is standing at this instant. Squaring up into a
+     punch is what a body actually does -- the shoulder comes through with the
+     fist -- and guarding turns away to present a shoulder instead of a chest. */
+  function turnOf(f,t){
+    var a=(f.lunge||0)*0.016;
+    if(f.guard) a-=0.20;
+    a+=Math.sin(t*0.021+(f.ph||0))*0.045;
+    return a<-0.42?-0.42:(a>0.42?0.42:a);
+  }
+
+  var projPose={};
+  for(var pj=0;pj<JOINTS.length;pj++) projPose[JOINTS[pj]]=[0,0];
+  function project3d(P,turn){
+    var cs=Math.cos(turn), sn=Math.sin(turn);
+    var nx=P.neck[0], px=P.pelvis[0], O=projPose, j, i, dx, z, dx2, z2, p;
+    /* the spine keeps the centre line, so the head, the chest emblem and every
+       seam that reads off neck and pelvis stay exactly where they were */
+    O.head[0]=P.head[0];   O.head[1]=P.head[1];
+    O.neck[0]=P.neck[0];   O.neck[1]=P.neck[1];
+    O.pelvis[0]=P.pelvis[0]; O.pelvis[1]=P.pelvis[1];
+    for(i=0;i<12;i++){
+      var arm=(i<6), set=arm?ARMJ:LEGJ;
+      j=set[i%6];
+      var cx=arm?nx:px;
+      /* the root of this limb -- shoulder or hip -- owns the depth */
+      var root=arm?(i<3?P.shF:P.shB):(i<9?P.hiF:P.hiB);
+      z=-(root[0]-cx)/TAN0;
+      dx=P[j][0]-cx;
+      dx2=dx*cs - z*sn;
+      z2 =dx*sn + z*cs;
+      p=CAMZ/(CAMZ+z2);
+      O[j][0]=cx+dx2*p;
+      O[j][1]=EYEY+(P[j][1]-EYEY)*p;
+    }
+    return O;
+  }
+
   function drawFighter(g,f,t,scale){
-    var h=f.h, P0=f.pose, T=TIERS[f.tier], face=f.facing;
+    var h=f.h, P0=project3d(f.pose,turnOf(f,t)), T=TIERS[f.tier], face=f.facing;
     DETAIL=(scale>1.2);
     g.save();
     g.translate(f.x+(f.lunge||0)*face+(f.dx||0), GY-(f.air||0));
@@ -4164,6 +4246,12 @@
 
   /* ================= fight state ================= */
   var screen='home', tick=0, shake=0, flash=0, slow=0;
+  /* Hit stop: the whole game stops dead for a few hundredths of a second when
+     something lands. It is why a fighting game punch feels like it weighs
+     something -- the freeze is the impact. Held in seconds rather than frames
+     so it is the same length on a 60Hz screen and a 120Hz one. */
+  var hitStop=0;
+  function impact(sec){ if(sec>hitStop) hitStop=sec; }
   var me=null, foe=null, floats=[], sparks=[], fx=[], endT=0;
   /* the super-move cutscene: a camera push, letterbox bars and a title card */
   var cam={z:1,x:0,y:0,tz:1,tx:0,ty:0};
@@ -4591,6 +4679,7 @@
       floatText(hx,hy-10,'-'+dmg,heavy?'#FFE08A':'#FF8B6B',heavy);
       spark(hx,hy,heavy?'#FFE08A':'#FFC48A',kind==='special'?30:(heavy?20:14));
       shake=Math.max(shake,kind==='special'?20:(heavy?15:8));
+      impact(kind==='special'?0.105:(heavy?0.062:0.028));
       thud(heavy?0.32:0.14,heavy?0.15:0.09);
       if(kind==='special'){ flash=16; slow=26; }
     }
@@ -4741,7 +4830,7 @@
         {p:POSE.open,d:16,hit:function(){
           hitLand(f,other,3.1,'special');
           fx.push({k:'shock',x:f.x,y:GY-72,life:52,max:52});
-          shake=Math.max(shake,26);
+          shake=Math.max(shake,26); impact(0.15);
           other.vAir=6;
         }},
         {p:POSE.idle,d:20}
@@ -4773,7 +4862,7 @@
         }},
         {p:POSE.blast,d:34,hit:function(){
           hitLand(f,other,3.3,'special');
-          shake=Math.max(shake,28);
+          shake=Math.max(shake,28); impact(0.15);
           fx.push({k:'impact',x:other.x,y:GY-40,life:26,max:26,c:'#5CF08A'});
         }},
         {p:POSE.idle,d:18}
@@ -4787,7 +4876,7 @@
         }},
         {p:POSE.cannon,d:22,hit:function(){
           hitLand(f,other,3.0,'special');
-          shake=Math.max(shake,26);
+          shake=Math.max(shake,26); impact(0.15);
           other.vAir=7;
           fx.push({k:'impact',x:other.x,y:GY-90,life:26,max:26,c:'#EAF2FF'});
         }},
@@ -4803,7 +4892,7 @@
         {p:POSE.cannon,d:22,hit:function(){
           hitLand(f,other,3.2,'special');
           fx.push({k:'beam',a:f,b:other,life:38,max:38});
-          shake=Math.max(shake,24);
+          shake=Math.max(shake,24); impact(0.15);
         }},
         {p:POSE.idle,d:18}
       ]);
@@ -4873,7 +4962,7 @@
     if(near&&!other.dead&&!f.dead){
       hitLand(f,other,flier?2.4:1.5,'heavy');
       fx.push({k:'impact',x:f.x+f.dx,y:GY-24,life:26,max:26,c:flier?'#FFE08A':f.h.trim});
-      shake=Math.max(shake,flier?20:13);
+      shake=Math.max(shake,flier?20:13); impact(flier?0.12:0.05);
       if(flier){ other.vAir=5; }
     }
     thud(0.26,0.12);
@@ -5523,7 +5612,132 @@
     ctx.restore();
   }
 
+  /* ---- the cinematic pass ---------------------------------------------
+     A film does not go straight from the camera to the screen. It is graded:
+     highlights bloom into the air around them, shadows are pushed cool and
+     highlights warm, the corners fall off. That grade is most of why a game
+     reads as expensive, and none of it needs 3D models -- so the scene is
+     painted into an offscreen buffer and composited through the same chain.
+
+     Everything here leans on ctx.filter, which the browser runs on the GPU.
+     Older Safari has no such thing, so the whole pass is skipped there and
+     the game draws exactly as it always did. */
+  var POST_OK=false, blendOK=false;
+  try{
+    var probe=document.createElement('canvas').getContext('2d');
+    POST_OK=(typeof probe.filter==='string');
+    probe.globalCompositeOperation='multiply';
+    blendOK=(probe.globalCompositeOperation==='multiply');
+  }catch(e){ POST_OK=false; }
+
+  var sceneC=null, sctx=null, bloomC=null, bctx=null, gradeC=null;
+  var bloom1=null, b1ctx=null;
+  var realCtx=ctx, postOn=POST_OK&&!reduce, bufDpr=0;
+
+  var BLOOM=0.62;    /* how much glow is added back */
+  var BLOOM_BLUR=3.4;/* in quarter-size pixels, so ~14 at full resolution */
+  var GRADE='saturate(1.16) contrast(1.07) brightness(1.02)';
+
+  function buildGrade(w,h){
+    /* a split tone: cool in the low corners, warm through the middle, which
+       is the oldest trick in colour grading and costs one blit a frame */
+    gradeC=document.createElement('canvas'); gradeC.width=w; gradeC.height=h;
+    var q=gradeC.getContext('2d');
+    var lg=q.createLinearGradient(0,0,0,h);
+    lg.addColorStop(0,'rgba(120,170,255,0.13)');
+    lg.addColorStop(0.52,'rgba(255,238,206,0.05)');
+    lg.addColorStop(1,'rgba(255,176,104,0.11)');
+    q.fillStyle=lg; q.fillRect(0,0,w,h);
+    /* and the vignette, painted into the same sheet so it is one draw */
+    var rg=q.createRadialGradient(w/2,h*0.46,Math.min(w,h)*0.30,
+                                  w/2,h*0.5, Math.max(w,h)*0.72);
+    rg.addColorStop(0,'rgba(0,0,0,0)');
+    rg.addColorStop(0.66,'rgba(4,8,14,0.16)');
+    rg.addColorStop(1,'rgba(2,5,10,0.52)');
+    q.fillStyle=rg; q.fillRect(0,0,w,h);
+  }
+
+  function ensureBuffers(){
+    var dw=cvs.width, dh=cvs.height;
+    if(bufDpr===dw&&sceneC) return;
+    bufDpr=dw;
+    sceneC=document.createElement('canvas'); sceneC.width=dw; sceneC.height=dh;
+    sctx=sceneC.getContext('2d');
+    var k=dw/W; sctx.setTransform(k,0,0,k,0,0);
+    /* the bloom buffer is a quarter across, so a sixteenth of the pixels */
+    bloomC=document.createElement('canvas');
+    bloomC.width=Math.max(1,Math.round(dw/4)); bloomC.height=Math.max(1,Math.round(dh/4));
+    bctx=bloomC.getContext('2d');
+    bloom1=document.createElement('canvas');
+    bloom1.width=bloomC.width; bloom1.height=bloomC.height;
+    b1ctx=bloom1.getContext('2d');
+    buildGrade(dw,dh);
+  }
+
+  function postProcess(){
+    var g=realCtx, dw=cvs.width, dh=cvs.height;
+    g.save();
+    g.setTransform(1,0,0,1,0,0);
+    /* 1. the scene, straight down. No filter here on purpose -- a filtered
+       blit at full resolution was the single most expensive thing in the
+       frame, and it buys nothing that step 2 does not buy more cheaply. */
+    g.drawImage(sceneC,0,0,dw,dh);
+    /* 2. the grade. Blending the frame over itself in overlay is a contrast
+       and saturation curve for the price of one ordinary blit -- no filter,
+       no per-pixel work. Deep colours get deeper, highlights get cleaner. */
+    if(blendOK&&quality>0){
+      g.globalCompositeOperation='overlay';
+      g.globalAlpha=0.19;
+      g.drawImage(sceneC,0,0,dw,dh);
+      g.globalAlpha=1;
+      g.globalCompositeOperation='source-over';
+    }
+    /* 3. bloom. The trick that makes this affordable is that the filter never
+       touches a full-size surface: the scene is shrunk first with a plain
+       blit, and the bright pass and blur run on an image a sixteenth the
+       size. Then it is added back over the top. */
+    if(blendOK&&quality>1){
+      var bw=bloomC.width, bh=bloomC.height;
+      b1ctx.clearRect(0,0,bw,bh);
+      b1ctx.drawImage(sceneC,0,0,bw,bh);
+      bctx.clearRect(0,0,bw,bh);
+      bctx.filter='brightness(1.5) contrast(3.4) saturate(1.35) blur('+BLOOM_BLUR+'px)';
+      bctx.drawImage(bloom1,0,0);
+      bctx.filter='none';
+      g.globalCompositeOperation='lighter';
+      g.globalAlpha=BLOOM;
+      g.drawImage(bloomC,0,0,dw,dh);
+      g.globalAlpha=1;
+      g.globalCompositeOperation='source-over';
+    }
+    /* 4. split tone and vignette, baked into one sheet, one draw */
+    if(gradeC&&quality>0) g.drawImage(gradeC,0,0);
+    g.restore();
+  }
+
+  /* Adaptive quality. A phone from four years ago should not be punished for
+     effects it cannot afford, so the frame rate is watched and the pass steps
+     itself down -- full, then grade only, then off -- rather than letting the
+     game stutter. It steps back up if the machine turns out to cope. */
+  var quality=2, qLow=0, qHigh=0;
+  function qualityWatch(fps){
+    if(!postOn||!fps) return;
+    if(fps<46){ qLow++; qHigh=0; if(qLow>3&&quality>0){ quality--; qLow=0; } }
+    else if(fps>75){ qHigh++; qLow=0; if(qHigh>10&&quality<2){ quality++; qHigh=0; } }
+    else { qLow=0; qHigh=0; }
+  }
+
   function render(){
+    if(postOn){
+      ensureBuffers();
+      ctx=sctx;                       /* everything below paints the buffer */
+      ctx.clearRect(0,0,W,H);
+    }
+    renderScene();
+    if(postOn){ ctx=realCtx; postProcess(); }
+  }
+
+  function renderScene(){
     ctx.save();
     if(shake>0.4) ctx.translate((Math.random()-0.5)*shake,(Math.random()-0.5)*shake);
     if(cam.z>1.001||Math.abs(cam.x)>0.5||Math.abs(cam.y)>0.5){
@@ -5607,6 +5821,7 @@
     if(t-fpsT>=500){
       var v=Math.round(fpsN*1000/(t-fpsT));
       fpsN=0; fpsT=t;
+      qualityWatch(v);
       if(v!==fpsShown){
         fpsShown=v;
         var el=$('fps'); if(el) el.textContent=v;
@@ -5622,6 +5837,7 @@
     if(!last){ last=t; return; }
     var dt=(t-last)/1000; last=t;
     if(dt>0.25) dt=0.25;
+    if(hitStop>0){ hitStop-=dt; render(); fpsCount(t); return; }
     if(slow>0) dt*=0.4;
     acc+=dt;
     var guard=0;

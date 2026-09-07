@@ -220,6 +220,90 @@ torso's real length.
 Everything is still drawn with canvas paths — no images, no 3D — so this is a
 cinematic comic-realist look rather than a photograph.
 
+### Depth: turning the rig in space
+
+The fighters are not sprites and never were -- each pose is a set of fifteen
+joint positions, and the drawing code builds a shaded tube between any two of
+them. That turned out to be the door to real 3D.
+
+The poses are flat pairs of numbers, but they were never a flat *body*. The gap
+between the front shoulder and the back shoulder only exists because the figure
+is already standing at an angle to the camera. That gap is a projection -- and a
+projection can be run backwards. If the poses were drawn at 28 degrees, then a
+joint sitting `dx` from the body's centre line must really be `-dx/tan(28)` deep.
+
+So every joint's depth comes out of the artwork that is already there. No depth
+table, nothing new to keep in sync across 148 characters, and no risk of the two
+drifting apart.
+
+With the depths known, the body can be spun about its own vertical axis and
+projected back down to the screen. That is real 3D geometry -- it is simply
+filled with canvas paths instead of triangles. Watch the legs: side-on they
+overlap, and as the body squares up to the camera they separate. Nothing draws
+that; it falls out of the perspective.
+
+Three rules keep it safe:
+
+- **Arms and legs inherit the depth of the shoulder or hip they hang off.** A
+  punch travels along the fighting axis, not toward the camera, so an extended
+  fist must not be dragged forward out of the screen.
+- **The spine keeps the centre line.** Head, neck and pelvis have no depth, so
+  the chest emblem and every seam that reads off them stay exactly where they
+  were -- still measured at dead centre on every frame of the animation.
+- **The turn is capped at 24 degrees either way**, which is the range where the
+  far limb can never swing in front of the near one. No depth sorting needed,
+  and nothing can ever draw in the wrong order.
+
+The angle is not decoration. A body squares up as it throws a punch -- the
+shoulder comes through with the fist -- so the turn is driven by how far the
+champion is lunging. Guarding turns the other way, presenting a shoulder instead
+of a chest, and there is a slow sway underneath it all while standing.
+
+### The cinematic pass
+
+A film does not go straight from the camera to the screen; it is graded. That
+grade is most of why a game reads as expensive, and none of it needs 3D models.
+The scene is painted into an offscreen buffer and composited through the same
+chain a film goes through:
+
+| | |
+| --- | --- |
+| bloom | bright things bleed light into the air around them |
+| grade | a contrast and saturation curve |
+| split tone | cool in the shadows, warm in the highlights |
+| vignette | the corners fall away |
+
+**Depth of field** comes free. The far background -- sky, skyline, stars -- is
+already cached once per arena, so softening it when that cache is built costs
+nothing per frame and leaves the deck and the fighters razor sharp. Your eye
+goes to the fighters because they are the only sharp thing on screen.
+
+**Hit stop** is why a punch feels like it weighs something. The whole game
+freezes for a few hundredths of a second when something lands: 28ms on a
+strike, 62ms on a heavy, 150ms on a super. It is held in seconds rather than
+frames, so it is the same length on a 60Hz screen and a 120Hz one.
+
+Cost was the whole problem. A first attempt ran two filtered blits at full
+resolution and took a frame from 32ms to 80ms -- unplayable. Keeping every
+filter on a quarter-size surface, and doing the grade by blending the frame
+over itself instead of with a filter, brought it back to 35ms. On top of that
+the quality steps itself down on a machine that cannot hold 46fps and back up
+if it turns out to cope, and a browser with no canvas filter support skips the
+pass entirely and draws exactly as it always did.
+
+### What this is not
+
+It is worth being straight about the ceiling. This is not, and will not become,
+Injustice 2. That game's characters are sculpted 3D models with separate texture
+maps for colour, roughness and metal, rigged with a hundred bones plus a second
+rig for the face, and animated from real actors on a motion-capture stage. One
+character is a small team for a month or two. There are 148 here.
+
+The gap is not a programming gap that more code closes -- it is an
+art-production gap the size of a studio. What *is* reachable is everything above:
+the camera, the timing, the light and real geometry. Those are most of why a
+game feels expensive, and they are all here.
+
 ### Faces
 
 Every character has a face of their own, and **two eyes**. The head used to
