@@ -1,3 +1,27 @@
+### The code
+
+There is one code, and it is his name.
+
+Type **`YAYACR7`** into the box on the home screen -- or just type it on the
+keyboard anywhere on that screen -- and the whole game unlocks at once: all 148
+champions at level 60 in Legendary armour, every costume, every legendary, and a
+million credits.
+
+There used to be thirteen codes, one per power. That was worse than useless --
+nobody wants to memorise a table to play their own game -- so the other twelve
+are gone and the fun ones (big head mode, bullet time, mirror match) are simply
+switches you click in the panel above, along with the other three.
+
+The code ends in a digit, which caught out the first version: the input filter
+stripped everything that was not a letter, so `YAYACR7` arrived as `YAYACR` and
+the game replied "YAYACR7 is not the code. The code is YAYACR7."
+
+One honest note: the code is **not a secret**. It is plain text inside the page,
+so anyone who opens the source can read it. That is completely fine for a game
+only you play -- but it is worth knowing that a code in a game running on your
+own computer can never really be hidden, which is why real games keep anything
+that matters on a server instead.
+
 # Yaya Builds
 
 Things I'm making with Claude Code.

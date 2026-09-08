@@ -187,10 +187,6 @@
     text-transform:uppercase;color:var(--gold);background:var(--panel);
     border:2px solid var(--edge);border-radius:8px;padding:8px 11px;min-width:196px}
   .codebox input:focus{outline:none;border-color:var(--gold)}
-  .codelist{margin:9px 0 0;font-size:.74rem;color:var(--dim);line-height:1.6;
-    display:none;border-top:1px solid var(--edge);padding-top:9px}
-  .codelist.show{display:block}
-  .codelist b{color:var(--gold);font-family:"Saira Condensed",sans-serif;letter-spacing:.09em}
   .toggles{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(214px,1fr));margin-top:8px}
   .tog{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;font:inherit;
     cursor:pointer;text-align:left;color:var(--ice);background:var(--panel-2);
@@ -361,19 +357,24 @@
             <span class="d">Your hits land ten times harder</span></span><span class="pip"></span></button>
           <button class="tog" id="tMeter"><span><span class="t">Super move always ready</span>
             <span class="d">Your meter refills the moment you spend it</span></span><span class="pip"></span></button>
+          <button class="tog" id="tBig"><span><span class="t">Big head mode</span>
+            <span class="d">Everybody fights with an enormous head</span></span><span class="pip"></span></button>
+          <button class="tog" id="tSlow"><span><span class="t">Bullet time</span>
+            <span class="d">The whole fight runs in slow motion</span></span><span class="pip"></span></button>
+          <button class="tog" id="tMirror"><span><span class="t">Mirror match</span>
+            <span class="d">You always fight a copy of yourself</span></span><span class="pip"></span></button>
         </div>
         <div class="squad">
           <label>Always fight<select id="oFoe"></select></label>
         </div>
-        <p class="onote" style="margin-top:11px">Codes. Type one in the box, or just
-          type it on your keyboard anywhere on this screen. Type <b>CODES</b> to see
-          the whole list.</p>
+        <p class="onote" style="margin-top:11px">There is one code, and it is your name.
+          Type <b>YAYACR7</b> into the box &mdash; or just type it on your keyboard anywhere
+          on this screen &mdash; and the whole game unlocks at once.</p>
         <div class="codebox">
-          <input id="codeIn" maxlength="16" placeholder="ENTER A CODE"
+          <input id="codeIn" maxlength="16" placeholder="TYPE THE CODE"
                  autocomplete="off" spellcheck="false">
           <button class="btn" id="bCode" style="width:auto;flex:none">Enter</button>
         </div>
-        <p class="codelist" id="codeList"></p>
         <p class="msg" id="oMsg"></p>
       </div>
     </section>
@@ -6605,6 +6606,9 @@
   ownerToggle('tGod','god','You now take a tenth of all damage.','Damage is back to normal.');
   ownerToggle('tPunch','punch','Your hits land ten times harder.','Your damage is back to normal.');
   ownerToggle('tMeter','meter','Your super move is always ready.','The meter fills normally again.');
+  ownerToggle('tBig','bighead','Big head mode ON. Look at them.','Heads are back to normal.');
+  ownerToggle('tSlow','slowmo','Bullet time ON. Everything is slow now.','Speed is back to normal.');
+  ownerToggle('tMirror','mirror','Mirror match ON. Now fight yourself.','Opponents are normal again.');
 
   /* ---- the owner's key ----------------------------------------------
      This is a single-player game that lives in one browser, so these just
@@ -6642,6 +6646,9 @@
     $('tGod').className='tog'+(ow.god?' on':'');
     $('tPunch').className='tog'+(ow.punch?' on':'');
     $('tMeter').className='tog'+(ow.meter?' on':'');
+    $('tBig').className='tog'+(ow.bighead?' on':'');
+    $('tSlow').className='tog'+(ow.slowmo?' on':'');
+    $('tMirror').className='tog'+(ow.mirror?' on':'');
   }
   $('bAllSkins').addEventListener('click',function(){
     var n=0;
@@ -6723,45 +6730,17 @@
     save.owner[key]=save.owner[key]?0:1;
     return save.owner[key]?onTxt:offTxt;
   }
+  /* One code, and it is his name. A table of thirteen words was worse than
+     useless -- nobody wants to memorise a list to play their own game. */
   var CODES=[
-    {c:'SKYFORGE', d:'unlocks absolutely everything at once',
-     go:function(){ allSkins(); allLegends(); HEROES.forEach(maxOne); save.credits+=1000000;
-       return 'EVERYTHING UNLOCKED. All '+HEROES.length+' champions maxed, every version, every legendary, a million credits.'; }},
-    {c:'KRYPTON', d:'a million credits',
-     go:function(){ grantCredits(1000000); return 'A million credits added.'; }},
-    {c:'WARDROBE', d:'every costume on every champion',
-     go:function(){ var n=allSkins(); return n?('Unlocked '+n+' version'+(n===1?'':'s')+'.'):'You already own every version.'; }},
-    {c:'LEGENDS', d:'every legendary champion',
-     go:function(){ var n=allLegends(); return n?('Unlocked '+n+' legendary champion'+(n===1?'':'s')+'.'):'You already have every legendary.'; }},
-    {c:'ASCEND', d:'maxes the champion you have selected',
-     go:function(){ var h=HEROES[save.sel]; maxOne(h); me=null;
-       return h.name+' is level 60, Legendary armour, every version.'; }},
-    {c:'PANTHEON', d:'maxes all '+HEROES.length+' champions',
-     go:function(){ HEROES.forEach(maxOne); me=null;
-       return 'All '+HEROES.length+' champions are level 60 in Legendary armour.'; }},
-    {c:'MANOFSTEEL', d:'you take a tenth of all damage',
-     go:function(){ return flip('god','You now take a tenth of all damage.','Damage is back to normal.'); }},
-    {c:'ONEPUNCH', d:'your hits land ten times harder',
-     go:function(){ return flip('punch','Your hits land ten times harder.','Your damage is back to normal.'); }},
-    {c:'FULLPOWER', d:'your super move is always ready',
-     go:function(){ return flip('meter','Your super move is always ready.','The meter fills normally again.'); }},
-    {c:'BIGHEAD', d:'everybody fights with an enormous head',
-     go:function(){ return flip('bighead','Big head mode ON. Look at them.','Heads are normal again.'); }},
-    {c:'BULLETTIME', d:'the whole fight runs in slow motion',
-     go:function(){ return flip('slowmo','Bullet time ON. Everything is slow now.','Speed is back to normal.'); }},
-    {c:'MIRROR', d:'you always fight a copy of yourself',
-     go:function(){ return flip('mirror','Mirror match ON. Now fight yourself.','Opponents are normal again.'); }},
-    {c:'CODES', d:'shows this list',
-     go:function(){ $('codeList').className='codelist show'; return 'Here they all are.'; }}
+    {c:'YAYACR7', go:function(){
+      allSkins(); allLegends(); HEROES.forEach(maxOne);
+      save.credits+=1000000; me=null;
+      return 'EVERYTHING UNLOCKED. All '+HEROES.length+' champions at level 60 in '
+        +'Legendary armour, every costume, every legendary, and a million credits.'; }}
   ];
-  function showCodeList(){
-    if(!CODES) return;
-    $('codeList').innerHTML=CODES.map(function(k){
-      return '<b>'+k.c+'</b> &mdash; '+k.d; }).join('<br>');
-  }
-  showCodeList();   /* here, where CODES actually has a value */
   function tryCode(raw){
-    var t=String(raw||'').toUpperCase().replace(/[^A-Z]/g,'');
+    var t=String(raw||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
     if(!t) return false;
     for(var i=0;i<CODES.length;i++){
       if(CODES[i].c!==t) continue;
@@ -6776,7 +6755,7 @@
   }
   function enterCode(){
     var box=$('codeIn'), v=box.value;
-    if(!tryCode(v)) ownerMsg('"'+String(v).toUpperCase()+'" is not a code. Type CODES to see the list.');
+    if(!tryCode(v)) ownerMsg('"'+String(v).toUpperCase()+'" is not the code. The code is YAYACR7.');
     box.value='';
   }
   $('bCode').addEventListener('click',enterCode);
@@ -6789,7 +6768,7 @@
   window.addEventListener('keydown',function(e){
     if(screen!=='home') return;
     if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')) return;
-    if(e.key&&e.key.length===1&&/[a-zA-Z]/.test(e.key)){
+    if(e.key&&e.key.length===1&&/[a-zA-Z0-9]/.test(e.key)){
       codeBuf=(codeBuf+e.key.toUpperCase()).slice(-16);
       for(var i=0;i<CODES.length;i++){
         if(codeBuf.length>=CODES[i].c.length&&
