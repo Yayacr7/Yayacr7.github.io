@@ -1,209 +1,55 @@
-### The code
+### Admin abuse days
 
-There is one code, and it is his name.
+The admin panel is not an everyday thing. It exists on **Tuesdays, Thursdays and
+Saturdays**, and on every other day it is gone: no panel, no codes, no switches,
+and the game plays completely straight.
 
-Type **`YAYACR7`** into the box on the home screen -- or just type it on the
-keyboard anywhere on that screen -- and the whole game unlocks at once: all 148
-champions at level 60 in Legendary armour, every costume, every legendary, and a
-million credits.
+The rule is that **grants keep, switches pause**. Unlocking a champion is a thing
+that happened, so it stays -- but the ongoing switches simply stop applying on a
+normal day, and come back exactly as they were left on the next admin day. The
+gold `OWNER` badge follows the same rule, so it only ever appears when a switch
+is genuinely doing something.
 
-There used to be thirteen codes, one per power. That was worse than useless --
-nobody wants to memorise a table to play their own game -- so the other twelve
-are gone and the fun ones (big head mode, bullet time, mirror match) are simply
-switches you click in the panel above, along with the other three.
+On a normal day a single line replaces the panel saying which day the next one
+is, so it is obvious the feature is waiting rather than broken.
 
-The code ends in a digit, which caught out the first version: the input filter
-stripped everything that was not a letter, so `YAYACR7` arrived as `YAYACR` and
-the game replied "YAYACR7 is not the code. The code is YAYACR7."
+### The codes
 
-One honest note: the code is **not a secret**. It is plain text inside the page,
-so anyone who opens the source can read it. That is completely fine for a game
-only you play -- but it is worth knowing that a code in a game running on your
-own computer can never really be hidden, which is why real games keep anything
-that matters on a server instead.
+Codes are typed into the box on the admin panel, or just typed on the keyboard
+anywhere on the home screen. They work **only on admin abuse days**; on any other
+day the game says so and does nothing. The list is printed inside the panel.
 
-# Yaya Builds
+**Things you get, once:**
 
-Things I'm making with Claude Code.
+| Code | What it does |
+| --- | --- |
+| `YAYACR7` | everything at once |
+| `MONEY` | a million credits |
+| `MAX` | maxes every champion |
+| `SKINS` | every costume |
+| `HEROES` | every legendary champion |
+| `STORY` | all ten story chapters |
 
-## Yahya.games.com — Skyforge Champions
+**Switches — type again to turn off:**
 
-A hundred and forty-eight characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
-and forge their armour into brighter and brighter finishes.
+| Code | What it does |
+| --- | --- |
+| `GOD` | you take a tenth of all damage |
+| `PUNCH` | your hits land ten times harder |
+| `SUPER` | your super move is always ready |
+| `BIG` | everybody gets an enormous head |
+| `SLOW` | the fight runs in slow motion |
+| `FAST` | the fight runs at double speed |
+| `TINY` | your opponent shrinks |
+| `GIANT` | you tower over them |
+| `TWIN` | you always fight a copy of yourself |
 
-**To play:** open `index.html` in any web browser.
+`SLOW` and `FAST` cancel each other, from the codes and from the switches alike.
 
-### Fighting
-
-| Key | Button | Does |
-| --- | --- | --- |
-| `A` | Strike | Punch. Tap in rhythm for a 3-hit combo — the third hit is the heavy one |
-| `F` | Super Punch | Roughly double damage. Costs 25% of the meter |
-| `K` | Kick | Slower than a strike and hits considerably harder |
-| `G` | Grab | Modest damage, but a guard barely helps against it |
-| `W` | Leap | A jump attack. Solaris flies instead — higher, further, and harder |
-| `S` | Guard | Hold to block. Cuts incoming damage to about a sixth |
-| `D` | Super Move | That champion's signature move. Needs a full meter |
-
-Landing hits fills the meter fastest; guarding fills it slowly.
-
-The controls sit in the bottom-right corner of the arena itself, over the
-action, rather than below it.
-
-**A press always does something.** If a move is requested while the champion
-is mid-animation or on cooldown it is buffered and fires the moment they are
-free, and a move you cannot afford falls back to a plain strike rather than
-being swallowed. Mashing a button is never a dead input.
-
-### Arenas
-
-Six places to fight, chosen on the home screen. Each has its own sky ramp,
-light source, cloud tint and deck colours:
-
-**Sky Arena** above the clouds · **Metropolis** rooftops at noon ·
-**Gotham City** after dark, stars and a cold moon over a lit skyline ·
-**Themyscira** on the Amazon coast at sunset · **Apokolips**, a burning red
-sky over the fire pits · **The Watchtower** in orbit, with Earth below.
-
-### The roster
-
-A hundred and forty-eight characters, each drawn to their own costume. This is
-not every character from anywhere — each one here is hand-written drawing code
-— but it covers the Justice League, the Bat-family, a bench of villains, a
-Marvel and X-Men wing, and seventy-six anime fighters.
-
-Twenty more joined the roster: Doctor Strange, Black Widow, Hawkeye, Loki,
-Thanos, Ant-Man, Scarlet Witch, Vision, Ghost Rider, Silver Surfer, Jean Grey,
-Nightcrawler, Rogue, Beast, Gambit, John Stewart, Static Shock, Two-Face,
-Scarecrow and The Penguin — with horned, flaming-skull and split-face head
-treatments drawn for Loki, Ghost Rider and Two-Face.
-
-**Anime (seventy-six fighters):** Goku, Vegeta, Gohan, Piccolo, Frieza, Naruto,
-Sasuke, Kakashi, Ichigo, Luffy, Zoro, Saitama, Tanjiro, Nezuko, Zenitsu,
-Levi, Eren, Mikasa, Edward Elric, Gon, Killua, All Might, Deku, Bakugo,
-Todoroki, Gojo, Yuji, Sukuna, Meliodas, Asta, Denji, Inuyasha, Yusuke,
-Jotaro, DIO, Kenshin, Guts, Sailor Moon, Kaneki and Astro Boy — with new
-head shapes for spiked hair, ponytails, braids, a straw hat, a bandana,
-a blindfold, a peaked cap and a boar mask.
-
-A second wave joined them: Broly, Trunks, Beerus, Cell, Majin Buu, Sakura,
-Itachi, Madara, Rock Lee, Rukia, Aizen, Sanji, Nami, Ace, Shanks, Genos,
-Inosuke, Rengoku, Muzan, Armin, Reiner, Alphonse, Hisoka, Kurapika, Uraraka,
-Shigaraki, Megumi, Nobara, Escanor, Yami, Sesshomaru, Hiei, Giorno, Rimuru,
-Vash and Spike.
-
-### Story mode
-
-Ten chapters, with cutscenes between them, telling how the Skyforge came to be.
-Lex Luthor built a platform four miles above the ground and invited nobodies up
-to be humiliated on it. You are one of the nobodies.
-
-| | Chapter | Opponent |
-| --- | --- | --- |
-| 1 | The Invitation | The Penguin, level 4 |
-| 2 | The Long Way Up | The Riddler, level 9 |
-| 3 | The Detective | Batman, level 16 |
-| 4 | The Security Detail | Bane, level 24 |
-| 5 | The Amazon | Wonder Woman, level 33 |
-| 6 | The Champion's Cut | Deathstroke, level 40 |
-| 7 | Betrayal | Black Adam, level 47 |
-| 8 | The God of Apokolips | Darkseid, level 53 |
-| 9 | The Collector | Brainiac, level 57 |
-| 10 | Doomsday | Doomsday, level 60 |
-
-The opponents sit at **fixed levels and do not scale to you**, which is the whole
-design: chapter one is winnable on your first day and chapter ten is not. Losing
-costs nothing but time -- the chapter waits, and everything you earn anywhere
-else in the game counts towards being ready for it. That is what makes the story
-the reason to grind and the grind the way to finish the story.
-
-Each chapter pays a large one-off reward; replaying one pays a quarter.
-
-The cutscenes draw the speaker with the same joint rig as everything else, so
-Lex, Batman and Darkseid are the real characters rather than portraits made
-specially.
-
-### Survival
-
-Round after round, and **nothing heals**. The raid hands back a chunk of health
-between floors; this hands back nothing, so every scratch carries forward and
-the rounds keep getting harder.
-
-There is no banking decision either: **everything you earn is yours whatever
-happens**, which makes it the steadiest way to farm credits in the game. The
-only thing at stake is the number, and your best run is kept.
-
-### Daily bonus
-
-One a day, and the streak is the point: 400 credits on the first day, growing
-every day in a row up to ten. Miss a day and it goes back to one.
-
-### Mastery
-
-A champion keeps improving after level 60, slowly, forever. Wins are the
-currency -- from any mode in the game -- and they earn ranks:
-
-**Bronze** at 10 wins, **Silver** at 25, **Gold** at 50, **Platinum** at 90,
-**Diamond** at 150. Each rank adds 3% to health and damage, permanently.
-
-Mastery is yours alone. Opponents are built without it, so the bonus never
-quietly ends up on the other side.
-
-### Leaderboards
-
-The **Hall of Fame** ranks your own 148 champions against each other on level,
-armour, wins and costumes owned. That is real data about your save.
-
-The **rival ladder** is a set of accounts to climb past, and your account rating
-is slotted in among them.
-
-**The rivals are invented by the game.** This is worth being straight about: the
-whole game runs inside your own browser and saves to it, with no internet
-connection and no accounts, so there is no way for it to see anybody else's
-save. A leaderboard of real people would need a server keeping everyone's scores
-in one place -- a much bigger project, and a different kind of program
-altogether.
-
-### Team battle
-
-Three champions a side, one at a time. Pick a squad of three; when one falls the
-next steps in, and **whoever is left standing keeps the damage they have taken**
-while the champion coming on arrives fresh. Beat all three of theirs before they
-beat all three of yours. Three lozenges under each health bar show how many are
-left on each side.
-
-Every knockout pays, clearing the whole squad pays nearly double on top, and the
-**experience is shared across all three**, which is the point of fielding a squad
-rather than one star.
-
-The other squad is built around the **average** of yours, not its leader. Scaling
-it off the leader was the first thing tried and it was quietly brutal: a squad of
-one champion at level 40 and two rookies at level 1 drew three opponents at level
-40 and was hopeless before it started.
-
-### Tournament
-
-Eight fighters, three rounds, one champion: **quarter-final**, **semi-final**,
-**final**. You are healed to full between rounds, but each opponent is a level
-higher than the last, the final opponent moves up an armour finish and carries a
-quarter more health again, and the purse grows with the rounds. Lose at any point
-and you are out with part of the purse. Win all three and you take the trophy,
-which is counted on the home screen.
-
-### Levelling and missions
-
-Winning is the main way a champion gets stronger. Every win pays credits and
-experience, the experience grows with how many times that champion has won,
-and **every third win is a free level** on top of it. Training, forging and
-new versions are all cheaper than they used to be.
-
-The missions board on the home screen holds sixteen objectives. Ten are about
-the champion you have selected — win one fight, win five, win fifteen, win
-thirty, reach level 5, 12 and 25, forge to Chrome, forge to Legendary, unlock
-a second version. Six are about the whole roster — win with 5 and with 20
-different champions, win 50 fights in total, win at least once in every arena,
-unlock ten versions, and forge anyone to Legendary. Each shows how far along
-you are and pays credits and experience when you collect it.
+One honest note: the codes are **not secrets**. They are plain text inside the
+page, so anyone who opens the source can read them. That is completely fine for a
+game only you play -- but a code in a game running on your own computer can never
+really be hidden, which is why real games keep anything that matters on a server.
 
 ### Solo raid
 

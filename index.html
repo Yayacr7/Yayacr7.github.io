@@ -221,6 +221,12 @@
   .chap.now{border-color:var(--gold)}
   .chap.now .ct{color:var(--gold)}
   .chap.lock{opacity:.5}
+  .offday{margin:14px 0 0;padding:9px 13px;border-radius:10px;font-size:.76rem;color:var(--dim);
+    background:var(--panel-2);border:2px dashed var(--edge)}
+  .codelist{margin:9px 0 0;font-size:.74rem;color:var(--dim);line-height:1.7;
+    border-top:1px solid var(--edge);padding-top:9px;display:none}
+  .codelist.show{display:block}
+  .codelist b{color:var(--gold);font-family:"Saira Condensed",sans-serif;letter-spacing:.09em}
   .codebox{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:9px}
   .codebox input{font:inherit;font-size:.86rem;font-weight:800;letter-spacing:.13em;
     text-transform:uppercase;color:var(--gold);background:var(--panel);
@@ -378,11 +384,12 @@
       </div>
     </section>
 
-    <section class="sec" style="margin-top:14px">
-      <h3>Owner&rsquo;s key</h3>
+    <p class="offday" id="offDay" hidden></p>
+
+    <section class="sec" id="ownerSec" style="margin-top:14px" hidden>
+      <h3>Admin abuse <span class="mReady" id="abTag">today</span></h3>
       <div class="owner">
-        <p class="onote">This is your game, so these are your buttons. They change your
-          saved progress straight away.</p>
+        <p class="onote" id="abLead"></p>
         <div class="obtns">
           <button class="buy" id="bAllSkins"><span><span class="t">Unlock every version</span>
             <span class="d">Every costume on all champions</span></span></button>
@@ -413,18 +420,25 @@
             <span class="d">The whole fight runs in slow motion</span></span><span class="pip"></span></button>
           <button class="tog" id="tMirror"><span><span class="t">Mirror match</span>
             <span class="d">You always fight a copy of yourself</span></span><span class="pip"></span></button>
+          <button class="tog" id="tFast"><span><span class="t">Double speed</span>
+            <span class="d">The whole fight runs twice as fast</span></span><span class="pip"></span></button>
+          <button class="tog" id="tTiny"><span><span class="t">Tiny opponents</span>
+            <span class="d">They shrink; you do not</span></span><span class="pip"></span></button>
+          <button class="tog" id="tGiant"><span><span class="t">Giant mode</span>
+            <span class="d">You tower over whoever you are fighting</span></span><span class="pip"></span></button>
         </div>
         <div class="squad">
           <label>Always fight<select id="oFoe"></select></label>
         </div>
-        <p class="onote" style="margin-top:11px">There is one code, and it is your name.
-          Type <b>YAYACR7</b> into the box &mdash; or just type it on your keyboard anywhere
-          on this screen &mdash; and the whole game unlocks at once.</p>
+        <p class="onote" style="margin-top:11px">Codes. Type one into the box, or just type it
+          on your keyboard anywhere on this screen. <b>YAYACR7</b> is the big one &mdash; it
+          unlocks the whole game at once.</p>
         <div class="codebox">
-          <input id="codeIn" maxlength="16" placeholder="TYPE THE CODE"
+          <input id="codeIn" maxlength="16" placeholder="TYPE A CODE"
                  autocomplete="off" spellcheck="false">
           <button class="btn" id="bCode" style="width:auto;flex:none">Enter</button>
         </div>
+        <p class="codelist show" id="codeList"></p>
         <p class="msg" id="oMsg"></p>
       </div>
     </section>
@@ -2039,6 +2053,9 @@
     if(typeof ow.bighead!=='number') ow.bighead=0;
     if(typeof ow.slowmo!=='number') ow.slowmo=0;
     if(typeof ow.mirror!=='number') ow.mirror=0;
+    if(typeof ow.fast!=='number') ow.fast=0;
+    if(typeof ow.tiny!=='number') ow.tiny=0;
+    if(typeof ow.giant!=='number') ow.giant=0;
     missionState();
   }
   function store(){ try{ localStorage.setItem('skyforge.v1',JSON.stringify(save)); }catch(e){} }
@@ -3548,6 +3565,8 @@
 
   function drawFighter(g,f,t,scale){
     var h=f.h, T=TIERS[f.tier], face=f.facing;
+    if(f===foe&&ab('tiny')) scale*=0.62;
+    if(f===me&&ab('giant')) scale*=1.42;
     f.turnNow=turnOf(f,t);
     var P0=project3d(f.pose,f.turnNow);
     DETAIL=(scale>1.2);
@@ -3970,7 +3989,7 @@
       g.save();
       var hw=1+(f.turnNow||0)*0.17;
       if(hw<0.93) hw=0.93; else if(hw>1.09) hw=1.09;
-      var hbig=(save.owner&&save.owner.bighead)?1.85:1;
+      var hbig=ab('bighead')?1.85:1;
       g.translate(hx,hy); g.scale(HEAD_S*hw*hbig,HEAD_S*hbig); g.translate(-hx,-hy);
       INKW=INK_HEAD;
       blob(g,hx,hy,8.1,9.1,0.06,skinHi,skinLo,f.tier);
@@ -4521,12 +4540,13 @@
     me=myFighter(h,p);
     var pool=HEROES.filter(function(x){return x.id!==h.id&&!x.legend;});
     var oh=pool[Math.floor(Math.random()*pool.length)];
-    if(save.owner&&save.owner.foe){
+    var pick=abFoe();
+    if(pick){
       for(var oi=0;oi<HEROES.length;oi++)
-        if(HEROES[oi].id===save.owner.foe&&HEROES[oi].id!==h.id) oh=HEROES[oi];
+        if(HEROES[oi].id===pick&&HEROES[oi].id!==h.id) oh=HEROES[oi];
     }
     /* a mirror match beats a chosen opponent -- it is the more specific ask */
-    if(save.owner&&save.owner.mirror) oh=h;
+    if(ab('mirror')) oh=h;
     var olvl=Math.max(1,p.lvl+(Math.random()<0.5?0:1));
     var otier=Math.min(4,Math.max(0,p.tier+(Math.random()<0.35?1:0)));
     foe=makeFighter(oh,olvl,otier,-1,620,Math.floor(Math.random()*oh.skins.length));
@@ -4932,6 +4952,25 @@
     if(won){ tone(660,0.12,'triangle',0.05,990); setTimeout(function(){tone(1050,0.3,'triangle',0.05,1500);},150); }
     else tone(240,0.5,'sawtooth',0.05,90);
   }
+
+  /* ================= admin abuse days =================
+     Admin powers are not an everyday thing any more. They exist on Tuesday,
+     Thursday and Saturday, and on every other day the panel is gone, the code
+     is refused and the switches do not apply -- the game plays completely
+     straight. Anything already GRANTED stays granted, because unlocking a
+     champion is a thing that happened; only the ongoing switches pause, and
+     they come back exactly as they were left on the next admin day. */
+  var ADMIN_DAYS=[2,4,6];               /* Tuesday, Thursday, Saturday */
+  var DAYNAME=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  function isAdminDay(){ return ADMIN_DAYS.indexOf(new Date().getDay())>=0; }
+  function nextAdminDay(){
+    var d=new Date().getDay();
+    for(var i=1;i<=7;i++) if(ADMIN_DAYS.indexOf((d+i)%7)>=0) return {in:i,name:DAYNAME[(d+i)%7]};
+    return {in:1,name:'Tuesday'};
+  }
+  /* the single question the rest of the game asks: is this switch live? */
+  function ab(k){ return isAdminDay()&&save.owner&&!!save.owner[k]; }
+  function abFoe(){ return isAdminDay()&&save.owner?save.owner.foe:''; }
 
   /* ================= mastery =================
      A champion keeps getting better after level 60, slowly, forever. Wins are
@@ -5445,10 +5484,8 @@
     var dmg=Math.max(1,Math.round(raw*soak*(blocked?blockMul:1)));
     /* the owner's switches. Only ever in your favour, and only in your hands --
        the same switch never helps whoever you are fighting. */
-    if(save.owner){
-      if(save.owner.punch&&att===me) dmg=Math.round(dmg*10);
-      if(save.owner.god&&def===me) dmg=Math.max(1,Math.round(dmg*0.1));
-    }
+    if(ab('punch')&&att===me) dmg=Math.round(dmg*10);
+    if(ab('god')&&def===me) dmg=Math.max(1,Math.round(dmg*0.1));
     def.hp-=dmg; def.flash=10;
     if(crit) floatText(att.x+att.facing*40,GY-186,'CRITICAL','#FFD46B');
     if(tr){
@@ -5858,7 +5895,7 @@
   function update(){
     tick++;
     updateCine();
-    if(save.owner&&save.owner.meter&&me&&!me.dead&&screen==='fight') me.meter=100;
+    if(ab('meter')&&me&&!me.dead&&screen==='fight') me.meter=100;
     if(shake>0) shake*=0.86;
     if(camKick>0.0002) camKick*=0.86; else camKick=0;
     if(flash>0) flash--;
@@ -6630,8 +6667,8 @@
       }
       /* and a badge whenever one of the owner's switches is on, so a win is
          never quietly a switch's win */
-      var ow=save.owner;
-      if(ow&&(ow.god||ow.punch||ow.meter||ow.bighead||ow.slowmo||ow.mirror)){
+      if(ab('god')||ab('punch')||ab('meter')||ab('bighead')||ab('slowmo')
+         ||ab('fast')||ab('tiny')||ab('giant')||ab('mirror')){
         ctx.textAlign='left';
         ctx.font='800 14px "Saira Condensed", sans-serif';
         ctx.fillStyle='rgba(247,201,72,.22)';
@@ -6715,7 +6752,8 @@
     if(dt>0.25) dt=0.25;
     if(hitStop>0){ hitStop-=dt; render(); fpsCount(t); return; }
     if(slow>0) dt*=0.4;
-    else if(save.owner&&save.owner.slowmo) dt*=0.45;
+    else if(ab('slowmo')) dt*=0.45;
+    else if(ab('fast')) dt*=1.85;
     acc+=dt;
     var guard=0;
     while(acc>=STEP&&guard<8){ snapAll(); update(); acc-=STEP; guard++; }
@@ -7047,7 +7085,8 @@
     $('owned').textContent=HEROES.length;
   }
   buildRoster(); buildArenas(); buildSkins(); buildMissions(); buildLegend();
-  buildSquadPickers(); ownerLights(); buildStory(); buildDaily(); buildLeader(); renderUI();
+  buildSquadPickers(); ownerLights(); adminRefresh();
+  buildStory(); buildDaily(); buildLeader(); renderUI();
 
   function flashMsg(t){ $('msg').textContent=t; setTimeout(function(){ if($('msg').textContent===t) $('msg').textContent=''; },2600); }
 
@@ -7104,7 +7143,11 @@
   });
   function ownerToggle(id,key,onTxt,offTxt){
     $(id).addEventListener('click',function(){
-      save.owner[key]=save.owner[key]?0:1; store();
+      save.owner[key]=save.owner[key]?0:1;
+      /* running slow and fast at once is nonsense, so the last one wins */
+      if(key==='slowmo'&&save.owner.slowmo) save.owner.fast=0;
+      if(key==='fast'&&save.owner.fast) save.owner.slowmo=0;
+      store();
       ownerRefresh(); ownerMsg(save.owner[key]?onTxt:offTxt);
     });
   }
@@ -7114,6 +7157,9 @@
   ownerToggle('tBig','bighead','Big head mode ON. Look at them.','Heads are back to normal.');
   ownerToggle('tSlow','slowmo','Bullet time ON. Everything is slow now.','Speed is back to normal.');
   ownerToggle('tMirror','mirror','Mirror match ON. Now fight yourself.','Opponents are normal again.');
+  ownerToggle('tFast','fast','Double speed ON.','Speed is back to normal.');
+  ownerToggle('tTiny','tiny','Your opponents are tiny now.','Opponents are back to normal size.');
+  ownerToggle('tGiant','giant','You are a giant now.','You are back to normal size.');
 
   /* ---- the owner's key ----------------------------------------------
      This is a single-player game that lives in one browser, so these just
@@ -7145,7 +7191,23 @@
     store(); markCardsDirty(); buildRoster();
     buildSkins(); buildMissions(); buildLegend(); buildSquadPickers(); buildStory();
     buildDaily(); buildLeader(); renderUI();
-    ownerLights();
+    ownerLights(); adminRefresh();
+  }
+  function adminRefresh(){
+    var on=isAdminDay(), nx=nextAdminDay();
+    $('ownerSec').hidden=!on;
+    $('offDay').hidden=on;
+    if(!on){
+      $('offDay').textContent='Admin abuse runs on Tuesdays, Thursdays and Saturdays. '
+        +'Today is '+DAYNAME[new Date().getDay()]+', so the game is playing it straight — '
+        +'the panel, the codes and the switches are all off until '+nx.name+'. '
+        +'Anything already unlocked stays unlocked.';
+      return;
+    }
+    $('abLead').textContent='It is '+DAYNAME[new Date().getDay()]+', so the panel is open. '
+      +'These buttons change your saved progress straight away, and the switches stay on until '
+      +'you turn them off. They go quiet again on a normal day and come back exactly as you left '
+      +'them next time. Anything you unlock is yours for good.';
   }
   function ownerLights(){
     var ow=save.owner;
@@ -7155,6 +7217,9 @@
     $('tBig').className='tog'+(ow.bighead?' on':'');
     $('tSlow').className='tog'+(ow.slowmo?' on':'');
     $('tMirror').className='tog'+(ow.mirror?' on':'');
+    $('tFast').className='tog'+(ow.fast?' on':'');
+    $('tTiny').className='tog'+(ow.tiny?' on':'');
+    $('tGiant').className='tog'+(ow.giant?' on':'');
   }
   $('bAllSkins').addEventListener('click',function(){
     var n=0;
@@ -7238,16 +7303,60 @@
   }
   /* One code, and it is his name. A table of thirteen words was worse than
      useless -- nobody wants to memorise a list to play their own game. */
+  /* Short words, because a code you cannot remember is not a code. */
+  function grantAll(){
+    allSkins(); allLegends(); HEROES.forEach(maxOne);
+    save.credits+=1000000; me=null;
+  }
   var CODES=[
-    {c:'YAYACR7', go:function(){
-      allSkins(); allLegends(); HEROES.forEach(maxOne);
-      save.credits+=1000000; me=null;
-      return 'EVERYTHING UNLOCKED. All '+HEROES.length+' champions at level 60 in '
-        +'Legendary armour, every costume, every legendary, and a million credits.'; }}
+    {c:'YAYACR7',d:'everything at once',go:function(){ grantAll();
+      return 'EVERYTHING UNLOCKED. All '+HEROES.length+' champions at level 60 in Legendary '
+        +'armour, every costume, every legendary, and a million credits.'; }},
+    {c:'MONEY',d:'a million credits',go:function(){ save.credits+=1000000;
+      return 'A million credits added.'; }},
+    {c:'MAX',d:'maxes every champion',go:function(){ HEROES.forEach(maxOne); me=null;
+      return 'All '+HEROES.length+' champions are level 60 in Legendary armour.'; }},
+    {c:'SKINS',d:'every costume',go:function(){ var n=allSkins();
+      return n?('Unlocked '+n+' costume'+(n===1?'':'s')+'.'):'You already own every costume.'; }},
+    {c:'HEROES',d:'every legendary champion',go:function(){ var n=allLegends();
+      return n?('Unlocked '+n+' legendary champion'+(n===1?'':'s')+'.'):'You already have every legendary.'; }},
+    {c:'STORY',d:'all ten story chapters',go:function(){ save.storyDone=STORY.length;
+      return 'All '+STORY.length+' story chapters marked as beaten.'; }},
+    {c:'GOD',d:'you take a tenth of all damage',
+     go:function(){ return flip('god','You now take a tenth of all damage.','Damage is back to normal.'); }},
+    {c:'PUNCH',d:'your hits land ten times harder',
+     go:function(){ return flip('punch','Your hits land ten times harder.','Your damage is back to normal.'); }},
+    {c:'SUPER',d:'your super move is always ready',
+     go:function(){ return flip('meter','Your super move is always ready.','The meter fills normally again.'); }},
+    {c:'BIG',d:'everybody gets an enormous head',
+     go:function(){ return flip('bighead','Big head mode ON.','Heads are back to normal.'); }},
+    {c:'SLOW',d:'the fight runs in slow motion',
+     go:function(){ if(save.owner.fast) save.owner.fast=0;
+       return flip('slowmo','Slow motion ON.','Speed is back to normal.'); }},
+    {c:'FAST',d:'the fight runs at double speed',
+     go:function(){ if(save.owner.slowmo) save.owner.slowmo=0;
+       return flip('fast','Double speed ON.','Speed is back to normal.'); }},
+    {c:'TINY',d:'your opponent shrinks',
+     go:function(){ return flip('tiny','Your opponents are tiny now.','Opponents are back to normal size.'); }},
+    {c:'GIANT',d:'you tower over them',
+     go:function(){ return flip('giant','You are a giant now.','You are back to normal size.'); }},
+    {c:'TWIN',d:'you always fight a copy of yourself',
+     go:function(){ return flip('mirror','Mirror match ON.','Opponents are normal again.'); }}
   ];
+  function showCodeList(){
+    var el=$('codeList'); if(!el||!CODES) return;
+    el.innerHTML=CODES.map(function(k){
+      return '<b>'+k.c+'</b> &mdash; '+k.d; }).join('<br>');
+  }
+  showCodeList();   /* here, below the table, where CODES is real */
   function tryCode(raw){
     var t=String(raw||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
     if(!t) return false;
+    if(!isAdminDay()){
+      var nx=nextAdminDay();
+      ownerMsg('Codes only work on admin abuse days. The next one is '+nx.name+'.');
+      return true;
+    }
     for(var i=0;i<CODES.length;i++){
       if(CODES[i].c!==t) continue;
       var msg=CODES[i].go();
@@ -7261,7 +7370,7 @@
   }
   function enterCode(){
     var box=$('codeIn'), v=box.value;
-    if(!tryCode(v)) ownerMsg('"'+String(v).toUpperCase()+'" is not the code. The code is YAYACR7.');
+    if(!tryCode(v)) ownerMsg('"'+String(v).toUpperCase()+'" is not a code. Type CODES to see the list.');
     box.value='';
   }
   $('bCode').addEventListener('click',enterCode);
@@ -7272,7 +7381,7 @@
   /* and the proper way: just type it, anywhere on the home screen */
   var codeBuf='';
   window.addEventListener('keydown',function(e){
-    if(screen!=='home') return;
+    if(screen!=='home'||!isAdminDay()) return;
     if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')) return;
     if(e.key&&e.key.length===1&&/[a-zA-Z0-9]/.test(e.key)){
       codeBuf=(codeBuf+e.key.toUpperCase()).slice(-16);
@@ -7288,7 +7397,7 @@
   $('bWipe').addEventListener('click',function(){
     if(!window.confirm('Start again? This wipes every level, credit, version and legendary.')) return;
     save={credits:600,sel:0,arena:0,h:{},done:{},arenaWins:{},legends:{},raidBest:0,
-          teamWins:0,tourWins:0,tourFar:0,storyDone:0,survBest:0,dailyDay:0,dailyStreak:0,team:[0,-1,-1],owner:{god:0,punch:0,meter:0,foe:'',bighead:0,slowmo:0,mirror:0}};
+          teamWins:0,tourWins:0,tourFar:0,storyDone:0,survBest:0,dailyDay:0,dailyStreak:0,team:[0,-1,-1],owner:{god:0,punch:0,meter:0,foe:'',bighead:0,slowmo:0,mirror:0,fast:0,tiny:0,giant:0}};
     for(var i=0;i<HEROES.length;i++) save.h[HEROES[i].id]=blank();
     raid=null; legendBout=null; team=null; tour=null; story=null; surv=null; me=null;
     ownerRefresh();
