@@ -92,6 +92,78 @@ Inosuke, Rengoku, Muzan, Armin, Reiner, Alphonse, Hisoka, Kurapika, Uraraka,
 Shigaraki, Megumi, Nobara, Escanor, Yami, Sesshomaru, Hiei, Giorno, Rimuru,
 Vash and Spike.
 
+### Story mode
+
+Ten chapters, with cutscenes between them, telling how the Skyforge came to be.
+Lex Luthor built a platform four miles above the ground and invited nobodies up
+to be humiliated on it. You are one of the nobodies.
+
+| | Chapter | Opponent |
+| --- | --- | --- |
+| 1 | The Invitation | The Penguin, level 4 |
+| 2 | The Long Way Up | The Riddler, level 9 |
+| 3 | The Detective | Batman, level 16 |
+| 4 | The Security Detail | Bane, level 24 |
+| 5 | The Amazon | Wonder Woman, level 33 |
+| 6 | The Champion's Cut | Deathstroke, level 40 |
+| 7 | Betrayal | Black Adam, level 47 |
+| 8 | The God of Apokolips | Darkseid, level 53 |
+| 9 | The Collector | Brainiac, level 57 |
+| 10 | Doomsday | Doomsday, level 60 |
+
+The opponents sit at **fixed levels and do not scale to you**, which is the whole
+design: chapter one is winnable on your first day and chapter ten is not. Losing
+costs nothing but time -- the chapter waits, and everything you earn anywhere
+else in the game counts towards being ready for it. That is what makes the story
+the reason to grind and the grind the way to finish the story.
+
+Each chapter pays a large one-off reward; replaying one pays a quarter.
+
+The cutscenes draw the speaker with the same joint rig as everything else, so
+Lex, Batman and Darkseid are the real characters rather than portraits made
+specially.
+
+### Survival
+
+Round after round, and **nothing heals**. The raid hands back a chunk of health
+between floors; this hands back nothing, so every scratch carries forward and
+the rounds keep getting harder.
+
+There is no banking decision either: **everything you earn is yours whatever
+happens**, which makes it the steadiest way to farm credits in the game. The
+only thing at stake is the number, and your best run is kept.
+
+### Daily bonus
+
+One a day, and the streak is the point: 400 credits on the first day, growing
+every day in a row up to ten. Miss a day and it goes back to one.
+
+### Mastery
+
+A champion keeps improving after level 60, slowly, forever. Wins are the
+currency -- from any mode in the game -- and they earn ranks:
+
+**Bronze** at 10 wins, **Silver** at 25, **Gold** at 50, **Platinum** at 90,
+**Diamond** at 150. Each rank adds 3% to health and damage, permanently.
+
+Mastery is yours alone. Opponents are built without it, so the bonus never
+quietly ends up on the other side.
+
+### Leaderboards
+
+The **Hall of Fame** ranks your own 148 champions against each other on level,
+armour, wins and costumes owned. That is real data about your save.
+
+The **rival ladder** is a set of accounts to climb past, and your account rating
+is slotted in among them.
+
+**The rivals are invented by the game.** This is worth being straight about: the
+whole game runs inside your own browser and saves to it, with no internet
+connection and no accounts, so there is no way for it to see anybody else's
+save. A leaderboard of real people would need a server keeping everyone's scores
+in one place -- a much bigger project, and a different kind of program
+altogether.
+
 ### Team battle
 
 Three champions a side, one at a time. Pick a squad of three; when one falls the
