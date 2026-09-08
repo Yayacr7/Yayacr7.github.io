@@ -182,6 +182,15 @@
     font-weight:800;letter-spacing:.07em;text-transform:uppercase}
   .squad select{font:inherit;font-size:.8rem;font-weight:700;color:var(--ice);
     background:var(--panel);border:2px solid var(--edge);border-radius:8px;padding:6px 8px;min-width:148px}
+  .codebox{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:9px}
+  .codebox input{font:inherit;font-size:.86rem;font-weight:800;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--gold);background:var(--panel);
+    border:2px solid var(--edge);border-radius:8px;padding:8px 11px;min-width:196px}
+  .codebox input:focus{outline:none;border-color:var(--gold)}
+  .codelist{margin:9px 0 0;font-size:.74rem;color:var(--dim);line-height:1.6;
+    display:none;border-top:1px solid var(--edge);padding-top:9px}
+  .codelist.show{display:block}
+  .codelist b{color:var(--gold);font-family:"Saira Condensed",sans-serif;letter-spacing:.09em}
   .toggles{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(214px,1fr));margin-top:8px}
   .tog{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;font:inherit;
     cursor:pointer;text-align:left;color:var(--ice);background:var(--panel-2);
@@ -356,6 +365,15 @@
         <div class="squad">
           <label>Always fight<select id="oFoe"></select></label>
         </div>
+        <p class="onote" style="margin-top:11px">Codes. Type one in the box, or just
+          type it on your keyboard anywhere on this screen. Type <b>CODES</b> to see
+          the whole list.</p>
+        <div class="codebox">
+          <input id="codeIn" maxlength="16" placeholder="ENTER A CODE"
+                 autocomplete="off" spellcheck="false">
+          <button class="btn" id="bCode" style="width:auto;flex:none">Enter</button>
+        </div>
+        <p class="codelist" id="codeList"></p>
         <p class="msg" id="oMsg"></p>
       </div>
     </section>
@@ -1906,6 +1924,9 @@
     if(typeof ow.punch!=='number') ow.punch=0;
     if(typeof ow.meter!=='number') ow.meter=0;
     if(typeof ow.foe!=='string') ow.foe='';
+    if(typeof ow.bighead!=='number') ow.bighead=0;
+    if(typeof ow.slowmo!=='number') ow.slowmo=0;
+    if(typeof ow.mirror!=='number') ow.mirror=0;
     missionState();
   }
   function store(){ try{ localStorage.setItem('skyforge.v1',JSON.stringify(save)); }catch(e){} }
@@ -3837,7 +3858,8 @@
       g.save();
       var hw=1+(f.turnNow||0)*0.17;
       if(hw<0.93) hw=0.93; else if(hw>1.09) hw=1.09;
-      g.translate(hx,hy); g.scale(HEAD_S*hw,HEAD_S); g.translate(-hx,-hy);
+      var hbig=(save.owner&&save.owner.bighead)?1.85:1;
+      g.translate(hx,hy); g.scale(HEAD_S*hw*hbig,HEAD_S*hbig); g.translate(-hx,-hy);
       INKW=INK_HEAD;
       blob(g,hx,hy,8.1,9.1,0.06,skinHi,skinLo,f.tier);
 
@@ -4391,6 +4413,8 @@
       for(var oi=0;oi<HEROES.length;oi++)
         if(HEROES[oi].id===save.owner.foe&&HEROES[oi].id!==h.id) oh=HEROES[oi];
     }
+    /* a mirror match beats a chosen opponent -- it is the more specific ask */
+    if(save.owner&&save.owner.mirror) oh=h;
     var olvl=Math.max(1,p.lvl+(Math.random()<0.5?0:1));
     var otier=Math.min(4,Math.max(0,p.tier+(Math.random()<0.35?1:0)));
     foe=makeFighter(oh,olvl,otier,-1,620,Math.floor(Math.random()*oh.skins.length));
@@ -6116,7 +6140,7 @@
       /* and a badge whenever one of the owner's switches is on, so a win is
          never quietly a switch's win */
       var ow=save.owner;
-      if(ow&&(ow.god||ow.punch||ow.meter)){
+      if(ow&&(ow.god||ow.punch||ow.meter||ow.bighead||ow.slowmo||ow.mirror)){
         ctx.textAlign='left';
         ctx.font='800 14px "Saira Condensed", sans-serif';
         ctx.fillStyle='rgba(247,201,72,.22)';
@@ -6200,6 +6224,7 @@
     if(dt>0.25) dt=0.25;
     if(hitStop>0){ hitStop-=dt; render(); fpsCount(t); return; }
     if(slow>0) dt*=0.4;
+    else if(save.owner&&save.owner.slowmo) dt*=0.45;
     acc+=dt;
     var guard=0;
     while(acc>=STEP&&guard<8){ snapAll(); update(); acc-=STEP; guard++; }
@@ -6672,10 +6697,113 @@
     setTimeout(function(){ tone(900,0.3,'triangle',0.05,1400); },200);
     setTimeout(function(){ tone(1250,0.34,'triangle',0.05,1700); },400);
   });
+  /* ================= codes =================
+     Every code is one of the owner's powers behind a word. They are typed
+     rather than clicked, which is the whole appeal -- but they are also plain
+     text inside this page, so anybody who opens it can read them. That is fine
+     for a game only you play; it is worth knowing they are not secrets. */
+  function grantCredits(n){ save.credits+=n; }
+  function maxOne(h){
+    var g=prog(h); g.lvl=60; g.xp=0; g.tier=4;
+    for(var i=0;i<h.skins.length;i++) if(g.owned.indexOf(i)<0) g.owned.push(i);
+    if(h.legend) save.legends[h.id]=1;
+  }
+  function allSkins(){
+    var n=0;
+    HEROES.forEach(function(h){ var g=prog(h);
+      for(var i=0;i<h.skins.length;i++) if(g.owned.indexOf(i)<0){ g.owned.push(i); n++; } });
+    return n;
+  }
+  function allLegends(){
+    var n=0;
+    LEGENDS.forEach(function(h){ if(!save.legends[h.id]){ save.legends[h.id]=1; n++; } });
+    return n;
+  }
+  function flip(key,onTxt,offTxt){
+    save.owner[key]=save.owner[key]?0:1;
+    return save.owner[key]?onTxt:offTxt;
+  }
+  var CODES=[
+    {c:'SKYFORGE', d:'unlocks absolutely everything at once',
+     go:function(){ allSkins(); allLegends(); HEROES.forEach(maxOne); save.credits+=1000000;
+       return 'EVERYTHING UNLOCKED. All '+HEROES.length+' champions maxed, every version, every legendary, a million credits.'; }},
+    {c:'KRYPTON', d:'a million credits',
+     go:function(){ grantCredits(1000000); return 'A million credits added.'; }},
+    {c:'WARDROBE', d:'every costume on every champion',
+     go:function(){ var n=allSkins(); return n?('Unlocked '+n+' version'+(n===1?'':'s')+'.'):'You already own every version.'; }},
+    {c:'LEGENDS', d:'every legendary champion',
+     go:function(){ var n=allLegends(); return n?('Unlocked '+n+' legendary champion'+(n===1?'':'s')+'.'):'You already have every legendary.'; }},
+    {c:'ASCEND', d:'maxes the champion you have selected',
+     go:function(){ var h=HEROES[save.sel]; maxOne(h); me=null;
+       return h.name+' is level 60, Legendary armour, every version.'; }},
+    {c:'PANTHEON', d:'maxes all '+HEROES.length+' champions',
+     go:function(){ HEROES.forEach(maxOne); me=null;
+       return 'All '+HEROES.length+' champions are level 60 in Legendary armour.'; }},
+    {c:'MANOFSTEEL', d:'you take a tenth of all damage',
+     go:function(){ return flip('god','You now take a tenth of all damage.','Damage is back to normal.'); }},
+    {c:'ONEPUNCH', d:'your hits land ten times harder',
+     go:function(){ return flip('punch','Your hits land ten times harder.','Your damage is back to normal.'); }},
+    {c:'FULLPOWER', d:'your super move is always ready',
+     go:function(){ return flip('meter','Your super move is always ready.','The meter fills normally again.'); }},
+    {c:'BIGHEAD', d:'everybody fights with an enormous head',
+     go:function(){ return flip('bighead','Big head mode ON. Look at them.','Heads are normal again.'); }},
+    {c:'BULLETTIME', d:'the whole fight runs in slow motion',
+     go:function(){ return flip('slowmo','Bullet time ON. Everything is slow now.','Speed is back to normal.'); }},
+    {c:'MIRROR', d:'you always fight a copy of yourself',
+     go:function(){ return flip('mirror','Mirror match ON. Now fight yourself.','Opponents are normal again.'); }},
+    {c:'CODES', d:'shows this list',
+     go:function(){ $('codeList').className='codelist show'; return 'Here they all are.'; }}
+  ];
+  function showCodeList(){
+    if(!CODES) return;
+    $('codeList').innerHTML=CODES.map(function(k){
+      return '<b>'+k.c+'</b> &mdash; '+k.d; }).join('<br>');
+  }
+  showCodeList();   /* here, where CODES actually has a value */
+  function tryCode(raw){
+    var t=String(raw||'').toUpperCase().replace(/[^A-Z]/g,'');
+    if(!t) return false;
+    for(var i=0;i<CODES.length;i++){
+      if(CODES[i].c!==t) continue;
+      var msg=CODES[i].go();
+      ownerRefresh();
+      ownerMsg(msg);
+      tone(880,0.14,'triangle',0.05,1320);
+      setTimeout(function(){ tone(1240,0.24,'triangle',0.05,1600); },130);
+      return true;
+    }
+    return false;
+  }
+  function enterCode(){
+    var box=$('codeIn'), v=box.value;
+    if(!tryCode(v)) ownerMsg('"'+String(v).toUpperCase()+'" is not a code. Type CODES to see the list.');
+    box.value='';
+  }
+  $('bCode').addEventListener('click',enterCode);
+  $('codeIn').addEventListener('keydown',function(e){
+    if(e.key==='Enter'){ e.preventDefault(); enterCode(); }
+    e.stopPropagation();
+  });
+  /* and the proper way: just type it, anywhere on the home screen */
+  var codeBuf='';
+  window.addEventListener('keydown',function(e){
+    if(screen!=='home') return;
+    if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')) return;
+    if(e.key&&e.key.length===1&&/[a-zA-Z]/.test(e.key)){
+      codeBuf=(codeBuf+e.key.toUpperCase()).slice(-16);
+      for(var i=0;i<CODES.length;i++){
+        if(codeBuf.length>=CODES[i].c.length&&
+           codeBuf.slice(-CODES[i].c.length)===CODES[i].c){
+          tryCode(CODES[i].c); codeBuf=''; break;
+        }
+      }
+    }
+  });
+
   $('bWipe').addEventListener('click',function(){
     if(!window.confirm('Start again? This wipes every level, credit, version and legendary.')) return;
     save={credits:600,sel:0,arena:0,h:{},done:{},arenaWins:{},legends:{},raidBest:0,
-          teamWins:0,tourWins:0,tourFar:0,team:[0,-1,-1],owner:{god:0,punch:0,meter:0,foe:''}};
+          teamWins:0,tourWins:0,tourFar:0,team:[0,-1,-1],owner:{god:0,punch:0,meter:0,foe:'',bighead:0,slowmo:0,mirror:0}};
     for(var i=0;i<HEROES.length;i++) save.h[HEROES[i].id]=blank();
     raid=null; legendBout=null; team=null; tour=null; me=null;
     ownerRefresh();

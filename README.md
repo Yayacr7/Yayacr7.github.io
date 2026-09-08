@@ -511,6 +511,36 @@ rather than yours.
 Everything the panel does is written straight to the save, so it survives a
 reload.
 
+### Codes
+
+Every power also has a word. Type one into the box on the home screen, or just
+**type it on the keyboard** anywhere on that screen and it fires -- which is the
+whole appeal. Typing `CODES` reveals the list inside the game.
+
+| Code | What it does |
+| --- | --- |
+| `SKYFORGE` | unlocks absolutely everything at once |
+| `KRYPTON` | a million credits |
+| `WARDROBE` | every costume on every champion |
+| `LEGENDS` | every legendary champion |
+| `ASCEND` | maxes the champion you have selected |
+| `PANTHEON` | maxes all 148 champions |
+| `MANOFSTEEL` | you take a tenth of all damage |
+| `ONEPUNCH` | your hits land ten times harder |
+| `FULLPOWER` | your super move is always ready |
+| `BIGHEAD` | everybody fights with an enormous head |
+| `BULLETTIME` | the whole fight runs in slow motion |
+| `MIRROR` | you always fight a copy of yourself |
+
+The last six are switches: type the code again to turn it off, and they survive
+closing the tab. A word that is not a code says so and changes nothing.
+
+One honest note: these are **not secrets**. They are plain text inside the page,
+so anyone who opens the source can read them. That is completely fine for a game
+only you play -- but it is worth knowing that a code in a game running on your
+own computer can never really be hidden, which is why real games keep anything
+that matters on a server instead.
+
 ### Super move cutscenes
 
 Firing a Super Move takes over the screen. Letterbox bars slide in, the camera
