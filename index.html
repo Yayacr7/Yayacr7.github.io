@@ -221,6 +221,14 @@
   .chap.now{border-color:var(--gold)}
   .chap.now .ct{color:var(--gold)}
   .chap.lock{opacity:.5}
+  .findbar{display:flex;gap:8px;align-items:center;margin:0 0 11px}
+  .findbar input{flex:1;min-width:0;font:inherit;font-size:.88rem;font-weight:600;color:var(--ice);
+    background:var(--panel-2);border:2px solid var(--edge);border-radius:9px;padding:9px 12px}
+  .findbar input:focus{outline:none;border-color:var(--gold)}
+  .findbar input::placeholder{color:var(--dim);font-weight:500}
+  .findbar .btn{flex:none;width:auto;padding:8px 15px}
+  .rsNone{margin:0 0 11px;font-size:.8rem;color:var(--dim)}
+  .card.hide{display:none}
   .offday{margin:14px 0 0;padding:9px 13px;border-radius:10px;font-size:.76rem;color:var(--dim);
     background:var(--panel-2);border:2px dashed var(--edge)}
   .codelist{margin:9px 0 0;font-size:.74rem;color:var(--dim);line-height:1.7;
@@ -367,7 +375,13 @@
 
   <div id="homeUI">
     <section class="sec">
-      <h3>Your champions</h3>
+      <h3>Your champions <span class="mReady" id="rsCount" hidden></span></h3>
+      <div class="findbar">
+        <input id="rsFind" type="search" autocomplete="off" spellcheck="false"
+               placeholder="Search champions — name, real name or type">
+        <button class="btn ghost" id="rsClear" hidden>Clear</button>
+      </div>
+      <p class="rsNone" id="rsNone" hidden>Nobody by that name.</p>
       <div class="roster" id="roster"></div>
     </section>
 
@@ -1996,7 +2010,289 @@
      superDesc:'The moon opens an eye and everyone stops fighting',
      skins:[SK({name:'White Goddess',suit:'#F4F6FA',suitLo:'#AEB6C2',trim:'#8E4EC4',trimLo:'#4E2472',
            cape:'#E8ECF2',capeLo:'#98A2B0',leg:'#F4F6FA',boot:'#D8DEE8',hair:'#F4F6FA',
-           skin:'#F0E4E8',skinLo:'#B49CA6',fore:'#F0E4E8',foreLo:'#B49CA6'})]}
+           skin:'#F0E4E8',skinLo:'#B49CA6',fore:'#F0E4E8',foreLo:'#B49CA6'})]},
+    /* --- footballers --- */
+    {id:'messi',name:'Messi',real:'Lionel Messi',cls:'The Little Left Foot',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Impossible Angle',kind:'power',v:0.16,desc:'Finds a finish nobody else saw'},
+     pow:21,tough:98,spd:1.22,superName:'Left-Foot Curler',
+     superDesc:'Drops a shoulder, opens his body and bends it into the far corner',
+     skins:[SK({name:'Home Kit',suit:'#75AADB',suitLo:'#2A4E86',trim:'#F4F6FA',trimLo:'#2A4E86',leg:'#75AADB',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#F4F6FA',suitLo:'#2A4E86',trim:'#75AADB',trimLo:'#2A4E86',leg:'#F4F6FA',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'ronaldo',name:'Ronaldo',real:'Cristiano Ronaldo',cls:'The Machine',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Hang Time',kind:'power',v:0.16,desc:'Rises above everyone and stays there'},
+     pow:24,tough:104,spd:1.14,superName:'Siuuu Header',
+     superDesc:'Climbs above the defence, hangs, and buries it downward',
+     skins:[SK({name:'Home Kit',suit:'#C8102E',suitLo:'#7A0A1C',trim:'#0B6B3A',trimLo:'#7A0A1C',leg:'#C8102E',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#0B6B3A',suitLo:'#7A0A1C',trim:'#C8102E',trimLo:'#7A0A1C',leg:'#0B6B3A',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'mbappe',name:'Mbappe',real:'Kylian Mbappe',cls:'The Turbo',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Ninety-Six Metres',kind:'power',v:0.16,desc:'Nobody in the game is quicker over the ground'},
+     pow:22,tough:96,spd:1.28,superName:'Counter Sprint',
+     superDesc:'Takes it from his own half and is gone before anyone turns',
+     skins:[SK({name:'Home Kit',suit:'#1E3A8A',suitLo:'#0B1E52',trim:'#F4F6FA',trimLo:'#0B1E52',leg:'#1E3A8A',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#F4F6FA',suitLo:'#0B1E52',trim:'#1E3A8A',trimLo:'#0B1E52',leg:'#F4F6FA',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'haaland',name:'Haaland',real:'Erling Haaland',cls:'The Android',
+     emblem:'none',head:'ponytail',athlete:'football',
+     trait:{name:'Cyborg Instinct',kind:'power',v:0.16,desc:'Ruthless the moment a chance appears'},
+     pow:26,tough:112,spd:1.08,superName:'Point-Blank Finish',
+     superDesc:'One touch, no backlift, and the net is already moving',
+     skins:[SK({name:'Home Kit',suit:'#1B4DA0',suitLo:'#0A2456',trim:'#E01B24',trimLo:'#0A2456',leg:'#1B4DA0',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#E01B24',suitLo:'#0A2456',trim:'#1B4DA0',trimLo:'#0A2456',leg:'#E01B24',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'neymar',name:'Neymar',real:'Neymar Junior',cls:'The Showman',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Elastico',kind:'power',v:0.16,desc:'Slips a challenge that should have landed'},
+     pow:20,tough:92,spd:1.24,superName:'Rainbow Flick',
+     superDesc:'Flicks it over their head, walks around them and finishes',
+     skins:[SK({name:'Home Kit',suit:'#F7D117',suitLo:'#B08A02',trim:'#0B6B3A',trimLo:'#B08A02',leg:'#F7D117',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#0B6B3A',suitLo:'#B08A02',trim:'#F7D117',trimLo:'#B08A02',leg:'#0B6B3A',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'vinicius',name:'Vinicius',real:'Vinicius Junior',cls:'The Winger',
+     emblem:'none',head:'braid',athlete:'football',
+     trait:{name:'Down The Line',kind:'power',v:0.16,desc:'Runs at them again and again until something gives'},
+     pow:21,tough:94,spd:1.26,superName:'Stepover Storm',
+     superDesc:'Six stepovers, an explosion of pace, and a low cross',
+     skins:[SK({name:'Home Kit',suit:'#F4F6FA',suitLo:'#B8BEC8',trim:'#F7D117',trimLo:'#B8BEC8',leg:'#F4F6FA',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#F7D117',suitLo:'#B8BEC8',trim:'#F4F6FA',trimLo:'#B8BEC8',leg:'#F7D117',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'bellingham',name:'Bellingham',real:'Jude Bellingham',cls:'The Engine',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Hey Jude',kind:'power',v:0.16,desc:'Grows into a fight the longer it lasts'},
+     pow:22,tough:106,spd:1.16,superName:'Late Arrival',
+     superDesc:'Ghosts in behind them at the exact moment nobody is looking',
+     skins:[SK({name:'Home Kit',suit:'#F4F6FA',suitLo:'#B8BEC8',trim:'#1E3A8A',trimLo:'#B8BEC8',leg:'#F4F6FA',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#1E3A8A',suitLo:'#B8BEC8',trim:'#F4F6FA',trimLo:'#B8BEC8',leg:'#1E3A8A',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'salah',name:'Salah',real:'Mohamed Salah',cls:'The King',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Cut Inside',kind:'power',v:0.16,desc:'Comes off the right and shoots across you'},
+     pow:22,tough:98,spd:1.22,superName:'Left-Foot Rocket',
+     superDesc:'Cuts in from the right and curls it into the top corner',
+     skins:[SK({name:'Home Kit',suit:'#C8102E',suitLo:'#7A0A1C',trim:'#F4F6FA',trimLo:'#7A0A1C',leg:'#C8102E',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#F4F6FA',suitLo:'#7A0A1C',trim:'#C8102E',trimLo:'#7A0A1C',leg:'#F4F6FA',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'kane',name:'Kane',real:'Harry Kane',cls:'The Complete Nine',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Dropping Deep',kind:'power',v:0.16,desc:'Reads the whole pitch from twenty yards back'},
+     pow:23,tough:108,spd:1.06,superName:'Forty-Yard Pass',
+     superDesc:'Turns and drills a pass nobody thought was on, then finishes it',
+     skins:[SK({name:'Home Kit',suit:'#F4F6FA',suitLo:'#B8BEC8',trim:'#1E3A8A',trimLo:'#B8BEC8',leg:'#F4F6FA',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#1E3A8A',suitLo:'#B8BEC8',trim:'#F4F6FA',trimLo:'#B8BEC8',leg:'#1E3A8A',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'debruyne',name:'De Bruyne',real:'Kevin De Bruyne',cls:'The Passer',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Whipped Delivery',kind:'power',v:0.16,desc:'Every ball he plays leaves them worse off'},
+     pow:21,tough:100,spd:1.12,superName:'Outside-Boot Cross',
+     superDesc:'Wraps his foot around it and hangs it exactly where it hurts',
+     skins:[SK({name:'Home Kit',suit:'#87CEEB',suitLo:'#3A6E8E',trim:'#0B1E52',trimLo:'#3A6E8E',leg:'#87CEEB',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#0B1E52',suitLo:'#3A6E8E',trim:'#87CEEB',trimLo:'#3A6E8E',leg:'#0B1E52',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'modric',name:'Modric',real:'Luka Modric',cls:'The Metronome',
+     emblem:'none',head:'longhair',athlete:'football',
+     trait:{name:'Never Rushed',kind:'power',v:0.16,desc:'The pace of the game is whatever he decides'},
+     pow:18,tough:96,spd:1.14,superName:'Outside-of-the-Boot',
+     superDesc:'A pass with the outside of the foot that breaks a whole line',
+     skins:[SK({name:'Home Kit',suit:'#C8102E',suitLo:'#7A0A1C',trim:'#F4F6FA',trimLo:'#7A0A1C',leg:'#C8102E',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#F4F6FA',suitLo:'#7A0A1C',trim:'#C8102E',trimLo:'#7A0A1C',leg:'#F4F6FA',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'lewandowski',name:'Lewandowski',real:'Robert Lewandowski',cls:'The Poacher',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Five In Nine',kind:'power',v:0.16,desc:'Once he starts scoring he does not stop'},
+     pow:23,tough:104,spd:1.10,superName:'Volley Finish',
+     superDesc:'Meets it on the half-volley before it has even dropped',
+     skins:[SK({name:'Home Kit',suit:'#F4F6FA',suitLo:'#B8BEC8',trim:'#C8102E',trimLo:'#B8BEC8',leg:'#F4F6FA',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#C8102E',suitLo:'#B8BEC8',trim:'#F4F6FA',trimLo:'#B8BEC8',leg:'#C8102E',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'vandijk',name:'Van Dijk',real:'Virgil van Dijk',cls:'The Wall',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Nobody Gets Past',kind:'power',v:0.16,desc:'Running at him costs you more than it costs him'},
+     pow:19,tough:124,spd:1.00,superName:'Last-Ditch Block',
+     superDesc:'Arrives from nowhere and takes the ball cleanly off their toe',
+     skins:[SK({name:'Home Kit',suit:'#F58220',suitLo:'#A24E08',trim:'#F4F6FA',trimLo:'#A24E08',leg:'#F58220',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#F4F6FA',suitLo:'#A24E08',trim:'#F58220',trimLo:'#A24E08',leg:'#F4F6FA',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'alisson',name:'Alisson',real:'Alisson Becker',cls:'The Keeper',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Sweeper Keeper',kind:'power',v:0.16,desc:'Comes out and smothers everything'},
+     pow:16,tough:130,spd:0.98,superName:'One-Handed Save',
+     superDesc:'Flies across his line and pushes it round the post',
+     skins:[SK({name:'Home Kit',suit:'#3AA655',suitLo:'#175E2C',trim:'#F7D117',trimLo:'#175E2C',leg:'#3AA655',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#F7D117',suitLo:'#175E2C',trim:'#3AA655',trimLo:'#175E2C',leg:'#F7D117',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'griezmann',name:'Griezmann',real:'Antoine Griezmann',cls:'The Link',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Between The Lines',kind:'power',v:0.16,desc:'Finds the space between everybody'},
+     pow:20,tough:98,spd:1.16,superName:'Chipped Finish',
+     superDesc:'Waits for the keeper to move and lifts it gently over',
+     skins:[SK({name:'Home Kit',suit:'#1E3A8A',suitLo:'#0B1E52',trim:'#C8102E',trimLo:'#0B1E52',leg:'#1E3A8A',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#C8102E',suitLo:'#0B1E52',trim:'#1E3A8A',trimLo:'#0B1E52',leg:'#C8102E',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'musiala',name:'Musiala',real:'Jamal Musiala',cls:'The Glider',
+     emblem:'none',head:'braid',athlete:'football',
+     trait:{name:'Bambi Balance',kind:'power',v:0.16,desc:'Impossible to knock off the ball'},
+     pow:20,tough:94,spd:1.24,superName:'Slalom Run',
+     superDesc:'Glides through four challenges as if they were cones',
+     skins:[SK({name:'Home Kit',suit:'#F4F6FA',suitLo:'#B8BEC8',trim:'#1E1E1E',trimLo:'#B8BEC8',leg:'#F4F6FA',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#1E1E1E',suitLo:'#B8BEC8',trim:'#F4F6FA',trimLo:'#B8BEC8',leg:'#1E1E1E',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'yamal',name:'Yamal',real:'Lamine Yamal',cls:'The Prodigy',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Ten Out Of Ten',kind:'power',v:0.16,desc:'Starts fast and makes it count'},
+     pow:20,tough:90,spd:1.26,superName:'Far Post Curl',
+     superDesc:'Comes inside off the right and bends it into the far post',
+     skins:[SK({name:'Home Kit',suit:'#A50044',suitLo:'#5E0026',trim:'#004D98',trimLo:'#5E0026',leg:'#A50044',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#004D98',suitLo:'#5E0026',trim:'#A50044',trimLo:'#5E0026',leg:'#004D98',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'saka',name:'Saka',real:'Bukayo Saka',cls:'The Starboy',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Endless Running',kind:'power',v:0.16,desc:'Keeps going long after everyone else has stopped'},
+     pow:20,tough:96,spd:1.22,superName:'Inside-Out Finish',
+     superDesc:'Feints outside, comes inside, and finds the bottom corner',
+     skins:[SK({name:'Home Kit',suit:'#EF0107',suitLo:'#8E0104',trim:'#F4F6FA',trimLo:'#8E0104',leg:'#EF0107',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#F4F6FA',suitLo:'#8E0104',trim:'#EF0107',trimLo:'#8E0104',leg:'#F4F6FA',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'foden',name:'Foden',real:'Phil Foden',cls:'The Stockport Iniesta',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Tight Spaces',kind:'power',v:0.16,desc:'The smaller the space the more dangerous he is'},
+     pow:20,tough:96,spd:1.20,superName:'Twenty-Yard Curler',
+     superDesc:'Half a yard is all he needs before it is in the top corner',
+     skins:[SK({name:'Home Kit',suit:'#87CEEB',suitLo:'#3A6E8E',trim:'#0B1E52',trimLo:'#3A6E8E',leg:'#87CEEB',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#0B1E52',suitLo:'#3A6E8E',trim:'#87CEEB',trimLo:'#3A6E8E',leg:'#0B1E52',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'son',name:'Son',real:'Son Heung-min',cls:'Sonny',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Both Feet',kind:'power',v:0.16,desc:'It makes no difference which side you show him'},
+     pow:21,tough:98,spd:1.24,superName:'Solo Run',
+     superDesc:'Runs from his own box past everybody and slots it away',
+     skins:[SK({name:'Home Kit',suit:'#F4F6FA',suitLo:'#B8BEC8',trim:'#1E3A8A',trimLo:'#B8BEC8',leg:'#F4F6FA',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#1E3A8A',suitLo:'#B8BEC8',trim:'#F4F6FA',trimLo:'#B8BEC8',leg:'#1E3A8A',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'rodri',name:'Rodri',real:'Rodri Hernandez',cls:'The Holder',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Everything Goes Through Him',kind:'power',v:0.16,desc:'The game does not work without him in it'},
+     pow:19,tough:116,spd:1.04,superName:'Interception',
+     superDesc:'Steps in front of the pass before it has been played',
+     skins:[SK({name:'Home Kit',suit:'#F7D117',suitLo:'#B08A02',trim:'#C8102E',trimLo:'#B08A02',leg:'#F7D117',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#C8102E',suitLo:'#B08A02',trim:'#F7D117',trimLo:'#B08A02',leg:'#C8102E',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'benzema',name:'Benzema',real:'Karim Benzema',cls:'The Nine',
+     emblem:'none',head:'short',athlete:'football',
+     trait:{name:'Cat Burglar',kind:'power',v:0.16,desc:'Takes what he wants while nobody is watching'},
+     pow:22,tough:102,spd:1.10,superName:'Chest And Volley',
+     superDesc:'Kills it on his chest and volleys it before it lands',
+     skins:[SK({name:'Home Kit',suit:'#F4F6FA',suitLo:'#B8BEC8',trim:'#1E3A8A',trimLo:'#B8BEC8',leg:'#F4F6FA',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#1E3A8A',suitLo:'#B8BEC8',trim:'#F4F6FA',trimLo:'#B8BEC8',leg:'#1E3A8A',boot:'#F4F6FA',hair:'#181C26'})]},
+    /* --- basketball --- */
+    {id:'lebron',name:'LeBron',real:'LeBron James',cls:'The King',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Chasedown Block',kind:'power',v:0.16,desc:'Arrives from the other end to swat it away'},
+     pow:25,tough:118,spd:1.10,superName:'Poster Dunk',
+     superDesc:'Takes off from the dotted line and puts them on a poster',
+     skins:[SK({name:'Home Kit',suit:'#552583',suitLo:'#2E1247',trim:'#FDB927',trimLo:'#2E1247',leg:'#552583',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#FDB927',suitLo:'#2E1247',trim:'#552583',trimLo:'#2E1247',leg:'#FDB927',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'curry',name:'Curry',real:'Stephen Curry',cls:'The Splash',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Logo Range',kind:'power',v:0.16,desc:'Shoots from places that should not be legal'},
+     pow:22,tough:92,spd:1.22,superName:'Night Night',
+     superDesc:'Pulls up from the logo, turns away before it lands, and waves',
+     skins:[SK({name:'Home Kit',suit:'#1D428A',suitLo:'#0A2050',trim:'#FFC72C',trimLo:'#0A2050',leg:'#1D428A',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#FFC72C',suitLo:'#0A2050',trim:'#1D428A',trimLo:'#0A2050',leg:'#FFC72C',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'durant',name:'Durant',real:'Kevin Durant',cls:'The Slim Reaper',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Unblockable',kind:'power',v:0.16,desc:'Seven feet with a guard release point'},
+     pow:24,tough:100,spd:1.14,superName:'Pull-Up Three',
+     superDesc:'Rises straight up over the contest and it never touches the rim',
+     skins:[SK({name:'Home Kit',suit:'#000000',suitLo:'#1E1E1E',trim:'#F4F6FA',trimLo:'#1E1E1E',leg:'#000000',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#F4F6FA',suitLo:'#1E1E1E',trim:'#000000',trimLo:'#1E1E1E',leg:'#F4F6FA',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'giannis',name:'Giannis',real:'Giannis Antetokounmpo',cls:'The Greek Freak',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Two Steps',kind:'power',v:0.16,desc:'Crosses the whole floor in two strides'},
+     pow:26,tough:120,spd:1.12,superName:'Euro Step Slam',
+     superDesc:'One step, two steps, and he is already dunking on you',
+     skins:[SK({name:'Home Kit',suit:'#00471B',suitLo:'#00300F',trim:'#EEE1C6',trimLo:'#00300F',leg:'#00471B',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#EEE1C6',suitLo:'#00300F',trim:'#00471B',trimLo:'#00300F',leg:'#EEE1C6',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'jokic',name:'Jokic',real:'Nikola Jokic',cls:'The Joker',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Sees Everything',kind:'power',v:0.16,desc:'Knows where you will be before you do'},
+     pow:23,tough:122,spd:0.98,superName:'No-Look Dime',
+     superDesc:'Looks the other way entirely and the pass still arrives',
+     skins:[SK({name:'Home Kit',suit:'#0E2240',suitLo:'#050F20',trim:'#FEC524',trimLo:'#050F20',leg:'#0E2240',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#FEC524',suitLo:'#050F20',trim:'#0E2240',trimLo:'#050F20',leg:'#FEC524',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'luka',name:'Luka',real:'Luka Doncic',cls:'The Magician',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Step Back',kind:'power',v:0.16,desc:'Creates a shot out of nothing at all'},
+     pow:24,tough:110,spd:1.06,superName:'Step-Back Three',
+     superDesc:'Steps back into space that was not there and lets it go',
+     skins:[SK({name:'Home Kit',suit:'#00538C',suitLo:'#00294A',trim:'#B8C4CA',trimLo:'#00294A',leg:'#00538C',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#B8C4CA',suitLo:'#00294A',trim:'#00538C',trimLo:'#00294A',leg:'#B8C4CA',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'embiid',name:'Embiid',real:'Joel Embiid',cls:'The Process',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Trust The Process',kind:'power',v:0.16,desc:'Wears you down possession by possession'},
+     pow:25,tough:124,spd:1.00,superName:'Dream Shake',
+     superDesc:'Spins baseline, fades away, and it drops through clean',
+     skins:[SK({name:'Home Kit',suit:'#006BB6',suitLo:'#00325A',trim:'#ED174C',trimLo:'#00325A',leg:'#006BB6',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#ED174C',suitLo:'#00325A',trim:'#006BB6',trimLo:'#00325A',leg:'#ED174C',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'tatum',name:'Tatum',real:'Jayson Tatum',cls:'The Wing',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Three Level',kind:'power',v:0.16,desc:'Scores from everywhere on the floor'},
+     pow:23,tough:106,spd:1.14,superName:'Fadeaway Jumper',
+     superDesc:'Rises over the contest and fades away as it leaves his hand',
+     skins:[SK({name:'Home Kit',suit:'#007A33',suitLo:'#004A1E',trim:'#F4F6FA',trimLo:'#004A1E',leg:'#007A33',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#F4F6FA',suitLo:'#004A1E',trim:'#007A33',trimLo:'#004A1E',leg:'#F4F6FA',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'wemby',name:'Wembanyama',real:'Victor Wembanyama',cls:'The Alien',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Eight Foot Reach',kind:'power',v:0.16,desc:'Nothing gets to the rim without him touching it'},
+     pow:24,tough:116,spd:1.10,superName:'Rim Protection',
+     superDesc:'Takes it out of the air with one impossibly long arm',
+     skins:[SK({name:'Home Kit',suit:'#C4CED4',suitLo:'#8A939A',trim:'#000000',trimLo:'#8A939A',leg:'#C4CED4',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#000000',suitLo:'#8A939A',trim:'#C4CED4',trimLo:'#8A939A',leg:'#000000',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'shai',name:'Shai',real:'Shai Gilgeous-Alexander',cls:'The Silent Assassin',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Mid Range',kind:'power',v:0.16,desc:'Every shot looks exactly the same until it goes in'},
+     pow:23,tough:102,spd:1.18,superName:'Pull-Up Fade',
+     superDesc:'Two dribbles, a soft fade, and it is already through the net',
+     skins:[SK({name:'Home Kit',suit:'#007AC1',suitLo:'#00375A',trim:'#EF3B24',trimLo:'#00375A',leg:'#007AC1',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#EF3B24',suitLo:'#00375A',trim:'#007AC1',trimLo:'#00375A',leg:'#EF3B24',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'morant',name:'Morant',real:'Ja Morant',cls:'The Bounce',
+     emblem:'none',head:'braid',athlete:'basketball',
+     trait:{name:'Ceiling Vertical',kind:'power',v:0.16,desc:'Gets higher than anybody has any right to'},
+     pow:22,tough:94,spd:1.26,superName:'Poster Slam',
+     superDesc:'Takes off in traffic and finishes over the top of everyone',
+     skins:[SK({name:'Home Kit',suit:'#5D76A9',suitLo:'#26334A',trim:'#12173F',trimLo:'#26334A',leg:'#5D76A9',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#12173F',suitLo:'#26334A',trim:'#5D76A9',trimLo:'#26334A',leg:'#12173F',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'booker',name:'Booker',real:'Devin Booker',cls:'The Bucket',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Seventy Point Game',kind:'power',v:0.16,desc:'Once he is hot the game stops being fair'},
+     pow:22,tough:98,spd:1.16,superName:'Turnaround Jumper',
+     superDesc:'Turns over his shoulder and it is gone before you jump',
+     skins:[SK({name:'Home Kit',suit:'#1D1160',suitLo:'#0A0730',trim:'#E56020',trimLo:'#0A0730',leg:'#1D1160',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#E56020',suitLo:'#0A0730',trim:'#1D1160',trimLo:'#0A0730',leg:'#E56020',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'butler',name:'Butler',real:'Jimmy Butler',cls:'Himmy Buckets',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Playoff Jimmy',kind:'power',v:0.16,desc:'Twice the player when it actually matters'},
+     pow:23,tough:110,spd:1.10,superName:'Fourth Quarter',
+     superDesc:'Takes the whole game over in the last four minutes',
+     skins:[SK({name:'Home Kit',suit:'#98002E',suitLo:'#520018',trim:'#F9A01B',trimLo:'#520018',leg:'#98002E',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#F9A01B',suitLo:'#520018',trim:'#98002E',trimLo:'#520018',leg:'#F9A01B',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'kawhi',name:'Kawhi',real:'Kawhi Leonard',cls:'The Claw',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Big Hands',kind:'power',v:0.16,desc:'Takes the ball off you without you noticing'},
+     pow:23,tough:112,spd:1.08,superName:'Corner Three',
+     superDesc:'Rises in the corner with no expression at all and drains it',
+     skins:[SK({name:'Home Kit',suit:'#C8102E',suitLo:'#7A0A1C',trim:'#1D428A',trimLo:'#7A0A1C',leg:'#C8102E',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#1D428A',suitLo:'#7A0A1C',trim:'#C8102E',trimLo:'#7A0A1C',leg:'#1D428A',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'davis',name:'Davis',real:'Anthony Davis',cls:'The Brow',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Rim Deterrent',kind:'power',v:0.16,desc:'Coming into the paint is a bad decision'},
+     pow:24,tough:120,spd:1.06,superName:'Alley-Oop Slam',
+     superDesc:'Catches it above the square and throws it down two-handed',
+     skins:[SK({name:'Home Kit',suit:'#552583',suitLo:'#2E1247',trim:'#FDB927',trimLo:'#2E1247',leg:'#552583',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#FDB927',suitLo:'#2E1247',trim:'#552583',trimLo:'#2E1247',leg:'#FDB927',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'edwards',name:'Edwards',real:'Anthony Edwards',cls:'Ant-Man',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Fearless',kind:'power',v:0.16,desc:'Backs down from absolutely nobody'},
+     pow:23,tough:104,spd:1.18,superName:'Baseline Jam',
+     superDesc:'Drives the baseline and dunks on whoever is standing there',
+     skins:[SK({name:'Home Kit',suit:'#0C2340',suitLo:'#04101E',trim:'#78BE20',trimLo:'#04101E',leg:'#0C2340',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#78BE20',suitLo:'#04101E',trim:'#0C2340',trimLo:'#04101E',leg:'#78BE20',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'zion',name:'Zion',real:'Zion Williamson',cls:'The Freight Train',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Unstoppable Force',kind:'power',v:0.16,desc:'Getting in the way does not help'},
+     pow:26,tough:116,spd:1.10,superName:'Two-Hand Windmill',
+     superDesc:'Goes through the defender and windmills it home',
+     skins:[SK({name:'Home Kit',suit:'#0C2340',suitLo:'#04101E',trim:'#C8102E',trimLo:'#04101E',leg:'#0C2340',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#C8102E',suitLo:'#04101E',trim:'#0C2340',trimLo:'#04101E',leg:'#C8102E',boot:'#F4F6FA',hair:'#181C26'})]},
+    {id:'kyrie',name:'Kyrie',real:'Kyrie Irving',cls:'The Handles',
+     emblem:'none',head:'short',athlete:'basketball',
+     trait:{name:'Best Handles Ever',kind:'power',v:0.16,desc:'The ball is on a string and you are not'},
+     pow:22,tough:96,spd:1.24,superName:'Reverse Layup',
+     superDesc:'Spins under the rim and lays it in off the wrong side',
+     skins:[SK({name:'Home Kit',suit:'#00538C',suitLo:'#00294A',trim:'#B8C4CA',trimLo:'#00294A',leg:'#00538C',boot:'#1E2430',hair:'#181C26'}),
+       SK({name:'Away Kit',cost:6000,suit:'#B8C4CA',suitLo:'#00294A',trim:'#00538C',trimLo:'#00294A',leg:'#B8C4CA',boot:'#F4F6FA',hair:'#181C26'})]},
   ];
   var HP_SCALE=2.8;   /* fights last far longer now */
   var TIERS=[
@@ -5029,6 +5325,29 @@
      straight. Anything already GRANTED stays granted, because unlocking a
      champion is a thing that happened; only the ongoing switches pause, and
      they come back exactly as they were left on the next admin day. */
+  /* ---- whose game is this? ----
+     Admin abuse is the owner's, not every visitor's. Until this browser has
+     been claimed with the owner phrase there is no panel, no codes and no
+     switches on any day, and nothing on screen hints that they exist -- a
+     friend opening the site just gets the game.
+
+     Be clear about what this is: it keeps the admin tools out of the way of
+     anybody who happens to open the page, which is the thing that actually
+     matters here. It is NOT protection. The phrase sits in this file in plain
+     text like everything else, so anyone who reads the source can find it.
+     Nothing running entirely on the visitor's own computer can do better than
+     that; real gating needs a server holding the answer.
+
+     It lives outside the save on purpose, so wiping the save does not lock the
+     owner out of their own game. */
+  var OWNER_PHRASE='YAYAISADMIN', OWNER_OFF='LOGOUT', OWNER_SLOT='skyforge.owner';
+  function isOwner(){
+    try{ return localStorage.getItem(OWNER_SLOT)==='1'; }catch(e){ return false; }
+  }
+  function setOwner(on){
+    try{ if(on) localStorage.setItem(OWNER_SLOT,'1'); else localStorage.removeItem(OWNER_SLOT); }catch(e){}
+  }
+
   var ADMIN_DAYS=[2,4,6];               /* Tuesday, Thursday, Saturday */
   var DAYNAME=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   function isAdminDay(){ return ADMIN_DAYS.indexOf(new Date().getDay())>=0; }
@@ -5038,8 +5357,8 @@
     return {in:1,name:'Tuesday'};
   }
   /* the single question the rest of the game asks: is this switch live? */
-  function ab(k){ return isAdminDay()&&save.owner&&!!save.owner[k]; }
-  function abFoe(){ return isAdminDay()&&save.owner?save.owner.foe:''; }
+  function ab(k){ return isOwner()&&save.owner&&!!save.owner[k]; }
+  function abFoe(){ return (isOwner()&&save.owner)?save.owner.foe:''; }
 
   /* ================= mastery =================
      A champion keeps getting better after level 60, slowly, forever. Wins are
@@ -6888,8 +7207,9 @@
       });
       wrap.appendChild(b);
       var cc=c.getContext('2d'); cc.setTransform(2,0,0,2,0,0);
-      cards.push({ctx:cc,h:h,lv:lv,pw:pw,pips:pips});
+      cards.push({ctx:cc,h:h,lv:lv,pw:pw,pips:pips,el:b});
     });
+    if($('rsFind')) rosterFilter();
   }
   var skinDrawn={};
   function drawSkinCards(){
@@ -6907,6 +7227,31 @@
       drawFighter(g,ghost,tick+i*30,0.36);
       g.restore();
     }
+  }
+
+  /* Search hides cards, it never rebuilds a shorter list -- cards[] lines up
+     with HEROES by index, and a filtered list would hand every portrait to the
+     wrong champion. */
+  function rosterFilter(){
+    var q=($('rsFind').value||'').trim().toLowerCase();
+    $('rsClear').hidden=!q;
+    var shown=0;
+    for(var i=0;i<cards.length;i++){
+      var h=cards[i].h;
+      var hit=!q
+        || h.name.toLowerCase().indexOf(q)>=0
+        || (h.real||'').toLowerCase().indexOf(q)>=0
+        || (h.cls||'').toLowerCase().indexOf(q)>=0
+        || (h.athlete||'').indexOf(q)>=0
+        || (h.legend&&'legendary'.indexOf(q)===0);
+      if(hit) shown++;
+      cards[i].el.className=cards[i].el.className.replace(/ hide\b/,'')+(hit?'':' hide');
+    }
+    $('rsNone').hidden=(shown>0);
+    var c=$('rsCount');
+    c.hidden=!q;
+    c.textContent=shown+' of '+cards.length;
+    return shown;
   }
 
   var cardDrawn={};
@@ -7207,6 +7552,8 @@
     tone(300,0.2,'square',0.05,700);
   });
   $('bLegend').addEventListener('click',function(){ startLegendFight(); });
+  $('rsFind').addEventListener('input',rosterFilter);
+  $('rsClear').addEventListener('click',function(){ $('rsFind').value=''; rosterFilter(); $('rsFind').focus(); });
   $('bDaily').addEventListener('click',claimDaily);
   $('bStory').addEventListener('click',function(){ startStory(); tone(300,0.2,'square',0.05,700); });
   $('bSurv').addEventListener('click',function(){ startSurv(); tone(300,0.2,'square',0.05,700); });
@@ -7276,20 +7623,19 @@
     ownerLights(); adminRefresh();
   }
   function adminRefresh(){
-    var on=isAdminDay(), nx=nextAdminDay();
-    $('ownerSec').hidden=!on;
-    $('offDay').hidden=on;
-    if(!on){
-      $('offDay').textContent='Admin abuse runs on Tuesdays, Thursdays and Saturdays. '
-        +'Today is '+DAYNAME[new Date().getDay()]+', so the game is playing it straight — '
-        +'the panel, the codes and the switches are all off until '+nx.name+'. '
-        +'Anything already unlocked stays unlocked.';
-      return;
-    }
-    $('abLead').textContent='It is '+DAYNAME[new Date().getDay()]+', so the panel is open. '
-      +'These buttons change your saved progress straight away, and the switches stay on until '
-      +'you turn them off. They go quiet again on a normal day and come back exactly as you left '
-      +'them next time. Anything you unlock is yours for good.';
+    var owner=isOwner(), abuse=isAdminDay();
+    /* the owner always has their panel; a visitor never sees it exists */
+    $('ownerSec').hidden=!owner;
+    $('offDay').hidden=true;
+    if(!owner) return;
+    $('abTag').textContent=abuse?'admin abuse day':'open';
+    $('abTag').hidden=false;
+    $('abLead').textContent=(abuse
+      ? 'It is '+DAYNAME[new Date().getDay()]+' — an ADMIN ABUSE day. '
+      : 'It is '+DAYNAME[new Date().getDay()]+'. ')
+      +'This is your game and this panel is always yours, every day of the week. The buttons '
+      +'change your saved progress straight away, and the switches stay on until you turn them '
+      +'off. Nobody else who opens the site sees any of this.';
   }
   function ownerLights(){
     var ow=save.owner;
@@ -7434,11 +7780,7 @@
   function tryCode(raw){
     var t=String(raw||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
     if(!t) return false;
-    if(!isAdminDay()){
-      var nx=nextAdminDay();
-      ownerMsg('Codes only work on admin abuse days. The next one is '+nx.name+'.');
-      return true;
-    }
+    if(!isOwner()) return false;      /* not your game: the word means nothing */
     for(var i=0;i<CODES.length;i++){
       if(CODES[i].c!==t) continue;
       var msg=CODES[i].go();
@@ -7452,6 +7794,7 @@
   }
   function enterCode(){
     var box=$('codeIn'), v=box.value;
+    if(ownerPhrase(String(v||'').toUpperCase().replace(/[^A-Z0-9]/g,''))){ box.value=''; return; }
     if(!tryCode(v)) ownerMsg('"'+String(v).toUpperCase()+'" is not a code. Type CODES to see the list.');
     box.value='';
   }
@@ -7462,8 +7805,37 @@
   });
   /* and the proper way: just type it, anywhere on the home screen */
   var codeBuf='';
+  /* The owner phrase is listened for on any day and in any browser -- it is
+     how a browser gets claimed in the first place. Everything else still
+     needs both the owner and the day. */
+  var ownerBuf='';
+  function ownerPhrase(buf){
+    if(buf.slice(-OWNER_PHRASE.length)===OWNER_PHRASE){
+      if(!isOwner()){
+        setOwner(true); ownerRefresh();
+        ownerMsg('This browser is yours now. The panel and every code are yours on any day; '
+          +'type LOGOUT to hand it back.');
+        tone(880,0.14,'triangle',0.05,1320);
+        setTimeout(function(){ tone(1240,0.24,'triangle',0.05,1600); },130);
+      }
+      return true;
+    }
+    if(isOwner()&&buf.slice(-OWNER_OFF.length)===OWNER_OFF){
+      setOwner(false); ownerRefresh();
+      tone(300,0.3,'sawtooth',0.05,700);
+      return true;
+    }
+    return false;
+  }
   window.addEventListener('keydown',function(e){
-    if(screen!=='home'||!isAdminDay()) return;
+    if(screen!=='home') return;
+    if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')) return;
+    if(!(e.key&&e.key.length===1&&/[a-zA-Z0-9]/.test(e.key))) return;
+    ownerBuf=(ownerBuf+e.key.toUpperCase()).slice(-24);
+    if(ownerPhrase(ownerBuf)){ ownerBuf=''; return; }
+  });
+  window.addEventListener('keydown',function(e){
+    if(screen!=='home'||!isOwner()) return;
     if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')) return;
     if(e.key&&e.key.length===1&&/[a-zA-Z0-9]/.test(e.key)){
       codeBuf=(codeBuf+e.key.toUpperCase()).slice(-16);
