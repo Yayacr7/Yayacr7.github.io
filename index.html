@@ -4579,33 +4579,102 @@
     return Math.max(1,Math.ceil((end-Date.now())/86400000));
   }
   var legendBout=null;
+  /* ---- the Trial of Three ----
+     A legend used to be one narrow fight. It is now three of them, back to
+     back, in a single sitting: the legend returns each round higher, tougher
+     and hitting harder, you only get a third of your health back in between,
+     and losing any round ends the whole trial. There is also a floor on who
+     may even attempt it. Nothing else in the game is meant to be this hard. */
+  var LEG_ROUNDS=3;
+  /* These numbers are measured, not guessed. The cost of a round is
+     (their health / your damage) x (their damage / your health) -- how many
+     of your own health bars it takes to get through them -- and the trial
+     only ever hands back a third of a bar twice, so the three rounds have to
+     add up to less than about 1.66 for a champion who plays well, and to more
+     than that for one who never guards. That gap is where the difficulty
+     lives: strong enough is not enough on its own, you have to block too. */
+  var LEG_HP  =[1.10,1.25,1.45];   /* health, per round */
+  var LEG_POW =[0.050,0.055,0.060];/* a wall first, a hammer later */
+  var LEG_SPD =[0.64,0.68,0.72];
+  var LEG_LVL =[4,7,10];           /* levels above you */
+  var LEG_MINLVL=50, LEG_MINTIER=3;
+
+  function legendGate(){
+    var h=HEROES[save.sel], p=prog(h);
+    if(p.lvl<LEG_MINLVL)
+      return h.name+' must be level '+LEG_MINLVL+' to enter the trial — currently level '+p.lvl+'.';
+    if(p.tier<LEG_MINTIER)
+      return h.name+' must be forged to '+TIERS[LEG_MINTIER].name+' or better to enter the trial — '
+        +'currently '+TIERS[p.tier].name+'.';
+    return '';
+  }
   function startLegendFight(){
     var L=legendOfWeek(); if(!L) return;
-    raid=null; legendBout=L.id;
-    var h=HEROES[save.sel], p=prog(h);
+    if(legendGate()) return;
+    raid=null; team=null; tour=null; story=null; surv=null;
+    legendBout={id:L.id,round:1,carryHp:null,carryMeter:0};
+    beginLegendRound();
+  }
+  function beginLegendRound(){
+    var L=heroById(legendBout.id); if(!L) return;
+    var h=HEROES[save.sel], p=prog(h), r=legendBout.round, i=r-1;
     me=myFighter(h,p);
-    /* the legend turns up at full strength — this is meant to be the hardest
-       single fight in the game outside a raid boss */
-    var lv=Math.max(20,Math.min(60,p.lvl+6));
+    if(legendBout.carryHp!==null){ me.hp=Math.max(1,legendBout.carryHp); me.meter=legendBout.carryMeter; }
+    var lv=Math.max(20,Math.min(60,p.lvl+LEG_LVL[i]));
     foe=makeFighter(L,lv,4,-1,620,0);
     /* A legend already has enormous base stats, and tier 4 at a high level
-       multiplies them again. Left alone it out-damages anything you can
-       bring and stun-locks you, so — same rule as a raid boss — it is a
-       wall of health rather than a hammer. */
-    foe.max=Math.round(foe.max*1.15); foe.hp=foe.max;
-    foe.pow=Math.max(1,Math.round(foe.pow*0.065));
-    foe.spd=foe.spd*0.66;
+       multiplies them again. Left alone it out-damages anything you can bring
+       and stun-locks you, so — same rule as a raid boss — it is mostly a wall
+       of health. The hammer only comes out in the later rounds. */
+    foe.max=Math.round(foe.max*LEG_HP[i]); foe.hp=foe.max;
+    foe.pow=Math.max(1,Math.round(foe.pow*LEG_POW[i]));
+    foe.spd=foe.spd*LEG_SPD[i];
     foe.isLegend=true;
-    floats.length=0; sparks.length=0; fx.length=0; endT=0;
-    screen='fight';
-    var lb=$('bLeap'), flier=(h.id==='superman');
-    lb.childNodes[0].nodeValue=flier?'Flying Jump':'Leap';
-    lb.querySelector('small').textContent=flier?'Fly up and dive':'Jump attack';
-    $('fightbar').hidden=false; $('homeUI').hidden=true; $('overlay').hidden=true;
-    floatText(512,GY-250,'LEGENDARY EVENT','#FFD46B',true);
+    enterArena(h);
+    floatText(512,GY-250,'TRIAL OF THREE · ROUND '+r,'#FFD46B',true);
     flash=Math.max(flash,16); shake=Math.max(shake,18);
     tone(200,0.5,'square',0.05,700);
     setTimeout(function(){ tone(320,0.4,'triangle',0.05,1100); },240);
+  }
+  function legendCleared(){
+    var who=(me.isGuard&&me.guardHost)?me.guardHost:me;
+    legendBout.round++;
+    /* a third of your bar back, and no more — the trial is one long fight */
+    legendBout.carryHp=Math.min(who.max,who.hp+Math.round(who.max*0.33));
+    legendBout.carryMeter=who.meter;
+    var L=heroById(legendBout.id);
+    $('ovTitle').textContent='Round '+(legendBout.round-1)+' of '+LEG_ROUNDS+' down';
+    $('ovText').textContent=L.name+' gets back up, higher and angrier. '
+      +HEROES[save.sel].name+' goes into round '+legendBout.round+' on '
+      +Math.round(legendBout.carryHp/who.max*100)+'% health — a third of your bar back is all '
+      +'the trial gives you. Lose this and the whole trial goes with it.';
+    $('ovReward').hidden=true;
+    $('ovBtn').textContent='Round '+legendBout.round+' of '+LEG_ROUNDS;
+    $('ovBtn2').hidden=true;
+    $('overlay').hidden=false;
+    tone(660,0.12,'triangle',0.05,990);
+  }
+  function legendFailed(){
+    var L=heroById(legendBout.id), r=legendBout.round;
+    var h=HEROES[save.sel], p=prog(h);
+    legendBout=null;
+    var cred=Math.round(120+r*160), xp=Math.round(90+r*120);
+    save.credits+=cred; p.xp+=xp;
+    var ups=0;
+    while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; ups++; }
+    store();
+    $('ovTitle').textContent='Trial failed';
+    $('ovText').textContent=L.name+' stopped you in round '+r+' of '+LEG_ROUNDS
+      +'. The trial has to be won in one sitting, so it starts again from round one — '
+      +'but nothing is lost, and you can go again straight away.'
+      +(ups?' Levelled up to '+p.lvl+'!':'');
+    $('rwCred').innerHTML=cred+'<span>Credits</span>';
+    $('rwXp').innerHTML=xp+'<span>Experience</span>';
+    $('ovReward').hidden=false;
+    $('ovBtn').textContent='Back to champions';
+    $('ovBtn2').hidden=true;
+    $('overlay').hidden=false;
+    tone(240,0.5,'sawtooth',0.05,90);
   }
 
   /* ================= solo raid =================
@@ -5360,7 +5429,11 @@
     if(raid){ if(win) raidCleared(); else raidBank(false); return; }
     var wonLegend=null;
     if(legendBout){
-      if(win&&!save.legends[legendBout]){ save.legends[legendBout]=1; wonLegend=legendBout; rosterDirty=true; }
+      if(!win){ legendFailed(); return; }
+      if(legendBout.round<LEG_ROUNDS){ legendCleared(); return; }
+      if(!save.legends[legendBout.id]){
+        save.legends[legendBout.id]=1; wonLegend=legendBout.id; rosterDirty=true;
+      }
       legendBout=null;
     }
     var h=HEROES[save.sel], p=prog(h);
@@ -6913,14 +6986,22 @@
     if(!L){ $('lName').textContent='—'; return; }
     $('lName').textContent=L.name;
     $('lSub').textContent=L.real+' · '+L.cls;
+    var gate=legendGate();
     $('lNote').textContent=owned
       ? 'Already won. '+L.name+' is in your roster for good, and a different legend takes over next week.'
-      : L.name+' turns up eight levels above your champion, fully forged, with a third more health again. '
-        +'Beat them and they are yours permanently. '+daysLeftInEvent()
-        +(daysLeftInEvent()===1?' day':' days')+' left, then the next legend takes over.';
+      : (gate
+        ? gate+' The Trial of Three is the hardest thing in the game and it will not let you in '
+          +'under-prepared. Go and grow your champion — every mode counts.'
+        : 'The TRIAL OF THREE. You must beat '+L.name+' three times back to back in one sitting. '
+          +'They return each round higher, tougher and hitting harder — '+LEG_LVL.join(', ')
+          +' levels above you with '+LEG_HP.map(function(x){return Math.round(x*100)+'%';}).join(', ')
+          +' of their health — and you only get a third of your bar back between rounds. '
+          +'Lose any round and the whole trial starts again. Win all three and they are yours '
+          +'permanently. '+daysLeftInEvent()+(daysLeftInEvent()===1?' day':' days')
+          +' left, then the next legend takes over.');
     var btn=$('bLegend');
-    btn.textContent=owned?'Already won':'Take the challenge';
-    btn.disabled=owned;
+    btn.textContent=owned?'Already won':(gate?'Not strong enough yet':'Enter the Trial of Three');
+    btn.disabled=owned||!!gate;
     /* portrait */
     var c=$('lCanvas'), cc=c.getContext('2d');
     cc.setTransform(1,0,0,1,0,0);
@@ -7114,6 +7195,7 @@
     /* mid-raid this button is "go one floor deeper", otherwise it goes home */
     if(raid&&raid.floor>1){ beginRaidFloor(); return; }
     if(tour){ beginTourRound(); return; }
+    if(legendBout&&legendBout.round>1){ beginLegendRound(); return; }
     if(surv&&surv.round>1){ beginSurvRound(); return; }
     toHome();
   });

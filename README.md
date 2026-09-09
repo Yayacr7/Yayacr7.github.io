@@ -402,26 +402,49 @@ between 2,900 and 16,200 credits — and the level gates came down with them, to
 level 4, 7 or 11 depending on the version. A version changes the palette only,
 so it is a look rather than an advantage.
 
-### Legendary champions and the Legendary Event
+### Legendary champions and the Trial of Three
 
 Six champions are **legendary** and are not simply there for the taking:
-**Doomsday, Brainiac, Galactus, Apocalypse, Jiren** and **Kaguya**. Their
-roster cards carry a gold LEGENDARY tag, sit dimmed, and refuse to enter a
-fight or a raid until they are earned.
+**Doomsday, Brainiac, Galactus, Apocalypse, Jiren** and **Kaguya**. Their roster
+cards carry a gold LEGENDARY tag, sit dimmed, and refuse to enter a fight or a
+raid until they are earned.
 
-The way to earn one is the **Legendary Event** on the home screen. One
-legendary is the challenger each week and the panel names them, draws their
-portrait, and counts how many are still to win. Beat the week's challenger and
-they are yours permanently — the card unlocks the moment you walk back to the
-home screen, not on the next page load.
+Earning one is the hardest thing in the game. One legend is the challenger each
+week, and to take them you must beat them **three times back to back in a single
+sitting**. They come back each round higher, tougher and hitting harder, you get
+only **a third of your health bar back between rounds**, and losing any round
+ends the whole trial.
 
-The challenger is not a pushover. They arrive six levels above you (capped at
-60), fully forged, with 15% extra health on top. Their damage and speed are
-pulled down so the fight is a long one rather than a short brutal one: a maxed
-champion needs about 0.90x of its own health bar to get through, so it is close
-enough to lose and fair enough to win.
+There is also a floor on who may attempt it: **level 50 and Energised armour**.
+Below that the button will not even open.
 
-The rotation moves on a weekly cycle, so a legendary you miss comes back around.
+The difficulty is measured rather than guessed. The cost of a round is
+*(their health ÷ your damage) × (their damage ÷ your health)* — how many of your
+own health bars it takes to get through them — and since the trial hands back
+only a third of a bar twice, the three rounds have to total under about 1.66 for
+a champion who plays well and over it for one who does not. Running the real
+trial rather than a model:
+
+| Champion | Blocks? | Rounds reached | Trials won |
+| --- | --- | --- | --- |
+| Level 60, Legendary | yes | 3, 3 | **2 of 2** |
+| Level 60, Legendary | no | 2, 2 | 0 of 2 |
+| Level 55, Energised | yes | 1, 1 | 0 of 2 |
+| Level 55, Energised | no | 0, 0 | 0 of 2 |
+
+That is the shape it should have. A maxed champion who blocks can do it; the
+same champion mashing attack cannot get past round two; and a champion five
+levels short cannot do it at all. **Being strong is not enough on its own — you
+have to play well too.**
+
+The first attempt at this was simply impossible, which is a different thing from
+hard. Round one alone cost a level-40 champion 1.77 health bars even playing
+properly, and rounds two and three scaled up from there. It took measuring every
+round to find that out; the win-or-lose result alone would only have said "you
+lost again".
+
+Losing costs nothing but time — you keep a consolation payment and can start the
+trial again immediately.
 
 ### The Owner's Key
 
