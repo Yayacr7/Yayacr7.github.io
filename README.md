@@ -243,20 +243,73 @@ currency -- from any mode in the game -- and they earn ranks:
 Mastery is yours alone. Opponents are built without it, so the bonus never
 quietly ends up on the other side.
 
-### Leaderboards
+### The leaderboard
 
-The **Hall of Fame** ranks your own 148 champions against each other on level,
-armour, wins and costumes owned. That is real data about your save.
+The invented rivals are gone. This is a real leaderboard: real people who play
+the site, ranked by credits, and nobody else.
 
-The **rival ladder** is a set of accounts to climb past, and your account rating
-is slotted in among them.
+It needs one thing that cannot live in this file -- a database. GitHub Pages
+serves files and nothing else, so a leaderboard that several people share has to
+keep its scores somewhere on the internet. That is a free Firebase project, and
+creating one needs an email address.
 
-**The rivals are invented by the game.** This is worth being straight about: the
-whole game runs inside your own browser and saves to it, with no internet
-connection and no accounts, so there is no way for it to see anybody else's
-save. A leaderboard of real people would need a server keeping everyone's scores
-in one place -- a much bigger project, and a different kind of program
-altogether.
+**Until it is connected**, the panel is invisible to visitors and shows the owner
+the setup steps. Nothing is broken and nothing is pretending.
+
+**To connect it**
+
+1. At `console.firebase.google.com`, make a free project.
+2. Create a **Realtime Database** in it.
+3. Under **Authentication**, enable **Anonymous** sign-in.
+4. Open the database's **Rules** tab and paste this:
+
+```json
+{
+  "rules": {
+    "scores": {
+      ".read": true,
+      ".indexOn": "credits",
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid",
+        ".validate": "newData.hasChildren(['name','credits']) && newData.child('name').isString() && newData.child('name').val().length <= 18 && newData.child('credits').isNumber() && newData.child('credits').val() >= 0"
+      }
+    }
+  }
+}
+```
+
+5. Put your **Project ID** and **Web API key** into the `LEADERBOARD` block near
+   the top of `index.html`, and push.
+
+**How it works.** Each player is signed in anonymously -- no email, no password,
+nothing personal, just an id the database generates. That id owns exactly one
+row, and the rules above mean a player can only ever write their own. The only
+two things sent are the name they typed and their credits. No library is loaded
+for any of it; Firebase has a plain REST interface, so it is all `fetch` and the
+game stays one file with no dependencies.
+
+**Two honest limits**, both printed in the panel as well:
+
+- **The key in the file is public, and that is normal.** Anyone can read it out of
+  the page. Firebase is designed that way -- the key says which project to talk
+  to, and the security rules are what actually protect the data.
+- **Credits can be faked by someone determined.** The game runs on the player's
+  own computer, so a person who knows how can change their number before it is
+  sent. Stopping that properly would mean the server running the fights itself,
+  which is a far bigger program than a leaderboard. For a game among friends the
+  rules above are the right amount of protection.
+
+**A word about names.** Other people's names are drawn as text and never as
+markup -- a player calling themselves `<img onerror=...>` shows up as those exact
+characters and cannot run anything. Ask people for a nickname rather than their
+real name: the site is public, and some of the people playing it are children.
+
+**If the database is unreachable** the panel says so plainly and the game carries
+on as normal -- every mode still works with no network at all.
+
+The **Hall of Fame** beside it is unchanged and needs no database: it ranks the
+player's own champions against each other, which is real data already on the
+device.
 
 ### Team battle
 

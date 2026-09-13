@@ -471,6 +471,7 @@
           <button class="btn" id="bCode" style="width:auto;flex:none">Enter</button>
         </div>
         <p class="codelist show" id="codeList"></p>
+        <div class="abuseShut" id="lbSetup" hidden></div>
         <div class="abuseBox" id="abuseBox" hidden>
           <h4>Admin abuse &mdash; today only</h4>
           <p class="onote" id="abuseNote"></p>
@@ -518,18 +519,20 @@
     </section>
 
     <section class="sec" style="margin-top:14px">
-      <h3>Leaderboards</h3>
+      <h3>Leaderboard <span class="mReady" id="lbTag" hidden></span></h3>
       <div class="raid">
         <div class="rinfo" style="width:100%">
           <p class="rlead" id="lbLead">Account rating 0</p>
-          <p class="rnote">Your <b>Hall of Fame</b> ranks your own 148 champions against each
-            other. The <b>rival ladder</b> is a set of accounts to climb past.
-            <b>The rivals are invented by the game</b> &mdash; this game runs entirely inside your
-            own browser with no internet connection and no accounts, so there is no way for it to
-            see anybody else's save. A real worldwide leaderboard would need a server.</p>
+          <p class="rnote" id="lbNote"></p>
+          <div class="findbar" id="lbJoin" hidden>
+            <input id="lbName" maxlength="18" autocomplete="off" spellcheck="false"
+                   placeholder="Pick a name for the leaderboard">
+            <button class="btn" id="lbSave" style="width:auto;flex:none">Save</button>
+          </div>
+          <p class="rnote" id="lbState"></p>
           <div class="lbwrap">
+            <div class="lb"><h4>Top players by credits</h4><ol id="world"></ol></div>
             <div class="lb"><h4>Hall of Fame &mdash; your champions</h4><ol id="hof"></ol></div>
-            <div class="lb"><h4>Rival ladder</h4><ol id="rivals"></ol></div>
           </div>
         </div>
       </div>
@@ -2856,6 +2859,7 @@
     if(typeof save.survBest!=='number') save.survBest=0;
     if(typeof save.dailyDay!=='number') save.dailyDay=0;
     if(typeof save.dailyStreak!=='number') save.dailyStreak=0;
+    if(typeof save.lbName!=='string') save.lbName='';
     if(!save.team||save.team.length!==3) save.team=[save.sel,-1,-1];
     if(!save.owner||typeof save.owner!=='object') save.owner={};
     var ow=save.owner;
@@ -5976,12 +5980,91 @@
       +legendsOwnedCount()*350+Math.floor((save.credits||0)/500);
     return t;
   }
-  var RIVALS=[
-    {n:'Cloudbreaker',s:1400},{n:'Nine Volt',s:4200},{n:'Kestrel',s:9500},
-    {n:'The Understudy',s:17000},{n:'Ash Rivera',s:28000},{n:'Halcyon',s:44000},
-    {n:'Iron Verdict',s:66000},{n:'Nocturne_88',s:95000},{n:'Sable',s:132000},
-    {n:'Vanguard Prime',s:178000},{n:'The Quiet One',s:235000},{n:'Skyforge Ghost',s:310000}
-  ];
+  /* ================= the real leaderboard =================
+     The invented rivals are gone. This talks to an actual database over the
+     network, so real people who play the site appear here and nobody else does.
+
+     It needs one thing that cannot live in this file: a Firebase project, which
+     needs an email address to create. Paste its two values into LEADERBOARD
+     below and the whole panel comes alive; leave them empty and the panel tells
+     the owner how to set it up and stays hidden from everybody else.
+
+     No library is loaded for this. Firebase has a plain REST interface, so it
+     is all fetch() -- the game stays one file with no dependencies, exactly as
+     it always has been.
+
+     Two honest limits, both written into the panel as well:
+       - The key below is meant to be public. Anyone can read it out of this
+         page. Firebase is built that way, and what actually protects the data
+         is the security rules, which say a player may only write their own row.
+       - The game runs on the player's own computer, so a determined person can
+         edit their credits before they are sent. Stopping that properly needs
+         the server to run the fights itself, which is a far bigger thing than
+         a leaderboard. */
+  var LEADERBOARD={
+    project:'',        /* your Firebase project id            */
+    apiKey:''          /* your Firebase Web API key           */
+  };
+  function lbOn(){ return !!(LEADERBOARD.project&&LEADERBOARD.apiKey); }
+  function lbBase(){ return 'https://'+LEADERBOARD.project+'-default-rtdb.firebaseio.com'; }
+
+  var lbAuth=null, lbRows=null, lbBusy=false, lbErr='';
+  /* an anonymous account, so each player owns exactly one row and can only
+     write to that one. No email, no password, nothing personal. */
+  function lbSignIn(){
+    if(lbAuth) return Promise.resolve(lbAuth);
+    var keep=null;
+    try{ keep=JSON.parse(localStorage.getItem('skyforge.lb')||'null'); }catch(e){}
+    if(keep&&keep.idToken&&keep.at&&(Date.now()-keep.at)<50*60*1000){
+      lbAuth=keep; return Promise.resolve(lbAuth);
+    }
+    return fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+
+                 encodeURIComponent(LEADERBOARD.apiKey),
+      {method:'POST',headers:{'Content-Type':'application/json'},
+       body:JSON.stringify({returnSecureToken:true})})
+      .then(function(r){ if(!r.ok) throw new Error('sign-in failed ('+r.status+')'); return r.json(); })
+      .then(function(j){
+        lbAuth={idToken:j.idToken,uid:j.localId,at:Date.now()};
+        try{ localStorage.setItem('skyforge.lb',JSON.stringify(lbAuth)); }catch(e){}
+        return lbAuth;
+      });
+  }
+  function lbFetchTop(){
+    /* ordering is done by the database, so only the top rows come down the wire */
+    var url=lbBase()+'/scores.json?orderBy='+encodeURIComponent('"credits"')+'&limitToLast=20';
+    return fetch(url).then(function(r){
+      if(!r.ok) throw new Error('could not read the leaderboard ('+r.status+')');
+      return r.json();
+    }).then(function(j){
+      var out=[];
+      for(var k in (j||{})){
+        var v=j[k]||{};
+        out.push({uid:k,name:String(v.name||'?').slice(0,18),credits:Math.max(0,Math.round(v.credits||0))});
+      }
+      out.sort(function(a,b){ return b.credits-a.credits; });
+      return out;
+    });
+  }
+  function lbSubmit(){
+    if(!lbOn()) return Promise.resolve();
+    var nm=(save.lbName||'').trim();
+    if(!nm) return Promise.resolve();
+    return lbSignIn().then(function(a){
+      return fetch(lbBase()+'/scores/'+a.uid+'.json?auth='+encodeURIComponent(a.idToken),
+        {method:'PUT',headers:{'Content-Type':'application/json'},
+         body:JSON.stringify({name:nm.slice(0,18),credits:Math.max(0,Math.round(save.credits||0)),
+                              at:Date.now()})})
+        .then(function(r){ if(!r.ok) throw new Error('could not save your score ('+r.status+')'); });
+    });
+  }
+  function lbRefresh(force){
+    if(!lbOn()||lbBusy) return;
+    lbBusy=true; lbErr=''; buildLeader();
+    var job=force?lbSubmit().then(lbFetchTop):lbFetchTop();
+    job.then(function(rows){ lbRows=rows; })
+       .catch(function(e){ lbErr=e&&e.message?e.message:'network problem'; })
+       .then(function(){ lbBusy=false; buildLeader(); });
+  }
   function buildLeader(){
     var mine=accountScore();
     $('lbLead').textContent='Account rating '+mine.toLocaleString();
@@ -5996,17 +6079,41 @@
         +(x.p.lvl||1)+(m?' · '+m:'')+'</span></span>'
         +'<span class="sc">'+x.s.toLocaleString()+'</span></li>';
     }).join('');
-    /* the rival ladder, with the player slotted in by rating */
-    var all=RIVALS.map(function(r){ return {n:r.n,s:r.s,you:false}; });
-    all.push({n:'YOU',s:mine,you:true});
-    all.sort(function(a,b){ return b.s-a.s; });
-    var at=0; for(var i=0;i<all.length;i++) if(all[i].you) at=i;
-    var from=Math.max(0,Math.min(all.length-7,at-3));
-    $('rivals').innerHTML=all.slice(from,from+7).map(function(x,i){
-      return '<li'+(x.you?' class="you"':'')+'><span class="rk">'+(from+i+1)+'</span>'
-        +'<span class="nm2">'+x.n+'</span>'
-        +'<span class="sc">'+x.s.toLocaleString()+'</span></li>';
+    /* and the real players, straight out of the database */
+    var on=lbOn(), owner=isOwner(), world=$('world');
+    $('lbJoin').hidden=!on;
+    $('lbTag').hidden=!(on&&lbRows&&lbRows.length);
+    if(on&&lbRows) $('lbTag').textContent=lbRows.length+' playing';
+    if(!on){
+      $('lbNote').textContent=owner
+        ? 'The leaderboard is not connected yet. It needs a free Firebase database — the exact '
+          +'steps are in your admin panel, and it is two values pasted into this file. Until then '
+          +'nobody sees this panel but you.'
+        : '';
+      world.innerHTML='';
+      $('lbState').textContent='';
+      $('world').parentNode.hidden=!owner;
+      return;
+    }
+    $('world').parentNode.hidden=false;
+    $('lbNote').textContent='Real players only. Your name and your credits are the only things '
+      +'sent, and you can change or clear your name whenever you like.';
+    $('lbState').textContent=lbBusy?'Checking the leaderboard…'
+      :(lbErr?('Could not reach the leaderboard: '+lbErr):'');
+    if(!lbRows){ world.innerHTML=''; return; }
+    if(!lbRows.length){ world.innerHTML='<li><span class="nm2">Nobody has joined yet — be first.</span></li>'; return; }
+    var myUid=lbAuth&&lbAuth.uid;
+    world.innerHTML=lbRows.slice(0,20).map(function(x,i){
+      return '<li'+(x.uid===myUid?' class="you"':'')+'><span class="rk">'+(i+1)+'</span>'
+        +'<span class="nm2">'+esc(x.name)+'</span>'
+        +'<span class="sc">'+x.credits.toLocaleString()+'</span></li>';
     }).join('');
+  }
+  /* names come from other people, so they are text and never markup */
+  function esc(t){
+    return String(t).replace(/[&<>"']/g,function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
   }
 
   /* ================= survival =================
@@ -8079,6 +8186,8 @@
   buildRoster(); buildArenas(); buildSkins(); buildMissions(); buildLegend();
   buildSquadPickers(); ownerLights(); adminRefresh(); buildRarChips();
   buildStory(); buildDaily(); buildLeader(); renderUI();
+  if($('lbName')) $('lbName').value=save.lbName||'';
+  lbRefresh(true);
 
   function flashMsg(t){ $('msg').textContent=t; setTimeout(function(){ if($('msg').textContent===t) $('msg').textContent=''; },2600); }
 
@@ -8121,6 +8230,16 @@
   $('rsFind').addEventListener('input',rosterFilter);
   $('rsClear').addEventListener('click',function(){
     $('rsFind').value=''; rarPick=''; buildRarChips(); rosterFilter(); $('rsFind').focus(); });
+  $('lbSave').addEventListener('click',function(){
+    var v=($('lbName').value||'').trim().slice(0,18);
+    save.lbName=v; store();
+    if(!v){ ownerMsg('Name cleared — you are off the leaderboard after the next update.'); }
+    lbRefresh(true);
+  });
+  $('lbName').addEventListener('keydown',function(e){
+    if(e.key==='Enter'){ e.preventDefault(); $('lbSave').click(); }
+    e.stopPropagation();
+  });
   $('bDaily').addEventListener('click',claimDaily);
   $('bStory').addEventListener('click',function(){ startStory(); tone(300,0.2,'square',0.05,700); });
   $('bSurv').addEventListener('click',function(){ startSurv(); tone(300,0.2,'square',0.05,700); });
@@ -8191,6 +8310,7 @@
     buildSkins(); buildMissions(); buildLegend(); buildSquadPickers(); buildStory();
     buildDaily(); buildLeader(); renderUI();
     ownerLights(); adminRefresh();
+    lbRefresh(true);
   }
   function adminRefresh(){
     var owner=isOwner(), abuse=isAdminDay();
@@ -8198,6 +8318,19 @@
     $('ownerSec').hidden=!owner;
     $('offDay').hidden=true;
     if(!owner) return;
+    var setup=$('lbSetup');
+    setup.hidden=lbOn();
+    if(!lbOn()){
+      setup.innerHTML='<b>To switch the leaderboard on</b> (an adult will need to do the first bit, '
+        +'because it asks for an email):<br>'
+        +'1. Go to console.firebase.google.com and make a free project.<br>'
+        +'2. Inside it, create a <b>Realtime Database</b> in test mode, then open '
+        +'<b>Rules</b> and paste the rules from the README.<br>'
+        +'3. In Project settings, turn on <b>Anonymous</b> sign-in under Authentication.<br>'
+        +'4. Copy your <b>Project ID</b> and <b>Web API key</b> into the LEADERBOARD block near '
+        +'the top of index.html, then push the file.<br>'
+        +'That is the whole job. Nobody but you can see this box.';
+    }
     $('abuseBox').hidden=!abuse;
     $('abuseShut').hidden=abuse;
     if(abuse){
@@ -8454,7 +8587,7 @@
   $('bWipe').addEventListener('click',function(){
     if(!window.confirm('Start again? This wipes every level, credit, version and legendary.')) return;
     save={credits:600,sel:0,arena:0,h:{},done:{},arenaWins:{},legends:{},raidBest:0,
-          teamWins:0,tourWins:0,tourFar:0,storyDone:0,survBest:0,dailyDay:0,dailyStreak:0,team:[0,-1,-1],owner:{god:0,punch:0,meter:0,foe:'',bighead:0,slowmo:0,mirror:0,fast:0,tiny:0,giant:0,smite:0,immortal:0,rich:0}};
+          teamWins:0,tourWins:0,tourFar:0,storyDone:0,survBest:0,dailyDay:0,dailyStreak:0,lbName:'',team:[0,-1,-1],owner:{god:0,punch:0,meter:0,foe:'',bighead:0,slowmo:0,mirror:0,fast:0,tiny:0,giant:0,smite:0,immortal:0,rich:0}};
     for(var i=0;i<HEROES.length;i++) save.h[HEROES[i].id]=blank();
     raid=null; legendBout=null; team=null; tour=null; story=null; surv=null; me=null;
     ownerRefresh();
