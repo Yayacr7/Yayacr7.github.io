@@ -4,7 +4,7 @@ Things I'm making with Claude Code.
 
 ## Yahya.games.com — Skyforge Champions
 
-A hundred and eighty-eight characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
+Two hundred and eighteen characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
 and forge their armour into brighter and brighter finishes.
 
 **To play:** open `index.html` in any web browser.
@@ -43,7 +43,7 @@ sky over the fire pits · **The Watchtower** in orbit, with Earth below.
 
 ### The roster
 
-A hundred and eighty-eight characters, each drawn to their own costume. This is
+Two hundred and eighteen characters, each drawn to their own costume. This is
 not every character from anywhere — each one here is hand-written drawing code
 — but it covers the Justice League, the Bat-family, a bench of villains, a
 Marvel and X-Men wing, and seventy-six anime fighters.
@@ -68,6 +68,62 @@ Inosuke, Rengoku, Muzan, Armin, Reiner, Alphonse, Hisoka, Kurapika, Uraraka,
 Shigaraki, Megumi, Nobara, Escanor, Yami, Sesshomaru, Hiei, Giorno, Rimuru,
 Vash and Spike.
 
+### Rarity
+
+Every champion now sits on one of seven steps, and the roster is a pyramid
+rather than a list:
+
+| Rarity | How many | Locked? |
+| --- | --- | --- |
+| Common | 72 | no |
+| Rare | 71 | no |
+| Epic | 44 | no |
+| **Legendary** | 10 | yes |
+| **Mythic** | 9 | yes |
+| **Ultimate** | 6 | yes |
+| **Majestic** | 6 | yes |
+
+Everything from Legendary upward has to be won in the Trial of Three, and the
+rarer the prize the harder that trial is -- a Majestic comes with a good deal
+more health than a Legendary. Mythic and above also hit harder and carry more
+health when **you** field them, which is the point of chasing them.
+
+Rarity replaced a single locked/unlocked flag that had been doing the job of a
+ladder. The first pass set it purely from each champion's stats, which was
+mechanically fair and read completely wrong -- it made Superman **Common** -- so
+the headline names now have a floor under them.
+
+Cards carry their rarity in the corner in its own colour, and everything from
+Epic upward gets a matching border.
+
+### Searching by rarity
+
+A row of chips above the roster filters it to one rarity in a tap, and the
+search box matches rarity words too, so typing `majestic` finds all six. The two
+work together: pick Mythic and type `fate` and you get Doctor Fate.
+
+### DC magic, myth and the powers above
+
+Thirty new DC characters, almost all of them at the top of the ladder.
+
+**The magicians:** Doctor Fate, Constantine, Circe, Klarion, Enchantress,
+Mordru, Felix Faust and Madame Xanadu.
+
+**Mythic:** Etrigan, Swamp Thing, Phantom Stranger, Trigon, Eclipso, Parallax
+and Deadman -- joined by Galactus and Kaguya, promoted now there is a step above
+Legendary for them to stand on.
+
+**Ultimate:** Anti-Monitor, Nekron, Imperiex, Superboy-Prime, Black Racer and
+Mordru.
+
+**Majestic:** The Presence, Lucifer Morningstar, Michael Demiurgos, Perpetua,
+The Spectre and Dream -- the six most powerful things in the game by a distance.
+
+**More Legendaries:** Sinestro, Ares, Neron, Circe, Enchantress and Larfleeze.
+
+Every one of them carries **three versions** rather than the usual one or two,
+so a Mythic or an Ultimate is worth forging as well as winning.
+
 ### Footballers and basketball players
 
 Forty athletes joined the roster. **Twenty-two footballers** -- Messi, Ronaldo,
@@ -91,7 +147,7 @@ thousands of professionals playing right now.
 
 ### Search
 
-At a hundred and eighty-eight champions, scrolling stopped being reasonable. The
+At two hundred and eighteen champions, scrolling stopped being reasonable. The
 box above the roster filters as you type and matches **name, real name, type and
 sport** -- so `kent` finds Superman, `amazon` finds Wonder Woman, `football`
 brings up all twenty-two footballers, and `curry` quite correctly returns both
