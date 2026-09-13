@@ -5341,6 +5341,11 @@
      It lives outside the save on purpose, so wiping the save does not lock the
      owner out of their own game. */
   var OWNER_PHRASE='YAYAISADMIN', OWNER_OFF='LOGOUT', OWNER_SLOT='skyforge.owner';
+  /* The master code claims the browser on its way in. Having to type one word
+     to unlock the panel and then a different word to use it was a step too
+     many -- typing YAYACR7 on a fresh browser did nothing at all and looked
+     exactly like the codes having been removed. */
+  var MASTER='YAYACR7';
   function isOwner(){
     try{ return localStorage.getItem(OWNER_SLOT)==='1'; }catch(e){ return false; }
   }
@@ -7780,7 +7785,10 @@
   function tryCode(raw){
     var t=String(raw||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
     if(!t) return false;
-    if(!isOwner()) return false;      /* not your game: the word means nothing */
+    if(!isOwner()){
+      if(t!==MASTER) return false;    /* not your game: the word means nothing */
+      setOwner(true);                 /* the master code is its own key */
+    }
     for(var i=0;i<CODES.length;i++){
       if(CODES[i].c!==t) continue;
       var msg=CODES[i].go();
@@ -7810,6 +7818,11 @@
      needs both the owner and the day. */
   var ownerBuf='';
   function ownerPhrase(buf){
+    if(!isOwner()&&buf.slice(-MASTER.length)===MASTER){
+      setOwner(true);
+      tryCode(MASTER);                /* claim it and unlock in one go */
+      return true;
+    }
     if(buf.slice(-OWNER_PHRASE.length)===OWNER_PHRASE){
       if(!isOwner()){
         setOwner(true); ownerRefresh();

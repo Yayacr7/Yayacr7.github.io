@@ -241,9 +241,20 @@ anywhere on the home screen. They work on **any day**, but only in a browser tha
 has been claimed with the owner phrase -- in anybody else's they do nothing at
 all. The list is printed inside the panel.
 
-The one phrase that is not in the list is the owner phrase itself, `YAYAISADMIN`.
-It is listened for in every browser on every day, because it is how a browser
-gets claimed in the first place.
+**`YAYACR7` is its own key.** Typing it on a browser that has never been claimed
+claims it and unlocks the whole game in the same breath, so there is one word to
+remember and no setup step. Needing one word to open the panel and a different
+word to use it was a step too many: on a fresh browser `YAYACR7` did nothing at
+all, which looked exactly like the codes having been taken out.
+
+`YAYAISADMIN` still works as a plain claim -- it opens the panel without
+unlocking anything -- and `LOGOUT` hands the browser back. Both are listened for
+in every browser on every day, because that is how a browser gets claimed.
+
+The trade-off is worth being clear about: anybody who guesses the master word can
+unlock **their own copy**. That costs nothing, because there is no shared state
+here -- their save lives in their browser and yours lives in yours, and neither
+can see the other.
 
 **Things you get, once:**
 
