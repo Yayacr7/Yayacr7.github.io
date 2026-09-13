@@ -224,6 +224,15 @@
   .card .rarTag{position:absolute;top:6px;right:6px;font-family:"Saira Condensed",sans-serif;
     font-size:.55rem;font-weight:800;letter-spacing:.09em;border-radius:5px;padding:1px 5px;
     background:rgba(8,12,20,.72)}
+  .abuseBox{margin-top:12px;border:2px dashed rgba(255,77,109,.55);border-radius:12px;
+    padding:11px 13px;background:rgba(255,77,109,.07)}
+  .abuseBox h4{font-family:"Saira Condensed",sans-serif;font-weight:800;font-size:1rem;margin:0 0 4px;
+    letter-spacing:.06em;text-transform:uppercase;color:#FF6E8A}
+  .abuseBox .tog.on{border-color:#FF6E8A}
+  .abuseBox .tog.on .pip{background:rgba(255,110,138,.32);border-color:#FF6E8A}
+  .abuseBox .tog.on .pip::after{background:#FF6E8A}
+  .abuseShut{margin-top:12px;border:2px dashed var(--edge);border-radius:12px;padding:11px 13px;
+    font-size:.78rem;color:var(--dim)}
   .rarchips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
   .rarchip{font:inherit;font-family:"Saira Condensed",sans-serif;font-weight:800;font-size:.72rem;
     letter-spacing:.08em;text-transform:uppercase;cursor:pointer;color:var(--dim);
@@ -462,6 +471,19 @@
           <button class="btn" id="bCode" style="width:auto;flex:none">Enter</button>
         </div>
         <p class="codelist show" id="codeList"></p>
+        <div class="abuseBox" id="abuseBox" hidden>
+          <h4>Admin abuse &mdash; today only</h4>
+          <p class="onote" id="abuseNote"></p>
+          <div class="toggles">
+            <button class="tog" id="tSmite"><span><span class="t">Smite</span>
+              <span class="d">Every hit you land finishes them</span></span><span class="pip"></span></button>
+            <button class="tog" id="tImmortal"><span><span class="t">Immortal</span>
+              <span class="d">You can never drop below one health</span></span><span class="pip"></span></button>
+            <button class="tog" id="tRich"><span><span class="t">Payday</span>
+              <span class="d">Every reward in the game pays ten times</span></span><span class="pip"></span></button>
+          </div>
+        </div>
+        <p class="abuseShut" id="abuseShut" hidden></p>
         <p class="msg" id="oMsg"></p>
       </div>
     </section>
@@ -1989,7 +2011,7 @@
            leg:'#26663C',boot:'#12401E',hair:'#3E7A4E',
            skin:'#7ECC8E',skinLo:'#3E7A4E',fore:'#7ECC8E',foreLo:'#3E7A4E'})]},
     {id:'galactus',name:'Galactus',real:'Galan',cls:'Devourer of Worlds',
-     emblem:'core',head:'omegahelm',rar:'mythic',
+     emblem:'core',head:'omegahelm',rar:'majestic',
      trait:{name:'The Power Cosmic',kind:'auto',every:250,dmg:1.7,fx:'cosmic',v:0,desc:'The hunger reaches out and takes what it needs'},
      pow:46,tough:190,spd:0.78,superName:'World Hunger',
      superDesc:'He stops holding back, and the sky goes out',
@@ -2013,7 +2035,7 @@
            leg:'#1E2430',boot:'#0E1016',hair:'#1A1E2A',
            skin:'#8A8E96',skinLo:'#4A4E56',fore:'#8A8E96',foreLo:'#4A4E56'})]},
     {id:'kaguya',name:'Kaguya',real:'Kaguya Otsutsuki',cls:'The Rabbit Goddess',
-     emblem:'crescent',head:'longhair',rar:'mythic',
+     emblem:'crescent',head:'longhair',rar:'majestic',
      trait:{name:'All-Killing Ash Bones',kind:'auto',every:245,dmg:1.6,fx:'psi',v:0,desc:'Bone dust that ends whatever it touches'},
      pow:40,tough:168,spd:1.16,superName:'Infinite Tsukuyomi',
      superDesc:'The moon opens an eye and everyone stops fighting',
@@ -2247,7 +2269,7 @@
        SK({name:'Red Panda',cost:9000,suit:'#F24E4E',suitLo:'#5E0808',trim:'#FFE27A',trimLo:'#5E0808',leg:'#F24E4E',boot:'#5E0808',hair:'#1E1A16'})]},
     /* --- DC magic, myth and the powers above them --- */
     {id:'drfate',name:'Doctor Fate',real:'Kent Nelson',cls:'Lord of Order',
-     emblem:'orb',head:'domehelm',rar:'mythic',
+     emblem:'orb',head:'domehelm',rar:'majestic',
      trait:{name:'Ankh of Amon-Ra',kind:'power',v:0.20,desc:'Golden sigils close around them out of nowhere'},
      pow:35,tough:154,spd:1.06,superName:'Judgement of Nabu',
      superDesc:'The helm speaks and the verdict lands like a mountain',
@@ -2311,7 +2333,7 @@
        SK({name:'Seer',cost:7000,suit:'#C44E86',suitLo:'#3A0E22',trim:'#FFE27A',trimLo:'#3A0E22',leg:'#C44E86',boot:'#3A0E22',hair:'#2A1018'}),
        SK({name:'Nimue',cost:11900,suit:'#F2C230',suitLo:'#3A0E22',trim:'#7A2448',trimLo:'#3A0E22',leg:'#F2C230',boot:'#3A0E22',hair:'#2A1018'})]},
     {id:'etrigan',name:'Etrigan',real:'Jason Blood',cls:'The Demon',
-     emblem:'flame',head:'horns',rar:'mythic',
+     emblem:'flame',head:'horns',rar:'majestic',
      trait:{name:'Rhyming Demon',kind:'power',v:0.20,desc:'Speaks in rhyme and hits like a furnace'},
      pow:36,tough:158,spd:1.08,superName:'Hellfire Verse',
      superDesc:'Finishes the couplet and the arena catches fire',
@@ -2319,7 +2341,7 @@
        SK({name:'Demon Knight',cost:16000,suit:'#FFD84E',suitLo:'#8E6A06',trim:'#7A0E0E',trimLo:'#8E6A06',leg:'#FFD84E',boot:'#8E6A06',hair:'#E8B020'}),
        SK({name:'Jason Blood',cost:27200,suit:'#C42020',suitLo:'#8E6A06',trim:'#F2C230',trimLo:'#8E6A06',leg:'#C42020',boot:'#8E6A06',hair:'#E8B020'})]},
     {id:'swampthing',name:'Swamp Thing',real:'Alec Holland',cls:'Avatar of the Green',
-     emblem:'leaf',head:'longhair',rar:'mythic',
+     emblem:'leaf',head:'longhair',rar:'majestic',
      trait:{name:'The Green',kind:'power',v:0.20,desc:'Every living thing on the platform is on his side'},
      pow:35,tough:168,spd:0.96,superName:'Roots of the World',
      superDesc:'The deck splits and the Green comes up through it',
@@ -2327,7 +2349,7 @@
        SK({name:'Avatar',cost:16000,suit:'#4E9E42',suitLo:'#0E2E0E',trim:'#C8B48E',trimLo:'#0E2E0E',leg:'#4E9E42',boot:'#0E2E0E',hair:'#1A3A14'}),
        SK({name:'The Rot',cost:27200,suit:'#8E5E2E',suitLo:'#0E2E0E',trim:'#2E6E2E',trimLo:'#0E2E0E',leg:'#8E5E2E',boot:'#0E2E0E',hair:'#1A3A14'})]},
     {id:'stranger',name:'Phantom Stranger',real:'The Wanderer',cls:'The Judge',
-     emblem:'star',head:'tophat',rar:'mythic',
+     emblem:'star',head:'tophat',rar:'majestic',
      trait:{name:'No Name At All',kind:'power',v:0.20,desc:'Nothing that needs a name can touch him'},
      pow:34,tough:152,spd:1.10,superName:'Walk Between',
      superDesc:'Steps out of the world and back in behind them',
@@ -2335,7 +2357,7 @@
        SK({name:'The Wanderer',cost:16000,suit:'#3A4E7A',suitLo:'#0A1024',trim:'#FFF4D8',trimLo:'#0A1024',leg:'#3A4E7A',boot:'#0A1024',hair:'#141A2E'}),
        SK({name:'Judgement',cost:27200,suit:'#F2E2C2',suitLo:'#0A1024',trim:'#1E2A4E',trimLo:'#0A1024',leg:'#F2E2C2',boot:'#0A1024',hair:'#141A2E'})]},
     {id:'trigon',name:'Trigon',real:'Trigon the Terrible',cls:'The Conqueror of Worlds',
-     emblem:'core',head:'horns',rar:'mythic',
+     emblem:'core',head:'horns',rar:'majestic',
      trait:{name:'Four Red Eyes',kind:'power',v:0.20,desc:'Sees every opening at the same time'},
      pow:38,tough:172,spd:1.00,superName:'Dimension Collapse',
      superDesc:'Folds the arena in on itself',
@@ -2343,7 +2365,7 @@
        SK({name:'Conqueror',cost:16000,suit:'#F24E4E',suitLo:'#5E0808',trim:'#4A2E6E',trimLo:'#5E0808',leg:'#F24E4E',boot:'#5E0808',hair:'#7A0E0E'}),
        SK({name:'Father of Raven',cost:27200,suit:'#2A1E3E',suitLo:'#5E0808',trim:'#C42020',trimLo:'#5E0808',leg:'#2A1E3E',boot:'#5E0808',hair:'#7A0E0E'})]},
     {id:'eclipso',name:'Eclipso',real:'Bruce Gordon',cls:'The Wrath of God',
-     emblem:'core',head:'domino',rar:'mythic',
+     emblem:'core',head:'domino',rar:'majestic',
      trait:{name:'Black Diamond',kind:'power',v:0.20,desc:'The shard turns whatever it touches against you'},
      pow:36,tough:156,spd:1.10,superName:'Total Eclipse',
      superDesc:'Puts out the sun and fights in the dark',
@@ -2351,7 +2373,7 @@
        SK({name:'Wrath',cost:16000,suit:'#2E2E44',suitLo:'#08080E',trim:'#FFE27A',trimLo:'#08080E',leg:'#2E2E44',boot:'#08080E',hair:'#0A0A12'}),
        SK({name:'Bruce Gordon',cost:27200,suit:'#F2C230',suitLo:'#08080E',trim:'#1E1E2A',trimLo:'#08080E',leg:'#F2C230',boot:'#08080E',hair:'#0A0A12'})]},
     {id:'parallax',name:'Parallax',real:'The Fear Entity',cls:'Living Fear',
-     emblem:'lantern',head:'helmet',rar:'mythic',
+     emblem:'lantern',head:'helmet',rar:'majestic',
      trait:{name:'Yellow Impurity',kind:'power',v:0.20,desc:'Feeds on the moment you hesitate'},
      pow:37,tough:160,spd:1.12,superName:'Fear Made Real',
      superDesc:'Shows them the thing they were most afraid of',
@@ -2415,7 +2437,7 @@
        SK({name:'Agent Orange',cost:12000,suit:'#FFA84E',suitLo:'#8E4A06',trim:'#FFE27A',trimLo:'#8E4A06',leg:'#FFA84E',boot:'#8E4A06',hair:'#6E3A08'}),
        SK({name:'The Hoard',cost:20400,suit:'#F2C230',suitLo:'#8E4A06',trim:'#E8801E',trimLo:'#8E4A06',leg:'#F2C230',boot:'#8E4A06',hair:'#6E3A08'})]},
     {id:'presence',name:'The Presence',real:'The Voice',cls:'The Source of All',
-     emblem:'none',head:'hood',rar:'majestic',
+     emblem:'none',head:'hood',rar:'mythic',
      trait:{name:'Let There Be',kind:'power',v:0.20,desc:'What is said simply becomes true'},
      pow:50,tough:222,spd:1.04,superName:'The Word',
      superDesc:'Speaks once, and the argument is over',
@@ -2423,7 +2445,7 @@
        SK({name:'The Voice',cost:32000,suit:'#FFFFFF',suitLo:'#B8B0A0',trim:'#FFE27A',trimLo:'#B8B0A0',leg:'#FFFFFF',boot:'#B8B0A0',hair:'#FFFFFF'}),
        SK({name:'The Source',cost:54400,suit:'#F2C230',suitLo:'#B8B0A0',trim:'#F8F4E8',trimLo:'#B8B0A0',leg:'#F2C230',boot:'#B8B0A0',hair:'#FFFFFF'})]},
     {id:'lucifer',name:'Lucifer',real:'Lucifer Morningstar',cls:'The Lightbringer',
-     emblem:'wings',head:'longhair',rar:'majestic',
+     emblem:'wings',head:'longhair',rar:'mythic',
      trait:{name:'He Chose To Fall',kind:'power',v:0.20,desc:'Nothing forced on him ever sticks'},
      pow:48,tough:208,spd:1.16,superName:'Morningstar',
      superDesc:'Opens white wings and the sky goes bright',
@@ -2431,7 +2453,7 @@
        SK({name:'Lightbringer',cost:32000,suit:'#FFFFFF',suitLo:'#A8B0BC',trim:'#F24E4E',trimLo:'#A8B0BC',leg:'#FFFFFF',boot:'#A8B0BC',hair:'#F2E8C8'}),
        SK({name:'Fallen',cost:54400,suit:'#C42020',suitLo:'#A8B0BC',trim:'#F2F4F8',trimLo:'#A8B0BC',leg:'#C42020',boot:'#A8B0BC',hair:'#F2E8C8'})]},
     {id:'michael',name:'Michael Demiurgos',real:'Michael',cls:'The Demiurge',
-     emblem:'star',head:'longhair',rar:'majestic',
+     emblem:'star',head:'longhair',rar:'mythic',
      trait:{name:'Half The Power',kind:'power',v:0.20,desc:'Carries half of creation in his hands'},
      pow:49,tough:214,spd:1.10,superName:'Demiurgic Blast',
      superDesc:'A beam that has been going since the beginning',
@@ -2439,7 +2461,7 @@
        SK({name:'Demiurge',cost:32000,suit:'#FFE27A',suitLo:'#8E6A06',trim:'#FFFFFF',trimLo:'#8E6A06',leg:'#FFE27A',boot:'#8E6A06',hair:'#FFE8A0'}),
        SK({name:'Archangel',cost:54400,suit:'#F2F4F8',suitLo:'#8E6A06',trim:'#F2C230',trimLo:'#8E6A06',leg:'#F2F4F8',boot:'#8E6A06',hair:'#FFE8A0'})]},
     {id:'perpetua',name:'Perpetua',real:'Perpetua',cls:'Mother of the Multiverse',
-     emblem:'core',head:'helmet',rar:'majestic',
+     emblem:'core',head:'helmet',rar:'mythic',
      trait:{name:'She Built It',kind:'power',v:0.20,desc:'Knows every weakness because she made them'},
      pow:47,tough:218,spd:1.00,superName:'Unmaking',
      superDesc:'Takes back the piece of creation they were standing on',
@@ -2447,7 +2469,7 @@
        SK({name:'Mother',cost:32000,suit:'#7A4EC4',suitLo:'#1E0E38',trim:'#FFE27A',trimLo:'#1E0E38',leg:'#7A4EC4',boot:'#1E0E38',hair:'#2A1048'}),
        SK({name:'The Forger',cost:54400,suit:'#F2C230',suitLo:'#1E0E38',trim:'#4E2E7A',trimLo:'#1E0E38',leg:'#F2C230',boot:'#1E0E38',hair:'#2A1048'})]},
     {id:'spectre',name:'The Spectre',real:'Jim Corrigan',cls:'The Wrath of the Presence',
-     emblem:'none',head:'hood',rar:'majestic',
+     emblem:'none',head:'hood',rar:'mythic',
      trait:{name:'Divine Vengeance',kind:'power',v:0.20,desc:'The punishment always fits exactly'},
      pow:48,tough:210,spd:1.06,superName:'Judgement Day',
      superDesc:'Grows to the size of the sky and passes sentence',
@@ -2455,7 +2477,7 @@
        SK({name:'Wrath',cost:32000,suit:'#4E9E5E',suitLo:'#0E2E16',trim:'#FFFFFF',trimLo:'#0E2E16',leg:'#4E9E5E',boot:'#0E2E16',hair:'#F2F4F8'}),
        SK({name:'Jim Corrigan',cost:54400,suit:'#F2F4F8',suitLo:'#0E2E16',trim:'#2E6E3A',trimLo:'#0E2E16',leg:'#F2F4F8',boot:'#0E2E16',hair:'#F2F4F8'})]},
     {id:'dream',name:'Dream',real:'Morpheus',cls:'Lord of the Dreaming',
-     emblem:'gem',head:'spiky',rar:'majestic',
+     emblem:'gem',head:'spiky',rar:'mythic',
      trait:{name:'Shaper of Sleep',kind:'power',v:0.20,desc:'Fights you inside your own head'},
      pow:46,tough:200,spd:1.12,superName:'The Dreaming',
      superDesc:'Pulls the arena into a dream and changes its rules',
@@ -2779,9 +2801,9 @@
     {k:'rare',     n:'Rare',      c:'#4FA3E3', lock:0, hp:1.00, pw:1.00},
     {k:'epic',     n:'Epic',      c:'#A56BE8', lock:0, hp:1.00, pw:1.00},
     {k:'legendary',n:'Legendary', c:'#F7C948', lock:1, hp:1.00, pw:1.00},
-    {k:'mythic',   n:'Mythic',    c:'#FF7A45', lock:1, hp:1.18, pw:1.10},
-    {k:'ultimate', n:'Ultimate',  c:'#FF4D6D', lock:1, hp:1.40, pw:1.22},
-    {k:'majestic', n:'Majestic',  c:'#7CF5D5', lock:1, hp:1.70, pw:1.38}
+    {k:'majestic', n:'Majestic',  c:'#7CF5D5', lock:1, hp:1.18, pw:1.10},
+    {k:'ultimate', n:'Ultimate',  c:'#FF4D6D', lock:1, hp:1.42, pw:1.24},
+    {k:'mythic',   n:'Mythic',    c:'#FF7A45', lock:1, hp:1.80, pw:1.45}
   ];
   var RIDX={}, RMAP={};
   for(var ri=0;ri<RARITY.length;ri++){ RIDX[RARITY[ri].k]=ri; RMAP[RARITY[ri].k]=RARITY[ri]; }
@@ -2847,6 +2869,9 @@
     if(typeof ow.fast!=='number') ow.fast=0;
     if(typeof ow.tiny!=='number') ow.tiny=0;
     if(typeof ow.giant!=='number') ow.giant=0;
+    if(typeof ow.smite!=='number') ow.smite=0;
+    if(typeof ow.immortal!=='number') ow.immortal=0;
+    if(typeof ow.rich!=='number') ow.rich=0;
     missionState();
   }
   function store(){ try{ localStorage.setItem('skyforge.v1',JSON.stringify(save)); }catch(e){} }
@@ -2934,7 +2959,7 @@
     var h=HEROES[save.sel];
     if(!mReady(m,h)) return false;
     save.done[mkey(m,h)]=1;
-    save.credits+=m.cred;
+    save.credits+=m.cred*payMul();
     if(m.xp){
       var p=prog(h); p.xp+=m.xp;
       while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; }
@@ -5455,7 +5480,7 @@
     var h=HEROES[save.sel], p=prog(h);
     legendBout=null;
     var cred=Math.round(120+r*160), xp=Math.round(90+r*120);
-    save.credits+=cred; p.xp+=xp;
+    save.credits+=cred*payMul(); p.xp+=xp*payMul();
     var ups=0;
     while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; ups++; }
     store();
@@ -5464,8 +5489,8 @@
       +'. The trial has to be won in one sitting, so it starts again from round one — '
       +'but nothing is lost, and you can go again straight away.'
       +(ups?' Levelled up to '+p.lvl+'!':'');
-    $('rwCred').innerHTML=cred+'<span>Credits</span>';
-    $('rwXp').innerHTML=xp+'<span>Experience</span>';
+    $('rwCred').innerHTML=(cred*payMul())+'<span>Credits</span>';
+    $('rwXp').innerHTML=(xp*payMul())+'<span>Experience</span>';
     $('ovReward').hidden=false;
     $('ovBtn').textContent='Back to champions';
     $('ovBtn2').hidden=true;
@@ -5566,7 +5591,7 @@
     var wasBest=save.raidBest||0;
     if(reached>p.raid) p.raid=reached;
     if(reached>save.raidBest) save.raidBest=reached;
-    save.credits+=cred; p.xp+=xp;
+    save.credits+=cred*payMul(); p.xp+=xp*payMul();
     var ups=0;
     while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; ups++; }
     store();
@@ -5579,8 +5604,8 @@
       +(reached>wasBest?' Best raid yet.':'')
       +(ups?' Levelled up to '+p.lvl+'!':'')
       +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'');
-    $('rwCred').innerHTML=cred+'<span>Credits</span>';
-    $('rwXp').innerHTML=xp+'<span>Experience</span>';
+    $('rwCred').innerHTML=(cred*payMul())+'<span>Credits</span>';
+    $('rwXp').innerHTML=(xp*payMul())+'<span>Experience</span>';
     $('ovReward').hidden=false;
     $('ovBtn').textContent='Back to champions';
     $('ovBtn2').hidden=true;
@@ -5618,8 +5643,8 @@
           : nm+' is on '+Math.round(raid.carryHp/who.max*100)
             +'% health going into floor '+raid.floor+'.')
       +' Bank now and it is all yours; lose and you keep half.';
-    $('rwCred').innerHTML=raid.cred+'<span>Credits in the pot</span>';
-    $('rwXp').innerHTML=raid.xp+'<span>Experience in the pot</span>';
+    $('rwCred').innerHTML=(raid.cred*payMul())+'<span>Credits in the pot</span>';
+    $('rwXp').innerHTML=(raid.xp*payMul())+'<span>Experience in the pot</span>';
     $('ovReward').hidden=false;
     $('ovBtn').textContent=(nk==='main'?'RAID BOSS':(nk==='sub'?'Sub-boss':'Floor '+raid.floor))
       +' \u2014 +'+next.cred;
@@ -5725,7 +5750,7 @@
       names.push(HEROES[mine[i]].name);
     }
     if(win) save.h[HEROES[mine[0]].id].wins++;
-    save.credits+=cred;
+    save.credits+=cred*payMul();
     store();
     var got=missionsReady();
     $('ovTitle').textContent=win?'Squad wiped out!':'Your squad is down';
@@ -5735,8 +5760,8 @@
       +' Experience is shared across the whole squad.'
       +(ups?' '+ups+' level'+(ups>1?'s':'')+' between them!':'')
       +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'');
-    $('rwCred').innerHTML=cred+'<span>Credits</span>';
-    $('rwXp').innerHTML=xp+'<span>Experience</span>';
+    $('rwCred').innerHTML=(cred*payMul())+'<span>Credits</span>';
+    $('rwXp').innerHTML=(xp*payMul())+'<span>Experience</span>';
     $('ovReward').hidden=false;
     $('ovBtn').textContent='Back to champions';
     $('ovBtn2').hidden=true;
@@ -5780,8 +5805,8 @@
     $('ovText').textContent=HEROES[save.sel].name+' is healed to full for the '
       +TOUR_NAME[tour.round].toLowerCase()+'. The next one is harder.'
       +(tour.round===3?' This is the last fight — the final pays more than the other two together.':'');
-    $('rwCred').innerHTML=tour.cred+'<span>Credits so far</span>';
-    $('rwXp').innerHTML=tour.xp+'<span>Experience so far</span>';
+    $('rwCred').innerHTML=(tour.cred*payMul())+'<span>Credits so far</span>';
+    $('rwXp').innerHTML=(tour.xp*payMul())+'<span>Experience so far</span>';
     $('ovReward').hidden=false;
     $('ovBtn').textContent=TOUR_NAME[tour.round]+' — +'+tourReward(tour.round).cred;
     $('ovBtn2').hidden=true;
@@ -5794,7 +5819,7 @@
     var cred=won?tour.cred:Math.round(tour.cred*0.4);
     var xp=won?tour.xp:Math.round(tour.xp*0.4);
     if(won){ save.tourWins++; p.wins++; }
-    save.credits+=cred; p.xp+=xp;
+    save.credits+=cred*payMul(); p.xp+=xp*payMul();
     var ups=0;
     while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; ups++; }
     store();
@@ -5807,8 +5832,8 @@
         +'. You keep part of the purse.')
       +(ups?' Levelled up to '+p.lvl+'!':'')
       +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'');
-    $('rwCred').innerHTML=cred+'<span>Credits</span>';
-    $('rwXp').innerHTML=xp+'<span>Experience</span>';
+    $('rwCred').innerHTML=(cred*payMul())+'<span>Credits</span>';
+    $('rwXp').innerHTML=(xp*payMul())+'<span>Experience</span>';
     $('ovReward').hidden=false;
     $('ovBtn').textContent='Back to champions';
     $('ovBtn2').hidden=true;
@@ -5863,6 +5888,11 @@
   }
   /* the single question the rest of the game asks: is this switch live? */
   function ab(k){ return isOwner()&&save.owner&&!!save.owner[k]; }
+  /* The panel is the owner's every day. These three are not: they only work on
+     an admin abuse day, which is what makes Tuesday, Thursday and Saturday
+     worth waiting for. */
+  function abuse(k){ return isOwner()&&isAdminDay()&&save.owner&&!!save.owner[k]; }
+  function payMul(){ return abuse('rich')?10:1; }
   function abFoe(){ return (isOwner()&&save.owner)?save.owner.foe:''; }
 
   /* ================= mastery =================
@@ -6017,8 +6047,8 @@
     $('ovText').textContent=HEROES[save.sel].name+' is on '
       +Math.round(who.hp/who.max*100)+'% health going into round '+surv.round
       +'. Nothing is healed in here. Everything in the pot is yours whatever happens next.';
-    $('rwCred').innerHTML=surv.cred+'<span>Credits banked</span>';
-    $('rwXp').innerHTML=surv.xp+'<span>Experience banked</span>';
+    $('rwCred').innerHTML=(surv.cred*payMul())+'<span>Credits banked</span>';
+    $('rwXp').innerHTML=(surv.xp*payMul())+'<span>Experience banked</span>';
     $('ovReward').hidden=false;
     $('ovBtn').textContent='Round '+surv.round+' — +'+next.cred;
     $('ovBtn2').textContent='Walk away';
@@ -6031,7 +6061,7 @@
     var reached=surv.round-1;
     var wasBest=save.survBest||0;
     if(reached>save.survBest) save.survBest=reached;
-    save.credits+=surv.cred; p.xp+=surv.xp;
+    save.credits+=surv.cred*payMul(); p.xp+=surv.xp*payMul();
     var ups=0;
     while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; ups++; }
     store();
@@ -6044,8 +6074,8 @@
       +(reached>wasBest?' New best.':' Your best is '+save.survBest+'.')
       +(ups?' Levelled up to '+p.lvl+'!':'')
       +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'');
-    $('rwCred').innerHTML=surv.cred+'<span>Credits</span>';
-    $('rwXp').innerHTML=surv.xp+'<span>Experience</span>';
+    $('rwCred').innerHTML=(surv.cred*payMul())+'<span>Credits</span>';
+    $('rwXp').innerHTML=(surv.xp*payMul())+'<span>Experience</span>';
     $('ovReward').hidden=false;
     $('ovBtn').textContent='Back to champions';
     $('ovBtn2').hidden=true;
@@ -6182,7 +6212,7 @@
     var xp=win?(first?C.xp:Math.round(C.xp*0.25)):Math.round(C.xp*0.08);
     if(win&&first) save.storyDone=story.n;
     if(win) p.wins++;
-    save.credits+=cred; p.xp+=xp;
+    save.credits+=cred*payMul(); p.xp+=xp*payMul();
     var ups=0;
     while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; ups++; }
     store();
@@ -6198,8 +6228,8 @@
           +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':''))
         :(foeName+' (level '+C.lvl+') stopped you. Go and get stronger -- the chapter will wait, '
           +'and everything you earn anywhere else in the game counts towards it.');
-      $('rwCred').innerHTML=cred+'<span>Credits</span>';
-      $('rwXp').innerHTML=xp+'<span>Experience</span>';
+      $('rwCred').innerHTML=(cred*payMul())+'<span>Credits</span>';
+      $('rwXp').innerHTML=(xp*payMul())+'<span>Experience</span>';
       $('ovReward').hidden=false;
       $('ovBtn').textContent='Back to champions';
       $('ovBtn2').hidden=true;
@@ -6275,7 +6305,7 @@
     }else{
       cred=Math.round(45+foe.lvl*9); xp=Math.round(40+foe.lvl*8);
     }
-    save.credits+=cred; p.xp+=xp;
+    save.credits+=cred*payMul(); p.xp+=xp*payMul();
     var ups=0;
     while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; ups++; }
     if(freeLvl&&p.lvl<60){ p.lvl++; ups++; }
@@ -6293,8 +6323,8 @@
         +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'')
       : foe.h.name+' (level '+foe.lvl+') was too strong. You still earned something for trying.'
         +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'');
-    $('rwCred').innerHTML=cred+'<span>Credits</span>';
-    $('rwXp').innerHTML=xp+'<span>Experience</span>';
+    $('rwCred').innerHTML=(cred*payMul())+'<span>Credits</span>';
+    $('rwXp').innerHTML=(xp*payMul())+'<span>Experience</span>';
     $('ovReward').hidden=false;
     $('ovBtn').textContent='Back to champions';
     $('overlay').hidden=false;
@@ -6383,7 +6413,9 @@
        the same switch never helps whoever you are fighting. */
     if(ab('punch')&&att===me) dmg=Math.round(dmg*10);
     if(ab('god')&&def===me) dmg=Math.max(1,Math.round(dmg*0.1));
+    if(abuse('smite')&&def===foe) dmg=Math.max(dmg,def.hp);
     def.hp-=dmg; def.flash=10;
+    if(abuse('immortal')&&def===me&&def.hp<1) def.hp=1;
     if(crit) floatText(att.x+att.facing*40,GY-186,'CRITICAL','#FFD46B');
     if(tr){
       if(tr.kind==='lifesteal'&&att.hp<att.max){
@@ -7564,7 +7596,8 @@
       }
       /* and a badge whenever one of the owner's switches is on, so a win is
          never quietly a switch's win */
-      if(ab('god')||ab('punch')||ab('meter')||ab('bighead')||ab('slowmo')
+      if(abuse('smite')||abuse('immortal')||abuse('rich')
+         ||ab('god')||ab('punch')||ab('meter')||ab('bighead')||ab('slowmo')
          ||ab('fast')||ab('tiny')||ab('giant')||ab('mirror')){
         ctx.textAlign='left';
         ctx.font='800 14px "Saira Condensed", sans-serif';
@@ -8123,6 +8156,9 @@
   ownerToggle('tFast','fast','Double speed ON.','Speed is back to normal.');
   ownerToggle('tTiny','tiny','Your opponents are tiny now.','Opponents are back to normal size.');
   ownerToggle('tGiant','giant','You are a giant now.','You are back to normal size.');
+  ownerToggle('tSmite','smite','SMITE on. One hit ends anybody.','Smite off.');
+  ownerToggle('tImmortal','immortal','IMMORTAL on. You cannot be put down.','Immortal off.');
+  ownerToggle('tRich','rich','PAYDAY on. Everything pays ten times.','Payday off.');
 
   /* ---- the owner's key ----------------------------------------------
      This is a single-player game that lives in one browser, so these just
@@ -8162,6 +8198,16 @@
     $('ownerSec').hidden=!owner;
     $('offDay').hidden=true;
     if(!owner) return;
+    $('abuseBox').hidden=!abuse;
+    $('abuseShut').hidden=abuse;
+    if(abuse){
+      $('abuseNote').textContent='It is '+DAYNAME[new Date().getDay()]+'. These three only exist on '
+        +'Tuesdays, Thursdays and Saturdays — they switch themselves off again tomorrow, and back '
+        +'on next time. Everything above is yours every day.';
+    } else {
+      $('abuseShut').textContent='ADMIN ABUSE is closed today. Smite, Immortal and Payday come back '
+        +'on '+nextAdminDay().name+'. The rest of the panel is yours every day.';
+    }
     $('abTag').textContent=abuse?'admin abuse day':'open';
     $('abTag').hidden=false;
     $('abLead').textContent=(abuse
@@ -8182,6 +8228,9 @@
     $('tFast').className='tog'+(ow.fast?' on':'');
     $('tTiny').className='tog'+(ow.tiny?' on':'');
     $('tGiant').className='tog'+(ow.giant?' on':'');
+    $('tSmite').className='tog'+(ow.smite?' on':'');
+    $('tImmortal').className='tog'+(ow.immortal?' on':'');
+    $('tRich').className='tog'+(ow.rich?' on':'');
   }
   $('bAllSkins').addEventListener('click',function(){
     var n=0;
@@ -8302,6 +8351,18 @@
      go:function(){ return flip('tiny','Your opponents are tiny now.','Opponents are back to normal size.'); }},
     {c:'GIANT',d:'you tower over them',
      go:function(){ return flip('giant','You are a giant now.','You are back to normal size.'); }},
+    {c:'SMITE',d:'abuse day only — one hit ends anybody',
+     go:function(){ if(!isAdminDay()) return 'SMITE only works on an admin abuse day. The next one is '
+       +nextAdminDay().name+'.';
+       return flip('smite','SMITE on. One hit ends anybody.','Smite off.'); }},
+    {c:'IMMORTAL',d:'abuse day only — you cannot be put down',
+     go:function(){ if(!isAdminDay()) return 'IMMORTAL only works on an admin abuse day. The next one is '
+       +nextAdminDay().name+'.';
+       return flip('immortal','IMMORTAL on. You cannot be put down.','Immortal off.'); }},
+    {c:'PAYDAY',d:'abuse day only — every reward pays ten times',
+     go:function(){ if(!isAdminDay()) return 'PAYDAY only works on an admin abuse day. The next one is '
+       +nextAdminDay().name+'.';
+       return flip('rich','PAYDAY on. Everything pays ten times.','Payday off.'); }},
     {c:'TWIN',d:'you always fight a copy of yourself',
      go:function(){ return flip('mirror','Mirror match ON.','Opponents are normal again.'); }}
   ];
@@ -8393,7 +8454,7 @@
   $('bWipe').addEventListener('click',function(){
     if(!window.confirm('Start again? This wipes every level, credit, version and legendary.')) return;
     save={credits:600,sel:0,arena:0,h:{},done:{},arenaWins:{},legends:{},raidBest:0,
-          teamWins:0,tourWins:0,tourFar:0,storyDone:0,survBest:0,dailyDay:0,dailyStreak:0,team:[0,-1,-1],owner:{god:0,punch:0,meter:0,foe:'',bighead:0,slowmo:0,mirror:0,fast:0,tiny:0,giant:0}};
+          teamWins:0,tourWins:0,tourFar:0,storyDone:0,survBest:0,dailyDay:0,dailyStreak:0,team:[0,-1,-1],owner:{god:0,punch:0,meter:0,foe:'',bighead:0,slowmo:0,mirror:0,fast:0,tiny:0,giant:0,smite:0,immortal:0,rich:0}};
     for(var i=0;i<HEROES.length;i++) save.h[HEROES[i].id]=blank();
     raid=null; legendBout=null; team=null; tour=null; story=null; surv=null; me=null;
     ownerRefresh();

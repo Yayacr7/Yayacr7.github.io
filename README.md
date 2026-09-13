@@ -75,18 +75,24 @@ rather than a list:
 
 | Rarity | How many | Locked? |
 | --- | --- | --- |
-| Common | 72 | no |
-| Rare | 71 | no |
-| Epic | 44 | no |
+| Common | 80 | no |
+| Rare | 85 | no |
+| Epic | 54 | no |
 | **Legendary** | 10 | yes |
-| **Mythic** | 9 | yes |
+| **Majestic** | 9 | yes |
 | **Ultimate** | 6 | yes |
-| **Majestic** | 6 | yes |
+| **Mythic** | 6 | yes |
+
+**Mythic sits at the top.** It is both the rarest step and much the strongest --
+a Mythic carries 80% more health and 45% more damage than its raw stats, against
+42% and 24% for an Ultimate. The six who hold it are the six biggest characters
+in the game: The Presence, Lucifer Morningstar, Michael Demiurgos, Perpetua, The
+Spectre and Dream. Majestic and Ultimate slot in beneath it.
 
 Everything from Legendary upward has to be won in the Trial of Three, and the
-rarer the prize the harder that trial is -- a Majestic comes with a good deal
-more health than a Legendary. Mythic and above also hit harder and carry more
-health when **you** field them, which is the point of chasing them.
+rarer the prize the harder that trial is -- a Mythic comes with a good deal more
+health than a Legendary. Majestic and above also hit harder and carry more health
+when **you** field them, which is the point of chasing them.
 
 Rarity replaced a single locked/unlocked flag that had been doing the job of a
 ladder. The first pass set it purely from each champion's stats, which was
@@ -309,9 +315,23 @@ so anyone who reads the source can find it. Nothing running entirely on the
 visitor's own computer can do better -- real gating needs a server holding the
 answer, and this game has no server.
 
-**Admin abuse days** -- Tuesday, Thursday and Saturday -- are still named in the
-panel, but they no longer lock the owner out: the panel and every code belong to
-the owner on any day of the week.
+### Admin abuse days
+
+The panel and every ordinary code belong to the owner **every day**. But on
+**Tuesday, Thursday and Saturday** a second, red-dashed section opens inside it
+with three powers that exist on no other day:
+
+| | |
+| --- | --- |
+| **Smite** | every hit you land finishes them |
+| **Immortal** | you can never drop below one health |
+| **Payday** | every reward in the game pays ten times |
+
+They switch themselves off when the day ends and come back on next time, and
+their codes (`SMITE`, `IMMORTAL`, `PAYDAY`) say which day to come back on if you
+try them early. Measured on a Tuesday: Smite finished a fight in 34 strikes that
+took 70 without it, and Payday turned a 117-credit reward into 1,170. Measured on
+a Wednesday, with the same switches saved as on: no difference at all.
 
 ### The codes
 
