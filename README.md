@@ -4,7 +4,7 @@ Things I'm making with Claude Code.
 
 ## Yahya.games.com — Skyforge Champions
 
-Two hundred and eighteen characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
+Two hundred and fifty characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
 and forge their armour into brighter and brighter finishes.
 
 **To play:** open `index.html` in any web browser.
@@ -43,7 +43,7 @@ sky over the fire pits · **The Watchtower** in orbit, with Earth below.
 
 ### The roster
 
-Two hundred and eighteen characters, each drawn to their own costume. This is
+Two hundred and fifty characters, each drawn to their own costume. This is
 not every character from anywhere — each one here is hand-written drawing code
 — but it covers the Justice League, the Bat-family, a bench of villains, a
 Marvel and X-Men wing, and seventy-six anime fighters.
@@ -124,6 +124,29 @@ The Spectre and Dream -- the six most powerful things in the game by a distance.
 Every one of them carries **three versions** rather than the usual one or two,
 so a Mythic or an Ultimate is worth forging as well as winning.
 
+### Pixar
+
+Thirty-two Pixar characters, all of them playable straight away rather than
+locked behind the Trial -- there is already plenty to win.
+
+**Toy Story:** Buzz Lightyear, Woody, Jessie, Zurg, Lotso.
+**The Incredibles:** Mr. Incredible, Elastigirl, Violet, Dash, Frozone, Syndrome
+and Edna Mode.
+**Monsters, Inc.:** Sulley, Mike Wazowski, Randall.
+**Up:** Carl and Russell. **Coco:** Miguel, Hector, Ernesto.
+**Soul:** Joe Gardner and 22. **WALL-E:** WALL-E and EVE.
+**A Bug's Life:** Flik and Hopper. **Onward:** Ian and Barley.
+**Elemental:** Ember and Wade. Plus **Merida** and **Mei**.
+
+The existing head shapes did most of the work: Buzz gets the dome helmet, Jessie
+and Mei get the braid, Sulley the horns, Hector the skull, Russell the peaked
+scout cap, Flik the wide bug eyes, and Syndrome the spiked hair he already had.
+
+Their traits are jokes from the films rather than superpowers -- Woody has
+*There's a Snake in My Boot*, Edna has *No Capes*, Mike has *Always Watching* --
+and their stats run from Common up to Epic, with Mr. Incredible the strongest
+of them.
+
 ### Footballers and basketball players
 
 Forty athletes joined the roster. **Twenty-two footballers** -- Messi, Ronaldo,
@@ -147,7 +170,7 @@ thousands of professionals playing right now.
 
 ### Search
 
-At two hundred and eighteen champions, scrolling stopped being reasonable. The
+At two hundred and fifty champions, scrolling stopped being reasonable. The
 box above the roster filters as you type and matches **name, real name, type and
 sport** -- so `kent` finds Superman, `amazon` finds Wonder Woman, `football`
 brings up all twenty-two footballers, and `curry` quite correctly returns both
