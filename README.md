@@ -186,6 +186,24 @@ Search hides cards rather than rebuilding a shorter list, because the card array
 lines up with the roster by index -- a filtered list would hand every portrait to
 the wrong champion.
 
+### The movie
+
+**Skyforge: The Last Specimen** is a short film in five acts that plays itself.
+Press **Watch the movie** on the home screen and sit back: title cards,
+subtitled dialogue scenes with the camera pushing in on whoever is speaking,
+four real bouts, and a credits roll, over a quiet score. It runs about five
+minutes.
+
+- **You are the star.** Whoever you have selected plays the lead. If your pick
+  already has a part in the film (Batman, say), Superman stands in.
+- **The fights are real.** Both champions are on the AI, so no two screenings
+  play out the same. The winner is scripted, though: they wear plot armour and
+  can't be knocked out, and a bout that drags makes them hit harder.
+- **Nothing is earned or lost.** It doesn't touch credits, experience or your
+  save, and the owner switches are off while it plays.
+- **Controls:** Skip scene (right arrow, Enter or Space) and Leave the cinema
+  (Esc), bottom-right of the screen.
+
 ### Story mode
 
 Ten chapters, with cutscenes between them, telling how the Skyforge came to be.
