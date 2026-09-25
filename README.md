@@ -11,25 +11,52 @@ and forge their armour into brighter and brighter finishes.
 
 ### Fighting
 
-| Key | Button | Does |
+Four big buttons, that's all:
+
+| Button | Key | Does |
 | --- | --- | --- |
-| `A` | Strike | Punch. Tap in rhythm for a 3-hit combo — the third hit is the heavy one |
-| `F` | Super Punch | Roughly double damage. Costs 25% of the meter |
-| `K` | Kick | Slower than a strike and hits considerably harder |
-| `G` | Grab | Modest damage, but a guard barely helps against it |
-| `W` | Leap | A jump attack. Solaris flies instead — higher, further, and harder |
-| `S` | Guard | Hold to block. Cuts incoming damage to about a sixth |
-| `D` | Super Move | That champion's signature move. Needs a full meter |
+| 👊 Punch | `A` or `J` | Tap in rhythm for a 3-hit combo — the third hit is the heavy one |
+| 🦶 Kick | `K` or `L` | Slower than a punch and hits harder |
+| 🚀 Jump | `W` or `Space` | Jump at them. **In the air, Punch = Flying Punch and Kick = Flying Kick**: you dive straight onto them for big damage. Superman flies instead |
+| ⚡ Power | `D` or `P` | Always does the biggest move you can afford: your **Super Move** on a full meter, the **Punch of Death** at half a meter, otherwise a punch |
 
-Landing hits fills the meter fastest; guarding fills it slowly.
+The **Punch of Death** is a dash-in haymaker: slow motion, a flash, after-images,
+three times a normal punch, and it knocks them off their feet. It costs half
+the meter.
 
-The controls sit in the bottom-right corner of the arena itself, over the
-action, rather than below it.
+**Blocking is automatic.** When your opponent winds up and you're standing
+still, your champion gets their guard up on their own a good share of the
+time. Keyboard players can still hold `S` to block and press `G` to grab.
 
-**A press always does something.** If a move is requested while the champion
-is mid-animation or on cooldown it is buffered and fires the moment they are
-free, and a move you cannot afford falls back to a plain strike rather than
-being swallowed. Mashing a button is never a dead input.
+Landing hits fills the meter fastest. While you're in the air the Punch and
+Kick buttons light up blue and say FLYING PUNCH / FLYING KICK, and Power
+pulses when it's charged.
+
+**A press always does something.** A move pressed mid-animation is buffered
+and fires the moment the champion is free, and a move you can't afford falls
+back to a plain punch. Mashing is never a dead input.
+
+### Making every fight feel big
+
+- **READY? … FIGHT!** before every bout, and a giant **K.O.!** at the end
+- Comic-book hit words (**POW! BAM! WHAM! KAPOW!**) on the big hits
+- Confetti on every win
+- A **treasure chest** after every win: Wooden, Silver, Gold or (rarely)
+  Diamond, which also gives a free level
+- **Win streaks**: each win in a row pays 10% more credits, up to double.
+  Losing resets it
+- Tips along the bottom of the screen for your first five fights
+
+### Quick play modes
+
+- **🧌 Giant Battle**: one of the game's heaviest hitters, drawn 1.5× size
+  with 3× the health. A win always drops a Gold Chest or better
+- **⏱ 60-Second Rush**: knock out as many as you can in a minute. Each
+  knockout pays, heals you a little and brings the next one straight in.
+  Three or more knockouts earns a chest
+- **🤖 Smash the Dummy**: twenty seconds against a training robot that never
+  hits back. Pays by damage dealt, and a new record drops a Silver Chest or
+  better
 
 ### Arenas
 
@@ -185,6 +212,26 @@ Stephen and Arthur.
 Search hides cards rather than rebuilding a shorter list, because the card array
 lines up with the roster by index -- a filtered list would hand every portrait to
 the wrong champion.
+
+### The movie (owner only)
+
+Only shows up on a browser unlocked with the owner key; nobody else sees it.
+
+**Skyforge: The Last Specimen** is a short film in five acts that plays itself.
+Press **Watch the movie** on the home screen and sit back: title cards,
+subtitled dialogue scenes with the camera pushing in on whoever is speaking,
+four real bouts, and a credits roll, over a quiet score. It runs about five
+minutes.
+
+- **You are the star.** Whoever you have selected plays the lead. If your pick
+  already has a part in the film (Batman, say), Superman stands in.
+- **The fights are real.** Both champions are on the AI, so no two screenings
+  play out the same. The winner is scripted, though: they wear plot armour and
+  can't be knocked out, and a bout that drags makes them hit harder.
+- **Nothing is earned or lost.** It doesn't touch credits, experience or your
+  save, and the owner switches are off while it plays.
+- **Controls:** Skip scene (right arrow, Enter or Space) and Leave the cinema
+  (Esc), bottom-right of the screen.
 
 ### Story mode
 

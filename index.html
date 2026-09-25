@@ -77,6 +77,30 @@
   .pad{position:absolute;right:12px;bottom:12px;z-index:4;
     display:grid;gap:7px;grid-template-columns:repeat(2,minmax(0,1fr));width:min(46%,320px)}
   .pad .wide{grid-column:1 / -1}
+  .pad .fbtn{font-size:clamp(.8rem,2.3vw,1.18rem);padding:13px 6px}
+  .pad .fbtn.air{border-color:#7FD4FF;background:#16324D;color:#fff;box-shadow:0 0 18px rgba(127,212,255,.7)}
+  #bSpecial.ready{animation:pulse 0.9s ease-in-out infinite}
+  #bSpecial.ready:not(.super){border-color:#FF6B57;color:#fff;background:#4A2418}
+  @keyframes pulse{50%{transform:scale(1.05)}}
+  .chest{margin:0 0 1em;padding:10px 14px;border-radius:12px;border:2px solid;animation:chestpop .6s cubic-bezier(.2,1.6,.4,1)}
+  .chest .ci{display:block;font-size:2.4rem;line-height:1;animation:wiggle 1.2s ease-in-out .5s 2}
+  .chest b{display:block;font-family:"Saira Condensed",sans-serif;font-size:1.35rem;text-transform:uppercase}
+  .chest small{display:block;font-weight:800;font-size:.8rem}
+  .chest.wood{border-color:#B07A45;background:rgba(120,72,30,.35)} .chest.wood b{color:#E8B47A}
+  .chest.silver{border-color:#C9D6E6;background:rgba(160,180,210,.22)} .chest.silver b{color:#E6EEF8}
+  .chest.gold{border-color:#F7C948;background:rgba(247,201,72,.2)} .chest.gold b{color:#FFD46B}
+  .chest.diamond{border-color:#7FD4FF;background:rgba(127,212,255,.2);box-shadow:0 0 26px rgba(127,212,255,.6)} .chest.diamond b{color:#BDEBFF}
+  @keyframes chestpop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
+  @keyframes wiggle{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+  .funmodes{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .funmodes .fm{background:var(--panel-2);border-radius:13px;padding:14px;display:flex;flex-direction:column;gap:6px}
+  .funmodes .fm h4{margin:0;font-family:"Saira Condensed",sans-serif;font-size:1.3rem;text-transform:uppercase;color:var(--gold)}
+  .funmodes .fm p{margin:0;font-size:.88rem}
+  .funmodes .fm .rbest{font-weight:800;font-size:.8rem;color:var(--dim)}
+  .funmodes .btn{margin-top:auto}
+  .moviebar{position:absolute;right:12px;bottom:12px;z-index:4;display:flex;gap:7px;opacity:.55}
+  .moviebar:hover{opacity:1}
+  @media (max-width:620px){ .moviebar{right:7px;bottom:7px;gap:5px} }
   @media (max-width:620px){ .pad{right:7px;bottom:7px;gap:5px;width:52%} }
   .fbtn{font-family:"Saira Condensed",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.04em;
     font-size:clamp(.66rem,1.7vw,.92rem);padding:9px 6px;border-radius:10px;
@@ -87,14 +111,9 @@
     letter-spacing:.08em;color:var(--dim);margin-top:2px}
   .fbtn.flash{border-color:var(--gold);background:rgba(52,42,12,.86)}
   #bKick{border-color:rgba(255,107,74,.44)}
-  #bGrab{border-color:rgba(247,201,72,.4)}
   .fbtn:active,.fbtn.held{background:#2B3E57}
   #bStrike{border-color:rgba(255,107,74,.5)} #bStrike:active{background:#40251E}
   #bLeap{border-color:rgba(79,168,245,.5)} #bLeap:active{background:#16324D}
-  #bHeavy{border-color:rgba(255,107,74,.28);color:var(--dim)}
-  #bHeavy.ready{border-color:var(--hot);color:var(--ice)}
-  #bHeavy.ready:active{background:#4A2418}
-  #bGuard{border-color:rgba(79,168,245,.5)} #bGuard.held{background:#16324D}
   #bSpecial{border-color:rgba(247,201,72,.28);color:var(--dim)}
   #bSpecial.ready{border-color:var(--gold);color:#2E2103;background:linear-gradient(180deg,#FFDD72,#EDAF16);
     animation:glow 1.1s ease-in-out infinite}
@@ -359,6 +378,7 @@
       <div class="panel">
         <h2 id="ovTitle">Victory</h2>
         <p id="ovText"></p>
+        <div class="chest" id="ovChest" hidden><span class="ci">🎁</span><b></b><small></small></div>
         <div class="reward" id="ovReward" hidden>
           <div id="rwCred">0<span>Credits</span></div>
           <div id="rwXp">0<span>Experience</span></div>
@@ -378,14 +398,15 @@
         </div>
       </div>
     </div>
+    <div class="moviebar" id="moviebar" hidden>
+      <button class="fbtn" id="mvSkip">Skip scene<small>Right arrow</small></button>
+      <button class="fbtn" id="mvExit">Leave the cinema<small>Esc</small></button>
+    </div>
     <div class="pad" id="fightbar" hidden>
-      <button class="fbtn" id="bStrike">Strike<small>Tap fast to combo</small></button>
-      <button class="fbtn" id="bKick">Kick<small>Slower, hits harder</small></button>
-      <button class="fbtn" id="bGrab">Grab<small>Beats a guard</small></button>
-      <button class="fbtn" id="bLeap">Leap<small>Jump attack</small></button>
-      <button class="fbtn" id="bGuard">Guard<small>Hold to block</small></button>
-      <button class="fbtn" id="bHeavy">Super Punch<small>Costs 25%</small></button>
-      <button class="fbtn wide" id="bSpecial">Super Move<small>Charging</small></button>
+      <button class="fbtn" id="bStrike">👊 Punch<small>Tap fast to combo</small></button>
+      <button class="fbtn" id="bKick">🦶 Kick<small>Hits harder</small></button>
+      <button class="fbtn" id="bLeap">🚀 Jump<small>Then punch or kick!</small></button>
+      <button class="fbtn" id="bSpecial">⚡ Power<small>Charging</small></button>
     </div>
   </div>
 
@@ -535,6 +556,37 @@
             <div class="lb"><h4>Hall of Fame &mdash; your champions</h4><ol id="hof"></ol></div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="sec" style="margin-top:14px">
+      <h3>Quick play <span class="mReady" id="stkBest"></span></h3>
+      <div class="funmodes">
+        <div class="fm"><h4>🧌 Giant Battle</h4>
+          <p>One champion, <b>one and a half times the size</b> and three times the health. Topple it for a huge prize and a <b>Gold Chest or better</b>.</p>
+          <p class="rbest" id="gtBest"></p>
+          <button class="btn fight" id="bGiant">Fight a giant</button></div>
+        <div class="fm"><h4>⏱ 60-Second Rush</h4>
+          <p>Knock out as many as you can in one minute. Every knockout pays, heals you a little, and the next one is <b>straight in</b>.</p>
+          <p class="rbest" id="rhBest"></p>
+          <button class="btn fight" id="bRush">Start the clock</button></div>
+        <div class="fm"><h4>🤖 Smash the Dummy</h4>
+          <p>Twenty seconds, a training robot that never hits back, and <b>one giant damage number</b>. Beat your record for a chest.</p>
+          <p class="rbest" id="dmBest"></p>
+          <button class="btn fight" id="bDummy">Start smashing</button></div>
+      </div>
+    </section>
+
+    <section class="sec" style="margin-top:14px" id="movieSec" hidden>
+      <h3>The movie <span class="mReady">Owner only</span></h3>
+      <div class="raid">
+        <div class="rinfo">
+          <p class="rlead">Skyforge: The Last Specimen &mdash; starring your champion.</p>
+          <p class="rnote">A short film in five acts that plays itself. Title cards, dialogue,
+            and four real bouts fought on the AI, so no two screenings are quite the same.
+            Whoever you have selected is the star. Nothing is earned or lost by watching.</p>
+        </div>
+        <button class="btn fight" id="bMovie">Watch the movie</button>
       </div>
     </section>
 
@@ -4031,7 +4083,9 @@
      shafts:0,clouds:'none',haze:'20,30,60',stars:true,earth:true,
      deck:{lo:'#2A3340',mid:'#182028',a:'#4E5A6A',b:'#6E7C8E',c:'#93A2B4',ring:'99,224,208'}}
   ];
-  function arena(){ return ARENAS[Math.min(ARENAS.length-1,Math.max(0,save.arena||0))]; }
+  function arena(){
+    if(movie&&MOVIE[movie.i]) return ARENAS[MOVIE[movie.i].arena];
+    return ARENAS[Math.min(ARENAS.length-1,Math.max(0,save.arena||0))]; }
 
   var skyCache=null, skyCacheId='';
   function buildSky(){
@@ -4388,6 +4442,7 @@
     var h=f.h, T=TIERS[f.tier], face=f.facing;
     if(f===foe&&ab('tiny')) scale*=0.62;
     if(f===me&&ab('giant')) scale*=1.42;
+    if(f.big) scale*=f.big;
     f.turnNow=turnOf(f,t);
     var P0=project3d(f.pose,f.turnNow);
     DETAIL=(scale>1.2);
@@ -5347,6 +5402,8 @@
       cam.ty=(H/2-oy)*0.85;
       if(!cine.f.anim) cine.tail++;
       if(cine.tail>34||cine.t>320){ cine=null; }
+    }else if(movie&&movie.cam){
+      cam.tz=movie.cam.z; cam.tx=movie.cam.x; cam.ty=movie.cam.y;
     }else{
       cam.tz=1; cam.tx=0; cam.ty=0;
     }
@@ -5378,8 +5435,8 @@
     floats.length=0; sparks.length=0; fx.length=0; endT=0;
     screen='fight';
     var lb=$('bLeap'), flier=(h.id==='superman');
-    lb.childNodes[0].nodeValue=flier?'Flying Jump':'Leap';
-    lb.querySelector('small').textContent=flier?'Fly up and dive':'Jump attack';
+    lb.childNodes[0].nodeValue=flier?'🚀 Fly':'🚀 Jump';
+    lb.querySelector('small').textContent='Then punch or kick!';
     $('fightbar').hidden=false; $('homeUI').hidden=true; $('overlay').hidden=true;
     tone(520,0.16,'square',0.05,880);
   }
@@ -5572,8 +5629,8 @@
     floats.length=0; sparks.length=0; fx.length=0; endT=0;
     screen='fight';
     var lb=$('bLeap'), flier=(h.id==='superman');
-    lb.childNodes[0].nodeValue=flier?'Flying Jump':'Leap';
-    lb.querySelector('small').textContent=flier?'Fly up and dive':'Jump attack';
+    lb.childNodes[0].nodeValue=flier?'🚀 Fly':'🚀 Jump';
+    lb.querySelector('small').textContent='Then punch or kick!';
     $('fightbar').hidden=false; $('homeUI').hidden=true; $('overlay').hidden=true;
     var rk=raidKind(raid.floor);
     floatText(512,GY-250,raidLabel(rk)+' '+raid.floor,
@@ -5891,11 +5948,11 @@
     return {in:1,name:'Tuesday'};
   }
   /* the single question the rest of the game asks: is this switch live? */
-  function ab(k){ return isOwner()&&save.owner&&!!save.owner[k]; }
+  function ab(k){ return !movie&&isOwner()&&save.owner&&!!save.owner[k]; }
   /* The panel is the owner's every day. These three are not: they only work on
      an admin abuse day, which is what makes Tuesday, Thursday and Saturday
      worth waiting for. */
-  function abuse(k){ return isOwner()&&isAdminDay()&&save.owner&&!!save.owner[k]; }
+  function abuse(k){ return !movie&&isOwner()&&isAdminDay()&&save.owner&&!!save.owner[k]; }
   function payMul(){ return abuse('rich')?10:1; }
   function abFoe(){ return (isOwner()&&save.owner)?save.owner.foe:''; }
 
@@ -6377,8 +6434,638 @@
     });
   }
 
+  /* ================= the movie =================
+     Skyforge: The Last Specimen. A short film that plays itself: title cards,
+     dialogue scenes and real bouts, all run through the same engine as the
+     game. The fights are not canned animation -- both champions are on the
+     AI -- so no two screenings are quite the same. What IS scripted is who
+     wins: the winner carries plot armour and cannot be knocked out, and if a
+     bout drags the winner starts to hit harder, so a scene never outstays
+     its welcome. Your selected champion is the star. */
+  var MOVIE_TITLE='Skyforge: The Last Specimen';
+  var MOVIE_CAST=['lex','batman','joker','deathstroke','wonderwoman','brainiac','doomsday'];
+  var MOVIE=[
+  {k:'card',arena:0,dur:560,cards:[
+    {at:0,big:'Yaya Pictures',small:'presents'},
+    {at:190,small:'starring',big:'{you}'},
+    {at:370,big:MOVIE_TITLE,title:true}]},
+  {k:'talk',arena:2,act:'Act I',name:'Gotham, After Dark',a:'you',b:'batman',lines:[
+    {w:'batman',t:"Four miles up there's a stone platform nobody built by accident. Luthor calls it the Skyforge.",g:'cross'},
+    {w:'you',t:"I've seen the adverts. Fight, win, get paid. What's the catch?"},
+    {w:'batman',t:"Everyone who wins up there disappears from the ground records. Every one of them."},
+    {w:'you',t:"Then somebody should go and find out why.",g:'open'},
+    {w:'batman',t:"Somebody is about to. Behind you.",g:'guard'}]},
+  {k:'talk',arena:2,a:'you',b:'joker',lines:[
+    {w:'joker',t:"Ohh, a detective AND a hero? Nobody told me it was a double feature!",g:'open'},
+    {w:'joker',t:"Luthor pays a thousand to whoever sends you home crying. I'd have done it for free."},
+    {w:'you',t:"Then let's keep it cheap.",g:'guard'}]},
+  {k:'fight',arena:2,a:'you',b:'joker',win:'a',la:22,ta:2,lb:18,tb:1,
+    tag:'The Joker is laughing. Not for long.'},
+  {k:'talk',arena:1,act:'Act II',name:"The Champion's Cut",a:'you',b:'lex',lines:[
+    {w:'lex',t:"You broke the Joker's jaw on a Gotham rooftop and nobody paid to watch. Such a waste.",g:'open'},
+    {w:'lex',t:"Fight on my platform instead. Half the gate, a floor of my tower, and one little favour."},
+    {w:'you',t:"Which is?"},
+    {w:'lex',t:"You lose. Once. On a night I choose.",g:'cross'},
+    {w:'you',t:"No."},
+    {w:'lex',t:"You did not even pause. Very well. Deathstroke has already been paid."}]},
+  {k:'fight',arena:1,a:'you',b:'deathstroke',win:'a',la:30,ta:3,lb:28,tb:2,
+    tag:'Metropolis. One contract. One answer.'},
+  {k:'talk',arena:3,act:'Act III',name:'The Amazon Coast',a:'you',b:'wonderwoman',lines:[
+    {w:'wonderwoman',t:"I followed the money from Luthor's arena. It does not end with Luthor.",g:'cross'},
+    {w:'wonderwoman',t:"Every bout on the Skyforge is recorded, measured, sent up. Something in orbit is keeping a catalogue."},
+    {w:'you',t:"Of the fights?"},
+    {w:'wonderwoman',t:"Of the fighters. Of this whole world. And you are the last page it has not filled in.",g:'open'},
+    {w:'you',t:"Then I'll go up and tear the page out myself."}]},
+  {k:'talk',arena:5,act:'Act IV',name:'The Collector',a:'you',b:'brainiac',lines:[
+    {w:'brainiac',t:"Welcome aboard. You are the final specimen. I have watched every one of your fights.",g:'open'},
+    {w:'brainiac',t:"I know every opening you leave. I know them better than you do."},
+    {w:'you',t:"You've watched me. You've never fought me.",g:'guard'}]},
+  {k:'fight',arena:5,a:'you',b:'brainiac',win:'b',la:34,ta:3,lb:48,tb:4,
+    tag:'Every move, catalogued in advance.'},
+  {k:'talk',arena:5,a:'you',b:'brainiac',down:'a',lines:[
+    {w:'brainiac',t:"As predicted. The collection is complete. Now to bottle the planet.",g:'open'},
+    {w:'brainiac',t:"Ah -- but first, a vault to empty. Luthor kept something down there he could never control."},
+    {w:'brainiac',t:"Let us see what it does to what is left of you."}]},
+  {k:'talk',arena:4,act:'Act V',name:'The Vault Opens',a:'you',b:'doomsday',lines:[
+    {w:'you',t:"...Get up. Get up. They're all watching.",g:'guard'},
+    {w:'doomsday',t:"RRRAAAAGH!",g:'charge'},
+    {w:'you',t:"Okay. That's new.",g:'cross'},
+    {w:'you',t:"He studied every fight I've had. He never studied this one.",g:'open'}]},
+  {k:'fight',arena:4,a:'you',b:'doomsday',win:'a',la:44,ta:4,lb:40,tb:4,
+    tag:'The one fight nobody catalogued.'},
+  {k:'talk',arena:0,act:'Epilogue',name:'Above the Clouds',a:'you',b:'lex',lines:[
+    {w:'lex',t:"Doomsday is back in the vault, Brainiac's ship is a scrap cloud over Siberia, and my arena is in one piece.",g:'cross'},
+    {w:'lex',t:"The Skyforge is yours. The platform, the title, the name. I am keeping the tower, obviously."},
+    {w:'you',t:"Keep it. I'm keeping the view.",g:'open'}]},
+  {k:'credits',arena:0,dur:1500}
+  ];
+
+  var movie=null;
+  function movieLead(){
+    var h=HEROES[save.sel];
+    /* the star cannot also be playing a part, so a clash hands the lead to Superman */
+    if(MOVIE_CAST.indexOf(h.id)>=0) h=heroById('superman')||HEROES[0];
+    return h;
+  }
+  function movieWho(w){ return w==='you'?movie.lead:heroById(w); }
+  function movieText(t){ return t.replace('{you}',movie.lead.name); }
+  function startMovie(){
+    if(!isOwner()) return;
+    raid=null; team=null; tour=null; legendBout=null; surv=null; story=null;
+    cut=null; $('cut').hidden=true;
+    movie={lead:movieLead(),i:-1,t:0,fade:1,out:0,cam:null,beat:0};
+    $('fightbar').hidden=true; $('homeUI').hidden=true; $('overlay').hidden=true;
+    $('moviebar').hidden=false;
+    movieNext();
+  }
+  function movieCast(id,facing,x,skin){
+    var h=movieWho(id);
+    var f=makeFighter(h,40,3,facing,x,skin||0);
+    f.guardLeft=0;
+    return f;
+  }
+  function movieScene(){ return movie?MOVIE[movie.i]:null; }
+  function movieNext(){
+    movie.i++; movie.t=0; movie.out=0; movie.line=0; movie.lineT=0; movie.cam=null;
+    var S=movieScene();
+    if(!S){ endMovie(); return; }
+    cine=null; floats.length=0; sparks.length=0; fx.length=0;
+    skyCache=null;
+    if(S.k==='card'||S.k==='credits'){ me=null; foe=null; screen='movie'; }
+    else if(S.k==='talk'){
+      screen='movie';
+      me=movieCast(S.a,1,W/2-170); foe=movieCast(S.b,-1,W/2+170);
+      if(S.down==='a'){ me.dead=true; me.pose=clonePose(POSE.down); }
+      movieGesture();
+    }else{
+      /* a real bout: both sides on the AI, the scripted winner in plot armour */
+      var lead=S.a==='you';
+      me=makeFighter(movieWho(S.a),S.la,S.ta,1,404,lead?(prog(movie.lead).skin||0):0);
+      foe=makeFighter(movieWho(S.b),S.lb,S.tb,-1,620,0);
+      me.guardLeft=0; foe.guardLeft=0;
+      /* a film fight wants room to breathe: three times the health of a game bout */
+      me.max=me.hp=me.max*3; foe.max=foe.hp=foe.max*3;
+      me.plot=(S.win==='a'); foe.plot=(S.win==='b');
+      me.aiT=50; foe.aiT=70;
+      screen='fight'; endT=0;
+      tone(520,0.16,'square',0.05,880);
+    }
+  }
+  function movieGesture(){
+    var S=movieScene(), L=S.lines[movie.line];
+    if(!L||!L.g) return;
+    var f=(L.w===S.a)?me:foe;
+    if(!f||f.dead||!POSE[L.g]) return;
+    play(f,[{p:POSE[L.g],d:18},{p:POSE[L.g],d:70},{p:POSE.idle,d:24}]);
+  }
+  function lineLen(L){ return Math.round(90+L.t.length*3.1); }
+  /* the winner of a scripted bout never goes down, and if it runs long
+     they start to hit harder, a little more every second */
+  function plotArmour(f){
+    if(movie&&f&&f.plot&&f.hp<f.max*0.12) f.hp=f.max*0.12;
+  }
+  function movieFightOver(win){
+    /* win is from `me`'s side; the scene holds on the result, then cuts */
+    movie.out=0; movie.hold=150;
+    var w=win?me:foe;
+    floatText(W/2,GY-250,w.h.name.toUpperCase()+' WINS','#FFE08A',true);
+    tone(660,0.12,'triangle',0.05,990);
+  }
+  function movieStep(){
+    if(!movie) return;
+    var S=movieScene(); if(!S) return;
+    movie.t++;
+    if(movie.t%150===1) movieScore(S);
+    if(movie.out>0){
+      movie.out++;
+      movie.fade=Math.min(1,movie.out/30);
+      if(movie.out>=34) movieNext();
+      return;
+    }
+    movie.fade=Math.max(0,movie.fade-0.035);
+    if(S.k==='card'||S.k==='credits'){
+      if(movie.t>=S.dur) movie.out=1;
+    }else if(S.k==='talk'){
+      var tIn=S.act?150:40;
+      if(movie.t<tIn){ movie.cam={z:1.08,x:0,y:14}; return; }
+      var L=S.lines[movie.line];
+      movie.lineT++;
+      var who=(L.w===S.a)?me:foe;
+      movie.cam={z:1.22,x:(W/2-who.x)*0.55,y:40};
+      if(movie.lineT>=lineLen(L)){
+        movie.line++; movie.lineT=0;
+        if(movie.line>=S.lines.length){ movie.line=S.lines.length-1; movie.out=1; }
+        else { movieGesture(); tone(420,0.05,'square',0.015,300); }
+      }
+    }else if(S.k==='fight'){
+      if(screen==='over'){
+        if(movie.hold>0&&--movie.hold===0) movie.out=1;
+        return;
+      }
+      /* after forty seconds the winner starts to push for the finish */
+      if(movie.t>2400&&movie.t%60===0){
+        var wf=me.plot?me:foe; wf.pow=Math.round(wf.pow*1.08)+1;
+      }
+    }
+  }
+  /* a quiet score: one soft chord every two and a half seconds, in a key
+     picked by the mood of the scene */
+  var SCORE={bright:[[262,330,392],[294,370,440],[220,277,330],[247,311,370]],
+    dark:[[220,262,330],[175,220,262],[196,247,294],[165,196,247]],
+    fight:[[147,175,220],[131,165,196],[147,185,220],[165,196,247]]};
+  function movieScore(S){
+    var moodA=S.arena===2||S.arena===5||S.arena===4;
+    var set=S.k==='fight'?SCORE.fight:(moodA?SCORE.dark:SCORE.bright);
+    var c=set[movie.beat++%set.length];
+    for(var i=0;i<c.length;i++) tone(c[i],2.3,'triangle',0.012,c[i]*0.998);
+    if(S.k==='fight') tone(c[0]/2,0.4,'sawtooth',0.02,c[0]/2.2);
+  }
+  function movieSkip(){
+    if(!movie) return;
+    if(movie.out===0){ movie.out=1; cine=null; }
+  }
+  function endMovie(){
+    movie=null;
+    $('moviebar').hidden=true;
+    skyCache=null;
+    toHome();
+  }
+  function wrapText(txt,x,y,maxW,lh){
+    var words=txt.split(' '), line='', lines=[];
+    for(var i=0;i<words.length;i++){
+      var t2=line?line+' '+words[i]:words[i];
+      if(ctx.measureText(t2).width>maxW&&line){ lines.push(line); line=words[i]; }
+      else line=t2;
+    }
+    if(line) lines.push(line);
+    for(var j=0;j<lines.length;j++) ctx.fillText(lines[j],x,y+j*lh);
+    return lines.length;
+  }
+  function drawMovie(){
+    if(!movie) return;
+    var S=movieScene(); if(!S) return;
+    var bh=58;
+    ctx.save();
+    ctx.textAlign='center';
+    /* a card or the credits: the sky, darkened, and lettering */
+    if(S.k==='card'||S.k==='credits'){
+      ctx.fillStyle='rgba(4,7,14,.55)'; ctx.fillRect(0,0,W,H);
+    }
+    ctx.fillStyle='#04070E';
+    ctx.fillRect(0,0,W,bh); ctx.fillRect(0,H-bh,W,bh);
+    if(S.k==='card'){
+      var cur=null;
+      for(var i=0;i<S.cards.length;i++) if(movie.t>=S.cards[i].at) cur=S.cards[i];
+      if(cur){
+        var next=S.cards[S.cards.indexOf(cur)+1];
+        var end=next?next.at:S.dur, age=movie.t-cur.at;
+        var a=Math.min(1,age/30)*Math.min(1,(end-movie.t)/30);
+        ctx.globalAlpha=Math.max(0,a);
+        if(cur.title){
+          ctx.fillStyle='#F7C948';
+          ctx.font='800 64px "Saira Condensed", sans-serif';
+          var parts=MOVIE_TITLE.split(': ');
+          ctx.fillText(parts[0].toUpperCase(),W/2,H/2-14);
+          ctx.fillStyle='#FFFFFF';
+          ctx.font='800 30px "Saira Condensed", sans-serif';
+          ctx.fillText(parts[1].toUpperCase(),W/2,H/2+30);
+          ctx.fillStyle='rgba(247,201,72,.8)';
+          var lw=Math.min(age*4,300);
+          ctx.fillRect(W/2-lw/2,H/2+48,lw,3);
+        }else{
+          /* 'starring' sits above the name; 'presents' sits below the studio */
+          var above=(cur.small==='starring');
+          ctx.fillStyle='#9FB4CC';
+          ctx.font='700 18px Barlow, sans-serif';
+          if(cur.small) ctx.fillText(cur.small.toUpperCase(),W/2,above?H/2-30:H/2+30);
+          ctx.fillStyle='#FFFFFF';
+          ctx.font='800 46px "Saira Condensed", sans-serif';
+          ctx.fillText(movieText(cur.big).toUpperCase(),W/2,above?H/2+22:H/2-4);
+        }
+        ctx.globalAlpha=1;
+      }
+    }else if(S.k==='credits'){
+      var roll=[['',MOVIE_TITLE.toUpperCase()],['',''],['Starring',movie.lead.name]];
+      MOVIE_CAST.forEach(function(id){
+        var h=heroById(id); if(h&&h.id!==movie.lead.id) roll.push(['',h.name]);
+      });
+      roll.push(['',''],['Directed by','Yaya'],['Written, drawn and scored by','Yaya Builds'],
+        ['Filmed on location','Gotham · Metropolis · Themyscira'],['','The Watchtower · Apokolips · The Skyforge'],
+        ['',''],['No champions were catalogued','in the making of this film'],['',''],['','THE END']);
+      var y0=H+20-movie.t*0.62;
+      for(var r=0;r<roll.length;r++){
+        var y=y0+r*44;
+        if(y<bh-10||y>H-bh+30) continue;
+        if(roll[r][0]){
+          ctx.fillStyle='#9FB4CC'; ctx.font='700 14px Barlow, sans-serif';
+          ctx.fillText(roll[r][0].toUpperCase(),W/2,y-16);
+        }
+        var last=r===roll.length-1||r===0;
+        ctx.fillStyle=last?'#F7C948':'#FFFFFF';
+        ctx.font='800 '+(last?38:26)+'px "Saira Condensed", sans-serif';
+        ctx.fillText(roll[r][1],W/2,y+8);
+      }
+      /* the letterbox again, so the roll slides under it */
+      ctx.fillStyle='#04070E';
+      ctx.fillRect(0,0,W,bh); ctx.fillRect(0,H-bh,W,bh);
+    }else if(S.k==='talk'){
+      var tIn=S.act?150:40;
+      if(S.act&&movie.t<tIn){
+        var aa=Math.min(1,movie.t/24)*Math.min(1,(tIn-movie.t)/24);
+        ctx.globalAlpha=Math.max(0,aa);
+        ctx.fillStyle='rgba(4,7,14,.6)'; ctx.fillRect(0,H/2-70,W,120);
+        ctx.fillStyle='#F7C948'; ctx.font='800 18px Barlow, sans-serif';
+        ctx.fillText(S.act.toUpperCase(),W/2,H/2-28);
+        ctx.fillStyle='#FFFFFF'; ctx.font='800 50px "Saira Condensed", sans-serif';
+        ctx.fillText(S.name.toUpperCase(),W/2,H/2+24);
+        ctx.globalAlpha=1;
+      }else if(movie.t>=tIn){
+        var L=S.lines[movie.line], h=movieWho(L.w);
+        var shown=L.t.slice(0,Math.floor(movie.lineT*1.4));
+        ctx.fillStyle='rgba(4,7,14,.72)';
+        ctx.fillRect(W/2-400,H-bh-92,800,96);
+        ctx.fillStyle=h?h.trim||'#F7C948':'#F7C948';
+        ctx.fillRect(W/2-400,H-bh-92,800,4);
+        ctx.fillStyle='#F7C948'; ctx.font='800 17px "Saira Condensed", sans-serif';
+        ctx.fillText((h?h.name:'').toUpperCase(),W/2,H-bh-66);
+        ctx.fillStyle='#FFFFFF'; ctx.font='600 20px Barlow, sans-serif';
+        wrapText(shown,W/2,H-bh-40,740,26);
+      }
+    }else if(S.k==='fight'&&me&&foe){
+      /* slim broadcast bars inside the letterbox */
+      function slim(x,f,flip){
+        var w=360, k=Math.max(0,f.hp/f.max);
+        ctx.fillStyle='rgba(255,255,255,.14)'; ctx.fillRect(x,34,w,8);
+        ctx.fillStyle=k>0.35?'#F7C948':'#FF6B57';
+        ctx.fillRect(flip?x+w*(1-k):x,34,w*k,8);
+        ctx.fillStyle='#FFFFFF'; ctx.font='800 16px "Saira Condensed", sans-serif';
+        ctx.textAlign=flip?'right':'left';
+        ctx.fillText(f.h.name.toUpperCase(),flip?x+w:x,26);
+      }
+      if(!cine){ slim(34,me,false); slim(W-394,foe,true); }
+      ctx.textAlign='center';
+      if(movie.t<200){
+        ctx.globalAlpha=Math.min(1,movie.t/20)*Math.min(1,(200-movie.t)/30);
+        ctx.fillStyle='#FFE9A8'; ctx.font='italic 700 20px Barlow, sans-serif';
+        ctx.fillText(S.tag,W/2,H-22);
+        ctx.globalAlpha=1;
+      }
+    }
+    if(movie.fade>0.01){
+      ctx.fillStyle='rgba(0,0,0,'+movie.fade.toFixed(3)+')';
+      ctx.fillRect(0,0,W,H);
+    }
+    ctx.restore();
+  }
+
+  /* ================= the fun layer =================
+     Everything that makes a bout feel like an event: the READY / FIGHT
+     countdown, the big K.O., comic-book hit words, confetti, win streaks,
+     a loot chest after every win, and tips for anyone on their first few
+     fights. Plus three quick modes built for short, grindable sessions. */
+  var DEATH_COST=50, guardHeld=false;
+  var introT=0, prevScreen='home', koT=0, koFor=null;
+  var HIT_WORDS=['POW!','BAM!','WHAM!','KAPOW!','BOOM!','SMASH!','CRUNCH!','THWACK!','ZOK!','KRAK!'];
+  var WORD_COLS=['#FFE08A','#FF8B6B','#7FD4FF','#B6F28A','#FF9AD5','#FFD46B'];
+  var TIPS=[
+    '👊 Tap PUNCH again and again for a 3-hit combo!',
+    '🚀 Press JUMP, then PUNCH in the air for a FLYING PUNCH!',
+    '🦶 Press JUMP, then KICK in the air for a FLYING KICK!',
+    '⚡ Land hits to fill your meter. POWER at half = PUNCH OF DEATH!',
+    '⭐ Full meter? POWER unleashes your SUPER MOVE!',
+    '🎁 Every win drops a treasure chest. Win in a row for bonus credits!'];
+  function hitWord(x,y,heavy){
+    if(!heavy&&Math.random()>0.28) return;
+    var w=HIT_WORDS[Math.floor(Math.random()*HIT_WORDS.length)];
+    floatText(x+(Math.random()-0.5)*50,y-58,w,WORD_COLS[Math.floor(Math.random()*WORD_COLS.length)],true);
+  }
+  function confetti(){
+    var cols=['#FFD46B','#FF6B57','#7FD4FF','#8BE8A8','#FF9AD5','#FFFFFF'];
+    var n=reduce?20:110;
+    for(var i=0;i<n;i++){
+      sparks.push({x:Math.random()*W,y:-10-Math.random()*120,vx:(Math.random()-0.5)*3,
+        vy:Math.random()*2,life:70+Math.random()*50,c:cols[i%cols.length],r:2.5+Math.random()*3});
+    }
+  }
+  /* the hype timers, run once per simulation step */
+  function hypeStep(){
+    if(screen==='fight'&&prevScreen!=='fight'){ introT=84; koFor=null; tone(440,0.12,'square',0.03,440); }
+    prevScreen=screen;
+    if(introT>0){
+      introT--;
+      if(introT===40) tone(880,0.3,'square',0.05,1320);
+    }
+    if(koT>0) koT--;
+    if(me&&foe&&(screen==='fight'||screen==='over')){
+      var down=foe.dead?foe:(me.dead?me:null);
+      if(down&&koFor!==down){
+        koFor=down; koT=90;
+        tone(160,0.6,'sawtooth',0.05,60); thud(0.4,0.16);
+      }
+    }
+    /* timed modes count down while the bout is live */
+    if(screen==='fight'&&introT<=0){
+      if(rush){ rush.t--; if(rush.t<=0){ screen='over'; rushEnd(); } }
+      else if(dummy){ dummy.t--; if(dummy.t<=0){ screen='over'; dummyEnd(); } }
+    }
+    /* the auto-block: when the other side winds up and you are standing
+       still, your champion gets their arms up on their own some of the time */
+    if(!movie&&screen==='fight'&&me&&foe&&!me.dead){
+      if(foe.anim&&foe.anim.i===0&&foe.anim.t===1&&!me.anim&&Math.random()<0.4){
+        me.guard=true; me.autoG=22;
+      }
+      if(me.autoG>0){ me.autoG--; if(me.autoG===0&&!guardHeld) me.guard=false; }
+    }
+  }
+  function bigText(txt,y,size,fill,k){
+    ctx.save();
+    ctx.translate(W/2,y);
+    ctx.scale(k,k);
+    ctx.font='800 '+size+'px "Saira Condensed", sans-serif';
+    ctx.textAlign='center';
+    ctx.lineJoin='round';
+    ctx.lineWidth=size/7; ctx.strokeStyle='rgba(8,12,22,.85)';
+    ctx.strokeText(txt,0,0);
+    ctx.fillStyle=fill; ctx.fillText(txt,0,0);
+    ctx.restore();
+  }
+  function clock(t){ var s=Math.ceil(t/60); return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2); }
+  function plate(txt,sub,hot){
+    ctx.save();
+    ctx.textAlign='center';
+    ctx.font='800 30px "Saira Condensed", sans-serif';
+    var w=Math.max(150,ctx.measureText(txt).width+34);
+    ctx.fillStyle=hot?'rgba(70,14,10,.8)':'rgba(10,18,28,.7)';
+    ctx.fillRect(W/2-w/2,24,w,36);
+    ctx.strokeStyle=hot?'#FF6B57':'rgba(247,201,72,.7)'; ctx.lineWidth=2;
+    ctx.strokeRect(W/2-w/2,24,w,36);
+    ctx.fillStyle=hot?'#FF9A8A':'#FFE9A8';
+    ctx.fillText(txt,W/2,53);
+    if(sub){ ctx.font='800 15px Barlow, sans-serif'; ctx.fillStyle='#FFFFFF'; ctx.fillText(sub,W/2,80); }
+    ctx.restore();
+  }
+  function drawHype(){
+    if(screen!=='fight'&&screen!=='over') return;
+    if(rush) plate(clock(Math.max(0,rush.t)),rush.kos+' KNOCKOUT'+(rush.kos===1?'':'S'),rush.t<600);
+    if(dummy) plate(clock(Math.max(0,dummy.t)),Math.round(dummy.dmg).toLocaleString()+' DAMAGE',dummy.t<300);
+    if(introT>0){
+      var t=84-introT;
+      ctx.fillStyle='rgba(4,7,14,'+(Math.min(0.35,introT/84)).toFixed(3)+')'; ctx.fillRect(0,0,W,H);
+      if(t<44) bigText('READY?',H/2+20,84,'#FFFFFF',0.8+Math.min(0.2,t/60));
+      else bigText('FIGHT!',H/2+30,130,'#F7C948',1+Math.max(0,(52-t)/16)*0.5);
+    }
+    if(koT>0){
+      var a=Math.min(1,koT/20), k=1+Math.max(0,(koT-70)/20);
+      ctx.globalAlpha=a;
+      bigText(koFor===me?'OUCH!':'K.O.!',H/2+10,150,koFor===me?'#9BD3FF':'#FF6B57',k);
+      ctx.globalAlpha=1;
+    }
+    /* coaching for the first few fights */
+    if(!movie&&screen==='fight'&&introT<=0&&(save.tut||0)<5){
+      var tip=TIPS[Math.floor(tick/280)%TIPS.length];
+      ctx.save();
+      ctx.font='800 17px Barlow, sans-serif'; ctx.textAlign='left';
+      var tw=Math.min(W*0.5,ctx.measureText(tip).width+28);
+      ctx.fillStyle='rgba(10,18,28,.78)'; ctx.fillRect(18,H-62,tw,40);
+      ctx.fillStyle='#F7C948'; ctx.fillRect(18,H-62,5,40);
+      ctx.fillStyle='#FFFFFF'; ctx.fillText(tip,32,H-36,tw-24);
+      ctx.restore();
+    }
+  }
+
+  /* ---------- flying attacks: jump, then punch or kick in the air ---------- */
+  function airAttack(f,other,type){
+    if(!f.leap||f.airMove||f.dead||!other) return false;
+    f.airMove=type;
+    f.vAir=Math.min(f.vAir,2);
+    /* aim the dive so it comes down right on top of them */
+    var v=f.vAir, T=Math.max(6,(v+Math.sqrt(v*v+1.24*Math.max(0,f.air)))/0.62);
+    var reach=(other.x-(f.x+f.dx))-f.facing*72;
+    f.leapVX=reach/T;
+    var pose=type==='kick'?POSE.kick:POSE.cannon;
+    play(f,[{p:pose,d:8},{p:pose,d:120}]);
+    floatText(f.x+f.dx,GY-(f.air||0)-150,type==='kick'?'FLYING KICK!':'FLYING PUNCH!','#7FD4FF',true);
+    tone(type==='kick'?300:380,0.25,'sawtooth',0.04,900);
+    return true;
+  }
+
+  /* ---------- the treasure chest ---------- */
+  var CHESTS=[
+    {n:'Wooden Chest',c:'wood',p:0.55,cr:120,xp:90},
+    {n:'Silver Chest',c:'silver',p:0.30,cr:420,xp:260},
+    {n:'Gold Chest',c:'gold',p:0.12,cr:1300,xp:800},
+    {n:'Diamond Chest',c:'diamond',p:0.03,cr:5200,xp:2600}];
+  function rollChest(p,minTier){
+    var r=Math.random(), i=0, acc=0;
+    for(i=0;i<CHESTS.length;i++){ acc+=CHESTS[i].p; if(r<acc) break; }
+    i=Math.max(minTier||0,Math.min(i,CHESTS.length-1));
+    var C=CHESTS[i], g=1+p.lvl*0.05;
+    var o={n:C.n,c:C.c,cred:Math.round(C.cr*g*(0.8+Math.random()*0.4)),xp:Math.round(C.xp*g),lvl:i===3?1:0};
+    save.credits+=o.cred*payMul(); p.xp+=o.xp*payMul();
+    if(o.lvl&&p.lvl<60) p.lvl++;
+    return o;
+  }
+  function showChest(o){
+    var el=$('ovChest');
+    if(!o){ el.hidden=true; return; }
+    el.className='chest '+o.c;
+    el.querySelector('b').textContent=o.n+'!';
+    el.querySelector('small').textContent='+'+(o.cred*payMul())+' credits · +'+(o.xp*payMul())+' XP'
+      +(o.lvl?' · +1 LEVEL':'');
+    el.hidden=false;
+    setTimeout(function(){ tone(990,0.18,'triangle',0.05,1480); },260);
+  }
+  function levelUps(p){
+    var ups=0;
+    while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; ups++; }
+    return ups;
+  }
+  function showOver(title,text,cred,xp,chest){
+    $('ovTitle').textContent=title;
+    $('ovText').textContent=text;
+    $('rwCred').innerHTML=(cred*payMul())+'<span>Credits</span>';
+    $('rwXp').innerHTML=(xp*payMul())+'<span>Experience</span>';
+    $('ovReward').hidden=false;
+    showChest(chest||null);
+    $('ovBtn').textContent='Back to champions';
+    $('ovBtn2').hidden=true;
+    $('overlay').hidden=false;
+  }
+  function clearModes(){
+    raid=null; team=null; tour=null; story=null; legendBout=null; surv=null;
+    giant=null; rush=null; dummy=null;
+  }
+
+  /* ---------- Giant Battle: one enormous champion, a huge prize ---------- */
+  var giant=null;
+  function startGiant(){
+    clearModes(); giant={};
+    var h=HEROES[save.sel], p=prog(h);
+    me=myFighter(h,p,380);
+    var pool=heavies().filter(function(x){ return x.id!==h.id; });
+    var oh=pool[Math.floor(Math.random()*pool.length)];
+    foe=makeFighter(oh,Math.min(60,p.lvl+2),Math.min(4,p.tier+1),-1,660,0);
+    foe.big=1.5; foe.guardLeft=0;
+    foe.max=foe.hp=Math.round(foe.max*3.2); foe.pow=Math.round(foe.pow*0.85);
+    foe.spd*=0.8;
+    enterArena(h);
+  }
+  function giantEnd(win){
+    var h=HEROES[save.sel], p=prog(h), fl=foe.lvl, name=foe.h.name;
+    var cred=win?Math.round(700+fl*95):Math.round(80+fl*12);
+    var xp=win?Math.round(500+fl*70):Math.round(60+fl*10);
+    save.credits+=cred*payMul(); p.xp+=xp*payMul();
+    var chest=null;
+    if(win){ p.wins++; save.giantWins=(save.giantWins||0)+1; chest=rollChest(p,2); }
+    var ups=levelUps(p);
+    giant=null; store();
+    showOver(win?'Giant toppled!':'The giant won',
+      win?('You brought down GIANT '+name.toUpperCase()+'! That is '+save.giantWins+' giant'
+        +(save.giantWins===1?'':'s')+' so far.'+(ups?' Levelled up to '+p.lvl+'!':''))
+         :('Giant '+name+' was too big this time. Level up and come back -- giants always drop a Gold Chest or better.'),
+      cred,xp,chest);
+    if(win) tone(660,0.12,'triangle',0.05,990); else tone(240,0.5,'sawtooth',0.05,90);
+  }
+
+  /* ---------- 60-Second Rush: knock out as many as you can ---------- */
+  var rush=null;
+  function rushFoe(){
+    var h=HEROES[save.sel], p=prog(h);
+    var pool=HEROES.filter(function(x){return x.id!==h.id&&!isLocked(x);});
+    var oh=pool[Math.floor(Math.random()*pool.length)];
+    var lv=Math.max(1,p.lvl-2+Math.floor(rush.kos/3));
+    foe=makeFighter(oh,Math.min(60,lv),Math.max(0,p.tier-1),-1,620,Math.floor(Math.random()*oh.skins.length));
+    foe.guardLeft=0;
+    foe.max=foe.hp=Math.round(foe.max*0.65);
+  }
+  function startRush(){
+    clearModes(); rush={t:60*60,kos:0,cred:0,xp:0};
+    var h=HEROES[save.sel], p=prog(h);
+    me=myFighter(h,p);
+    rushFoe();
+    enterArena(h);
+  }
+  function rushKO(win){
+    if(!win){ screen='over'; rushEnd(); return; }
+    rush.kos++;
+    var c=Math.round(60+foe.lvl*12), x=Math.round(50+foe.lvl*10);
+    rush.cred+=c; rush.xp+=x;
+    floatText(W/2,150,'+'+(c*payMul())+' CREDITS','#FFD46B',true);
+    /* a little health back and straight on to the next one */
+    me.hp=Math.min(me.max,me.hp+me.max*0.15);
+    me.meter=Math.min(100,me.meter+15);
+    rushFoe();
+    floats.length=Math.min(floats.length,6);
+    tone(880,0.12,'triangle',0.05,1320);
+  }
+  function rushEnd(){
+    var h=HEROES[save.sel], p=prog(h), k=rush.kos;
+    var best=save.rushBest||0, rec=k>best;
+    if(rec) save.rushBest=k;
+    save.credits+=rush.cred*payMul(); p.xp+=rush.xp*payMul();
+    var chest=(k>=3)?rollChest(p,k>=8?1:0):null;
+    var ups=levelUps(p);
+    var cred=rush.cred, xp=rush.xp;
+    rush=null; store();
+    showOver(k+' knockout'+(k===1?'':'s')+'!',
+      (rec?'NEW RECORD! ':'Your record is '+best+'. ')
+        +(k>=3?'Three or more knockouts earns a chest.':'Knock out 3 to earn a chest.')
+        +(ups?' Levelled up to '+p.lvl+'!':''),
+      cred,xp,chest);
+    if(rec) confetti();
+    tone(660,0.12,'triangle',0.05,990);
+  }
+
+  /* ---------- Smash the Dummy: twenty seconds, biggest number wins ---------- */
+  var dummy=null;
+  function startDummy(){
+    clearModes(); dummy={t:20*60,dmg:0};
+    var h=HEROES[save.sel], p=prog(h);
+    me=myFighter(h,p);
+    me.meter=60;
+    foe=makeFighter(GUARD_UNIT,Math.max(1,p.lvl),0,-1,610,0);
+    foe.dummy=true; foe.guardLeft=0; foe.trait=null;
+    foe.max=foe.hp=999999;
+    var dh={}; for(var dk in foe.h) dh[dk]=foe.h[dk]; dh.name='Training Robot'; foe.h=dh;
+    enterArena(h);
+  }
+  function dummyEnd(){
+    var h=HEROES[save.sel], p=prog(h), d=Math.round(dummy.dmg);
+    var best=save.dummyBest||0, rec=d>best;
+    if(rec) save.dummyBest=d;
+    var cred=Math.round(Math.min(6000,d/9)), xp=Math.round(Math.min(4500,d/12));
+    save.credits+=cred*payMul(); p.xp+=xp*payMul();
+    var chest=rec?rollChest(p,1):null;
+    var ups=levelUps(p);
+    dummy=null; store();
+    showOver(d.toLocaleString()+' damage!',
+      (rec?'NEW RECORD! A new best always drops a Silver Chest or better.'
+          :'Your record is '+best.toLocaleString()+'. Beat it for a chest.')
+        +(ups?' Levelled up to '+p.lvl+'!':''),
+      cred,xp,chest);
+    if(rec) confetti();
+    tone(660,0.12,'triangle',0.05,990);
+  }
+
+  function buildFun(){
+    $('gtBest').textContent='Giants toppled: '+(save.giantWins||0);
+    $('rhBest').textContent='Best: '+(save.rushBest||0)+' knockouts';
+    $('dmBest').textContent='Best: '+(save.dummyBest||0).toLocaleString()+' damage';
+    $('stkBest').textContent='Win streak: '+(save.streak||0)+' · best ever '+(save.bestStreak||0);
+    var ms=$('movieSec'); if(ms) ms.hidden=!isOwner();
+  }
+
   function endFight(win){
     if(screen==='over') return;
+    if(movie){
+      /* a knockout timer left over from a skipped scene is ignored */
+      if(screen!=='fight'||!me||!foe||(!me.dead&&!foe.dead)) return;
+      cine=null; screen='over'; movieFightOver(win); return;
+    }
+    if(rush){ rushKO(win); return; }
+    if(win) confetti();
+    $('ovChest').hidden=true;
+    save.tut=(save.tut||0)+1;
     cine=null;
     /* a team battle is not over until one side has run out of champions */
     if(team&&teamAdvance(win)) return;
@@ -6387,6 +7074,8 @@
     if(tour){ if(win) tourCleared(); else tourEnd(false); return; }
     if(story){ storyEnd(win); return; }
     if(surv){ if(win) survCleared(); else survEnd(false); return; }
+    if(giant){ giantEnd(win); return; }
+    if(dummy){ return; }
     if(raid){ if(win) raidCleared(); else raidBank(false); return; }
     var wonLegend=null;
     if(legendBout){
@@ -6412,7 +7101,15 @@
     }else{
       cred=Math.round(45+foe.lvl*9); xp=Math.round(40+foe.lvl*8);
     }
+    /* win streak: every win in a row adds 10% more credits, up to double */
+    var chest=null;
+    if(win){
+      save.streak=(save.streak||0)+1;
+      if(save.streak>(save.bestStreak||0)) save.bestStreak=save.streak;
+      cred=Math.round(cred*(1+Math.min(1,(save.streak-1)*0.1)));
+    }else save.streak=0;
     save.credits+=cred*payMul(); p.xp+=xp*payMul();
+    if(win) chest=rollChest(p,0);
     var ups=0;
     while(p.xp>=xpNeed(p.lvl)&&p.lvl<60){ p.xp-=xpNeed(p.lvl); p.lvl++; ups++; }
     if(freeLvl&&p.lvl<60){ p.lvl++; ups++; }
@@ -6428,12 +7125,14 @@
         +(ups?' Levelled up to '+p.lvl+'!':'')
         +(freeLvl?' Win '+p.wins+' — every third win is a free level.':'')
         +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'')
+        +(save.streak>1?' \uD83D\uDD25 '+save.streak+' WINS IN A ROW (+'+Math.min(100,(save.streak-1)*10)+'% credits)!':'')
       : foe.h.name+' (level '+foe.lvl+') was too strong. You still earned something for trying.'
         +(got?' '+got+' mission'+(got>1?'s':'')+' ready to collect.':'');
     $('rwCred').innerHTML=(cred*payMul())+'<span>Credits</span>';
     $('rwXp').innerHTML=(xp*payMul())+'<span>Experience</span>';
     $('ovReward').hidden=false;
     $('ovBtn').textContent='Back to champions';
+    showChest(chest);
     $('overlay').hidden=false;
     if(win){ tone(660,0.12,'triangle',0.05,990); setTimeout(function(){tone(880,0.22,'triangle',0.05,1320);},130); }
     else { tone(240,0.5,'sawtooth',0.05,90); }
@@ -6442,11 +7141,13 @@
     cine=null; cam.z=1; cam.x=0; cam.y=0;
     raid=null; legendBout=null; team=null; tour=null; story=null; surv=null;
     cut=null; $('cut').hidden=true;
+    movie=null; $('moviebar').hidden=true; skyCache=null;
+    giant=null; rush=null; dummy=null; $('ovChest').hidden=true;
     screen='home'; me=null; foe=null;
     $('ovBtn2').hidden=true;
     $('fightbar').hidden=true; $('homeUI').hidden=false; $('overlay').hidden=true;
     if(rosterDirty){ markCardsDirty(); buildRoster(); }
-    buildMissions(); buildLegend(); buildSquadPickers(); buildStory();
+    buildMissions(); buildLegend(); buildSquadPickers(); buildStory(); buildFun();
     buildDaily(); buildLeader(); renderUI();
   }
 
@@ -6522,6 +7223,8 @@
     if(ab('god')&&def===me) dmg=Math.max(1,Math.round(dmg*0.1));
     if(abuse('smite')&&def===foe) dmg=Math.max(dmg,def.hp);
     def.hp-=dmg; def.flash=10;
+    plotArmour(def);
+    if(def.dummy){ if(dummy) dummy.dmg+=dmg; def.hp=def.max; }
     if(abuse('immortal')&&def===me&&def.hp<1) def.hp=1;
     if(crit) floatText(att.x+att.facing*40,GY-186,'CRITICAL','#FFD46B');
     if(tr){
@@ -6539,7 +7242,7 @@
     if(dtr&&!blocked){
       if(dtr.kind==='thorns'&&!att.dead){
         var back=Math.max(1,Math.round(dmg*dtr.v));
-        att.hp=Math.max(0,att.hp-back);
+        att.hp=Math.max(0,att.hp-back); plotArmour(att);
         floatText(def.x-def.facing*40,GY-170,'-'+back,'#FF9AA8');
         if(att.hp<=0&&!att.dead&&!catchFall(att)){ att.hp=0; att.dead=true;
           play(att,[{p:POSE.hurt,d:8},{p:POSE.down,d:22}]);
@@ -6573,6 +7276,7 @@
         flash=10; shake=Math.max(shake,18); tone(1200,0.2,'triangle',0.05,420);
       }
       floatText(hx,hy-10,'-'+dmg,heavy?'#FFE08A':'#FF8B6B',heavy);
+      hitWord(hx,hy,heavy);
       spark(hx,hy,heavy?'#FFE08A':'#FFC48A',kind==='special'?30:(heavy?20:14));
       shake=Math.max(shake,kind==='special'?20:(heavy?15:8));
       impact(kind==='special'?0.105:(heavy?0.062:0.028),att.facing);
@@ -6582,7 +7286,7 @@
     if(twice&&def.hp>0&&!def.dead){
       floatText(hx+18,hy-30,'x2','#FFD46B');
       var extra=Math.max(1,Math.round(dmg*0.72));
-      def.hp-=extra; spark(hx,hy,'#FFD46B',9);
+      def.hp-=extra; spark(hx,hy,'#FFD46B',9); plotArmour(def);
     }
     /* Lex does not wait to be knocked out. The moment his health drops
        into the red his detail steps in for him, while he is still up. */
@@ -6617,23 +7321,31 @@
     tone(c===3?200:340,0.06,'square',0.025,120);
     return true;
   }
-  /* ---------- the Super Punch: costs a quarter meter, hits like a truck ---------- */
+  /* ---------- the Punch of Death: half a meter, a dash, and a crater ---------- */
   function doHeavy(f,other){
     if(f.dead||f.stun>0||f.anim||screen!=='fight') return false;
-    if(f.cd>0||f.meter<25) return false;
+    if(f.cd>0||f.meter<DEATH_COST) return false;
     study(other,16);
-    f.meter-=25; f.guard=false; f.combo=0;
+    f.meter-=DEATH_COST; f.guard=false; f.combo=0;
     var sp=Math.max(0.6,1/f.spd);
+    floatText(f.x,GY-230,'PUNCH OF DEATH!','#FF6B57',true);
+    slow=Math.max(slow,16);
+    tone(90,0.5,'sawtooth',0.05,300);
     play(f,[
-      {p:POSE.bigwind,d:Math.round(13*sp)},
-      {p:POSE.smash,d:Math.round(8*sp),hit:function(){
-        hitLand(f,other,2.1,'heavy');
-        fx.push({k:'impact',x:other.x-other.facing*30,y:GY-72,life:20,max:20,c:f.h.trim});
+      {p:POSE.bigwind,d:Math.round(14*sp)},
+      {p:POSE.smash,d:Math.round(7*sp),hit:function(){
+        hitLand(f,other,3.0,'heavy');
+        if(!other.dead) other.vAir=Math.max(other.vAir||0,7);
+        flash=Math.max(flash,12); shake=Math.max(shake,22);
+        fx.push({k:'impact',x:other.x-other.facing*30,y:GY-72,life:30,max:30,c:'#FF6B57'});
+        fx.push({k:'impact',x:other.x-other.facing*30,y:GY-72,life:22,max:22,c:f.h.trim});
       }},
-      {p:POSE.idle,d:Math.round(16*sp)}
+      {p:POSE.idle,d:Math.round(18*sp)}
     ]);
-    f.cd=Math.round(30*sp);
-    tone(150,0.14,'square',0.04,80);
+    /* the dash: a burst toward them, leaving after-images behind */
+    ghost(f,f.x); f.dx=f.facing*Math.max(0,Math.min(150,Math.abs(other.x-f.x)-120));
+    setTimeout(function(){ if(me===f||foe===f) ghost(f,f.x+f.dx*0.5); },60);
+    f.cd=Math.round(34*sp);
     return true;
   }
 
@@ -6853,6 +7565,18 @@
   }
   function land(f,other){
     f.leap=false; f.air=0; f.vAir=0;
+    if(f.airMove){
+      var am=f.airMove; f.airMove=null;
+      play(f,[{p:POSE.idle,d:14}]);
+      if(Math.abs((f.x+f.dx)-other.x)<175&&!other.dead&&!f.dead){
+        hitLand(f,other,am==='kick'?2.6:2.3,'heavy');
+        if(!other.dead) other.vAir=Math.max(other.vAir||0,6);
+        fx.push({k:'impact',x:other.x-other.facing*20,y:GY-(am==='kick'?96:76),life:28,max:28,c:'#7FD4FF'});
+        shake=Math.max(shake,18); impact(0.09,f.facing);
+      }
+      thud(0.3,0.14);
+      return;
+    }
     var flier=(f.h.id==='superman');
     var near=Math.abs((f.x+f.dx)-other.x)<150;
     if(near&&!other.dead&&!f.dead){
@@ -6877,15 +7601,21 @@
     return (f.trait&&f.trait.kind==='cheapsuper')?Math.round(100*(1-f.trait.v)):100;
   }
   function canAfford(f,kind){
-    if(kind==='heavy') return f.meter>=25;
+    if(kind==='heavy') return f.meter>=DEATH_COST;
     if(kind==='superm') return f.meter>=superCost(f);
     return true;
   }
   function request(f,other,kind){
-    if(!f||!other||f.dead||screen!=='fight') return;
+    if(!f||!other||f.dead||screen!=='fight'||introT>0) return;
+    /* in the air, punch and kick become flying attacks */
+    if(f.leap&&!f.airMove&&(kind==='strike'||kind==='kick'||kind==='power')){
+      airAttack(f,other,kind==='kick'?'kick':'punch'); f.buffer=null; return;
+    }
+    /* the POWER button always does the biggest thing you can afford */
+    if(kind==='power') kind=f.meter>=superCost(f)?'superm':(f.meter>=DEATH_COST?'heavy':'strike');
     /* not enough meter? do the thing you can do instead of nothing */
     if(!canAfford(f,kind)){
-      floatText(f.x,GY-200,kind==='superm'?'NOT CHARGED':'NEED 25%','#9BD3FF');
+      floatText(f.x,GY-200,kind==='superm'?'NOT CHARGED':'NEED '+DEATH_COST+'%','#9BD3FF');
       kind='strike';
     }
     var busy=(f.anim||f.stun>0||f.cd>0);
@@ -6909,6 +7639,8 @@
 
   function aiStep(f,other){
     if(f.dead||other.dead||screen!=='fight') return;
+    if(introT>0||f.dummy) return;
+    if(f.leap&&!f.airMove&&f.air>40&&Math.random()<0.05){ airAttack(f,other,Math.random()<0.5?'kick':'punch'); return; }
     if(f.stun>0){ f.stun--; f.guard=false; return; }
     if(f.cd>0) f.cd--;
     f.aiT-=(f.chill>0?0.6:1);
@@ -6919,7 +7651,7 @@
     if(f.aiT>0){ f.guard=(f.guard&&Math.random()<0.9); return; }
     f.guard=false;
     if(f.meter>=superCost(f)){ doSuper(f,other); f.aiT=Math.round(150/f.spd); return; }
-    if(f.meter>=25&&Math.random()<0.27){ doHeavy(f,other); f.aiT=Math.round(70/f.spd); return; }
+    if(f.meter>=DEATH_COST&&Math.random()<0.27){ doHeavy(f,other); f.aiT=Math.round(70/f.spd); return; }
     if(Math.random()<0.11){ doLeap(f,other); f.aiT=Math.round(96/f.spd); return; }
     if(other.guard&&Math.random()<0.4){ doGrab(f,other); f.aiT=Math.round(80/f.spd); return; }
     if(Math.random()<0.24){ doKick(f,other); f.aiT=Math.round(62/f.spd); return; }
@@ -6930,6 +7662,8 @@
   /* ================= loop ================= */
   function update(){
     tick++;
+    movieStep();
+    hypeStep();
     updateCine();
     if(ab('meter')&&me&&!me.dead&&screen==='fight') me.meter=100;
     if(shake>0) shake*=0.86;
@@ -6950,13 +7684,13 @@
         f.lunge+=(want-f.lunge)*0.3;
         if(!f.dead&&f.guard) f.meter=Math.min(100,f.meter+0.16);
         if(f.isBrain&&!f.dead) study(f,0.09);
-        if(f.trait&&f.trait.kind==='auto'&&!f.dead&&screen==='fight'){
+        if(f.trait&&f.trait.kind==='auto'&&!f.dead&&screen==='fight'&&introT<=0){
           if(f.autoT===undefined) f.autoT=Math.round(f.trait.every*0.55);
           f.autoT--;
           if(f.autoT<=0){ f.autoT=f.trait.every; autoFire(f,(f===me)?foe:me); }
         }
         if(f.trait&&f.trait.kind==='regen'&&!f.dead&&f.hp<f.max) f.hp=Math.min(f.max,f.hp+f.trait.v/60);
-        if(f.bleed>0&&!f.dead){ f.hp-=f.bleed/120; f.bleed*=0.992;
+        if(f.bleed>0&&!f.dead){ f.hp-=f.bleed/120; f.bleed*=0.992; plotArmour(f);
           if(f.bleed<0.4) f.bleed=0;
           if(f.guardLeft>0&&!f.isGuard&&f.hp<=f.max*GUARD_AT) catchFall(f);
           else if(f.hp<=0){ f.hp=0;
@@ -6965,6 +7699,7 @@
         if(f.chill>0) f.chill--;
         if(f.trait&&f.trait.kind==='charge'&&f.guard&&!f.dead) f.meter=Math.min(100,f.meter+0.1*f.trait.v);
         if(f.air>0||f.vAir>0){
+          if(f.airMove&&tick%3===0) ghost(f,f.x+f.dx);
           f.air+=f.vAir; f.vAir-=0.62;
           if(f.leap) f.dx+=f.leapVX;
           if(f.air<=0){
@@ -6975,10 +7710,18 @@
         if(!f.leap&&f.dx!==0){ f.dx*=0.86; if(Math.abs(f.dx)<0.5) f.dx=0; }
         stepAnim(f);
       });
-      if(me&&me.cd>0) me.cd-=(me.chill>0?0.55:1);
-      if(me&&me.stun>0) me.stun--;
-      if(screen==='fight'&&me&&foe) runBuffer(me,foe);
+      if(movie){
+        /* in the movie both champions are on the AI */
+        if(screen==='fight'&&me&&foe) aiStep(me,foe);
+      }else{
+        if(me&&me.cd>0) me.cd-=(me.chill>0?0.55:1);
+        if(me&&me.stun>0) me.stun--;
+        if(screen==='fight'&&me&&foe) runBuffer(me,foe);
+      }
       if(screen==='fight'&&foe&&me) aiStep(foe,me);
+    }else if(screen==='movie'){
+      if(me) stepAnim(me);
+      if(foe) stepAnim(foe);
     }else{
       /* showcase: the selected champion idles on the platform */
       var sh=HEROES[save.sel], sp2=prog(sh);
@@ -7678,7 +8421,7 @@
     }else{
       if(foe) drawFighter(ctx,foe,tick,2.45);
       if(me) drawFighter(ctx,me,tick,2.45);
-      if(!cine&&cz<1.06){
+      if(!cine&&cz<1.06&&!movie){
       bar(34,26,380,me.hp/me.max,me.h.name,me.lvl,me.tier,false);
       bar(W-414,26,380,foe.hp/foe.max,foe.h.name,foe.lvl,foe.tier,true);
       meter(34,62,380,me.meter/100,false);
@@ -7745,7 +8488,7 @@
 
     for(var s=0;s<sparks.length;s++){
       var sp=sparks[s];
-      ctx.globalAlpha=Math.max(0,sp.life/34); ctx.fillStyle=sp.c;
+      ctx.globalAlpha=Math.min(1,Math.max(0,sp.life/34)); ctx.fillStyle=sp.c;
       ctx.beginPath(); ctx.arc(sp.x,sp.y,sp.r,0,6.283); ctx.fill();
     }
     ctx.globalAlpha=1;
@@ -7760,6 +8503,8 @@
     ctx.globalAlpha=1;
     ctx.restore();
     drawCine();
+    drawHype();
+    drawMovie();
     if(flash>0){ ctx.fillStyle='rgba(255,250,220,'+(flash/16*0.5).toFixed(3)+')'; ctx.fillRect(0,0,W,H); }
   }
 
@@ -7809,13 +8554,19 @@
        breathing, and stop entirely during a fight. Biggest saving in the loop. */
     if(screen==='home'&&(tick%4)===0){ drawCards(); drawSkinCards(); }
     if(screen==='fight'&&me){
-      var sb=$('bSpecial');
-      if(me.meter>=superCost(me)){ sb.classList.add('ready'); sb.querySelector('small').textContent=me.h.superName; }
-      else { sb.classList.remove('ready'); sb.querySelector('small').textContent=Math.floor(me.meter)+'%'; }
-      var hb=$('bHeavy');
-      if(me.meter>=25){ hb.classList.add('ready'); hb.querySelector('small').textContent='Ready — costs 25%'; }
-      else { hb.classList.remove('ready'); hb.querySelector('small').textContent='Needs 25%'; }
+      var sb=$('bSpecial'), sc=superCost(me), air=(me.leap&&!me.airMove);
+      if(me.meter>=sc){ setBtn(sb,'ready super',me.h.superName+'!'); }
+      else if(me.meter>=DEATH_COST){ setBtn(sb,'ready','Punch of Death!'); }
+      else setBtn(sb,'',Math.floor(me.meter)+'% \u2014 land hits');
+      setBtn($('bStrike'),air?'air':'',air?'FLYING PUNCH!':'Tap fast to combo');
+      setBtn($('bKick'),air?'air':'',air?'FLYING KICK!':'Hits harder');
     }
+  }
+  function setBtn(el,cls,small){
+    var c='fbtn'+(cls?' '+cls:'');
+    if(el.className!==c) el.className=c;
+    var s2=el.querySelector('small');
+    if(s2.textContent!==small) s2.textContent=small;
   }
   requestAnimationFrame(frame);
 
@@ -8185,7 +8936,7 @@
   }
   buildRoster(); buildArenas(); buildSkins(); buildMissions(); buildLegend();
   buildSquadPickers(); ownerLights(); adminRefresh(); buildRarChips();
-  buildStory(); buildDaily(); buildLeader(); renderUI();
+  buildStory(); buildFun(); buildDaily(); buildLeader(); renderUI();
   if($('lbName')) $('lbName').value=save.lbName||'';
   lbRefresh(true);
 
@@ -8242,6 +8993,12 @@
   });
   $('bDaily').addEventListener('click',claimDaily);
   $('bStory').addEventListener('click',function(){ startStory(); tone(300,0.2,'square',0.05,700); });
+  $('bMovie').addEventListener('click',function(){ if(isOwner()) startMovie(); });
+  $('bGiant').addEventListener('click',function(){ startGiant(); });
+  $('bRush').addEventListener('click',function(){ startRush(); });
+  $('bDummy').addEventListener('click',function(){ startDummy(); });
+  $('mvSkip').addEventListener('click',function(){ movieSkip(); });
+  $('mvExit').addEventListener('click',function(){ endMovie(); });
   $('bSurv').addEventListener('click',function(){ startSurv(); tone(300,0.2,'square',0.05,700); });
   $('cutNext').addEventListener('click',cutAdvance);
   $('bTeam').addEventListener('click',function(){ startTeam(); tone(300,0.2,'square',0.05,700); });
@@ -8307,7 +9064,7 @@
   }
   function ownerRefresh(){
     store(); markCardsDirty(); buildRoster();
-    buildSkins(); buildMissions(); buildLegend(); buildSquadPickers(); buildStory();
+    buildSkins(); buildMissions(); buildLegend(); buildSquadPickers(); buildStory(); buildFun();
     buildDaily(); buildLeader(); renderUI();
     ownerLights(); adminRefresh();
     lbRefresh(true);
@@ -8609,28 +9366,31 @@
       el.classList.add('flash'); setTimeout(function(){ el.classList.remove('flash'); },120);
     });
   }
-  tap('bStrike','strike'); tap('bKick','kick'); tap('bGrab','grab');
-  press($('bGuard'),
-    function(){ if(me&&!me.dead){ me.guard=true; $('bGuard').classList.add('held'); } },
-    function(){ if(me) me.guard=false; $('bGuard').classList.remove('held'); });
-  tap('bHeavy','heavy'); tap('bLeap','leap'); tap('bSpecial','superm');
+  tap('bStrike','strike'); tap('bKick','kick'); tap('bLeap','leap'); tap('bSpecial','power');
 
   window.addEventListener('keydown',function(e){
     if(e.target&&e.target.tagName==='BUTTON') return;
     if(e.repeat) return;
+    if(movie){
+      if(e.code==='Escape'){ e.preventDefault(); endMovie(); }
+      else if(e.code==='ArrowRight'||e.code==='Enter'||e.code==='Space'){ e.preventDefault(); movieSkip(); }
+      return;
+    }
     if(screen!=='fight') return;
     if(e.code==='KeyA'){ e.preventDefault(); request(me,foe,'strike'); }
     else if(e.code==='KeyK'){ e.preventDefault(); request(me,foe,'kick'); }
     else if(e.code==='KeyG'){ e.preventDefault(); request(me,foe,'grab'); }
-    else if(e.code==='KeyS'){ e.preventDefault(); if(me&&!me.dead){ me.guard=true; $('bGuard').classList.add('held'); } }
-    else if(e.code==='KeyD'){ e.preventDefault(); request(me,foe,'superm'); }
+    else if(e.code==='KeyS'){ e.preventDefault(); guardHeld=true; if(me&&!me.dead) me.guard=true; }
+    else if(e.code==='KeyD'||e.code==='KeyP'){ e.preventDefault(); request(me,foe,'power'); }
+    else if(e.code==='KeyJ'){ e.preventDefault(); request(me,foe,'strike'); }
+    else if(e.code==='KeyL'){ e.preventDefault(); request(me,foe,'kick'); }
     else if(e.code==='KeyF'){ e.preventDefault(); request(me,foe,'heavy'); }
     else if(e.code==='KeyW'||e.code==='Space'){ e.preventDefault(); request(me,foe,'leap'); }
   });
   window.addEventListener('keyup',function(e){
-    if(e.code==='KeyS'&&me){ me.guard=false; $('bGuard').classList.remove('held'); }
+    if(e.code==='KeyS'){ guardHeld=false; if(me) me.guard=false; }
   });
-  window.addEventListener('blur',function(){ if(me) me.guard=false; $('bGuard').classList.remove('held'); });
+  window.addEventListener('blur',function(){ guardHeld=false; if(me) me.guard=false; });
 
   $('sound').addEventListener('click',function(){
     muted=!muted;
