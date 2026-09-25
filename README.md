@@ -36,6 +36,26 @@ pulses when it's charged.
 and fires the moment the champion is free, and a move you can't afford falls
 back to a plain punch. Mashing is never a dead input.
 
+### How the moves work
+
+Every attack moves the fighter's weight, the way a real one does:
+
+- **Punch combo:** lead jab, rear straight, then either an uppercut to the head
+  or a hook to the body. Each punch snaps back to a guard.
+- **Kicks rotate between four real techniques**: a roundhouse to the head, a
+  low kick to the leg, a front push-kick to the body that shoves them back,
+  and a knee up close.
+- **Hit reactions match where the blow landed.** A head shot snaps the head
+  back, a body shot folds them over, and a leg kick buckles the knee.
+- **Knockback:** a clean hit sends the defender skidding back with a puff of
+  dust, and they step back into range. A block still gives a little ground.
+- **Footwork:** fighters never stand frozen. They shuffle in and out and
+  bounce lightly on their feet.
+- **Flying attacks have real airborne poses:** a flying kick with the leg
+  out straight, and a "superman punch" with the back leg thrown behind.
+- **Knockouts:** the loser is lifted off their feet, thrown back in slow
+  motion, and lands with a thud and a cloud of dust.
+
 ### Making every fight feel big
 
 - **READY? … FIGHT!** before every bout, and a giant **K.O.!** at the end

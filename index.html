@@ -3115,6 +3115,37 @@
     launched:P({head:[-18,-82],neck:[-12,-71],pelvis:[0,-47],
       shF:[-7,-69],elF:[-20,-58],haF:[-33,-49],shB:[-17,-69],elB:[-30,-60],haB:[-40,-53],
       hiF:[5,-47],knF:[18,-39],ftF:[31,-31],hiB:[3,-45],knB:[16,-35],ftB:[28,-27]}),
+    /* ---- real fight technique: every attack shifts the weight ---- */
+    straight:P({head:[10,-90],neck:[6,-76],pelvis:[4,-45],
+      shF:[10,-74],elF:[16,-64],haF:[14,-80],shB:[4,-74],elB:[24,-74],haB:[48,-73],
+      hiF:[10,-45],knF:[20,-25],ftF:[24,-1],hiB:[-2,-45],knB:[-10,-22],ftB:[-18,-1]}),
+    bodyhook:P({head:[10,-84],neck:[6,-70],pelvis:[0,-40],
+      shF:[10,-68],elF:[22,-52],haF:[38,-50],shB:[-3,-68],elB:[-8,-60],haB:[4,-74],
+      hiF:[6,-40],knF:[18,-22],ftF:[22,-1],hiB:[-6,-40],knB:[-14,-20],ftB:[-24,-1]}),
+    roundhouse:P({head:[-9,-90],neck:[-7,-76],pelvis:[-4,-47],
+      shF:[-2,-73],elF:[8,-66],haF:[4,-78],shB:[-12,-73],elB:[-26,-66],haB:[-36,-58],
+      hiF:[2,-47],knF:[26,-68],ftF:[52,-86],hiB:[-6,-45],knB:[-8,-24],ftB:[-12,-1]}),
+    lowkick:P({head:[2,-92],neck:[0,-77],pelvis:[-2,-46],
+      shF:[4,-74],elF:[14,-64],haF:[12,-80],shB:[-8,-74],elB:[-2,-66],haB:[8,-76],
+      hiF:[2,-46],knF:[22,-32],ftF:[46,-14],hiB:[-6,-46],knB:[-10,-24],ftB:[-14,-1]}),
+    frontkick:P({head:[-3,-93],neck:[-3,-78],pelvis:[-3,-47],
+      shF:[3,-75],elF:[12,-66],haF:[10,-80],shB:[-9,-75],elB:[-18,-66],haB:[-10,-56],
+      hiF:[1,-47],knF:[24,-52],ftF:[50,-50],hiB:[-7,-46],knB:[-10,-24],ftB:[-15,-1]}),
+    knee:P({head:[10,-90],neck:[7,-76],pelvis:[2,-47],
+      shF:[10,-73],elF:[26,-72],haF:[34,-84],shB:[-2,-73],elB:[14,-76],haB:[30,-86],
+      hiF:[4,-47],knF:[22,-68],ftF:[8,-44],hiB:[-4,-47],knB:[-6,-24],ftB:[-10,-1]}),
+    hurtBody:P({head:[10,-80],neck:[6,-68],pelvis:[-6,-43],
+      shF:[6,-66],elF:[12,-54],haF:[8,-50],shB:[-4,-66],elB:[2,-52],haB:[0,-48],
+      hiF:[-2,-43],knF:[6,-23],ftF:[6,-1],hiB:[-9,-43],knB:[-14,-22],ftB:[-20,-1]}),
+    hurtLeg:P({head:[-4,-86],neck:[-4,-72],pelvis:[-2,-40],
+      shF:[2,-69],elF:[14,-60],haF:[18,-70],shB:[-10,-69],elB:[-22,-62],haB:[-30,-54],
+      hiF:[2,-40],knF:[4,-18],ftF:[14,-1],hiB:[-6,-40],knB:[-16,-22],ftB:[-20,-1]}),
+    flykick:P({head:[-6,-90],neck:[-5,-76],pelvis:[0,-46],
+      shF:[-2,-73],elF:[-14,-78],haF:[-26,-70],shB:[-10,-73],elB:[-22,-80],haB:[-34,-74],
+      hiF:[4,-46],knF:[26,-44],ftF:[52,-40],hiB:[-4,-46],knB:[-2,-28],ftB:[-18,-22]}),
+    flypunch:P({head:[12,-90],neck:[8,-76],pelvis:[-2,-46],
+      shF:[12,-74],elF:[30,-78],haF:[52,-80],shB:[-2,-74],elB:[-12,-66],haB:[-4,-56],
+      hiF:[2,-46],knF:[10,-28],ftF:[4,-10],hiB:[-6,-46],knB:[-24,-38],ftB:[-40,-30]}),
     down:P({head:[-26,-30],neck:[-19,-24],pelvis:[2,-16],
       shF:[-16,-24],elF:[-26,-14],haF:[-38,-6],shB:[-20,-20],elB:[-30,-10],haB:[-40,-3],
       hiF:[4,-16],knF:[20,-12],ftF:[34,-3],hiB:[2,-14],knB:[18,-6],ftB:[32,-2]})
@@ -4447,7 +4478,7 @@
     var P0=project3d(f.pose,f.turnNow);
     DETAIL=(scale>1.2);
     g.save();
-    g.translate(f.x+(f.lunge||0)*face+(f.dx||0), GY-(f.air||0));
+    g.translate(f.x+(f.lunge||0)*face+(f.dx||0)+(f.kb||0)+(f.sway||0), GY-(f.air||0)-(f.bob||0));
     g.scale(face*scale,scale);
 
     /* cast shadow on the deck */
@@ -6882,7 +6913,7 @@
     var v=f.vAir, T=Math.max(6,(v+Math.sqrt(v*v+1.24*Math.max(0,f.air)))/0.62);
     var reach=(other.x-(f.x+f.dx))-f.facing*72;
     f.leapVX=reach/T;
-    var pose=type==='kick'?POSE.kick:POSE.cannon;
+    var pose=type==='kick'?POSE.flykick:POSE.flypunch;
     play(f,[{p:pose,d:8},{p:pose,d:120}]);
     floatText(f.x+f.dx,GY-(f.air||0)-150,type==='kick'?'FLYING KICK!':'FLYING PUNCH!','#7FD4FF',true);
     tone(type==='kick'?300:380,0.25,'sawtooth',0.04,900);
@@ -7165,6 +7196,7 @@
     if(att!==me&&att!==foe) return;
     if(def!==me&&def!==foe) def=(att===me)?foe:me;
     if(!def||def.dead||att.dead) return;
+    var zone=att.zone||'head', kbSet=att.knock; att.zone=null; att.knock=null;
     /* a moment of cover right after getting back up, so a champion who
        just refused to go down is not deleted by the very next punch */
     if(def.inv>0){
@@ -7245,7 +7277,7 @@
         att.hp=Math.max(0,att.hp-back); plotArmour(att);
         floatText(def.x-def.facing*40,GY-170,'-'+back,'#FF9AA8');
         if(att.hp<=0&&!att.dead&&!catchFall(att)){ att.hp=0; att.dead=true;
-          play(att,[{p:POSE.hurt,d:8},{p:POSE.down,d:22}]);
+          play(att,[{p:POSE.launched,d:10},{p:POSE.down,d:22}]); att.vAir=Math.max(att.vAir||0,6);
           setTimeout(function(){ endFight(att===foe); },900); }
       }
       else if(dtr.kind==='spite') def.meter=Math.min(100,def.meter+dtr.v*22);
@@ -7263,13 +7295,21 @@
       floatText(hx,hy-22,'COUNTER!','#9BD3FF');
       setTimeout(function(){ if(screen==='fight'&&!def.dead) doStrike(def,att); },40);
     }
+    /* every hit moves them: a block gives ground a little, a clean
+       shot sends them skidding back, a big one takes them off their feet */
+    var kb=(kbSet!=null)?kbSet:(kind==='special'?70:(kind==='heavy'?32:(kind==='auto'?20:12)));
+    knockBack(def,att,blocked?kb*0.3:kb);
     if(blocked){
       floatText(hx,hy,'BLOCK',' #9BD3FF');
       spark(hx,hy,'#9BD3FF',7); tone(300,0.07,'square',0.03,180);
     }else{
       def.stun=kind==='special'?46:(kind==='heavy'?30:18);
-      play(def,[{p:POSE.hurt,d:8},{p:POSE.idle,d:14}]);
       var heavy=(kind==='special'||kind==='heavy'||predicted);
+      /* the reaction matches where it landed: the head snaps back, a body
+         shot folds them over, a leg kick buckles the knee */
+      var rp=zone==='body'?POSE.hurtBody:(zone==='legs'?POSE.hurtLeg:POSE.hurt);
+      if(heavy) play(def,[{p:rp,d:5},{p:rp,d:12},{p:POSE.guard,d:10},{p:POSE.idle,d:12}]);
+      else play(def,[{p:rp,d:6},{p:rp,d:3},{p:POSE.idle,d:12}]);
       if(predicted){
         floatText(att.x+att.facing*40,GY-190,'PREDICTED COUNTER','#7FD4FF',true);
         fx.push({k:'scan',b:def,life:44,max:44,txt:'PATTERN SOLVED'});
@@ -7295,7 +7335,10 @@
       def.hp=0;
       if(catchFall(def)) return;
       def.dead=true; def.guard=false;
-      play(def,[{p:POSE.hurt,d:8},{p:POSE.down,d:22}]);
+      /* a knockout: lifted off their feet, thrown back, and dropped */
+      play(def,[{p:POSE.launched,d:10},{p:POSE.launched,d:14},{p:POSE.down,d:16}]);
+      def.vAir=Math.max(def.vAir||0,8); knockBack(def,att,120);
+      slow=Math.max(slow,34);
       spark(def.x,GY-60,'#FFD98A',28);
       setTimeout(function(){ endFight(def===foe); },900);
     }
@@ -7308,14 +7351,21 @@
     f.guard=false;
     f.comboT=42; f.combo=(f.combo%3)+1;
     var c=f.combo;
-    var pose=c===1?POSE.jab:(c===2?POSE.hook:POSE.upper);
-    var mul=c===3?1.5:1;
+    /* a real combination: lead jab, rear straight, then a finisher that
+       goes upstairs (uppercut) or downstairs (hook to the body) */
+    var low=(c===3&&Math.random()<0.5);
+    var pose=c===1?POSE.jab:(c===2?POSE.straight:(low?POSE.bodyhook:POSE.upper));
+    var mul=c===3?1.5:(c===2?1.15:1);
     var sp=Math.max(0.55,1/f.spd);
     f.lunge=0;
     play(f,[
-      {p:POSE.wind,d:Math.round(5*sp)},
-      {p:pose,d:Math.round(7*sp),hit:function(){ hitLand(f,other,mul,'hit'); }},
-      {p:POSE.idle,d:Math.round(11*sp)}
+      {p:c===1?POSE.guard:POSE.wind,d:Math.round((c===1?4:6)*sp)},
+      {p:pose,d:Math.round(7*sp),hit:function(){
+        f.zone=low?'body':'head'; f.knock=c===3?30:(c===2?16:9);
+        hitLand(f,other,mul,'hit'); }},
+      {p:pose,d:Math.round(3*sp)},
+      {p:POSE.guard,d:Math.round(8*sp)},
+      {p:POSE.idle,d:Math.round(6*sp)}
     ]);
     f.cd=Math.round(20*sp);
     tone(c===3?200:340,0.06,'square',0.025,120);
@@ -7334,6 +7384,7 @@
     play(f,[
       {p:POSE.bigwind,d:Math.round(14*sp)},
       {p:POSE.smash,d:Math.round(7*sp),hit:function(){
+        f.zone='head'; f.knock=110;
         hitLand(f,other,3.0,'heavy');
         if(!other.dead) other.vAir=Math.max(other.vAir||0,7);
         flash=Math.max(flash,12); shake=Math.max(shake,22);
@@ -7349,23 +7400,32 @@
     return true;
   }
 
-  /* ---------- a heavy kick: slower than a strike, and it hurts ---------- */
+  /* ---------- kicks: four real ones, cycled so it never looks the same twice ---------- */
+  var KICKS=[
+    {p:POSE.roundhouse,w:POSE.kickwind,zone:'head',mul:1.95,kb:34,wd:11,name:''},
+    {p:POSE.lowkick,w:POSE.guard,zone:'legs',mul:1.4,kb:12,wd:6,name:''},
+    {p:POSE.frontkick,w:POSE.kickwind,zone:'body',mul:1.6,kb:58,wd:8,name:''},
+    {p:POSE.knee,w:POSE.guard,zone:'body',mul:1.75,kb:24,wd:7,name:''}];
   function doKick(f,other){
     if(f.dead||f.stun>0||f.anim||screen!=='fight') return false;
     if(f.cd>0) return false;
     study(other,11);
     f.guard=false; f.combo=0;
+    var K=KICKS[(f.kickN=((f.kickN||0)+1+(Math.random()<0.3?1:0))%KICKS.length)];
     var sp=Math.max(0.6,1/f.spd);
     play(f,[
-      {p:POSE.kickwind,d:Math.round(9*sp)},
-      {p:POSE.kick,d:Math.round(8*sp),hit:function(){
-        hitLand(f,other,1.7,'heavy');
-        fx.push({k:'impact',x:other.x-other.facing*26,y:GY-90,life:18,max:18,c:f.h.trim});
+      {p:K.w,d:Math.round(K.wd*sp)},
+      {p:K.p,d:Math.round(8*sp),hit:function(){
+        f.zone=K.zone; f.knock=K.kb;
+        hitLand(f,other,K.mul,'heavy');
+        fx.push({k:'impact',x:other.x-other.facing*26,y:GY-(K.zone==='head'?110:(K.zone==='legs'?34:70)),life:18,max:18,c:f.h.trim});
       }},
-      {p:POSE.idle,d:Math.round(15*sp)}
+      {p:K.p,d:Math.round(4*sp)},
+      {p:POSE.guard,d:Math.round(10*sp)},
+      {p:POSE.idle,d:Math.round(8*sp)}
     ]);
     f.cd=Math.round(26*sp);
-    tone(240,0.08,'square',0.03,140);
+    tone(K.zone==='legs'?300:220,0.08,'square',0.03,140);
     return true;
   }
 
@@ -7569,6 +7629,7 @@
       var am=f.airMove; f.airMove=null;
       play(f,[{p:POSE.idle,d:14}]);
       if(Math.abs((f.x+f.dx)-other.x)<175&&!other.dead&&!f.dead){
+        f.zone=am==='kick'?'body':'head'; f.knock=am==='kick'?90:70;
         hitLand(f,other,am==='kick'?2.6:2.3,'heavy');
         if(!other.dead) other.vAir=Math.max(other.vAir||0,6);
         fx.push({k:'impact',x:other.x-other.facing*20,y:GY-(am==='kick'?96:76),life:28,max:28,c:'#7FD4FF'});
@@ -7632,6 +7693,31 @@
     if(MOVES[kind](f,other)) f.buffer=null;
   }
 
+  /* ---------- weight and footwork ----------
+     kbT is where a hit has pushed a fighter; kb eases there fast (the
+     skid) and kbT drifts back to zero slowly (stepping back into range).
+     A fighter who is knocked out stays where they landed. */
+  function knockBack(def,att,px){
+    if(!def||!px) return;
+    var t=(def.kbT||0)+att.facing*px;
+    var lo=70-def.x, hi=W-70-def.x;
+    def.kbT=Math.max(lo,Math.min(hi,t));
+    if(px>=30) spark(def.x+(def.kb||0)-att.facing*10,GY-4,'#CFC4AE',Math.min(12,Math.round(px/8)));
+  }
+  function footwork(f){
+    if(f.kbT){
+      if(!f.dead){ f.kbT*=0.955; if(Math.abs(f.kbT)<0.4) f.kbT=0; }
+    }
+    f.kb=(f.kb||0)+((f.kbT||0)-(f.kb||0))*0.32;
+    /* a live fighter never stands still: a slow shuffle in and out and a
+       light bounce on the balls of the feet */
+    if(f.seed===undefined) f.seed=Math.random()*6.283;
+    var live=!f.dead&&!f.anim&&!f.leap&&(screen==='fight');
+    var ts=live?Math.sin(tick*0.032+f.seed)*9*f.facing:0;
+    var tb=live?Math.abs(Math.sin(tick*0.105+f.seed))*3.2:0;
+    f.sway=(f.sway||0)+(ts-(f.sway||0))*0.12;
+    f.bob=(f.bob||0)+(tb-(f.bob||0))*0.3;
+  }
   /* a translucent copy of the fighter left behind mid-move */
   function ghost(f,x){
     fx.push({k:'ghost',h:f.h,tier:f.tier,facing:f.facing,x:x,pose:clonePose(f.pose),life:20,max:20});
@@ -7705,9 +7791,14 @@
           if(f.air<=0){
             f.air=0; f.vAir=0;
             if(f.leap) land(f,(f===me)?foe:me);
+            else if(f.dead&&!f.floored){
+              f.floored=true; thud(0.34,0.16); shake=Math.max(shake,12);
+              spark(f.x+(f.kb||0),GY-4,'#CFC4AE',14);
+            }
           }
         }
         if(!f.leap&&f.dx!==0){ f.dx*=0.86; if(Math.abs(f.dx)<0.5) f.dx=0; }
+        footwork(f);
         stepAnim(f);
       });
       if(movie){
