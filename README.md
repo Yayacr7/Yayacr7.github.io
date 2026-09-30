@@ -11,25 +11,145 @@ and forge their armour into brighter and brighter finishes.
 
 ### Fighting
 
-| Key | Button | Does |
+Four big buttons, that's all:
+
+| Button | Key | Does |
 | --- | --- | --- |
-| `A` | Strike | Punch. Tap in rhythm for a 3-hit combo — the third hit is the heavy one |
-| `F` | Super Punch | Roughly double damage. Costs 25% of the meter |
-| `K` | Kick | Slower than a strike and hits considerably harder |
-| `G` | Grab | Modest damage, but a guard barely helps against it |
-| `W` | Leap | A jump attack. Solaris flies instead — higher, further, and harder |
-| `S` | Guard | Hold to block. Cuts incoming damage to about a sixth |
-| `D` | Super Move | That champion's signature move. Needs a full meter |
+| 👊 Punch | `A` or `J` | Tap in rhythm for a 3-hit combo — the third hit is the heavy one |
+| 🦶 Kick | `K` or `L` | Slower than a punch and hits harder |
+| 🚀 Jump | `W` or `Space` | Jump at them. **In the air, Punch = Flying Punch and Kick = Flying Kick**: you dive straight onto them for big damage. Superman flies instead |
+| ⚡ Power | `D` or `P` | Always does the biggest move you can afford: your **Super Move** on a full meter, the **Punch of Death** at half a meter, otherwise a punch |
 
-Landing hits fills the meter fastest; guarding fills it slowly.
+The **Punch of Death** is a dash-in haymaker: slow motion, a flash, after-images,
+three times a normal punch, and it knocks them off their feet. It costs half
+the meter.
 
-The controls sit in the bottom-right corner of the arena itself, over the
-action, rather than below it.
+**Blocking is automatic.** When your opponent winds up and you're standing
+still, your champion gets their guard up on their own a good share of the
+time. Keyboard players can still hold `S` to block and press `G` to grab.
 
-**A press always does something.** If a move is requested while the champion
-is mid-animation or on cooldown it is buffered and fires the moment they are
-free, and a move you cannot afford falls back to a plain strike rather than
-being swallowed. Mashing a button is never a dead input.
+Landing hits fills the meter fastest. While you're in the air the Punch and
+Kick buttons light up blue and say FLYING PUNCH / FLYING KICK, and Power
+pulses when it's charged.
+
+**A press always does something.** A move pressed mid-animation is buffered
+and fires the moment the champion is free, and a move you can't afford falls
+back to a plain punch. Mashing is never a dead input.
+
+### How the moves work
+
+Every attack moves the fighter's weight, the way a real one does:
+
+- **Punch combo:** jab, rear straight, then a finisher: uppercut, body hook,
+  elbow, spinning backfist or headbutt.
+- **Kicks rotate between seven techniques:** roundhouse, low kick, push
+  kick, knee strike, axe kick, spinning heel kick and a sweep that knocks
+  them down. Kick someone who is blocking and you **throw** them instead.
+- **Jump, then Power** is a **Flying Knee** (25% meter) that knocks them down.
+- **Hit reactions match where the blow landed.** A head shot snaps the head
+  back, a body shot folds them over, and a leg kick buckles the knee.
+- **Knockback:** a clean hit sends the defender skidding back with a puff of
+  dust, and they step back into range. A block still gives a little ground.
+- **Footwork:** fighters never stand frozen. They shuffle in and out and
+  bounce lightly on their feet.
+- **Flying attacks have real airborne poses:** a flying kick with the leg
+  out straight, and a "superman punch" with the back leg thrown behind.
+- **Knockouts:** the loser is lifted off their feet, thrown back in slow
+  motion, and lands with a thud and a cloud of dust.
+
+### Fighting-game systems
+
+- **Parry:** block right as a hit arrives (the auto-block can do it too) and
+  it's deflected completely. The attacker staggers, and you gain meter.
+- **Counter hit:** hit someone during the wind-up of their own attack for
+  +35% damage.
+- **Air combo:** fighters knocked into the air can't block, take +20%, and
+  stay up for juggles.
+- **Knockdowns:** the sweep, throw, Flying Knee and Punch of Death put them
+  on the floor. They get back up after a moment and can't be hit while down.
+- **Dizzy:** take enough damage quickly and you see stars, wide open for
+  almost two seconds.
+- **Guard break:** block too much in a row and your guard shatters.
+- **Rage mode:** drop under 30% health and you hit 25% harder, with a red aura.
+- **Edge bounce:** a big hit into the edge of the platform bounces them off it.
+- **Hit counter and ratings:** GOOD, GREAT, AMAZING, INCREDIBLE, UNSTOPPABLE.
+- **Announcer voice** (the browser's speech engine, off when sound is off):
+  "Ready? Fight!", "Round two", "K.O.!", "Perfect!", "Parry!", "Dizzy!".
+- **Victory poses**, a **PERFECT!** (+50% credits for a win without taking
+  damage), and fight stats (hits, best combo, damage) on the result screen.
+- A full **move list** on the home screen.
+
+### More modes
+
+- **🕹 Arcade Ladder:** seven fights in a row, harder each time, with a giant
+  final boss. One free continue. Clearing it drops a Diamond Chest.
+- **🥊 Best of 3:** first to two rounds, same opponent, fresh health each
+  round. The winner gets a Silver Chest or better.
+- **✨ Power-Up Brawl:** orbs float down mid-fight (❤️ health, ⚡ full meter,
+  💪 strength, 🛡️ shield, ❄️ freeze). Land a clean hit to grab one.
+
+### Fighting styles
+
+Every champion fights in one of seven styles. It's fixed for that champion,
+shown next to their name on the health bar, and changes how they play:
+
+| Style | Effect |
+| --- | --- |
+| 🥊 Boxer | Punches +20% |
+| 🦵 Kickboxer | Kicks +20% |
+| 🤼 Wrestler | Kicks often become throws, and throws +40% |
+| 👊 Brawler | Knocks them back 50% further and dizzies faster |
+| 🥋 Martial Artist | Flying attacks +25% |
+| 💨 Speedster | Recovers from every move 20% faster |
+| 🦍 Powerhouse | Punch of Death costs 40% meter instead of 50% |
+
+### The Finisher
+
+With a full meter and the opponent under 25% health, **Power** becomes a
+**FINISHER**: the camera pushes in, the screen goes red at the edges, and a
+five-hit sequence ends the fight. The computer opponents use it too.
+
+### Trophies and daily challenges
+
+- **Twenty trophies** on the home screen, from First Victory to Unstoppable
+  (a 16-hit combo), Executioner (10 Finishers) and Arcade Champion. Each one
+  pays credits the moment it pops, with a banner mid-fight.
+- **A new daily challenge every day**: land a 6-hit combo, knock down 5,
+  parry 3, land 8 flying attacks, and so on. Claiming it pays 2,500 credits
+  and a Gold Chest.
+
+### Graphics
+
+- A crescent **swoosh** on every attack, and a star-shaped **impact burst**
+  where each clean hit lands, at head, body or leg height.
+- **Arcade health bars**: segmented, with a pale chunk that drains away
+  after each hit so you can see how much it took.
+- The **camera zooms in slow motion** on every knockout.
+- **Arena weather**: lightning and shooting stars over Gotham, shooting stars
+  at the Watchtower, fire geysers on Apokolips, and birds over the daytime
+  arenas.
+
+### Making every fight feel big
+
+- **READY? … FIGHT!** before every bout, and a giant **K.O.!** at the end
+- Comic-book hit words (**POW! BAM! WHAM! KAPOW!**) on the big hits
+- Confetti on every win
+- A **treasure chest** after every win: Wooden, Silver, Gold or (rarely)
+  Diamond, which also gives a free level
+- **Win streaks**: each win in a row pays 10% more credits, up to double.
+  Losing resets it
+- Tips along the bottom of the screen for your first five fights
+
+### Quick play modes
+
+- **🧌 Giant Battle**: one of the game's heaviest hitters, drawn 1.5× size
+  with 3× the health. A win always drops a Gold Chest or better
+- **⏱ 60-Second Rush**: knock out as many as you can in a minute. Each
+  knockout pays, heals you a little and brings the next one straight in.
+  Three or more knockouts earns a chest
+- **🤖 Smash the Dummy**: twenty seconds against a training robot that never
+  hits back. Pays by damage dealt, and a new record drops a Silver Chest or
+  better
 
 ### Arenas
 
@@ -185,6 +305,26 @@ Stephen and Arthur.
 Search hides cards rather than rebuilding a shorter list, because the card array
 lines up with the roster by index -- a filtered list would hand every portrait to
 the wrong champion.
+
+### The movie (owner only)
+
+Only shows up on a browser unlocked with the owner key; nobody else sees it.
+
+**Skyforge: The Last Specimen** is a short film in five acts that plays itself.
+Press **Watch the movie** on the home screen and sit back: title cards,
+subtitled dialogue scenes with the camera pushing in on whoever is speaking,
+four real bouts, and a credits roll, over a quiet score. It runs about five
+minutes.
+
+- **You are the star.** Whoever you have selected plays the lead. If your pick
+  already has a part in the film (Batman, say), Superman stands in.
+- **The fights are real.** Both champions are on the AI, so no two screenings
+  play out the same. The winner is scripted, though: they wear plot armour and
+  can't be knocked out, and a bout that drags makes them hit harder.
+- **Nothing is earned or lost.** It doesn't touch credits, experience or your
+  save, and the owner switches are off while it plays.
+- **Controls:** Skip scene (right arrow, Enter or Space) and Leave the cinema
+  (Esc), bottom-right of the screen.
 
 ### Story mode
 
