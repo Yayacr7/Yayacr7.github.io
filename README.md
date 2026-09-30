@@ -129,6 +129,33 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
+### Graphics & FPS settings
+
+Press **⚙️ Graphics** in the top bar (or click the FPS counter) to open the
+settings. They're saved per device, so a phone and a gaming PC can each keep
+their own.
+
+| Setting | Options |
+| --- | --- |
+| Preset | **Auto** (default), **Performance** (highest FPS), Balanced, High, **Ultra** (best looking) |
+| FPS limit | Unlimited (match screen), 30 (battery saver), 60, 90, 120, 144, 240 |
+| Resolution | Low (fastest), Standard, Sharp (matches screen), Ultra sharp (supersampled) |
+| Lighting effects | Auto, Off, Colour grade, Colour grade + glow |
+| Particles | Low, Normal, High |
+| Character detail | Full, Simple |
+| Arena weather | On, Off |
+| Motion smoothing | Auto (high refresh screens), Always on, Off (lowest input lag) |
+| Screen shake | On, Off |
+
+**Auto** watches the frame rate. If it drops, Auto turns the lighting
+effects down first, then lowers the resolution step by step (down to 60%).
+When the FPS recovers, it climbs back up. The panel shows the live FPS, the
+exact resolution being drawn, and what Auto is currently doing.
+
+Every frame is now painted off-screen and copied to the screen in one go,
+which measured roughly twice as fast as drawing straight onto the visible
+canvas, even with effects off.
+
 ### Making every fight feel big
 
 - **READY? … FIGHT!** before every bout, and a giant **K.O.!** at the end

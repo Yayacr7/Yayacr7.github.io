@@ -77,6 +77,17 @@
   .pad{position:absolute;right:12px;bottom:12px;z-index:4;
     display:grid;gap:7px;grid-template-columns:repeat(2,minmax(0,1fr));width:min(46%,320px)}
   .pad .wide{grid-column:1 / -1}
+  .gfxpanel{position:fixed;inset:0;z-index:50;background:rgba(4,8,14,.72);display:grid;place-items:center;padding:16px}
+  .gfxbox{background:var(--panel-2);border:2px solid var(--gold);border-radius:15px;padding:18px;max-width:640px;width:100%;
+    max-height:92vh;overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+  .gfxbox h3{margin:0 0 4px;font-family:"Saira Condensed",sans-serif;font-size:1.6rem;text-transform:uppercase;color:var(--gold)}
+  .gfxnow{margin:0 0 12px;font-weight:800;font-size:.82rem;color:#8BE8A8}
+  .gfxgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .gfxgrid label{display:flex;flex-direction:column;gap:4px;font-weight:800;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+  .gfxgrid select{font:inherit;font-size:.95rem;text-transform:none;letter-spacing:0;color:var(--ice);background:#0D1622;
+    border:2px solid #2B3E57;border-radius:9px;padding:8px}
+  .gfxtip{font-size:.84rem;margin:12px 0}
+  #fpsWrap{cursor:pointer}
   .pad .fbtn{font-size:clamp(.8rem,2.3vw,1.18rem);padding:13px 6px}
   .pad .fbtn.air{border-color:#7FD4FF;background:#16324D;color:#fff;box-shadow:0 0 18px rgba(127,212,255,.7)}
   #bSpecial.ready{animation:pulse 0.9s ease-in-out infinite}
@@ -385,6 +396,60 @@
     <span class="lab">FPS</span>
     <div class="coin fps ok" id="fpsWrap"><span id="fps">—</span></div>
     <button class="sound" id="sound" aria-pressed="true">Sound on</button>
+    <button class="sound" id="gfxBtn">⚙️ Graphics</button>
+  </div>
+
+  <div class="gfxpanel" id="gfxPanel" hidden>
+    <div class="gfxbox" role="dialog" aria-label="Graphics and FPS settings">
+      <h3>Graphics &amp; FPS</h3>
+      <p class="gfxnow" id="gfxNow"></p>
+      <div class="gfxgrid">
+        <label>Preset<select id="gPreset">
+          <option value="auto">Auto (adjusts itself)</option>
+          <option value="performance">Performance (highest FPS)</option>
+          <option value="balanced">Balanced</option>
+          <option value="high">High</option>
+          <option value="ultra">Ultra (best looking)</option>
+          <option value="custom">Custom</option></select></label>
+        <label>FPS limit<select id="gCap">
+          <option value="0">Unlimited (match screen)</option>
+          <option value="30">30 FPS (battery saver)</option>
+          <option value="60">60 FPS</option>
+          <option value="90">90 FPS</option>
+          <option value="120">120 FPS</option>
+          <option value="144">144 FPS</option>
+          <option value="240">240 FPS</option></select></label>
+        <label>Resolution<select id="gRes">
+          <option value="low">Low (fastest)</option>
+          <option value="1x">Standard</option>
+          <option value="native">Sharp (matches screen)</option>
+          <option value="max">Ultra sharp (supersampled)</option></select></label>
+        <label>Lighting effects<select id="gPost">
+          <option value="auto">Auto</option>
+          <option value="off">Off (fastest)</option>
+          <option value="grade">Colour grade</option>
+          <option value="full">Colour grade + glow</option></select></label>
+        <label>Particles<select id="gPart">
+          <option value="0.5">Low</option>
+          <option value="1">Normal</option>
+          <option value="1.5">High</option></select></label>
+        <label>Character detail<select id="gDetail">
+          <option value="1">Full</option>
+          <option value="0">Simple (faster)</option></select></label>
+        <label>Arena weather<select id="gWeather">
+          <option value="1">On</option>
+          <option value="0">Off</option></select></label>
+        <label>Motion smoothing<select id="gSmooth">
+          <option value="auto">Auto (high refresh screens)</option>
+          <option value="on">Always on</option>
+          <option value="off">Off (lowest input lag)</option></select></label>
+        <label>Screen shake<select id="gShake">
+          <option value="1">On</option>
+          <option value="0">Off</option></select></label>
+      </div>
+      <p class="gfxtip">Low FPS? Pick <b>Performance</b>. Strong computer? Try <b>Ultra</b>. <b>Auto</b> watches your FPS and turns effects and resolution down or back up by itself.</p>
+      <button class="btn" id="gClose">Done</button>
+    </div>
   </div>
 
   <div class="stage" id="stage">
@@ -802,15 +867,48 @@
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $=function(id){return document.getElementById(id);};
 
+  /* ---------- graphics settings ----------
+     Kept per device (a phone and a gaming PC want different answers), so
+     they live in this browser's storage and never in the save file. */
+  var GFX_PRESETS={
+    auto:       {res:'native',post:'auto', part:1,  weather:1,detail:1,smooth:'auto'},
+    performance:{res:'low',   post:'off',  part:0.5,weather:0,detail:0,smooth:'off'},
+    balanced:   {res:'1x',    post:'grade',part:1,  weather:1,detail:1,smooth:'auto'},
+    high:       {res:'native',post:'full', part:1,  weather:1,detail:1,smooth:'auto'},
+    ultra:      {res:'max',   post:'full', part:1.5,weather:1,detail:1,smooth:'on'}};
+  var gfx={preset:'auto',cap:0,shake:1};
+  (function(){
+    var A=GFX_PRESETS.auto; for(var k in A) gfx[k]=A[k];
+    try{
+      var g0=JSON.parse(localStorage.getItem('skyforge.gfx'));
+      if(g0&&typeof g0==='object') for(var k2 in g0) if(k2 in gfx) gfx[k2]=g0[k2];
+    }catch(e){}
+  })();
+  /* Auto mode's own resolution dial: it drops below 100% when the frame
+     rate cannot keep up, and climbs back when it can */
+  var dynScale=1;
+  function renderDpr(){
+    var base=window.devicePixelRatio||1, dpr;
+    if(gfx.res==='low') dpr=0.75;
+    else if(gfx.res==='1x') dpr=1;
+    else if(gfx.res==='max') dpr=Math.min(Math.max(base,1)*1.5,3);   /* supersampled */
+    else {
+      /* A 3x phone screen would mean nine times the pixels for no visible gain.
+         Cap by how wide the arena is actually drawn. */
+      var shown=cvs.clientWidth||cvs.offsetWidth||W;
+      dpr=Math.min(base,shown>820?1.5:2);
+    }
+    if(gfx.preset==='auto') dpr*=dynScale;
+    return Math.max(0.5,dpr);
+  }
+
   var hasAspect=!!(window.CSS&&CSS.supports&&CSS.supports('aspect-ratio','16 / 9'));
   function fit(){
-    /* A 3x phone screen would mean nine times the pixels for no visible gain.
-       Cap by how wide the arena is actually drawn. */
-    var shown=cvs.clientWidth||cvs.offsetWidth||W;
-    var cap=shown>820?1.5:2;
-    var dpr=Math.min(window.devicePixelRatio||1,cap);
+    var dpr=renderDpr();
     cvs.width=Math.round(W*dpr); cvs.height=Math.round(H*dpr);
     ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.imageSmoothingEnabled=true;
+    try{ ctx.imageSmoothingQuality=(gfx.res==='max'||gfx.res==='native')?'high':'medium'; }catch(e){}
     /* older Safari has no aspect-ratio, so hold the shape by hand */
     if(!hasAspect){
       var w=cvs.clientWidth||cvs.offsetWidth;
@@ -4592,7 +4690,7 @@
     if(f.big) scale*=f.big;
     f.turnNow=turnOf(f,t);
     var P0=project3d(f.pose,f.turnNow);
-    DETAIL=(scale>1.2);
+    DETAIL=(scale>1.2)&&!!gfx.detail;
     g.save();
     g.translate(f.x+(f.lunge||0)*face+(f.dx||0)+(f.kb||0)+(f.sway||0), GY-(f.air||0)-(f.bob||0));
     g.scale(face*scale,scale);
@@ -6933,7 +7031,7 @@
   }
   function confetti(){
     var cols=['#FFD46B','#FF6B57','#7FD4FF','#8BE8A8','#FF9AD5','#FFFFFF'];
-    var n=reduce?20:110;
+    var n=Math.round((reduce?20:110)*gfx.part);
     for(var i=0;i<n;i++){
       sparks.push({x:Math.random()*W,y:-10-Math.random()*120,vx:(Math.random()-0.5)*3,
         vy:Math.random()*2,life:70+Math.random()*50,c:cols[i%cols.length],r:2.5+Math.random()*3});
@@ -7733,7 +7831,7 @@
   }
   var wx={bolt:0,pts:null,star:null,fire:null};
   function drawWeather(){
-    if(reduce) return;
+    if(reduce||!gfx.weather) return;
     var A=arena(), id=A.id;
     if(id==='gotham'){
       if(wx.bolt<=0&&Math.random()<0.0035){
@@ -7897,6 +7995,7 @@
   function floatText(x,y,txt,col,big){ floats.push({x:x,y:y,t:txt,c:col,life:56,big:!!big}); }
   function spark(x,y,col,n){
     if(reduce) n=Math.min(n,4);
+    n=Math.max(1,Math.round(n*gfx.part));
     for(var i=0;i<n;i++){ var a=Math.random()*6.283,s=1.5+Math.random()*4.5;
       sparks.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-1.4,life:20+Math.random()*16,c:col,r:1.4+Math.random()*2.4}); }
   }
@@ -9144,7 +9243,7 @@
 
   var sceneC=null, sctx=null, bloomC=null, bctx=null, gradeC=null;
   var bloom1=null, b1ctx=null;
-  var realCtx=ctx, postOn=POST_OK&&!reduce, bufDpr=0;
+  var realCtx=ctx, postOn=POST_OK&&!reduce&&gfx.post!=='off', bufDpr=0;
 
   var BLOOM=0.62;    /* how much glow is added back */
   var BLOOM_BLUR=3.4;/* in quarter-size pixels, so ~14 at full resolution */
@@ -9231,13 +9330,74 @@
      effects it cannot afford, so the frame rate is watched and the pass steps
      itself down -- full, then grade only, then off -- rather than letting the
      game stutter. It steps back up if the machine turns out to cope. */
-  var quality=2, qLow=0, qHigh=0;
+  var quality=2, qLow=0, qHigh=0, qNeed=10;
   function qualityWatch(fps){
-    if(!postOn||!fps) return;
-    if(fps<46){ qLow++; qHigh=0; if(qLow>3&&quality>0){ quality--; qLow=0; } }
-    else if(fps>75){ qHigh++; qLow=0; if(qHigh>10&&quality<2){ quality++; qHigh=0; } }
-    else { qLow=0; qHigh=0; }
+    if(!fps) return;
+    var autoPost=(gfx.post==='auto'&&postOn), autoRes=(gfx.preset==='auto');
+    if(!autoPost&&!autoRes) return;
+    /* with a frame cap the target is the cap, not the screen */
+    var target=gfx.cap?Math.min(gfx.cap,60):60;
+    if(fps<target*0.77){
+      qLow++; qHigh=0;
+      if(qLow>3){
+        qLow=0; qNeed=Math.min(80,qNeed*2);       /* back off before climbing again */
+        if(autoPost&&quality>0) quality--;
+        else if(autoRes&&dynScale>0.6){ dynScale=Math.max(0.6,dynScale-0.15); fit(); }
+      }
+    }else if(fps>=target*0.95){
+      qHigh++; qLow=0;
+      if(qHigh>qNeed){
+        qHigh=0;
+        if(autoRes&&dynScale<1){ dynScale=Math.min(1,dynScale+0.15); fit(); }
+        else if(autoPost&&quality<2) quality++;
+      }
+    }else { qLow=0; qHigh=0; }
   }
+
+  /* ---------- the Graphics panel ---------- */
+  var GFX_FIELDS={gPreset:'preset',gCap:'cap',gRes:'res',gPost:'post',gPart:'part',
+    gDetail:'detail',gWeather:'weather',gSmooth:'smooth',gShake:'shake'};
+  function saveGfx(){ try{ localStorage.setItem('skyforge.gfx',JSON.stringify(gfx)); }catch(e){} }
+  function applyGfx(){
+    postOn=POST_OK&&!reduce&&gfx.post!=='off';
+    quality=(gfx.post==='grade')?1:2;
+    BLOOM=(gfx.preset==='ultra')?0.74:0.62;
+    if(gfx.preset!=='auto') dynScale=1;
+    qLow=0; qHigh=0; qNeed=10;
+    fit(); bufDpr=0; skyCache=null; capNext=0;
+    syncGfx();
+  }
+  function syncGfx(){
+    for(var id in GFX_FIELDS){ var el=$(id); if(el) el.value=String(gfx[GFX_FIELDS[id]]); }
+    gfxNow();
+  }
+  function gfxNow(){
+    var el=$('gfxNow'); if(!el||$('gfxPanel').hidden) return;
+    var fx2=!postOn?'effects off':(quality>1?'full lighting':(quality>0?'colour grade':'lighting off (auto)'));
+    el.textContent=(fpsShown||'—')+' FPS  ·  drawing '+cvs.width+' × '+cvs.height+' pixels  ·  '+fx2
+      +(gfx.preset==='auto'&&dynScale<1?'  ·  auto lowered resolution to '+Math.round(dynScale*100)+'%':'')
+      +(gfx.cap?'  ·  capped at '+gfx.cap:'');
+  }
+  function openGfx(){ $('gfxPanel').hidden=false; syncGfx(); }
+  Object.keys(GFX_FIELDS).forEach(function(id){
+    var el=$(id); if(!el) return;
+    el.addEventListener('change',function(){
+      var k=GFX_FIELDS[id], v=el.value;
+      if(k==='preset'){
+        gfx.preset=v;
+        var P=GFX_PRESETS[v]; if(P) for(var pk in P) gfx[pk]=P[pk];
+      }else{
+        gfx[k]=(k==='cap'||k==='part'||k==='detail'||k==='weather'||k==='shake')?Number(v):v;
+        if(k!=='cap'&&k!=='shake') gfx.preset='custom';
+      }
+      applyGfx(); saveGfx();
+    });
+  });
+  $('gfxBtn').addEventListener('click',openGfx);
+  $('fpsWrap').addEventListener('click',openGfx);
+  $('gClose').addEventListener('click',function(){ $('gfxPanel').hidden=true; });
+  $('gfxPanel').addEventListener('click',function(e){ if(e.target===$('gfxPanel')) $('gfxPanel').hidden=true; });
+  applyGfx();
 
   /* three lozenges a side: filled for a champion still to come, hollow for
      one already knocked out */
@@ -9255,18 +9415,25 @@
   }
 
   function render(){
-    if(postOn){
-      ensureBuffers();
-      ctx=sctx;                       /* everything below paints the buffer */
-      ctx.clearRect(0,0,W,H);
-    }
+    /* Always paint into the offscreen buffer and copy it across in one go:
+       measured, that is roughly twice as fast as drawing hundreds of shapes
+       straight onto the visible canvas, even with every effect switched off. */
+    ensureBuffers();
+    ctx=sctx;
+    ctx.clearRect(0,0,W,H);
     renderScene();
-    if(postOn){ ctx=realCtx; postProcess(); }
+    ctx=realCtx;
+    if(postOn) postProcess();
+    else {
+      realCtx.save(); realCtx.setTransform(1,0,0,1,0,0);
+      realCtx.drawImage(sceneC,0,0);
+      realCtx.restore();
+    }
   }
 
   function renderScene(){
     ctx.save();
-    if(shake>0.4) ctx.translate((Math.random()-0.5)*shake,(Math.random()-0.5)*shake);
+    if(shake>0.4&&gfx.shake) ctx.translate((Math.random()-0.5)*shake,(Math.random()-0.5)*shake);
     var cz=cam.z+camKick;
     if(cz>1.001||Math.abs(cam.x)>0.5||Math.abs(cam.y)>0.5){
       ctx.translate(W/2,H/2);
@@ -9396,6 +9563,7 @@
       if(v!==fpsShown){
         fpsShown=v;
         var el=$('fps'); if(el) el.textContent=v;
+        gfxNow();
         var w=$('fpsWrap');
         if(w) w.className='coin fps'+(v>=100?' hi':(v>=50?' ok':' lo'));
       }
@@ -9403,8 +9571,17 @@
   }
 
   var last=0,acc=0,smoothDt=STEP;
+  var capNext=0;
   function frame(t){
     requestAnimationFrame(frame);
+    /* the FPS limit: frames that arrive early are skipped outright, and the
+       target advances in fixed steps so a 144Hz screen capped at 60 really
+       does average 60 */
+    if(gfx.cap){
+      var gap=1000/gfx.cap;
+      if(capNext&&t<capNext-1) return;
+      capNext=(!capNext||t-capNext>gap)?t+gap:capNext+gap;
+    }
     if(!last){ last=t; return; }
     var dt=(t-last)/1000; last=t;
     if(dt>0.25) dt=0.25;
@@ -9421,7 +9598,7 @@
        On a 60Hz screen this is skipped and the loop behaves exactly as it
        always has; on a 120Hz+ screen it fills in the in-between frames. */
     smoothDt+=(dt-smoothDt)*0.1;
-    var fast=(smoothDt<STEP*0.85);
+    var fast=gfx.smooth==='on'?true:(gfx.smooth==='off'?false:(smoothDt<STEP*0.85));
     if(fast) applyInterp(acc/STEP);
     render();
     if(fast) clearInterp();
