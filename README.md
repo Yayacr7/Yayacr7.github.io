@@ -88,6 +88,47 @@ Every attack moves the fighter's weight, the way a real one does:
 - **✨ Power-Up Brawl:** orbs float down mid-fight (❤️ health, ⚡ full meter,
   💪 strength, 🛡️ shield, ❄️ freeze). Land a clean hit to grab one.
 
+### Fighting styles
+
+Every champion fights in one of seven styles. It's fixed for that champion,
+shown next to their name on the health bar, and changes how they play:
+
+| Style | Effect |
+| --- | --- |
+| 🥊 Boxer | Punches +20% |
+| 🦵 Kickboxer | Kicks +20% |
+| 🤼 Wrestler | Kicks often become throws, and throws +40% |
+| 👊 Brawler | Knocks them back 50% further and dizzies faster |
+| 🥋 Martial Artist | Flying attacks +25% |
+| 💨 Speedster | Recovers from every move 20% faster |
+| 🦍 Powerhouse | Punch of Death costs 40% meter instead of 50% |
+
+### The Finisher
+
+With a full meter and the opponent under 25% health, **Power** becomes a
+**FINISHER**: the camera pushes in, the screen goes red at the edges, and a
+five-hit sequence ends the fight. The computer opponents use it too.
+
+### Trophies and daily challenges
+
+- **Twenty trophies** on the home screen, from First Victory to Unstoppable
+  (a 16-hit combo), Executioner (10 Finishers) and Arcade Champion. Each one
+  pays credits the moment it pops, with a banner mid-fight.
+- **A new daily challenge every day**: land a 6-hit combo, knock down 5,
+  parry 3, land 8 flying attacks, and so on. Claiming it pays 2,500 credits
+  and a Gold Chest.
+
+### Graphics
+
+- A crescent **swoosh** on every attack, and a star-shaped **impact burst**
+  where each clean hit lands, at head, body or leg height.
+- **Arcade health bars**: segmented, with a pale chunk that drains away
+  after each hit so you can see how much it took.
+- The **camera zooms in slow motion** on every knockout.
+- **Arena weather**: lightning and shooting stars over Gotham, shooting stars
+  at the Watchtower, fire geysers on Apokolips, and birds over the daytime
+  arenas.
+
 ### Making every fight feel big
 
 - **READY? … FIGHT!** before every bout, and a giant **K.O.!** at the end

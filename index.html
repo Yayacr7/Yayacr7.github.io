@@ -103,6 +103,16 @@
   .movelist h4{margin:0 0 6px;font-family:"Saira Condensed",sans-serif;font-size:1.2rem;text-transform:uppercase;color:var(--gold)}
   .movelist ul{margin:0;padding-left:18px;font-size:.86rem;line-height:1.45}
   .movelist li{margin-bottom:4px}
+  .trophies{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+  .tro{background:var(--panel-2);border-radius:12px;padding:10px;text-align:center;opacity:.5;filter:grayscale(1)}
+  .tro.on{opacity:1;filter:none;border:2px solid var(--gold);box-shadow:0 0 16px rgba(247,201,72,.25)}
+  .tro span{display:block;font-size:1.9rem;line-height:1.1}
+  .tro b{display:block;font-family:"Saira Condensed",sans-serif;font-size:1.02rem;text-transform:uppercase;color:var(--gold)}
+  .tro small{display:block;font-size:.72rem;color:var(--dim)}
+  .daily2{background:var(--panel-2);border-radius:13px;padding:14px;display:flex;flex-direction:column;gap:8px}
+  .dcbar{height:14px;border-radius:7px;background:rgba(255,255,255,.1);overflow:hidden}
+  .dcbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3FD07A,#9BE8B4);transition:width .4s}
+  .daily2 .btn[disabled]{opacity:.5;cursor:default}
   .moviebar{position:absolute;right:12px;bottom:12px;z-index:4;display:flex;gap:7px;opacity:.55}
   .moviebar:hover{opacity:1}
   @media (max-width:620px){ .moviebar{right:7px;bottom:7px;gap:5px} }
@@ -595,6 +605,21 @@
     </section>
 
     <section class="sec" style="margin-top:14px">
+      <h3>Daily challenge</h3>
+      <div class="daily2">
+        <p class="rlead" id="dcText"></p>
+        <div class="dcbar"><i id="dcBar"></i></div>
+        <p class="rbest" id="dcProg"></p>
+        <button class="btn fight" id="dcClaim" disabled>Claim when done</button>
+      </div>
+    </section>
+
+    <section class="sec" style="margin-top:14px">
+      <h3>Trophies <span class="mReady" id="troCount"></span></h3>
+      <div class="trophies" id="trophies"></div>
+    </section>
+
+    <section class="sec" style="margin-top:14px">
       <h3>Move list</h3>
       <div class="movelist">
         <div><h4>👊 Punch</h4><ul>
@@ -614,6 +639,16 @@
           <li>Your champion <b>blocks on their own</b> some of the time. Hold <b>S</b> to block yourself.</li>
           <li>Block right as the hit arrives for a <b>PARRY</b>: no damage, and they are left wide open.</li>
           <li>Block too much and your <b>guard breaks</b>.</li></ul></div>
+        <div><h4>☠️ Finisher</h4><ul>
+          <li>Full meter and your opponent under <b>25% health</b>? POWER turns into a <b>FINISHER</b>: a five-hit cinematic that ends the fight.</li></ul></div>
+        <div><h4>🥋 Fighting styles</h4><ul>
+          <li><b>🥊 Boxer</b>: punches +20%</li>
+          <li><b>🦵 Kickboxer</b>: kicks +20%</li>
+          <li><b>🤼 Wrestler</b>: kicks often become throws, and throws +40%</li>
+          <li><b>👊 Brawler</b>: knocks them back further and dizzies faster</li>
+          <li><b>🥋 Martial Artist</b>: flying attacks +25%</li>
+          <li><b>💨 Speedster</b>: recovers 20% faster</li>
+          <li><b>🦍 Powerhouse</b>: Punch of Death costs 40%</li></ul></div>
         <div><h4>⭐ Big moments</h4><ul>
           <li><b>COUNTER!</b> Hit them while they wind up: +35% damage.</li>
           <li><b>AIR COMBO!</b> Hit them while they are in the air.</li>
@@ -5514,6 +5549,11 @@
       cam.ty=(H/2-oy)*0.85;
       if(!cine.f.anim) cine.tail++;
       if(cine.tail>34||cine.t>320){ cine=null; }
+    }else if(finT>0&&finF&&finO){
+      var fmx=(finF.x+(finF.kb||0)+finO.x+(finO.kb||0))/2;
+      cam.tz=1.45; cam.tx=(W/2-fmx)*0.9; cam.ty=(H/2-(GY-160))*0.7;
+    }else if(koT>50&&koFor&&!movie){
+      cam.tz=1.2; cam.tx=(W/2-(koFor.x+(koFor.kb||0)))*0.7; cam.ty=(H/2-(GY-90))*0.55;
     }else if(movie&&movie.cam){
       cam.tz=movie.cam.z; cam.tx=movie.cam.x; cam.ty=movie.cam.y;
     }else{
@@ -6912,6 +6952,7 @@
     }
     if(koT>0) koT--;
     if(perfT>0) perfT--;
+    if(finT>0) finT--;
     brawlStep();
     if(me&&foe&&(screen==='fight'||screen==='over')){
       var down=foe.dead?foe:(me.dead?me:null);
@@ -6975,10 +7016,19 @@
       if(t<44) bigText(introLabel(),H/2+20,84,'#FFFFFF',0.8+Math.min(0.2,t/60));
       else bigText('FIGHT!',H/2+30,130,'#F7C948',1+Math.max(0,(52-t)/16)*0.5);
     }
-    if(koT>0){
+    if(koT>0&&finT<=0){
       var a=Math.min(1,koT/20), k=1+Math.max(0,(koT-70)/20);
       ctx.globalAlpha=a;
       bigText(koFor===me?'OUCH!':'K.O.!',H/2+10,150,koFor===me?'#9BD3FF':'#FF6B57',k);
+      ctx.globalAlpha=1;
+    }
+    if(finT>0){
+      var fa=Math.min(1,finT/20,(170-finT)/10);
+      var vg=ctx.createRadialGradient(W/2,H/2,H*0.25,W/2,H/2,H*0.85);
+      vg.addColorStop(0,'rgba(120,0,0,0)'); vg.addColorStop(1,'rgba(120,0,0,'+(0.55*fa).toFixed(3)+')');
+      ctx.fillStyle=vg; ctx.fillRect(0,0,W,H);
+      ctx.globalAlpha=Math.max(0,fa);
+      bigText('FINISHER!',150,78,'#FF4A3A',1+Math.max(0,(finT-150)/20)*0.5);
       ctx.globalAlpha=1;
     }
     if(perfT>0&&perfT<110){
@@ -7026,6 +7076,7 @@
     var r=Math.random(), i=0, acc=0;
     for(i=0;i<CHESTS.length;i++){ acc+=CHESTS[i].p; if(r<acc) break; }
     i=Math.max(minTier||0,Math.min(i,CHESTS.length-1));
+    if(i===3) setTimeout(function(){ ev('diamond'); },0);
     var C=CHESTS[i], g=1+p.lvl*0.05;
     var o={n:C.n,c:C.c,cred:Math.round(C.cr*g*(0.8+Math.random()*0.4)),xp:Math.round(C.xp*g),lvl:i===3?1:0};
     save.credits+=o.cred*payMul(); p.xp+=o.xp*payMul();
@@ -7083,7 +7134,7 @@
     var xp=win?Math.round(500+fl*70):Math.round(60+fl*10);
     save.credits+=cred*payMul(); p.xp+=xp*payMul();
     var chest=null;
-    if(win){ p.wins++; save.giantWins=(save.giantWins||0)+1; chest=rollChest(p,2); }
+    if(win){ p.wins++; save.giantWins=(save.giantWins||0)+1; chest=rollChest(p,2); ev('giant'); }
     var ups=levelUps(p);
     giant=null; store();
     showOver(win?'Giant toppled!':'The giant won',
@@ -7129,6 +7180,7 @@
     var h=HEROES[save.sel], p=prog(h), k=rush.kos;
     var best=save.rushBest||0, rec=k>best;
     if(rec) save.rushBest=k;
+    ev('rushk',k);
     save.credits+=rush.cred*payMul(); p.xp+=rush.xp*payMul();
     var chest=(k>=3)?rollChest(p,k>=8?1:0):null;
     var ups=levelUps(p);
@@ -7160,6 +7212,7 @@
     var h=HEROES[save.sel], p=prog(h), d=Math.round(dummy.dmg);
     var best=save.dummyBest||0, rec=d>best;
     if(rec) save.dummyBest=d;
+    ev('dmg',d);
     var cred=Math.round(Math.min(6000,d/9)), xp=Math.round(Math.min(4500,d/12));
     save.credits+=cred*payMul(); p.xp+=xp*payMul();
     var chest=rec?rollChest(p,1):null;
@@ -7180,6 +7233,7 @@
     $('dmBest').textContent='Best: '+(save.dummyBest||0).toLocaleString()+' damage';
     $('ldBest').textContent='Arcade clears: '+(save.ladderWins||0);
     $('b3Best').textContent='Matches won: '+(save.bo3Wins||0);
+    buildTrophies();
     $('stkBest').textContent='Win streak: '+(save.streak||0)+' · best ever '+(save.bestStreak||0);
     var ms=$('movieSec'); if(ms) ms.hidden=!isOwner();
   }
@@ -7234,6 +7288,7 @@
     if(tick-(att.lastHitT||-999)<75) att.chain=(att.chain||0)+1; else att.chain=1;
     att.lastHitT=tick;
     if(att.chain>(att.stBest||0)) att.stBest=att.chain;
+    if(att===me) ev('chain',att.chain);
     att.stHits=(att.stHits||0)+1; att.stDmg=(att.stDmg||0)+dmg;
     for(var i=0;i<RATINGS.length;i++) if(att.chain===RATINGS[i].n){
       floatText(W/2,att===me?200:240,att.chain+' HITS — '+RATINGS[i].t,att===me?'#FFD46B':'#FF9A8A',true);
@@ -7241,13 +7296,14 @@
     }
     /* take enough in a short space and you see stars */
     if(!def.dummy&&!def.dead&&def.hp>0){
-      def.daze=(def.daze||0)+dmg/def.max*100;
+      def.daze=(def.daze||0)+dmg/def.max*100*(styleOf(att).daze||1);
       if(def.daze>=36&&!(def.dizzyCd>0)){
         def.daze=0; def.dizzy=110; def.dizzyCd=600;
         def.stun=Math.max(def.stun,110); def.guard=false; def.autoG=0;
         play(def,[{p:POSE.hurt,d:18},{p:POSE.hurtBody,d:26},{p:POSE.hurt,d:26},{p:POSE.hurtBody,d:26},{p:POSE.idle,d:14}]);
         floatText(def.x+(def.kb||0),GY-230,'DIZZY!','#FFE08A',true);
         tone(990,0.5,'sine',0.04,500); say('Dizzy!');
+        if(att===me) ev('dizzy');
       }
     }
     /* power-up brawl: land a clean hit to grab the orb */
@@ -7375,7 +7431,7 @@
     var cred=won?Math.round(360+lv*80):Math.round(90+lv*16), xp=won?Math.round(260+lv*60):Math.round(70+lv*12);
     save.credits+=cred*payMul(); p.xp+=xp*payMul();
     var chest=null;
-    if(won){ p.wins++; save.bo3Wins=(save.bo3Wins||0)+1; chest=rollChest(p,1); }
+    if(won){ p.wins++; save.bo3Wins=(save.bo3Wins||0)+1; chest=rollChest(p,1); ev('bo3'); }
     var ups=levelUps(p), score=bo3.mw+' – '+bo3.fw;
     bo3=null; store();
     showOver(won?'Champion!':'Beaten '+score,
@@ -7421,7 +7477,7 @@
       var ups=levelUps(p);
       ladder.step++;
       if(ladder.step>=ladder.foes.length){
-        save.ladderWins=(save.ladderWins||0)+1;
+        save.ladderWins=(save.ladderWins||0)+1; ev('ladder');
         var chest=rollChest(p,3), tot=ladder.cred;
         ladder=null; store();
         showOver('ARCADE CLEARED!','You beat all seven, boss included. That is '+save.ladderWins+' arcade clear'
@@ -7446,6 +7502,294 @@
     showOver('Game over','You reached stage '+(reached+1)+'. Everything you won on the way is yours.',got,0,null);
   }
 
+  /* ================= fighting styles =================
+     Every champion fights in one of seven styles, fixed for that champion,
+     and it changes how they play -- not just a label. */
+  var STYLES={
+    boxer:{n:'Boxer',icon:'🥊',d:'Punches hit 20% harder',punch:1.2,kick:0.92},
+    kick:{n:'Kickboxer',icon:'🦵',d:'Kicks hit 20% harder',punch:0.94,kick:1.2},
+    wrestle:{n:'Wrestler',icon:'🤼',d:'Kicks often turn into throws, and throws hit 40% harder',throwMul:1.4,throwChance:0.3},
+    brawl:{n:'Brawler',icon:'👊',d:'Every hit knocks them back 50% further and dizzies faster',kb:1.5,daze:1.35},
+    martial:{n:'Martial Artist',icon:'🥋',d:'Flying attacks hit 25% harder',air:1.25},
+    speed:{n:'Speedster',icon:'💨',d:'Recovers from every move 20% faster',cd:0.8},
+    power:{n:'Powerhouse',icon:'🦍',d:'Punch of Death costs 40% meter, not 50%',death:40}};
+  var STYLE_KEYS=['boxer','kick','wrestle','brawl','martial','speed','power'];
+  function styleOf(f){
+    var h=f&&(f.base||f.h)||f; if(!h) return STYLES.boxer;
+    if(h._style) return STYLES[h._style];
+    var id=h.id||h.name||'', x=0;
+    for(var i=0;i<id.length;i++) x=(x*31+id.charCodeAt(i))|0;
+    h._style=STYLE_KEYS[Math.abs(x)%STYLE_KEYS.length];
+    return STYLES[h._style];
+  }
+  function deathCost(f){ return styleOf(f).death||DEATH_COST; }
+  /* the damage and knockback a style adds to a given move */
+  function styleMul(att,mv){
+    var S=styleOf(att);
+    if(mv==='punch') return S.punch||1;
+    if(mv==='kick') return S.kick||1;
+    if(mv==='throw') return S.throwMul||1;
+    if(mv==='air') return S.air||1;
+    return 1;
+  }
+
+  /* ================= the finisher =================
+     Full meter and the opponent under a quarter health: POWER becomes a
+     cinematic five-hit finisher that ends the fight. */
+  var finT=0, finF=null, finO=null;
+  function canFinish(f,other){
+    return f&&other&&f.meter>=superCost(f)&&other.hp>0&&other.hp<=other.max*0.25
+      &&!other.plot&&!other.dummy&&!other.dead&&screen==='fight';
+  }
+  function doFinisher(f,other){
+    if(f.dead||f.stun>0||f.anim||screen!=='fight'||!canFinish(f,other)) return false;
+    f.meter=0; f.guard=false; f.combo=0;
+    other.guard=false; other.autoG=0; other.inv=0; other.stun=Math.max(other.stun,220);
+    f.inv=Math.max(f.inv,220);
+    finT=170; finF=f; finO=other; slow=Math.max(slow,50); flash=16;
+    tone(70,0.9,'sawtooth',0.06,40);
+    if(f===me){ say('Finisher!',true); ev('fin'); }
+    function tap(m,z){ return function(){ other.inv=0; f.zone=z; f.knock=6; f.mv='fin'; hitLand(f,other,m,'special'); flash=Math.max(flash,6); }; }
+    play(f,[
+      {p:POSE.charge,d:20},
+      {p:POSE.jab,d:7,hit:tap(0.35,'head')},
+      {p:POSE.straight,d:7,hit:tap(0.35,'head')},
+      {p:POSE.bodyhook,d:8,hit:tap(0.4,'body')},
+      {p:POSE.roundhouse,d:10,hit:tap(0.45,'head')},
+      {p:POSE.bigwind,d:16},
+      {p:POSE.smash,d:10,hit:function(){
+        other.inv=0; f.zone='head'; f.knock=170; f.mv='fin';
+        hitLand(f,other,Math.max(4,other.hp/Math.max(1,f.pow)*3+4),'special');
+        shake=Math.max(shake,30); flash=20;
+      }},
+      {p:POSE.idle,d:20}
+    ]);
+    return true;
+  }
+
+  /* ================= trophies and daily challenges ================= */
+  var TROPHIES=[
+    {id:'win1',i:'🥇',n:'First Victory',d:'Win a fight',cr:300},
+    {id:'combo10',i:'🔟',n:'Ten Hit Wonder',d:'Land a 10-hit combo',cr:1500},
+    {id:'combo16',i:'🌪️',n:'Unstoppable',d:'Land a 16-hit combo',cr:4000},
+    {id:'parry10',i:'🛡️',n:'Parry Master',d:'Parry 10 attacks',cr:1500},
+    {id:'perfect',i:'💎',n:'Flawless',d:'Win without taking a hit',cr:2000},
+    {id:'dizzy',i:'💫',n:'Seeing Stars',d:'Make an opponent dizzy',cr:600},
+    {id:'kd25',i:'🤕',n:'Floor Inspector',d:'Knock down 25 opponents',cr:2500},
+    {id:'fly30',i:'🚀',n:'Air Force',d:'Land 30 flying attacks',cr:2500},
+    {id:'fin1',i:'☠️',n:'Finish It',d:'Land a Finisher',cr:1200},
+    {id:'fin10',i:'💀',n:'Executioner',d:'Land 10 Finishers',cr:5000},
+    {id:'throw20',i:'🤼',n:'Suplex City',d:'Throw 20 opponents',cr:2500},
+    {id:'counter25',i:'⚡',n:'Counter Puncher',d:'Land 25 counter hits',cr:2500},
+    {id:'rage',i:'🔥',n:'Comeback Kid',d:'Win a fight after going into Rage Mode',cr:1500},
+    {id:'streak10',i:'🌟',n:'On Fire',d:'Win 10 quick fights in a row',cr:5000},
+    {id:'giant',i:'🧌',n:'Giant Slayer',d:'Topple a giant',cr:2000},
+    {id:'ladder',i:'🕹️',n:'Arcade Champion',d:'Clear the Arcade Ladder',cr:6000},
+    {id:'bo3',i:'🏆',n:'Champion Belt',d:'Win a Best of 3',cr:2000},
+    {id:'rush10',i:'⏱️',n:'Speed Demon',d:'Get 10 knockouts in one Rush',cr:3000},
+    {id:'dummy10k',i:'🤖',n:'Wrecking Ball',d:'Deal 10,000 damage to the dummy',cr:3000},
+    {id:'diamond',i:'💠',n:'Treasure Hunter',d:'Open a Diamond Chest',cr:3000}];
+  var CHALLENGES=[
+    {k:'chain',n:6,t:'Land a 6-hit combo',max:true},
+    {k:'kd',n:5,t:'Knock down 5 opponents'},
+    {k:'parry',n:3,t:'Parry 3 attacks'},
+    {k:'fly',n:8,t:'Land 8 flying attacks'},
+    {k:'win',n:3,t:'Win 3 fights'},
+    {k:'dizzy',n:2,t:'Make 2 opponents dizzy'},
+    {k:'counter',n:4,t:'Land 4 counter hits'},
+    {k:'fin',n:1,t:'Land a Finisher'},
+    {k:'throw',n:2,t:'Throw 2 opponents (kick them while they block)'}];
+  var toasts=[];
+  function toast(t,col){ toasts.push({t:t,c:col||'#FFD46B',life:220}); }
+  function statsBlock(){
+    if(!save.st||typeof save.st!=='object') save.st={};
+    if(!save.tro||typeof save.tro!=='object') save.tro={};
+    return save.st;
+  }
+  function todayChal(){ return CHALLENGES[today()%CHALLENGES.length]; }
+  function chalState(){
+    if(!save.dc||save.dc.day!==today()) save.dc={day:today(),prog:0,claimed:0};
+    return save.dc;
+  }
+  function award(id){
+    statsBlock();
+    if(save.tro[id]) return;
+    var T=null; for(var i=0;i<TROPHIES.length;i++) if(TROPHIES[i].id===id) T=TROPHIES[i];
+    if(!T) return;
+    save.tro[id]=1; save.credits+=T.cr;
+    toast('🏆 TROPHY: '+T.n.toUpperCase()+'  +'+T.cr+' credits');
+    tone(1046,0.2,'triangle',0.05,1568); setTimeout(function(){ tone(1568,0.3,'triangle',0.05,2093); },160);
+    store();
+  }
+  /* one place every notable thing the player does is reported to */
+  function ev(k,v){
+    if(movie) return;
+    var st=statsBlock();
+    var n=(v===undefined)?1:v;
+    if(k!=='chain'&&k!=='rushk'&&k!=='dmg') st[k]=(st[k]||0)+n;
+    var dc=chalState(), C=todayChal();
+    if(C.k===k&&!dc.claimed){
+      var before=dc.prog;
+      dc.prog=C.max?Math.max(dc.prog,n):dc.prog+n;
+      if(before<C.n&&dc.prog>=C.n) toast('✅ DAILY CHALLENGE DONE — claim it on the home screen','#8BE8A8');
+    }
+    if(k==='chain'){ if(n>=10) award('combo10'); if(n>=16) award('combo16'); }
+    if(k==='parry'&&st.parry>=10) award('parry10');
+    if(k==='dizzy') award('dizzy');
+    if(k==='kd'&&st.kd>=25) award('kd25');
+    if(k==='fly'&&st.fly>=30) award('fly30');
+    if(k==='fin'){ award('fin1'); if(st.fin>=10) award('fin10'); }
+    if(k==='throw'&&st.throw>=20) award('throw20');
+    if(k==='counter'&&st.counter>=25) award('counter25');
+    if(k==='win') award('win1');
+    if(k==='perfect') award('perfect');
+    if(k==='ragewin') award('rage');
+    if(k==='streak'&&n>=10) award('streak10');
+    if(k==='giant') award('giant');
+    if(k==='ladder') award('ladder');
+    if(k==='bo3') award('bo3');
+    if(k==='rushk'&&n>=10) award('rush10');
+    if(k==='dmg'&&n>=10000) award('dummy10k');
+    if(k==='diamond') award('diamond');
+  }
+  function drawToasts(){
+    if(!toasts.length) return;
+    var T=toasts[0]; T.life--;
+    if(T.life<=0){ toasts.shift(); return; }
+    var a=Math.min(1,T.life/20,(220-T.life)/12);
+    ctx.save(); ctx.globalAlpha=Math.max(0,a);
+    ctx.font='800 20px "Saira Condensed", sans-serif'; ctx.textAlign='center';
+    var w=ctx.measureText(T.t).width+40, y=100+(1-Math.min(1,(220-T.life)/12))*-30;
+    ctx.fillStyle='rgba(8,14,24,.88)'; ctx.fillRect(W/2-w/2,y,w,36);
+    ctx.strokeStyle=T.c; ctx.lineWidth=2; ctx.strokeRect(W/2-w/2,y,w,36);
+    ctx.fillStyle=T.c; ctx.fillText(T.t,W/2,y+25);
+    ctx.restore();
+  }
+  function buildTrophies(){
+    statsBlock();
+    var wrap=$('trophies'); if(!wrap) return;
+    var got=0, html='';
+    TROPHIES.forEach(function(T){
+      var on=!!save.tro[T.id]; if(on) got++;
+      html+='<div class="tro'+(on?' on':'')+'"><span>'+T.i+'</span><b>'+T.n+'</b><small>'+T.d
+        +(on?'':' · +'+T.cr)+'</small></div>';
+    });
+    wrap.innerHTML=html;
+    $('troCount').textContent=got+' / '+TROPHIES.length;
+    var C=todayChal(), dc=chalState(), pr=Math.min(C.n,dc.prog);
+    $('dcText').textContent=C.t;
+    $('dcBar').style.width=Math.round(pr/C.n*100)+'%';
+    $('dcProg').textContent=dc.claimed?'Claimed! A new challenge arrives tomorrow.':(pr+' / '+C.n);
+    var b=$('dcClaim'); b.disabled=!(pr>=C.n&&!dc.claimed);
+    b.textContent=dc.claimed?'Done for today':(pr>=C.n?'Claim 2,500 credits + Gold Chest':'Claim when done');
+  }
+  function claimChallenge(){
+    var C=todayChal(), dc=chalState();
+    if(dc.claimed||dc.prog<C.n) return;
+    dc.claimed=1; save.credits+=2500;
+    var o=rollChest(prog(HEROES[save.sel]),2);
+    store(); buildTrophies(); renderUI();
+    flashMsg('Daily challenge claimed: +2500 credits and a '+o.n+' (+'+o.cred+' credits)!');
+    tone(880,0.2,'triangle',0.05,1320);
+  }
+
+  /* ================= graphics: swooshes, bursts, weather ================= */
+  function swoosh(att,zone,col){
+    var y=zone==='legs'?GY-60:(zone==='body'?GY-170:GY-255);
+    fx.push({k:'swoosh',x:att.x+(att.kb||0)+att.facing*70,y:y*1+(att.big?-(att.big-1)*120:0),f:att.facing,c:col||'#FFFFFF',life:11,max:11});
+  }
+  function burst(x,y,col,big){ fx.push({k:'burst',x:x,y:y,c:col,life:big?16:11,max:big?16:11,big:!!big}); }
+  function drawNewFx(e,k){
+    if(e.k==='swoosh'){
+      ctx.globalCompositeOperation='lighter';
+      ctx.globalAlpha=(1-k)*0.85;
+      ctx.translate(e.x,e.y); ctx.scale(e.f,1);
+      var g=ctx.createLinearGradient(-60,0,60,0);
+      g.addColorStop(0,'rgba(255,255,255,0)'); g.addColorStop(1,e.c);
+      ctx.fillStyle=g;
+      ctx.beginPath();
+      ctx.arc(-20,0,70+k*20,-1.1,1.1);
+      ctx.arc(-40,0,62+k*20,1.0,-1.0,true);
+      ctx.closePath(); ctx.fill();
+      return true;
+    }
+    if(e.k==='burst'){
+      ctx.globalCompositeOperation='lighter';
+      ctx.strokeStyle=e.c; ctx.lineCap='round';
+      var n=e.big?14:9, r0=10+k*30, r1=r0+(e.big?70:42)*(1-k*0.6);
+      ctx.lineWidth=Math.max(1,(e.big?7:5)*(1-k));
+      ctx.beginPath();
+      for(var i=0;i<n;i++){
+        var a=i*6.283/n+(e.x%7);
+        ctx.moveTo(e.x+Math.cos(a)*r0,e.y+Math.sin(a)*r0);
+        ctx.lineTo(e.x+Math.cos(a)*r1,e.y+Math.sin(a)*r1);
+      }
+      ctx.stroke();
+      ctx.fillStyle='rgba(255,255,255,'+(0.8*(1-k)).toFixed(3)+')';
+      ctx.beginPath(); ctx.arc(e.x,e.y,(e.big?22:14)*(1-k),0,6.283); ctx.fill();
+      return true;
+    }
+    return false;
+  }
+  var wx={bolt:0,pts:null,star:null,fire:null};
+  function drawWeather(){
+    if(reduce) return;
+    var A=arena(), id=A.id;
+    if(id==='gotham'){
+      if(wx.bolt<=0&&Math.random()<0.0035){
+        wx.bolt=22; var x=120+Math.random()*(W-240), y=0; wx.pts=[[x,y]];
+        while(y<GY-200){ y+=20+Math.random()*30; x+=(Math.random()-0.5)*60; wx.pts.push([x,y]); }
+        setTimeout(function(){ thud(0.9,0.12); },350);
+      }
+      if(wx.bolt>0){
+        wx.bolt--;
+        var on=(wx.bolt>14||(wx.bolt>6&&wx.bolt<10));
+        if(on){
+          ctx.save();
+          ctx.fillStyle='rgba(200,215,255,'+(wx.bolt>14?0.28:0.14)+')'; ctx.fillRect(-100,-100,W+200,H+200);
+          ctx.strokeStyle='rgba(235,242,255,.95)'; ctx.lineWidth=3.5; ctx.shadowColor='#AFC8FF'; ctx.shadowBlur=18;
+          ctx.beginPath(); ctx.moveTo(wx.pts[0][0],wx.pts[0][1]);
+          for(var i=1;i<wx.pts.length;i++) ctx.lineTo(wx.pts[i][0],wx.pts[i][1]);
+          ctx.stroke(); ctx.restore();
+        }
+      }
+    }
+    if(id==='gotham'||id==='watchtower'){
+      if(!wx.star&&Math.random()<0.006) wx.star={x:200+Math.random()*W,y:20+Math.random()*140,vx:-9-Math.random()*5,vy:3+Math.random()*2,life:36};
+      if(wx.star){
+        var s=wx.star; s.x+=s.vx; s.y+=s.vy; s.life--;
+        ctx.save(); ctx.strokeStyle='rgba(255,255,255,'+(s.life/36).toFixed(3)+')'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s.x-s.vx*7,s.y-s.vy*7); ctx.stroke(); ctx.restore();
+        if(s.life<=0) wx.star=null;
+      }
+    }
+    if(id==='apokolips'){
+      if(!wx.fire&&Math.random()<0.008) wx.fire={x:Math.random()<0.5?40+Math.random()*90:W-40-Math.random()*90,life:60};
+      if(wx.fire){
+        var F=wx.fire; F.life--;
+        var hgt=Math.sin(Math.PI*(1-F.life/60))*260;
+        ctx.save(); ctx.globalCompositeOperation='lighter';
+        var g=ctx.createLinearGradient(0,GY,0,GY-hgt);
+        g.addColorStop(0,'rgba(255,200,80,.85)'); g.addColorStop(0.5,'rgba(255,90,20,.6)'); g.addColorStop(1,'rgba(255,40,0,0)');
+        ctx.fillStyle=g;
+        ctx.beginPath(); ctx.moveTo(F.x-26,GY+20);
+        ctx.quadraticCurveTo(F.x-10+Math.sin(tick*0.5)*8,GY-hgt*0.5,F.x,GY-hgt);
+        ctx.quadraticCurveTo(F.x+10+Math.cos(tick*0.5)*8,GY-hgt*0.5,F.x+26,GY+20); ctx.fill();
+        ctx.restore();
+        if(tick%4===0) spark(F.x,GY-hgt*0.6,'#FFB050',2);
+        if(F.life<=0) wx.fire=null;
+      }
+    }
+    if(id==='sky'||id==='metropolis'||id==='themyscira'){
+      ctx.save(); ctx.strokeStyle=id==='themyscira'?'rgba(60,40,60,.55)':'rgba(40,60,90,.45)'; ctx.lineWidth=2; ctx.lineCap='round';
+      for(var b=0;b<4;b++){
+        var bx=((tick*(0.9+b*0.15)+b*260)%(W+300))-150, by=110+b*22+Math.sin(tick*0.03+b)*10, fl=Math.sin(tick*0.25+b*2)*6;
+        ctx.beginPath(); ctx.moveTo(bx-10,by-fl); ctx.lineTo(bx,by); ctx.lineTo(bx+10,by-fl); ctx.stroke();
+      }
+      ctx.restore();
+    }
+  }
+
   function endFight(win){
     if(screen==='over') return;
     if(movie){
@@ -7454,6 +7798,7 @@
       cine=null; screen='over'; movieFightOver(win); return;
     }
     if(rush){ rushKO(win); return; }
+    if(win&&me&&!movie){ ev('win'); if(me.hp>=me.max) ev('perfect'); if(me.raged) ev('ragewin'); }
     if(win) confetti();
     $('ovChest').hidden=true;
     save.tut=(save.tut||0)+1;
@@ -7499,6 +7844,7 @@
     if(win){
       save.streak=(save.streak||0)+1;
       if(save.streak>(save.bestStreak||0)) save.bestStreak=save.streak;
+      ev('streak',save.streak);
       cred=Math.round(cred*(1+Math.min(1,(save.streak-1)*0.1)));
       if(me.hp>=me.max) cred=Math.round(cred*1.5);
     }else save.streak=0;
@@ -7562,7 +7908,8 @@
     if(att!==me&&att!==foe) return;
     if(def!==me&&def!==foe) def=(att===me)?foe:me;
     if(!def||def.dead||att.dead) return;
-    var zone=att.zone||'head', kbSet=att.knock, kd=att.kd; att.zone=null; att.knock=null; att.kd=null;
+    var zone=att.zone||'head', kbSet=att.knock, kd=att.kd, mv=att.mv; att.zone=null; att.knock=null; att.kd=null; att.mv=null;
+    if(kind!=='auto') swoosh(att,zone,att.h.trim);
     /* a moment of cover right after getting back up, so a champion who
        just refused to go down is not deleted by the very next punch */
     if(def.inv>0){
@@ -7611,12 +7958,13 @@
       floatText(def.x+(def.kb||0),GY-210,'PARRY!','#7FD4FF',true);
       spark(def.x-def.facing*26,GY-90,'#FFFFFF',16); flash=Math.max(flash,8);
       tone(1500,0.18,'triangle',0.05,2200); impact(0.08,def.facing);
-      if(def===me) say('Parry!');
+      if(def===me){ say('Parry!'); ev('parry'); }
       return;
     }
     /* COUNTER: catching someone in the wind-up of their own attack */
     var counter=(!blocked&&kind!=='auto'&&def.anim&&def.anim.i===0&&def.anim.frames[1]&&!!def.anim.frames[1].hit);
-    if(counter){ raw*=1.35; floatText(def.x+(def.kb||0),GY-222,'COUNTER!','#FF9AD5',true); }
+    if(counter){ raw*=1.35; floatText(def.x+(def.kb||0),GY-222,'COUNTER!','#FF9AD5',true); if(att===me) ev('counter'); }
+    raw*=styleMul(att,mv);
     /* AIR COMBO: hitting someone who is already off their feet */
     if(!blocked&&def.air>8&&!def.leap){ raw*=1.2; def.vAir=Math.max(def.vAir||0,4);
       floatText(def.x+(def.kb||0),GY-(def.air||0)-230,'AIR COMBO!','#B6F28A',true); }
@@ -7686,6 +8034,7 @@
     /* every hit moves them: a block gives ground a little, a clean
        shot sends them skidding back, a big one takes them off their feet */
     var kb=(kbSet!=null)?kbSet:(kind==='special'?70:(kind==='heavy'?32:(kind==='auto'?20:12)));
+    kb*=(styleOf(att).kb||1);
     knockBack(def,att,blocked?kb*0.3:kb);
     if(blocked){
       floatText(hx,hy,'BLOCK',' #9BD3FF');
@@ -7706,6 +8055,7 @@
       floatText(hx,hy-10,'-'+dmg,heavy?'#FFE08A':'#FF8B6B',heavy);
       hitWord(hx,hy,heavy);
       spark(hx,hy,heavy?'#FFE08A':'#FFC48A',kind==='special'?30:(heavy?20:14));
+      burst(def.x+(def.kb||0)-def.facing*26,zone==='legs'?GY-60:(zone==='body'?GY-170:GY-250),heavy?'#FFE08A':'#FFFFFF',heavy);
       shake=Math.max(shake,kind==='special'?20:(heavy?15:8));
       impact(kind==='special'?0.105:(heavy?0.062:0.028),att.facing);
       thud(heavy?0.32:0.14,heavy?0.15:0.09);
@@ -7717,7 +8067,7 @@
       def.hp-=extra; spark(hx,hy,'#FFD46B',9); plotArmour(def);
     }
     fightExtras(att,def,dmg,blocked,kind);
-    if(kd&&!blocked&&def.hp>0&&!def.dead) knockDown(def);
+    if(kd&&!blocked&&def.hp>0&&!def.dead){ knockDown(def); if(att===me) ev('kd'); }
     /* Lex does not wait to be knocked out. The moment his health drops
        into the red his detail steps in for him, while he is still up. */
     if(def.guardLeft>0&&!def.isGuard&&def.hp<=def.max*GUARD_AT&&catchFall(def)) return;
@@ -7755,22 +8105,22 @@
     play(f,[
       {p:c===1?POSE.guard:POSE.wind,d:Math.round((c===1?4:6)*sp)},
       {p:pose,d:Math.round(7*sp),hit:function(){
-        f.zone=low?'body':'head'; f.knock=c===3?30:(c===2?16:9);
+        f.zone=low?'body':'head'; f.mv='punch'; f.knock=c===3?30:(c===2?16:9);
         hitLand(f,other,mul,'hit'); }},
       {p:pose,d:Math.round(3*sp)},
       {p:POSE.guard,d:Math.round(8*sp)},
       {p:POSE.idle,d:Math.round(6*sp)}
     ]);
-    f.cd=Math.round(20*sp);
+    f.cd=Math.round(20*sp*(styleOf(f).cd||1));
     tone(c===3?200:340,0.06,'square',0.025,120);
     return true;
   }
   /* ---------- the Punch of Death: half a meter, a dash, and a crater ---------- */
   function doHeavy(f,other){
     if(f.dead||f.stun>0||f.anim||screen!=='fight') return false;
-    if(f.cd>0||f.meter<DEATH_COST) return false;
+    if(f.cd>0||f.meter<deathCost(f)) return false;
     study(other,16);
-    f.meter-=DEATH_COST; f.guard=false; f.combo=0;
+    f.meter-=deathCost(f); f.guard=false; f.combo=0;
     var sp=Math.max(0.6,1/f.spd);
     floatText(f.x,GY-230,'PUNCH OF DEATH!','#FF6B57',true);
     slow=Math.max(slow,16);
@@ -7815,7 +8165,7 @@
     if(K.up) fr.push({p:K.up,d:Math.round(9*sp)});
     play(f,fr.concat([
       {p:K.p,d:Math.round(8*sp),hit:function(){
-        f.zone=K.zone; f.knock=K.kb; f.kd=!!K.kd;
+        f.zone=K.zone; f.knock=K.kb; f.kd=!!K.kd; f.mv='kick';
         hitLand(f,other,K.mul,'heavy');
         fx.push({k:'impact',x:other.x-other.facing*26,y:GY-(K.zone==='head'?110:(K.zone==='legs'?34:70)),life:18,max:18,c:f.h.trim});
       }},
@@ -7823,7 +8173,7 @@
       {p:POSE.guard,d:Math.round(10*sp)},
       {p:POSE.idle,d:Math.round(8*sp)}
     ]));
-    f.cd=Math.round(26*sp);
+    f.cd=Math.round(26*sp*(styleOf(f).cd||1));
     tone(K.zone==='legs'?300:220,0.08,'square',0.03,140);
     return true;
   }
@@ -7839,7 +8189,7 @@
       {p:POSE.grab,d:Math.round(10*sp),hit:function(){
         var wasGuarding=other.guard;
         other.guard=false;                 /* a throw goes through a block */
-        f.zone='body'; f.knock=60; f.kd=true;
+        f.zone='body'; f.knock=60; f.kd=true; f.mv='throw'; if(f===me) ev('throw');
         floatText(f.x+(f.kb||0),GY-236,'THROW!','#FFFFFF',true);
         hitLand(f,other,1.35,'heavy');
         other.vAir=6; other.stun=Math.max(other.stun,26);
@@ -8030,6 +8380,7 @@
       var am=f.airMove; f.airMove=null;
       play(f,[{p:POSE.idle,d:14}]);
       if(Math.abs((f.x+f.dx)-other.x)<175&&!other.dead&&!f.dead){
+        f.mv='air'; if(f===me) ev('fly');
         f.zone=am==='kick'?'body':'head'; f.knock=am==='kick'?90:(am==='knee'?80:70); f.kd=(am==='knee');
         hitLand(f,other,am==='kick'?2.6:(am==='knee'?3.1:2.3),'heavy');
         if(!other.dead) other.vAir=Math.max(other.vAir||0,6);
@@ -8057,13 +8408,13 @@
      swallowing the input. */
   var MOVES={
     strike:doStrike, kick:doKick, grab:doGrab,
-    heavy:doHeavy, leap:doLeap, superm:doSuper
+    heavy:doHeavy, leap:doLeap, superm:doSuper, finisher:doFinisher
   };
   function superCost(f){
     return (f.trait&&f.trait.kind==='cheapsuper')?Math.round(100*(1-f.trait.v)):100;
   }
   function canAfford(f,kind){
-    if(kind==='heavy') return f.meter>=DEATH_COST;
+    if(kind==='heavy') return f.meter>=deathCost(f);
     if(kind==='superm') return f.meter>=superCost(f);
     return true;
   }
@@ -8074,12 +8425,16 @@
       airAttack(f,other,kind==='kick'?'kick':(kind==='power'&&f.meter>=25?'knee':'punch')); f.buffer=null; return;
     }
     /* kick a blocking opponent and it becomes a throw */
-    if(kind==='kick'&&other.guard&&!other.dead) kind='grab';
+    if(kind==='kick'&&!other.dead&&(other.guard||Math.random()<(styleOf(f).throwChance||0))) kind='grab';
     /* the POWER button always does the biggest thing you can afford */
-    if(kind==='power') kind=f.meter>=superCost(f)?'superm':(f.meter>=DEATH_COST?'heavy':'strike');
+    if(kind==='power'&&canFinish(f,other)){
+      if(!f.anim&&!(f.stun>0)&&!(f.cd>0)&&doFinisher(f,other)){ f.buffer=null; return; }
+      f.buffer={kind:'finisher',t:26}; return;
+    }
+    if(kind==='power') kind=f.meter>=superCost(f)?'superm':(f.meter>=deathCost(f)?'heavy':'strike');
     /* not enough meter? do the thing you can do instead of nothing */
     if(!canAfford(f,kind)){
-      floatText(f.x,GY-200,kind==='superm'?'NOT CHARGED':'NEED '+DEATH_COST+'%','#9BD3FF');
+      floatText(f.x,GY-200,kind==='superm'?'NOT CHARGED':'NEED '+deathCost(f)+'%','#9BD3FF');
       kind='strike';
     }
     var busy=(f.anim||f.stun>0||f.cd>0);
@@ -8148,8 +8503,9 @@
     if(threat&&Math.random()<0.035+f.tier*0.012){ f.guard=true; return; }
     if(f.aiT>0){ f.guard=(f.guard&&Math.random()<0.9); return; }
     f.guard=false;
+    if(canFinish(f,other)&&Math.random()<0.5){ doFinisher(f,other); f.aiT=Math.round(150/f.spd); return; }
     if(f.meter>=superCost(f)){ doSuper(f,other); f.aiT=Math.round(150/f.spd); return; }
-    if(f.meter>=DEATH_COST&&Math.random()<0.27){ doHeavy(f,other); f.aiT=Math.round(70/f.spd); return; }
+    if(f.meter>=deathCost(f)&&Math.random()<0.27){ doHeavy(f,other); f.aiT=Math.round(70/f.spd); return; }
     if(Math.random()<0.11){ doLeap(f,other); f.aiT=Math.round(96/f.spd); return; }
     if(other.guard&&Math.random()<0.4){ doGrab(f,other); f.aiT=Math.round(80/f.spd); return; }
     if(Math.random()<0.24){ doKick(f,other); f.aiT=Math.round(62/f.spd); return; }
@@ -8308,21 +8664,32 @@
     return false;
   }
 
-  function bar(x,y,w,f,label,lvl,tier,flip){
+  var barGhost=[1,1];
+  function bar(x,y,w,f,label,lvl,tier,flip,sty){
     ctx.save();
+    /* the white chunk that drains after a hit, like an arcade fighter */
+    var gi=flip?1:0;
+    if(f>barGhost[gi]) barGhost[gi]=f;
+    else barGhost[gi]=Math.max(f,barGhost[gi]-Math.max(0.0012,(barGhost[gi]-f)*0.03));
     ctx.fillStyle='rgba(10,18,28,.62)';
     ctx.fillRect(x-3,y-3,w+6,32);
     ctx.strokeStyle='rgba(247,201,72,.45)'; ctx.lineWidth=2;
     ctx.strokeRect(x-3,y-3,w+6,32);
+    var gw=Math.max(0,w*barGhost[gi]);
+    ctx.fillStyle='rgba(255,236,190,.9)';
+    ctx.fillRect(flip?x+w-gw:x,y,gw,15);
     var hw=Math.max(0,w*f);
     var hg=ctx.createLinearGradient(x,y,x+w,y);
     hg.addColorStop(0,f>0.3?'#3FD07A':'#FF5C4A'); hg.addColorStop(1,f>0.3?'#9BE8B4':'#FFA07A');
     ctx.fillStyle=hg;
     ctx.fillRect(flip?x+w-hw:x,y,hw,15);
     ctx.fillStyle='rgba(255,255,255,.22)'; ctx.fillRect(flip?x+w-hw:x,y,hw,5);
+    ctx.fillStyle='rgba(10,18,28,.45)';
+    for(var nt=1;nt<10;nt++) ctx.fillRect(x+w*nt/10-1,y,2,15);
     ctx.fillStyle='#EBF3FB'; ctx.font='800 12px Barlow, sans-serif';
     ctx.textAlign=flip?'right':'left';
-    ctx.fillText(label.toUpperCase()+'   LV '+lvl+'   '+TIERS[tier].name.toUpperCase(),flip?x+w:x,y+27);
+    ctx.fillText(label.toUpperCase()+'   LV '+lvl+'   '+TIERS[tier].name.toUpperCase()
+      +(sty?'   '+sty.icon+' '+sty.n.toUpperCase():''),flip?x+w:x,y+27);
     ctx.restore();
   }
   function meter(x,y,w,f,flip){
@@ -8341,6 +8708,7 @@
     for(var i=0;i<fx.length;i++){
       var e=fx[i], k=1-e.life/e.max;
       ctx.save();
+      if(drawNewFx(e,k)){ ctx.restore(); continue; }
       if(e.k==='heat'){
         /* twin beams from the eyes to the target */
         var ex=e.a.x+e.a.facing*(20*2.45*0.42)+e.a.facing*16, ey=GY-(e.a.air||0)-224;
@@ -8910,6 +9278,7 @@
       ctx.translate(cam.x,cam.y);
     }
     drawSky(tick);
+    drawWeather();
     drawArena();
 
     if(screen==='home'){
@@ -8917,7 +9286,8 @@
       ctx.fillStyle='rgba(10,18,28,.5)';
       var h=HEROES[save.sel],p=prog(h);
       ctx.font='800 15px Barlow, sans-serif'; ctx.textAlign='center';
-      var t1=h.name.toUpperCase()+'  ·  LEVEL '+p.lvl+'  ·  '+TIERS[p.tier].name.toUpperCase();
+      var t1=h.name.toUpperCase()+'  ·  LEVEL '+p.lvl+'  ·  '+TIERS[p.tier].name.toUpperCase()
+        +'  ·  '+styleOf(h).icon+' '+styleOf(h).n.toUpperCase();
       var tw=ctx.measureText(t1).width;
       ctx.fillRect(W/2-tw/2-14,H-52,tw+28,28);
       ctx.fillStyle='#FFE9A8'; ctx.fillText(t1,W/2,H-33);
@@ -8926,8 +9296,8 @@
       if(me) drawFighter(ctx,me,tick,2.45);
       drawWorldFx();
       if(!cine&&cz<1.06&&!movie){
-      bar(34,26,380,me.hp/me.max,me.h.name,me.lvl,me.tier,false);
-      bar(W-414,26,380,foe.hp/foe.max,foe.h.name,foe.lvl,foe.tier,true);
+      bar(34,26,380,me.hp/me.max,me.h.name,me.lvl,me.tier,false,styleOf(me));
+      bar(W-414,26,380,foe.hp/foe.max,foe.h.name,foe.lvl,foe.tier,true,styleOf(foe));
       meter(34,62,380,me.meter/100,false);
       meter(W-414,62,380,foe.meter/100,true);
       if(me.isBrain) iqBar(34,74,380,me.iq/100,false);
@@ -9010,6 +9380,7 @@
     drawCine();
     drawHype();
     drawMovie();
+    drawToasts();
     if(flash>0){ ctx.fillStyle='rgba(255,250,220,'+(flash/16*0.5).toFixed(3)+')'; ctx.fillRect(0,0,W,H); }
   }
 
@@ -9060,8 +9431,9 @@
     if(screen==='home'&&(tick%4)===0){ drawCards(); drawSkinCards(); }
     if(screen==='fight'&&me){
       var sb=$('bSpecial'), sc=superCost(me), air=(me.leap&&!me.airMove);
-      if(me.meter>=sc){ setBtn(sb,'ready super',me.h.superName+'!'); }
-      else if(me.meter>=DEATH_COST){ setBtn(sb,'ready','Punch of Death!'); }
+      if(canFinish(me,foe)){ setBtn(sb,'ready super','FINISHER!'); }
+      else if(me.meter>=sc){ setBtn(sb,'ready super',me.h.superName+'!'); }
+      else if(me.meter>=deathCost(me)){ setBtn(sb,'ready','Punch of Death!'); }
       else setBtn(sb,'',Math.floor(me.meter)+'% \u2014 land hits');
       setBtn($('bStrike'),air?'air':'',air?'FLYING PUNCH!':'Tap fast to combo');
       setBtn($('bKick'),air?'air':'',air?'FLYING KICK!':'Hits harder');
@@ -9506,6 +9878,7 @@
   $('bRush').addEventListener('click',function(){ startRush(); });
   $('bDummy').addEventListener('click',function(){ startDummy(); });
   $('bLadder').addEventListener('click',function(){ startLadder(); });
+  $('dcClaim').addEventListener('click',claimChallenge);
   $('bBo3').addEventListener('click',function(){ startBo3(); });
   $('bBrawl').addEventListener('click',function(){ startBrawl(); });
   $('mvSkip').addEventListener('click',function(){ movieSkip(); });
