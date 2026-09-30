@@ -40,11 +40,12 @@ back to a plain punch. Mashing is never a dead input.
 
 Every attack moves the fighter's weight, the way a real one does:
 
-- **Punch combo:** lead jab, rear straight, then either an uppercut to the head
-  or a hook to the body. Each punch snaps back to a guard.
-- **Kicks rotate between four real techniques**: a roundhouse to the head, a
-  low kick to the leg, a front push-kick to the body that shoves them back,
-  and a knee up close.
+- **Punch combo:** jab, rear straight, then a finisher: uppercut, body hook,
+  elbow, spinning backfist or headbutt.
+- **Kicks rotate between seven techniques:** roundhouse, low kick, push
+  kick, knee strike, axe kick, spinning heel kick and a sweep that knocks
+  them down. Kick someone who is blocking and you **throw** them instead.
+- **Jump, then Power** is a **Flying Knee** (25% meter) that knocks them down.
 - **Hit reactions match where the blow landed.** A head shot snaps the head
   back, a body shot folds them over, and a leg kick buckles the knee.
 - **Knockback:** a clean hit sends the defender skidding back with a puff of
@@ -55,6 +56,37 @@ Every attack moves the fighter's weight, the way a real one does:
   out straight, and a "superman punch" with the back leg thrown behind.
 - **Knockouts:** the loser is lifted off their feet, thrown back in slow
   motion, and lands with a thud and a cloud of dust.
+
+### Fighting-game systems
+
+- **Parry:** block right as a hit arrives (the auto-block can do it too) and
+  it's deflected completely. The attacker staggers, and you gain meter.
+- **Counter hit:** hit someone during the wind-up of their own attack for
+  +35% damage.
+- **Air combo:** fighters knocked into the air can't block, take +20%, and
+  stay up for juggles.
+- **Knockdowns:** the sweep, throw, Flying Knee and Punch of Death put them
+  on the floor. They get back up after a moment and can't be hit while down.
+- **Dizzy:** take enough damage quickly and you see stars, wide open for
+  almost two seconds.
+- **Guard break:** block too much in a row and your guard shatters.
+- **Rage mode:** drop under 30% health and you hit 25% harder, with a red aura.
+- **Edge bounce:** a big hit into the edge of the platform bounces them off it.
+- **Hit counter and ratings:** GOOD, GREAT, AMAZING, INCREDIBLE, UNSTOPPABLE.
+- **Announcer voice** (the browser's speech engine, off when sound is off):
+  "Ready? Fight!", "Round two", "K.O.!", "Perfect!", "Parry!", "Dizzy!".
+- **Victory poses**, a **PERFECT!** (+50% credits for a win without taking
+  damage), and fight stats (hits, best combo, damage) on the result screen.
+- A full **move list** on the home screen.
+
+### More modes
+
+- **🕹 Arcade Ladder:** seven fights in a row, harder each time, with a giant
+  final boss. One free continue. Clearing it drops a Diamond Chest.
+- **🥊 Best of 3:** first to two rounds, same opponent, fresh health each
+  round. The winner gets a Silver Chest or better.
+- **✨ Power-Up Brawl:** orbs float down mid-fight (❤️ health, ⚡ full meter,
+  💪 strength, 🛡️ shield, ❄️ freeze). Land a clean hit to grab one.
 
 ### Making every fight feel big
 
