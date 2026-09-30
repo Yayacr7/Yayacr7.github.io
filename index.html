@@ -7236,7 +7236,7 @@
     if(att.chain>(att.stBest||0)) att.stBest=att.chain;
     att.stHits=(att.stHits||0)+1; att.stDmg=(att.stDmg||0)+dmg;
     for(var i=0;i<RATINGS.length;i++) if(att.chain===RATINGS[i].n){
-      floatText(att===me?220:W-220,150,att.chain+' HITS — '+RATINGS[i].t,'#FFD46B',true);
+      floatText(W/2,att===me?200:240,att.chain+' HITS — '+RATINGS[i].t,att===me?'#FFD46B':'#FF9A8A',true);
       if(i>=1&&att===me) say(RATINGS[i].t.replace('!',''));
     }
     /* take enough in a short space and you see stars */
