@@ -129,6 +129,21 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
+### What's New screen
+
+A **✨ What's New** screen inside the game lists everything that has been
+added, one card each, with buttons that jump straight to it:
+
+- **Play** starts that mode (Giant Battle, Rush, Dummy, Arcade Ladder, Best
+  of 3, Power-Up Brawl).
+- **Show me** scrolls to the trophies, the daily challenge or the move list.
+- **Open settings** opens Graphics & FPS.
+- The movie card only appears for the owner.
+
+It opens by itself the first time someone loads a new version, and any time
+from the **✨ What's New** button in the top bar (a red dot means there's
+something you haven't seen).
+
 ### Graphics & FPS settings
 
 Press **⚙️ Graphics** in the top bar (or click the FPS counter) to open the
