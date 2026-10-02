@@ -8,7 +8,7 @@
 <title>Yahya.games.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;800&family=Barlow:wght@400;600;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;800&family=Barlow:wght@400;600;800&family=Orbitron:wght@600;800&family=Press+Start+2P&display=swap">
 <style>
   :root{
     --steel:#0C131F; --panel:#15202E; --panel-2:#1C2A3C; --edge:rgba(150,195,245,.16);
@@ -77,6 +77,21 @@
   .pad{position:absolute;right:12px;bottom:12px;z-index:4;
     display:grid;gap:7px;grid-template-columns:repeat(2,minmax(0,1fr));width:min(46%,320px)}
   .pad .wide{grid-column:1 / -1}
+  body.retro{background:
+      linear-gradient(rgba(255,60,200,.07) 1px,transparent 1px) 0 0/100% 34px,
+      linear-gradient(90deg,rgba(60,240,255,.06) 1px,transparent 1px) 0 0/34px 100%,
+      radial-gradient(ellipse at 50% -10%,#3A0E5E 0%,#14072A 45%,#07030F 100%) fixed}
+  body.retro h3,body.retro .panel h2,body.retro .gfxbox h3,body.retro .wn .wt,body.retro .funmodes .fm h4,body.retro .movelist h4{
+    font-family:Orbitron,sans-serif;letter-spacing:.04em;text-shadow:0 0 10px rgba(60,240,255,.55)}
+  body.retro .panel h2{font-family:"Press Start 2P",monospace;font-size:clamp(1rem,3.4vw,1.7rem);line-height:1.3;
+    color:#FFF27A;text-shadow:0 0 12px rgba(255,60,200,.9),3px 3px 0 #FF3CC8}
+  body.retro h1{text-shadow:0 0 22px rgba(255,60,200,.55),0 0 2px rgba(60,240,255,.8)}
+  body.retro .stage{border-color:#FF3CC8;box-shadow:0 0 0 1px rgba(60,240,255,.5),0 0 28px rgba(255,60,200,.45),0 24px 56px rgba(0,0,0,.55)}
+  body.retro .btn{box-shadow:0 5px 0 #9C7207,0 0 18px rgba(255,214,90,.35)}
+  body.retro .btn.ghost{box-shadow:0 5px 0 #0D1622,0 0 14px rgba(60,240,255,.3);border:1px solid rgba(60,240,255,.45)}
+  body.retro .fbtn{border-color:rgba(60,240,255,.65)!important;box-shadow:0 0 12px rgba(60,240,255,.3);font-family:Orbitron,sans-serif}
+  body.retro .funmodes .fm,body.retro .movelist>div,body.retro .tro,body.retro .daily2{border:1px solid rgba(60,240,255,.22)}
+  body.retro .gfxbox{border-color:#3CF0FF;box-shadow:0 0 30px rgba(60,240,255,.35),0 24px 60px rgba(0,0,0,.6)}
   .gfxpanel{position:fixed;inset:0;z-index:50;background:rgba(4,8,14,.72);display:grid;place-items:center;padding:16px}
   .gfxbox{background:var(--panel-2);border:2px solid var(--gold);border-radius:15px;padding:18px;max-width:640px;width:100%;
     max-height:92vh;overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.6)}
@@ -399,7 +414,7 @@
     <p class="brand">Yahya<span>.games</span><b>.com</b></p>
     <p class="eyebrow">Sky arena &middot; High noon</p>
     <h1>Skyforge Champions</h1>
-    <p class="sub">A hundred and forty-two characters &mdash; DC, Marvel, the X-Men and seventy-six anime fighters &mdash; battle across six arenas. Winning is how you get stronger: every win pays experience, every third win is a free level, and missions pay out credits on top. Spend those on training, on new versions of a champion, and on forging their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
+    <p class="sub">A hundred and forty-two characters &mdash; DC, Marvel, the X-Men and seventy-six anime fighters &mdash; battle across seven arenas. Winning is how you get stronger: every win pays experience, every third win is a free level, and missions pay out credits on top. Spend those on training, on new versions of a champion, and on forging their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
   </header>
 
   <div class="topbar">
@@ -421,6 +436,7 @@
       <p class="gfxnow">Everything that's been added to Skyforge Champions. Tap a button to try it!</p>
       <div class="wngrid">
         <div class="wn"><span class="wi">🎮</span><div><b class="wt">Easier controls</b><p>Just four big buttons now: <b>Punch, Kick, Jump</b> and <b>Power</b>. Your champion even blocks on their own sometimes.</p></div></div>
+        <div class="wn"><span class="wi">🌆</span><div><b class="wt">Retro-Future style</b><p>Neon glow, a <b>CRT screen</b> shimmer, <b>arcade pixel</b> lettering, glitch flashes on big hits, a <b>chiptune soundtrack</b>, and a new arena: the <b>Neon Grid</b>. Switch back to Classic in Graphics.</p><button class="btn ghost" data-go="neon">Fight in the Neon Grid</button></div></div>
         <div class="wn"><span class="wi">⚡</span><div><b class="wt">Smoother, faster combat</b><p>Moves now flow straight into each other: <b>Punch, Punch, Punch, Kick</b> chains with no waiting. Attacks <b>step in</b> to close the gap, and the computer strings combos too.</p><button class="btn ghost" data-go="fight">Try it</button></div></div>
         <div class="wn"><span class="wi">🚀</span><div><b class="wt">Flying attacks</b><p>Press <b>Jump</b>, then <b>Punch</b> for a Flying Punch, <b>Kick</b> for a Flying Kick, or <b>Power</b> for a Flying Knee.</p><button class="btn ghost" data-go="fight">Fight now</button></div></div>
         <div class="wn"><span class="wi">💥</span><div><b class="wt">Punch of Death</b><p>Fill your meter halfway, then press <b>Power</b> for a slow-motion dash punch that knocks them flat.</p></div></div>
@@ -451,6 +467,12 @@
       <h3>Graphics &amp; FPS</h3>
       <p class="gfxnow" id="gfxNow"></p>
       <div class="gfxgrid">
+        <label>Visual style<select id="gStyle">
+          <option value="retro">Retro-Future (neon + pixel)</option>
+          <option value="classic">Classic</option></select></label>
+        <label>Synth music in fights<select id="gMusic">
+          <option value="1">On</option>
+          <option value="0">Off</option></select></label>
         <label>Preset<select id="gPreset">
           <option value="auto">Auto (adjusts itself)</option>
           <option value="performance">Performance (highest FPS)</option>
@@ -923,7 +945,7 @@
     balanced:   {res:'1x',    post:'grade',part:1,  weather:1,detail:1,smooth:'auto'},
     high:       {res:'native',post:'full', part:1,  weather:1,detail:1,smooth:'auto'},
     ultra:      {res:'max',   post:'full', part:1.5,weather:1,detail:1,smooth:'on'}};
-  var gfx={preset:'auto',cap:0,shake:1};
+  var gfx={preset:'auto',cap:0,shake:1,style:'retro',music:1};
   (function(){
     var A=GFX_PRESETS.auto; for(var k in A) gfx[k]=A[k];
     try{
@@ -4373,7 +4395,11 @@
     {id:'watchtower',name:'The Watchtower',where:'In orbit',
      sky:['#02030A','#050914','#0A1024','#101A34'],sun:null,
      shafts:0,clouds:'none',haze:'20,30,60',stars:true,earth:true,
-     deck:{lo:'#2A3340',mid:'#182028',a:'#4E5A6A',b:'#6E7C8E',c:'#93A2B4',ring:'99,224,208'}}
+     deck:{lo:'#2A3340',mid:'#182028',a:'#4E5A6A',b:'#6E7C8E',c:'#93A2B4',ring:'99,224,208'}},
+    {id:'neon',name:'Neon Grid',where:'A synthwave sunset',neon:true,
+     sky:['#0E0024','#33094F','#8A1A72','#FF5E6C'],sun:null,
+     shafts:0,clouds:'none',haze:'120,40,150',
+     deck:{lo:'#14082A',mid:'#0A0418',a:'#22103E',b:'#2E1456',c:'#43206E',ring:'255,60,200'}}
   ];
   function arena(){
     if(movie&&MOVIE[movie.i]) return ARENAS[MOVIE[movie.i].arena];
@@ -4388,6 +4414,7 @@
     g.addColorStop(0,A.sky[0]); g.addColorStop(0.34,A.sky[1]);
     g.addColorStop(0.68,A.sky[2]); g.addColorStop(1,A.sky[3]);
     q.fillStyle=g; q.fillRect(0,0,W,H);
+    if(A.neon){ neonSky(q); return c; }
 
     if(A.stars){
       for(var st=0;st<150;st++){
@@ -7128,7 +7155,7 @@
     ctx.save();
     ctx.translate(W/2,y);
     ctx.scale(k,k);
-    ctx.font='800 '+size+'px "Saira Condensed", sans-serif';
+    ctx.font=RETRO()?(Math.round(size*0.58)+'px "Press Start 2P", monospace'):('800 '+size+'px "Saira Condensed", sans-serif');
     ctx.textAlign='center';
     ctx.lineJoin='round';
     ctx.lineWidth=size/7; ctx.strokeStyle='rgba(8,12,22,.85)';
@@ -7803,7 +7830,7 @@
     if(T.life<=0){ toasts.shift(); return; }
     var a=Math.min(1,T.life/20,(220-T.life)/12);
     ctx.save(); ctx.globalAlpha=Math.max(0,a);
-    ctx.font='800 20px "Saira Condensed", sans-serif'; ctx.textAlign='center';
+    ctx.font=(RETRO()?'800 15px ':'800 20px ')+fa(); ctx.textAlign='center';
     var w=ctx.measureText(T.t).width+40, y=100+(1-Math.min(1,(220-T.life)/12))*-30;
     ctx.fillStyle='rgba(8,14,24,.88)'; ctx.fillRect(W/2-w/2,y,w,36);
     ctx.strokeStyle=T.c; ctx.lineWidth=2; ctx.strokeRect(W/2-w/2,y,w,36);
@@ -7840,10 +7867,11 @@
 
   /* ================= graphics: swooshes, bursts, weather ================= */
   function swoosh(att,zone,col){
+    if(RETRO()) col=(att===me)?NEON_C:NEON_M;
     var y=zone==='legs'?GY-60:(zone==='body'?GY-170:GY-255);
     fx.push({k:'swoosh',x:att.x+(att.kb||0)+att.facing*70,y:y*1+(att.big?-(att.big-1)*120:0),f:att.facing,c:col||'#FFFFFF',life:11,max:11});
   }
-  function burst(x,y,col,big){ fx.push({k:'burst',x:x,y:y,c:col,life:big?16:11,max:big?16:11,big:!!big}); }
+  function burst(x,y,col,big){ if(RETRO()&&col==='#FFFFFF') col=NEON_C; fx.push({k:'burst',x:x,y:y,c:col,life:big?16:11,max:big?16:11,big:!!big}); }
   function drawNewFx(e,k){
     if(e.k==='swoosh'){
       ctx.globalCompositeOperation='lighter';
@@ -7933,6 +7961,129 @@
       }
       ctx.restore();
     }
+  }
+
+  /* ================= Retro-Future style =================
+     Synthwave: an 80s arcade cabinet that has been to the future. Pixel
+     lettering for the big arcade moments, a clean futuristic face for the
+     HUD, neon edges, CRT scanlines, a glitch on the big hits, and a chiptune
+     soundtrack. Switchable back to Classic in the Graphics panel. */
+  function RETRO(){ return gfx.style==='retro'; }
+  function fa(){ return RETRO()?'Orbitron, sans-serif':'"Saira Condensed", sans-serif'; }
+  var NEON_C='#3CF0FF', NEON_M='#FF3CC8';
+
+  /* the Neon Grid's sky: violet dusk, a striped sunset sun, wireframe hills */
+  function neonSky(q){
+    for(var st=0;st<120;st++){
+      q.fillStyle='rgba(255,220,255,'+(0.2+Math.random()*0.6).toFixed(2)+')';
+      q.fillRect(Math.random()*W,Math.random()*(GY-200),Math.random()<0.15?2:1,Math.random()<0.15?2:1);
+    }
+    var sx=W/2, sy=GY-110, r=150;
+    var sg=q.createLinearGradient(0,sy-r,0,sy+r);
+    sg.addColorStop(0,'#FFF27A'); sg.addColorStop(0.45,'#FF9A3C'); sg.addColorStop(1,'#FF2E9A');
+    q.save();
+    q.shadowColor='#FF5AB4'; q.shadowBlur=60;
+    q.fillStyle=sg; q.beginPath(); q.arc(sx,sy,r,0,6.283); q.fill();
+    q.restore();
+    /* the stripes that make it a synthwave sun: gaps that grow toward the bottom */
+    q.save(); q.globalCompositeOperation='destination-out';
+    for(var i=0;i<8;i++){
+      var y=sy+i*17, h=2+i*1.6;
+      q.fillRect(sx-r-2,y,2*r+4,h);
+    }
+    q.restore();
+    /* hills: dark filled ridges with neon edges */
+    function ridge(base,amp,seed,fill,edge){
+      q.beginPath(); q.moveTo(0,GY-50);
+      for(var x=0;x<=W;x+=32){
+        var yy=base-Math.abs(Math.sin(x*0.011+seed))*amp-Math.abs(Math.sin(x*0.027+seed*2))*amp*0.5;
+        q.lineTo(x,yy);
+      }
+      q.lineTo(W,GY-50); q.closePath();
+      q.fillStyle=fill; q.fill();
+      q.strokeStyle=edge; q.lineWidth=2; q.shadowColor=edge; q.shadowBlur=10; q.stroke(); q.shadowBlur=0;
+    }
+    ridge(GY-90,70,1.3,'#2A0B4A','rgba(255,80,210,.8)');
+    ridge(GY-60,50,4.1,'#1A0632','rgba(60,240,255,.75)');
+    /* horizon glow */
+    var hg=q.createLinearGradient(0,GY-80,0,GY-40);
+    hg.addColorStop(0,'rgba(255,60,200,0)'); hg.addColorStop(1,'rgba(255,60,200,.55)');
+    q.fillStyle=hg; q.fillRect(0,GY-80,W,40);
+    q.fillStyle='#0B0218'; q.fillRect(0,GY-50,W,H);
+  }
+  /* the floor: a perspective grid that rolls toward you */
+  function drawNeonGrid(){
+    if(!arena().neon) return;
+    var hz=GY-50, vx=W/2;
+    ctx.save();
+    ctx.strokeStyle=NEON_M; ctx.lineWidth=1.6; ctx.shadowColor=NEON_M; ctx.shadowBlur=8;
+    ctx.beginPath();
+    for(var i=-14;i<=14;i++){ ctx.moveTo(vx+i*14,hz); ctx.lineTo(vx+i*150,H+40); }
+    var sp=(tick*0.012)%1;
+    for(var k=0;k<14;k++){
+      var z=(k+sp)/14, y=hz+(H+40-hz)*z*z;
+      ctx.moveTo(0,y); ctx.lineTo(W,y);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+  /* a neon edge on the platform in every arena when the style is on */
+  function drawRetroDeck(){
+    if(!RETRO()&&!arena().neon) return;
+    var cx=W/2, top=GY, w=430;
+    ctx.save();
+    ctx.lineWidth=3; ctx.strokeStyle='rgba(60,240,255,.75)'; ctx.shadowColor=NEON_C; ctx.shadowBlur=14;
+    ctx.beginPath(); ctx.ellipse(cx,top,w,44,0,0,6.283); ctx.stroke();
+    ctx.lineWidth=2; ctx.strokeStyle='rgba(255,60,200,.6)'; ctx.shadowColor=NEON_M;
+    var pulse=0.5+Math.sin(tick*0.06)*0.5;
+    ctx.globalAlpha=0.45+pulse*0.4;
+    ctx.beginPath(); ctx.ellipse(cx,top,w-92,28,0,0,6.283); ctx.stroke();
+    ctx.restore();
+  }
+  /* CRT scanlines over everything, and a glitch on the biggest hits */
+  var scanC=null;
+  function retroPost(){
+    if(!RETRO()) return;
+    var g=realCtx, dw=cvs.width, dh=cvs.height;
+    if(!scanC||scanC.width!==dw||scanC.height!==dh){
+      scanC=document.createElement('canvas'); scanC.width=dw; scanC.height=dh;
+      var q=scanC.getContext('2d'), step=Math.max(2,Math.round(dh/288));
+      q.fillStyle='rgba(0,0,0,.16)';
+      for(var y=0;y<dh;y+=step*2) q.fillRect(0,y,dw,step);
+    }
+    g.save(); g.setTransform(1,0,0,1,0,0);
+    var big=(shake>13||flash>8);
+    if(big&&!reduce){
+      /* RGB-split ghosting, then a few torn slices */
+      g.globalCompositeOperation='lighter'; g.globalAlpha=0.14;
+      var o=Math.round(dw/220);
+      g.drawImage(sceneC,-o,0); g.drawImage(sceneC,o,0);
+      g.globalCompositeOperation='source-over'; g.globalAlpha=1;
+      for(var s=0;s<4;s++){
+        var sy=Math.floor(Math.random()*dh), sh=Math.floor(dh*(0.01+Math.random()*0.03));
+        g.drawImage(sceneC,0,sy,dw,sh,(Math.random()-0.5)*dw*0.04,sy,dw,sh);
+      }
+    }
+    g.drawImage(scanC,0,0);
+    g.restore();
+  }
+  /* ---------- chiptune soundtrack ----------
+     Driving synthwave bass, an 8-bit arpeggio and a drum machine, in A minor
+     (Am - F - C - G). Played on real time, so slow-motion never drags it. */
+  var musNext=0, musStep=0;
+  var MUS_ROOT=[110,87.31,130.81,98];
+  var MUS_ARP=[[440,523.25,659.25],[349.23,440,523.25],[523.25,659.25,783.99],[392,493.88,587.33]];
+  function musicStep(t){
+    if(!gfx.music||muted||!RETRO()||screen!=='fight'||movie||introT>0){ musNext=0; return; }
+    if(!musNext) musNext=t;
+    if(t<musNext) return;
+    musNext+=214; if(t-musNext>500) musNext=t+214;
+    var s=musStep++%32, bar=Math.floor(s/8), r=MUS_ROOT[bar];
+    var f=(s%2)?r*2:r;
+    tone(f,0.16,'sawtooth',0.016,f*0.99);
+    var A=MUS_ARP[bar]; tone(A[s%3]*(s%8>=4?2:1),0.08,'square',0.006,A[s%3]*(s%8>=4?2:1));
+    if(s%4===0) tone(130,0.14,'sine',0.05,42);
+    if(s%8===4) thud(0.08,0.035);
   }
 
   function endFight(win){
@@ -8851,8 +9002,13 @@
     else barGhost[gi]=Math.max(f,barGhost[gi]-Math.max(0.0012,(barGhost[gi]-f)*0.03));
     ctx.fillStyle='rgba(10,18,28,.62)';
     ctx.fillRect(x-3,y-3,w+6,32);
-    ctx.strokeStyle='rgba(247,201,72,.45)'; ctx.lineWidth=2;
-    ctx.strokeRect(x-3,y-3,w+6,32);
+    if(RETRO()){
+      ctx.strokeStyle=flip?NEON_M:NEON_C; ctx.lineWidth=2; ctx.shadowColor=ctx.strokeStyle; ctx.shadowBlur=12;
+      ctx.strokeRect(x-3,y-3,w+6,32); ctx.shadowBlur=0;
+    }else{
+      ctx.strokeStyle='rgba(247,201,72,.45)'; ctx.lineWidth=2;
+      ctx.strokeRect(x-3,y-3,w+6,32);
+    }
     var gw=Math.max(0,w*barGhost[gi]);
     ctx.fillStyle='rgba(255,236,190,.9)';
     ctx.fillRect(flip?x+w-gw:x,y,gw,15);
@@ -8864,7 +9020,7 @@
     ctx.fillStyle='rgba(255,255,255,.22)'; ctx.fillRect(flip?x+w-hw:x,y,hw,5);
     ctx.fillStyle='rgba(10,18,28,.45)';
     for(var nt=1;nt<10;nt++) ctx.fillRect(x+w*nt/10-1,y,2,15);
-    ctx.fillStyle='#EBF3FB'; ctx.font='800 12px Barlow, sans-serif';
+    ctx.fillStyle='#EBF3FB'; ctx.font=RETRO()?'700 10px Orbitron, sans-serif':'800 12px Barlow, sans-serif';
     ctx.textAlign=flip?'right':'left';
     ctx.fillText(label.toUpperCase()+'   LV '+lvl+'   '+TIERS[tier].name.toUpperCase()
       +(sty?'   '+sty.icon+' '+sty.n.toUpperCase():''),flip?x+w:x,y+27);
@@ -9435,7 +9591,7 @@
 
   /* ---------- the Graphics panel ---------- */
   var GFX_FIELDS={gPreset:'preset',gCap:'cap',gRes:'res',gPost:'post',gPart:'part',
-    gDetail:'detail',gWeather:'weather',gSmooth:'smooth',gShake:'shake'};
+    gDetail:'detail',gWeather:'weather',gSmooth:'smooth',gShake:'shake',gStyle:'style',gMusic:'music'};
   function saveGfx(){ try{ localStorage.setItem('skyforge.gfx',JSON.stringify(gfx)); }catch(e){} }
   function applyGfx(){
     postOn=POST_OK&&!reduce&&gfx.post!=='off';
@@ -9444,6 +9600,7 @@
     if(gfx.preset!=='auto') dynScale=1;
     qLow=0; qHigh=0; qNeed=10;
     fit(); bufDpr=0; skyCache=null; capNext=0;
+    document.body.classList.toggle('retro',RETRO());
     syncGfx();
   }
   function syncGfx(){
@@ -9466,8 +9623,8 @@
         gfx.preset=v;
         var P=GFX_PRESETS[v]; if(P) for(var pk in P) gfx[pk]=P[pk];
       }else{
-        gfx[k]=(k==='cap'||k==='part'||k==='detail'||k==='weather'||k==='shake')?Number(v):v;
-        if(k!=='cap'&&k!=='shake') gfx.preset='custom';
+        gfx[k]=(k==='cap'||k==='part'||k==='detail'||k==='weather'||k==='shake'||k==='music')?Number(v):v;
+        if(k!=='cap'&&k!=='shake'&&k!=='style'&&k!=='music') gfx.preset='custom';
       }
       applyGfx(); saveGfx();
     });
@@ -9481,7 +9638,7 @@
   /* ---------- What's New ----------
      Opens by itself the first time someone loads this version, and any
      time from the top bar. Remembered per browser. */
-  var NEW_VER='2026-10-b';
+  var NEW_VER='2026-10-c';
   function newSeen(){ try{ return localStorage.getItem('skyforge.seenNew')===NEW_VER; }catch(e){ return true; } }
   function markNewSeen(){ try{ localStorage.setItem('skyforge.seenNew',NEW_VER); }catch(e){} $('newBtn').classList.remove('unseen'); }
   function openNew(){
@@ -9491,7 +9648,11 @@
   }
   function closeNew(){ $('newPanel').hidden=true; }
   var NEW_GO={
-    fight:function(){ startFight(); }, giant:function(){ startGiant(); }, rush:function(){ startRush(); },
+    fight:function(){ startFight(); },
+    neon:function(){
+      for(var ni=0;ni<ARENAS.length;ni++) if(ARENAS[ni].neon) save.arena=ni;
+      store(); skyCache=null; startFight();
+    }, giant:function(){ startGiant(); }, rush:function(){ startRush(); },
     dummy:function(){ startDummy(); }, ladder:function(){ startLadder(); }, bo3:function(){ startBo3(); },
     brawl:function(){ startBrawl(); }, movie:function(){ if(isOwner()) startMovie(); }, gfx:function(){ openGfx(); },
     moves:function(){ document.querySelector('.movelist').scrollIntoView({behavior:'smooth',block:'start'}); },
@@ -9543,6 +9704,7 @@
       realCtx.drawImage(sceneC,0,0);
       realCtx.restore();
     }
+    retroPost();
   }
 
   function renderScene(){
@@ -9559,8 +9721,10 @@
       ctx.translate(cam.x,cam.y);
     }
     drawSky(tick);
+    drawNeonGrid();
     drawWeather();
     drawArena();
+    drawRetroDeck();
 
     if(screen==='home'){
       if(me) drawFighter(ctx,me,tick,2.7);
@@ -9633,7 +9797,7 @@
         ctx.fillText(raid.cred+' in the pot',W/2,72);
       }
       if(me.chain>1&&tick-(me.lastHitT||0)<90){
-        ctx.fillStyle='#FFE9A8'; ctx.font='800 '+Math.min(48,28+me.chain*2)+'px "Saira Condensed", sans-serif'; ctx.textAlign='left';
+        ctx.fillStyle='#FFE9A8'; ctx.font=RETRO()?(Math.min(30,18+me.chain)+'px "Press Start 2P", monospace'):('800 '+Math.min(48,28+me.chain*2)+'px "Saira Condensed", sans-serif'); ctx.textAlign='left';
         ctx.lineWidth=5; ctx.strokeStyle='rgba(12,20,32,.7)';
         ctx.strokeText(me.chain+' HITS!',36,122); ctx.fillText(me.chain+' HITS!',36,122);
       }
@@ -9652,7 +9816,7 @@
     for(var f2=0;f2<floats.length;f2++){
       var fl=floats[f2];
       ctx.globalAlpha=Math.min(1,fl.life/26);
-      ctx.font='800 '+(fl.big?32:22)+'px "Saira Condensed", sans-serif';
+      ctx.font='800 '+Math.round((fl.big?32:22)*(RETRO()?0.76:1))+'px '+fa();
       ctx.lineWidth=4; ctx.strokeStyle='rgba(12,20,32,.6)';
       ctx.strokeText(fl.t,fl.x,fl.y); ctx.fillStyle=fl.c; ctx.fillText(fl.t,fl.x,fl.y);
     }
@@ -9688,6 +9852,7 @@
   var capNext=0;
   function frame(t){
     requestAnimationFrame(frame);
+    musicStep(t);
     /* the FPS limit: frames that arrive early are skipped outright, and the
        target advances in fixed steps so a 144Hz screen capped at 60 really
        does average 60 */

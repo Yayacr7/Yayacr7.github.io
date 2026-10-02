@@ -129,6 +129,27 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
+### Retro-Future style
+
+The game's default look is a mix of retro and futuristic, synthwave style:
+
+- **Neon Grid**, a seventh arena: a striped synthwave sun, wireframe hills
+  with neon edges, and a perspective grid floor that rolls toward you.
+- **Arcade pixel lettering** (Press Start 2P) for the big moments: FIGHT!,
+  K.O.!, PERFECT!, FINISHER!, the hit counter and the result titles.
+- **A futuristic face** (Orbitron) for the HUD, headings and buttons.
+- **Neon everywhere:** glowing health bars (cyan for you, magenta for them),
+  a neon edge and pulsing ring on the platform in every arena, neon attack
+  swooshes, and a glowing page with a faint grid behind it.
+- **CRT scanlines** over the screen, and an **RGB-split glitch** with torn
+  slices on the biggest hits.
+- **A chiptune soundtrack** during fights: a driving synthwave bassline, an
+  8-bit arpeggio and a drum machine in A minor. It runs on real time, so
+  slow motion never drags it.
+
+**Visual style** (Retro-Future or Classic) and **Synth music** (on/off) are
+in the ⚙️ Graphics panel, saved per device.
+
 ### Smoother, faster combat
 
 - **Recovery cancels:** the last part of every punch, kick, Punch of Death
