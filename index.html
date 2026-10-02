@@ -88,6 +88,21 @@
     border:2px solid #2B3E57;border-radius:9px;padding:8px}
   .gfxtip{font-size:.84rem;margin:12px 0}
   #fpsWrap{cursor:pointer}
+  .newbox{max-width:900px}
+  .newbox h3{font-size:2rem}
+  .wngrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));margin:6px 0 16px}
+  .wn{display:flex;gap:10px;align-items:flex-start;background:#0D1622;border:2px solid #2B3E57;border-radius:12px;padding:12px;
+    animation:wnin .45s cubic-bezier(.2,1.4,.4,1) both}
+  .wn .wi{font-size:2rem;line-height:1;flex:none}
+  .wn .wt{display:block;font-family:"Saira Condensed",sans-serif;font-size:1.2rem;text-transform:uppercase;color:var(--gold)}
+  .wn p b{color:#FFE9A8}
+  .wn p{margin:2px 0 8px;font-size:.88rem;line-height:1.4}
+  .wn .btn{padding:7px 16px;font-size:.88rem}
+  @keyframes wnin{0%{transform:translateY(14px) scale(.96);opacity:0}100%{transform:none;opacity:1}}
+  .newbtn{position:relative}
+  .newbtn i{position:absolute;top:-4px;right:-4px;width:12px;height:12px;border-radius:50%;background:#FF5C4A;
+    box-shadow:0 0 0 2px #0D1622;display:none}
+  .newbtn.unseen i{display:block;animation:pulse .9s ease-in-out infinite}
   .pad .fbtn{font-size:clamp(.8rem,2.3vw,1.18rem);padding:13px 6px}
   .pad .fbtn.air{border-color:#7FD4FF;background:#16324D;color:#fff;box-shadow:0 0 18px rgba(127,212,255,.7)}
   #bSpecial.ready{animation:pulse 0.9s ease-in-out infinite}
@@ -397,6 +412,37 @@
     <div class="coin fps ok" id="fpsWrap"><span id="fps">—</span></div>
     <button class="sound" id="sound" aria-pressed="true">Sound on</button>
     <button class="sound" id="gfxBtn">⚙️ Graphics</button>
+    <button class="sound newbtn" id="newBtn">✨ What's New<i id="newDot"></i></button>
+  </div>
+
+  <div class="gfxpanel" id="newPanel" hidden>
+    <div class="gfxbox newbox" role="dialog" aria-label="What's new in Skyforge Champions">
+      <h3>✨ What's New</h3>
+      <p class="gfxnow">Everything that's been added to Skyforge Champions. Tap a button to try it!</p>
+      <div class="wngrid">
+        <div class="wn"><span class="wi">🎮</span><div><b class="wt">Easier controls</b><p>Just four big buttons now: <b>Punch, Kick, Jump</b> and <b>Power</b>. Your champion even blocks on their own sometimes.</p></div></div>
+        <div class="wn"><span class="wi">🚀</span><div><b class="wt">Flying attacks</b><p>Press <b>Jump</b>, then <b>Punch</b> for a Flying Punch, <b>Kick</b> for a Flying Kick, or <b>Power</b> for a Flying Knee.</p><button class="btn ghost" data-go="fight">Fight now</button></div></div>
+        <div class="wn"><span class="wi">💥</span><div><b class="wt">Punch of Death</b><p>Fill your meter halfway, then press <b>Power</b> for a slow-motion dash punch that knocks them flat.</p></div></div>
+        <div class="wn"><span class="wi">☠️</span><div><b class="wt">The Finisher</b><p>Full meter and your opponent under 25% health? <b>Power</b> becomes a five-hit cinematic <b>FINISHER</b> that ends the fight.</p></div></div>
+        <div class="wn"><span class="wi">🥋</span><div><b class="wt">Real fighting moves</b><p>Jab, straight, uppercut, body hook, elbow, spinning backfist, headbutt, roundhouse, low kick, <b>knee strike</b>, axe kick, spinning heel kick, sweep, and throws.</p><button class="btn ghost" data-go="moves">See every move</button></div></div>
+        <div class="wn"><span class="wi">🛡️</span><div><b class="wt">Big fighting tricks</b><p><b>Parry</b>, <b>Counter</b>, <b>Air Combo</b>, <b>Knockdowns</b>, <b>Dizzy</b> stars, <b>Guard Break</b>, <b>Rage Mode</b> and <b>Edge Bounce</b>.</p><button class="btn ghost" data-go="moves">See how</button></div></div>
+        <div class="wn"><span class="wi">🥊</span><div><b class="wt">Fighting styles</b><p>Every champion is a Boxer, Kickboxer, Wrestler, Brawler, Martial Artist, Speedster or Powerhouse, and each style plays differently.</p><button class="btn ghost" data-go="moves">See the styles</button></div></div>
+        <div class="wn"><span class="wi">🧌</span><div><b class="wt">Giant Battle</b><p>Fight a champion one and a half times bigger with three times the health. Win a <b>Gold Chest or better</b>.</p><button class="btn ghost" data-go="giant">Play</button></div></div>
+        <div class="wn"><span class="wi">⏱️</span><div><b class="wt">60-Second Rush</b><p>Knock out as many as you can in one minute.</p><button class="btn ghost" data-go="rush">Play</button></div></div>
+        <div class="wn"><span class="wi">🤖</span><div><b class="wt">Smash the Dummy</b><p>Twenty seconds, one training robot, one giant damage number.</p><button class="btn ghost" data-go="dummy">Play</button></div></div>
+        <div class="wn"><span class="wi">🕹️</span><div><b class="wt">Arcade Ladder</b><p>Seven fights in a row with a giant boss at the end. Clear it for a <b>Diamond Chest</b>.</p><button class="btn ghost" data-go="ladder">Play</button></div></div>
+        <div class="wn"><span class="wi">🏆</span><div><b class="wt">Best of 3</b><p>First to win two rounds is the champion.</p><button class="btn ghost" data-go="bo3">Play</button></div></div>
+        <div class="wn"><span class="wi">✨</span><div><b class="wt">Power-Up Brawl</b><p>Health, power and shield orbs float down mid-fight. Hit them first to grab one!</p><button class="btn ghost" data-go="brawl">Play</button></div></div>
+        <div class="wn"><span class="wi">🎁</span><div><b class="wt">Treasure chests</b><p>Every win drops a chest: Wooden, Silver, Gold or rare <b>Diamond</b>. Win in a row for up to <b>double credits</b>.</p></div></div>
+        <div class="wn"><span class="wi">🏅</span><div><b class="wt">Trophies</b><p>Twenty trophies to collect, and each one pays credits the moment you earn it.</p><button class="btn ghost" data-go="trophies">Show me</button></div></div>
+        <div class="wn"><span class="wi">📅</span><div><b class="wt">Daily challenge</b><p>A new challenge every day, worth 2,500 credits and a Gold Chest.</p><button class="btn ghost" data-go="daily">Show me</button></div></div>
+        <div class="wn"><span class="wi">🖼️</span><div><b class="wt">Better graphics</b><p>Attack swooshes, impact bursts, health bars that drain, a slow-motion K.O. camera, and weather: lightning, shooting stars, fire and birds.</p></div></div>
+        <div class="wn"><span class="wi">🔊</span><div><b class="wt">Announcer</b><p>A voice calls "Ready? Fight!", "K.O.!", "Perfect!" and more. Turn sound off to quiet it.</p></div></div>
+        <div class="wn"><span class="wi">⚙️</span><div><b class="wt">Graphics & FPS settings</b><p>Pick <b>Performance</b> for the most FPS or <b>Ultra</b> for the best look. <b>Auto</b> sorts it out for you.</p><button class="btn ghost" data-go="gfx">Open settings</button></div></div>
+        <div class="wn" data-owner="1"><span class="wi">🎬</span><div><b class="wt">The Movie</b><p><i>Skyforge: The Last Specimen</i>, a five-act film starring your champion. Owner only.</p><button class="btn ghost" data-go="movie">Watch</button></div></div>
+      </div>
+      <button class="btn" id="newClose">Let's fight!</button>
+    </div>
   </div>
 
   <div class="gfxpanel" id="gfxPanel" hidden>
@@ -9398,6 +9444,41 @@
   $('gClose').addEventListener('click',function(){ $('gfxPanel').hidden=true; });
   $('gfxPanel').addEventListener('click',function(e){ if(e.target===$('gfxPanel')) $('gfxPanel').hidden=true; });
   applyGfx();
+
+  /* ---------- What's New ----------
+     Opens by itself the first time someone loads this version, and any
+     time from the top bar. Remembered per browser. */
+  var NEW_VER='2026-10-a';
+  function newSeen(){ try{ return localStorage.getItem('skyforge.seenNew')===NEW_VER; }catch(e){ return true; } }
+  function markNewSeen(){ try{ localStorage.setItem('skyforge.seenNew',NEW_VER); }catch(e){} $('newBtn').classList.remove('unseen'); }
+  function openNew(){
+    var own=isOwner();
+    Array.prototype.forEach.call(document.querySelectorAll('.wn[data-owner]'),function(el){ el.hidden=!own; });
+    $('newPanel').hidden=false; markNewSeen();
+  }
+  function closeNew(){ $('newPanel').hidden=true; }
+  var NEW_GO={
+    fight:function(){ startFight(); }, giant:function(){ startGiant(); }, rush:function(){ startRush(); },
+    dummy:function(){ startDummy(); }, ladder:function(){ startLadder(); }, bo3:function(){ startBo3(); },
+    brawl:function(){ startBrawl(); }, movie:function(){ if(isOwner()) startMovie(); }, gfx:function(){ openGfx(); },
+    moves:function(){ document.querySelector('.movelist').scrollIntoView({behavior:'smooth',block:'start'}); },
+    trophies:function(){ $('trophies').scrollIntoView({behavior:'smooth',block:'start'}); },
+    daily:function(){ document.querySelector('.daily2').scrollIntoView({behavior:'smooth',block:'center'}); }};
+  Array.prototype.forEach.call(document.querySelectorAll('.wn [data-go]'),function(b){
+    b.addEventListener('click',function(){
+      var go=NEW_GO[b.getAttribute('data-go')]; closeNew();
+      /* a mode can only start from the home screen */
+      if(go&&(screen==='home'||b.getAttribute('data-go')==='gfx')) go();
+      else if(go) flashMsg('Finish this fight first, then try it from the home screen!');
+    });
+  });
+  $('newBtn').addEventListener('click',openNew);
+  $('newClose').addEventListener('click',closeNew);
+  $('newPanel').addEventListener('click',function(e){ if(e.target===$('newPanel')) closeNew(); });
+  if(!newSeen()){
+    $('newBtn').classList.add('unseen');
+    setTimeout(function(){ if(screen==='home'&&$('gfxPanel').hidden) openNew(); },900);
+  }
 
   /* three lozenges a side: filled for a champion still to come, hollow for
      one already knocked out */
