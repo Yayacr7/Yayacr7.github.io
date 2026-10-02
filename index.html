@@ -421,6 +421,7 @@
       <p class="gfxnow">Everything that's been added to Skyforge Champions. Tap a button to try it!</p>
       <div class="wngrid">
         <div class="wn"><span class="wi">🎮</span><div><b class="wt">Easier controls</b><p>Just four big buttons now: <b>Punch, Kick, Jump</b> and <b>Power</b>. Your champion even blocks on their own sometimes.</p></div></div>
+        <div class="wn"><span class="wi">⚡</span><div><b class="wt">Smoother, faster combat</b><p>Moves now flow straight into each other: <b>Punch, Punch, Punch, Kick</b> chains with no waiting. Attacks <b>step in</b> to close the gap, and the computer strings combos too.</p><button class="btn ghost" data-go="fight">Try it</button></div></div>
         <div class="wn"><span class="wi">🚀</span><div><b class="wt">Flying attacks</b><p>Press <b>Jump</b>, then <b>Punch</b> for a Flying Punch, <b>Kick</b> for a Flying Kick, or <b>Power</b> for a Flying Knee.</p><button class="btn ghost" data-go="fight">Fight now</button></div></div>
         <div class="wn"><span class="wi">💥</span><div><b class="wt">Punch of Death</b><p>Fill your meter halfway, then press <b>Power</b> for a slow-motion dash punch that knocks them flat.</p></div></div>
         <div class="wn"><span class="wi">☠️</span><div><b class="wt">The Finisher</b><p>Full meter and your opponent under 25% health? <b>Power</b> becomes a five-hit cinematic <b>FINISHER</b> that ends the fight.</p></div></div>
@@ -7686,7 +7687,7 @@
       &&!other.plot&&!other.dummy&&!other.dead&&screen==='fight';
   }
   function doFinisher(f,other){
-    if(f.dead||f.stun>0||f.anim||screen!=='fight'||!canFinish(f,other)) return false;
+    if(f.dead||f.stun>0||busy(f)||screen!=='fight'||!canFinish(f,other)) return false;
     f.meter=0; f.guard=false; f.combo=0;
     other.guard=false; other.autoG=0; other.inv=0; other.stun=Math.max(other.stun,220);
     f.inv=Math.max(f.inv,220);
@@ -8113,6 +8114,10 @@
     /* AIR COMBO: hitting someone who is already off their feet */
     if(!blocked&&def.air>8&&!def.leap){ raw*=1.2; def.vAir=Math.max(def.vAir||0,4);
       floatText(def.x+(def.kb||0),GY-(def.air||0)-230,'AIR COMBO!','#B6F28A',true); }
+    /* long combos scale down a little per hit after the fourth, the way
+       real fighting games keep a touch-of-death combo from existing */
+    if(!blocked&&kind!=='special'&&(att.chain||0)>=4&&tick-(att.lastHitT||-999)<75)
+      raw*=Math.max(0.55,1-0.05*(att.chain-3));
     if(att.rage) raw*=1.25;
     if(att.pup>0) raw*=1.4;
     /* defender traits */
@@ -8230,9 +8235,10 @@
   }
 
   function doStrike(f,other){
-    if(f.dead||f.stun>0||f.anim||screen!=='fight') return false;
+    if(f.dead||f.stun>0||busy(f)||screen!=='fight') return false;
     if(f.cd>0) return false;
     study(other,9);
+    closeIn(f,other);
     f.guard=false;
     f.comboT=42; f.combo=(f.combo%3)+1;
     var c=f.combo;
@@ -8253,18 +8259,20 @@
         f.zone=low?'body':'head'; f.mv='punch'; f.knock=c===3?30:(c===2?16:9);
         hitLand(f,other,mul,'hit'); }},
       {p:pose,d:Math.round(3*sp)},
-      {p:POSE.guard,d:Math.round(8*sp)},
-      {p:POSE.idle,d:Math.round(6*sp)}
+      {p:POSE.guard,d:Math.round(8*sp),rec:true},
+      {p:POSE.idle,d:Math.round(6*sp),rec:true}
     ]);
-    f.cd=Math.round(20*sp*(styleOf(f).cd||1));
+    /* free again the moment the punch has landed and been seen */
+    f.cd=Math.round((c===1?4:6)*sp+10*sp*(styleOf(f).cd||1));
     tone(c===3?200:340,0.06,'square',0.025,120);
     return true;
   }
   /* ---------- the Punch of Death: half a meter, a dash, and a crater ---------- */
   function doHeavy(f,other){
-    if(f.dead||f.stun>0||f.anim||screen!=='fight') return false;
+    if(f.dead||f.stun>0||busy(f)||screen!=='fight') return false;
     if(f.cd>0||f.meter<deathCost(f)) return false;
     study(other,16);
+    closeIn(f,other);
     f.meter-=deathCost(f); f.guard=false; f.combo=0;
     var sp=Math.max(0.6,1/f.spd);
     floatText(f.x,GY-230,'PUNCH OF DEATH!','#FF6B57',true);
@@ -8280,12 +8288,12 @@
         fx.push({k:'impact',x:other.x-other.facing*30,y:GY-72,life:30,max:30,c:'#FF6B57'});
         fx.push({k:'impact',x:other.x-other.facing*30,y:GY-72,life:22,max:22,c:f.h.trim});
       }},
-      {p:POSE.idle,d:Math.round(18*sp)}
+      {p:POSE.idle,d:Math.round(18*sp),rec:true}
     ]);
     /* the dash: a burst toward them, leaving after-images behind */
     ghost(f,f.x); f.dx=f.facing*Math.max(0,Math.min(150,Math.abs(other.x-f.x)-120));
     setTimeout(function(){ if(me===f||foe===f) ghost(f,f.x+f.dx*0.5); },60);
-    f.cd=Math.round(34*sp);
+    f.cd=Math.round(24*sp);
     return true;
   }
 
@@ -8299,9 +8307,10 @@
     {p:POSE.spinkick,w:POSE.guard,zone:'head',mul:2.0,kb:48,wd:9,name:'SPINNING HEEL KICK!'},
     {p:POSE.sweep,w:POSE.getup,zone:'legs',mul:1.3,kb:10,wd:7,name:'SWEEP!',kd:true}];
   function doKick(f,other){
-    if(f.dead||f.stun>0||f.anim||screen!=='fight') return false;
+    if(f.dead||f.stun>0||busy(f)||screen!=='fight') return false;
     if(f.cd>0) return false;
     study(other,11);
+    closeIn(f,other);
     f.guard=false; f.combo=0;
     var K=KICKS[(f.kickN=((f.kickN||0)+1+(Math.random()<0.3?1:0))%KICKS.length)];
     var sp=Math.max(0.6,1/f.spd);
@@ -8315,19 +8324,20 @@
         fx.push({k:'impact',x:other.x-other.facing*26,y:GY-(K.zone==='head'?110:(K.zone==='legs'?34:70)),life:18,max:18,c:f.h.trim});
       }},
       {p:K.p,d:Math.round(4*sp)},
-      {p:POSE.guard,d:Math.round(10*sp)},
-      {p:POSE.idle,d:Math.round(8*sp)}
+      {p:POSE.guard,d:Math.round(10*sp),rec:true},
+      {p:POSE.idle,d:Math.round(8*sp),rec:true}
     ]));
-    f.cd=Math.round(26*sp*(styleOf(f).cd||1));
+    f.cd=Math.round((K.wd+(K.up?9:0)+12)*sp*(styleOf(f).cd||1));
     tone(K.zone==='legs'?300:220,0.08,'square',0.03,140);
     return true;
   }
 
   /* ---------- a grab: modest damage, but a guard barely helps ---------- */
   function doGrab(f,other){
-    if(f.dead||f.stun>0||f.anim||screen!=='fight') return false;
+    if(f.dead||f.stun>0||busy(f)||screen!=='fight') return false;
     if(f.cd>0) return false;
     study(other,13);
+    closeIn(f,other);
     f.guard=false; f.combo=0;
     var sp=Math.max(0.6,1/f.spd);
     play(f,[
@@ -8342,16 +8352,16 @@
         fx.push({k:'impact',x:other.x,y:GY-70,life:20,max:20,c:'#FFD46B'});
       }},
       {p:POSE.bigwind,d:Math.round(7*sp)},
-      {p:POSE.idle,d:Math.round(16*sp)}
+      {p:POSE.idle,d:Math.round(16*sp),rec:true}
     ]);
-    f.cd=Math.round(34*sp);
+    f.cd=Math.round(20*sp);
     thud(0.2,0.1);
     return true;
   }
 
   /* ---------- signature super moves, one per champion ---------- */
   function doSuper(f,other){
-    if(f.dead||f.stun>0||f.anim||f.meter<superCost(f)||screen!=='fight') return false;
+    if(f.dead||f.stun>0||busy(f)||f.meter<superCost(f)||screen!=='fight') return false;
     f.meter=0; f.guard=false; f.combo=0;
     study(other,26);
     var id=f.h.id;
@@ -8499,7 +8509,7 @@
 
   /* ---------- flight: Solaris really flies, everyone else leaps ---------- */
   function doLeap(f,other){
-    if(f.dead||f.stun>0||f.anim||f.leap||f.air>0||screen!=='fight') return false;
+    if(f.dead||f.stun>0||busy(f)||f.leap||f.air>0||screen!=='fight') return false;
     if(f.cd>0) return false;
     study(other,7);
     var flier=(f.h.id==='superman');
@@ -8573,7 +8583,7 @@
     if(kind==='kick'&&!other.dead&&(other.guard||Math.random()<(styleOf(f).throwChance||0))) kind='grab';
     /* the POWER button always does the biggest thing you can afford */
     if(kind==='power'&&canFinish(f,other)){
-      if(!f.anim&&!(f.stun>0)&&!(f.cd>0)&&doFinisher(f,other)){ f.buffer=null; return; }
+      if(!busy(f)&&!(f.stun>0)&&!(f.cd>0)&&doFinisher(f,other)){ f.buffer=null; return; }
       f.buffer={kind:'finisher',t:26}; return;
     }
     if(kind==='power') kind=f.meter>=superCost(f)?'superm':(f.meter>=deathCost(f)?'heavy':'strike');
@@ -8582,18 +8592,39 @@
       floatText(f.x,GY-200,kind==='superm'?'NOT CHARGED':'NEED '+deathCost(f)+'%','#9BD3FF');
       kind='strike';
     }
-    var busy=(f.anim||f.stun>0||f.cd>0);
-    if(!busy&&MOVES[kind](f,other)){ f.buffer=null; return; }
+    var isBusy=(busy(f)||f.stun>0||f.cd>0);
+    if(!isBusy&&MOVES[kind](f,other)){ f.buffer=null; return; }
     f.buffer={kind:kind,t:26};
   }
   function runBuffer(f,other){
     if(!f.buffer) return;
     f.buffer.t--;
     if(f.buffer.t<=0){ f.buffer=null; return; }
-    if(f.anim||f.stun>0||f.cd>0||f.dead) return;
+    if(busy(f)||f.stun>0||f.cd>0||f.dead) return;
     var kind=f.buffer.kind;
     if(!canAfford(f,kind)) kind='strike';
     if(MOVES[kind](f,other)) f.buffer=null;
+  }
+
+  /* ---------- cancels and spacing ----------
+     A move's last frames (the arms coming back to guard) are RECOVERY, and
+     any new move may cut them off. That is what lets a jab flow straight
+     into a straight into a kick instead of waiting out every animation. */
+  function busy(f){
+    var a=f.anim;
+    return !!(a&&!(a.frames[a.i]&&a.frames[a.i].rec));
+  }
+  /* knocked a long way back? the next attack steps in to close the gap so
+     it connects, instead of punching the air from across the platform */
+  function closeIn(f,other){
+    if(!other) return;
+    var gap=Math.abs((other.x+(other.kb||0))-(f.x+(f.kb||0)));
+    if(gap>235){
+      var step=Math.min(150,gap-215);
+      ghost(f,f.x+(f.kb||0));
+      var t=(f.kbT||0)+f.facing*step;
+      f.kbT=Math.max(70-f.x,Math.min(W-70-f.x,t));
+    }
   }
 
   /* ---------- weight and footwork ----------
@@ -8642,7 +8673,7 @@
     if(f.stun>0){ f.stun--; f.guard=false; return; }
     if(f.cd>0) f.cd--;
     f.aiT-=(f.chill>0?0.6:1);
-    if(f.anim) return;
+    if(busy(f)) return;
     /* guard when the player is winding up */
     var threat=other.anim&&other.anim.i===0;
     if(threat&&Math.random()<0.035+f.tier*0.012){ f.guard=true; return; }
@@ -8655,7 +8686,9 @@
     if(other.guard&&Math.random()<0.4){ doGrab(f,other); f.aiT=Math.round(80/f.spd); return; }
     if(Math.random()<0.24){ doKick(f,other); f.aiT=Math.round(62/f.spd); return; }
     doStrike(f,other);
-    f.aiT=Math.round((36+Math.random()*46)/f.spd);
+    /* mid-combo the AI keeps the string going, like a real player would */
+    if(f.combo<3&&Math.random()<0.65) f.aiT=Math.round((12+Math.random()*8)/f.spd);
+    else f.aiT=Math.round((36+Math.random()*46)/f.spd);
   }
 
   /* ================= loop ================= */
@@ -9448,7 +9481,7 @@
   /* ---------- What's New ----------
      Opens by itself the first time someone loads this version, and any
      time from the top bar. Remembered per browser. */
-  var NEW_VER='2026-10-a';
+  var NEW_VER='2026-10-b';
   function newSeen(){ try{ return localStorage.getItem('skyforge.seenNew')===NEW_VER; }catch(e){ return true; } }
   function markNewSeen(){ try{ localStorage.setItem('skyforge.seenNew',NEW_VER); }catch(e){} $('newBtn').classList.remove('unseen'); }
   function openNew(){
