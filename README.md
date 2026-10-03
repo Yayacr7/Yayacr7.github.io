@@ -131,9 +131,8 @@ five-hit sequence ends the fight. The computer opponents use it too.
 
 ### 45 new sports icons
 
-The 25 footballers and 20 basketball players have left the roster, at the
-owner's request. In their place come 45 icons from 14 other sports, so the
-roster stays at 287:
+45 icons from 14 other sports join the roster, which grows from 287 to 332.
+The footballers and basketball players stay.
 
 - **American football:** Mahomes, Kelce, Jerry Rice, Lamar Jackson, Barry Sanders.
 - **Ice hockey:** Ovechkin, Crosby, McDavid, Lemieux.
@@ -150,9 +149,7 @@ roster stays at 287:
 Each has a real-name search hit in Forge, a trait that fits, a super in their
 sport's style (gridiron ball, puck, tennis ball, baseball, cricket ball, golf
 ball, punch barrage, kick chain, slam, speed streak, water rain, meteor dive)
-and two kits. Saves made before the change are moved across automatically, so
-your selected champion and team squad still point at the right people; anyone
-who had a footballer or basketball player selected starts on Superman.
+and two kits.
 
 ### 104 champions fight differently
 
@@ -230,7 +227,7 @@ Every champion has a build: how tall and how broad they are.
     Sulley.
   - Kids and small characters are small: Dash, Russell, Mei, Violet, Gon,
     Astro Boy and 22, with Flik and Mike tiny.
-  - Tyson Fury and the Undertaker are the tallest of the icons; Bolt and the Flash are long and lean.
+  - Wembanyama is the tallest of all; Bolt and the Flash are long and lean.
 - **The other 212 are worked out from their stats,** so tough, slow hitters
   come out broader and fast ones slimmer.
 - Heights range from 0.72× to 1.28× normal, and widths from 0.84× to 1.40×.
