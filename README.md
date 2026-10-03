@@ -129,11 +129,19 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
-### Forge, the help robot
+### Forge, the talking help robot
 
 Tap **🤖 Help** at the top of the page to meet Forge, a retro arena robot
 built into the game. There is no AI service behind him, so he is free,
 private and works offline.
+
+- **He talks.** Forge reads every answer out loud with the browser's own
+  voice reader, in a robot-ish pitch, and his mouth moves while he speaks.
+  A Voice on/off button is remembered, and the game's Sound button mutes
+  him too.
+- **He listens.** On Chrome, Edge and Android, a 🎤 button lets you ask
+  with your voice. Where the browser can't do that, the button stays
+  hidden and typing still works.
 
 - Thirty ready-made questions about controls, moves, modes, champions,
   rewards and settings. Tap one to hear the answer.

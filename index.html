@@ -205,6 +205,10 @@
     border-radius:10px;padding:10px 12px;margin-bottom:10px}
   #forgeIn:focus{outline:none;border-color:var(--gold)}
   .forgechips{max-height:38vh;overflow:auto;margin-bottom:12px}
+  .forgerow{display:flex;gap:6px;flex-wrap:wrap;margin:-4px 0 10px}
+  .forgerow .fchip{border-color:#3CF0FF;color:#3CF0FF}
+  .forgerow .fchip.live{background:#FF5C4A;border-color:#FF5C4A;color:#fff;animation:pulse .9s ease-in-out infinite}
+  .forgerow .fchip[aria-pressed="false"]{border-color:var(--edge);color:var(--dim)}
   .fchip{text-transform:none;letter-spacing:0;font-size:.82rem;color:var(--ice)}
   .fchip:hover{border-color:var(--gold)}
   @media (max-width:540px){ .forgetop{gap:8px} #forgeFace{width:72px;height:80px} }
@@ -531,7 +535,7 @@
       <p class="gfxnow">Everything that's been added to Skyforge Champions. Tap a button to try it!</p>
       <div class="wngrid">
         <div class="wn"><span class="wi">🎮</span><div><b class="wt">Easier controls</b><p>Just four big buttons now: <b>Punch, Kick, Jump</b> and <b>Power</b>. Your champion even blocks on their own sometimes.</p></div></div>
-        <div class="wn"><span class="wi">🤖</span><div><b class="wt">Meet Forge, the help robot</b><p>Stuck? Tap <b>🤖 Help</b> at the top. Forge answers questions about <b>controls, moves, modes and champions</b>: tap a question, type a few words, or type a champion's name to hear all about them. Built right in, free, and works offline.</p><button class="btn ghost" data-go="forge">Ask Forge</button></div></div>
+        <div class="wn"><span class="wi">🤖</span><div><b class="wt">Meet Forge, the talking help robot</b><p>Stuck? Tap <b>🤖 Help</b> at the top. Forge <b>talks out loud</b> and answers questions about <b>controls, moves, modes and champions</b>: tap a question, type, or press <b>🎤</b> and ask with your voice (Chrome, Edge and Android). Type a champion's name to hear all about them. Built right in, free, and works offline.</p><button class="btn ghost" data-go="forge">Ask Forge</button></div></div>
         <div class="wn"><span class="wi">✨</span><div><b class="wt">A super move for every style</b><p>Super moves now match the character: athletes fire their <b>own ball</b> (football, basketball, tennis, baseball, cricket, puck, golf), boxers throw a <b>punch barrage</b>, martial artists a <b>kick chain</b>, wrestlers <b>lift and slam</b>, fliers <b>dive from the sky</b>, singers blast <b>sound waves</b>, elemental heroes unleash <b>their own power</b>, and MrBeast makes it <b>rain cash</b>.</p></div></div>
         <div class="wn"><span class="wi">📏</span><div><b class="wt">Every body is different</b><p>Giants like the <b>Hulk, Thanos and Doomsday</b> tower over everyone; kids like <b>Dash, Russell and Mei</b> are small; <b>Flik</b> is tiny; <b>Wembanyama</b> is the tallest of all. Taller fighters reach a little further.</p></div></div>
         <div class="wn"><span class="wi">🏃</span><div><b class="wt">Walk, dash and dodge!</b><p>Fighters <b>move</b> now. Get in range to land hits, step out to make them <b>MISS</b>. Double-tap to <b>dash</b> in or <b>DODGE</b> out. Pick <b>Easy, Normal or Hard</b> and how you move on a phone in ⚙️ Settings.</p><button class="btn ghost" data-go="gfx">Open settings</button></div></div>
@@ -569,6 +573,10 @@
       <div class="forgetop">
         <canvas id="forgeFace" width="100" height="110" aria-hidden="true"></canvas>
         <div class="forgebubble"><b>FORGE</b><p id="forgeText"></p><button class="btn ghost" id="forgeGo" hidden>Show me</button></div>
+      </div>
+      <div class="forgerow">
+        <button type="button" class="rarchip fchip" id="forgeMic" hidden>🎤 Talk to Forge</button>
+        <button type="button" class="rarchip fchip" id="forgeVoice" aria-pressed="true">🔊 Voice on</button>
       </div>
       <input id="forgeIn" type="search" autocomplete="off" placeholder="Type a question or a champion's name…" aria-label="Ask Forge">
       <div class="rarchips forgechips" id="forgeChips"></div>
@@ -10910,7 +10918,7 @@
   /* ---------- What's New ----------
      Opens by itself the first time someone loads this version, and any
      time from the top bar. Remembered per browser. */
-  var NEW_VER='2026-10-j';
+  var NEW_VER='2026-10-k';
   function newSeen(){ try{ return localStorage.getItem('skyforge.seenNew')===NEW_VER; }catch(e){ return true; } }
   function markNewSeen(){ try{ localStorage.setItem('skyforge.seenNew',NEW_VER); }catch(e){} $('newBtn').classList.remove('unseen'); }
   function openNew(){
@@ -11045,11 +11053,69 @@
     var sup=FORGE_HAND[h.id]?('a one-of-a-kind super, '+(h.superName||'their own move')):SUPER_LABEL[superKind(h).t].toLowerCase();
     return h.name+(h.cls?', '+h.cls:'')+': '+(/^[AEIOU]/.test(rr.n)?'an ':'a ')+rr.n+' '+st.n+', '+size+'. Power '+(h.pow||23)+', toughness '+(h.tough||108)+', speed '+(h.spd||1.1)+'. Super: '+sup+'.';
   }
+  /* Forge talks. The browser's own voice reader does the speaking, so it
+     costs nothing and needs no network; a robot-ish pitch keeps it in
+     character. The mouth moves for as long as he speaks. */
+  var forgeSpeaking=false, forgeVoiceOn=true, forgeRec=null;
+  try{ forgeVoiceOn=localStorage.getItem('skyforge.forgeVoice')!=='off'; }catch(e){}
+  function forgeCanSpeak(){ return !!(window.speechSynthesis&&typeof SpeechSynthesisUtterance!=='undefined'); }
+  function forgeHush(){
+    if(forgeSpeaking&&forgeCanSpeak()){ try{ window.speechSynthesis.cancel(); }catch(e){} }
+    forgeSpeaking=false;
+  }
+  function forgeSpeak(text){
+    forgeHush();
+    if(!forgeVoiceOn||muted||!forgeCanSpeak()) return false;
+    try{
+      var u=new SpeechSynthesisUtterance(text.replace(/[\u2600-\u27BF\u{1F300}-\u{1FAFF}]/gu,''));
+      u.rate=1.0; u.pitch=0.8; u.volume=1;
+      u.onstart=function(){ forgeSpeaking=true; };
+      u.onend=u.onerror=function(){ forgeSpeaking=false; };
+      forgeSpeaking=true;
+      window.speechSynthesis.speak(u);
+      return true;
+    }catch(e){ forgeSpeaking=false; return false; }
+  }
   function forgeSay(text,go,gl){
     $('forgeText').textContent=text;
     var b=$('forgeGo'); b.hidden=!go; if(go){ b.textContent=gl||'Show me'; b.setAttribute('data-go',go); }
     forgeTalk=22; tone(880,0.06,'square',0.025,1320); setTimeout(function(){ tone(1180,0.06,'square',0.02,980); },90);
+    forgeSpeak(text);
   }
+  function forgeVoiceUI(){
+    var b=$('forgeVoice'); b.textContent=forgeVoiceOn?'\uD83D\uDD0A Voice on':'\uD83D\uDD07 Voice off';
+    b.setAttribute('aria-pressed',String(forgeVoiceOn));
+  }
+  /* listening: Chrome, Edge and Android phones can turn speech into words
+     for free; where that is missing the microphone button stays hidden */
+  var ForgeSR=window.SpeechRecognition||window.webkitSpeechRecognition||null;
+  function forgeListen(){
+    if(!ForgeSR) return;
+    if(forgeRec){ try{ forgeRec.stop(); }catch(e){} return; }
+    forgeHush();
+    var r=new ForgeSR(); forgeRec=r;
+    r.lang='en-US'; r.interimResults=false; r.maxAlternatives=1;
+    var mic=$('forgeMic'); mic.classList.add('live'); mic.textContent='\uD83C\uDFA4 Listening\u2026';
+    r.onresult=function(e){
+      var t=e.results&&e.results[0]&&e.results[0][0]?e.results[0][0].transcript:'';
+      if(t){ $('forgeIn').value=t; forgeAsk(); }
+    };
+    r.onerror=function(e){
+      var why=e&&e.error;
+      if(why==='not-allowed'||why==='service-not-allowed') forgeSay('I need the microphone turned on for that, Champion! Typing works too.');
+      else if(why!=='aborted'&&why!=='no-speech') forgeSay('I could not hear that one. Try again, or type it!');
+    };
+    r.onend=function(){ forgeRec=null; mic.classList.remove('live'); mic.textContent='\uD83C\uDFA4 Talk to Forge'; };
+    try{ r.start(); tone(660,0.08,'triangle',0.03,990); }catch(e){ r.onend(); }
+  }
+  $('forgeMic').hidden=!ForgeSR;
+  $('forgeMic').addEventListener('click',forgeListen);
+  $('forgeVoice').addEventListener('click',function(){
+    forgeVoiceOn=!forgeVoiceOn; try{ localStorage.setItem('skyforge.forgeVoice',forgeVoiceOn?'on':'off'); }catch(e){}
+    forgeVoiceUI();
+    if(forgeVoiceOn) forgeSay('Voice on! I am Forge, ready to help.'); else forgeHush();
+  });
+  forgeVoiceUI();
   function forgeMatch(text){
     var ws=forgeWords(text); if(!ws.length) return FORGE_QA.slice();
     var sc=FORGE_QA.map(function(e){
@@ -11087,8 +11153,9 @@
     var open=forgeBlink>0?2:12;
     g.fillStyle='#7CF5D5'; g.fillRect(-20,-18-open/2,14,open); g.fillRect(6,-18-open/2,14,open);
     g.fillStyle='#FFD46B';
-    var mouth=forgeTalk>0?6+Math.abs(Math.sin(Date.now()/60))*8:4;
-    for(var i=-3;i<=3;i++) g.fillRect(i*7-2,8-mouth/2+(forgeTalk>0?Math.sin(Date.now()/50+i)*2:0),4,mouth);
+    var talking=forgeTalk>0||forgeSpeaking;
+    var mouth=talking?6+Math.abs(Math.sin(Date.now()/60))*8:4;
+    for(var i=-3;i<=3;i++) g.fillRect(i*7-2,8-mouth/2+(talking?Math.sin(Date.now()/50+i)*2:0),4,mouth);
     g.fillStyle='#2B3E57'; g.fillRect(-42,-24,6,30); g.fillRect(36,-24,6,30);
     g.restore();
     if(forgeTalk>0) forgeTalk--;
@@ -11096,11 +11163,17 @@
   }
   function openForge(){
     $('helpPanel').hidden=false;
-    if(!$('forgeChips').children.length){ forgeChips(FORGE_QA); forgeSay('Hi, Champion! I am Forge. Tap a question, or type a few words or a champion’s name.'); }
+    if(!$('forgeChips').children.length) forgeChips(FORGE_QA);
+    forgeSay(ForgeSR?'Hi, Champion! I am Forge. Tap a question, type, or press the microphone and ask me out loud.'
+                    :'Hi, Champion! I am Forge. Tap a question, or type a few words or a champion\u2019s name.');
     if(!forgeTimer) forgeTimer=setInterval(forgeDraw,70);
     forgeDraw();
   }
-  function closeForge(){ $('helpPanel').hidden=true; if(forgeTimer){ clearInterval(forgeTimer); forgeTimer=null; } }
+  function closeForge(){
+    $('helpPanel').hidden=true; forgeHush();
+    if(forgeRec){ try{ forgeRec.stop(); }catch(e){} }
+    if(forgeTimer){ clearInterval(forgeTimer); forgeTimer=null; }
+  }
   $('helpBtn').addEventListener('click',openForge);
   $('forgeClose').addEventListener('click',closeForge);
   $('helpPanel').addEventListener('click',function(e){ if(e.target===$('helpPanel')) closeForge(); });
