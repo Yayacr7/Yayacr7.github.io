@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check Your Work</title>
+<meta name="description" content="Quizzes and calculation drills on negotiation and finance. Every answer explains the reasoning.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="brand" href="./">Business Basics</a>
+  <nav>
+    <a href="./">Home</a>
+    <a href="negotiation.html">Negotiation</a>
+    <a href="finance.html">Finance</a>
+    <a href="check.html" aria-current="page">Check your work</a>
+    <a href="prompts.html">AI prompts</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <h1>Check your work</h1>
+  <p class="lead">Pick a set. Answer before you peek. Every answer, right or wrong, shows the reasoning. Your best score is saved in this browser.</p>
+
+  <div class="tabs" id="quiz-tabs" role="tablist"></div>
+  <p id="quiz-desc" class="lead"></p>
+  <div id="quiz"></div>
+
+  <div class="card">
+    <h3>Want to check your own work, not ours?</h3>
+    <p>Paste your answer or your plan into an AI with the <a href="prompts.html#checker">Work Checker prompt</a>. It grades it, shows the error, and doesn't just hand you the answer.</p>
+  </div>
+</main>
+
+<footer><div class="wrap">Business Basics · Education only, not financial advice.</div></footer>
+
+<script>
+window.QUIZZES = [
+  {
+    id: 'negotiation',
+    title: 'Negotiation',
+    desc: 'BATNA, ZOPA, anchoring, interests and concessions.',
+    questions: [
+      { q: 'What does BATNA stand for, in plain terms?',
+        options: ['The best price you can get', 'What you will do if this deal falls through', 'The first offer on the table', 'The other side\'s budget'],
+        answer: 1,
+        why: 'BATNA is your Best Alternative To a Negotiated Agreement: your real plan B. It sets your leverage and your walk-away price.' },
+      { q: 'You want to improve your negotiating power before a salary talk. What usually helps most?',
+        options: ['Practicing a firmer handshake', 'Getting a competing offer', 'Asking for a very high number with no reason', 'Agreeing quickly to build goodwill'],
+        answer: 1,
+        why: 'Power comes from your alternative. A competing offer improves your BATNA, which raises the point at which you can credibly walk away.' },
+      { q: 'Seller will accept no less than $500. Buyer will pay up to $450. What is the ZOPA?',
+        options: ['$450 to $500', '$475', 'There is none', '$0 to $500'],
+        answer: 2,
+        why: 'The ZOPA is the overlap of the walk-away points. The buyer\'s max is below the seller\'s min, so no price works for both. To get a deal, something other than price has to change (terms, extras, or someone\'s BATNA).' },
+      { q: 'You have no idea what the market rate is. Should you name the first number?',
+        options: ['Yes, always go first', 'Usually better to let them go first and gather information', 'Go first with a very low number', 'It never matters'],
+        answer: 1,
+        why: 'Anchoring is powerful when you know the market. Without that information you risk anchoring far below what they would have paid. Ask questions and let them open.' },
+      { q: '"I need $90,000" is a...',
+        options: ['Interest', 'Position', 'BATNA', 'Concession'],
+        answer: 1,
+        why: 'It\'s a position: what they say they want. The interest is why (rent, fairness, career growth). Interests open up more ways to agree.' },
+      { q: 'Your concessions went $3,000, then $3,000, then $3,000. What does that signal?',
+        options: ['You are almost at your limit', 'There is probably more room', 'You are being fair', 'Nothing'],
+        answer: 1,
+        why: 'Equal steps suggest you can keep going. Shrinking steps ($3,000, $1,500, $500) signal you\'re approaching your limit.' },
+      { q: 'Which is the best way to give something up?',
+        options: ['"Fine, I\'ll lower it."', '"If you can sign this week, I can lower it by $500."', '"Let\'s just split the difference."', '"Whatever you think is fair."'],
+        answer: 1,
+        why: 'Trade, don\'t concede: tie every move to a move from them. Splitting the difference rewards whoever anchored more aggressively.' },
+      { q: 'The deal on the table is worse than your BATNA. What should you do?',
+        options: ['Take it to avoid conflict', 'Walk away politely', 'Reveal your walk-away price', 'Keep negotiating forever'],
+        answer: 1,
+        why: 'By definition your alternative is better. Taking a worse deal is a loss. Walk away politely; the door may reopen.' },
+      { q: 'Seller\'s minimum is $18,000 and buyer\'s maximum is $21,500. How wide is the ZOPA in dollars?',
+        numeric: true, answer: 3500, tolerance: 0, unit: '$',
+        why: 'ZOPA = buyer\'s max − seller\'s min = $21,500 − $18,000 = $3,500. Every price in that range beats both walk-away points.' }
+    ]
+  },
+  {
+    id: 'finance-personal',
+    title: 'Personal finance',
+    desc: 'Budgeting, interest, debt, investing and inflation.',
+    questions: [
+      { q: 'What is the main purpose of an emergency fund?',
+        options: ['To earn high returns', 'To avoid high-interest debt when something goes wrong', 'To pay for holidays', 'To buy stocks during crashes'],
+        answer: 1,
+        why: 'It\'s insurance. Without it, a surprise bill goes on a credit card at 20%+ interest. Its job is to be there, not to grow.' },
+      { q: 'You have $2,000 spare, a credit card at 22% APR, and an investment you expect to return 8%. Generally, which is the better use?',
+        options: ['Invest it', 'Pay down the card', 'Split it evenly', 'Keep it in checking'],
+        answer: 1,
+        why: 'Paying off 22% debt is a guaranteed 22% return. An 8% expected return is uncertain and lower. Math wins here.' },
+      { q: 'Using the Rule of 72, roughly how long does money take to double at 9% a year?',
+        options: ['4 years', '8 years', '12 years', '18 years'],
+        answer: 1,
+        why: '72 ÷ 9 = 8 years. A handy approximation for rates around 4% to 12%.' },
+      { q: 'Why does a 1% yearly fund fee matter so much over 30 years?',
+        options: ['It doesn\'t, 1% is tiny', 'Fees compound, shrinking the ending balance by roughly a quarter', 'Fees are only charged once', 'Higher fees mean better performance'],
+        answer: 1,
+        why: 'You lose 1% of a growing balance every year, plus the growth that money would have earned. At 7% vs 6% over 30 years, you end up with about 25% less.' },
+      { q: 'Your savings earn 2% while inflation is 4%. Your real return is about...',
+        options: ['+6%', '+2%', '−2%', '0%'],
+        answer: 2,
+        why: 'Real return ≈ nominal return − inflation = 2% − 4% = −2%. Your balance grows but buys less each year.' },
+      { q: 'What does diversification protect you from?',
+        options: ['All losses', 'One company or sector sinking your whole portfolio', 'Inflation', 'Taxes'],
+        answer: 1,
+        why: 'Spreading money across many investments limits damage from any single one. It doesn\'t prevent losses when the whole market falls.' },
+      { q: 'You need the money for a house deposit in 18 months. Where does it generally belong?',
+        options: ['All in stocks for growth', 'Somewhere stable like a high-yield savings account', 'Crypto', 'A single promising company'],
+        answer: 1,
+        why: 'Short time horizon means you can\'t wait out a crash. Stability matters more than return for money you need soon.' },
+      { q: 'You invest $5,000 at 6% a year, compounded yearly, for 3 years. What is it worth? (round to the nearest dollar)',
+        numeric: true, answer: 5955.08, tolerance: 1, unit: '$',
+        why: '5,000 × 1.06³ = 5,000 × 1.191016 = $5,955.08. Note this is more than simple interest (5,000 + 3 × 300 = $5,900) because you earned interest on interest.' }
+    ]
+  },
+  {
+    id: 'finance-business',
+    title: 'Business finance',
+    desc: 'Margins, cash flow, statements, break-even and unit economics.',
+    questions: [
+      { q: 'Revenue $80,000, cost of goods sold $30,000. What is the gross margin, in %?',
+        numeric: true, answer: 62.5, tolerance: 0.1, unit: '%',
+        why: 'Gross profit = 80,000 − 30,000 = 50,000. Gross margin = 50,000 ÷ 80,000 = 62.5%.' },
+      { q: 'You buy a product for $50 and sell it for $80. What is your margin, in %?',
+        numeric: true, answer: 37.5, tolerance: 0.1, unit: '%',
+        why: 'Margin = profit ÷ price = 30 ÷ 80 = 37.5%. (The markup is 30 ÷ 50 = 60%. Margin divides by the price, markup by the cost.)' },
+      { q: 'Fixed costs $9,000 a month. Price $40, variable cost $25 per unit. How many units to break even?',
+        numeric: true, answer: 600, tolerance: 0, unit: 'units',
+        why: 'Contribution margin = 40 − 25 = $15 per unit. Break-even = 9,000 ÷ 15 = 600 units.' },
+      { q: 'A company reports a profit but runs out of cash. How is that possible?',
+        options: ['It isn\'t possible', 'Customers haven\'t paid yet, while bills are due now', 'Profit always equals cash', 'Only if someone committed fraud'],
+        answer: 1,
+        why: 'Profit counts sales when they\'re made. Cash arrives when customers pay. Slow-paying customers, big inventory purchases, or loan repayments can drain cash while profit looks fine.' },
+      { q: 'Which statement is a snapshot of what a business owns and owes on one date?',
+        options: ['Income statement', 'Balance sheet', 'Cash flow statement', 'Budget'],
+        answer: 1,
+        why: 'The balance sheet: Assets = Liabilities + Equity, at a single point in time. The other two cover a period.' },
+      { q: 'Each customer brings $20 gross profit a month and stays 15 months. You spend $100 to win each one. What is LTV ÷ CAC?',
+        numeric: true, answer: 3, tolerance: 0.01, unit: '×',
+        why: 'LTV = 20 × 15 = $300. LTV ÷ CAC = 300 ÷ 100 = 3. That meets the common 3× rule of thumb.' },
+      { q: 'How much is $1,210 received in 2 years worth today, if your alternative earns 10% a year? (nearest dollar)',
+        numeric: true, answer: 1000, tolerance: 1, unit: '$',
+        why: 'Present value = 1,210 ÷ 1.10² = 1,210 ÷ 1.21 = $1,000.' },
+      { q: 'You spend $4,000 on equipment that produces $5,000 of extra profit. What is the ROI, in %?',
+        numeric: true, answer: 25, tolerance: 0.1, unit: '%',
+        why: 'ROI = (gain − cost) ÷ cost = (5,000 − 4,000) ÷ 4,000 = 25%. Remember ROI ignores how long it took.' },
+      { q: 'A project has a negative NPV. What does that mean?',
+        options: ['It loses money in accounting terms', 'Your money would do better in your next-best alternative', 'It will never make a profit', 'It has no risk'],
+        answer: 1,
+        why: 'NPV compares the project to your alternative return. Negative NPV can still be profitable in dollars, just not enough to beat what else you could do with the money.' }
+    ]
+  }
+];
+</script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Prompt Library</title>
+<meta name="description" content="Copy-paste system prompts and master prompts for learning negotiation and finance with an AI assistant.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="brand" href="./">Business Basics</a>
+  <nav>
+    <a href="./">Home</a>
+    <a href="negotiation.html">Negotiation</a>
+    <a href="finance.html">Finance</a>
+    <a href="check.html">Check your work</a>
+    <a href="prompts.html" aria-current="page">AI prompts</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <h1>AI prompt library</h1>
+  <p class="lead">Copy-paste prompts that turn an AI assistant into a tutor, a practice partner, or a critic that tells you the truth.</p>
+
+  <div class="card">
+    <h3>System prompt vs master prompt</h3>
+    <p><strong>System prompt:</strong> sets how the AI behaves for the whole conversation. Paste it into custom instructions, a project's instructions, or as your very first message.</p>
+    <p><strong>Master prompt:</strong> one detailed, reusable request for a specific job. Fill in the <code>[BRACKETS]</code> and send it.</p>
+    <p style="margin-bottom:0"><strong>Honest limit:</strong> no prompt makes an AI always right. It can still get numbers and facts wrong, so check any math with the <a href="finance.html">calculators</a> and verify anything you'll act on.</p>
+  </div>
+
+  <h2>System prompts</h2>
+
+  <div class="card" id="critic">
+    <div class="prompt-head"><h3>Honest Critic</h3><button class="secondary" data-copy="p-critic">Copy</button></div>
+    <p class="tag">Use for: any idea, plan or decision you want stress-tested</p>
+<pre id="p-critic">Be direct and honest, not agreeable. Your job is to make my thinking better, not to make me feel good.
+
+- Challenge my assumptions when they're weak, and name the specific assumption.
+- If I'm wrong, say "You're wrong" and explain why, with the reasoning or evidence.
+- Rate ideas honestly out of 10, and say what would raise the score by 2 points.
+- If you're uncertain, say so and say how confident you are, instead of guessing confidently.
+- Don't pad answers with praise or caveats. Lead with the most important point.
+- If something I said is right, say so briefly and move on. Don't invent disagreement.</pre>
+  </div>
+
+  <div class="card" id="tutor">
+    <div class="prompt-head"><h3>Business Tutor</h3><button class="secondary" data-copy="p-tutor">Copy</button></div>
+    <p class="tag">Use for: learning any finance or business concept from scratch</p>
+<pre id="p-tutor">You are a patient business and finance tutor for a beginner. Teach like this:
+
+1. Explain one concept at a time in plain English. Define every term the first time you use it.
+2. Give one concrete, everyday example with real numbers.
+3. Then ask me one question to check I understood. Wait for my answer.
+4. If I'm wrong, don't just give the answer. Point to where my reasoning broke and let me try again once.
+5. Keep each reply under 200 words unless I ask for more.
+6. When I've got 3 concepts right in a row, suggest the next concept to learn and why it builds on what I know.
+
+If a question depends on my country, taxes or personal situation, say so instead of assuming.</pre>
+  </div>
+
+  <div class="card" id="sparring">
+    <div class="prompt-head"><h3>Negotiation Sparring Partner</h3><button class="secondary" data-copy="p-spar">Copy</button></div>
+    <p class="tag">Use for: rehearsing a real negotiation before you have it</p>
+<pre id="p-spar">You are my negotiation sparring partner. We'll role-play a negotiation, then review it.
+
+Setup: I'll describe the situation. Ask me for anything missing: who you're playing, what they want, what I want, and roughly how tough they are.
+
+During the role-play:
+- Stay fully in character. Be realistic, not easy. Use common tactics: anchoring, "this is our final offer", silence, deadlines, asking for concessions without giving any.
+- Keep each turn short, like a real conversation.
+- Don't coach me during the role-play.
+
+When I type "REVIEW", step out of character and give me:
+1. A score out of 10 and one sentence on why.
+2. The moment I gave away the most value, quoted.
+3. Did I reveal my walk-away price or concede without trading? Quote it.
+4. Two better lines I could have used, word for word.
+5. What the other side's likely walk-away point was, and how close I got to it.</pre>
+  </div>
+
+  <div class="card" id="checker">
+    <div class="prompt-head"><h3>Work Checker</h3><button class="secondary" data-copy="p-check">Copy</button></div>
+    <p class="tag">Use for: checking your own calculations, answers or written work</p>
+<pre id="p-check">You check my work. I'll paste a problem and my answer or working.
+
+1. Say first, in one line: Correct, Partly correct, or Incorrect.
+2. If not fully correct, show exactly which step went wrong and why. Quote my step.
+3. Don't give me the final answer straight away. Give me a hint and let me fix it. Only give the full solution if I ask, or after my second attempt.
+4. Recompute any numbers step by step. If your own calculation is uncertain, say so.
+5. End with the one concept I should review, in one line.</pre>
+  </div>
+
+  <h2>Master prompts</h2>
+
+  <div class="card" id="plan">
+    <div class="prompt-head"><h3>30-day learning plan</h3><button class="secondary" data-copy="p-plan">Copy</button></div>
+<pre id="p-plan">Build me a 30-day plan to learn [TOPIC, e.g. "personal finance" or "negotiation"].
+
+About me:
+- Current level: [BEGINNER / SOME BASICS / INTERMEDIATE]
+- Time available: [MINUTES PER DAY]
+- My goal: [WHAT I WANT TO BE ABLE TO DO AT THE END, e.g. "negotiate my next salary" or "read a company's financial statements"]
+
+Requirements:
+- Order the topics so each one builds on the last.
+- Each day: one concept, one short exercise with a right answer I can check, and a 1-line explanation of why it matters.
+- Every 7th day: a review quiz of 5 questions with answers at the bottom.
+- Point out which parts of my goal are unrealistic for 30 days, if any.
+- Format as a table: Day | Concept | Exercise | Why it matters.</pre>
+  </div>
+
+  <div class="card" id="deal">
+    <div class="prompt-head"><h3>Negotiation prep</h3><button class="secondary" data-copy="p-deal">Copy</button></div>
+<pre id="p-deal">Help me prepare for a negotiation. Be direct and challenge my assumptions.
+
+Situation: [WHAT'S BEING NEGOTIATED, e.g. salary, rent, a supplier contract]
+The other side: [WHO THEY ARE, WHAT YOU KNOW ABOUT THEIR PRESSURES OR DEADLINES]
+What I want: [MY TARGET]
+My alternative if there's no deal: [MY BATNA]
+The worst deal I'd accept: [MY WALK-AWAY]
+
+Give me:
+1. Whether my BATNA is actually strong, and how to make it stronger before the meeting.
+2. Your best estimate of their BATNA and walk-away point, with your reasoning and how confident you are.
+3. Whether my target is too low, too high, or right, and why.
+4. My opening line, word for word, including the reason I'll give for my number.
+5. 3 things I could trade that cost me little but they'd value.
+6. The 3 toughest things they might say, and a strong reply to each.
+7. The one mistake I'm most likely to make, given what I've told you.</pre>
+  </div>
+
+  <div class="card" id="idea">
+    <div class="prompt-head"><h3>Business idea stress test</h3><button class="secondary" data-copy="p-idea">Copy</button></div>
+<pre id="p-idea">Stress-test my business idea. Be honest, not encouraging.
+
+The idea: [DESCRIBE IT IN 2-3 SENTENCES]
+Customer: [WHO PAYS]
+Price: [WHAT THEY PAY]
+Costs I know: [FIXED COSTS PER MONTH, VARIABLE COST PER UNIT]
+How I'll get customers: [CHANNEL, AND COST PER CUSTOMER IF KNOWN]
+
+Give me:
+1. A rating out of 10 and the single biggest reason it's not higher.
+2. Break-even: units per month and revenue, with the working shown.
+3. Unit economics: rough LTV and CAC, and whether LTV is at least 3x CAC. Flag every number you had to assume.
+4. The 3 assumptions most likely to be wrong, ranked.
+5. The cheapest test I could run in 2 weeks to check the riskiest assumption.
+6. Who already solves this problem, and why a customer would switch.</pre>
+  </div>
+
+  <div class="card" id="statements">
+    <div class="prompt-head"><h3>Explain a company's numbers</h3><button class="secondary" data-copy="p-fin">Copy</button></div>
+<pre id="p-fin">Explain this company's financials to me like I'm a smart beginner.
+
+[PASTE THE INCOME STATEMENT, BALANCE SHEET AND/OR CASH FLOW STATEMENT, OR KEY NUMBERS]
+
+1. In 3 sentences: is this business healthy, and how sure can you be from this data?
+2. Calculate gross margin, operating margin and net margin. Show the working.
+3. Compare profit with operating cash flow. If they differ a lot, explain why in plain English.
+4. Name the 2 numbers that worry you most and the 2 that look strongest.
+5. List 3 questions I should ask management or look up next.
+Define every financial term the first time you use it. Don't invent numbers that aren't in what I pasted.</pre>
+  </div>
+</main>
+
+<footer><div class="wrap">Business Basics · Prompts are free to copy and adapt.</div></footer>
+<script src="app.js"></script>
+</body>
+</html>
