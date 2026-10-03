@@ -129,15 +129,33 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
+### Credits are worth ten times more
+
+Measured before the change: a level-one champion mashing buttons earned
+12,463 credits in four fights, so every price in the game was trivial and a
+Mythic in the new shop was about ten minutes of play. Every credit payout
+now runs through one function, `creds()`, at a tenth of the old rate: fight
+rewards, chests, trophies, missions, the daily bonus and challenge, every
+mode's purse, online wins. Prices stay where they were, so a costume is a
+real decision, a Legendary is an afternoon, an Ultimate is a week or two.
+
+- Experience is untouched, so levelling is as fast as it was.
+- Balances earned before the change are converted once, to a tenth, and
+  never below the 600 a fresh save starts with.
+- The shop no longer sells the six Mythics: they can only be won in the
+  Trial of Three, so the hardest thing in the game keeps its exclusive
+  prize. The shop sells the 25 Legendary, Majestic and Ultimate champions.
+- The same four fights now pay 1,285 credits, most of it first-time trophy
+  and mission money.
+
 ### The Champion Shop
 
-A new 🛒 **Shop** tab. The 31 Legendary, Majestic, Ultimate and Mythic
+A new 🛒 **Shop** tab. The 25 Legendary, Majestic and Ultimate
 champions can be bought with the credits you earn by fighting, as a second
 road beside the Trial of Three (which still wins them for free).
 
-- Prices: Legendary 5,000, Majestic 12,000, Ultimate 25,000, Mythic 60,000.
-  A good player earns roughly 10,000 credits a day, so the first comes within
-  a day or two and the rarest within about a week.
+- Prices: Legendary 5,000, Majestic 12,000, Ultimate 25,000. The six Mythics
+  are not for sale; only the Trial of Three wins them.
 - Each champion sits in a wrapped gift until bought; tap the box to peek
   inside. Buying unwraps it with confetti, and a Pick button takes you
   straight to them in the picker.
