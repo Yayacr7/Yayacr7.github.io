@@ -129,6 +129,24 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
+### Signature super moves
+
+When the power meter is full, each champion's Super Move now fits who they
+are. The style shows in the champion's details.
+
+- **Athletes** fire a power shot with their own sport's ball: football,
+  basketball, tennis, baseball, cricket, hockey puck or golf ball.
+- **Boxers** throw a punch barrage; **martial artists** a kick chain.
+- **Wrestlers and heavyweights** lift and slam.
+- **Teleporters** vanish and strike from behind; **fliers** dive like a
+  meteor; **speedsters** race through in a streak.
+- **Singers** blast sound waves, and MrBeast makes it rain cash.
+- **Elemental heroes** unleash their own power (fire, ice, lightning and
+  more).
+- Superman, Batman, Wonder Woman, The Flash, Lumen and Peacemaker keep
+  their one-of-a-kind supers.
+- Supers show up for both players in online matches.
+
 ### Body sizes
 
 Every champion has a build: how tall and how broad they are.

@@ -514,6 +514,7 @@
       <p class="gfxnow">Everything that's been added to Skyforge Champions. Tap a button to try it!</p>
       <div class="wngrid">
         <div class="wn"><span class="wi">🎮</span><div><b class="wt">Easier controls</b><p>Just four big buttons now: <b>Punch, Kick, Jump</b> and <b>Power</b>. Your champion even blocks on their own sometimes.</p></div></div>
+        <div class="wn"><span class="wi">✨</span><div><b class="wt">A super move for every style</b><p>Super moves now match the character: athletes fire their <b>own ball</b> (football, basketball, tennis, baseball, cricket, puck, golf), boxers throw a <b>punch barrage</b>, martial artists a <b>kick chain</b>, wrestlers <b>lift and slam</b>, fliers <b>dive from the sky</b>, singers blast <b>sound waves</b>, elemental heroes unleash <b>their own power</b>, and MrBeast makes it <b>rain cash</b>.</p></div></div>
         <div class="wn"><span class="wi">📏</span><div><b class="wt">Every body is different</b><p>Giants like the <b>Hulk, Thanos and Doomsday</b> tower over everyone; kids like <b>Dash, Russell and Mei</b> are small; <b>Flik</b> is tiny; <b>Wembanyama</b> is the tallest of all. Taller fighters reach a little further.</p></div></div>
         <div class="wn"><span class="wi">🏃</span><div><b class="wt">Walk, dash and dodge!</b><p>Fighters <b>move</b> now. Get in range to land hits, step out to make them <b>MISS</b>. Double-tap to <b>dash</b> in or <b>DODGE</b> out. Pick <b>Easy, Normal or Hard</b> and how you move on a phone in ⚙️ Settings.</p><button class="btn ghost" data-go="gfx">Open settings</button></div></div>
         <div class="wn"><span class="wi">🌐</span><div><b class="wt">Fight your friends!</b><p><b>Online:</b> make a room, send the 4-letter code, and fight a friend on their own phone or computer. <b>2 players, 1 device:</b> share the keyboard, or split the phone screen. Turn on <b>Fair fight</b> to make it pure skill.</p><button class="btn ghost" data-go="online">Play a friend</button></div></div>
@@ -1055,7 +1056,7 @@
           <li>Jump, then Power: <b>Flying Knee</b> (25% meter). Knocks them down.</li></ul></div>
         <div><h4>⚡ Power</h4><ul>
           <li>Half meter: <b>Punch of Death</b>. Knocks them down.</li>
-          <li>Full meter: your champion's <b>Super Move</b>.</li></ul></div>
+          <li>Full meter: your champion's <b>Super Move</b>. Each one fits who they are: a power shot with their sport's ball, a punch barrage, a kick chain, a slam, a meteor dive, sound waves, their own element, and more. The style shows in the champion's details.</li></ul></div>
         <div><h4>🛡️ Defence</h4><ul>
           <li>Your champion <b>blocks on their own</b> some of the time. Hold <b>S</b> to block yourself.</li>
           <li>Block right as the hit arrives for a <b>PARRY</b>: no damage, and they are left wide open.</li>
@@ -8441,6 +8442,7 @@
   }
   function burst(x,y,col,big){ if(RETRO()&&col==='#FFFFFF') col=NEON_C; fx.push({k:'burst',x:x,y:y,c:col,life:big?16:11,max:big?16:11,big:!!big}); }
   function drawNewFx(e,k){
+    if(drawSuperFx(e,k)) return true;
     if(e.k==='swoosh'){
       ctx.globalCompositeOperation='lighter';
       ctx.globalAlpha=(1-k)*0.85;
@@ -8782,7 +8784,7 @@
     if(net.role==='local'){ $('pad2').hidden=false; $('fightbar').classList.add('p1left'); }
   }
   /* ---- the host's side: what goes over the wire every frame ---- */
-  var _fxPush=fx.push, FX_NET={impact:1,swoosh:1,burst:1};
+  var _fxPush=fx.push, FX_NET={impact:1,swoosh:1,burst:1,ball:1,notes:1,rain:1,streak:1,shock:1,smoke:1};
   fx.push=function(o){
     var r=_fxPush.call(fx,o);
     if(NETREC()&&o&&FX_NET[o.k]){
@@ -9059,6 +9061,237 @@
   function moveUI(){
     var show=(screen==='fight')&&gfx.move==='buttons'&&!(net&&net.role==='local')&&!movie;
     $('mvpad').hidden=!show;
+  }
+
+  /* ================= signature supers for everyone =================
+     Six champions have a super built entirely by hand. Everyone else gets
+     one of eleven styles that fits who they are: their own element if they
+     have one, their sport's actual ball if they are an athlete, a punch
+     barrage for boxers, a kick chain for martial artists, a slam for
+     wrestlers, a vanish for speedsters, a dive from the sky for fliers. */
+  var SPORT_OF={football:'football',basketball:'basketball',tennis:'tennis',baseball:'baseball',
+    cricket:'cricket','ice hockey':'puck',golf:'golf','american football':'gridiron'};
+  function superKind(h){
+    if(!h) return {t:'beam'};
+    if(h._sk) return h._sk;
+    var a=h.athlete||'', tr=h.trait||{}, st=styleOf(h), k;
+    if(SPORT_OF[a]) k={t:'ball',sport:SPORT_OF[a]};
+    else if(a==='boxing') k={t:'barrage'};
+    else if(a==='martial arts') k={t:'kicks'};
+    else if(a==='wrestling') k={t:'slam'};
+    else if(a==='track'||a==='racing') k={t:'racer'};
+    else if(a==='gymnastics') k={t:'meteor'};
+    else if(a==='music') k={t:'music'};
+    else if(h.id==='mrbeast') k={t:'rain',glyph:'$',c:'#4ADE80'};
+    else if(h.id==='newton') k={t:'rain',glyph:'🍎',c:'#E8402A'};
+    else if(h.id==='einstein') k={t:'rain',glyph:'E=mc²',c:'#FFE08A'};
+    else if(h.id==='cleopatra') k={t:'rain',glyph:'☥',c:'#E8C26A'};
+    else if(h.id==='davinci'||h.id==='speed') k={t:'meteor'};
+    else if(h.id==='keanu') k={t:'teleport'};
+    else if(tr.kind==='auto'&&tr.fx&&tr.fx!=='heal') k={t:'element',fx:tr.fx};
+    else if(tr.kind==='airmaster') k={t:'meteor'};
+    else if(st.n==='Boxer'||st.n==='Brawler') k={t:'barrage'};
+    else if(st.n==='Kickboxer'||st.n==='Martial Artist') k={t:'kicks'};
+    else if(st.n==='Wrestler'||st.n==='Powerhouse') k={t:'slam'};
+    else if(st.n==='Speedster') k={t:'teleport'};
+    else k={t:'beam'};
+    h._sk=k; return k;
+  }
+  var SUPER_LABEL={ball:'Power shot',barrage:'Punch barrage',kicks:'Kick chain',slam:'Lift and slam',
+    teleport:'Vanishing strikes',meteor:'Meteor dive',racer:'Speed streak',music:'Sound waves',
+    rain:'Sky rain',element:'Elemental blast',beam:'Beam cannon'};
+  function superPlay(f,other){
+    var K=superKind(f.base||f.h), col=f.h.trim||'#FFD46B';
+    function hit(m,extra){ return function(){ hitLand(f,other,m,'special'); if(extra) extra(); }; }
+    function px(g){ return g.x+(g.kb||0); }
+    var fr;
+    if(K.t==='ball'){
+      var throwPose=(K.sport==='football')?POSE.kick:((K.sport==='puck'||K.sport==='golf')?POSE.bodyhook:POSE.straight);
+      fr=[
+        {p:K.sport==='football'?POSE.kickwind:POSE.bigwind,d:14,hit:function(){ tone(420,0.25,'triangle',0.04,800); }},
+        {p:throwPose,d:9,hit:function(){
+          var sy=GY-(K.sport==='football'||K.sport==='puck'||K.sport==='golf'?30:190)*bodyH(f);
+          fx.push({k:'ball',sx:px(f)+f.facing*50,sy:sy,tx:px(other),ty:GY-140*bodyH(other),sport:K.sport,life:15,max:15});
+          tone(880,0.12,'square',0.04,1500); thud(0.15,0.08);
+        }},
+        {p:throwPose,d:15,hit:hit(3.0,function(){
+          other.vAir=Math.max(other.vAir||0,7);
+          fx.push({k:'impact',x:px(other),y:GY-140*bodyH(other),life:26,max:26,c:'#FFFFFF'});
+          shake=Math.max(shake,24); impact(0.14);
+        })},
+        {p:POSE.idle,d:14}];
+    }else if(K.t==='barrage'){
+      fr=[{p:POSE.guard,d:10,hit:function(){ tone(260,0.3,'square',0.04,520); }}];
+      for(var i=0;i<6;i++) fr.push({p:i%2?POSE.straight:POSE.jab,d:5,hit:hit(0.33)});
+      fr.push({p:POSE.bigwind,d:8},{p:POSE.upper,d:9,hit:hit(1.4,function(){
+        other.vAir=Math.max(other.vAir||0,11); shake=Math.max(shake,22);
+        fx.push({k:'impact',x:px(other),y:GY-190*bodyH(other),life:24,max:24,c:col});
+      })},{p:POSE.idle,d:16});
+    }else if(K.t==='kicks'){
+      fr=[{p:POSE.kickwind,d:8},
+        {p:POSE.roundhouse,d:7,hit:hit(0.7)},
+        {p:POSE.spinkick,d:7,hit:hit(0.7)},
+        {p:POSE.axeup,d:6},
+        {p:POSE.axedown,d:7,hit:hit(0.8)},
+        {p:POSE.flykick,d:10,hit:hit(1.2,function(){
+          other.vAir=Math.max(other.vAir||0,8); shake=Math.max(shake,22);
+          fx.push({k:'impact',x:px(other),y:GY-110*bodyH(other),life:24,max:24,c:col});
+        })},
+        {p:POSE.idle,d:14}];
+    }else if(K.t==='slam'){
+      fr=[{p:POSE.grab,d:10,hit:hit(0.8,function(){
+          other.vAir=13; other.stun=Math.max(other.stun,80);
+          play(other,[{p:POSE.launched,d:10},{p:POSE.launched,d:24},{p:POSE.down,d:16},{p:POSE.getup,d:14},{p:POSE.idle,d:10}]);
+          tone(200,0.3,'sawtooth',0.04,500);
+        })},
+        {p:POSE.bigwind,d:18},
+        {p:POSE.smash,d:10,hit:hit(2.6,function(){
+          fx.push({k:'shock',x:px(other),y:GY-30,life:52,max:52});
+          shake=Math.max(shake,28); impact(0.16); thud(0.5,0.18);
+        })},
+        {p:POSE.idle,d:16}];
+    }else if(K.t==='teleport'){
+      fr=[{p:POSE.guard,d:10,hit:function(){ fx.push({k:'smoke',x:px(f),y:GY-60,life:70,max:70}); thud(0.3,0.1); }},
+        {p:POSE.jab,d:8,hit:hit(0.8,function(){ ghost(f,px(other)-80); })},
+        {p:POSE.spinkick,d:8,hit:hit(0.8,function(){ ghost(f,px(other)+80); })},
+        {p:POSE.elbow,d:8,hit:hit(0.8,function(){ ghost(f,px(other)-60); })},
+        {p:POSE.upper,d:10,hit:hit(1.2,function(){ other.vAir=Math.max(other.vAir||0,8); })},
+        {p:POSE.idle,d:14}];
+    }else if(K.t==='meteor'){
+      fr=[{p:POSE.charge,d:10,hit:function(){ f.vAir=17; f.air=Math.max(f.air,0.1); tone(520,0.4,'triangle',0.04,1200); }},
+        {p:POSE.fly,d:18},
+        {p:POSE.dive,d:12,hit:hit(3.2,function(){
+          var d=gapOf(f,other)-150; if(d>0) moveBy(f,dirTo(f,other)*d,true);
+          fx.push({k:'shock',x:px(other),y:GY-30,life:52,max:52});
+          fx.push({k:'impact',x:px(other),y:GY-60,life:26,max:26,c:col});
+          shake=Math.max(shake,28); impact(0.16); thud(0.5,0.18);
+        })},
+        {p:POSE.idle,d:16}];
+    }else if(K.t==='racer'){
+      fr=[{p:POSE.charge,d:12,hit:function(){ tone(160,0.6,'sawtooth',0.05,900); }},
+        {p:POSE.guard,d:8,hit:hit(3.0,function(){
+          fx.push({k:'streak',sx:px(f)-f.facing*140,tx:px(other)+f.facing*260,y:GY-110,c:col,life:22,max:22});
+          shake=Math.max(shake,20); impact(0.12);
+        })},
+        {p:POSE.idle,d:18}];
+    }else if(K.t==='music'){
+      function notes(big){ fx.push({k:'notes',sx:px(f)+f.facing*30,tx:px(other),y:GY-170*bodyH(f),c:col,big:big?1:0,life:34,max:34}); }
+      fr=[{p:POSE.open,d:12,hit:function(){ notes(false); tone(523,0.3,'triangle',0.04,523); }},
+        {p:POSE.cross,d:8,hit:hit(0.8,function(){ tone(659,0.3,'triangle',0.04,659); })},
+        {p:POSE.open,d:10,hit:hit(0.8,function(){ notes(false); tone(784,0.3,'triangle',0.04,784); })},
+        {p:POSE.blast,d:14,hit:hit(1.6,function(){ notes(true); tone(1046,0.5,'triangle',0.05,1046); shake=Math.max(shake,22); })},
+        {p:POSE.idle,d:16}];
+    }else if(K.t==='rain'){
+      fr=[{p:POSE.charge,d:16,hit:function(){
+          fx.push({k:'rain',x:px(other),glyph:K.glyph,c:K.c,life:64,max:64}); tone(700,0.5,'triangle',0.04,300);
+        }},
+        {p:POSE.open,d:24,hit:hit(1.0)},
+        {p:POSE.open,d:10,hit:hit(1.0)},
+        {p:POSE.open,d:10,hit:hit(1.4,function(){ shake=Math.max(shake,22); })},
+        {p:POSE.idle,d:14}];
+    }else if(K.t==='element'){
+      fr=[{p:POSE.charge,d:14,hit:function(){ fx.push({k:K.fx,a:f,b:other,life:52,max:52}); tone(300,0.4,'sawtooth',0.04,900); }},
+        {p:POSE.blast,d:10,hit:hit(1.0)},
+        {p:POSE.blast,d:10,hit:hit(1.0,function(){ fx.push({k:K.fx,a:f,b:other,life:52,max:52}); })},
+        {p:POSE.cannon,d:12,hit:hit(1.4,function(){
+          fx.push({k:'impact',x:px(other),y:GY-120*bodyH(other),life:26,max:26,c:col});
+          shake=Math.max(shake,24); impact(0.14);
+        })},
+        {p:POSE.idle,d:16}];
+    }else{
+      /* folds one arm into a cannon and fires across the arena */
+      fr=[{p:POSE.cannon,d:24,hit:function(){ fx.push({k:'charge',a:f,life:24,max:24}); tone(180,0.6,'sawtooth',0.05,90); }},
+        {p:POSE.cannon,d:22,hit:hit(3.2,function(){
+          fx.push({k:'beam',a:f,b:other,life:38,max:38});
+          shake=Math.max(shake,24); impact(0.15);
+        })},
+        {p:POSE.idle,d:18}];
+    }
+    play(f,fr);
+  }
+  /* ---- the new effects: balls, sound waves, sky rain, speed streaks ---- */
+  function drawBall(sport,x,y,spin){
+    ctx.save(); ctx.translate(x,y); ctx.rotate(spin);
+    ctx.lineWidth=2; ctx.strokeStyle='#14181F';
+    if(sport==='puck'){ ctx.fillStyle='#111'; ctx.beginPath(); ctx.ellipse(0,0,15,6,0,0,6.283); ctx.fill(); ctx.restore(); return; }
+    if(sport==='gridiron'){
+      ctx.fillStyle='#8A4A22'; ctx.beginPath(); ctx.ellipse(0,0,17,10,0,0,6.283); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle='#FFF'; ctx.beginPath(); ctx.moveTo(-6,0); ctx.lineTo(6,0);
+      for(var l=-4;l<=4;l+=4){ ctx.moveTo(l,-2.5); ctx.lineTo(l,2.5); } ctx.stroke(); ctx.restore(); return;
+    }
+    var r=(sport==='golf')?7:(sport==='basketball'?16:(sport==='football'?15:11));
+    var fill={football:'#FFFFFF',basketball:'#E8742A',tennis:'#D8F24A',baseball:'#FFFFFF',cricket:'#9E1B1B',golf:'#FFFFFF'}[sport]||'#FFF';
+    ctx.fillStyle=fill; ctx.beginPath(); ctx.arc(0,0,r,0,6.283); ctx.fill(); ctx.stroke();
+    if(sport==='football'){
+      ctx.fillStyle='#14181F'; ctx.beginPath();
+      for(var a=0;a<5;a++){ var an=a*1.2566-1.57; ctx.lineTo(Math.cos(an)*5,Math.sin(an)*5); } ctx.closePath(); ctx.fill();
+      for(var b2=0;b2<5;b2++){ var an2=b2*1.2566+0.31; ctx.beginPath(); ctx.arc(Math.cos(an2)*12,Math.sin(an2)*12,3,0,6.283); ctx.fill(); }
+    }else if(sport==='basketball'){
+      ctx.beginPath(); ctx.moveTo(-r,0); ctx.lineTo(r,0); ctx.moveTo(0,-r); ctx.lineTo(0,r);
+      ctx.moveTo(-r*0.7,-r*0.7); ctx.quadraticCurveTo(0,0,-r*0.7,r*0.7);
+      ctx.moveTo(r*0.7,-r*0.7); ctx.quadraticCurveTo(0,0,r*0.7,r*0.7); ctx.stroke();
+    }else if(sport==='tennis'){
+      ctx.strokeStyle='#FFFFFF'; ctx.beginPath(); ctx.arc(-r,0,r*0.8,-1,1); ctx.moveTo(r,0); ctx.arc(r,0,r*0.8,2.14,4.14); ctx.stroke();
+    }else if(sport==='baseball'||sport==='cricket'){
+      ctx.strokeStyle=sport==='baseball'?'#D8202F':'#F4F0E0'; ctx.lineWidth=1.6;
+      ctx.beginPath(); ctx.arc(-r*1.15,0,r*0.85,-0.8,0.8); ctx.moveTo(r*1.15-r*0.85*Math.cos(0.8),0); ctx.arc(r*1.15,0,r*0.85,2.34,3.94); ctx.stroke();
+    }
+    ctx.restore();
+  }
+  function drawSuperFx(e,k){
+    if(e.k==='ball'){
+      var arc=(e.sport==='football'||e.sport==='puck'||e.sport==='golf')?60:120;
+      for(var t=4;t>=0;t--){
+        var kk=Math.max(0,k-t*0.06);
+        var x=e.sx+(e.tx-e.sx)*kk, y=e.sy+(e.ty-e.sy)*kk-Math.sin(kk*Math.PI)*arc;
+        ctx.globalAlpha=t?0.18*(5-t)/5:1;
+        drawBall(e.sport,x,y,kk*14);
+      }
+      ctx.globalAlpha=1;
+      return true;
+    }
+    if(e.k==='notes'){
+      var d=e.tx-e.sx, dir=d>0?1:-1;
+      ctx.globalCompositeOperation='lighter';
+      ctx.strokeStyle=e.c; ctx.lineWidth=e.big?6:4;
+      for(var i=0;i<3;i++){
+        var rr=Math.max(4,(k*1.3-i*0.18)*Math.abs(d));
+        ctx.globalAlpha=Math.max(0,(1-k)*0.8);
+        ctx.beginPath(); ctx.arc(e.sx,e.y,rr,dir>0?-0.7:Math.PI-0.7,dir>0?0.7:Math.PI+0.7); ctx.stroke();
+      }
+      ctx.globalCompositeOperation='source-over'; ctx.globalAlpha=Math.max(0,1-k*0.8);
+      ctx.font='800 '+(e.big?34:26)+'px sans-serif'; ctx.fillStyle=e.c; ctx.textAlign='center';
+      for(var n=0;n<4;n++){
+        var nk=Math.min(1,k*1.4-n*0.12); if(nk<=0) continue;
+        ctx.fillText(n%2?'♫':'♪',e.sx+d*nk,e.y-Math.sin(nk*6+n)*26);
+      }
+      ctx.globalAlpha=1;
+      return true;
+    }
+    if(e.k==='rain'){
+      ctx.textAlign='center'; ctx.font='800 '+(e.glyph.length>2?22:30)+'px sans-serif';
+      ctx.lineWidth=4; ctx.strokeStyle='rgba(10,14,24,.75)'; ctx.fillStyle=e.c;
+      for(var g=0;g<10;g++){
+        var gk=k*1.6-g*0.07; if(gk<=0||gk>1.15) continue;
+        var gx=e.x+(((g*53)%150)-75), gy=-30+gk*(GY-120);
+        ctx.globalAlpha=gk>1?Math.max(0,(1.15-gk)/0.15):1;
+        ctx.strokeText(e.glyph,gx,gy); ctx.fillText(e.glyph,gx,gy);
+      }
+      ctx.globalAlpha=1;
+      return true;
+    }
+    if(e.k==='streak'){
+      var a2=1-k;
+      var gr=ctx.createLinearGradient(e.sx,0,e.tx,0);
+      gr.addColorStop(0,'rgba(255,255,255,0)'); gr.addColorStop(0.6,e.c); gr.addColorStop(1,'#FFFFFF');
+      ctx.globalAlpha=a2; ctx.globalCompositeOperation='lighter';
+      ctx.fillStyle=gr; ctx.fillRect(Math.min(e.sx,e.tx),e.y-14*a2,Math.abs(e.tx-e.sx),28*a2);
+      ctx.fillStyle='#FFFFFF'; ctx.fillRect(Math.min(e.sx,e.tx),e.y-3,Math.abs(e.tx-e.sx),6);
+      for(var sl=0;sl<6;sl++){ ctx.fillRect(Math.min(e.sx,e.tx)+sl*60,e.y-60+sl*24,Math.abs(e.tx-e.sx)*0.4,2); }
+      ctx.globalCompositeOperation='source-over'; ctx.globalAlpha=1;
+      return true;
+    }
+    return false;
   }
 
   function endFight(win){
@@ -9604,19 +9837,7 @@
         {p:POSE.idle,d:18}
       ]);
     }else{
-      /* folds one arm into a cannon and fires across the arena */
-      play(f,[
-        {p:POSE.cannon,d:24,hit:function(){
-          fx.push({k:'charge',a:f,life:24,max:24});
-          tone(180,0.6,'sawtooth',0.05,90);
-        }},
-        {p:POSE.cannon,d:22,hit:function(){
-          hitLand(f,other,3.2,'special');
-          fx.push({k:'beam',a:f,b:other,life:38,max:38});
-          shake=Math.max(shake,24); impact(0.15);
-        }},
-        {p:POSE.idle,d:18}
-      ]);
+      superPlay(f,other);
     }
     return true;
   }
@@ -10659,7 +10880,7 @@
   /* ---------- What's New ----------
      Opens by itself the first time someone loads this version, and any
      time from the top bar. Remembered per browser. */
-  var NEW_VER='2026-10-h';
+  var NEW_VER='2026-10-i';
   function newSeen(){ try{ return localStorage.getItem('skyforge.seenNew')===NEW_VER; }catch(e){ return true; } }
   function markNewSeen(){ try{ localStorage.setItem('skyforge.seenNew',NEW_VER); }catch(e){} $('newBtn').classList.remove('unseen'); }
   function openNew(){
@@ -11271,6 +11492,7 @@
     $('dName').innerHTML=h.name
       +' <span class="tierTag" style="color:'+RR.c+';border-color:'+RR.c+'">'+RR.n.toUpperCase()+'</span>'
       +' <span class="tierTag">'+styleOf(h).icon+' '+styleOf(h).n+'</span>'
+      +' <span class="tierTag">\u2728 '+(['superman','batman','wonderwoman','flash','lumen','peacemaker'].indexOf(h.id)>=0?'One-of-a-kind super':SUPER_LABEL[superKind(h).t])+'</span>'
       +' <span class="tierTag">'+TIERS[p.tier].name+' armour</span>'+
       '<span class="tierTag">'+h.skins[p.skin].name+'</span>'+
       (mr?'<span class="tierTag" style="color:var(--gold);border-color:var(--gold)">'
