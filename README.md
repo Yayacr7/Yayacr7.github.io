@@ -2,6 +2,12 @@
 
 Things I'm making with Claude Code.
 
+## Napkin Proof — landing page and waitlist
+
+[`napkinproof/`](napkinproof/index.html) is the landing page for **Napkin Proof**: free tools and a course that show aspiring entrepreneurs whether a business idea makes money before they quit their job. It has a live "napkin test" calculator and a waitlist form.
+
+**Turn the waitlist on:** in `napkinproof/index.html`, set `WAITLIST = { provider: "...", id: "..." }` (`kit`, `formspree` or `formsubmit`). Until then, the form tells visitors the list opens soon and saves nothing.
+
 ## Money & Deals School — business, finance and negotiation lessons
 
 A plain-English learning site in [`learn/`](learn/index.html): seven short lessons (your money, investing, how a business makes money, financial statements, funding and valuation, negotiation, negotiation scripts). Each lesson ends with practice problems that check your answers and explain the ones you miss. There are also five calculators (compound growth, loan payment, break-even, margin vs markup, card payoff), a glossary, and copy-paste AI system and master prompts.
