@@ -129,6 +129,24 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
+### Body sizes
+
+Every champion has a build: how tall and how broad they are.
+
+- **75 are set by hand.**
+  - Giants tower over everyone: Hulk, Thanos, Doomsday, Galactus, Broly and
+    Sulley.
+  - Kids and small characters are small: Dash, Russell, Mei, Violet, Gon,
+    Astro Boy and 22, with Flik and Mike tiny.
+  - Wembanyama is the tallest of all; Bolt and the Flash are long and lean.
+- **The other 212 are worked out from their stats,** so tough, slow hitters
+  come out broader and fast ones slimmer.
+- Heights range from 0.72× to 1.28× normal, and widths from 0.84× to 1.40×.
+- **Taller fighters reach a little further.** Hit effects, dizzy stars and
+  name tags sit at each fighter's real head height.
+- Card portraits shrink tall fighters slightly so their heads stay in the
+  frame.
+
 ### Walking, dashing and dodging
 
 - **Walk:** hold ← → (or Q / E) on a keyboard, or use the movement option you
