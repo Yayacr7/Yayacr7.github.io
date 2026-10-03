@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finance Fundamentals</title>
+<meta name="description" content="Plain-English finance: compound interest, debt, investing, inflation, profit vs cash flow, financial statements, break-even and unit economics.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="brand" href="./">Business Basics</a>
+  <nav>
+    <a href="./">Home</a>
+    <a href="negotiation.html">Negotiation</a>
+    <a href="finance.html" aria-current="page">Finance</a>
+    <a href="check.html">Check your work</a>
+    <a href="prompts.html">AI prompts</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <h1>Finance fundamentals</h1>
+  <p class="lead">Part A is your own money. Part B is a business's money. The same few ideas (interest, risk, cash, margin) run through both.</p>
+
+  <div class="card toc"><strong>On this page</strong>
+    <ol>
+      <li><a href="#budget">Budget and emergency fund</a></li>
+      <li><a href="#compound">Compound interest</a></li>
+      <li><a href="#debt">Debt and APR</a></li>
+      <li><a href="#invest">Investing: risk, diversification, fees</a></li>
+      <li><a href="#inflation">Inflation</a></li>
+      <li><a href="#profit">Revenue, profit and margin</a></li>
+      <li><a href="#cash">Profit is not cash</a></li>
+      <li><a href="#statements">The three financial statements</a></li>
+      <li><a href="#breakeven">Break-even</a></li>
+      <li><a href="#unit">Unit economics</a></li>
+      <li><a href="#tvm">ROI and the time value of money</a></li>
+    </ol>
+  </div>
+
+  <h2>Part A: Your money</h2>
+
+  <h3 id="budget">1. Budget and emergency fund</h3>
+  <p>A budget is just a plan for where money goes before it goes. One simple starting point is the <strong>50/30/20</strong> split of take-home pay: about 50% needs (rent, food, transport), 30% wants, 20% saving and paying down debt. It's a rule of thumb, not a law; in an expensive city, needs can be 60% or more.</p>
+  <p>An <strong>emergency fund</strong> is cash you can reach quickly, commonly 3 to 6 months of essential expenses. It exists so that a car repair or job loss doesn't land on a credit card at 25% interest.</p>
+  <div class="key"><strong>Order of operations most guides agree on:</strong> small emergency fund → pay off high-interest debt → full emergency fund → invest for the long term. Exact thresholds vary by person.</div>
+
+  <h3 id="compound">2. Compound interest</h3>
+  <p><strong>Interest</strong> is the price of money: what you earn for lending it or pay for borrowing it. <strong>Compound</strong> interest means you earn interest on your past interest too, so growth speeds up over time.</p>
+  <p>Formula for a single amount: <code>Future value = P × (1 + r)<sup>n</sup></code>, where P is the starting amount, r the yearly rate, n the number of years. $1,000 at 7% for 10 years: 1,000 × 1.07<sup>10</sup> ≈ <strong>$1,967</strong>.</p>
+  <p><strong>Rule of 72:</strong> divide 72 by the yearly rate to estimate how many years it takes to double. At 8%, about 9 years. It's an approximation that works best between roughly 4% and 12%.</p>
+  <div class="card">
+    <h3>Calculator: compound growth</h3>
+    <form data-calc="compound">
+      <div class="fields">
+        <div><label for="c-principal">Starting amount ($)</label><input id="c-principal" type="number" value="1000"></div>
+        <div><label for="c-monthly">Added each month ($)</label><input id="c-monthly" type="number" value="200"></div>
+        <div><label for="c-rate">Yearly return (%)</label><input id="c-rate" type="number" value="7" step="0.1"></div>
+        <div><label for="c-years">Years</label><input id="c-years" type="number" value="30"></div>
+      </div>
+      <div class="result" aria-live="polite"></div>
+    </form>
+    <p class="tag">Compounds monthly. Real returns vary year to year; a steady rate is a simplification.</p>
+  </div>
+  <p>The biggest lever is <strong>time</strong>. Starting ten years earlier usually matters more than picking a slightly better investment.</p>
+
+  <h3 id="debt">3. Debt and APR</h3>
+  <p><strong>APR</strong> (annual percentage rate) is the yearly cost of borrowing. Compound interest works against you with debt exactly as it works for you with savings.</p>
+  <ul>
+    <li><strong>Good vs bad debt is about rate and purpose.</strong> A low-rate loan for something that grows in value or raises your income can make sense. A 25% credit card balance for consumption almost never does.</li>
+    <li><strong>Paying off a 20% card is a guaranteed 20% "return".</strong> Almost no investment reliably beats that.</li>
+    <li><strong>Avalanche method:</strong> pay extra on the highest-rate debt first (cheapest overall). <strong>Snowball:</strong> smallest balance first (more motivating). Avalanche wins on math; snowball can win on follow-through.</li>
+  </ul>
+  <div class="card">
+    <h3>Calculator: loan payment</h3>
+    <form data-calc="loan">
+      <div class="fields">
+        <div><label for="l-amount">Loan amount ($)</label><input id="l-amount" type="number" value="20000"></div>
+        <div><label for="l-rate">APR (%)</label><input id="l-rate" type="number" value="8" step="0.1"></div>
+        <div><label for="l-years">Years</label><input id="l-years" type="number" value="5"></div>
+      </div>
+      <div class="result" aria-live="polite"></div>
+    </form>
+  </div>
+
+  <h3 id="invest">4. Investing: risk, diversification, fees</h3>
+  <ul>
+    <li><strong>Stock:</strong> a small piece of ownership in a company. Higher expected return, bigger swings.</li>
+    <li><strong>Bond:</strong> a loan to a government or company that pays interest. Usually lower return, smaller swings.</li>
+    <li><strong>Risk and return travel together.</strong> Anyone promising high returns with low risk is either mistaken or selling something.</li>
+    <li><strong>Diversification:</strong> owning many different investments so one failure can't sink you. An <strong>index fund</strong> does this cheaply by owning a whole market (for example, the 500 largest US companies).</li>
+    <li><strong>Fees compound too.</strong> A 1% yearly fee sounds small but can eat roughly a quarter of your ending balance over 30 years compared with a near-zero-fee fund.</li>
+    <li><strong>Time horizon:</strong> money you need within a few years generally shouldn't be in stocks, because a crash could hit right when you need it.</li>
+  </ul>
+  <div class="warn">Most professional fund managers fail to beat a simple index fund over long periods after fees. That's well documented, but it isn't a guarantee about the future, and none of this is personal advice.</div>
+
+  <h3 id="inflation">5. Inflation</h3>
+  <p><strong>Inflation</strong> is prices rising over time, which means each dollar buys less. At 3% inflation for 10 years, prices end up about 34% higher (1.03<sup>10</sup> ≈ 1.34), so $100 kept in a drawer will buy only about $74 worth of today's goods.</p>
+  <p>The <strong>real return</strong> is roughly your return minus inflation. A savings account paying 2% while inflation is 3% is losing about 1% of buying power a year.</p>
+
+  <h2>Part B: A business's money</h2>
+
+  <h3 id="profit">6. Revenue, profit and margin</h3>
+  <div class="scroll"><table>
+    <tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td>Revenue</td><td>All the money from sales. Also called "sales" or "the top line".</td></tr>
+    <tr><td>COGS</td><td>Cost of goods sold: what it directly cost to make or buy what you sold.</td></tr>
+    <tr><td>Gross profit</td><td>Revenue − COGS.</td></tr>
+    <tr><td>Operating expenses</td><td>Rent, salaries, marketing, software: costs of running the business.</td></tr>
+    <tr><td>Operating profit</td><td>Gross profit − operating expenses.</td></tr>
+    <tr><td>Net profit</td><td>What's left after everything, including interest and taxes. "The bottom line".</td></tr>
+    <tr><td>Margin</td><td>Any profit ÷ revenue, as a %. Gross margin = gross profit ÷ revenue.</td></tr>
+  </table></div>
+  <div class="example"><strong>Example: a coffee cart</strong>Sells $10,000 of coffee in a month. Beans, cups and milk cost $3,000 (COGS). Gross profit = $7,000, gross margin = 70%. Rent, permit and wages cost $5,500. Operating profit = $1,500, a 15% operating margin.</div>
+  <p><strong>Markup is not margin.</strong> Buying at $60 and selling at $100 is a 67% markup (40 ÷ 60) but a 40% margin (40 ÷ 100). Mixing them up is one of the most common pricing mistakes.</p>
+
+  <h3 id="cash">7. Profit is not cash</h3>
+  <p>A business can be profitable on paper and still run out of money. Why: profit counts a sale when it's made, but cash arrives when the customer actually pays.</p>
+  <div class="example"><strong>Example:</strong>You sell $50,000 of furniture to a hotel with 90-day payment terms. Your profit report shows the sale today. But you paid your workers and suppliers this month, and the hotel's cash shows up in three months. If your bank balance can't bridge that gap, you're in trouble even though you're "profitable".</div>
+  <div class="key"><strong>Cash flow</strong> is money actually moving in and out. Many failed small businesses were profitable when they died; they ran out of cash.</div>
+
+  <h3 id="statements">8. The three financial statements</h3>
+  <ul>
+    <li><strong>Income statement</strong> (profit and loss, P&amp;L): revenue minus costs over a period. Answers "did we make money?"</li>
+    <li><strong>Balance sheet</strong>: a snapshot on one date of what the business owns (<em>assets</em>), owes (<em>liabilities</em>), and what's left for owners (<em>equity</em>). It always balances: <code>Assets = Liabilities + Equity</code>.</li>
+    <li><strong>Cash flow statement</strong>: where cash actually came from and went over a period, split into operating, investing and financing.</li>
+  </ul>
+  <p>They connect: net profit from the income statement flows into equity on the balance sheet, and the cash flow statement explains the change in the cash line on the balance sheet.</p>
+
+  <h3 id="breakeven">9. Break-even</h3>
+  <p><strong>Fixed costs</strong> stay the same whether you sell 1 unit or 1,000 (rent, salaries). <strong>Variable costs</strong> rise with each unit (materials, shipping). The <strong>contribution margin</strong> is price minus variable cost per unit: what each sale contributes toward fixed costs.</p>
+  <p><code>Break-even units = Fixed costs ÷ (Price − Variable cost per unit)</code></p>
+  <div class="card">
+    <h3>Calculator: break-even</h3>
+    <form data-calc="breakeven">
+      <div class="fields">
+        <div><label for="b-fixed">Fixed costs per month ($)</label><input id="b-fixed" type="number" value="6000"></div>
+        <div><label for="b-price">Price per unit ($)</label><input id="b-price" type="number" value="25"></div>
+        <div><label for="b-var">Variable cost per unit ($)</label><input id="b-var" type="number" value="10"></div>
+      </div>
+      <div class="result" aria-live="polite"></div>
+    </form>
+  </div>
+
+  <h3 id="unit">10. Unit economics</h3>
+  <p>Unit economics asks: does each customer make or lose money?</p>
+  <ul>
+    <li><strong>CAC</strong> (customer acquisition cost): total sales and marketing spend ÷ new customers won.</li>
+    <li><strong>LTV</strong> (lifetime value): the gross profit a customer brings over their whole time with you. Simple version: monthly gross profit per customer × average months they stay.</li>
+    <li>A common rule of thumb is <strong>LTV at least 3× CAC</strong>. Below 1×, every new customer loses money, and growing faster just loses money faster.</li>
+  </ul>
+  <div class="example"><strong>Example:</strong>A subscription box earns $15 gross profit per month per customer, and customers stay 20 months on average: LTV = $300. Ads cost $120 per new customer: LTV/CAC = 2.5. Workable, but below the 3× rule of thumb, so improve retention or cut acquisition cost.</div>
+
+  <h3 id="tvm">11. ROI and the time value of money</h3>
+  <p><strong>ROI</strong> (return on investment) = (gain − cost) ÷ cost. Spending $2,000 on a machine that adds $3,000 of profit is a 50% ROI. ROI ignores <em>time</em>, though: 50% in one year is far better than 50% over ten.</p>
+  <p>The <strong>time value of money</strong>: a dollar today is worth more than a dollar later, because today's dollar can be invested. To compare money at different times, convert future money to today's value (its <strong>present value</strong>):</p>
+  <p><code>Present value = Future amount ÷ (1 + r)<sup>n</sup></code>. $1,100 a year from now, with a 10% alternative return, is worth $1,000 today.</p>
+  <p><strong>NPV</strong> (net present value) adds up the present value of all of a project's future cash flows and subtracts what it costs now. Positive NPV means it beats your alternative; negative means your money does better elsewhere.</p>
+
+  <p><a class="btn" href="check.html#finance-personal">Check your work: finance quizzes →</a></p>
+</main>
+
+<footer><div class="wrap">Business Basics · Education only, not personal financial, tax or legal advice.</div></footer>
+<script src="app.js"></script>
+</body>
+</html>
