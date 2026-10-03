@@ -129,6 +129,31 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
+### 45 new sports icons
+
+The 25 footballers and 20 basketball players have left the roster, at the
+owner's request. In their place come 45 icons from 14 other sports, so the
+roster stays at 287:
+
+- **American football:** Mahomes, Kelce, Jerry Rice, Lamar Jackson, Barry Sanders.
+- **Ice hockey:** Ovechkin, Crosby, McDavid, Lemieux.
+- **Tennis:** Nadal, Djokovic, Alcaraz, Osaka, Swiatek.
+- **Baseball:** Babe Ruth, Aaron Judge, Jackie Robinson, Ken Griffey Jr.
+- **Cricket:** Kohli, Babar Azam. **Golf:** Rory McIlroy, Scottie Scheffler.
+- **Boxing:** Mike Tyson, Floyd Mayweather, Tyson Fury.
+- **MMA:** McGregor, Khabib, Ronda Rousey, Jon Jones, Adesanya.
+- **Wrestling:** the Undertaker, Rey Mysterio, Stone Cold, Hulk Hogan.
+- **Track:** Jesse Owens, Sha'Carri Richardson, Noah Lyles, Mondo Duplantis.
+- **Racing:** Verstappen, Senna, Schumacher. **Swimming:** Phelps, Ledecky.
+- **Boards:** Tony Hawk, Shaun White.
+
+Each has a real-name search hit in Forge, a trait that fits, a super in their
+sport's style (gridiron ball, puck, tennis ball, baseball, cricket ball, golf
+ball, punch barrage, kick chain, slam, speed streak, water rain, meteor dive)
+and two kits. Saves made before the change are moved across automatically, so
+your selected champion and team squad still point at the right people; anyone
+who had a footballer or basketball player selected starts on Superman.
+
 ### 104 champions fight differently
 
 Every champion has a named trait. Until now 104 of them were the same quiet
@@ -140,13 +165,13 @@ New mechanics added for this:
 - **Shield**: starts the fight inside a bubble that soaks up the first part
   of the damage (Violet, Russell, Doctor Fate).
 - **Growth**: below half health they get bigger and hit harder (Mei).
-- **Sprinter**: walks and dashes faster (Dash, Mbappé, Giannis, Saka, the
-  Black Racer).
-- **Long arm**: reaches further (Elastigirl, Wembanyama, Durant).
+- **Sprinter**: walks and dashes faster (Dash, McDavid, Jackie Robinson, Jesse
+  Owens, the Black Racer).
+- **Long arm**: reaches further (Elastigirl, Tyson Fury, Phelps).
 - **Sapper**: every hit steals a chunk of the opponent's power meter
-  (Larfleeze, Kawhi, Benzema, Klarion, Neron).
+  (Larfleeze, Mayweather, Klarion, Neron).
 - **Mend**: heals slowly all fight long (Wall-E, Wade, Swamp Thing).
-- **Kicker / Puncher**: kicks or punches hit harder (Messi, Salah; Joshua).
+- **Kicker / Puncher**: kicks or punches hit harder (Adesanya; Joshua, Mike Tyson).
 
 The rest reuse mechanics the game already had: thorns, counters, criticals,
 double hits, stuns, freezes, burns, guard breaks, last stands, meter head
@@ -205,7 +230,7 @@ Every champion has a build: how tall and how broad they are.
     Sulley.
   - Kids and small characters are small: Dash, Russell, Mei, Violet, Gon,
     Astro Boy and 22, with Flik and Mike tiny.
-  - Wembanyama is the tallest of all; Bolt and the Flash are long and lean.
+  - Tyson Fury and the Undertaker are the tallest of the icons; Bolt and the Flash are long and lean.
 - **The other 212 are worked out from their stats,** so tough, slow hitters
   come out broader and fast ones slimmer.
 - Heights range from 0.72× to 1.28× normal, and widths from 0.84× to 1.40×.
