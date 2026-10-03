@@ -514,6 +514,7 @@
       <p class="gfxnow">Everything that's been added to Skyforge Champions. Tap a button to try it!</p>
       <div class="wngrid">
         <div class="wn"><span class="wi">🎮</span><div><b class="wt">Easier controls</b><p>Just four big buttons now: <b>Punch, Kick, Jump</b> and <b>Power</b>. Your champion even blocks on their own sometimes.</p></div></div>
+        <div class="wn"><span class="wi">📏</span><div><b class="wt">Every body is different</b><p>Giants like the <b>Hulk, Thanos and Doomsday</b> tower over everyone; kids like <b>Dash, Russell and Mei</b> are small; <b>Flik</b> is tiny; <b>Wembanyama</b> is the tallest of all. Taller fighters reach a little further.</p></div></div>
         <div class="wn"><span class="wi">🏃</span><div><b class="wt">Walk, dash and dodge!</b><p>Fighters <b>move</b> now. Get in range to land hits, step out to make them <b>MISS</b>. Double-tap to <b>dash</b> in or <b>DODGE</b> out. Pick <b>Easy, Normal or Hard</b> and how you move on a phone in ⚙️ Settings.</p><button class="btn ghost" data-go="gfx">Open settings</button></div></div>
         <div class="wn"><span class="wi">🌐</span><div><b class="wt">Fight your friends!</b><p><b>Online:</b> make a room, send the 4-letter code, and fight a friend on their own phone or computer. <b>2 players, 1 device:</b> share the keyboard, or split the phone screen. Turn on <b>Fair fight</b> to make it pure skill.</p><button class="btn ghost" data-go="online">Play a friend</button></div></div>
         <div class="wn"><span class="wi">🥊</span><div><b class="wt">Boxing gloves + 37 icons</b><p>Every fighter now wears <b>boxing gloves</b>. And <b>37 celebrities and world icons</b> joined: Ali, Bruce Lee, The Rock, Usain Bolt, Serena, Simone Biles, Jordan, Pelé, Taylor Swift, MrBeast, Einstein, Cleopatra and more. Tap <b>⭐ Icons</b> in the picker to find them.</p><button class="btn ghost" data-go="icons">Show me the icons</button></div></div>
@@ -5294,7 +5295,8 @@
     DETAIL=(scale>1.2)&&!!gfx.detail;
     g.save();
     g.translate(f.x+(f.lunge||0)*face+(f.dx||0)+(f.kb||0)+(f.sway||0), GY-(f.air||0)-(f.bob||0));
-    g.scale(face*scale,scale);
+    var BLD=buildOf(f.base||null);
+    g.scale(face*scale*BLD.w,scale*BLD.h);
 
     /* cast shadow on the deck */
     g.fillStyle='rgba(70,66,50,.3)';
@@ -8056,7 +8058,7 @@
     [me,foe].forEach(function(f){
       if(!f) return;
       var x=f.x+(f.lunge||0)*f.facing+(f.dx||0)+(f.kb||0)+(f.sway||0);
-      var top=GY-(f.air||0)-(f.bob||0)-272*(f.big||1);
+      var top=GY-(f.air||0)-(f.bob||0)-272*bodyH(f);
       if(f.rage&&!f.dead){
         var g=ctx.createRadialGradient(x,GY-130*(f.big||1),20,x,GY-130*(f.big||1),170*(f.big||1));
         var a=0.18+Math.sin(tick*0.2)*0.06;
@@ -8079,7 +8081,7 @@
     if(net&&(net.live||net.after)&&me&&foe){
       var tags=net.role==='local'?['P1','P2']:(net.role==='host'?['YOU','FRIEND']:['FRIEND','YOU']);
       [me,foe].forEach(function(f,i){
-        var tx=f.x+(f.lunge||0)*f.facing+(f.dx||0)+(f.kb||0)+(f.sway||0), ty=GY-(f.air||0)-(f.bob||0)-300*(f.big||1);
+        var tx=f.x+(f.lunge||0)*f.facing+(f.dx||0)+(f.kb||0)+(f.sway||0), ty=GY-(f.air||0)-(f.bob||0)-300*(bodyH(f));
         var mine=(tags[i]==='YOU'||tags[i]==='P1');
         ctx.save(); ctx.font='800 15px '+fa(); ctx.textAlign='center';
         var w=ctx.measureText(tags[i]).width+18;
@@ -8434,7 +8436,8 @@
   function swoosh(att,zone,col){
     if(RETRO()) col=(att===me)?NEON_C:NEON_M;
     var y=zone==='legs'?GY-60:(zone==='body'?GY-170:GY-255);
-    fx.push({k:'swoosh',x:att.x+(att.kb||0)+att.facing*70,y:y*1+(att.big?-(att.big-1)*120:0),f:att.facing,c:col||'#FFFFFF',life:11,max:11});
+    y=GY-(GY-y)*bodyH(att);
+    fx.push({k:'swoosh',x:att.x+(att.kb||0)+att.facing*70,y:y,f:att.facing,c:col||'#FFFFFF',life:11,max:11});
   }
   function burst(x,y,col,big){ if(RETRO()&&col==='#FFFFFF') col=NEON_C; fx.push({k:'burst',x:x,y:y,c:col,life:big?16:11,max:big?16:11,big:!!big}); }
   function drawNewFx(e,k){
@@ -8909,7 +8912,27 @@
     guardHeld=down; if(me) me.guard=down&&!me.dead;
   }
 
-  function buildOf(h){ return {h:1,w:1}; }
+  /* ---- body sizes ----
+     Every champion now has a build: how tall and how broad. The ones that
+     matter most are set by hand (giants are huge, kids are small, Flik is
+     an ant); everyone else is worked out from their stats, so tough, slow
+     hitters come out broader and fast ones slimmer. Taller fighters also
+     reach a little further. */
+  var BUILDS={'hulk':[1.24,1.32],'thanos':[1.2,1.26],'darkseid':[1.16,1.2],'doomsday':[1.2,1.3],'grundy':[1.16,1.28],'bane':[1.1,1.24],'broly':[1.2,1.24],'galactus':[1.28,1.18],'apocalypse':[1.18,1.2],'majinbuu':[1.04,1.4],'cell':[1.08,1.0],'sulley':[1.16,1.38],'therock':[1.08,1.2],'joshua':[1.1,1.16],'venom':[1.12,1.18],'beast':[1.06,1.26],'thor':[1.08,1.12],'zurg':[1.12,1.24],'mrincredible':[1.1,1.3],'imperiex':[1.2,1.2],'antimonitor':[1.2,1.1],'jiren':[1.08,1.18],'escanor':[1.1,1.2],'embiid':[1.14,1.18],'jokic':[1.14,1.14],'giannis':[1.16,1.04],'wemby':[1.26,0.9],'presence':[1.1,1.0],'lotso':[0.86,1.22],'buzz':[1.0,1.08],'wade':[1.04,1.12],'barley':[1.0,1.08],'russell':[0.76,1.12],'dash':[0.74,0.92],'violet':[0.84,0.9],'mei':[0.8,0.96],'mike':[0.72,1.18],'walle':[0.74,1.12],'eve':[0.92,0.92],'flik':[0.72,0.84],'hopper':[0.96,1.0],'edna':[0.72,0.95],'ian':[0.92,0.9],'miguel':[0.8,0.92],'carl':[0.86,1.08],'astroboy':[0.78,0.94],'edward':[0.86,0.96],'gon':[0.84,0.94],'killua':[0.84,0.9],'nezuko':[0.84,0.9],'levi':[0.9,0.94],'deku':[0.94,0.96],'luffy':[0.96,0.92],'meliodas':[0.84,0.94],'antman':[0.95,0.96],'robin':[0.86,0.92],'beastboy':[0.9,0.92],'raven':[0.94,0.92],'harley':[0.95,0.92],'biles':[0.84,0.96],'messi':[0.92,0.98],'maradona':[0.9,1.0],'soul22':[0.76,0.9],'ember':[0.95,0.95],'beerus':[0.95,0.92],'woody':[1.02,0.86],'jessie':[0.98,0.86],'frozone':[1.02,0.92],'syndrome':[1.0,0.94],'kaguya':[1.0,0.9],'bolt':[1.08,0.9],'flash':[1.0,0.9],'reverseflash':[1.0,0.9],'spider':[0.98,0.92],'batgirl':[0.97,0.92]};
+  var buildCache={};
+  function buildOf(h){
+    if(!h) return {h:1,w:1};
+    var id=h.id||'';
+    if(buildCache[id]) return buildCache[id];
+    var b;
+    if(BUILDS[id]) b={h:BUILDS[id][0],w:BUILDS[id][1]};
+    else{
+      var m=((h.tough||108)-108)/30+(1.1-(h.spd||1.1))*1.6+((h.pow||23)-23)/7;
+      b={h:Math.max(0.95,Math.min(1.07,1+m*0.025)),w:Math.max(0.88,Math.min(1.16,1+m*0.06))};
+    }
+    buildCache[id]=b; return b;
+  }
+  function bodyH(f){ return (f.big||1)*(f.base?buildOf(f.base).h:1); }
   /* ================= movement: walking, dashing, dodging =================
      Fighters walk now. Every punch and kick has a real reach, so distance
      matters: step in to hit, step out to make them miss. Double-tap toward
@@ -9329,7 +9352,7 @@
       floatText(hx,hy-10,'-'+dmg,heavy?'#FFE08A':'#FF8B6B',heavy);
       hitWord(hx,hy,heavy);
       spark(hx,hy,heavy?'#FFE08A':'#FFC48A',kind==='special'?30:(heavy?20:14));
-      burst(def.x+(def.kb||0)-def.facing*26,zone==='legs'?GY-60:(zone==='body'?GY-170:GY-250),heavy?'#FFE08A':'#FFFFFF',heavy);
+      burst(def.x+(def.kb||0)-def.facing*26,GY-(zone==='legs'?60:(zone==='body'?170:250))*bodyH(def),heavy?'#FFE08A':'#FFFFFF',heavy);
       shake=Math.max(shake,kind==='special'?20:(heavy?15:8));
       impact(kind==='special'?0.105:(heavy?0.062:0.028),att.facing);
       thud(heavy?0.32:0.14,heavy?0.15:0.09);
@@ -9789,7 +9812,7 @@
   }
   /* a translucent copy of the fighter left behind mid-move */
   function ghost(f,x){
-    fx.push({k:'ghost',h:f.h,tier:f.tier,facing:f.facing,x:x,pose:clonePose(f.pose),life:20,max:20});
+    fx.push({k:'ghost',h:f.h,base:f.base,big:f.big,tier:f.tier,facing:f.facing,x:x,pose:clonePose(f.pose),life:20,max:20});
   }
 
   function aiStep(f,other){
@@ -10636,7 +10659,7 @@
   /* ---------- What's New ----------
      Opens by itself the first time someone loads this version, and any
      time from the top bar. Remembered per browser. */
-  var NEW_VER='2026-10-g';
+  var NEW_VER='2026-10-h';
   function newSeen(){ try{ return localStorage.getItem('skyforge.seenNew')===NEW_VER; }catch(e){ return true; } }
   function markNewSeen(){ try{ localStorage.setItem('skyforge.seenNew',NEW_VER); }catch(e){} $('newBtn').classList.remove('unseen'); }
   function openNew(){
@@ -11070,7 +11093,8 @@
       g.beginPath(); g.ellipse(96,112,34,11,0,0,6.283); g.fill();
       var ghost={base:h,h:look(h,p.skin),tier:p.tier,facing:1,x:0,lunge:0,dx:0,air:0,ph:i*1.3,
         pose:lerpPose(POSE.idle,POSE.breathe,(Math.sin(tick*0.045+i*1.3)+1)/2)};
-      g.save(); g.translate(65,124); g.scale(1.02,1.02); g.translate(-0,-GY);
+      var cfit=1.02/Math.max(1,buildOf(h).h);
+      g.save(); g.translate(65,124); g.scale(cfit,cfit); g.translate(-0,-GY);
       drawFighter(g,ghost,tick+i*30,1.0);
       g.restore();
     }
