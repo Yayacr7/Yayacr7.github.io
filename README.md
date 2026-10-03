@@ -129,6 +129,22 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
+### Forge, the help robot
+
+Tap **🤖 Help** at the top of the page to meet Forge, a retro arena robot
+built into the game. There is no AI service behind him, so he is free,
+private and works offline.
+
+- Thirty ready-made questions about controls, moves, modes, champions,
+  rewards and settings. Tap one to hear the answer.
+- Type a few words and the closest questions float to the top; the best
+  match is answered right away.
+- Type a champion's name ("messi", "who is the hulk") and Forge describes
+  them: rarity, fighting style, size, stats and super move.
+- Many answers have a button that takes you straight to the right place:
+  Settings, the champion picker, online play, the move list.
+- Forge keeps the owner's secrets.
+
 ### Signature super moves
 
 When the power meter is full, each champion's Super Move now fits who they

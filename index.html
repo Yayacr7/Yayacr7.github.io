@@ -192,6 +192,22 @@
   .wn p{margin:2px 0 8px;font-size:.88rem;line-height:1.4}
   .wn .btn{padding:7px 16px;font-size:.88rem}
   @keyframes wnin{0%{transform:translateY(14px) scale(.96);opacity:0}100%{transform:none;opacity:1}}
+  .forgebox{max-width:720px}
+  .forgetop{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+  #forgeFace{flex:none;width:100px;height:110px;image-rendering:pixelated}
+  .forgebubble{position:relative;flex:1;background:#0D1622;border:2px solid #3CF0FF;border-radius:14px;padding:10px 14px;min-height:72px;
+    box-shadow:0 0 18px rgba(60,240,255,.25)}
+  .forgebubble:before{content:"";position:absolute;left:-12px;top:26px;border:6px solid transparent;border-right-color:#3CF0FF}
+  .forgebubble b{font-family:"Saira Condensed",sans-serif;font-size:.8rem;letter-spacing:.2em;color:#3CF0FF}
+  .forgebubble p{margin:4px 0 8px;font-size:.95rem;line-height:1.45;color:var(--ice)}
+  .forgebubble .btn{padding:7px 16px;font-size:.88rem}
+  #forgeIn{width:100%;box-sizing:border-box;font:inherit;font-size:1rem;color:var(--ice);background:#0D1622;border:2px solid #2B3E57;
+    border-radius:10px;padding:10px 12px;margin-bottom:10px}
+  #forgeIn:focus{outline:none;border-color:var(--gold)}
+  .forgechips{max-height:38vh;overflow:auto;margin-bottom:12px}
+  .fchip{text-transform:none;letter-spacing:0;font-size:.82rem;color:var(--ice)}
+  .fchip:hover{border-color:var(--gold)}
+  @media (max-width:540px){ .forgetop{gap:8px} #forgeFace{width:72px;height:80px} }
   .newbtn{position:relative}
   .newbtn i{position:absolute;top:-4px;right:-4px;width:12px;height:12px;border-radius:50%;background:#FF5C4A;
     box-shadow:0 0 0 2px #0D1622;display:none}
@@ -506,6 +522,7 @@
     <button class="sound" id="sound" aria-pressed="true">Sound on</button>
     <button class="sound" id="gfxBtn">⚙️ Settings</button>
     <button class="sound newbtn" id="newBtn">✨ What's New<i id="newDot"></i></button>
+    <button class="sound" id="helpBtn">🤖 Help</button>
   </div>
 
   <div class="gfxpanel" id="newPanel" hidden>
@@ -514,6 +531,7 @@
       <p class="gfxnow">Everything that's been added to Skyforge Champions. Tap a button to try it!</p>
       <div class="wngrid">
         <div class="wn"><span class="wi">🎮</span><div><b class="wt">Easier controls</b><p>Just four big buttons now: <b>Punch, Kick, Jump</b> and <b>Power</b>. Your champion even blocks on their own sometimes.</p></div></div>
+        <div class="wn"><span class="wi">🤖</span><div><b class="wt">Meet Forge, the help robot</b><p>Stuck? Tap <b>🤖 Help</b> at the top. Forge answers questions about <b>controls, moves, modes and champions</b>: tap a question, type a few words, or type a champion's name to hear all about them. Built right in, free, and works offline.</p><button class="btn ghost" data-go="forge">Ask Forge</button></div></div>
         <div class="wn"><span class="wi">✨</span><div><b class="wt">A super move for every style</b><p>Super moves now match the character: athletes fire their <b>own ball</b> (football, basketball, tennis, baseball, cricket, puck, golf), boxers throw a <b>punch barrage</b>, martial artists a <b>kick chain</b>, wrestlers <b>lift and slam</b>, fliers <b>dive from the sky</b>, singers blast <b>sound waves</b>, elemental heroes unleash <b>their own power</b>, and MrBeast makes it <b>rain cash</b>.</p></div></div>
         <div class="wn"><span class="wi">📏</span><div><b class="wt">Every body is different</b><p>Giants like the <b>Hulk, Thanos and Doomsday</b> tower over everyone; kids like <b>Dash, Russell and Mei</b> are small; <b>Flik</b> is tiny; <b>Wembanyama</b> is the tallest of all. Taller fighters reach a little further.</p></div></div>
         <div class="wn"><span class="wi">🏃</span><div><b class="wt">Walk, dash and dodge!</b><p>Fighters <b>move</b> now. Get in range to land hits, step out to make them <b>MISS</b>. Double-tap to <b>dash</b> in or <b>DODGE</b> out. Pick <b>Easy, Normal or Hard</b> and how you move on a phone in ⚙️ Settings.</p><button class="btn ghost" data-go="gfx">Open settings</button></div></div>
@@ -543,6 +561,18 @@
         <div class="wn" data-owner="1"><span class="wi">🎬</span><div><b class="wt">The Movie</b><p><i>Skyforge: The Last Specimen</i>, a five-act film starring your champion. Owner only.</p><button class="btn ghost" data-go="movie">Watch</button></div></div>
       </div>
       <button class="btn" id="newClose">Let's fight!</button>
+    </div>
+  </div>
+
+  <div class="gfxpanel" id="helpPanel" hidden>
+    <div class="gfxbox forgebox" role="dialog" aria-label="Forge, the help robot">
+      <div class="forgetop">
+        <canvas id="forgeFace" width="100" height="110" aria-hidden="true"></canvas>
+        <div class="forgebubble"><b>FORGE</b><p id="forgeText"></p><button class="btn ghost" id="forgeGo" hidden>Show me</button></div>
+      </div>
+      <input id="forgeIn" type="search" autocomplete="off" placeholder="Type a question or a champion's name…" aria-label="Ask Forge">
+      <div class="rarchips forgechips" id="forgeChips"></div>
+      <button class="btn" id="forgeClose">Thanks, Forge!</button>
     </div>
   </div>
 
@@ -10880,7 +10910,7 @@
   /* ---------- What's New ----------
      Opens by itself the first time someone loads this version, and any
      time from the top bar. Remembered per browser. */
-  var NEW_VER='2026-10-i';
+  var NEW_VER='2026-10-j';
   function newSeen(){ try{ return localStorage.getItem('skyforge.seenNew')===NEW_VER; }catch(e){ return true; } }
   function markNewSeen(){ try{ localStorage.setItem('skyforge.seenNew',NEW_VER); }catch(e){} $('newBtn').classList.remove('unseen'); }
   function openNew(){
@@ -10902,6 +10932,7 @@
     }, giant:function(){ startGiant(); }, rush:function(){ startRush(); },
     dummy:function(){ startDummy(); }, ladder:function(){ startLadder(); }, bo3:function(){ startBo3(); },
     brawl:function(){ startBrawl(); }, movie:function(){ if(isOwner()) startMovie(); }, gfx:function(){ openGfx(); },
+    forge:function(){ openForge(); },
     moves:function(){ showTab('howto'); document.querySelector('.movelist').scrollIntoView({behavior:'smooth',block:'start'}); },
     trophies:function(){ showTab('progress'); $('trophies').scrollIntoView({behavior:'smooth',block:'start'}); },
     daily:function(){ showTab('progress'); document.querySelector('.daily2').scrollIntoView({behavior:'smooth',block:'center'}); }};
@@ -10909,7 +10940,7 @@
     b.addEventListener('click',function(){
       var go=NEW_GO[b.getAttribute('data-go')]; closeNew();
       /* a mode can only start from the home screen */
-      if(go&&(screen==='home'||b.getAttribute('data-go')==='gfx')) go();
+      if(go&&(screen==='home'||b.getAttribute('data-go')==='gfx'||b.getAttribute('data-go')==='forge')) go();
       else if(go) flashMsg('Finish this fight first, then try it from the home screen!');
     });
   });
@@ -10920,6 +10951,166 @@
     $('newBtn').classList.add('unseen');
     setTimeout(function(){ if(screen==='home'&&$('gfxPanel').hidden) openNew(); },900);
   }
+
+  /* ================= Forge, the help robot =================
+     A built-in helper with no AI service behind it, so it costs nothing
+     and works offline. Forge answers from a list of ready-made questions.
+     Type a few words and the closest questions float to the top; type a
+     champion's name and Forge describes them. */
+  var FORGE_QA=[
+    {q:'How do I play?',k:'play start begin basics how new',
+     a:'Pick a champion, press Fight, and knock the other champion’s health to zero. Punch, Kick, Jump and Power are your buttons!',go:'fight',gl:'Fight now'},
+    {q:'What are the controls?',k:'controls keys keyboard buttons press key',
+     a:'Keyboard: ← → walk, A punch, K kick, W jump, D power, hold S to block, G grab. On phones, tap the big buttons.',go:'moves',gl:'Move list'},
+    {q:'How do I move on my phone?',k:'phone move walk touch swipe buttons mobile tablet automatic',
+     a:'In ⚙️ Settings, pick Phone movement: ◀ ▶ buttons, swipe on the arena, or Automatic (I walk you into range myself!).',go:'gfx',gl:'Open Settings'},
+    {q:'How do I dash?',k:'dash run fast rush close in forward',
+     a:'Tap toward your opponent twice, fast. Zoom! You dash right in.'},
+    {q:'How do I dodge?',k:'dodge avoid escape back away miss untouchable invincible',
+     a:'Tap away from your opponent twice, fast. You hop back and nothing can touch you for a moment.'},
+    {q:'Why do my attacks miss?',k:'miss missing whiff range reach far distance hit nothing',
+     a:'You are too far away! Every punch and kick has a reach. Walk or dash in first, then swing. Easy mode steps in for you.'},
+    {q:'How do I do a combo?',k:'combo chain jab straight finisher three punches',
+     a:'Tap Punch three times: Jab, Straight, then a Finisher like an uppercut or a spinning backfist. Add a Kick for a fourth hit!'},
+    {q:'What do the kicks do?',k:'kick kicks sweep knee roundhouse low push axe heel seven',
+     a:'Each Kick press is a different kick: roundhouse, low kick, push kick, knee, axe kick, spinning heel kick and a sweep that knocks them down.'},
+    {q:'How do I do flying attacks?',k:'fly flying jump air punch kick knee aerial',
+     a:'Press Jump, then Punch for a Flying Punch, Kick for a Flying Kick, or Power for a Flying Knee (it costs a quarter of your meter).'},
+    {q:'What is the Punch of Death?',k:'punch death pod half meter power slow motion',
+     a:'Fill your meter halfway and press Power: a slow-motion dash punch that knocks them flat. Powerhouses pay less meter for it.'},
+    {q:'What is a Super Move?',k:'super move full meter special ultimate ball barrage',
+     a:'Fill your meter all the way and press Power. Every champion’s super fits them: athletes shoot their sport’s ball, boxers throw a barrage, wrestlers slam, fliers dive, singers blast sound!'},
+    {q:'What is the Finisher?',k:'finisher finish cinematic ko five hit',
+     a:'Full meter and your opponent under a quarter health? Press Power for a five-hit cinematic FINISHER. Boom!'},
+    {q:'How do I block and parry?',k:'block parry guard shield defend defense break',
+     a:'Hold S (or let your champion block on their own). Block right as a hit lands for a PARRY: no damage, and they are wide open. Block too long and your guard breaks!'},
+    {q:'What is a Counter?',k:'counter wind up interrupt extra damage',
+     a:'Hit them while they wind up a move. COUNTER! It does 35% more damage.'},
+    {q:'How do I beat someone who blocks?',k:'blocking turtle grab throw beat blocker stuck',
+     a:'Grab them! Press G, or kick: kicks go through a block better than punches, and Wrestlers turn kicks into throws.'},
+    {q:'What are the fighting styles?',k:'style styles boxer kickboxer wrestler brawler martial speedster powerhouse',
+     a:'Seven styles: Boxer (punches +20%), Kickboxer (kicks +20%), Wrestler (throws +40%), Brawler (big knockback), Martial Artist (flying +25%), Speedster (recovers faster), Powerhouse (cheaper Punch of Death).',go:'moves',gl:'See styles'},
+    {q:'How do I unlock champions?',k:'unlock buy credits coins owned locked new champion get',
+     a:'Win fights to earn credits and chests, then spend credits in the champion picker. Rarer champions cost more!',go:'icons',gl:'Champion picker'},
+    {q:'What are rarities?',k:'rarity rare epic legendary majestic ultimate mythic common colors',
+     a:'From Common up to Rare, Epic, Legendary, Majestic, Ultimate and Mythic. The rarest ones have more health and power.'},
+    {q:'Which champion is good for beginners?',k:'beginner beginners easy best first start who should recommend',
+     a:'Boxers are simple: just tap Punch! Try Superman or Batman, or pick a Speedster if you like moving fast.'},
+    {q:'How do I change the difficulty?',k:'difficulty easy normal hard too hard too easy cheap unfair',
+     a:'Open ⚙️ Settings and pick Easy, Normal or Hard. Easy steps in for you and slows the computer down; Hard makes it clever.',go:'gfx',gl:'Open Settings'},
+    {q:'How do I play with a friend?',k:'friend friends two 2 players online code room join local same device multiplayer versus',
+     a:'Online: one of you makes a room and shares the 4-letter code, the other taps Join. Same device: pick 2 Players and share the keyboard or screen.',go:'online',gl:'Play with a friend'},
+    {q:'What game modes are there?',k:'modes mode arcade ladder rush dummy giant brawl best of 3 daily',
+     a:'Quick Fight, Best of 3, Arcade Ladder, 60-Second Rush, Smash the Dummy, Giant Battle, Power-Up Brawl and a Daily Challenge.',go:'ladder',gl:'Arcade Ladder'},
+    {q:'What is the Daily Challenge?',k:'daily challenge today reward gold chest 2500',
+     a:'A new challenge every day, worth 2,500 credits and a Gold Chest. Come back tomorrow for the next one!',go:'daily',gl:'Today’s challenge'},
+    {q:'What are chests and trophies?',k:'chest chests trophy trophies rewards prizes diamond gold silver',
+     a:'Every win drops a chest: Wooden, Silver, Gold or Diamond, full of credits. Twenty trophies pay credits the moment you earn them.',go:'trophies',gl:'Trophies'},
+    {q:'The game is slow. What do I do?',k:'slow lag laggy fps frame rate choppy stutter performance speed up',
+     a:'Open ⚙️ Settings and pick Performance, or let Auto choose. Turning off weather and particles helps older phones.',go:'gfx',gl:'Open Settings'},
+    {q:'How do I turn the sound off?',k:'sound mute quiet volume announcer music noise',
+     a:'Tap the Sound button at the top. It mutes the announcer and the hits.'},
+    {q:'Is the game free?',k:'free cost pay money price buy purchase ads',
+     a:'Yes! Skyforge Champions is free, with no ads and nothing to buy. Everything is earned by fighting.'},
+    {q:'Does my progress save?',k:'save progress lost reset browser credits gone',
+     a:'Yes, in this browser. Keep using the same browser and device, and clearing site data would erase it.'},
+    {q:'What is The Movie?',k:'movie film owner secret key unlock cinema',
+     a:'A five-act film starring the owner’s champion. That one is Yaya’s secret, Champion!'},
+    {q:'Who made this game?',k:'made who creator author yaya made by',
+     a:'Yaya (YAYACR7) built Skyforge Champions, and all the art is drawn in code. I am Forge, the arena robot!'}
+  ];
+  var FORGE_HAND={superman:1,batman:1,wonderwoman:1,flash:1,lumen:1,peacemaker:1};
+  var forgeTimer=null, forgeBlink=0, forgeTalk=0;
+  function forgeWords(s){ return (s||'').toLowerCase().replace(/[^a-z0-9 ]+/g,' ').split(' ').filter(function(w){ return w.length>1; }); }
+  /* a champion counts as named when their whole name (or real name) appears
+     in the words typed; "dash" alone names Dash, "how do i dash" does not */
+  var FORGE_FILL={who:1,is:1,the:1,about:1,tell:1,me:1,what:1,whats:1,describe:1,show:1,info:1,on:1,of:1,champion:1};
+  function forgeHero(text){
+    var ws=forgeWords(text); if(!ws.length) return null;
+    var real=ws.filter(function(w){ return !FORGE_FILL[w]; }).length;
+    var pad=' '+ws.join(' ')+' ', best=null, bestN=0;
+    for(var i=0;i<HEROES.length;i++){
+      var h=HEROES[i], names=[h.name,h.real];
+      for(var j=0;j<2;j++){
+        var nw=forgeWords(names[j]); if(!nw.length||nw.join('').length<3) continue;
+        var key=' '+nw.join(' ')+' ';
+        if(pad.indexOf(key)>=0&&nw.length>bestN){ best={h:h,extra:real-nw.filter(function(w){ return !FORGE_FILL[w]; }).length}; bestN=nw.length; }
+      }
+    }
+    return best;
+  }
+  function forgeDescribe(h){
+    var st=styleOf(h), rr=RMAP[h.rar]||RMAP.common, b=buildOf(h);
+    var size=b.h>=1.15?'a giant':(b.h<=0.86?'small and quick':'average size');
+    var sup=FORGE_HAND[h.id]?('a one-of-a-kind super, '+(h.superName||'their own move')):SUPER_LABEL[superKind(h).t].toLowerCase();
+    return h.name+(h.cls?', '+h.cls:'')+': '+(/^[AEIOU]/.test(rr.n)?'an ':'a ')+rr.n+' '+st.n+', '+size+'. Power '+(h.pow||23)+', toughness '+(h.tough||108)+', speed '+(h.spd||1.1)+'. Super: '+sup+'.';
+  }
+  function forgeSay(text,go,gl){
+    $('forgeText').textContent=text;
+    var b=$('forgeGo'); b.hidden=!go; if(go){ b.textContent=gl||'Show me'; b.setAttribute('data-go',go); }
+    forgeTalk=22; tone(880,0.06,'square',0.025,1320); setTimeout(function(){ tone(1180,0.06,'square',0.02,980); },90);
+  }
+  function forgeMatch(text){
+    var ws=forgeWords(text); if(!ws.length) return FORGE_QA.slice();
+    var sc=FORGE_QA.map(function(e){
+      var hay=' '+e.q.toLowerCase()+' '+e.k+' ', n=0;
+      for(var i=0;i<ws.length;i++){ if(hay.indexOf(' '+ws[i]+' ')>=0) n+=2; else if(hay.indexOf(ws[i])>=0) n+=1; }
+      return {e:e,n:n};
+    }).filter(function(x){ return x.n>0; }).sort(function(a,b){ return b.n-a.n; });
+    return sc.map(function(x){ return x.e; });
+  }
+  function forgeChips(list){
+    var box=$('forgeChips'); box.innerHTML='';
+    list.slice(0,30).forEach(function(e){
+      var c=document.createElement('button'); c.type='button'; c.className='rarchip fchip'; c.textContent=e.q;
+      c.addEventListener('click',function(){ forgeSay(e.a,e.go,e.gl); $('forgeIn').value=''; });
+      box.appendChild(c);
+    });
+  }
+  function forgeAsk(){
+    var t=$('forgeIn').value, hero=forgeHero(t), list=forgeMatch(t);
+    forgeChips(list.length?list:FORGE_QA);
+    if(!t.trim()) return;
+    if(hero&&(list.length===0||hero.extra<=1)) forgeSay(forgeDescribe(hero.h),'icons','Champion picker');
+    else if(list.length) forgeSay(list[0].a,list[0].go,list[0].gl);
+    else forgeSay('Hmm, I don’t know that one yet, Champion! Try one of the questions below, or type a champion’s name.');
+  }
+  /* a little retro robot face, redrawn while the panel is open */
+  function forgeDraw(){
+    var c=$('forgeFace'); if(!c) return; var g=c.getContext('2d'), W2=c.width, H2=c.height;
+    g.clearRect(0,0,W2,H2);
+    var bob=Math.sin(Date.now()/420)*2;
+    g.save(); g.translate(W2/2,H2/2+bob);
+    g.fillStyle='#2B3E57'; g.fillRect(-6,-44,12,10); g.fillStyle='#FF5C4A'; g.beginPath(); g.arc(0,-48,5+Math.sin(Date.now()/200)*1,0,7); g.fill();
+    g.fillStyle='#3CF0FF'; g.fillRect(-36,-36,72,70);
+    g.fillStyle='#0D1622'; g.fillRect(-30,-30,60,46);
+    var open=forgeBlink>0?2:12;
+    g.fillStyle='#7CF5D5'; g.fillRect(-20,-18-open/2,14,open); g.fillRect(6,-18-open/2,14,open);
+    g.fillStyle='#FFD46B';
+    var mouth=forgeTalk>0?6+Math.abs(Math.sin(Date.now()/60))*8:4;
+    for(var i=-3;i<=3;i++) g.fillRect(i*7-2,8-mouth/2+(forgeTalk>0?Math.sin(Date.now()/50+i)*2:0),4,mouth);
+    g.fillStyle='#2B3E57'; g.fillRect(-42,-24,6,30); g.fillRect(36,-24,6,30);
+    g.restore();
+    if(forgeTalk>0) forgeTalk--;
+    if(forgeBlink>0) forgeBlink--; else if(Math.random()<0.02) forgeBlink=5;
+  }
+  function openForge(){
+    $('helpPanel').hidden=false;
+    if(!$('forgeChips').children.length){ forgeChips(FORGE_QA); forgeSay('Hi, Champion! I am Forge. Tap a question, or type a few words or a champion’s name.'); }
+    if(!forgeTimer) forgeTimer=setInterval(forgeDraw,70);
+    forgeDraw();
+  }
+  function closeForge(){ $('helpPanel').hidden=true; if(forgeTimer){ clearInterval(forgeTimer); forgeTimer=null; } }
+  $('helpBtn').addEventListener('click',openForge);
+  $('forgeClose').addEventListener('click',closeForge);
+  $('helpPanel').addEventListener('click',function(e){ if(e.target===$('helpPanel')) closeForge(); });
+  $('forgeIn').addEventListener('input',forgeAsk);
+  $('forgeIn').addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); forgeAsk(); } });
+  $('forgeGo').addEventListener('click',function(){
+    var k=$('forgeGo').getAttribute('data-go'), go=NEW_GO[k]; closeForge();
+    if(go&&(screen==='home'||k==='gfx')) go();
+    else if(go) flashMsg('Finish this fight first, then try it from the home screen!');
+  });
 
   /* three lozenges a side: filled for a champion still to come, hollow for
      one already knocked out */
@@ -11630,7 +11821,7 @@
     try{ localStorage.setItem('skyforge.sort',$('rsSort').value); }catch(e){}
   });
   window.addEventListener('keydown',function(e){
-    if(screen!=='home'||!$('gfxPanel').hidden||!$('newPanel').hidden) return;
+    if(screen!=='home'||!$('gfxPanel').hidden||!$('newPanel').hidden||!$('helpPanel').hidden) return;
     if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT'||e.target.tagName==='TEXTAREA')) return;
     if(e.code==='ArrowLeft'){ e.preventDefault(); stepHero(-1); }
     else if(e.code==='ArrowRight'){ e.preventDefault(); stepHero(1); }
