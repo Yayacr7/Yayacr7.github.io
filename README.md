@@ -129,6 +129,22 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
+### The Champion Shop
+
+A new 🛒 **Shop** tab. The 31 Legendary, Majestic, Ultimate and Mythic
+champions can be bought with the credits you earn by fighting, as a second
+road beside the Trial of Three (which still wins them for free).
+
+- Prices: Legendary 5,000, Majestic 12,000, Ultimate 25,000, Mythic 60,000.
+  A good player earns roughly 10,000 credits a day, so the first comes within
+  a day or two and the rarest within about a week.
+- Each champion sits in a wrapped gift until bought; tap the box to peek
+  inside. Buying unwraps it with confetti, and a Pick button takes you
+  straight to them in the picker.
+- A dot on the Shop tab shows when you can afford someone new. The picker's
+  lock message now names the price too, and Forge explains the shop.
+- **Nothing costs real money.** There is no payment of any kind in the game.
+
 ### 45 new sports icons
 
 45 icons from 14 other sports join the roster, which grows from 287 to 332.

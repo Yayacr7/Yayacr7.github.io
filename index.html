@@ -92,7 +92,7 @@
   body.retro .fbtn{border-color:rgba(60,240,255,.65)!important;box-shadow:0 0 12px rgba(60,240,255,.3);font-family:Orbitron,sans-serif}
   body.retro .funmodes .fm,body.retro .movelist>div,body.retro .tro,body.retro .daily2{border:1px solid rgba(60,240,255,.22)}
   body.retro .gfxbox{border-color:#3CF0FF;box-shadow:0 0 30px rgba(60,240,255,.35),0 24px 60px rgba(0,0,0,.6)}
-  .tabs{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;
+  .tabs{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
     margin:14px 0 12px;padding:8px;background:rgba(10,16,26,.92);backdrop-filter:blur(6px);
     border:2px solid var(--edge);border-radius:14px}
   .tabs button{position:relative;font-family:"Saira Condensed",sans-serif;font-weight:800;font-size:1.02rem;
@@ -127,8 +127,8 @@
     .tabs .tl{display:none}
     .tabs .ts{display:inline}
     .tabs{gap:3px;padding:5px}
-    .tabs button{font-size:.78rem;padding:8px 2px;white-space:nowrap}
-    body.retro .tabs button{font-size:.62rem}
+    .tabs button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.64rem;padding:6px 0;white-space:nowrap;min-width:0;line-height:1.1}
+    body.retro .tabs button{font-size:.5rem}
     .pkright .roster{max-height:330px;grid-template-columns:repeat(auto-fill,minmax(84px,1fr))}
     .pkright .roster .card .row{display:none}
     .pktip{display:none}
@@ -337,6 +337,30 @@
   .obtns{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(214px,1fr))}
   .buy.danger{border-color:rgba(255,110,90,.5)}
   .buy.danger:hover:not(:disabled){border-color:#FF6E5A}
+  .shopnote{margin:0;font-size:.86rem;color:var(--dim);line-height:1.45}
+  .shopnote b{color:var(--gold)}
+  .shopgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+  .shopc{position:relative;display:flex;flex-direction:column;gap:6px;background:var(--panel-2);border:2px solid var(--edge);
+    border-radius:14px;padding:10px;text-align:left;color:var(--ice)}
+  .shopc canvas{width:100%;aspect-ratio:1/1;border-radius:9px;background:#7EC0EC;display:block}
+  .shopc .nm{font-family:"Saira Condensed",sans-serif;font-weight:800;font-size:1.05rem;line-height:1;text-transform:uppercase}
+  .shopc .rar{font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+  .shopc .tr{font-size:.74rem;color:var(--dim);line-height:1.35;min-height:2.7em}
+  .shopc .price{font-family:"Saira Condensed",sans-serif;font-size:1.1rem;color:var(--gold)}
+  .shopc .btn{padding:8px 10px;font-size:.9rem;width:100%}
+  .shopc .gift{position:absolute;top:8px;right:8px;font-size:1.5rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+  .shopc.owned{border-color:var(--gold)}
+  .shopc.owned .price{color:#8BE8A8}
+  .shopc.can{box-shadow:0 0 0 3px rgba(247,201,72,.2)}
+  .shopc .wrap{position:absolute;inset:10px 10px auto 10px;aspect-ratio:1/1;border-radius:9px;display:grid;place-items:center;
+    background:repeating-linear-gradient(45deg,#C8102E 0 14px,#A00C24 14px 28px);overflow:hidden}
+  .shopc .wrap:before,.shopc .wrap:after{content:"";position:absolute;background:#F7C948}
+  .shopc .wrap:before{left:calc(50% - 9px);top:0;bottom:0;width:18px}
+  .shopc .wrap:after{top:calc(50% - 9px);left:0;right:0;height:18px}
+  .shopc .wrap span{position:relative;font-size:3rem;filter:drop-shadow(0 3px 5px rgba(0,0,0,.5))}
+  .shopc.peek .wrap{opacity:0;transition:opacity .35s}
+  @keyframes unwrap{0%{transform:scale(1)}40%{transform:scale(1.08) rotate(-3deg)}100%{transform:scale(1)}}
+  .shopc.pop{animation:unwrap .6s cubic-bezier(.2,1.4,.4,1)}
   .card.locked{opacity:.55}
   .card.locked .nm{color:var(--gold)}
   .card .lockTag{position:absolute;top:6px;left:6px;font-family:"Saira Condensed",sans-serif;
@@ -535,6 +559,7 @@
       <p class="gfxnow">Everything that's been added to Skyforge Champions. Tap a button to try it!</p>
       <div class="wngrid">
         <div class="wn"><span class="wi">🎮</span><div><b class="wt">Easier controls</b><p>Just four big buttons now: <b>Punch, Kick, Jump</b> and <b>Power</b>. Your champion even blocks on their own sometimes.</p></div></div>
+        <div class="wn"><span class="wi">🛒</span><div><b class="wt">The Champion Shop</b><p>A new <b>Shop</b> tab. The <b>31 Legendary, Majestic, Ultimate and Mythic</b> champions sit in wrapped gifts, and you buy them with the <b>credits you earn by fighting</b>: 5,000 for a Legendary up to 60,000 for a Mythic. Tap a gift to peek inside. <b>Nothing costs real money</b>, and the Trial of Three still wins them for free.</p><button class="btn ghost" data-go="shop">Open the Shop</button></div></div>
         <div class="wn"><span class="wi">🏟️</span><div><b class="wt">45 new sports icons</b><p><b>45 icons from 14 other sports</b> join the arena, and the footballers and basketball players stay. New: <b>Mahomes, Kelce and Jerry Rice</b> (gridiron), <b>Ovechkin, Crosby and McDavid</b> (hockey), <b>Nadal, Djokovic, Alcaraz, Osaka and Swiatek</b> (tennis), <b>Babe Ruth, Judge and Jackie Robinson</b> (baseball), <b>Kohli</b>, <b>Rory</b>, <b>Tyson, Mayweather and Fury</b> (boxing), <b>McGregor, Khabib, Rousey, Jon Jones and Adesanya</b> (MMA), <b>the Undertaker, Rey Mysterio, Stone Cold and Hogan</b> (wrestling), <b>Jesse Owens and Sha'Carri</b> (track), <b>Verstappen, Senna and Schumacher</b> (racing), <b>Phelps and Ledecky</b> (swimming), <b>Tony Hawk</b> and <b>Shaun White</b>. Each has their own trait, super and two kits.</p><button class="btn ghost" data-go="icons">See the icons</button></div></div>
         <div class="wn"><span class="wi">🧬</span><div><b class="wt">104 champions fight differently now</b><p>Every champion already had a named trait, but 104 of them were the same quiet damage bonus. Not any more: <b>Violet</b> starts inside a force field, <b>Mei</b> goes panda below half health, <b>Dash and Jesse Owens</b> sprint, <b>Elastigirl and Tyson Fury</b> reach further, <b>Carl and the Undertaker</b> hurt whoever hits them, <b>Larfleeze and Mayweather</b> steal your power meter, <b>Adesanya</b> kicks harder, <b>Mike Tyson</b> punches harder, and a hundred more. Read each trait in the champion's details.</p></div></div>
         <div class="wn"><span class="wi">🤖</span><div><b class="wt">Meet Forge, the talking help robot</b><p>Stuck? Tap <b>🤖 Help</b> at the top. Forge <b>talks out loud</b> and answers questions about <b>controls, moves, modes and champions</b>: tap a question, type, or press <b>🎤</b> and ask with your voice (Chrome, Edge and Android). Type a champion's name to hear all about them. Built right in, free, and works offline.</p><button class="btn ghost" data-go="forge">Ask Forge</button></div></div>
@@ -708,6 +733,7 @@
       <button data-tab="champ" class="on">🥊 <span class="tl">Champion</span><span class="ts">Fighter</span></button>
       <button data-tab="play">🎮 <span class="tl">Play</span><span class="ts">Play</span></button>
       <button data-tab="progress">🏆 <span class="tl">Progress</span><span class="ts">Goals</span><i class="tdot" id="dotProg"></i></button>
+      <button data-tab="shop">🛒 <span class="tl">Shop</span><span class="ts">Shop</span><i class="tdot" id="dotShop"></i></button>
       <button data-tab="howto">📖 <span class="tl">How to play</span><span class="ts">Help</span></button>
     </nav>
 
@@ -1072,6 +1098,14 @@
           </div>
         </div>
       </div>
+    </section>
+    </div>
+
+    <div class="tabpane" data-pane="shop" hidden>
+    <section class="sec">
+      <h3>🛒 Champion shop <span class="mReady" id="shTag" hidden></span></h3>
+      <p class="shopnote" id="shNote"></p>
+      <div class="shopgrid" id="shop"></div>
     </section>
     </div>
 
@@ -11321,7 +11355,7 @@
   /* ---------- What's New ----------
      Opens by itself the first time someone loads this version, and any
      time from the top bar. Remembered per browser. */
-  var NEW_VER='2026-10-n';
+  var NEW_VER='2026-10-o';
   function newSeen(){ try{ return localStorage.getItem('skyforge.seenNew')===NEW_VER; }catch(e){ return true; } }
   function markNewSeen(){ try{ localStorage.setItem('skyforge.seenNew',NEW_VER); }catch(e){} $('newBtn').classList.remove('unseen'); }
   function openNew(){
@@ -11344,6 +11378,7 @@
     dummy:function(){ startDummy(); }, ladder:function(){ startLadder(); }, bo3:function(){ startBo3(); },
     brawl:function(){ startBrawl(); }, movie:function(){ if(isOwner()) startMovie(); }, gfx:function(){ openGfx(); },
     forge:function(){ openForge(); },
+    shop:function(){ showTab('shop',true); },
     moves:function(){ showTab('howto'); document.querySelector('.movelist').scrollIntoView({behavior:'smooth',block:'start'}); },
     trophies:function(){ showTab('progress'); $('trophies').scrollIntoView({behavior:'smooth',block:'start'}); },
     daily:function(){ showTab('progress'); document.querySelector('.daily2').scrollIntoView({behavior:'smooth',block:'center'}); }};
@@ -11351,7 +11386,7 @@
     b.addEventListener('click',function(){
       var go=NEW_GO[b.getAttribute('data-go')]; closeNew();
       /* a mode can only start from the home screen */
-      if(go&&(screen==='home'||b.getAttribute('data-go')==='gfx'||b.getAttribute('data-go')==='forge')) go();
+      if(go&&(screen==='home'||b.getAttribute('data-go')==='gfx'||b.getAttribute('data-go')==='forge'||b.getAttribute('data-go')==='shop')) go();
       else if(go) flashMsg('Finish this fight first, then try it from the home screen!');
     });
   });
@@ -11401,8 +11436,8 @@
      a:'Grab them! Press G, or kick: kicks go through a block better than punches, and Wrestlers turn kicks into throws.'},
     {q:'What are the fighting styles?',k:'style styles boxer kickboxer wrestler brawler martial speedster powerhouse',
      a:'Seven styles: Boxer (punches +20%), Kickboxer (kicks +20%), Wrestler (throws +40%), Brawler (big knockback), Martial Artist (flying +25%), Speedster (recovers faster), Powerhouse (cheaper Punch of Death).',go:'moves',gl:'See styles'},
-    {q:'How do I unlock champions?',k:'unlock buy credits coins owned locked new champion get',
-     a:'Win fights to earn credits and chests, then spend credits in the champion picker. Rarer champions cost more!',go:'icons',gl:'Champion picker'},
+    {q:'How do I unlock champions?',k:'unlock buy credits coins owned locked new champion get shop gift legendary mythic',
+     a:'Common, Rare and Epic champions are free. Legendary and rarer ones are gifts in the \uD83D\uDED2 Shop: 5,000 to 60,000 credits, earned by fighting. Or win them in the Trial of Three!',go:'shop',gl:'Open the Shop'},
     {q:'What are rarities?',k:'rarity rare epic legendary majestic ultimate mythic common colors',
      a:'From Common up to Rare, Epic, Legendary, Majestic, Ultimate and Mythic. The rarest ones have more health and power.'},
     {q:'Which champion is good for beginners?',k:'beginner beginners easy best first start who should recommend',
@@ -11798,7 +11833,7 @@
     fpsCount(t);
     /* portraits are static art. Paint each once, keep only the selected one
        breathing, and stop entirely during a fight. Biggest saving in the loop. */
-    if(screen==='home'&&(tick%4)===0){ drawCards(); drawSkinCards(); }
+    if(screen==='home'&&(tick%4)===0){ drawCards(); drawSkinCards(); drawShopCards(); }
     if(screen==='fight'&&me){
       if(tick%30===0) moveUI();
       var pl=netGuestLive()?foe:me, op=(pl===me)?foe:me;
@@ -12028,6 +12063,94 @@
     save.arena=keep; skyCache=null;
   }
 
+  /* ================= the champion shop =================
+     The 31 Legendary-and-rarer champions can be bought with the game's own
+     credits, as a second road beside the Trial of Three. Each one sits in a
+     wrapped gift until you can afford it; tap the box to peek at who is
+     inside. Prices are set so a good player reaches the first within a day
+     or two of play and the rarest within a week or so. */
+  var SHOP_PRICE={legendary:5000,majestic:12000,ultimate:25000,mythic:60000};
+  function shopPrice(h){ return SHOP_PRICE[h.rar]||5000; }
+  var shopCards=[], shopDrawn={};
+  function buildShop(){
+    var wrap=$('shop'); if(!wrap) return;
+    wrap.innerHTML=''; shopCards.length=0; shopDrawn={};
+    var list=LEGENDS.slice().sort(function(a,b){ return (shopPrice(a)-shopPrice(b))||(rarRank(a)-rarRank(b)); });
+    list.forEach(function(h,i){
+      var R=rarOf(h), idx=HEROES.indexOf(h);
+      var d=document.createElement('div'); d.className='shopc';
+      var c=document.createElement('canvas'); c.width=260; c.height=260; d.appendChild(c);
+      var w=document.createElement('div'); w.className='wrap'; w.innerHTML='<span>\uD83C\uDF81</span>';
+      w.title='Tap to peek'; d.appendChild(w);
+      var nm=document.createElement('span'); nm.className='nm'; nm.textContent=h.name; d.appendChild(nm);
+      var rr=document.createElement('span'); rr.className='rar'; rr.textContent=R.n; rr.style.color=R.c; d.appendChild(rr);
+      var tr=document.createElement('span'); tr.className='tr'; tr.textContent=h.trait?h.trait.name+': '+h.trait.desc:''; d.appendChild(tr);
+      var pr=document.createElement('span'); pr.className='price'; d.appendChild(pr);
+      var b=document.createElement('button'); b.className='btn'; b.type='button'; d.appendChild(b);
+      w.addEventListener('click',function(){ d.classList.toggle('peek'); tone(620,0.05,'triangle',0.03,880); });
+      b.addEventListener('click',function(){ shopAct(h,idx,d); });
+      wrap.appendChild(d);
+      var cc=c.getContext('2d'); cc.setTransform(2,0,0,2,0,0);
+      shopCards.push({ctx:cc,h:h,el:d,price:pr,btn:b,wrap:w,idx:idx});
+    });
+    shopRefresh();
+  }
+  function shopRefresh(){
+    if(!shopCards.length) return;
+    var can=0, left=0;
+    shopCards.forEach(function(S){
+      var owned=!!save.legends[S.h.id], price=shopPrice(S.h), ok=save.credits>=price;
+      S.el.classList.toggle('owned',owned); S.el.classList.toggle('can',!owned&&ok);
+      S.wrap.hidden=owned;
+      if(owned){ S.price.textContent='Owned'; S.btn.textContent='Pick'; S.btn.disabled=false; S.btn.className='btn ghost'; }
+      else{
+        S.price.textContent=price.toLocaleString()+' credits';
+        S.btn.textContent=ok?'Buy':('Need '+(price-save.credits).toLocaleString()+' more');
+        S.btn.disabled=!ok; S.btn.className='btn';
+        left++; if(ok) can++;
+      }
+    });
+    var tag=$('shTag'); tag.hidden=(left===0); tag.textContent=left?(left+' to collect'):'';
+    $('dotShop').classList.toggle('show',can>0);
+    $('shNote').innerHTML=left
+      ? 'Legendary and rarer champions, for <b>credits you earn by fighting</b>. Nothing here costs real money. '
+        +'Tap a gift to peek inside. You have <b>'+save.credits.toLocaleString()+'</b> credits'
+        +(can?', enough for <b>'+can+'</b> of them right now.':'.')
+        +' The <b>Trial of Three</b> still wins them for free.'
+      : 'Every champion in the shop is yours. The whole roster is unlocked!';
+  }
+  function shopAct(h,idx,d){
+    if(screen!=='home') return;
+    if(save.legends[h.id]){ selectHero(idx,true); showTab('champ',true); return; }
+    var price=shopPrice(h);
+    if(save.credits<price){ flashMsg('Not enough credits yet. Keep fighting!'); tone(240,0.2,'sawtooth',0.04,120); return; }
+    save.credits-=price; save.legends[h.id]=1; rosterDirty=true; ev('shop'); store();
+    d.classList.add('peek','pop');
+    confetti(); say(h.name+' unlocked!',true);
+    tone(660,0.12,'triangle',0.05,990); setTimeout(function(){ tone(1000,0.28,'triangle',0.05,1450); },140);
+    flashMsg(h.name+' is yours! Tap Pick to fight as them.');
+    buildRoster(); renderUI(); buildLegend();
+  }
+  function drawShopCards(){
+    var pane=document.querySelector('.tabpane[data-pane="shop"]'); if(!pane||pane.hidden) return;
+    for(var i=0;i<shopCards.length;i++){
+      if(shopDrawn[i]&&(tick%12)!==0) continue;
+      shopDrawn[i]=1;
+      var S=shopCards[i], g=S.ctx, h=S.h;
+      g.clearRect(0,0,130,130);
+      var sg=g.createLinearGradient(0,0,0,130);
+      sg.addColorStop(0,'#1A2550'); sg.addColorStop(0.6,'#3B2A7A'); sg.addColorStop(1,'#6B3FA8');
+      g.fillStyle=sg; g.fillRect(0,0,130,130);
+      g.fillStyle='rgba(247,201,72,.25)'; g.beginPath(); g.arc(65,70,46,0,6.283); g.fill();
+      var ghost={base:h,h:look(h,0),tier:3,facing:1,x:0,lunge:0,dx:0,air:0,ph:i*1.3,
+        pose:lerpPose(POSE.idle,POSE.breathe,(Math.sin(tick*0.045+i*1.3)+1)/2)};
+      var cfit=1.02/Math.max(1,buildOf(h).h);
+      g.save(); g.translate(65,124); g.scale(cfit,cfit); g.translate(-0,-GY);
+      try{ drawFighter(g,ghost,tick+i*30,1.0); }catch(e){}
+      g.restore();
+    }
+  }
+
   var skinCards=[];
   /* the legend of the week, drawn into its own little canvas */
   function buildLegend(){
@@ -12144,6 +12267,7 @@
   function renderUI(){
     var h=HEROES[save.sel], p=prog(h), s=stats(h);
     $('credits').textContent=save.credits;
+    shopRefresh();
     $('tmBest').textContent='Squads beaten: '+(save.teamWins||0);
     $('trBest').textContent='Trophies: '+(save.tourWins||0);
     $('svBest').textContent='Best run: '+(save.survBest||0)+' rounds';
@@ -12216,7 +12340,7 @@
     var lockedPick=(isLocked(h)&&!legendOwned(h));
     var fb=$('bFight'), rb=$('bRaid');
     fb.disabled=lockedPick; rb.disabled=lockedPick;
-    fb.textContent=lockedPick?('Locked — '+rarOf(h).n+' · win the Trial of Three'):'Enter the arena';
+    fb.textContent=lockedPick?('Locked — '+rarOf(h).n+' · '+shopPrice(h).toLocaleString()+' credits in the Shop, or win the Trial of Three'):'Enter the arena';
     $('dMaxOne').textContent='Level 60, Legendary armour, every version — for '+h.name;
     $('dAllLegends').textContent=legendsOwnedCount()+' of '+LEGENDS.length+' won so far';
     $('rBestHero').textContent='Best with this champion: floor '+(p.raid||0);
@@ -12225,7 +12349,7 @@
   }
   buildRoster(); buildArenas(); buildSkins(); buildMissions(); buildLegend();
   buildSquadPickers(); ownerLights(); adminRefresh(); buildRarChips();
-  buildStory(); buildFun(); buildDaily(); buildLeader(); renderUI();
+  buildShop(); buildStory(); buildFun(); buildDaily(); buildLeader(); renderUI();
   if($('lbName')) $('lbName').value=save.lbName||'';
   lbRefresh(true);
 
