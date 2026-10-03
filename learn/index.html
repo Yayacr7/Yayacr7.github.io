@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Money &amp; Deals School</title>
 <meta name="description" content="Plain-English lessons on personal finance, business finance and negotiation — with calculators, practice problems that check your work, and ready-to-use AI prompts.">
 <style>
@@ -17,14 +17,14 @@
     --bg:#141513; --surface:#1d1f1c; --surface-2:#252824; --text:#ecebe6; --muted:#a6a59e;
     --border:#34372f; --accent:#5cc0a1; --accent-ink:#0d1f19; --accent-soft:#1d3a31;
     --good:#6fd08f; --good-soft:#1b3323; --bad:#ff8a80; --bad-soft:#3d1f1c; --warn:#f2c46b; --warn-soft:#3a2f17;
-    --code-bg:#22251f; --shadow:none;
+    --code-bg:#22251f; --shadow:none; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#141513; --surface:#1d1f1c; --surface-2:#252824; --text:#ecebe6; --muted:#a6a59e;
   --border:#34372f; --accent:#5cc0a1; --accent-ink:#0d1f19; --accent-soft:#1d3a31;
   --good:#6fd08f; --good-soft:#1b3323; --bad:#ff8a80; --bad-soft:#3d1f1c; --warn:#f2c46b; --warn-soft:#3a2f17;
-  --code-bg:#22251f; --shadow:none;
+  --code-bg:#22251f; --shadow:none; color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -42,7 +42,7 @@ th,td{border:1px solid var(--border);padding:.45em .6em;text-align:left;vertical
 th{background:var(--surface-2)}
 .table-wrap{overflow-x:auto}
 
-.topbar{position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:10px 16px}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:10px 16px}
 .brand{white-space:nowrap;font-weight:700;letter-spacing:.2px;text-decoration:none;color:var(--text)}
 .brand span{color:var(--accent)}
 .spacer{flex:1}
