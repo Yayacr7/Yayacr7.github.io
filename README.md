@@ -129,6 +129,31 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
+### Home screen: picker and tabs
+
+The home page used to be one long list: about 15,000 pixels tall on a
+computer and 45,000 on a phone, mostly the 250 champion cards, with every
+mode underneath them. It's now about 2,000 pixels on a computer and 2,400 on
+a phone:
+
+- **Pick your champion** sits right under the arena. On the left is the
+  chosen champion: stats, rarity, **fighting style**, trait and super move,
+  plus Train, Forge and **Enter the arena**. On the right, all 250 fighters
+  are in a compact grid that scrolls **inside its own box**, with search,
+  rarity filters and a **Sort** menu (Roster, Rarity, My level, My wins, A–Z).
+- **◀ ▶ buttons, the arrow keys, and 🎲 Random** flip through champions
+  (Random only picks ones you own). They follow your current search and sort.
+- **Tabs** split everything else, and the tab bar stays pinned to the top
+  while you scroll:
+  - **🥊 Champion:** the picker and your champion's versions.
+  - **🎮 Play:** Quick Fight and every other mode, the legendary event, story,
+    raid, team, survival, tournament, arenas and the movie.
+  - **🏆 Progress:** daily bonus, daily challenge, missions, trophies and the
+    leaderboard. A red dot means something is ready to collect.
+  - **📖 How to play:** the move list and keys.
+- The last tab and sort you used are remembered. On phones the tabs read
+  Fighter, Play, Goals and Help so they fit on one line.
+
 ### Retro-Future style
 
 The game's default look is a mix of retro and futuristic, synthwave style:

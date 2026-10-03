@@ -92,6 +92,50 @@
   body.retro .fbtn{border-color:rgba(60,240,255,.65)!important;box-shadow:0 0 12px rgba(60,240,255,.3);font-family:Orbitron,sans-serif}
   body.retro .funmodes .fm,body.retro .movelist>div,body.retro .tro,body.retro .daily2{border:1px solid rgba(60,240,255,.22)}
   body.retro .gfxbox{border-color:#3CF0FF;box-shadow:0 0 30px rgba(60,240,255,.35),0 24px 60px rgba(0,0,0,.6)}
+  .tabs{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;
+    margin:14px 0 12px;padding:8px;background:rgba(10,16,26,.92);backdrop-filter:blur(6px);
+    border:2px solid var(--edge);border-radius:14px}
+  .tabs button{position:relative;font-family:"Saira Condensed",sans-serif;font-weight:800;font-size:1.02rem;
+    text-transform:uppercase;letter-spacing:.05em;color:var(--dim);background:transparent;border:0;border-radius:10px;
+    padding:10px 4px;cursor:pointer}
+  .tabs button.on{color:#2E2103;background:linear-gradient(180deg,#FFDD72,#EDAF16)}
+  .tabs .tdot{position:absolute;top:5px;right:8px;width:9px;height:9px;border-radius:50%;background:#FF5C4A;display:none}
+  .tabs .tdot.show{display:block}
+  .tabpane{display:flex;flex-direction:column;gap:14px}
+  .tabpane[hidden]{display:none}
+  .picker .pkhead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .pknav{display:flex;gap:6px}
+  .pknav .btn{width:auto;padding:8px 14px;font-size:.95rem}
+  .pkbody{display:grid;gap:12px;grid-template-columns:1fr}
+  @media(min-width:860px){ .pkbody{grid-template-columns:minmax(300px,380px) 1fr} }
+  .pkleft .detail{grid-template-columns:1fr!important;height:100%;box-sizing:border-box}
+  .pkright{display:flex;flex-direction:column;min-width:0;background:var(--panel);border:2px solid var(--edge);
+    border-radius:14px;padding:12px}
+  .pkright .rarchips{margin-bottom:8px}
+  .findbar select{flex:none;font:inherit;font-size:.82rem;font-weight:700;color:var(--ice);background:#0D1622;
+    border:2px solid #2B3E57;border-radius:9px;padding:8px}
+  .pkright .roster{max-height:470px;overflow-y:auto;overscroll-behavior:contain;padding:2px 6px 2px 2px;
+    grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px;align-content:start}
+  .pkright .roster .card{padding:6px;gap:4px}
+  .pkright .roster .card .nm{font-size:.8rem}
+  .pkright .roster .card .lv{font-size:.58rem}
+  .pkright .roster .card .pw{font-size:.8rem}
+  .pkright .roster .card .rarTag,.pkright .roster .card .lockTag{font-size:.5rem}
+  .pktip{margin:8px 0 0;font-size:.76rem;color:var(--dim)}
+  .tabs .ts{display:none}
+  @media(max-width:620px){
+    .tabs .tl{display:none}
+    .tabs .ts{display:inline}
+    .tabs{gap:3px;padding:5px}
+    .tabs button{font-size:.78rem;padding:8px 2px;white-space:nowrap}
+    body.retro .tabs button{font-size:.62rem}
+    .pkright .roster{max-height:330px;grid-template-columns:repeat(auto-fill,minmax(84px,1fr))}
+    .pkright .roster .card .row{display:none}
+    .pktip{display:none}
+  }
+  body.retro .tabs{border-color:rgba(60,240,255,.4);box-shadow:0 0 16px rgba(60,240,255,.18)}
+  body.retro .tabs button{font-family:Orbitron,sans-serif;font-size:.82rem}
+  body.retro .pkright,body.retro .pkleft .detail{border-color:rgba(60,240,255,.3)}
   .gfxpanel{position:fixed;inset:0;z-index:50;background:rgba(4,8,14,.72);display:grid;place-items:center;padding:16px}
   .gfxbox{background:var(--panel-2);border:2px solid var(--gold);border-radius:15px;padding:18px;max-width:640px;width:100%;
     max-height:92vh;overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.6)}
@@ -436,6 +480,7 @@
       <p class="gfxnow">Everything that's been added to Skyforge Champions. Tap a button to try it!</p>
       <div class="wngrid">
         <div class="wn"><span class="wi">🎮</span><div><b class="wt">Easier controls</b><p>Just four big buttons now: <b>Punch, Kick, Jump</b> and <b>Power</b>. Your champion even blocks on their own sometimes.</p></div></div>
+        <div class="wn"><span class="wi">🧭</span><div><b class="wt">New champion picker</b><p>Your champion and all <b>250</b> fighters on one screen, with <b>sort</b>, <b>◀ ▶</b> arrows and <b>🎲 Random</b>. Everything else lives in tabs: <b>Champion, Play, Progress, How to play</b>. Much less scrolling!</p></div></div>
         <div class="wn"><span class="wi">🌆</span><div><b class="wt">Retro-Future style</b><p>Neon glow, a <b>CRT screen</b> shimmer, <b>arcade pixel</b> lettering, glitch flashes on big hits, a <b>chiptune soundtrack</b>, and a new arena: the <b>Neon Grid</b>. Switch back to Classic in Graphics.</p><button class="btn ghost" data-go="neon">Fight in the Neon Grid</button></div></div>
         <div class="wn"><span class="wi">⚡</span><div><b class="wt">Smoother, faster combat</b><p>Moves now flow straight into each other: <b>Punch, Punch, Punch, Kick</b> chains with no waiting. Attacks <b>step in</b> to close the gap, and the computer strings combos too.</p><button class="btn ghost" data-go="fight">Try it</button></div></div>
         <div class="wn"><span class="wi">🚀</span><div><b class="wt">Flying attacks</b><p>Press <b>Jump</b>, then <b>Punch</b> for a Flying Punch, <b>Kick</b> for a Flying Kick, or <b>Power</b> for a Flying Knee.</p><button class="btn ghost" data-go="fight">Fight now</button></div></div>
@@ -561,34 +606,78 @@
 
 
   <div id="homeUI">
-    <section class="sec">
-      <h3>Your champions <span class="mReady" id="rsCount" hidden></span></h3>
-      <div class="rarchips" id="rarChips"></div>
-      <div class="findbar">
-        <input id="rsFind" type="search" autocomplete="off" spellcheck="false"
-               placeholder="Search champions — name, real name or type">
-        <button class="btn ghost" id="rsClear" hidden>Clear</button>
+    <nav class="tabs" id="homeTabs" aria-label="Home sections">
+      <button data-tab="champ" class="on">🥊 <span class="tl">Champion</span><span class="ts">Fighter</span></button>
+      <button data-tab="play">🎮 <span class="tl">Play</span><span class="ts">Play</span></button>
+      <button data-tab="progress">🏆 <span class="tl">Progress</span><span class="ts">Goals</span><i class="tdot" id="dotProg"></i></button>
+      <button data-tab="howto">📖 <span class="tl">How to play</span><span class="ts">Help</span></button>
+    </nav>
+
+    <div class="tabpane" data-pane="champ">
+    <section class="sec picker">
+      <div class="pkhead">
+        <h3>Pick your champion <span class="mReady" id="rsCount" hidden></span></h3>
+        <div class="pknav">
+          <button class="btn ghost" id="pkPrev" aria-label="Previous champion">◀</button>
+          <button class="btn ghost" id="pkRand">🎲 Random</button>
+          <button class="btn ghost" id="pkNext" aria-label="Next champion">▶</button>
+        </div>
       </div>
-      <p class="rsNone" id="rsNone" hidden>Nobody by that name.</p>
-      <div class="roster" id="roster"></div>
+      <div class="pkbody">
+        <div class="pkleft">
+          <div class="detail">
+        <div class="stats">
+          <p class="dname" id="dName">Superman <span class="tierTag" id="dTier">Standard steel</span></p>
+          <div class="srow"><span class="k">Power</span><div class="track"><div class="fill" id="fPow"></div></div><span class="v" id="vPow">0</span></div>
+          <div class="srow"><span class="k">Toughness</span><div class="track"><div class="fill" id="fTough"></div></div><span class="v" id="vTough">0</span></div>
+          <div class="srow"><span class="k">Speed</span><div class="track"><div class="fill" id="fSpd"></div></div><span class="v" id="vSpd">0</span></div>
+          <div class="srow"><span class="k">Level <span id="vLvl">1</span></span><div class="track"><div class="fill" id="fXp"></div></div><span class="v" id="vXp">0%</span></div>
+          <p class="trait" id="dTrait"></p>
+          <p class="note" id="dSpecial" style="font-size:.8rem;margin-top:2px"></p>
+        </div>
+        <div class="acts">
+          <button class="buy" id="bTrain">
+            <span><span class="t">Train</span><span class="d" id="dTrain">Gain one level right now</span></span>
+            <span class="price"><i></i><span id="pTrain">0</span></span>
+          </button>
+          <button class="buy" id="bForge">
+            <span><span class="t" id="tForge">Forge armour</span><span class="d" id="dForge">Shinier and far stronger</span></span>
+            <span class="price"><i></i><span id="pForge">0</span></span>
+          </button>
+          <button class="btn fight" id="bFight">Enter the arena</button>
+          <p class="msg" id="msg"></p>
+        </div>
+      </div>
+        </div>
+        <div class="pkright">
+          <div class="rarchips" id="rarChips"></div>
+          <div class="findbar">
+            <input id="rsFind" type="search" autocomplete="off" spellcheck="false"
+                   placeholder="Search — name, real name or type">
+            <select id="rsSort" aria-label="Sort champions">
+              <option value="default">Sort: Roster</option>
+              <option value="rarity">Sort: Rarity</option>
+              <option value="level">Sort: My level</option>
+              <option value="wins">Sort: My wins</option>
+              <option value="name">Sort: A–Z</option>
+            </select>
+            <button class="btn ghost" id="rsClear" hidden>Clear</button>
+          </div>
+          <p class="rsNone" id="rsNone" hidden>Nobody by that name.</p>
+          <div class="roster" id="roster"></div>
+          <p class="pktip">Tip: use ◀ ▶ or your arrow keys to flip through champions.</p>
+        </div>
+      </div>
     </section>
 
-    <section class="sec" style="margin-top:14px">
-      <h3>Legendary event <span class="mReady" id="lTag" hidden></span></h3>
-      <div class="legend" id="legendPanel">
-        <canvas id="lCanvas" width="200" height="200"></canvas>
-        <div class="linfo">
-          <p class="lname" id="lName">&mdash;</p>
-          <p class="lsub" id="lSub"></p>
-          <p class="lnote" id="lNote"></p>
-        </div>
-        <button class="btn" id="bLegend">Take the challenge</button>
-      </div>
+    <section class="sec">
+      <h3>Versions of <span id="vName">Superman</span></h3>
+      <div class="skins" id="skins"></div>
     </section>
 
     <p class="offday" id="offDay" hidden></p>
 
-    <section class="sec" id="ownerSec" style="margin-top:14px" hidden>
+    <section class="sec" id="ownerSec" hidden>
       <h3>Admin abuse <span class="mReady" id="abTag">today</span></h3>
       <div class="owner">
         <p class="onote" id="abLead"></p>
@@ -658,59 +747,16 @@
         <p class="msg" id="oMsg"></p>
       </div>
     </section>
+    </div>
 
-    <section class="sec" style="margin-top:14px">
-      <h3>Solo raid</h3>
-      <div class="raid">
-        <div class="rinfo">
-          <p class="rlead">One champion, no help, a ladder of opponents that keeps getting harder.</p>
-          <p class="rnote">Every third floor is a <b>sub-boss</b>, and every twentieth is the
-            <b>RAID BOSS</b> &mdash; picked from the heaviest hitters on the roster, with by far the
-            biggest health bar in the game. Bosses pay enormously: a sub-boss is worth three floors,
-            the raid boss eleven. Your health carries from floor to floor with a chunk back between
-            fights, and you go into every boss patched up to full. After each floor you choose: go
-            deeper for a bigger pot, or bank what you have. Lose and you still keep half.</p>
-          <p class="rbest"><span id="rBestHero">Best with this champion: floor 0</span>
-            &nbsp;&middot;&nbsp; <span id="rBestAll">Best ever: floor 0</span></p>
-        </div>
-        <button class="btn fight" id="bRaid">Start a solo raid</button>
-      </div>
-    </section>
-
-    <section class="sec" style="margin-top:14px">
-      <h3>Daily bonus <span class="mReady" id="dyTag" hidden></span></h3>
-      <div class="daily" id="dailyBox">
-        <div class="dinfo">
-          <p class="rlead" id="dyLead">Come back tomorrow</p>
-          <p class="rnote" id="dyNote"></p>
-        </div>
-        <button class="btn" id="bDaily">Claim</button>
-      </div>
-    </section>
-
-    <section class="sec" style="margin-top:14px">
-      <h3>Leaderboard <span class="mReady" id="lbTag" hidden></span></h3>
-      <div class="raid">
-        <div class="rinfo" style="width:100%">
-          <p class="rlead" id="lbLead">Account rating 0</p>
-          <p class="rnote" id="lbNote"></p>
-          <div class="findbar" id="lbJoin" hidden>
-            <input id="lbName" maxlength="18" autocomplete="off" spellcheck="false"
-                   placeholder="Pick a name for the leaderboard">
-            <button class="btn" id="lbSave" style="width:auto;flex:none">Save</button>
-          </div>
-          <p class="rnote" id="lbState"></p>
-          <div class="lbwrap">
-            <div class="lb"><h4>Top players by credits</h4><ol id="world"></ol></div>
-            <div class="lb"><h4>Hall of Fame &mdash; your champions</h4><ol id="hof"></ol></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="sec" style="margin-top:14px">
+    <div class="tabpane" data-pane="play" hidden>
+    <section class="sec">
       <h3>Quick play <span class="mReady" id="stkBest"></span></h3>
       <div class="funmodes">
+        <div class="fm"><h4>⚔️ Quick Fight</h4>
+          <p>A straight fight against a random opponent at your level. Every win drops a <b>chest</b> and builds your <b>win streak</b>.</p>
+          <p class="rbest" id="qfChamp"></p>
+          <button class="btn fight" id="bFight2">Fight now</button></div>
         <div class="fm"><h4>🧌 Giant Battle</h4>
           <p>One champion, <b>one and a half times the size</b> and three times the health. Topple it for a huge prize and a <b>Gold Chest or better</b>.</p>
           <p class="rbest" id="gtBest"></p>
@@ -738,7 +784,133 @@
       </div>
     </section>
 
-    <section class="sec" style="margin-top:14px">
+    <section class="sec">
+      <h3>Legendary event <span class="mReady" id="lTag" hidden></span></h3>
+      <div class="legend" id="legendPanel">
+        <canvas id="lCanvas" width="200" height="200"></canvas>
+        <div class="linfo">
+          <p class="lname" id="lName">&mdash;</p>
+          <p class="lsub" id="lSub"></p>
+          <p class="lnote" id="lNote"></p>
+        </div>
+        <button class="btn" id="bLegend">Take the challenge</button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h3>Story mode <span class="mReady" id="stTag" hidden></span></h3>
+      <div class="raid">
+        <div class="rinfo">
+          <p class="rlead" id="stLead">Ten chapters. You start with nothing.</p>
+          <p class="rnote" id="stNote"></p>
+          <div class="chapters" id="chapters"></div>
+        </div>
+        <button class="btn fight" id="bStory">Play the next chapter</button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h3>Solo raid</h3>
+      <div class="raid">
+        <div class="rinfo">
+          <p class="rlead">One champion, no help, a ladder of opponents that keeps getting harder.</p>
+          <p class="rnote">Every third floor is a <b>sub-boss</b>, and every twentieth is the
+            <b>RAID BOSS</b> &mdash; picked from the heaviest hitters on the roster, with by far the
+            biggest health bar in the game. Bosses pay enormously: a sub-boss is worth three floors,
+            the raid boss eleven. Your health carries from floor to floor with a chunk back between
+            fights, and you go into every boss patched up to full. After each floor you choose: go
+            deeper for a bigger pot, or bank what you have. Lose and you still keep half.</p>
+          <p class="rbest"><span id="rBestHero">Best with this champion: floor 0</span>
+            &nbsp;&middot;&nbsp; <span id="rBestAll">Best ever: floor 0</span></p>
+        </div>
+        <button class="btn fight" id="bRaid">Start a solo raid</button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h3>Team battle <span class="mReady" id="tmTag" hidden></span></h3>
+      <div class="raid">
+        <div class="rinfo">
+          <p class="rlead">Three champions each. When one falls the next steps in.</p>
+          <p class="rnote">Pick a squad of three. You fight one at a time, and whoever is
+            still standing <b>keeps the damage they have taken</b> &mdash; the next champion in
+            comes on fresh. Beat all three of theirs before they beat all three of yours.
+            Every knockout pays, and clearing the whole squad pays a large bonus on top.</p>
+          <div class="squad">
+            <label>First out<select id="tm0"></select></label>
+            <label>Second<select id="tm1"></select></label>
+            <label>Third<select id="tm2"></select></label>
+          </div>
+          <p class="rbest"><span id="tmBest">Squads beaten: 0</span></p>
+        </div>
+        <button class="btn fight" id="bTeam">Start a team battle</button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h3>Survival <span class="mReady" id="svTag" hidden></span></h3>
+      <div class="raid">
+        <div class="rinfo">
+          <p class="rlead">Round after round, and nothing heals.</p>
+          <p class="rnote">The raid gives you a chunk of health back between floors. This gives
+            you <b>nothing</b> &mdash; you carry every scratch to the next round, and the rounds
+            keep getting harder. There is no banking decision either: <b>everything you earn is
+            yours whatever happens</b>, so it is the steadiest way to farm credits in the game.
+            The only thing at stake is the number.</p>
+          <p class="rbest"><span id="svBest">Best run: 0 rounds</span></p>
+        </div>
+        <button class="btn fight" id="bSurv">Start a survival run</button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h3>Tournament <span class="mReady" id="trTag" hidden></span></h3>
+      <div class="raid">
+        <div class="rinfo">
+          <p class="rlead">Eight fighters. Three rounds. One champion.</p>
+          <p class="rnote">A straight knockout bracket: <b>quarter-final</b>, <b>semi-final</b>,
+            <b>final</b>. You are healed to full between rounds, but each opponent is tougher
+            than the last and the final is a real fight. Lose at any point and you are out with
+            a small consolation. Win all three and you take the trophy and the whole purse.</p>
+          <p class="rbest"><span id="trBest">Trophies: 0</span>
+            &nbsp;&middot;&nbsp; <span id="trFar">Best round reached: none</span></p>
+        </div>
+        <button class="btn fight" id="bTour">Enter the tournament</button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h3>Choose your arena</h3>
+      <div class="arenas" id="arenas"></div>
+    </section>
+
+    <section class="sec" id="movieSec" hidden>
+      <h3>The movie <span class="mReady">Owner only</span></h3>
+      <div class="raid">
+        <div class="rinfo">
+          <p class="rlead">Skyforge: The Last Specimen &mdash; starring your champion.</p>
+          <p class="rnote">A short film in five acts that plays itself. Title cards, dialogue,
+            and four real bouts fought on the AI, so no two screenings are quite the same.
+            Whoever you have selected is the star. Nothing is earned or lost by watching.</p>
+        </div>
+        <button class="btn fight" id="bMovie">Watch the movie</button>
+      </div>
+    </section>
+    </div>
+
+    <div class="tabpane" data-pane="progress" hidden>
+    <section class="sec">
+      <h3>Daily bonus <span class="mReady" id="dyTag" hidden></span></h3>
+      <div class="daily" id="dailyBox">
+        <div class="dinfo">
+          <p class="rlead" id="dyLead">Come back tomorrow</p>
+          <p class="rnote" id="dyNote"></p>
+        </div>
+        <button class="btn" id="bDaily">Claim</button>
+      </div>
+    </section>
+
+    <section class="sec">
       <h3>Daily challenge</h3>
       <div class="daily2">
         <p class="rlead" id="dcText"></p>
@@ -748,12 +920,39 @@
       </div>
     </section>
 
-    <section class="sec" style="margin-top:14px">
+    <section class="sec">
+      <h3>Missions <span class="mReady" id="mReady" hidden></span></h3>
+      <div class="missions" id="missions"></div>
+    </section>
+
+    <section class="sec">
       <h3>Trophies <span class="mReady" id="troCount"></span></h3>
       <div class="trophies" id="trophies"></div>
     </section>
 
-    <section class="sec" style="margin-top:14px">
+    <section class="sec">
+      <h3>Leaderboard <span class="mReady" id="lbTag" hidden></span></h3>
+      <div class="raid">
+        <div class="rinfo" style="width:100%">
+          <p class="rlead" id="lbLead">Account rating 0</p>
+          <p class="rnote" id="lbNote"></p>
+          <div class="findbar" id="lbJoin" hidden>
+            <input id="lbName" maxlength="18" autocomplete="off" spellcheck="false"
+                   placeholder="Pick a name for the leaderboard">
+            <button class="btn" id="lbSave" style="width:auto;flex:none">Save</button>
+          </div>
+          <p class="rnote" id="lbState"></p>
+          <div class="lbwrap">
+            <div class="lb"><h4>Top players by credits</h4><ol id="world"></ol></div>
+            <div class="lb"><h4>Hall of Fame &mdash; your champions</h4><ol id="hof"></ol></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div>
+
+    <div class="tabpane" data-pane="howto" hidden>
+    <section class="sec">
       <h3>Move list</h3>
       <div class="movelist">
         <div><h4>👊 Punch</h4><ul>
@@ -792,137 +991,16 @@
           <li><b>PERFECT!</b> Win without taking a hit: +50% credits.</li></ul></div>
       </div>
     </section>
-    </section>
 
-    <section class="sec" style="margin-top:14px" id="movieSec" hidden>
-      <h3>The movie <span class="mReady">Owner only</span></h3>
-      <div class="raid">
-        <div class="rinfo">
-          <p class="rlead">Skyforge: The Last Specimen &mdash; starring your champion.</p>
-          <p class="rnote">A short film in five acts that plays itself. Title cards, dialogue,
-            and four real bouts fought on the AI, so no two screenings are quite the same.
-            Whoever you have selected is the star. Nothing is earned or lost by watching.</p>
-        </div>
-        <button class="btn fight" id="bMovie">Watch the movie</button>
-      </div>
-    </section>
-
-    <section class="sec" style="margin-top:14px">
-      <h3>Story mode <span class="mReady" id="stTag" hidden></span></h3>
-      <div class="raid">
-        <div class="rinfo">
-          <p class="rlead" id="stLead">Ten chapters. You start with nothing.</p>
-          <p class="rnote" id="stNote"></p>
-          <div class="chapters" id="chapters"></div>
-        </div>
-        <button class="btn fight" id="bStory">Play the next chapter</button>
-      </div>
-    </section>
-
-    <section class="sec" style="margin-top:14px">
-      <h3>Team battle <span class="mReady" id="tmTag" hidden></span></h3>
-      <div class="raid">
-        <div class="rinfo">
-          <p class="rlead">Three champions each. When one falls the next steps in.</p>
-          <p class="rnote">Pick a squad of three. You fight one at a time, and whoever is
-            still standing <b>keeps the damage they have taken</b> &mdash; the next champion in
-            comes on fresh. Beat all three of theirs before they beat all three of yours.
-            Every knockout pays, and clearing the whole squad pays a large bonus on top.</p>
-          <div class="squad">
-            <label>First out<select id="tm0"></select></label>
-            <label>Second<select id="tm1"></select></label>
-            <label>Third<select id="tm2"></select></label>
-          </div>
-          <p class="rbest"><span id="tmBest">Squads beaten: 0</span></p>
-        </div>
-        <button class="btn fight" id="bTeam">Start a team battle</button>
-      </div>
-    </section>
-
-    <section class="sec" style="margin-top:14px">
-      <h3>Survival <span class="mReady" id="svTag" hidden></span></h3>
-      <div class="raid">
-        <div class="rinfo">
-          <p class="rlead">Round after round, and nothing heals.</p>
-          <p class="rnote">The raid gives you a chunk of health back between floors. This gives
-            you <b>nothing</b> &mdash; you carry every scratch to the next round, and the rounds
-            keep getting harder. There is no banking decision either: <b>everything you earn is
-            yours whatever happens</b>, so it is the steadiest way to farm credits in the game.
-            The only thing at stake is the number.</p>
-          <p class="rbest"><span id="svBest">Best run: 0 rounds</span></p>
-        </div>
-        <button class="btn fight" id="bSurv">Start a survival run</button>
-      </div>
-    </section>
-
-    <section class="sec" style="margin-top:14px">
-      <h3>Tournament <span class="mReady" id="trTag" hidden></span></h3>
-      <div class="raid">
-        <div class="rinfo">
-          <p class="rlead">Eight fighters. Three rounds. One champion.</p>
-          <p class="rnote">A straight knockout bracket: <b>quarter-final</b>, <b>semi-final</b>,
-            <b>final</b>. You are healed to full between rounds, but each opponent is tougher
-            than the last and the final is a real fight. Lose at any point and you are out with
-            a small consolation. Win all three and you take the trophy and the whole purse.</p>
-          <p class="rbest"><span id="trBest">Trophies: 0</span>
-            &nbsp;&middot;&nbsp; <span id="trFar">Best round reached: none</span></p>
-        </div>
-        <button class="btn fight" id="bTour">Enter the tournament</button>
-      </div>
-    </section>
-
-    <section class="sec" style="margin-top:14px">
-      <h3>Missions <span class="mReady" id="mReady" hidden></span></h3>
-      <div class="missions" id="missions"></div>
-    </section>
-
-    <section class="sec" style="margin-top:14px">
-      <h3>Choose your arena</h3>
-      <div class="arenas" id="arenas"></div>
-    </section>
-
-    <section class="sec" style="margin-top:14px">
-      <h3>Versions of <span id="vName">Superman</span></h3>
-      <div class="skins" id="skins"></div>
-    </section>
-
-    <section class="sec" style="margin-top:14px">
-      <div class="detail">
-        <div class="stats">
-          <p class="dname" id="dName">Superman <span class="tierTag" id="dTier">Standard steel</span></p>
-          <div class="srow"><span class="k">Power</span><div class="track"><div class="fill" id="fPow"></div></div><span class="v" id="vPow">0</span></div>
-          <div class="srow"><span class="k">Toughness</span><div class="track"><div class="fill" id="fTough"></div></div><span class="v" id="vTough">0</span></div>
-          <div class="srow"><span class="k">Speed</span><div class="track"><div class="fill" id="fSpd"></div></div><span class="v" id="vSpd">0</span></div>
-          <div class="srow"><span class="k">Level <span id="vLvl">1</span></span><div class="track"><div class="fill" id="fXp"></div></div><span class="v" id="vXp">0%</span></div>
-          <p class="trait" id="dTrait"></p>
-          <p class="note" id="dSpecial" style="font-size:.8rem;margin-top:2px"></p>
-        </div>
-        <div class="acts">
-          <button class="buy" id="bTrain">
-            <span><span class="t">Train</span><span class="d" id="dTrain">Gain one level right now</span></span>
-            <span class="price"><i></i><span id="pTrain">0</span></span>
-          </button>
-          <button class="buy" id="bForge">
-            <span><span class="t" id="tForge">Forge armour</span><span class="d" id="dForge">Shinier and far stronger</span></span>
-            <span class="price"><i></i><span id="pForge">0</span></span>
-          </button>
-          <button class="btn fight" id="bFight">Enter the arena</button>
-          <p class="msg" id="msg"></p>
-        </div>
-      </div>
-    </section>
-
-    <ul class="keys" style="margin-top:14px">
-      <li><kbd>A</kbd><span>Strike &mdash; tap fast for a 3-hit combo</span></li>
-      <li><kbd>F</kbd><span>Super Punch &mdash; double damage, costs 25% meter</span></li>
-      <li><kbd>K</kbd><span>Kick &mdash; slower, but hits harder</span></li>
-      <li><kbd>G</kbd><span>Grab &mdash; goes straight through a guard</span></li>
-      <li><kbd>W</kbd><span>Leap &mdash; a jump attack. Superman flies</span></li>
-      <li><kbd>S</kbd><span>Guard &mdash; hold to block most damage</span></li>
-      <li><kbd>D</kbd><span>Super Move &mdash; needs a full meter</span></li>
+    <ul class="keys">
+      <li><kbd>A</kbd><span>👊 Punch — tap fast for a combo</span></li>
+      <li><kbd>K</kbd><span>🦶 Kick — seven different kicks</span></li>
+      <li><kbd>W</kbd><span>🚀 Jump — then Punch, Kick or Power in the air</span></li>
+      <li><kbd>D</kbd><span>⚡ Power — Punch of Death, Super Move or Finisher</span></li>
+      <li><kbd>S</kbd><span>🛡️ Hold to block (it also blocks by itself)</span></li>
+      <li><kbd>G</kbd><span>Grab — or kick someone who is blocking</span></li>
     </ul>
-
-    <p class="note" style="margin-top:12px">Land hits to fill your <b>meter</b>; guarding fills it slowly too. At <b>25%</b> you can throw a <b>Super Punch</b> that hits twice as hard. At <b>100%</b> you unleash that champion's <b>Super Move</b> &mdash; every one is different, and each is that hero's signature move. <b>Superman</b> can also take off with a <b>Flying Jump</b> &mdash; he climbs higher than anyone and dives down fist-first. And <b>Batman</b> fights with his head: his <b>Intellect</b> bar fills as he watches an opponent attack, quietly raising his damage, and a full read lands a <b>Predicted Counter</b> for more than double. Every bout pays <b>credits</b> and <b>experience</b>. Experience levels your champion up on its own, and credits buy the two upgrades: <b>Train</b> for an instant level, or <b>Forge armour</b> to push your champion up a finish &mdash; Standard, Polished, Chrome, Energised, then <b>Legendary</b>. Each forge makes them dramatically stronger and dramatically shinier.</p>
+    </div>
 
     <footer>Yahya.games.com &middot; built with Claude Code. All artwork drawn in code with the Canvas API &mdash; original characters, no image files. Progress saves in this browser.</footer>
   </div>
@@ -7406,8 +7484,12 @@
     $('ldBest').textContent='Arcade clears: '+(save.ladderWins||0);
     $('b3Best').textContent='Matches won: '+(save.bo3Wins||0);
     buildTrophies();
+    $('qfChamp').textContent='Fighting as '+HEROES[save.sel].name;
     $('stkBest').textContent='Win streak: '+(save.streak||0)+' · best ever '+(save.bestStreak||0);
     var ms=$('movieSec'); if(ms) ms.hidden=!isOwner();
+    var C0=todayChal(), dc0=chalState();
+    var waiting=dailyReady()||missionsReady()>0||(dc0.prog>=C0.n&&!dc0.claimed);
+    $('dotProg').classList.toggle('show',!!waiting);
   }
 
   /* ================= fighting-game systems =================
@@ -9638,7 +9720,7 @@
   /* ---------- What's New ----------
      Opens by itself the first time someone loads this version, and any
      time from the top bar. Remembered per browser. */
-  var NEW_VER='2026-10-c';
+  var NEW_VER='2026-10-d';
   function newSeen(){ try{ return localStorage.getItem('skyforge.seenNew')===NEW_VER; }catch(e){ return true; } }
   function markNewSeen(){ try{ localStorage.setItem('skyforge.seenNew',NEW_VER); }catch(e){} $('newBtn').classList.remove('unseen'); }
   function openNew(){
@@ -9655,9 +9737,9 @@
     }, giant:function(){ startGiant(); }, rush:function(){ startRush(); },
     dummy:function(){ startDummy(); }, ladder:function(){ startLadder(); }, bo3:function(){ startBo3(); },
     brawl:function(){ startBrawl(); }, movie:function(){ if(isOwner()) startMovie(); }, gfx:function(){ openGfx(); },
-    moves:function(){ document.querySelector('.movelist').scrollIntoView({behavior:'smooth',block:'start'}); },
-    trophies:function(){ $('trophies').scrollIntoView({behavior:'smooth',block:'start'}); },
-    daily:function(){ document.querySelector('.daily2').scrollIntoView({behavior:'smooth',block:'center'}); }};
+    moves:function(){ showTab('howto'); document.querySelector('.movelist').scrollIntoView({behavior:'smooth',block:'start'}); },
+    trophies:function(){ showTab('progress'); $('trophies').scrollIntoView({behavior:'smooth',block:'start'}); },
+    daily:function(){ showTab('progress'); document.querySelector('.daily2').scrollIntoView({behavior:'smooth',block:'center'}); }};
   Array.prototype.forEach.call(document.querySelectorAll('.wn [data-go]'),function(b){
     b.addEventListener('click',function(){
       var go=NEW_GO[b.getAttribute('data-go')]; closeNew();
@@ -9932,18 +10014,54 @@
       var pips=document.createElement('span'); pips.className='pips';
       row.appendChild(lv); row.appendChild(pw);
       b.appendChild(c); b.appendChild(nm); b.appendChild(pips); b.appendChild(row);
-      b.addEventListener('click',function(){
-        if(screen!=='home') return;
-        save.sel=i; store();
-        [].forEach.call(wrap.children,function(x,j){ x.className='card'+(j===i?' on':''); x.setAttribute('aria-pressed',String(j===i)); });
-        tone(760,0.07,'triangle',0.035,1050);
-        markCardsDirty(); buildSkins(); buildMissions(); buildLegend(); renderUI();
-      });
+      b.addEventListener('click',function(){ selectHero(i,false); });
       wrap.appendChild(b);
       var cc=c.getContext('2d'); cc.setTransform(2,0,0,2,0,0);
       cards.push({ctx:cc,h:h,lv:lv,pw:pw,pips:pips,el:b});
     });
     if($('rsFind')) rosterFilter();
+    sortRoster();
+  }
+  /* ---------- the champion picker ---------- */
+  function selectHero(i,scroll){
+    if(screen!=='home'||!HEROES[i]) return;
+    save.sel=i; store();
+    for(var j=0;j<cards.length;j++){
+      var el=cards[j].el, on=(j===i);
+      el.className=el.className.replace(/ on\b/g,'')+(on?' on':'');
+      el.setAttribute('aria-pressed',String(on));
+    }
+    tone(760,0.07,'triangle',0.035,1050);
+    markCardsDirty(); buildSkins(); buildMissions(); buildLegend(); renderUI(); buildFun();
+    if(scroll&&cards[i]) cards[i].el.scrollIntoView({block:'nearest',behavior:'smooth'});
+  }
+  function visibleOrder(){
+    var out=[], kids=$('roster').children;
+    for(var k=0;k<kids.length;k++){
+      if(/ hide\b/.test(kids[k].className)) continue;
+      for(var j=0;j<cards.length;j++) if(cards[j].el===kids[k]){ out.push(j); break; }
+    }
+    return out;
+  }
+  function stepHero(d){
+    var v=visibleOrder(); if(!v.length) return;
+    var at=v.indexOf(save.sel);
+    var n=(at<0)?v[0]:v[(at+d+v.length)%v.length];
+    selectHero(n,true);
+  }
+  function randomHero(){
+    var v=visibleOrder().filter(function(j){ return legendOwned(HEROES[j]); });
+    if(!v.length) return;
+    selectHero(v[Math.floor(Math.random()*v.length)],true);
+  }
+  function sortRoster(){
+    var how=($('rsSort')&&$('rsSort').value)||'default', wrap=$('roster');
+    var idx=cards.map(function(c,j){ return j; });
+    if(how==='rarity') idx.sort(function(x,y){ return rarRank(HEROES[y])-rarRank(HEROES[x])||x-y; });
+    else if(how==='level') idx.sort(function(x,y){ return prog(HEROES[y]).lvl-prog(HEROES[x]).lvl||x-y; });
+    else if(how==='wins') idx.sort(function(x,y){ return (prog(HEROES[y]).wins||0)-(prog(HEROES[x]).wins||0)||x-y; });
+    else if(how==='name') idx.sort(function(x,y){ return HEROES[x].name.localeCompare(HEROES[y].name); });
+    idx.forEach(function(j){ wrap.appendChild(cards[j].el); });
   }
   var skinDrawn={};
   function drawSkinCards(){
@@ -10204,6 +10322,7 @@
     var RR=rarOf(h);
     $('dName').innerHTML=h.name
       +' <span class="tierTag" style="color:'+RR.c+';border-color:'+RR.c+'">'+RR.n.toUpperCase()+'</span>'
+      +' <span class="tierTag">'+styleOf(h).icon+' '+styleOf(h).n+'</span>'
       +' <span class="tierTag">'+TIERS[p.tier].name+' armour</span>'+
       '<span class="tierTag">'+h.skins[p.skin].name+'</span>'+
       (mr?'<span class="tierTag" style="color:var(--gold);border-color:var(--gold)">'
@@ -10330,7 +10449,38 @@
   $('bDaily').addEventListener('click',claimDaily);
   $('bStory').addEventListener('click',function(){ startStory(); tone(300,0.2,'square',0.05,700); });
   $('bMovie').addEventListener('click',function(){ if(isOwner()) startMovie(); });
+  $('pkPrev').addEventListener('click',function(){ stepHero(-1); });
+  $('pkNext').addEventListener('click',function(){ stepHero(1); });
+  $('pkRand').addEventListener('click',randomHero);
+  try{ var sv=localStorage.getItem('skyforge.sort'); if(sv){ $('rsSort').value=sv; sortRoster(); } }catch(e){}
+  $('rsSort').addEventListener('change',function(){
+    sortRoster();
+    try{ localStorage.setItem('skyforge.sort',$('rsSort').value); }catch(e){}
+  });
+  window.addEventListener('keydown',function(e){
+    if(screen!=='home'||!$('gfxPanel').hidden||!$('newPanel').hidden) return;
+    if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT'||e.target.tagName==='TEXTAREA')) return;
+    if(e.code==='ArrowLeft'){ e.preventDefault(); stepHero(-1); }
+    else if(e.code==='ArrowRight'){ e.preventDefault(); stepHero(1); }
+  });
+  /* ---------- home tabs ---------- */
+  function showTab(t,scroll){
+    var panes=document.querySelectorAll('.tabpane');
+    for(var k=0;k<panes.length;k++) panes[k].hidden=(panes[k].getAttribute('data-pane')!==t);
+    var bs=document.querySelectorAll('#homeTabs button');
+    for(var m=0;m<bs.length;m++) bs[m].classList.toggle('on',bs[m].getAttribute('data-tab')===t);
+    try{ localStorage.setItem('skyforge.tab',t); }catch(e){}
+    if(scroll){
+      var nav=$('homeTabs'), top=nav.getBoundingClientRect().top;
+      if(top<0) window.scrollTo({top:window.scrollY+top,behavior:'smooth'});
+    }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('#homeTabs button'),function(b){
+    b.addEventListener('click',function(){ showTab(b.getAttribute('data-tab'),true); tone(620,0.05,'triangle',0.03,880); });
+  });
+  try{ var tb=localStorage.getItem('skyforge.tab'); if(tb&&document.querySelector('.tabpane[data-pane="'+tb+'"]')) showTab(tb,false); }catch(e){}
   $('bGiant').addEventListener('click',function(){ startGiant(); });
+  $('bFight2').addEventListener('click',function(){ startFight(); });
   $('bRush').addEventListener('click',function(){ startRush(); });
   $('bDummy').addEventListener('click',function(){ startDummy(); });
   $('bLadder').addEventListener('click',function(){ startLadder(); });
