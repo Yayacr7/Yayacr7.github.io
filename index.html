@@ -162,6 +162,12 @@
   .netfair{display:flex;gap:8px;align-items:center;font-size:.86rem}
   /* in a 2-player fight each player's buttons sit on their own fighter's side */
   .pad.p1left{left:12px;right:auto}
+  .mvpad{position:absolute;left:12px;bottom:12px;z-index:4;display:grid;grid-template-columns:1fr 1fr;gap:7px;width:min(26%,190px)}
+  .mvpad .fbtn{font-size:1.5rem;padding:14px 4px}
+  .mvpad .fbtn.held{background:#16324D}
+  .mvpad small{grid-column:1 / -1;text-align:center;font-size:.62rem;font-weight:800;letter-spacing:.06em;color:rgba(255,255,255,.75);text-transform:uppercase}
+  .mvpad[hidden]{display:none}
+  @media (max-width:620px){ .mvpad{left:7px;bottom:7px;width:34%} .mvpad .fbtn{padding:10px 2px;font-size:1.2rem} }
   @media (max-width:620px){ .pad.p1left{left:7px;right:auto;width:42%} .pad2{width:42%} }
   .pad2 .fbtn{border-color:rgba(255,60,200,.7)!important}
   .gfxpanel{position:fixed;inset:0;z-index:50;background:rgba(4,8,14,.72);display:grid;place-items:center;padding:16px}
@@ -498,7 +504,7 @@
     <span class="lab">FPS</span>
     <div class="coin fps ok" id="fpsWrap"><span id="fps">—</span></div>
     <button class="sound" id="sound" aria-pressed="true">Sound on</button>
-    <button class="sound" id="gfxBtn">⚙️ Graphics</button>
+    <button class="sound" id="gfxBtn">⚙️ Settings</button>
     <button class="sound newbtn" id="newBtn">✨ What's New<i id="newDot"></i></button>
   </div>
 
@@ -508,6 +514,7 @@
       <p class="gfxnow">Everything that's been added to Skyforge Champions. Tap a button to try it!</p>
       <div class="wngrid">
         <div class="wn"><span class="wi">🎮</span><div><b class="wt">Easier controls</b><p>Just four big buttons now: <b>Punch, Kick, Jump</b> and <b>Power</b>. Your champion even blocks on their own sometimes.</p></div></div>
+        <div class="wn"><span class="wi">🏃</span><div><b class="wt">Walk, dash and dodge!</b><p>Fighters <b>move</b> now. Get in range to land hits, step out to make them <b>MISS</b>. Double-tap to <b>dash</b> in or <b>DODGE</b> out. Pick <b>Easy, Normal or Hard</b> and how you move on a phone in ⚙️ Settings.</p><button class="btn ghost" data-go="gfx">Open settings</button></div></div>
         <div class="wn"><span class="wi">🌐</span><div><b class="wt">Fight your friends!</b><p><b>Online:</b> make a room, send the 4-letter code, and fight a friend on their own phone or computer. <b>2 players, 1 device:</b> share the keyboard, or split the phone screen. Turn on <b>Fair fight</b> to make it pure skill.</p><button class="btn ghost" data-go="online">Play a friend</button></div></div>
         <div class="wn"><span class="wi">🥊</span><div><b class="wt">Boxing gloves + 37 icons</b><p>Every fighter now wears <b>boxing gloves</b>. And <b>37 celebrities and world icons</b> joined: Ali, Bruce Lee, The Rock, Usain Bolt, Serena, Simone Biles, Jordan, Pelé, Taylor Swift, MrBeast, Einstein, Cleopatra and more. Tap <b>⭐ Icons</b> in the picker to find them.</p><button class="btn ghost" data-go="icons">Show me the icons</button></div></div>
         <div class="wn"><span class="wi">🧭</span><div><b class="wt">New champion picker</b><p>Your champion and all <b>250</b> fighters on one screen, with <b>sort</b>, <b>◀ ▶</b> arrows and <b>🎲 Random</b>. Everything else lives in tabs: <b>Champion, Play, Progress, How to play</b>. Much less scrolling!</p></div></div>
@@ -539,9 +546,17 @@
 
   <div class="gfxpanel" id="gfxPanel" hidden>
     <div class="gfxbox" role="dialog" aria-label="Graphics and FPS settings">
-      <h3>Graphics &amp; FPS</h3>
+      <h3>Settings</h3>
       <p class="gfxnow" id="gfxNow"></p>
       <div class="gfxgrid">
+        <label>Difficulty<select id="gDiff">
+          <option value="easy">Easy (attacks reach by themselves)</option>
+          <option value="normal">Normal</option>
+          <option value="hard">Hard (smart opponents, no help)</option></select></label>
+        <label>Phone movement<select id="gMove">
+          <option value="buttons">◀ ▶ Buttons</option>
+          <option value="swipe">Swipe on the arena</option>
+          <option value="auto">Automatic (moves by itself)</option></select></label>
         <label>Visual style<select id="gStyle">
           <option value="retro">Retro-Future (neon + pixel)</option>
           <option value="classic">Classic</option></select></label>
@@ -625,6 +640,11 @@
     <div class="moviebar" id="moviebar" hidden>
       <button class="fbtn" id="mvSkip">Skip scene<small>Right arrow</small></button>
       <button class="fbtn" id="mvExit">Leave the cinema<small>Esc</small></button>
+    </div>
+    <div class="mvpad" id="mvpad" hidden>
+      <button class="fbtn" id="bMvL" aria-label="Move left">◀</button>
+      <button class="fbtn" id="bMvR" aria-label="Move right">▶</button>
+      <small>hold to walk · double-tap to dash</small>
     </div>
     <div class="pad pad2" id="pad2" hidden>
       <button class="fbtn" id="b2Strike">👊 P2 Punch</button>
@@ -804,7 +824,7 @@
         </div>
         <div class="netcol">
           <h4>🎮 2 players, 1 device</h4>
-          <p>Share a keyboard: <b>Player 1</b> uses A K W D (hold S to block). <b>Player 2</b> uses ← ↓ ↑ → (hold / to block). On a phone, Player 2 gets their own buttons on the left.</p>
+          <p>Share a keyboard: <b>Player 1</b> uses A K W D, Q E to walk (hold S to block). <b>Player 2</b> uses ← ↓ ↑ →, comma and full stop to walk (hold / to block). On a phone, each player gets their own buttons and both walk automatically.</p>
           <label class="netlbl">Player 2 fights as<select id="p2Pick"></select></label>
           <button class="btn fight" id="bLocal2">Start a 2-player fight</button>
         </div>
@@ -1017,6 +1037,11 @@
     <section class="sec">
       <h3>Move list</h3>
       <div class="movelist">
+        <div><h4>◀▶ Moving</h4><ul>
+          <li><b>Walk:</b> hold ◀ ▶ (or ← →, or Q E on a keyboard). Punches and kicks only reach so far; out of range they <b>MISS</b>.</li>
+          <li><b>Dash in:</b> double-tap toward them.</li>
+          <li><b>Dodge:</b> double-tap away. For a moment nothing can touch you: <b>DODGE!</b></li>
+          <li>On a phone, pick <b>Buttons</b>, <b>Swipe</b> or <b>Automatic</b> in ⚙️ Settings.</li></ul></div>
         <div><h4>👊 Punch</h4><ul>
           <li><b>Jab → Straight → Finisher.</b> Tap three times. The finisher is an uppercut, a body hook, an elbow, a spinning backfist or a headbutt.</li></ul></div>
         <div><h4>🦶 Kick</h4><ul>
@@ -1055,6 +1080,7 @@
     </section>
 
     <ul class="keys">
+      <li><kbd>← →</kbd><span>◀▶ Walk (or Q / E). Double-tap to dash or dodge</span></li>
       <li><kbd>A</kbd><span>👊 Punch — tap fast for a combo</span></li>
       <li><kbd>K</kbd><span>🦶 Kick — seven different kicks</span></li>
       <li><kbd>W</kbd><span>🚀 Jump — then Punch, Kick or Power in the air</span></li>
@@ -1085,7 +1111,7 @@
     balanced:   {res:'1x',    post:'grade',part:1,  weather:1,detail:1,smooth:'auto'},
     high:       {res:'native',post:'full', part:1,  weather:1,detail:1,smooth:'auto'},
     ultra:      {res:'max',   post:'full', part:1.5,weather:1,detail:1,smooth:'on'}};
-  var gfx={preset:'auto',cap:0,shake:1,style:'retro',music:1};
+  var gfx={preset:'auto',cap:0,shake:1,style:'retro',music:1,diff:'normal',move:'buttons'};
   (function(){
     var A=GFX_PRESETS.auto; for(var k in A) gfx[k]=A[k];
     try{
@@ -3831,6 +3857,15 @@
     getup:P({head:[4,-66],neck:[2,-54],pelvis:[-2,-28],
       shF:[4,-52],elF:[14,-40],haF:[18,-28],shB:[-8,-52],elB:[-14,-40],haB:[-10,-28],
       hiF:[2,-28],knF:[18,-28],ftF:[20,-1],hiB:[-6,-28],knB:[-10,-2],ftB:[-28,-1]}),
+    walkA:P({head:[4,-92],neck:[1,-77],pelvis:[1,-45],
+      shF:[7,-74],elF:[20,-63],haF:[21,-76],shB:[-6,-74],elB:[-14,-63],haB:[-2,-71],
+      hiF:[6,-45],knF:[17,-25],ftF:[24,-1],hiB:[-5,-45],knB:[-15,-23],ftB:[-25,-3]}),
+    walkB:P({head:[3,-94],neck:[0,-79],pelvis:[0,-47],
+      shF:[6,-75],elF:[19,-63],haF:[21,-76],shB:[-7,-75],elB:[-15,-63],haB:[-3,-71],
+      hiF:[4,-47],knF:[9,-31],ftF:[3,-12],hiB:[-5,-47],knB:[-6,-25],ftB:[-7,-1]}),
+    dodge:P({head:[-12,-86],neck:[-9,-73],pelvis:[-3,-44],
+      shF:[-2,-71],elF:[8,-64],haF:[6,-80],shB:[-13,-71],elB:[-4,-66],haB:[6,-76],
+      hiF:[1,-44],knF:[12,-26],ftF:[19,-1],hiB:[-7,-44],knB:[-17,-22],ftB:[-26,-1]}),
     down:P({head:[-26,-30],neck:[-19,-24],pelvis:[2,-16],
       shF:[-16,-24],elF:[-26,-14],haF:[-38,-6],shB:[-20,-20],elB:[-30,-10],haB:[-40,-3],
       hiF:[4,-16],knF:[20,-12],ftF:[34,-3],hiB:[2,-14],knB:[18,-6],ftB:[32,-2]})
@@ -4804,6 +4839,11 @@
     if(f.dead) target=POSE.down;
     else if(f.guard) target=POSE.guard;
     else target=lerpPose(POSE.idle,POSE.breathe,(Math.sin(f.ph)+1)/2);
+    /* walking: the legs step through a two-pose cycle at the speed of travel */
+    if(!f.dead&&!f.guard&&f.walkAmt>0.05){
+      var wk=lerpPose(POSE.walkA,POSE.walkB,(Math.sin(f.walkPh||0)+1)/2);
+      target=lerpPose(target,wk,Math.min(1,f.walkAmt));
+    }
     f.pose=lerpPose(f.pose,target,f.dead?0.13:0.2);
   }
 
@@ -6257,6 +6297,7 @@
     lb.childNodes[0].nodeValue=flier?'🚀 Fly':'🚀 Jump';
     lb.querySelector('small').textContent='Then punch or kick!';
     $('fightbar').hidden=false; $('homeUI').hidden=true; $('overlay').hidden=true;
+    setTimeout(moveUI,0);
     tone(520,0.16,'square',0.05,880);
   }
   /* ================= legendary event =================
@@ -6451,6 +6492,7 @@
     lb.childNodes[0].nodeValue=flier?'🚀 Fly':'🚀 Jump';
     lb.querySelector('small').textContent='Then punch or kick!';
     $('fightbar').hidden=false; $('homeUI').hidden=true; $('overlay').hidden=true;
+    setTimeout(moveUI,0);
     var rk=raidKind(raid.floor);
     floatText(512,GY-250,raidLabel(rk)+' '+raid.floor,
               rk==='main'?'#FF8A72':(rk==='sub'?'#FFD46B':'#9BD3FF'),true);
@@ -7587,6 +7629,8 @@
   var HIT_WORDS=['POW!','BAM!','WHAM!','KAPOW!','BOOM!','SMASH!','CRUNCH!','THWACK!','ZOK!','KRAK!'];
   var WORD_COLS=['#FFE08A','#FF8B6B','#7FD4FF','#B6F28A','#FF9AD5','#FFD46B'];
   var TIPS=[
+    '◀▶ Walk with the arrow buttons (or ← → / Q E). Get close to hit!',
+    '💨 Double-tap AWAY from them to DODGE. Double-tap toward them to dash in!',
     '👊 Tap PUNCH again and again for a 3-hit combo!',
     '🚀 Press JUMP, then PUNCH in the air for a FLYING PUNCH!',
     '🦶 Press JUMP, then KICK in the air for a FLYING KICK!',
@@ -7713,10 +7757,12 @@
       var tip=TIPS[Math.floor(tick/280)%TIPS.length];
       ctx.save();
       ctx.font='800 17px Barlow, sans-serif'; ctx.textAlign='left';
-      var tw=Math.min(W*0.5,ctx.measureText(tip).width+28);
-      ctx.fillStyle='rgba(10,18,28,.78)'; ctx.fillRect(18,H-62,tw,40);
-      ctx.fillStyle='#F7C948'; ctx.fillRect(18,H-62,5,40);
-      ctx.fillStyle='#FFFFFF'; ctx.fillText(tip,32,H-36,tw-24);
+      /* with the walk buttons in the corner, the tip sits between them and the attack pad */
+      var tx0=$('mvpad').hidden?18:236, tmax=$('mvpad').hidden?W*0.5:430;
+      var tw=Math.min(tmax,ctx.measureText(tip).width+28);
+      ctx.fillStyle='rgba(10,18,28,.78)'; ctx.fillRect(tx0,H-62,tw,40);
+      ctx.fillStyle='#F7C948'; ctx.fillRect(tx0,H-62,5,40);
+      ctx.fillStyle='#FFFFFF'; ctx.fillText(tip,tx0+14,H-36,tw-24);
       ctx.restore();
     }
   }
@@ -8709,6 +8755,8 @@
     }else if(d.t==='start'&&net.role==='guest') netBegin(d);
     else if(d.t==='s'&&net.role==='guest') netApply(d);
     else if(d.t==='in'&&net.role==='host'&&net.live&&screen==='fight') request(foe,me,d.k);
+    else if(d.t==='mv'&&net.role==='host'&&net.live&&foe) foe.mvIn=d.d;
+    else if(d.t==='dash'&&net.role==='host'&&net.live&&foe) dash(foe,d.d);
     else if(d.t==='g'&&net.role==='host'){ net.p2Held=!!d.v; if(foe&&!foe.dead) foe.guard=!!d.v; }
     else if(d.t==='end'&&net.role==='guest') netResult(d.w===1?1:0);
     else if(d.t==='bye') netLost();
@@ -8744,14 +8792,15 @@
   function fSnap(f){
     var p=[]; for(var i=0;i<JOINTS.length;i++){ var j=f.pose[JOINTS[i]]; p.push(r1(j[0]),r1(j[1])); }
     return [Math.round(f.x),r1(f.dx),Math.round(f.lunge||0),r1(f.air),r1(f.kb),r1(f.sway),r1(f.bob),f.facing,
-      Math.round(f.hp),f.max,Math.round(f.meter),f.dead?1:0,f.flash||0,f.guard?1:0,f.dizzy||0,f.rage?1:0,f.pup||0,Math.round(f.iq||0),p,f.leap&&!f.airMove?1:0];
+      Math.round(f.hp),f.max,Math.round(f.meter),f.dead?1:0,f.flash||0,f.guard?1:0,f.dizzy||0,f.rage?1:0,f.pup||0,Math.round(f.iq||0),p,f.leap&&!f.airMove?1:0,
+      Math.round((f.walkAmt||0)*100)/100];
   }
   function fApply(f,a){
     f.x=a[0]; f.dx=a[1]; f.lunge=a[2]; f.air=a[3]; f.kb=a[4]; f.sway=a[5]; f.bob=a[6]; f.facing=a[7];
     f.hp=a[8]; f.max=a[9]; f.meter=a[10]; f.dead=!!a[11]; f.flash=a[12]; f.guard=!!a[13];
     f.dizzy=a[14]; f.rage=!!a[15]; f.pup=a[16]; f.iq=a[17];
     var p=a[18]; for(var i=0;i<JOINTS.length;i++){ var j=f.pose[JOINTS[i]]; j[0]=p[i*2]; j[1]=p[i*2+1]; }
-    f.leap=!!a[19]; f.airMove=null;
+    f.leap=!!a[19]; f.airMove=null; f.walkAmt=a[20]||0;
   }
   function netTick(){
     var ci=cine?[cine.name,cine.move,cine.t,r1(cine.bars),cine.f===me?0:1]:0;
@@ -8860,6 +8909,135 @@
     guardHeld=down; if(me) me.guard=down&&!me.dead;
   }
 
+  function buildOf(h){ return {h:1,w:1}; }
+  /* ================= movement: walking, dashing, dodging =================
+     Fighters walk now. Every punch and kick has a real reach, so distance
+     matters: step in to hit, step out to make them miss. Double-tap toward
+     the opponent to dash in; double-tap away to dodge, which makes you
+     untouchable for a moment. Difficulty decides how much an attack steps
+     in by itself, and how fast and clever the computer is. */
+  var REACH={punch:255,kick:285,throw:225,heavy:420};
+  var AIK={easy:{react:1.45,block:0.5,dodge:0,dash:0.5},
+           normal:{react:1,block:1,dodge:0.6,dash:1},
+           hard:{react:0.72,block:1.6,dodge:1.4,dash:1.5}};
+  function aik(){ return AIK[gfx.diff]||AIK.normal; }
+  function posOf(f){ return f.x+(f.kb||0)+(f.dx||0); }
+  function gapOf(a,b){ return Math.abs(posOf(b)-posOf(a)); }
+  function dirTo(a,b){ return posOf(b)>posOf(a)?1:-1; }
+  function reachOf(f,mv){ return (REACH[mv]||REACH.punch)*(f.big||1)*(f.base?buildOf(f.base).h:1); }
+  /* is this fighter steered by a person on this device (or a friend online)? */
+  function humanSide(f){
+    if(movie) return false;
+    if(f===me) return true;
+    return f===foe&&humanFoe();
+  }
+  /* how far an attack steps in on its own: lots on Easy or Automatic
+     movement, a little on Normal, almost none on Hard. The computer gets a
+     small step; it walks into range itself. */
+  function assistOf(f){
+    if(!humanSide(f)) return 40;
+    if(gfx.move==='auto'||(net&&net.role==='local')) return 320;
+    return gfx.diff==='easy'?320:(gfx.diff==='hard'?25:90);
+  }
+  function stepIn(f,other,mv){
+    if(!other) return;
+    var r=reachOf(f,mv||'punch')-25, g=gapOf(f,other);
+    if(g<=r) return;
+    var step=Math.min(assistOf(f),g-r);
+    if(step<=0) return;
+    ghost(f,f.x+(f.kb||0));
+    moveBy(f,dirTo(f,other)*step,true);
+  }
+  /* move a fighter's real position; slide=true keeps them drawn where they
+     were and lets the kb spring carry them there, so it reads as a step */
+  function moveBy(f,d,slide){
+    var other=(f===me)?foe:me;
+    var nx=Math.max(90,Math.min(W-90,f.x+d));
+    if(other&&!other.dead){
+      var o=other.x+(other.kb||0), side=(f.x<o)?-1:1;
+      var lim=o+side*135-(f.kb||0);
+      if(side<0&&nx>lim) nx=Math.min(nx,lim);
+      if(side>0&&nx<lim) nx=Math.max(nx,lim);
+    }
+    var moved=nx-f.x;
+    f.x=nx;
+    if(slide) f.kb=(f.kb||0)-moved;
+    return moved;
+  }
+  function canMove(f){
+    return screen==='fight'&&introT<=0&&!f.dead&&!f.leap&&!(f.stun>0)&&!busy(f)&&!f.guard;
+  }
+  function dash(f,dir){
+    if(!f||!canMove(f)||(f.dashCd>0)) return false;
+    var toward=(dir===f.facing);
+    f.dashV=dir*(toward?15:13); f.dashCd=26; f.mvIn=0;
+    if(!toward){
+      f.inv=Math.max(f.inv,15); f.dodgeT=18;
+      play(f,[{p:POSE.dodge,d:5},{p:POSE.dodge,d:8},{p:POSE.guard,d:8,rec:true},{p:POSE.idle,d:6,rec:true}]);
+      tone(520,0.12,'triangle',0.03,260);
+    }else{
+      play(f,[{p:POSE.guard,d:4},{p:POSE.guard,d:8,rec:true}]);
+      tone(300,0.12,'triangle',0.03,620);
+    }
+    ghost(f,f.x+(f.kb||0));
+    return true;
+  }
+  /* called for each fighter every step, after the hit-reaction springs */
+  function moveStep(f){
+    var other=(f===me)?foe:me;
+    if(f.dashCd>0) f.dashCd--;
+    if(f.dodgeT>0) f.dodgeT--;
+    if(f.dashV){
+      moveBy(f,f.dashV,false);
+      if(tick%2===0) ghost(f,f.x+(f.kb||0));
+      f.dashV*=0.8; if(Math.abs(f.dashV)<0.6) f.dashV=0;
+    }
+    var want=0;
+    if(canMove(f)&&other){
+      var dir=f.mvIn||0;
+      /* Automatic movement: with nothing pressed, drift into range */
+      if(!dir&&humanSide(f)&&(gfx.move==='auto'||(net&&net.role==='local'))&&gapOf(f,other)>reachOf(f,'punch')+10) dir=dirTo(f,other);
+      if(dir){
+        var back=(dir!==f.facing);
+        want=dir*2.7*Math.min(1.3,f.spd||1)*(back?0.78:1);
+      }
+    }
+    f.vx=(f.vx||0)+(want-(f.vx||0))*0.35;
+    if(Math.abs(f.vx)<0.05) f.vx=0;
+    if(f.vx) moveBy(f,f.vx,false);
+    f.walkAmt=Math.min(1,Math.abs(f.vx)/2.4);
+    f.walkPh=(f.walkPh||0)+f.vx*0.075*f.facing;
+  }
+  /* ---- input: keyboards, the arrow buttons, swipes, and online friends ---- */
+  var lastTap={};
+  function playerMove(pn,dir){
+    if(net&&net.role==='guest'){ if(net.live) netSend({t:'mv',d:dir}); return; }
+    var f=(pn===2)?foe:me; if(!f) return;
+    if(pn===2&&!humanFoe()) return;
+    f.mvIn=dir;
+  }
+  function playerDash(pn,dir){
+    if(net&&net.role==='guest'){ if(net.live) netSend({t:'dash',d:dir}); return; }
+    var f=(pn===2)?foe:me; if(!f) return;
+    if(pn===2&&!humanFoe()) return;
+    dash(f,dir);
+  }
+  /* a press that comes twice quickly in the same direction is a dash */
+  function movePress(pn,dir){
+    var k=pn+':'+dir, now=Date.now();
+    if(lastTap[k]&&now-lastTap[k]<260){ lastTap[k]=0; playerDash(pn,dir); }
+    else { lastTap[k]=now; playerMove(pn,dir); }
+  }
+  function moveRelease(pn,dir){
+    var f=(pn===2)?foe:me;
+    if(net&&net.role==='guest'){ netSend({t:'mv',d:0}); return; }
+    if(f&&f.mvIn===dir) f.mvIn=0;
+  }
+  function moveUI(){
+    var show=(screen==='fight')&&gfx.move==='buttons'&&!(net&&net.role==='local')&&!movie;
+    $('mvpad').hidden=!show;
+  }
+
   function endFight(win){
     if(screen==='over') return;
     if(net&&net.live){
@@ -8961,7 +9139,7 @@
     movie=null; $('moviebar').hidden=true; skyCache=null;
     giant=null; rush=null; dummy=null; brawl=null; bo3=null; ladder=null; $('ovChest').hidden=true;
     if(net){ net.live=false; net.after=false; if(net.role==='local') net=null; }
-    $('pad2').hidden=true; $('fightbar').classList.remove('p1left');
+    $('pad2').hidden=true; $('fightbar').classList.remove('p1left'); $('mvpad').hidden=true;
     screen='home'; me=null; foe=null;
     $('ovBtn2').hidden=true;
     $('fightbar').hidden=true; $('homeUI').hidden=false; $('overlay').hidden=true;
@@ -8991,9 +9169,20 @@
     if(!def||def.dead||att.dead) return;
     var zone=att.zone||'head', kbSet=att.knock, kd=att.kd, mv=att.mv; att.zone=null; att.knock=null; att.kd=null; att.mv=null;
     if(kind!=='auto') swoosh(att,zone,att.h.trim);
+    /* out of reach? it misses. Supers, passives, finishers and flying
+       attacks (which check their own landing) always connect. */
+    if(kind!=='special'&&kind!=='auto'&&mv!=='air'&&mv!=='fin'&&!def.dummy){
+      var at=att.x+(att.kb||0)+(att.dx||0)+(att.lunge||0)*att.facing;
+      if(Math.abs(posOf(def)-at)>reachOf(att,mv||'punch')){
+        floatText(att.x+(att.kb||0)+att.facing*90,GY-170,'MISS','#9FB4CC');
+        att.combo=0;
+        return;
+      }
+    }
     /* a moment of cover right after getting back up, so a champion who
        just refused to go down is not deleted by the very next punch */
     if(def.inv>0){
+      if(def.dodgeT>0){ floatText(def.x+(def.kb||0),GY-210,'DODGE!','#7FD4FF',true); def.dodgeT=0; if(def===me) ev('dodge'); }
       spark(def.x-def.facing*26,GY-72,'#9BD3FF',6);
       tone(420,0.05,'square',0.02,240);
       return;
@@ -9173,7 +9362,7 @@
     if(f.dead||f.stun>0||busy(f)||screen!=='fight') return false;
     if(f.cd>0) return false;
     study(other,9);
-    closeIn(f,other);
+    stepIn(f,other,'punch');
     f.guard=false;
     f.comboT=42; f.combo=(f.combo%3)+1;
     var c=f.combo;
@@ -9207,7 +9396,7 @@
     if(f.dead||f.stun>0||busy(f)||screen!=='fight') return false;
     if(f.cd>0||f.meter<deathCost(f)) return false;
     study(other,16);
-    closeIn(f,other);
+    stepIn(f,other,'heavy');
     f.meter-=deathCost(f); f.guard=false; f.combo=0;
     var sp=Math.max(0.6,1/f.spd);
     floatText(f.x,GY-230,'PUNCH OF DEATH!','#FF6B57',true);
@@ -9216,7 +9405,7 @@
     play(f,[
       {p:POSE.bigwind,d:Math.round(14*sp)},
       {p:POSE.smash,d:Math.round(7*sp),hit:function(){
-        f.zone='head'; f.knock=110; f.kd=true;
+        f.zone='head'; f.knock=110; f.kd=true; f.mv='heavy';
         hitLand(f,other,3.0,'heavy');
         if(!other.dead) other.vAir=Math.max(other.vAir||0,7);
         flash=Math.max(flash,12); shake=Math.max(shake,22);
@@ -9245,7 +9434,7 @@
     if(f.dead||f.stun>0||busy(f)||screen!=='fight') return false;
     if(f.cd>0) return false;
     study(other,11);
-    closeIn(f,other);
+    stepIn(f,other,'kick');
     f.guard=false; f.combo=0;
     var K=KICKS[(f.kickN=((f.kickN||0)+1+(Math.random()<0.3?1:0))%KICKS.length)];
     var sp=Math.max(0.6,1/f.spd);
@@ -9272,7 +9461,7 @@
     if(f.dead||f.stun>0||busy(f)||screen!=='fight') return false;
     if(f.cd>0) return false;
     study(other,13);
-    closeIn(f,other);
+    stepIn(f,other,'throw');
     f.guard=false; f.combo=0;
     var sp=Math.max(0.6,1/f.spd);
     play(f,[
@@ -9466,10 +9655,12 @@
   }
   function land(f,other){
     f.leap=false; f.air=0; f.vAir=0;
+    var ldx=f.dx||0; f.dx=0; moveBy(f,ldx,true);
+    f.kb=(f.kb||0)+ldx; f.dx=0;
     if(f.airMove){
       var am=f.airMove; f.airMove=null;
       play(f,[{p:POSE.idle,d:14}]);
-      if(Math.abs((f.x+f.dx)-other.x)<175&&!other.dead&&!f.dead){
+      if(Math.abs((f.x+(f.kb||0))-(other.x+(other.kb||0)))<175*(f.big||1)&&!other.dead&&!f.dead){
         f.mv='air'; if(f===me) ev('fly');
         f.zone=am==='kick'?'body':'head'; f.knock=am==='kick'?90:(am==='knee'?80:70); f.kd=(am==='knee');
         hitLand(f,other,am==='kick'?2.6:(am==='knee'?3.1:2.3),'heavy');
@@ -9481,7 +9672,7 @@
       return;
     }
     var flier=(f.h.id==='superman');
-    var near=Math.abs((f.x+f.dx)-other.x)<150;
+    var near=Math.abs((f.x+(f.kb||0))-(other.x+(other.kb||0)))<150*(f.big||1);
     if(near&&!other.dead&&!f.dead){
       hitLand(f,other,flier?2.4:1.5,'heavy');
       fx.push({k:'impact',x:f.x+f.dx,y:GY-24,life:26,max:26,c:flier?'#FFE08A':f.h.trim});
@@ -9582,6 +9773,7 @@
   function footwork(f){
     if(f.edgeT>0) f.edgeT--;
     fighterTick(f);
+    if(screen==='fight'||screen==='over') moveStep(f);
     if(f.kbT){
       if(!f.dead){ f.kbT*=0.955; if(Math.abs(f.kbT)<0.4) f.kbT=0; }
     }
@@ -9607,11 +9799,24 @@
       var ak=Math.random(); airAttack(f,other,ak<0.4?'kick':(ak<0.7&&f.meter>=25?'knee':'punch')); return; }
     if(f.stun>0){ f.stun--; f.guard=false; return; }
     if(f.cd>0) f.cd--;
-    f.aiT-=(f.chill>0?0.6:1);
+    var K=aik();
+    f.aiT-=(f.chill>0?0.6:1)/K.react;
     if(busy(f)) return;
-    /* guard when the player is winding up */
+    /* footwork: walk into range, sometimes dash or jump in from far away */
+    var gp=gapOf(f,other), rng=reachOf(f,'punch')-14;
+    if(!f.leap){
+      if(gp>rng){
+        f.guard=false; f.mvIn=dirTo(f,other);
+        if(gp>rng+120&&Math.random()<0.02*K.dash) dash(f,f.mvIn);
+        else if(f.aiT<=0&&gp>rng+60&&Math.random()<0.04){ doLeap(f,other); f.aiT=Math.round(96/f.spd); }
+        return;
+      }
+      f.mvIn=0;
+    }
+    /* guard when the player is winding up, or dodge out of it */
     var threat=other.anim&&other.anim.i===0;
-    if(threat&&Math.random()<0.035+f.tier*0.012){ f.guard=true; return; }
+    if(threat&&Math.random()<0.025*K.dodge){ dash(f,-f.facing); return; }
+    if(threat&&Math.random()<(0.035+f.tier*0.012)*K.block){ f.guard=true; return; }
     if(f.aiT>0){ f.guard=(f.guard&&Math.random()<0.9); return; }
     f.guard=false;
     if(canFinish(f,other)&&Math.random()<0.5){ doFinisher(f,other); f.aiT=Math.round(150/f.spd); return; }
@@ -9620,6 +9825,8 @@
     if(Math.random()<0.11){ doLeap(f,other); f.aiT=Math.round(96/f.spd); return; }
     if(other.guard&&Math.random()<0.4){ doGrab(f,other); f.aiT=Math.round(80/f.spd); return; }
     if(Math.random()<0.24){ doKick(f,other); f.aiT=Math.round(62/f.spd); return; }
+    /* on Hard, back off after finishing a combo instead of standing there */
+    if(f.combo===3&&gfx.diff==='hard'&&Math.random()<0.3){ dash(f,-f.facing); f.aiT=Math.round(30/f.spd); return; }
     doStrike(f,other);
     /* mid-combo the AI keeps the string going, like a real player would */
     if(f.combo<3&&Math.random()<0.65) f.aiT=Math.round((12+Math.random()*8)/f.spd);
@@ -10381,7 +10588,7 @@
 
   /* ---------- the Graphics panel ---------- */
   var GFX_FIELDS={gPreset:'preset',gCap:'cap',gRes:'res',gPost:'post',gPart:'part',
-    gDetail:'detail',gWeather:'weather',gSmooth:'smooth',gShake:'shake',gStyle:'style',gMusic:'music'};
+    gDetail:'detail',gWeather:'weather',gSmooth:'smooth',gShake:'shake',gStyle:'style',gMusic:'music',gDiff:'diff',gMove:'move'};
   function saveGfx(){ try{ localStorage.setItem('skyforge.gfx',JSON.stringify(gfx)); }catch(e){} }
   function applyGfx(){
     postOn=POST_OK&&!reduce&&gfx.post!=='off';
@@ -10414,7 +10621,8 @@
         var P=GFX_PRESETS[v]; if(P) for(var pk in P) gfx[pk]=P[pk];
       }else{
         gfx[k]=(k==='cap'||k==='part'||k==='detail'||k==='weather'||k==='shake'||k==='music')?Number(v):v;
-        if(k!=='cap'&&k!=='shake'&&k!=='style'&&k!=='music') gfx.preset='custom';
+        if(k!=='cap'&&k!=='shake'&&k!=='style'&&k!=='music'&&k!=='diff'&&k!=='move') gfx.preset='custom';
+        if(k==='move') moveUI();
       }
       applyGfx(); saveGfx();
     });
@@ -10428,7 +10636,7 @@
   /* ---------- What's New ----------
      Opens by itself the first time someone loads this version, and any
      time from the top bar. Remembered per browser. */
-  var NEW_VER='2026-10-f';
+  var NEW_VER='2026-10-g';
   function newSeen(){ try{ return localStorage.getItem('skyforge.seenNew')===NEW_VER; }catch(e){ return true; } }
   function markNewSeen(){ try{ localStorage.setItem('skyforge.seenNew',NEW_VER); }catch(e){} $('newBtn').classList.remove('unseen'); }
   function openNew(){
@@ -10681,6 +10889,7 @@
        breathing, and stop entirely during a fight. Biggest saving in the loop. */
     if(screen==='home'&&(tick%4)===0){ drawCards(); drawSkinCards(); }
     if(screen==='fight'&&me){
+      if(tick%30===0) moveUI();
       var pl=netGuestLive()?foe:me, op=(pl===me)?foe:me;
       var sb=$('bSpecial'), sc=superCost(pl), air=(pl.leap&&!pl.airMove);
       if(canFinish(pl,op)){ setBtn(sb,'ready super','FINISHER!'); }
@@ -11582,6 +11791,29 @@
     });
   }
   tap('bStrike','strike'); tap('bKick','kick'); tap('bLeap','leap'); tap('bSpecial','power');
+  press($('bMvL'),function(){ movePress(1,-1); $('bMvL').classList.add('held'); },function(){ moveRelease(1,-1); $('bMvL').classList.remove('held'); });
+  press($('bMvR'),function(){ movePress(1,1); $('bMvR').classList.add('held'); },function(){ moveRelease(1,1); $('bMvR').classList.remove('held'); });
+  /* swipe movement: drag left or right on the arena to walk, flick to dash */
+  (function(){
+    var sw=null, cv=$('game');
+    cv.addEventListener('pointerdown',function(e){
+      if(screen!=='fight'||gfx.move!=='swipe') return;
+      sw={x:e.clientX,t:Date.now(),dir:0};
+    });
+    cv.addEventListener('pointermove',function(e){
+      if(!sw) return;
+      var dx=e.clientX-sw.x, d=Math.abs(dx)>22?(dx>0?1:-1):0;
+      if(d!==sw.dir){ if(sw.dir) moveRelease(1,sw.dir); if(d) playerMove(1,d); sw.dir=d; }
+    });
+    function end(e){
+      if(!sw) return;
+      var dx=(e.clientX||sw.x)-sw.x;
+      if(sw.dir) moveRelease(1,sw.dir);
+      if(Date.now()-sw.t<230&&Math.abs(dx)>50) playerDash(1,dx>0?1:-1);
+      sw=null;
+    }
+    cv.addEventListener('pointerup',end); cv.addEventListener('pointercancel',end); cv.addEventListener('pointerleave',end);
+  })();
   function tap2(id,kind){
     var el=$(id);
     press(el,function(){ playerInput(2,kind); el.classList.add('flash'); setTimeout(function(){ el.classList.remove('flash'); },120); });
@@ -11597,6 +11829,11 @@
       return;
     }
     if(screen!=='fight') return;
+    var loc=(net&&net.role==='local');
+    if(e.code==='KeyQ'||(!loc&&e.code==='ArrowLeft')){ e.preventDefault(); movePress(1,-1); return; }
+    if(e.code==='KeyE'||(!loc&&e.code==='ArrowRight')){ e.preventDefault(); movePress(1,1); return; }
+    if(loc&&e.code==='Comma'){ e.preventDefault(); movePress(2,-1); return; }
+    if(loc&&e.code==='Period'){ e.preventDefault(); movePress(2,1); return; }
     if(e.code==='KeyA'){ e.preventDefault(); playerInput(1,'strike'); }
     else if(e.code==='KeyK'){ e.preventDefault(); playerInput(1,'kick'); }
     else if(e.code==='KeyG'){ e.preventDefault(); playerInput(1,'grab'); }
@@ -11617,6 +11854,11 @@
   });
   window.addEventListener('keyup',function(e){
     if(e.code==='KeyS') playerGuard(1,false);
+    var loc2=(net&&net.role==='local');
+    if(e.code==='KeyQ'||(!loc2&&e.code==='ArrowLeft')) moveRelease(1,-1);
+    if(e.code==='KeyE'||(!loc2&&e.code==='ArrowRight')) moveRelease(1,1);
+    if(loc2&&e.code==='Comma') moveRelease(2,-1);
+    if(loc2&&e.code==='Period') moveRelease(2,1);
     if(e.code==='Slash'&&net&&net.role==='local') playerGuard(2,false);
   });
   window.addEventListener('blur',function(){ guardHeld=false; if(me) me.guard=false; });

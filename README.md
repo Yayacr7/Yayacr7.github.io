@@ -129,6 +129,33 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
+### Walking, dashing and dodging
+
+- **Walk:** hold ← → (or Q / E) on a keyboard, or use the movement option you
+  picked on a phone. Legs step as you walk. Fighters can't pass through each
+  other or walk off the platform.
+- **Reach:** punches reach 255 px, kicks 285, throws 225 and the Punch of
+  Death 420 (it dashes). Out of reach, an attack shows **MISS** and does no
+  damage. Super moves, finishers, passives and flying attacks always connect.
+- **Dash:** double-tap toward the opponent. **Dodge:** double-tap away. For
+  a moment nothing can touch you, and **DODGE!** pops when it saves you.
+- **The computer moves too:** it walks into range, sometimes dashes or
+  jump-attacks in, dodges wind-ups, and on Hard backs off after a combo.
+- **⚙️ Settings → Difficulty:**
+  - **Easy:** attacks step in on their own from almost anywhere, and the
+    computer is slower and blocks less.
+  - **Normal:** a small step-in.
+  - **Hard:** almost no help, and the computer is faster, blocks and dodges
+    more.
+- **⚙️ Settings → Phone movement:**
+  - **◀ ▶ Buttons** (bottom-left, for the left thumb).
+  - **Swipe** (drag on the arena to walk, flick to dash).
+  - **Automatic** (you drift into range by yourself).
+  - Keyboards work whichever you pick.
+- Online, the friend's walking and dashing are sent to the room's creator.
+  In 2-player on one device, player 2 walks with , and . on a keyboard, and
+  on a phone both players move automatically.
+
 ### Versus: online and 2 players on one device
 
 On the **Play** tab, **🌐 Versus a friend**:
@@ -279,7 +306,7 @@ something you haven't seen).
 
 ### Graphics & FPS settings
 
-Press **⚙️ Graphics** in the top bar (or click the FPS counter) to open the
+Press **⚙️ Settings** in the top bar (or click the FPS counter) to open the
 settings. They're saved per device, so a phone and a gaming PC can each keep
 their own.
 
