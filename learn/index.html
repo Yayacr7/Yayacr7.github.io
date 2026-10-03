@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Money &amp; Deals School</title>
+<meta name="description" content="Plain-English lessons on personal finance, business finance and negotiation — with calculators, practice problems that check your work, and ready-to-use AI prompts.">
+<style>
+:root{
+  --bg:#f7f6f2; --surface:#ffffff; --surface-2:#f0eee8; --text:#1d1d1b; --muted:#5d5b55;
+  --border:#dedbd2; --accent:#1f6f5c; --accent-ink:#ffffff; --accent-soft:#e1efe9;
+  --good:#1d7a3e; --good-soft:#e3f3e8; --bad:#b3261e; --bad-soft:#fbe7e5; --warn:#8a5a00; --warn-soft:#fdf1d8;
+  --code-bg:#f3f1ea; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141513; --surface:#1d1f1c; --surface-2:#252824; --text:#ecebe6; --muted:#a6a59e;
+    --border:#34372f; --accent:#5cc0a1; --accent-ink:#0d1f19; --accent-soft:#1d3a31;
+    --good:#6fd08f; --good-soft:#1b3323; --bad:#ff8a80; --bad-soft:#3d1f1c; --warn:#f2c46b; --warn-soft:#3a2f17;
+    --code-bg:#22251f; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141513; --surface:#1d1f1c; --surface-2:#252824; --text:#ecebe6; --muted:#a6a59e;
+  --border:#34372f; --accent:#5cc0a1; --accent-ink:#0d1f19; --accent-soft:#1d3a31;
+  --good:#6fd08f; --good-soft:#1b3323; --bad:#ff8a80; --bad-soft:#3d1f1c; --warn:#f2c46b; --warn-soft:#3a2f17;
+  --code-bg:#22251f; --shadow:none;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent)}
+h1,h2,h3{line-height:1.25;margin:1.4em 0 .5em}
+h1{font-size:1.9rem;margin-top:.2em}
+h2{font-size:1.35rem}
+h3{font-size:1.08rem}
+p,ul,ol{margin:.6em 0}
+li{margin:.25em 0}
+code{background:var(--code-bg);padding:.1em .35em;border-radius:4px;font-size:.92em}
+table{border-collapse:collapse;width:100%;margin:.8em 0;font-size:.95rem}
+th,td{border:1px solid var(--border);padding:.45em .6em;text-align:left;vertical-align:top}
+th{background:var(--surface-2)}
+.table-wrap{overflow-x:auto}
+
+.topbar{position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:10px 16px}
+.brand{white-space:nowrap;font-weight:700;letter-spacing:.2px;text-decoration:none;color:var(--text)}
+.brand span{color:var(--accent)}
+.spacer{flex:1}
+.progress-pill{font-size:.85rem;color:var(--muted);white-space:nowrap}
+.icon-btn{background:none;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 10px;cursor:pointer;font:inherit;font-size:.85rem}
+
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr);max-width:1180px;margin:0 auto}
+nav.side{position:sticky;top:53px;align-self:start;height:calc(100vh - 53px);overflow-y:auto;padding:18px 12px;border-right:1px solid var(--border)}
+nav.side a{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:8px;color:var(--text);text-decoration:none;font-size:.95rem}
+nav.side a:hover{background:var(--surface-2)}
+nav.side a.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+nav.side .group{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:16px 10px 4px}
+nav.side .tick{color:var(--good);font-size:.85rem}
+
+main{padding:20px 32px 80px;min-width:0}
+section.page{max-width:760px}
+.js section.page{display:none}
+.js section.page.show{display:block}
+.lede{font-size:1.08rem;color:var(--muted)}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;box-shadow:var(--shadow)}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 14px;border-radius:8px;margin:14px 0}
+.callout.warn{border-color:var(--warn);background:var(--warn-soft)}
+.callout.honest{border-color:var(--bad);background:var(--bad-soft)}
+.callout b:first-child{display:block;margin-bottom:2px}
+.formula{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--code-bg);padding:10px 12px;border-radius:8px;overflow-x:auto;white-space:pre;font-size:.9rem;margin:.6em 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.grid .card{margin:0}
+.grid .card h3{margin-top:0}
+.module-link{text-decoration:none;color:inherit;display:block}
+.module-link:hover .card{border-color:var(--accent)}
+.module-link .card{height:100%}
+.module-link small{color:var(--muted)}
+
+/* quiz */
+.quiz{margin-top:28px}
+.q{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+.q .prompt{font-weight:600;margin-bottom:8px}
+.q label.opt{display:flex;gap:10px;align-items:flex-start;padding:7px 9px;border:1px solid var(--border);border-radius:8px;margin:6px 0;cursor:pointer}
+.q label.opt:hover{background:var(--surface-2)}
+.q label.opt input{margin-top:5px}
+.q .numrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.q input[type=number],.calc input,.calc select{font:inherit;padding:7px 9px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);width:170px;max-width:100%}
+.q .fb{margin-top:10px;padding:10px 12px;border-radius:8px;display:none}
+.q .fb.show{display:block}
+.q .fb.ok{background:var(--good-soft);color:var(--text);border-left:4px solid var(--good)}
+.q .fb.no{background:var(--bad-soft);color:var(--text);border-left:4px solid var(--bad)}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:8px 14px;font:inherit;font-weight:600;cursor:pointer}
+.btn.ghost{background:none;color:var(--accent);border:1px solid var(--accent)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.score{font-weight:700;margin-top:10px}
+
+/* calculators */
+.calc .row{display:flex;flex-wrap:wrap;gap:12px;margin:8px 0}
+.calc label{display:flex;flex-direction:column;font-size:.88rem;color:var(--muted);gap:4px}
+.calc .out{margin-top:10px;font-size:1.05rem}
+.calc .out b{color:var(--accent)}
+.calc h3{margin-top:0}
+
+/* prompts */
+.prompt-box{position:relative}
+.prompt-box pre{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:14px;white-space:pre-wrap;word-wrap:break-word;font-size:.86rem;line-height:1.5;max-height:420px;overflow:auto;margin:.5em 0}
+.copy{position:absolute;top:8px;right:8px;font-size:.8rem;padding:5px 10px}
+
+dl.gloss dt{font-weight:700;margin-top:12px}
+dl.gloss dd{margin:2px 0 0 0;color:var(--text)}
+.muted{color:var(--muted)}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:36px;border-top:1px solid var(--border);padding-top:16px}
+
+@media (max-width:820px){
+  .layout{display:block}
+  nav.side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--border);display:flex;overflow-x:auto;gap:4px;padding:8px 16px}
+  nav.side .group{display:none}
+  nav.side a{white-space:nowrap;flex:0 0 auto}
+  main{padding:16px 16px 60px}
+  h1{font-size:1.55rem}
+}
+@media print{nav.side,.topbar,.btn,.copy{display:none}.js section.page{display:block}}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<header class="topbar">
+  <a class="brand" href="#start">Money <span>&amp;</span> Deals School</a>
+  <div class="spacer"></div>
+  <span class="progress-pill" id="progressPill">0/7 passed</span>
+  <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle colour theme">Theme</button>
+</header>
+
+<div class="layout">
+<nav class="side" id="nav" aria-label="Lessons">
+  <div class="group">Start</div>
+  <a href="#start" data-page="start">Start here</a>
+  <div class="group">Lessons</div>
+  <a href="#money" data-page="money">1. Your money <span class="tick" data-tick="money"></span></a>
+  <a href="#investing" data-page="investing">2. Investing <span class="tick" data-tick="investing"></span></a>
+  <a href="#business" data-page="business">3. How a business makes money <span class="tick" data-tick="business"></span></a>
+  <a href="#statements" data-page="statements">4. Financial statements <span class="tick" data-tick="statements"></span></a>
+  <a href="#funding" data-page="funding">5. Funding &amp; valuation <span class="tick" data-tick="funding"></span></a>
+  <a href="#negotiation" data-page="negotiation">6. Negotiation <span class="tick" data-tick="negotiation"></span></a>
+  <a href="#scripts" data-page="scripts">7. Negotiation scripts <span class="tick" data-tick="scripts"></span></a>
+  <div class="group">Tools</div>
+  <a href="#calculators" data-page="calculators">Calculators</a>
+  <a href="#prompts" data-page="prompts">AI prompts</a>
+  <a href="#glossary" data-page="glossary">Glossary</a>
+</nav>
+
+<main id="main">
+
+<!-- ============ START ============ -->
+<section class="page" id="start">
+  <h1>Learn money, business and negotiation — in plain English.</h1>
+  <p class="lede">Seven short lessons. Each one ends with practice problems that check your answers and explain the ones you miss. Calculators and copy-paste AI prompts are in the Tools section.</p>
+
+  <div class="callout honest">
+    <b>Straight talk before you start</b>
+    This site covers the <em>foundations</em> — the ideas that do most of the work in everyday money and business decisions. It is <strong>not</strong> "everything there is to know about finance"; no single site is, and anyone who says otherwise is selling something. Tax rules and account types differ by country (examples here use US terms where noted). This is education, not personal financial advice.
+  </div>
+
+  <h2>How to use it</h2>
+  <ol>
+    <li><strong>Read a lesson</strong> (10–15 minutes each).</li>
+    <li><strong>Do the practice problems</strong> at the bottom without scrolling back up. Getting one wrong is the point — the explanation is where the learning happens.</li>
+    <li><strong>Pass at 80%</strong> and the lesson gets a ✓ in the menu. Your progress is saved in this browser only.</li>
+    <li><strong>Use the AI prompts</strong> to go deeper, practise a negotiation, or have your own numbers checked.</li>
+  </ol>
+
+  <h2>The lessons</h2>
+  <div class="grid">
+    <a class="module-link" href="#money"><div class="card"><h3>1. Your money</h3><small>Budgets, emergency funds, debt, compound interest, inflation, credit.</small></div></a>
+    <a class="module-link" href="#investing"><div class="card"><h3>2. Investing</h3><small>Risk vs return, index funds, fees, diversification, scams.</small></div></a>
+    <a class="module-link" href="#business"><div class="card"><h3>3. How a business makes money</h3><small>Margin, markup, break-even, unit economics, cash flow.</small></div></a>
+    <a class="module-link" href="#statements"><div class="card"><h3>4. Financial statements</h3><small>Income statement, balance sheet, cash flow, key ratios.</small></div></a>
+    <a class="module-link" href="#funding"><div class="card"><h3>5. Funding &amp; valuation</h3><small>Debt vs equity, dilution, time value of money.</small></div></a>
+    <a class="module-link" href="#negotiation"><div class="card"><h3>6. Negotiation</h3><small>BATNA, anchoring, interests, concessions, listening.</small></div></a>
+    <a class="module-link" href="#scripts"><div class="card"><h3>7. Negotiation scripts</h3><small>Salary, buying, selling, rent — word-for-word.</small></div></a>
+  </div>
+
+  <h2>The five ideas that matter most</h2>
+  <ol>
+    <li><strong>Spend less than you earn</strong>, automatically. Everything else in personal finance sits on top of this.</li>
+    <li><strong>Compound growth works both ways.</strong> It builds wealth in investments and destroys it in high-interest debt.</li>
+    <li><strong>Profit is not cash.</strong> Profitable businesses go bankrupt when the cash runs out before the customers pay.</li>
+    <li><strong>Fees and taxes are guaranteed losses</strong>; returns are not. Control what you can control.</li>
+    <li><strong>In a negotiation, your power is your alternative.</strong> The person who can walk away calmly usually gets the better deal.</li>
+  </ol>
+</section>
+
+<!-- ============ 1. MONEY ============ -->
+<section class="page" id="money">
+  <h1>1. Your money</h1>
+  <p class="lede">Personal finance is mostly behaviour, not maths. But the maths explains why the behaviour matters.</p>
+
+  <h2>Know where it goes</h2>
+  <p>You can't fix what you don't measure. Track every expense for one month before writing any budget — most people underestimate their spending by a wide margin, especially on food and subscriptions.</p>
+  <p>A common starting split is <strong>50/30/20</strong>: 50% needs, 30% wants, 20% saving and debt payoff. Treat it as a rough check, not a rule. In expensive cities, needs alone can be 60–70% of take-home pay; that's a signal to work on income or housing cost, not a personal failure.</p>
+  <div class="callout"><b>The one habit that matters most</b>Pay yourself first. Set savings to move automatically on payday, so you're budgeting what's left instead of saving what's left.</div>
+
+  <h2>Emergency fund</h2>
+  <p>Keep <strong>3–6 months of essential expenses</strong> in an easy-to-reach, insured savings account. Aim for the higher end if your income is irregular or you support others. This money isn't an investment; its job is to stop a car repair from becoming credit-card debt.</p>
+
+  <h2>Debt: good, bad and expensive</h2>
+  <p>Debt is a tool. The question is always: <em>does what I'm buying earn or save more than the interest costs?</em></p>
+  <ul>
+    <li><strong>Expensive debt</strong> (credit cards, payday loans, often 20–30%+ APR): pay it off before investing. Paying off a 24% card is a guaranteed 24% return — no investment reliably beats that.</li>
+    <li><strong>Moderate debt</strong> (car loans, personal loans): keep terms short and avoid borrowing for things that lose value fast.</li>
+    <li><strong>Low-rate debt</strong> (some mortgages and student loans): often fine to pay on schedule while you invest.</li>
+  </ul>
+  <h3>Two payoff methods</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Method</th><th>How</th><th>Honest verdict</th></tr>
+    <tr><td><strong>Avalanche</strong></td><td>Pay minimums on everything; extra money goes to the <em>highest interest rate</em>.</td><td>Mathematically cheapest. Always.</td></tr>
+    <tr><td><strong>Snowball</strong></td><td>Extra money goes to the <em>smallest balance</em> first.</td><td>Costs more interest, but quick wins keep some people going. The best plan is the one you'll stick to.</td></tr>
+  </table></div>
+
+  <h2>Compound interest</h2>
+  <p>Compounding means you earn returns on your earlier returns. Growth starts slow, then accelerates.</p>
+  <div class="formula">Future value = Starting amount × (1 + rate)^years
+
+Example: $10,000 at 7% for 30 years
+= 10,000 × 1.07^30 ≈ $76,123</div>
+  <p><strong>Rule of 72:</strong> divide 72 by the yearly rate to estimate how many years it takes money to double. At 8%, about 9 years. At 24% credit-card interest, a balance you ignore doubles in about 3 years.</p>
+
+  <h2>Inflation</h2>
+  <p>Inflation is prices rising over time, so each dollar buys less. At 3% inflation, $100 today buys only about $74 of today's goods in 10 years. Cash sitting in a 0% account is quietly losing value. That's the reason to invest long-term money, not keep it all in cash.</p>
+
+  <h2>Credit scores (US)</h2>
+  <p>Lenders use your score to price loans. The rough order of importance:</p>
+  <ol>
+    <li><strong>Payment history</strong> — never miss a payment. Turn on autopay for at least the minimum.</li>
+    <li><strong>Utilisation</strong> — how much of your limit you use. Under 30% is the common guideline; under 10% is better.</li>
+    <li><strong>Length of history</strong> — keep old no-fee cards open.</li>
+    <li><strong>Credit mix</strong> and <strong>new applications</strong> — minor factors.</li>
+  </ol>
+  <p class="muted">Other countries use different scoring systems, though paying on time and using little of your limit help almost everywhere.</p>
+
+  <div class="quiz" data-quiz="money"></div>
+  <div class="pager"><a href="#start">← Start here</a><a href="#investing">2. Investing →</a></div>
+</section>
+
+<!-- ============ 2. INVESTING ============ -->
+<section class="page" id="investing">
+  <h1>2. Investing</h1>
+  <p class="lede">Investing is buying things you expect to be worth more later, or that pay you while you own them. The hard part isn't picking winners. It's not sabotaging yourself.</p>
+
+  <h2>Risk and return are linked</h2>
+  <p>Higher expected return comes with bigger swings in value. There's no free lunch. Anyone offering high returns with "no risk" is mistaken or lying.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Asset</th><th>What it is</th><th>Typical role</th></tr>
+    <tr><td>Cash / savings</td><td>Bank deposits, money-market funds</td><td>Safety and short-term needs. Loses to inflation over long periods.</td></tr>
+    <tr><td>Bonds</td><td>Loans to governments or companies that pay interest</td><td>Steadier than stocks, lower long-run return.</td></tr>
+    <tr><td>Stocks</td><td>Part-ownership of companies</td><td>Long-term growth. Can fall 30–50% in a bad year.</td></tr>
+    <tr><td>Real estate</td><td>Property, or funds that own property</td><td>Income plus growth. Illiquid and concentrated if you own one house.</td></tr>
+  </table></div>
+  <p><strong>Time horizon rule of thumb:</strong> money you need within about 5 years shouldn't be heavily in stocks. A crash right before you need it can force you to sell at the bottom.</p>
+
+  <h2>Diversification and index funds</h2>
+  <p>Diversification means not betting everything on one company, sector or country. An <strong>index fund</strong> buys every company in a market index, such as the S&amp;P 500, for a very low fee.</p>
+  <div class="callout honest"><b>The uncomfortable fact</b>Over 15+ years, the large majority of professional fund managers fail to beat a simple low-cost index fund after fees. If professionals with research teams mostly can't do it, a beginner day-trading on a phone app almost certainly won't.</div>
+
+  <h2>Fees matter more than you think</h2>
+  <p>A 1% yearly fee sounds tiny. It's charged every year on your whole balance, forever.</p>
+  <div class="formula">$100,000 for 30 years
+  at 7% (≈0.05% index fund)  → about $761,000
+  at 6% (same, minus 1% fee) → about $574,000
+  The 1% fee cost ≈ $187,000</div>
+
+  <h2>Retirement accounts (US examples)</h2>
+  <ul>
+    <li><strong>401(k) employer match</strong>: if your employer matches contributions, contribute at least enough to get the full match. It's an instant 50–100% return.</li>
+    <li><strong>Traditional vs Roth</strong>: Traditional gives a tax break now and you pay tax later; Roth is taxed now and grows tax-free. Roth tends to suit people who expect a higher tax rate later.</li>
+    <li>Other countries have their own versions (UK ISA/SIPP, Canada TFSA/RRSP, Australia super). The logic is similar: use tax-advantaged accounts first.</li>
+  </ul>
+
+  <h2>A sensible order of operations</h2>
+  <ol>
+    <li>Small starter emergency fund.</li>
+    <li>Get any employer match.</li>
+    <li>Pay off high-interest debt.</li>
+    <li>Full emergency fund (3–6 months).</li>
+    <li>Max tax-advantaged accounts with low-cost diversified funds.</li>
+    <li>Then taxable investing, extra mortgage payments, and other goals.</li>
+  </ol>
+
+  <h2>Red flags</h2>
+  <ul>
+    <li>"Guaranteed" high returns.</li>
+    <li>Pressure to decide today.</li>
+    <li>Returns that are suspiciously smooth.</li>
+    <li>You can't explain how the money is made.</li>
+    <li>Income depends on recruiting others.</li>
+    <li>Influencers paid to promote coins or courses.</li>
+  </ul>
+
+  <div class="quiz" data-quiz="investing"></div>
+  <div class="pager"><a href="#money">← 1. Your money</a><a href="#business">3. Business →</a></div>
+</section>
+
+<!-- ============ 3. BUSINESS ============ -->
+<section class="page" id="business">
+  <h1>3. How a business makes money</h1>
+  <p class="lede">Every business, from a lemonade stand to Apple, comes down to: sell something for more than it costs, and don't run out of cash on the way.</p>
+
+  <h2>The profit ladder</h2>
+  <div class="formula">Revenue                     (what customers paid)
+− Cost of goods sold (COGS) (direct cost of what you sold)
+= Gross profit
+− Operating expenses        (rent, salaries, marketing, software)
+= Operating profit
+− Interest and taxes
+= Net profit</div>
+
+  <h2>Margin vs markup (people mix these up constantly)</h2>
+  <p>Say a product costs you $60 and you sell it for $100.</p>
+  <div class="formula">Markup = profit ÷ cost  = 40 ÷ 60  = 66.7%
+Margin = profit ÷ price = 40 ÷ 100 = 40%</div>
+  <p>Same deal, very different numbers. Always ask which one someone means. Margin can never exceed 100%; markup can.</p>
+
+  <h2>Fixed costs, variable costs and break-even</h2>
+  <ul>
+    <li><strong>Fixed costs</strong> stay the same however much you sell (rent, base salaries, software).</li>
+    <li><strong>Variable costs</strong> rise with each unit (materials, shipping, payment fees).</li>
+    <li><strong>Contribution margin</strong> = price − variable cost per unit. It's what each sale contributes towards fixed costs.</li>
+  </ul>
+  <div class="formula">Break-even units = Fixed costs ÷ (Price − Variable cost per unit)
+
+Example: $5,000/month fixed, $25 price, $15 variable
+= 5,000 ÷ 10 = 500 units a month just to break even</div>
+
+  <h2>Unit economics</h2>
+  <p>Does each customer make you money? Two numbers answer that:</p>
+  <ul>
+    <li><strong>CAC</strong> (customer acquisition cost): total sales and marketing spend ÷ new customers.</li>
+    <li><strong>LTV</strong> (lifetime value): average revenue per month × gross margin × months a customer stays.</li>
+  </ul>
+  <p>A common guideline is <strong>LTV at least 3× CAC</strong>, and earning back CAC within about 12 months. If LTV is below CAC, growing faster just loses money faster.</p>
+
+  <h2>Cash flow is not profit</h2>
+  <p>Profit is an accounting idea; cash is what pays the bills. You can be profitable on paper and still go bust if:</p>
+  <ul>
+    <li>Customers pay in 60 days but suppliers want payment in 30.</li>
+    <li>Stock (inventory) sits on shelves tying up cash.</li>
+    <li>Fast growth forces you to buy materials before customers pay.</li>
+  </ul>
+  <div class="callout warn"><b>The classic killer</b>Lack of cash, not lack of profit, is behind a large share of small-business failures. Watch your bank balance weekly and forecast it 13 weeks ahead.</div>
+
+  <h2>Pricing</h2>
+  <ul>
+    <li><strong>Cost-plus</strong>: cost + a markup. Simple, but ignores what customers would pay.</li>
+    <li><strong>Value-based</strong>: price based on the value to the customer. Harder, usually more profitable.</li>
+    <li><strong>Why price is powerful</strong>: on a 20% margin, a 5% price increase (if volume holds) raises profit by 25%. Most small businesses underprice.</li>
+  </ul>
+
+  <div class="quiz" data-quiz="business"></div>
+  <div class="pager"><a href="#investing">← 2. Investing</a><a href="#statements">4. Statements →</a></div>
+</section>
+
+<!-- ============ 4. STATEMENTS ============ -->
+<section class="page" id="statements">
+  <h1>4. Financial statements</h1>
+  <p class="lede">Three reports tell you almost everything about a company's health. Learn to read them and you can judge any business, including your own.</p>
+
+  <h2>Income statement — "Did we make money this period?"</h2>
+  <p>Revenue, minus costs, equals profit, over a period such as a quarter or year. It's the profit ladder from Lesson 3.</p>
+
+  <h2>Balance sheet — "What do we own and owe right now?"</h2>
+  <div class="formula">Assets = Liabilities + Equity</div>
+  <ul>
+    <li><strong>Assets</strong>: cash, money owed by customers (receivables), inventory, equipment.</li>
+    <li><strong>Liabilities</strong>: money owed to others, such as loans, supplier bills (payables) and taxes due.</li>
+    <li><strong>Equity</strong>: what's left for the owners.</li>
+  </ul>
+  <p>It always balances, because everything the company owns was paid for either with borrowed money or with owners' money.</p>
+
+  <h2>Cash flow statement — "Where did the cash actually go?"</h2>
+  <ul>
+    <li><strong>Operating</strong>: cash from running the business. This is the most important one.</li>
+    <li><strong>Investing</strong>: buying or selling equipment, property or other businesses.</li>
+    <li><strong>Financing</strong>: borrowing, repaying loans, raising equity, paying dividends.</li>
+  </ul>
+  <p>A healthy mature business usually generates positive operating cash flow. Positive profit with negative operating cash flow year after year is a warning sign.</p>
+
+  <h2>Ratios worth knowing</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Ratio</th><th>Formula</th><th>Tells you</th></tr>
+    <tr><td>Gross margin</td><td>Gross profit ÷ Revenue</td><td>How much each sale leaves after direct costs</td></tr>
+    <tr><td>Net margin</td><td>Net profit ÷ Revenue</td><td>What's left after everything</td></tr>
+    <tr><td>Current ratio</td><td>Current assets ÷ Current liabilities</td><td>Can it pay bills due in the next year? Below 1 is a caution sign.</td></tr>
+    <tr><td>Debt-to-equity</td><td>Total liabilities ÷ Equity</td><td>How much the business relies on borrowing</td></tr>
+    <tr><td>Return on equity (ROE)</td><td>Net profit ÷ Equity</td><td>How well it uses owners' money</td></tr>
+  </table></div>
+  <div class="callout honest"><b>Context beats rules</b>"Good" ratios vary a lot by industry. A supermarket with a 2–3% net margin can be excellent; a software company at 3% might be struggling. Compare a business against its own history and against similar companies, not against a universal number.</div>
+
+  <div class="quiz" data-quiz="statements"></div>
+  <div class="pager"><a href="#business">← 3. Business</a><a href="#funding">5. Funding →</a></div>
+</section>
+
+<!-- ============ 5. FUNDING ============ -->
+<section class="page" id="funding">
+  <h1>5. Funding &amp; valuation</h1>
+  <p class="lede">Where the money to start or grow a business comes from, what it costs you, and how people decide what a business is worth.</p>
+
+  <h2>Three ways to fund a business</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Source</th><th>You give up</th><th>Good when</th></tr>
+    <tr><td><strong>Bootstrapping</strong> (own savings, revenue)</td><td>Speed</td><td>You can grow from customer money. You keep full control.</td></tr>
+    <tr><td><strong>Debt</strong> (loans, credit lines)</td><td>Fixed repayments plus interest; often a personal guarantee</td><td>Cash flow is predictable enough to cover repayments.</td></tr>
+    <tr><td><strong>Equity</strong> (angels, venture capital)</td><td>Ownership and some control</td><td>The business can grow very large, very fast, and needs money to do it.</td></tr>
+  </table></div>
+  <div class="callout honest"><b>Reality check</b>Most businesses never raise venture capital and shouldn't try. VCs need a few investments to return their whole fund, so they push for huge, risky growth. That's often bad for a business that could be a very good, profitable, smaller company.</div>
+
+  <h2>Dilution</h2>
+  <div class="formula">Pre-money valuation  = value before new money comes in
+Post-money valuation = pre-money + investment
+Investor's share     = investment ÷ post-money
+
+Example: raise $250,000 at $1,000,000 pre-money
+Post-money = $1,250,000 → investor owns 250k ÷ 1.25M = 20%</div>
+  <p>A smaller slice of a bigger pie can be worth more, but only if the money actually makes the pie bigger.</p>
+
+  <h2>Time value of money</h2>
+  <p>A dollar today is worth more than a dollar next year, because today's dollar can be invested and because the future is uncertain. To compare money at different times, <strong>discount</strong> future amounts back to today:</p>
+  <div class="formula">Present value = Future amount ÷ (1 + rate)^years
+
+$1,000 received in 3 years at a 10% rate
+= 1,000 ÷ 1.1^3 ≈ $751.31 today</div>
+
+  <h2>How businesses are valued</h2>
+  <ul>
+    <li><strong>Multiples</strong>: value = a profit or revenue figure × a multiple seen in similar businesses. Small private businesses often sell for roughly 2–5× their yearly owner earnings; it varies widely.</li>
+    <li><strong>Discounted cash flow (DCF)</strong>: forecast future cash flows and discount each one to today. It's correct in theory but very sensitive to assumptions. Small changes to the growth or discount rate swing the answer enormously.</li>
+    <li><strong>Assets</strong>: what the things it owns would sell for. Mainly used as a floor, or for asset-heavy businesses.</li>
+  </ul>
+  <p class="muted">Honest caveat: valuation is part maths, part negotiation. A business is worth what a buyer will actually pay, and that links straight to the next lesson.</p>
+
+  <div class="quiz" data-quiz="funding"></div>
+  <div class="pager"><a href="#statements">← 4. Statements</a><a href="#negotiation">6. Negotiation →</a></div>
+</section>
+
+<!-- ============ 6. NEGOTIATION ============ -->
+<section class="page" id="negotiation">
+  <h1>6. Negotiation</h1>
+  <p class="lede">Negotiation isn't a talent you're born with. It's mostly preparation, plus a handful of habits you can practise.</p>
+
+  <h2>Step 1: prepare four numbers and one plan</h2>
+  <ul>
+    <li><strong>BATNA</strong> (Best Alternative To a Negotiated Agreement): what you'll actually do if this deal fails. Another job offer? Another supplier? Staying put? <em>Your BATNA is your power.</em> Improve it before you negotiate.</li>
+    <li><strong>Walk-away point</strong> (reservation price): the worst deal you'll accept. Set it from your BATNA, and set it before you're in the room.</li>
+    <li><strong>Target</strong>: an ambitious but defensible outcome. People who aim higher tend to get more.</li>
+    <li><strong>Their side</strong>: estimate their BATNA and walk-away point too.</li>
+  </ul>
+  <p>The <strong>ZOPA</strong> (Zone Of Possible Agreement) is the overlap between your walk-away point and theirs. If a seller won't go below $8,000 and a buyer won't go above $10,000, the ZOPA is $8,000–$10,000. If there's no overlap, no deal is possible on price alone, so you'll need to change the deal itself.</p>
+
+  <h2>Step 2: interests, not positions</h2>
+  <p>A <strong>position</strong> is what someone says they want ("I need $90k"). An <strong>interest</strong> is <em>why</em> ("I need to cover my rent and feel valued"). Two sisters fight over one orange and split it in half. One wanted the juice, the other the peel for baking; they could have had 100% each. Ask <em>why</em> to find trades that cost you little and are worth a lot to them.</p>
+
+  <h2>Step 3: anchor deliberately</h2>
+  <p>The first number on the table pulls the final result towards it. That's <strong>anchoring</strong>.</p>
+  <ul>
+    <li>If you know the market well, consider making the first offer, ambitious but with a reason attached.</li>
+    <li>If you <em>don't</em> know the market, let them go first, or anchor with research ("Similar roles pay $85–95k").</li>
+    <li>If they anchor extreme, don't counter off their number. Name it ("That's far from what we're seeing") and re-anchor with your own reasoning.</li>
+  </ul>
+
+  <h2>Step 4: listen more than you talk</h2>
+  <ul>
+    <li><strong>Ask open questions</strong>: "What would make this work for you?" "How did you arrive at that number?"</li>
+    <li><strong>Calibrated "how" questions</strong> push the problem back to them: "How am I supposed to do that on this budget?"</li>
+    <li><strong>Label emotions</strong>: "It sounds like timing is the real pressure here."</li>
+    <li><strong>Use silence.</strong> After you make an offer or hear one, stop talking. People fill silence with concessions and information.</li>
+  </ul>
+
+  <h2>Step 5: trade, don't give</h2>
+  <ul>
+    <li>Never make a concession for free. Use "If you can do X, I can do Y."</li>
+    <li>Make each concession smaller than the last. It signals you're near your limit.</li>
+    <li>Negotiate several things at once (price, timing, scope, payment terms, extras). Single-issue haggling is win/lose; multi-issue deals let both sides win.</li>
+    <li>Don't split the difference early. It rewards whoever anchored more extremely.</li>
+  </ul>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Negotiating against yourself</strong>: lowering your ask before they've responded.</li>
+    <li><strong>Revealing your walk-away point.</strong></li>
+    <li><strong>Accepting the first offer</strong>: it signals you left money on the table, and often leaves <em>both</em> sides less happy.</li>
+    <li><strong>Treating it as a fight</strong>: you may work with this person for years. Be hard on the problem, soft on the person.</li>
+    <li><strong>Not preparing a BATNA</strong>: walking in with no alternative is the single biggest weakness.</li>
+  </ul>
+  <div class="callout honest"><b>Ethics and self-interest agree here</b>Don't lie about facts ("I have another offer" when you don't). It's often illegal in contracts, it's easy to call out, and it ruins trust. You're allowed to <em>decline to share</em> information ("I'd rather not get into my current salary").</div>
+
+  <div class="quiz" data-quiz="negotiation"></div>
+  <div class="pager"><a href="#funding">← 5. Funding</a><a href="#scripts">7. Scripts →</a></div>
+</section>
+
+<!-- ============ 7. SCRIPTS ============ -->
+<section class="page" id="scripts">
+  <h1>7. Negotiation scripts</h1>
+  <p class="lede">Word-for-word starting points. Adapt the wording so it sounds like you — scripts read robotically are worse than none.</p>
+
+  <h2>Salary — new job offer</h2>
+  <div class="card">
+    <p><strong>When they ask your expectations early:</strong><br>"I'd like to learn more about the role before naming a number. What's the budgeted range?"</p>
+    <p><strong>When the offer arrives:</strong><br>"Thank you. I'm excited about this role and the team. Based on [market data / my experience with X], I was expecting something closer to [target]. Is there flexibility on base?"</p>
+    <p><em>Then stop talking.</em></p>
+    <p><strong>If base is fixed:</strong><br>"I understand. Could we look at a signing bonus, extra leave, a title change, or a salary review at six months?"</p>
+  </div>
+
+  <h2>Raise at your current job</h2>
+  <div class="card">
+    <p>"I'd like to talk about my compensation. Over the last year I [concrete result with a number: grew X by 20%, saved $Y, took on Z]. Market data for this role shows [range]. I'm asking for an adjustment to [number]. What would it take to get there?"</p>
+    <p class="muted">Bring results, not needs. "My rent went up" is your problem; "I saved the company $40k" is theirs.</p>
+  </div>
+
+  <h2>Buying something (car, equipment, services)</h2>
+  <div class="card">
+    <p>"I'm ready to buy this week, and I'm comparing it with [alternative]. What's the best out-the-door price you can do?"</p>
+    <p>Then: "That's above what I can do. If you can get to [number], we can sign today."</p>
+    <p class="muted">Negotiate the total price, not the monthly payment. Monthly payments hide a longer loan and extras.</p>
+  </div>
+
+  <h2>Selling / pricing your services</h2>
+  <div class="card">
+    <p><strong>When a client says it's too expensive:</strong><br>"I understand. Which part of the project matters most to you? We could reduce the scope to fit your budget rather than reduce the quality."</p>
+    <p class="muted">Cut scope, not price. Discounting trains clients to push back every time.</p>
+  </div>
+
+  <h2>Rent or a bill</h2>
+  <div class="card">
+    <p>"I've been a reliable tenant/customer for [time] and I'd like to stay. Similar places nearby are listed at [number]. If I sign a [longer] lease, could we keep the rent at [number]?"</p>
+  </div>
+
+  <h2>Preparation sheet (fill this before any negotiation)</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Question</th><th>Your answer</th></tr>
+    <tr><td>What do I actually want, and why (my interests)?</td><td></td></tr>
+    <tr><td>What's my BATNA if this fails?</td><td></td></tr>
+    <tr><td>Walk-away point</td><td></td></tr>
+    <tr><td>Target (ambitious + reason)</td><td></td></tr>
+    <tr><td>What do they want, and why?</td><td></td></tr>
+    <tr><td>Their likely BATNA</td><td></td></tr>
+    <tr><td>Things cheap for me but valuable to them</td><td></td></tr>
+    <tr><td>Questions I'll ask</td><td></td></tr>
+  </table></div>
+
+  <div class="quiz" data-quiz="scripts"></div>
+  <div class="pager"><a href="#negotiation">← 6. Negotiation</a><a href="#calculators">Calculators →</a></div>
+</section>
+
+<!-- ============ CALCULATORS ============ -->
+<section class="page" id="calculators">
+  <h1>Calculators</h1>
+  <p class="lede">Use these to check your own numbers and the practice problems. The formulas are shown so nothing is a black box.</p>
+
+  <div class="card calc" id="c-compound">
+    <h3>Compound growth with monthly saving</h3>
+    <div class="row">
+      <label>Starting amount ($)<input type="number" data-k="p" value="1000" min="0"></label>
+      <label>Monthly addition ($)<input type="number" data-k="m" value="200" min="0"></label>
+      <label>Yearly return (%)<input type="number" data-k="r" value="7" step="0.1"></label>
+      <label>Years<input type="number" data-k="y" value="30" min="0" max="80"></label>
+    </div>
+    <div class="out" data-out></div>
+    <p class="muted">Assumes returns compound monthly and additions are made at the end of each month. Real returns vary year to year.</p>
+  </div>
+
+  <div class="card calc" id="c-loan">
+    <h3>Loan payment</h3>
+    <div class="row">
+      <label>Amount borrowed ($)<input type="number" data-k="p" value="20000" min="0"></label>
+      <label>Yearly interest rate (%)<input type="number" data-k="r" value="6" step="0.1"></label>
+      <label>Length (months)<input type="number" data-k="n" value="60" min="1"></label>
+    </div>
+    <div class="out" data-out></div>
+    <div class="formula">Payment = P × r(1+r)^n ÷ ((1+r)^n − 1),  r = yearly rate ÷ 12</div>
+  </div>
+
+  <div class="card calc" id="c-breakeven">
+    <h3>Break-even</h3>
+    <div class="row">
+      <label>Fixed costs per month ($)<input type="number" data-k="f" value="5000" min="0"></label>
+      <label>Price per unit ($)<input type="number" data-k="p" value="25" min="0"></label>
+      <label>Variable cost per unit ($)<input type="number" data-k="v" value="15" min="0"></label>
+    </div>
+    <div class="out" data-out></div>
+  </div>
+
+  <div class="card calc" id="c-margin">
+    <h3>Margin and markup</h3>
+    <div class="row">
+      <label>Your cost ($)<input type="number" data-k="c" value="60" min="0"></label>
+      <label>Selling price ($)<input type="number" data-k="p" value="100" min="0"></label>
+    </div>
+    <div class="out" data-out></div>
+  </div>
+
+  <div class="card calc" id="c-debt">
+    <h3>How long to pay off a card?</h3>
+    <div class="row">
+      <label>Balance ($)<input type="number" data-k="b" value="3000" min="0"></label>
+      <label>APR (%)<input type="number" data-k="r" value="24" step="0.1"></label>
+      <label>Monthly payment ($)<input type="number" data-k="m" value="100" min="0"></label>
+    </div>
+    <div class="out" data-out></div>
+  </div>
+</section>
+
+<!-- ============ PROMPTS ============ -->
+<section class="page" id="prompts">
+  <h1>AI prompts</h1>
+  <p class="lede">Copy these into Claude or any other AI assistant. The <strong>system prompt</strong> sets how the AI behaves for a whole conversation. The <strong>master prompts</strong> are reusable starting messages for specific jobs.</p>
+  <div class="callout warn"><b>Check the AI's work too</b>AI assistants can be confidently wrong, especially with arithmetic, current tax rules, interest rates and laws. Re-run any important number in the calculators here, and verify anything legal or tax-related with an official source or a professional.</div>
+
+  <h2>Where to put a system prompt</h2>
+  <ul>
+    <li><strong>Claude.ai</strong>: create a Project and paste it into the project instructions, or use Settings → Profile → personal preferences for every chat.</li>
+    <li><strong>API</strong>: send it as the <code>system</code> parameter.</li>
+    <li><strong>No settings available?</strong> Paste it as your first message and add: "Follow these instructions for the rest of this conversation."</li>
+  </ul>
+
+  <div id="promptList"></div>
+</section>
+
+<!-- ============ GLOSSARY ============ -->
+<section class="page" id="glossary">
+  <h1>Glossary</h1>
+  <p class="lede">Plain-English definitions.</p>
+  <dl class="gloss">
+    <dt>APR</dt><dd>Annual percentage rate — the yearly cost of borrowing, including some fees.</dd>
+    <dt>Asset</dt><dd>Something you own that has value: cash, equipment, property, money owed to you.</dd>
+    <dt>BATNA</dt><dd>Best Alternative To a Negotiated Agreement — what you'll do if no deal happens.</dd>
+    <dt>Bond</dt><dd>A loan you make to a government or company in exchange for interest.</dd>
+    <dt>Break-even</dt><dd>The sales level where revenue exactly covers all costs: zero profit, zero loss.</dd>
+    <dt>CAC</dt><dd>Customer acquisition cost — sales and marketing spend ÷ new customers won.</dd>
+    <dt>Cash flow</dt><dd>Money actually moving in and out of the bank, as opposed to accounting profit.</dd>
+    <dt>COGS</dt><dd>Cost of goods sold — direct costs of making or buying what you sold.</dd>
+    <dt>Compound interest</dt><dd>Earning interest on previous interest, so growth accelerates over time.</dd>
+    <dt>Contribution margin</dt><dd>Price minus variable cost per unit — what each sale adds towards fixed costs.</dd>
+    <dt>Dilution</dt><dd>Your ownership percentage shrinking when new shares are issued to investors.</dd>
+    <dt>Diversification</dt><dd>Spreading money across many investments so one failure doesn't sink you.</dd>
+    <dt>Equity</dt><dd>Ownership. On a balance sheet: assets minus liabilities.</dd>
+    <dt>Expense ratio</dt><dd>The yearly fee a fund charges, as a percentage of your money in it.</dd>
+    <dt>Gross margin</dt><dd>(Revenue − COGS) ÷ Revenue.</dd>
+    <dt>Index fund</dt><dd>A fund that buys everything in a market index instead of picking stocks. Usually very cheap.</dd>
+    <dt>Inflation</dt><dd>The general rise in prices over time, which reduces what money can buy.</dd>
+    <dt>Liability</dt><dd>Something you owe: loans, unpaid bills, taxes due.</dd>
+    <dt>Liquidity</dt><dd>How quickly something can be turned into cash without losing value.</dd>
+    <dt>LTV</dt><dd>Lifetime value — gross profit you expect from a customer over the whole relationship.</dd>
+    <dt>Markup</dt><dd>Profit ÷ cost. Not the same as margin.</dd>
+    <dt>Net profit</dt><dd>What's left after every cost, interest payment and tax.</dd>
+    <dt>Present value</dt><dd>What a future amount of money is worth today, after discounting.</dd>
+    <dt>Receivables</dt><dd>Money customers owe you for things already delivered.</dd>
+    <dt>Reservation price</dt><dd>Your walk-away point in a negotiation.</dd>
+    <dt>Valuation</dt><dd>An estimate of what a business is worth.</dd>
+    <dt>ZOPA</dt><dd>Zone Of Possible Agreement — the overlap between both sides' walk-away points.</dd>
+  </dl>
+</section>
+
+</main>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- storage (best effort only) ---------- */
+function load(key, fallback){ try{ var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }catch(e){ return fallback; } }
+function save(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
+
+/* ---------- theme ---------- */
+var themeBtn = document.getElementById('themeBtn');
+var theme = load('mds-theme', null);
+function applyTheme(t){ if(t){ document.documentElement.setAttribute('data-theme', t); } else { document.documentElement.removeAttribute('data-theme'); } }
+applyTheme(theme);
+themeBtn.addEventListener('click', function(){
+  var isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+    (!document.documentElement.getAttribute('data-theme') && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+  theme = isDark ? 'light' : 'dark';
+  applyTheme(theme); save('mds-theme', theme);
+});
+
+/* ---------- routing ---------- */
+var pages = Array.prototype.slice.call(document.querySelectorAll('section.page'));
+var navLinks = Array.prototype.slice.call(document.querySelectorAll('nav.side a'));
+function route(){
+  var id = (location.hash || '#start').slice(1);
+  if(!document.getElementById(id) || !document.getElementById(id).classList.contains('page')) id = 'start';
+  pages.forEach(function(p){ p.classList.toggle('show', p.id === id); });
+  navLinks.forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-page') === id); });
+  window.scrollTo(0,0);
+  var active = document.querySelector('nav.side a.active');
+  if(active && active.scrollIntoView && window.innerWidth <= 820){ active.scrollIntoView({block:'nearest', inline:'center'}); }
+}
+window.addEventListener('hashchange', route);
+
+/* ---------- quizzes ---------- */
+// type "mc": choices + answer index. type "num": answer + tol (absolute) + unit.
+var QUIZZES = {
+  money: [
+    {type:'mc', q:'You have a $4,000 credit card balance at 24% APR and $4,000 in savings beyond your emergency fund. What usually makes the most financial sense?',
+      c:['Invest the $4,000 in an index fund','Pay off the credit card','Keep the cash and pay the minimum','Split it 50/50'], a:1,
+      e:'Paying off a 24% card is a guaranteed 24% return. Stock markets have historically averaged well under that, and with risk. Kill expensive debt first.'},
+    {type:'num', q:'Rule of 72: at an 8% yearly return, roughly how many years does it take money to double?', a:9, tol:0.5, unit:'years',
+      e:'72 ÷ 8 = 9 years.'},
+    {type:'num', q:'$10,000 grows at 7% a year, compounded yearly, for 30 years. About how much is it worth? (nearest dollar is fine; within 1% counts)', a:76123, tol:761, unit:'$',
+      e:'10,000 × 1.07^30 = 10,000 × 7.612 ≈ $76,123.'},
+    {type:'mc', q:'Which debt payoff method always costs the least total interest?', c:['Snowball (smallest balance first)','Avalanche (highest rate first)','Pay all debts equally','Pay the newest debt first'], a:1,
+      e:'Avalanche minimises interest by definition. Snowball can still be the right choice if motivation is your real bottleneck.'},
+    {type:'num', q:'With 3% yearly inflation, how much of today\'s buying power does $100 have after 10 years? (within $1 counts)', a:74.41, tol:1, unit:'$',
+      e:'100 ÷ 1.03^10 = 100 ÷ 1.344 ≈ $74.41.'},
+    {type:'mc', q:'What is the single biggest factor in most US credit scores?', c:['Your income','Payment history','Number of cards','Your bank balance'], a:1,
+      e:'Payment history matters most. Income and bank balance aren\'t in your credit score at all.'}
+  ],
+  investing: [
+    {type:'mc', q:'A friend offers an investment with a "guaranteed 20% a year, zero risk". The best response is:', c:['Invest a small amount to test it','Treat it as a red flag and walk away','Invest if the friend has made money','Ask for 25%'], a:1,
+      e:'High returns with no risk don\'t exist. Early "winners" in Ponzi schemes are paid with later investors\' money, so a friend\'s gains prove nothing.'},
+    {type:'num', q:'$100,000 grows for 30 years at 6% instead of 7% because of a 1% fee. Roughly how many dollars does the fee cost? (within $3,000 counts)', a:186877, tol:3000, unit:'$',
+      e:'100,000 × (1.07^30 − 1.06^30) = 761,226 − 574,349 ≈ $186,877.'},
+    {type:'mc', q:'You need money for a house deposit in 2 years. Where should most of it sit?', c:['100% stocks for maximum growth','High-yield savings or short-term bonds','Cryptocurrency','A single promising company'], a:1,
+      e:'Short time horizon = low risk tolerance. A 30% crash a year before you buy could wreck the plan.'},
+    {type:'mc', q:'Your employer matches 50% of 401(k) contributions up to 6% of salary. What\'s generally smart?', c:['Skip it and invest on your own','Contribute at least 6% to get the full match','Contribute 1%','Wait until you\'re older'], a:1,
+      e:'The match is an instant 50% return on that money. Very little else beats it.'},
+    {type:'mc', q:'Over long periods, most actively managed funds compared with low-cost index funds:', c:['Beat them easily','Underperform them after fees','Perform exactly the same','Are always safer'], a:1,
+      e:'The majority of active funds trail their index over 15+ years once fees are counted.'}
+  ],
+  business: [
+    {type:'num', q:'A product costs $60 and sells for $100. What is the gross MARGIN in %?', a:40, tol:0.5, unit:'%',
+      e:'Margin = profit ÷ price = 40 ÷ 100 = 40%. (Markup would be 40 ÷ 60 = 66.7%.)'},
+    {type:'num', q:'Same product: cost $60, price $100. What is the MARKUP in %? (one decimal place is fine)', a:66.67, tol:0.5, unit:'%',
+      e:'Markup = profit ÷ cost = 40 ÷ 60 = 66.7%.'},
+    {type:'num', q:'Fixed costs are $5,000/month, price is $25, variable cost is $15 per unit. How many units a month to break even?', a:500, tol:0.5, unit:'units',
+      e:'5,000 ÷ (25 − 15) = 500 units.'},
+    {type:'num', q:'Customers pay $50/month, gross margin is 70%, and they stay 24 months on average. What is LTV in $?', a:840, tol:1, unit:'$',
+      e:'50 × 0.70 × 24 = $840.'},
+    {type:'mc', q:'With LTV of $840 and CAC of $300, the LTV:CAC ratio is 2.8. Against the common 3:1 guideline, this is:', c:['Excellent — scale ad spend hard','Slightly below guideline — improve retention, margin or acquisition cost before scaling','Losing money on every customer','Irrelevant'], a:1,
+      e:'2.8:1 is profitable per customer but a bit thin once overheads are included. Tighten the numbers first.'},
+    {type:'mc', q:'A business shows a profit every month but keeps running out of cash. The most likely cause?', c:['The accountant made errors','Customers pay slowly and/or cash is tied up in inventory','Profit and cash are always equal','It needs a new logo'], a:1,
+      e:'Profit counts a sale when it happens; cash arrives when the customer pays. Slow receivables and inventory eat cash.'}
+  ],
+  statements: [
+    {type:'mc', q:'Which equation always holds on a balance sheet?', c:['Revenue − Costs = Profit','Assets = Liabilities + Equity','Cash = Profit','Assets = Revenue'], a:1,
+      e:'Everything owned (assets) was funded either by borrowing (liabilities) or by owners (equity).'},
+    {type:'num', q:'Revenue is $200,000 and COGS is $120,000. Gross margin in %?', a:40, tol:0.5, unit:'%',
+      e:'(200,000 − 120,000) ÷ 200,000 = 40%.'},
+    {type:'num', q:'Current assets $150,000, current liabilities $100,000. Current ratio?', a:1.5, tol:0.01, unit:'',
+      e:'150,000 ÷ 100,000 = 1.5. Short-term bills are covered 1.5 times.'},
+    {type:'num', q:'Revenue $500,000, net profit $50,000. Net margin in %?', a:10, tol:0.2, unit:'%',
+      e:'50,000 ÷ 500,000 = 10%.'},
+    {type:'mc', q:'Buying a $40,000 delivery van with cash shows up in which section of the cash flow statement?', c:['Operating','Investing','Financing','It doesn\'t appear'], a:1,
+      e:'Buying long-term assets is an investing activity. If you took a loan to buy it, the loan itself would appear under financing.'}
+  ],
+  funding: [
+    {type:'num', q:'You raise $250,000 at a $1,000,000 pre-money valuation. What % does the investor own?', a:20, tol:0.2, unit:'%',
+      e:'Post-money = 1,250,000. 250,000 ÷ 1,250,000 = 20%.'},
+    {type:'num', q:'What is $1,000 received 3 years from now worth today at a 10% discount rate? (within $1 counts)', a:751.31, tol:1, unit:'$',
+      e:'1,000 ÷ 1.1^3 = 1,000 ÷ 1.331 ≈ $751.31.'},
+    {type:'mc', q:'A steady local bakery wants money for a second oven. Usually the better-matched funding is:', c:['Venture capital','A small business loan or equipment financing','An ICO','Selling 50% to an angel'], a:1,
+      e:'Predictable cash flow and a physical asset suit debt. VC wants massive scale, which a bakery isn\'t designed for.'},
+    {type:'mc', q:'Why is a DCF valuation risky to rely on alone?', c:['It ignores cash','Small changes in growth or discount-rate assumptions swing the result a lot','It\'s illegal','It only works for banks'], a:1,
+      e:'DCF is right in principle, but the output is only as good as the forecasts fed in.'}
+  ],
+  negotiation: [
+    {type:'mc', q:'What gives you the most power in a negotiation?', c:['Talking first and loudest','A strong alternative if this deal fails (BATNA)','Being liked','Having a lot of time to talk'], a:1,
+      e:'If you can walk away to something good, you don\'t need this deal, and both sides can feel it.'},
+    {type:'num', q:'A seller won\'t go below $8,000. A buyer won\'t go above $10,000. How wide is the ZOPA in $?', a:2000, tol:1, unit:'$',
+      e:'The overlap runs from $8,000 to $10,000, so it\'s $2,000 wide.'},
+    {type:'mc', q:'The other side opens with an extreme, insulting number. Best move?', c:['Counter halfway between their number and yours','Name it as far off and re-anchor with your own reasoned number','Accept to keep things friendly','Storm out'], a:1,
+      e:'Countering off an extreme anchor lets it pull the result. Refuse to treat it as a reference point.'},
+    {type:'mc', q:'You\'ve made an offer. They go quiet. You should:', c:['Immediately lower your offer','Explain your offer again in more detail','Stay quiet and wait','Change the subject'], a:2,
+      e:'Filling silence with a lower number is negotiating against yourself. Let them respond.'},
+    {type:'mc', q:'They ask for a faster delivery date. The strongest response is:', c:['"Sure, no problem."','"If we deliver two weeks early, can you pay 50% up front?"','"No."','"Let me think about it" and never follow up'], a:1,
+      e:'Trade, don\'t give. Every concession should buy something back.'},
+    {type:'mc', q:'Which is an INTEREST rather than a position?', c:['"I want $90,000."','"I need enough to cover childcare and feel my experience is valued."','"Final offer: $85,000."','"Take it or leave it."'], a:1,
+      e:'Interests are the why behind the number. They open up creative options such as flexible hours or a childcare stipend.'}
+  ],
+  scripts: [
+    {type:'mc', q:'You\'ve just made your salary counter-offer. What next?', c:['Justify it with three more reasons','Say "but I\'m flexible"','Stop talking and let them respond','Lower it slightly to be safe'], a:2,
+      e:'Adding "I\'m flexible" or more justification signals weakness. Make your ask, then be quiet.'},
+    {type:'mc', q:'Which argument for a raise is strongest?', c:['"My rent went up."','"I\'ve been here three years."','"I cut supplier costs by $40,000 this year, and market rate for this role is $X."','"Others got raises."'], a:2,
+      e:'Value delivered plus market data. Your expenses and tenure are not the employer\'s reasons to pay more.'},
+    {type:'mc', q:'A car dealer keeps asking what monthly payment you want. Why resist?', c:['Monthly figures are illegal','Focusing on monthly payment lets them stretch the loan term and add extras while the total price rises','Dealers hate it','It doesn\'t matter'], a:1,
+      e:'Negotiate the out-the-door total. Financing is a separate negotiation.'},
+    {type:'mc', q:'A client says your quote is too expensive. The best first move is usually:', c:['Drop the price 20%','Offer to reduce scope to match their budget','Refuse to discuss it','Add free extras'], a:1,
+      e:'Cutting scope protects your rate and keeps the value-for-money link intact.'},
+    {type:'mc', q:'You don\'t have another job offer. The recruiter asks if you do. Best answer?', c:['"Yes, a big one." (bluff)','"I\'m talking with a few companies, but this role is my priority." — only if true; otherwise focus on why you\'re a strong fit and market data','"No, I have nothing else, please hire me."','Refuse to answer and hang up'], a:1,
+      e:'Don\'t invent offers: bluffs get called and destroy trust. You also don\'t have to volunteer weakness. Lean on value and market data.'}
+  ]
+};
+var QUIZ_IDS = Object.keys(QUIZZES);
+var progress = load('mds-progress', {});
+
+function el(tag, attrs, html){ var n = document.createElement(tag); if(attrs) for(var k in attrs) n.setAttribute(k, attrs[k]); if(html != null) n.innerHTML = html; return n; }
+function fmt(n, d){ return Number(n).toLocaleString(undefined, {minimumFractionDigits:d||0, maximumFractionDigits:d||0}); }
+
+function updateProgressUI(){
+  var passed = QUIZ_IDS.filter(function(id){ return progress[id] && progress[id].passed; }).length;
+  document.getElementById('progressPill').textContent = passed + '/' + QUIZ_IDS.length + ' passed';
+  QUIZ_IDS.forEach(function(id){
+    var t = document.querySelector('[data-tick="' + id + '"]');
+    if(t) t.textContent = (progress[id] && progress[id].passed) ? '✓' : '';
+  });
+}
+
+function buildQuiz(container){
+  var id = container.getAttribute('data-quiz');
+  var qs = QUIZZES[id]; if(!qs) return;
+  container.appendChild(el('h2', null, 'Practice — check your work'));
+  container.appendChild(el('p', {'class':'muted'}, 'Answer each, then press <strong>Check answers</strong>. 80% or more marks this lesson as passed.'));
+  var best = progress[id] && progress[id].best;
+  if(best != null) container.appendChild(el('p', {'class':'muted'}, 'Your best so far: ' + best + '%'));
+
+  qs.forEach(function(q, i){
+    var box = el('div', {'class':'q'});
+    box.appendChild(el('div', {'class':'prompt'}, (i+1) + '. ' + q.q));
+    if(q.type === 'mc'){
+      q.c.forEach(function(choice, j){
+        var lab = el('label', {'class':'opt'});
+        var inp = el('input', {type:'radio', name:id + '-' + i, value:String(j)});
+        lab.appendChild(inp); lab.appendChild(el('span', null, choice));
+        box.appendChild(lab);
+      });
+    } else {
+      var row = el('div', {'class':'numrow'});
+      if(q.unit === '$') row.appendChild(el('span', null, '$'));
+      row.appendChild(el('input', {type:'number', step:'any', inputmode:'decimal', 'aria-label':'Your answer', name:id + '-' + i}));
+      if(q.unit && q.unit !== '$') row.appendChild(el('span', {'class':'muted'}, q.unit));
+      box.appendChild(row);
+    }
+    box.appendChild(el('div', {'class':'fb'}));
+    container.appendChild(box);
+  });
+
+  var btns = el('div', {'class':'btnrow'});
+  var check = el('button', {type:'button', 'class':'btn'}, 'Check answers');
+  var reset = el('button', {type:'button', 'class':'btn ghost'}, 'Try again');
+  btns.appendChild(check); btns.appendChild(reset);
+  container.appendChild(btns);
+  var scoreEl = el('div', {'class':'score', 'aria-live':'polite'});
+  container.appendChild(scoreEl);
+
+  var boxes = container.querySelectorAll('.q');
+
+  check.addEventListener('click', function(){
+    var right = 0, blank = 0;
+    qs.forEach(function(q, i){
+      var box = boxes[i], fb = box.querySelector('.fb'), ok = false, answered = true, correctText;
+      if(q.type === 'mc'){
+        var sel = box.querySelector('input:checked');
+        if(!sel) answered = false; else ok = Number(sel.value) === q.a;
+        correctText = q.c[q.a];
+      } else {
+        var raw = box.querySelector('input').value.replace(/,/g,'').trim();
+        if(raw === '' || isNaN(Number(raw))) answered = false;
+        else ok = Math.abs(Number(raw) - q.a) <= q.tol;
+        correctText = (q.unit === '$' ? '$' : '') + fmt(q.a, q.a % 1 ? 2 : 0) + (q.unit && q.unit !== '$' ? ' ' + q.unit : '');
+      }
+      if(!answered) blank++;
+      if(ok) right++;
+      fb.className = 'fb show ' + (ok ? 'ok' : 'no');
+      fb.innerHTML = ok ? '<strong>Correct.</strong> ' + q.e
+        : '<strong>' + (answered ? 'Not quite.' : 'No answer.') + '</strong> Answer: ' + correctText + '. ' + q.e;
+    });
+    var pct = Math.round(right / qs.length * 100);
+    var passed = pct >= 80;
+    var msg = 'Score: ' + right + '/' + qs.length + ' (' + pct + '%). ';
+    msg += passed ? 'Passed ✓' : 'Not yet — reread the explanations above, then try again.';
+    if(blank) msg += ' (' + blank + ' left blank)';
+    scoreEl.textContent = msg;
+    var prev = progress[id] || {};
+    progress[id] = {best: Math.max(prev.best || 0, pct), passed: !!(prev.passed || passed)};
+    save('mds-progress', progress);
+    updateProgressUI();
+  });
+
+  reset.addEventListener('click', function(){
+    container.querySelectorAll('input[type=radio]').forEach(function(r){ r.checked = false; });
+    container.querySelectorAll('input[type=number]').forEach(function(r){ r.value = ''; });
+    container.querySelectorAll('.fb').forEach(function(f){ f.className = 'fb'; f.innerHTML = ''; });
+    scoreEl.textContent = '';
+  });
+}
+
+document.querySelectorAll('[data-quiz]').forEach(buildQuiz);
+
+/* ---------- calculators ---------- */
+function calc(id, fn){
+  var root = document.getElementById(id), out = root.querySelector('[data-out]');
+  function run(){
+    var v = {};
+    root.querySelectorAll('input').forEach(function(i){ v[i.getAttribute('data-k')] = parseFloat(i.value) || 0; });
+    out.innerHTML = fn(v);
+  }
+  root.addEventListener('input', run); run();
+}
+calc('c-compound', function(v){
+  var n = Math.round(v.y * 12), r = v.r / 100 / 12, fv;
+  fv = r === 0 ? v.p + v.m * n : v.p * Math.pow(1 + r, n) + v.m * (Math.pow(1 + r, n) - 1) / r;
+  var contributed = v.p + v.m * n;
+  return 'Final balance: <b>$' + fmt(fv) + '</b><br>You put in $' + fmt(contributed) + ' · Growth earned $' + fmt(fv - contributed);
+});
+calc('c-loan', function(v){
+  if(v.n <= 0) return 'Enter a length in months.';
+  var r = v.r / 100 / 12, pay = r === 0 ? v.p / v.n : v.p * r * Math.pow(1 + r, v.n) / (Math.pow(1 + r, v.n) - 1);
+  return 'Monthly payment: <b>$' + fmt(pay, 2) + '</b><br>Total paid $' + fmt(pay * v.n, 2) + ' · Total interest $' + fmt(pay * v.n - v.p, 2);
+});
+calc('c-breakeven', function(v){
+  var cm = v.p - v.v;
+  if(cm <= 0) return '<b>No break-even possible:</b> each sale loses money (price ≤ variable cost). Raise price or cut variable cost.';
+  var units = v.f / cm;
+  return 'Break-even: <b>' + fmt(Math.ceil(units)) + ' units</b> a month (' + fmt(units, 1) + ' exactly)<br>Revenue needed: $' + fmt(Math.ceil(units) * v.p) + ' · Contribution per unit $' + fmt(cm, 2);
+});
+calc('c-margin', function(v){
+  if(v.p <= 0) return 'Enter a selling price.';
+  var profit = v.p - v.c;
+  var margin = profit / v.p * 100, markup = v.c > 0 ? profit / v.c * 100 : null;
+  return 'Profit per unit: <b>$' + fmt(profit, 2) + '</b><br>Margin: <b>' + fmt(margin, 1) + '%</b> · Markup: <b>' + (markup == null ? '—' : fmt(markup, 1) + '%') + '</b>';
+});
+calc('c-debt', function(v){
+  var r = v.r / 100 / 12, bal = v.b, months = 0, interest = 0;
+  if(bal <= 0) return 'No balance — nothing to pay off.';
+  if(v.m <= bal * r) return '<b>This payment never pays it off.</b> It doesn\'t even cover the monthly interest of $' + fmt(bal * r, 2) + '. Pay more.';
+  while(bal > 0.005 && months < 1200){ var i = bal * r; interest += i; bal = bal + i - v.m; months++; }
+  var y = Math.floor(months / 12), m = months % 12;
+  return 'Paid off in <b>' + months + ' months</b> (' + (y ? y + ' yr ' : '') + m + ' mo)<br>Total interest: <b>$' + fmt(interest, 2) + '</b>';
+});
+
+/* ---------- prompts ---------- */
+var PROMPTS = [
+  {title:'System prompt — Straight-Talk Mentor', kind:'System prompt', note:'Paste into project instructions or custom instructions. It sets the honesty rules for everything after.',
+   text:
+'You are my straight-talk mentor for business, finance and negotiation.\n\n' +
+'How to behave:\n' +
+'- Be direct and honest, not agreeable. Do not flatter me or soften bad news into mush.\n' +
+'- Challenge my assumptions when they are weak. Name the specific assumption and explain why it is weak.\n' +
+'- If I am wrong, say "You\'re wrong about this" and explain why, with numbers or evidence where possible.\n' +
+'- When I share an idea, plan or decision, rate it honestly out of 10, then give the 2–3 biggest reasons for the score and what would raise it by 2 points.\n' +
+'- If you are uncertain, say so plainly and say what would resolve the uncertainty. Never guess confidently. Separate what you know, what you are estimating, and what you don\'t know.\n' +
+'- Show your working for any calculation, step by step, so I can check it. Double-check arithmetic before answering.\n' +
+'- Flag when something depends on my country, current law, tax rules or today\'s rates, and tell me to verify it with an official source.\n' +
+'- Explain in plain English. Define any jargon the first time you use it.\n' +
+'- Keep answers tight. Lead with the answer, then the reasoning.\n' +
+'- Disagreeing with me is fine and expected. Being right matters more than being pleasant.\n\n' +
+'You are not a licensed financial adviser. For big, irreversible decisions, tell me when a professional is worth paying for.'},
+
+  {title:'Master prompt — Teach me a topic', kind:'Master prompt', note:'Replace the bracketed parts.',
+   text:
+'Teach me [TOPIC, e.g. "how a balance sheet works"].\n\n' +
+'My current level: [beginner / some basics / intermediate].\n' +
+'Why I want to know: [goal, e.g. "to read my own business\'s numbers"].\n\n' +
+'Do it like this:\n' +
+'1. Explain it in plain English in under 200 words, with one concrete real-world example using simple numbers.\n' +
+'2. List the 3 most common misunderstandings beginners have about it.\n' +
+'3. Give me 3 practice questions, from easy to hard. Don\'t show the answers.\n' +
+'4. Wait for my answers. Then mark each one right or wrong, explain any mistake, and tell me honestly whether I actually understand it or am just pattern-matching.\n' +
+'5. If I\'m ready, suggest the next topic to learn. If I\'m not, tell me what to review first.'},
+
+  {title:'Master prompt — Check my work', kind:'Master prompt', note:'For calculations, budgets, financial statements or a plan.',
+   text:
+'Check my work. Be a strict reviewer, not a cheerleader.\n\n' +
+'What I\'m trying to do: [GOAL]\n' +
+'My work:\n[PASTE NUMBERS, BUDGET, CALCULATION OR PLAN]\n\n' +
+'Please:\n' +
+'1. Recalculate every number independently and show your working. List each error with the correct figure.\n' +
+'2. Point out any wrong formulas or concepts (e.g. margin vs markup, profit vs cash flow).\n' +
+'3. List assumptions I made without stating them, and which ones are weakest.\n' +
+'4. Tell me what I left out that a professional would include.\n' +
+'5. Give an overall accuracy rating out of 10 and say whether I can rely on this as it stands.\n' +
+'If anything is ambiguous, ask me instead of guessing.'},
+
+  {title:'Master prompt — Negotiation sparring partner', kind:'Master prompt', note:'Role-play practice. Tell it to make the counterpart tough.',
+   text:
+'Let\'s role-play a negotiation so I can practise.\n\n' +
+'Scenario: [e.g. "I\'m negotiating salary for a marketing manager job offer of $70,000"]\n' +
+'My goal: [TARGET]   My walk-away point: [NUMBER — keep it secret in the role-play]\n' +
+'My BATNA: [what I\'ll do if this fails]\n\n' +
+'Rules:\n' +
+'- You play the other side: [recruiter / landlord / supplier / buyer]. Be realistic and moderately tough. Use real tactics: anchoring, silence, "that\'s our policy", deadlines, and asking about my other offers.\n' +
+'- Invent a hidden walk-away point and hidden interests for your character, and don\'t reveal them until the end.\n' +
+'- Reply only as the character, one message at a time, and wait for my reply.\n' +
+'- When I type "SCORE", step out of character and give me: the final result vs my target; your hidden walk-away point (how much I left on the table); every mistake I made, quoting my exact words; what I did well; and a rating out of 10. Be blunt.\n\n' +
+'Start the role-play now with your opening line.'},
+
+  {title:'Master prompt — Prepare for a real negotiation', kind:'Master prompt', note:'Use before any real negotiation.',
+   text:
+'Help me prepare for a real negotiation. Ask me questions one at a time until you have what you need, then build my plan.\n\n' +
+'Situation: [DESCRIBE]\n\n' +
+'Cover:\n' +
+'1. My interests (the why behind what I want) and theirs.\n' +
+'2. My BATNA and how to make it stronger before the meeting.\n' +
+'3. My walk-away point, target, and opening anchor, each with a one-sentence justification I can say out loud.\n' +
+'4. Their likely BATNA, walk-away point and pressure points.\n' +
+'5. Things that are cheap for me to give but valuable to them, and the reverse.\n' +
+'6. Five questions I should ask them.\n' +
+'7. The three toughest things they might say, and how I should respond.\n' +
+'8. Where my plan is weak. Be honest even if it\'s uncomfortable. Rate my position out of 10.'},
+
+  {title:'Master prompt — Rate my business idea', kind:'Master prompt', note:'For idea validation before you spend money.',
+   text:
+'Rate my business idea honestly out of 10. Assume I would rather hear a painful truth now than lose money later.\n\n' +
+'Idea: [DESCRIBE]\n' +
+'Customer: [WHO EXACTLY]\n' +
+'Price: [$]   Estimated cost per sale: [$]   Monthly fixed costs: [$]\n' +
+'My advantage: [why me]\n\n' +
+'Give me:\n' +
+'1. The score, and the single biggest reason it isn\'t higher.\n' +
+'2. My 3 weakest assumptions, and a cheap way to test each in under 2 weeks.\n' +
+'3. Unit economics: margin, contribution per sale, and break-even volume. Show the maths, and flag any number I need to supply.\n' +
+'4. Who already does this, and why a customer would switch to me (or wouldn\'t).\n' +
+'5. The most likely way this fails.\n' +
+'6. What would make it a 9/10.\n' +
+'Say clearly if you don\'t know something rather than inventing market data.'},
+
+  {title:'Master prompt — Review my budget', kind:'Master prompt', note:'Remove account numbers and anything identifying before pasting.',
+   text:
+'Review my monthly budget like an honest, practical financial coach.\n\n' +
+'Take-home income: [$]\n' +
+'Expenses:\n[LIST: category — amount]\n' +
+'Debts: [type — balance — interest rate — minimum payment]\n' +
+'Savings: [emergency fund $, retirement %, other]\n' +
+'Country: [COUNTRY]\n' +
+'Goal: [e.g. "debt-free in 2 years" / "house deposit of $30k"]\n\n' +
+'Please:\n' +
+'1. Check my maths and the % of income in each category.\n' +
+'2. Tell me the 3 changes with the biggest impact, in order, with dollar amounts.\n' +
+'3. Give my debt payoff order (avalanche) with an estimated payoff date, showing working.\n' +
+'4. Tell me whether my goal is realistic on this budget. If not, say so and say what would make it realistic.\n' +
+'5. Flag anything that depends on my country\'s rules that I should verify.'},
+
+  {title:'Master prompt — The all-in-one tutor', kind:'Master prompt', note:'One prompt that runs a full learning session. Pair it with the system prompt above.',
+   text:
+'Act as my personal business, finance and negotiation tutor for this session.\n\n' +
+'Start by asking me 5 quick diagnostic questions (mixed topics: personal finance, business finance, financial statements, investing, negotiation) to find my level. Ask them one at a time.\n\n' +
+'Then:\n' +
+'- Tell me honestly where I\'m strong and where I\'m weak, with a score out of 10 for each area.\n' +
+'- Teach my weakest area first, in short chunks of under 150 words, each followed by one question to check I understood before moving on.\n' +
+'- Use realistic numbers and situations, and show all working on calculations.\n' +
+'- When I get something wrong, tell me directly and explain the misconception, not just the right answer.\n' +
+'- Every 3 chunks, give me a mixed review question from earlier topics.\n' +
+'- At the end, give me a 5-item summary of what I learned and a 1-week practice plan.\n\n' +
+'Do not move on until I answer. Do not praise wrong answers. If you\'re unsure about a fact, say so.'}
+];
+
+var list = document.getElementById('promptList');
+PROMPTS.forEach(function(p, i){
+  list.appendChild(el('h2', null, p.title));
+  list.appendChild(el('p', {'class':'muted'}, '<strong>' + p.kind + '.</strong> ' + p.note));
+  var box = el('div', {'class':'prompt-box'});
+  var pre = el('pre'); pre.textContent = p.text;
+  var btn = el('button', {type:'button', 'class':'btn copy'}, 'Copy');
+  btn.addEventListener('click', function(){
+    function done(ok){ btn.textContent = ok ? 'Copied ✓' : 'Select & copy manually'; setTimeout(function(){ btn.textContent = 'Copy'; }, 1800); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(p.text).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      try{ var r = document.createRange(); r.selectNodeContents(pre); var s = getSelection(); s.removeAllRanges(); s.addRange(r); done(document.execCommand('copy')); }catch(e){ done(false); }
+    }
+  });
+  box.appendChild(pre); box.appendChild(btn);
+  list.appendChild(box);
+});
+
+updateProgressUI();
+route();
+})();
+</script>
+</body>
+</html>

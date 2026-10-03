@@ -2,6 +2,15 @@
 
 Things I'm making with Claude Code.
 
+## Money & Deals School — business, finance and negotiation lessons
+
+A plain-English learning site in [`learn/`](learn/index.html): seven short lessons (your money, investing, how a business makes money, financial statements, funding and valuation, negotiation, negotiation scripts). Each lesson ends with practice problems that check your answers and explain the ones you miss. There are also five calculators (compound growth, loan payment, break-even, margin vs markup, card payoff), a glossary, and copy-paste AI system and master prompts.
+
+**To use:** open `learn/index.html` in a browser, or visit `/learn/` on the published site. The prompts are also in [`learn/PROMPTS.md`](learn/PROMPTS.md).
+
+Educational only, not personal financial advice. Account and tax examples use US terms where noted.
+
+
 ## Yahya.games.com — Skyforge Champions
 
 Two hundred and eighty-seven characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
