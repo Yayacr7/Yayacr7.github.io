@@ -136,6 +136,34 @@
   body.retro .tabs{border-color:rgba(60,240,255,.4);box-shadow:0 0 16px rgba(60,240,255,.18)}
   body.retro .tabs button{font-family:Orbitron,sans-serif;font-size:.82rem}
   body.retro .pkright,body.retro .pkleft .detail{border-color:rgba(60,240,255,.3)}
+  .netbox{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .netcol{background:var(--panel-2);border-radius:13px;padding:14px;display:flex;flex-direction:column;gap:8px}
+  .netcol h4{margin:0;font-family:"Saira Condensed",sans-serif;font-size:1.3rem;text-transform:uppercase;color:var(--gold)}
+  .netcol p{margin:0;font-size:.88rem}
+  .netrow{display:flex;gap:8px}
+  .netrow .btn{flex:1}
+  #netCode{flex:1;min-width:0;font:inherit;font-family:"Saira Condensed",sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:.3em;
+    text-transform:uppercase;text-align:center;color:var(--ice);background:#0D1622;border:2px solid #2B3E57;border-radius:10px;padding:6px}
+  .netlobby{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--edge);padding-top:10px}
+  .netlobby[hidden]{display:none}
+  .netbig{margin:0;font-family:"Press Start 2P",monospace;font-size:2rem;letter-spacing:.2em;text-align:center;color:#FFF27A;
+    text-shadow:0 0 14px rgba(255,60,200,.8)}
+  .netbig:empty{display:none}
+  .netstatus{margin:0;font-weight:800;font-size:.86rem;color:#8BE8A8}
+  .netvs{display:flex;align-items:center;justify-content:center;gap:10px}
+  .netvs i{font-family:"Press Start 2P",monospace;font-style:normal;color:#FF3CC8}
+  .netp{display:flex;flex-direction:column;align-items:center;background:#0D1622;border-radius:10px;padding:8px 12px;min-width:110px}
+  .netp b{font-size:.7rem;letter-spacing:.12em;color:var(--dim)}
+  .netp span{font-family:"Saira Condensed",sans-serif;font-weight:800;font-size:1.1rem;color:var(--gold)}
+  .netp small{color:var(--dim)}
+  .netp.wait span{color:var(--dim)}
+  .netlbl{display:flex;flex-direction:column;gap:4px;font-weight:800;font-size:.78rem;text-transform:uppercase;color:var(--dim)}
+  .netlbl select{font:inherit;font-size:.95rem;text-transform:none;color:var(--ice);background:#0D1622;border:2px solid #2B3E57;border-radius:9px;padding:8px}
+  .netfair{display:flex;gap:8px;align-items:center;font-size:.86rem}
+  /* in a 2-player fight each player's buttons sit on their own fighter's side */
+  .pad.p1left{left:12px;right:auto}
+  @media (max-width:620px){ .pad.p1left{left:7px;right:auto;width:42%} .pad2{width:42%} }
+  .pad2 .fbtn{border-color:rgba(255,60,200,.7)!important}
   .gfxpanel{position:fixed;inset:0;z-index:50;background:rgba(4,8,14,.72);display:grid;place-items:center;padding:16px}
   .gfxbox{background:var(--panel-2);border:2px solid var(--gold);border-radius:15px;padding:18px;max-width:640px;width:100%;
     max-height:92vh;overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.6)}
@@ -480,6 +508,7 @@
       <p class="gfxnow">Everything that's been added to Skyforge Champions. Tap a button to try it!</p>
       <div class="wngrid">
         <div class="wn"><span class="wi">🎮</span><div><b class="wt">Easier controls</b><p>Just four big buttons now: <b>Punch, Kick, Jump</b> and <b>Power</b>. Your champion even blocks on their own sometimes.</p></div></div>
+        <div class="wn"><span class="wi">🌐</span><div><b class="wt">Fight your friends!</b><p><b>Online:</b> make a room, send the 4-letter code, and fight a friend on their own phone or computer. <b>2 players, 1 device:</b> share the keyboard, or split the phone screen. Turn on <b>Fair fight</b> to make it pure skill.</p><button class="btn ghost" data-go="online">Play a friend</button></div></div>
         <div class="wn"><span class="wi">🥊</span><div><b class="wt">Boxing gloves + 37 icons</b><p>Every fighter now wears <b>boxing gloves</b>. And <b>37 celebrities and world icons</b> joined: Ali, Bruce Lee, The Rock, Usain Bolt, Serena, Simone Biles, Jordan, Pelé, Taylor Swift, MrBeast, Einstein, Cleopatra and more. Tap <b>⭐ Icons</b> in the picker to find them.</p><button class="btn ghost" data-go="icons">Show me the icons</button></div></div>
         <div class="wn"><span class="wi">🧭</span><div><b class="wt">New champion picker</b><p>Your champion and all <b>250</b> fighters on one screen, with <b>sort</b>, <b>◀ ▶</b> arrows and <b>🎲 Random</b>. Everything else lives in tabs: <b>Champion, Play, Progress, How to play</b>. Much less scrolling!</p></div></div>
         <div class="wn"><span class="wi">🌆</span><div><b class="wt">Retro-Future style</b><p>Neon glow, a <b>CRT screen</b> shimmer, <b>arcade pixel</b> lettering, glitch flashes on big hits, a <b>chiptune soundtrack</b>, and a new arena: the <b>Neon Grid</b>. Switch back to Classic in Graphics.</p><button class="btn ghost" data-go="neon">Fight in the Neon Grid</button></div></div>
@@ -596,6 +625,12 @@
     <div class="moviebar" id="moviebar" hidden>
       <button class="fbtn" id="mvSkip">Skip scene<small>Right arrow</small></button>
       <button class="fbtn" id="mvExit">Leave the cinema<small>Esc</small></button>
+    </div>
+    <div class="pad pad2" id="pad2" hidden>
+      <button class="fbtn" id="b2Strike">👊 P2 Punch</button>
+      <button class="fbtn" id="b2Kick">🦶 P2 Kick</button>
+      <button class="fbtn" id="b2Leap">🚀 P2 Jump</button>
+      <button class="fbtn" id="b2Power">⚡ P2 Power</button>
     </div>
     <div class="pad" id="fightbar" hidden>
       <button class="fbtn" id="bStrike">👊 Punch<small>Tap fast to combo</small></button>
@@ -751,6 +786,32 @@
     </div>
 
     <div class="tabpane" data-pane="play" hidden>
+    <section class="sec" id="onlineSec">
+      <h3>🌐 Versus a friend</h3>
+      <div class="netbox">
+        <div class="netcol">
+          <h4>🌐 Online</h4>
+          <p>One of you makes a room and gets a <b>4-letter code</b>. The other types it in and taps Join. Works phone to phone, phone to computer, anywhere.</p>
+          <div class="netrow"><button class="btn fight" id="netCreate">Create a room</button></div>
+          <div class="netrow"><input id="netCode" maxlength="4" autocomplete="off" spellcheck="false" placeholder="CODE"><button class="btn ghost" id="netJoin">Join</button></div>
+          <div class="netlobby" id="netLobby" hidden>
+            <p class="netbig" id="netBig"></p>
+            <p class="netstatus" id="netStatus"></p>
+            <div class="netvs" id="netVs"></div>
+            <button class="btn fight" id="netStart" hidden>Start the fight!</button>
+            <button class="btn ghost" id="netLeave">Leave the room</button>
+          </div>
+        </div>
+        <div class="netcol">
+          <h4>🎮 2 players, 1 device</h4>
+          <p>Share a keyboard: <b>Player 1</b> uses A K W D (hold S to block). <b>Player 2</b> uses ← ↓ ↑ → (hold / to block). On a phone, Player 2 gets their own buttons on the left.</p>
+          <label class="netlbl">Player 2 fights as<select id="p2Pick"></select></label>
+          <button class="btn fight" id="bLocal2">Start a 2-player fight</button>
+        </div>
+      </div>
+      <label class="netfair"><input type="checkbox" id="netFair" checked> <span><b>Fair fight:</b> both champions at level 30, so it's skill against skill</span></label>
+    </section>
+
     <section class="sec">
       <h3>Quick play <span class="mReady" id="stkBest"></span></h3>
       <div class="funmodes">
@@ -1068,6 +1129,7 @@
   /* ================= sound ================= */
   var ac=null,muted=false;
   function tone(f,dur,type,vol,to){
+    if(NETREC()) netEv.push(['t',f,dur,type||'square',vol||0.04,to||0]);
     if(muted) return;
     try{
       if(!ac){ var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; ac=new AC(); }
@@ -1080,6 +1142,7 @@
     }catch(e){}
   }
   function thud(dur,vol){
+    if(NETREC()) netEv.push(['h',dur,vol||0.1]);
     if(muted) return;
     try{
       if(!ac){ var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; ac=new AC(); }
@@ -4793,6 +4856,7 @@
   ];
   function arena(){
     if(movie&&MOVIE[movie.i]) return ARENAS[MOVIE[movie.i].arena];
+    if(net&&(net.live||net.after)&&net.arena!=null) return ARENAS[Math.min(ARENAS.length-1,net.arena)];
     return ARENAS[Math.min(ARENAS.length-1,Math.max(0,save.arena||0))]; }
 
   var skyCache=null, skyCacheId='';
@@ -6703,11 +6767,11 @@
     return {in:1,name:'Tuesday'};
   }
   /* the single question the rest of the game asks: is this switch live? */
-  function ab(k){ return !movie&&isOwner()&&save.owner&&!!save.owner[k]; }
+  function ab(k){ return !movie&&!(net&&(net.live||net.after))&&isOwner()&&save.owner&&!!save.owner[k]; }
   /* The panel is the owner's every day. These three are not: they only work on
      an admin abuse day, which is what makes Tuesday, Thursday and Saturday
      worth waiting for. */
-  function abuse(k){ return !movie&&isOwner()&&isAdminDay()&&save.owner&&!!save.owner[k]; }
+  function abuse(k){ return !movie&&!(net&&(net.live||net.after))&&isOwner()&&isAdminDay()&&save.owner&&!!save.owner[k]; }
   function payMul(){ return abuse('rich')?10:1; }
   function abFoe(){ return (isOwner()&&save.owner)?save.owner.foe:''; }
 
@@ -7575,11 +7639,15 @@
     }
     /* the auto-block: when the other side winds up and you are standing
        still, your champion gets their arms up on their own some of the time */
-    if(!movie&&screen==='fight'&&me&&foe&&!me.dead){
+    if(!movie&&!netGuestLive()&&screen==='fight'&&me&&foe&&!me.dead){
       if(foe.anim&&foe.anim.i===0&&foe.anim.t===1&&!me.anim&&Math.random()<0.4){
         me.guard=true; me.autoG=22;
       }
       if(me.autoG>0){ me.autoG--; if(me.autoG===0&&!guardHeld) me.guard=false; }
+    }
+    if(humanFoe()&&screen==='fight'&&me&&foe&&!foe.dead){
+      if(me.anim&&me.anim.i===0&&me.anim.t===1&&!foe.anim&&Math.random()<0.4){ foe.guard=true; foe.autoG=22; }
+      if(foe.autoG>0){ foe.autoG--; if(foe.autoG===0&&!net.p2Held) foe.guard=false; }
     }
   }
   function bigText(txt,y,size,fill,k){
@@ -7622,7 +7690,8 @@
     if(koT>0&&finT<=0){
       var a=Math.min(1,koT/20), k=1+Math.max(0,(koT-70)/20);
       ctx.globalAlpha=a;
-      bigText(koFor===me?'OUCH!':'K.O.!',H/2+10,150,koFor===me?'#9BD3FF':'#FF6B57',k);
+      var ouch=(koFor===me&&!net);
+      bigText(ouch?'OUCH!':'K.O.!',H/2+10,150,ouch?'#9BD3FF':'#FF6B57',k);
       ctx.globalAlpha=1;
     }
     if(finT>0){
@@ -7640,7 +7709,7 @@
       ctx.globalAlpha=1;
     }
     /* coaching for the first few fights */
-    if(!movie&&screen==='fight'&&introT<=0&&(save.tut||0)<5){
+    if(!movie&&!net&&screen==='fight'&&introT<=0&&(save.tut||0)<5){
       var tip=TIPS[Math.floor(tick/280)%TIPS.length];
       ctx.save();
       ctx.font='800 17px Barlow, sans-serif'; ctx.textAlign='left';
@@ -7852,6 +7921,7 @@
      ratings, an announcer, victory poses and a PERFECT. */
   var lastSay=0, perfT=0;
   function say(t,force){
+    if(NETREC()) netEv.push(['s',t,force?1:0]);
     if(muted||!window.speechSynthesis||typeof SpeechSynthesisUtterance==='undefined') return;
     var now=Date.now();
     if(!force&&now-lastSay<1400) return;
@@ -7960,6 +8030,20 @@
         }
       }
     });
+    if(net&&(net.live||net.after)&&me&&foe){
+      var tags=net.role==='local'?['P1','P2']:(net.role==='host'?['YOU','FRIEND']:['FRIEND','YOU']);
+      [me,foe].forEach(function(f,i){
+        var tx=f.x+(f.lunge||0)*f.facing+(f.dx||0)+(f.kb||0)+(f.sway||0), ty=GY-(f.air||0)-(f.bob||0)-300*(f.big||1);
+        var mine=(tags[i]==='YOU'||tags[i]==='P1');
+        ctx.save(); ctx.font='800 15px '+fa(); ctx.textAlign='center';
+        var w=ctx.measureText(tags[i]).width+18;
+        ctx.fillStyle=mine?'rgba(60,240,255,.9)':'rgba(255,60,200,.9)';
+        ctx.beginPath(); if(ctx.roundRect) ctx.roundRect(tx-w/2,ty-18,w,24,8); else ctx.rect(tx-w/2,ty-18,w,24); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(tx-6,ty+6); ctx.lineTo(tx+6,ty+6); ctx.lineTo(tx,ty+13); ctx.fill();
+        ctx.fillStyle='#0B0A14'; ctx.fillText(tags[i],tx,ty);
+        ctx.restore();
+      });
+    }
     if(brawl&&brawl.orb){
       var o=brawl.orb, oy=o.y+Math.sin(tick*0.08)*8;
       var gg=ctx.createRadialGradient(o.x,oy,4,o.x,oy,44);
@@ -8513,16 +8597,275 @@
     if(!musNext) musNext=t;
     if(t<musNext) return;
     musNext+=214; if(t-musNext>500) musNext=t+214;
+    netInMusic=true;
     var s=musStep++%32, bar=Math.floor(s/8), r=MUS_ROOT[bar];
     var f=(s%2)?r*2:r;
     tone(f,0.16,'sawtooth',0.016,f*0.99);
     var A=MUS_ARP[bar]; tone(A[s%3]*(s%8>=4?2:1),0.08,'square',0.006,A[s%3]*(s%8>=4?2:1));
     if(s%4===0) tone(130,0.14,'sine',0.05,42);
     if(s%8===4) thud(0.08,0.035);
+    netInMusic=false;
+  }
+
+  /* ================= versus: online and on one device =================
+     Online play is peer to peer (WebRTC through PeerJS): one player makes a
+     room and gets a four-letter code, the other types it in, and the two
+     browsers talk directly. The room's creator is the HOST and runs the one
+     true fight; the friend's presses are sent to it, and it sends back the
+     whole state of the fight every frame -- poses, health, effects, sounds --
+     which the friend's browser simply draws. One simulation means the two
+     screens can never disagree about who hit whom. */
+  var net=null, netEv=[], netInMusic=false;
+  var NET_PREFIX='skyforge-v1-';
+  var NET_CHARS='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  function NETREC(){ return !!(net&&net.role==='host'&&net.live&&net.conn&&!netInMusic); }
+  function humanFoe(){ return !!(net&&net.live&&(net.role==='host'||net.role==='local')); }
+  function netGuestLive(){ return !!(net&&net.role==='guest'&&net.live); }
+  function netSend(m){ try{ if(net&&net.conn&&net.conn.open) net.conn.send(m); }catch(e){} }
+  function netStatus(t){ var el=$('netStatus'); if(el) el.textContent=t; }
+  function mkCode(){ var c=''; for(var i=0;i<4;i++) c+=NET_CHARS[Math.floor(Math.random()*NET_CHARS.length)]; return c; }
+  function myCard(){
+    var h=HEROES[save.sel], p=prog(h);
+    return {t:'hello',id:h.id,skin:p.skin||0,lvl:p.lvl,tier:p.tier,name:h.name};
+  }
+  function loadPeer(cb){
+    if(window.Peer) return cb();
+    var s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js';
+    s.onload=cb;
+    s.onerror=function(){ netStatus('Could not load online play. Check your internet connection.'); };
+    document.head.appendChild(s);
+  }
+  function peerOpts(){ return window.SKYFORGE_PEER_OPTS||{debug:0}; }
+  function lobbyOpen(on){ $('netLobby').hidden=!on; $('netCreate').disabled=on; $('netJoin').disabled=on; }
+  function netCreate(){
+    netLeave(true);
+    lobbyOpen(true); netStatus('Making a room…'); $('netBig').textContent=''; $('netVs').innerHTML=''; $('netStart').hidden=true;
+    loadPeer(function(){
+      var code=mkCode(), peer=new Peer(NET_PREFIX+code,peerOpts());
+      net={role:'host',peer:peer,code:code,live:false};
+      peer.on('open',function(){
+        $('netBig').textContent=code;
+        netStatus('Room ready! Tell your friend this code. They tap Join and type it in.');
+      });
+      peer.on('connection',function(c){
+        if(net.conn){ try{ c.close(); }catch(e){} return; }
+        net.conn=c; netWire(c);
+      });
+      peer.on('error',function(e){
+        if(e.type==='unavailable-id'){ netLeave(true); netCreate(); }
+        else netStatus('Online problem: '+e.type+'. Try again.');
+      });
+    });
+  }
+  function netJoin(){
+    var code=($('netCode').value||'').trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+    if(code.length!==4){ netStatus('Type the 4-letter room code first.'); lobbyOpen(true); return; }
+    netLeave(true);
+    lobbyOpen(true); netStatus('Looking for room '+code+'…'); $('netBig').textContent=''; $('netVs').innerHTML=''; $('netStart').hidden=true;
+    loadPeer(function(){
+      var peer=new Peer(peerOpts());
+      net={role:'guest',peer:peer,code:code,live:false};
+      peer.on('open',function(){
+        var c=peer.connect(NET_PREFIX+code,{reliable:true,serialization:'json'});
+        net.conn=c; netWire(c);
+      });
+      peer.on('error',function(e){
+        netStatus(e.type==='peer-unavailable'?'No room called '+code+'. Check the code and try again.':'Online problem: '+e.type+'. Try again.');
+      });
+    });
+  }
+  /* a closed tab does not always say goodbye, so both sides check in once a
+     second and treat six silent seconds as the friend having gone */
+  function netWire(c){
+    c.on('open',function(){
+      c.send(myCard());
+      if(!net) return;
+      net.lastRx=Date.now();
+      clearInterval(net.beat);
+      net.beat=setInterval(function(){
+        if(!net||net.conn!==c){ clearInterval(this); return; }
+        netSend({t:'ping'});
+        if(Date.now()-net.lastRx>6000) netLost();
+      },1000);
+    });
+    c.on('data',function(d){ if(net) net.lastRx=Date.now(); netOnData(d); });
+    c.on('close',netLost);
+    c.on('error',netLost);
+  }
+  function vsCard(m,tag){
+    var h=heroById(m.id);
+    return '<div class="netp"><b>'+tag+'</b><span>'+esc(h?h.name:m.name)+'</span><small>Level '+m.lvl+'</small></div>';
+  }
+  function netShowVs(){
+    $('netVs').innerHTML=vsCard(myCard(),'YOU')+'<i>VS</i>'+(net.them?vsCard(net.them,'FRIEND'):'<div class="netp wait"><b>FRIEND</b><span>waiting…</span></div>');
+  }
+  function netOnData(d){
+    if(!net||!d||!d.t) return;
+    if(d.t==='hello'){
+      net.them=d; netShowVs();
+      if(net.role==='host'){ $('netStart').hidden=false; netStatus('Your friend is here! Press Start when you are both ready.'); tone(880,0.15,'triangle',0.05,1320); }
+      else netStatus('Connected! Waiting for your friend to start the fight…');
+    }else if(d.t==='start'&&net.role==='guest') netBegin(d);
+    else if(d.t==='s'&&net.role==='guest') netApply(d);
+    else if(d.t==='in'&&net.role==='host'&&net.live&&screen==='fight') request(foe,me,d.k);
+    else if(d.t==='g'&&net.role==='host'){ net.p2Held=!!d.v; if(foe&&!foe.dead) foe.guard=!!d.v; }
+    else if(d.t==='end'&&net.role==='guest') netResult(d.w===1?1:0);
+    else if(d.t==='bye') netLost();
+  }
+  function netStartFight(){
+    if(!net||net.role!=='host'||!net.them) return;
+    var mine=myCard();
+    var m={t:'start',a:mine,b:net.them,arena:save.arena||0,fair:$('netFair').checked};
+    netSend(m); netBegin(m);
+  }
+  function netBegin(m){
+    clearModes(); cut=null;
+    net.live=true; net.after=false; net.last=m; net.arena=m.arena; net.p2Held=false;
+    skyCache=null;
+    var A=heroById(m.a.id)||HEROES[0], B=heroById(m.b.id)||HEROES[1];
+    me=makeFighter(A,m.fair?30:m.a.lvl,m.fair?2:m.a.tier,1,404,m.a.skin||0);
+    foe=makeFighter(B,m.fair?30:m.b.lvl,m.fair?2:m.b.tier,-1,620,m.b.skin||0);
+    me.guardLeft=0; foe.guardLeft=0;
+    enterArena(net.role==='guest'?B:A);
+    if(net.role==='local'){ $('pad2').hidden=false; $('fightbar').classList.add('p1left'); }
+  }
+  /* ---- the host's side: what goes over the wire every frame ---- */
+  var _fxPush=fx.push, FX_NET={impact:1,swoosh:1,burst:1};
+  fx.push=function(o){
+    var r=_fxPush.call(fx,o);
+    if(NETREC()&&o&&FX_NET[o.k]){
+      var c={}; for(var k in o){ var v=o[k]; if(v===null||(typeof v!=='object'&&typeof v!=='function')) c[k]=v; }
+      netEv.push(['x',c]);
+    }
+    return r;
+  };
+  function r1(v){ return Math.round((v||0)*10)/10; }
+  function fSnap(f){
+    var p=[]; for(var i=0;i<JOINTS.length;i++){ var j=f.pose[JOINTS[i]]; p.push(r1(j[0]),r1(j[1])); }
+    return [Math.round(f.x),r1(f.dx),Math.round(f.lunge||0),r1(f.air),r1(f.kb),r1(f.sway),r1(f.bob),f.facing,
+      Math.round(f.hp),f.max,Math.round(f.meter),f.dead?1:0,f.flash||0,f.guard?1:0,f.dizzy||0,f.rage?1:0,f.pup||0,Math.round(f.iq||0),p,f.leap&&!f.airMove?1:0];
+  }
+  function fApply(f,a){
+    f.x=a[0]; f.dx=a[1]; f.lunge=a[2]; f.air=a[3]; f.kb=a[4]; f.sway=a[5]; f.bob=a[6]; f.facing=a[7];
+    f.hp=a[8]; f.max=a[9]; f.meter=a[10]; f.dead=!!a[11]; f.flash=a[12]; f.guard=!!a[13];
+    f.dizzy=a[14]; f.rage=!!a[15]; f.pup=a[16]; f.iq=a[17];
+    var p=a[18]; for(var i=0;i<JOINTS.length;i++){ var j=f.pose[JOINTS[i]]; j[0]=p[i*2]; j[1]=p[i*2+1]; }
+    f.leap=!!a[19]; f.airMove=null;
+  }
+  function netTick(){
+    var ci=cine?[cine.name,cine.move,cine.t,r1(cine.bars),cine.f===me?0:1]:0;
+    netSend({t:'s',a:fSnap(me),b:fSnap(foe),
+      g:[introT,koT,koFor===me?0:(koFor===foe?1:-1),perfT,finT,r1(shake),flash,Math.round(camKick*1000)/1000,camTiltDir,
+         Math.round(cam.z*1000)/1000,r1(cam.x),r1(cam.y)],
+      c:ci,e:netEv});
+    netEv=[];
+  }
+  /* ---- the friend's side: draw exactly what the host sent ---- */
+  function netApply(d){
+    if(!me||!foe) return;
+    fApply(me,d.a); fApply(foe,d.b);
+    var g=d.g;
+    introT=g[0]; koT=g[1]; koFor=g[2]===0?me:(g[2]===1?foe:null); perfT=g[3]; finT=g[4];
+    shake=g[5]; flash=g[6]; camKick=g[7]; camTiltDir=g[8]; cam.z=g[9]; cam.x=g[10]; cam.y=g[11];
+    cine=d.c?{name:d.c[0],move:d.c[1],t:d.c[2],bars:d.c[3],f:d.c[4]===0?me:foe,other:d.c[4]===0?foe:me}:null;
+    for(var i=0;i<d.e.length;i++){
+      var e=d.e[i];
+      if(e[0]==='f') floatText(e[1],e[2],e[3],e[4],e[5]);
+      else if(e[0]==='p') spark(e[1],e[2],e[3],e[4]);
+      else if(e[0]==='t') tone(e[1],e[2],e[3],e[4],e[5]);
+      else if(e[0]==='h') thud(e[1],e[2]);
+      else if(e[0]==='s') say(e[1],e[2]);
+      else if(e[0]==='x'&&FX_NET[e[1].k]) _fxPush.call(fx,e[1]);
+    }
+  }
+  function guestStep(){
+    tick++;
+    for(var i=floats.length-1;i>=0;i--){ var fl=floats[i]; fl.y-=1.1; fl.life--; if(fl.life<=0) floats.splice(i,1); }
+    for(var s=sparks.length-1;s>=0;s--){ var sp=sparks[s]; sp.x+=sp.vx; sp.y+=sp.vy; sp.vy+=0.24; sp.vx*=0.97; sp.life--; if(sp.life<=0) sparks.splice(s,1); }
+    for(var e=fx.length-1;e>=0;e--){ fx[e].life--; if(fx[e].life<=0) fx.splice(e,1); }
+  }
+  /* ---- the end of a versus fight ---- */
+  function netEnd(win){
+    /* win is from the left fighter's side (the host, or player 1) */
+    if(net.role==='host') netSend({t:'end',w:win?0:1});
+    netResult(win?0:1);
+  }
+  function netResult(w){
+    net.after=true;
+    var local=(net.role==='local');
+    var iWon=local?null:((net.role==='host')===(w===0));
+    var title=local?('Player '+(w===0?'1':'2')+' wins!'):(iWon?'You win!':'Your friend wins!');
+    var winner=(w===0?me:foe), cred=0;
+    if(!local){ cred=iWon?400:120; save.credits+=cred; store(); }
+    $('ovTitle').textContent=title;
+    $('ovText').textContent=winner.h.name+' takes it with '+Math.max(0,Math.round(winner.hp/winner.max*100))+'% health left.'
+      +(local?'':(iWon?' +400 credits for the win.':' +120 credits for playing.'));
+    $('ovReward').hidden=true; showChest(null);
+    if(net.role==='guest'){ $('ovBtn').textContent='Waiting for a rematch…'; }
+    else $('ovBtn').textContent='Rematch!';
+    $('ovBtn2').textContent=local?'Back to the menu':'Leave the room'; $('ovBtn2').hidden=false;
+    $('overlay').hidden=false;
+    if(local||iWon){ confetti(); tone(660,0.12,'triangle',0.05,990); } else tone(240,0.5,'sawtooth',0.05,90);
+  }
+  function netRematch(){
+    if(!net) return;
+    if(net.role==='local'){ netBegin(net.last); return; }
+    if(net.role==='host'&&net.conn&&net.conn.open){ var m=net.last; m.a=myCard(); m.b=net.them; netSend(m); netBegin(m); }
+  }
+  function netLeave(quiet){
+    if(net){
+      clearInterval(net.beat);
+      if(net.role!=='local'){ netSend({t:'bye'}); try{ if(net.conn) net.conn.close(); }catch(e){} try{ if(net.peer) net.peer.destroy(); }catch(e){} }
+      net=null;
+    }
+    if(!quiet){ lobbyOpen(false); netStatus(''); }
+    $('pad2').hidden=true;
+  }
+  function netLost(){
+    if(!net||net.role==='local') return;
+    clearInterval(net.beat);
+    var wasLive=net.live||net.after;
+    net.conn=null; netLeave(true);
+    lobbyOpen(true); $('netStart').hidden=true; $('netBig').textContent='';
+    netStatus('Your friend left the room.');
+    if(wasLive){ toHome(); toast('🌐 Your friend left the room','#FF9A8A'); }
+  }
+  /* ---- 2 players on one device ---- */
+  function startLocal2(){
+    netLeave(true);
+    var h1=HEROES[save.sel], p1=prog(h1);
+    var pick=$('p2Pick').value, h2=heroById(pick)||HEROES[(save.sel+1)%HEROES.length];
+    net={role:'local',live:false};
+    var m={a:{id:h1.id,skin:p1.skin||0,lvl:p1.lvl,tier:p1.tier},b:{id:h2.id,skin:0,lvl:p1.lvl,tier:p1.tier},arena:save.arena||0,fair:$('netFair').checked};
+    netBegin(m);
+  }
+  function buildP2Pick(){
+    var sel=$('p2Pick'); if(!sel||sel.options.length) return;
+    HEROES.forEach(function(h,i){
+      if(!legendOwned(h)) return;
+      var o=document.createElement('option'); o.value=h.id; o.textContent=h.name; sel.appendChild(o);
+    });
+    sel.value=HEROES[(save.sel+1)%HEROES.length].id;
+  }
+  /* one place every press goes through: player 1 or 2, local or online */
+  function playerInput(pn,kind){
+    if(net&&net.role==='guest'){ if(net.live) netSend({t:'in',k:kind}); return; }
+    if(pn===2){ if(humanFoe()) request(foe,me,kind); return; }
+    request(me,foe,kind);
+  }
+  function playerGuard(pn,down){
+    if(net&&net.role==='guest'){ netSend({t:'g',v:down?1:0}); return; }
+    if(pn===2){ if(net){ net.p2Held=down; } if(foe&&humanFoe()) foe.guard=down&&!foe.dead; return; }
+    guardHeld=down; if(me) me.guard=down&&!me.dead;
   }
 
   function endFight(win){
     if(screen==='over') return;
+    if(net&&net.live){
+      if(screen!=='fight'||!me||!foe||(!me.dead&&!foe.dead)) return;
+      cine=null; screen='over'; net.live=false; netEnd(win); return;
+    }
     if(movie){
       /* a knockout timer left over from a skipped scene is ignored */
       if(screen!=='fight'||!me||!foe||(!me.dead&&!foe.dead)) return;
@@ -8617,6 +8960,8 @@
     cut=null; $('cut').hidden=true;
     movie=null; $('moviebar').hidden=true; skyCache=null;
     giant=null; rush=null; dummy=null; brawl=null; bo3=null; ladder=null; $('ovChest').hidden=true;
+    if(net){ net.live=false; net.after=false; if(net.role==='local') net=null; }
+    $('pad2').hidden=true; $('fightbar').classList.remove('p1left');
     screen='home'; me=null; foe=null;
     $('ovBtn2').hidden=true;
     $('fightbar').hidden=true; $('homeUI').hidden=false; $('overlay').hidden=true;
@@ -8625,8 +8970,12 @@
     buildDaily(); buildLeader(); renderUI();
   }
 
-  function floatText(x,y,txt,col,big){ floats.push({x:x,y:y,t:txt,c:col,life:56,big:!!big}); }
+  function floatText(x,y,txt,col,big){
+    floats.push({x:x,y:y,t:txt,c:col,life:56,big:!!big});
+    if(NETREC()) netEv.push(['f',Math.round(x),Math.round(y),txt,col,big?1:0]);
+  }
   function spark(x,y,col,n){
+    if(NETREC()) netEv.push(['p',Math.round(x),Math.round(y),col,n]);
     if(reduce) n=Math.min(n,4);
     n=Math.max(1,Math.round(n*gfx.part));
     for(var i=0;i<n;i++){ var a=Math.random()*6.283,s=1.5+Math.random()*4.5;
@@ -9279,6 +9628,8 @@
 
   /* ================= loop ================= */
   function update(){
+    if(netGuestLive()){ guestStep(); return; }
+    if(net&&net.role==='host'&&net.live&&me&&foe) netTick();
     tick++;
     movieStep();
     hypeStep();
@@ -9341,7 +9692,11 @@
         if(me&&me.stun>0) me.stun--;
         if(screen==='fight'&&me&&foe) runBuffer(me,foe);
       }
-      if(screen==='fight'&&foe&&me) aiStep(foe,me);
+      if(humanFoe()){
+        if(foe&&foe.cd>0) foe.cd-=(foe.chill>0?0.55:1);
+        if(foe&&foe.stun>0) foe.stun--;
+        if(screen==='fight'&&foe&&me) runBuffer(foe,me);
+      }else if(screen==='fight'&&foe&&me) aiStep(foe,me);
     }else if(screen==='movie'){
       if(me) stepAnim(me);
       if(foe) stepAnim(foe);
@@ -10073,7 +10428,7 @@
   /* ---------- What's New ----------
      Opens by itself the first time someone loads this version, and any
      time from the top bar. Remembered per browser. */
-  var NEW_VER='2026-10-e';
+  var NEW_VER='2026-10-f';
   function newSeen(){ try{ return localStorage.getItem('skyforge.seenNew')===NEW_VER; }catch(e){ return true; } }
   function markNewSeen(){ try{ localStorage.setItem('skyforge.seenNew',NEW_VER); }catch(e){} $('newBtn').classList.remove('unseen'); }
   function openNew(){
@@ -10084,6 +10439,7 @@
   function closeNew(){ $('newPanel').hidden=true; }
   var NEW_GO={
     fight:function(){ startFight(); },
+    online:function(){ showTab('play'); $('onlineSec').scrollIntoView({behavior:'smooth',block:'start'}); },
     icons:function(){
       showTab('champ'); rarPick='celeb'; buildRarChips(); rosterFilter();
       document.querySelector('.picker').scrollIntoView({behavior:'smooth',block:'start'});
@@ -10325,11 +10681,12 @@
        breathing, and stop entirely during a fight. Biggest saving in the loop. */
     if(screen==='home'&&(tick%4)===0){ drawCards(); drawSkinCards(); }
     if(screen==='fight'&&me){
-      var sb=$('bSpecial'), sc=superCost(me), air=(me.leap&&!me.airMove);
-      if(canFinish(me,foe)){ setBtn(sb,'ready super','FINISHER!'); }
-      else if(me.meter>=sc){ setBtn(sb,'ready super',me.h.superName+'!'); }
-      else if(me.meter>=deathCost(me)){ setBtn(sb,'ready','Punch of Death!'); }
-      else setBtn(sb,'',Math.floor(me.meter)+'% \u2014 land hits');
+      var pl=netGuestLive()?foe:me, op=(pl===me)?foe:me;
+      var sb=$('bSpecial'), sc=superCost(pl), air=(pl.leap&&!pl.airMove);
+      if(canFinish(pl,op)){ setBtn(sb,'ready super','FINISHER!'); }
+      else if(pl.meter>=sc){ setBtn(sb,'ready super',pl.h.superName+'!'); }
+      else if(pl.meter>=deathCost(pl)){ setBtn(sb,'ready','Punch of Death!'); }
+      else setBtn(sb,'',Math.floor(pl.meter)+'% \u2014 land hits');
       setBtn($('bStrike'),air?'air':'',air?'FLYING PUNCH!':'Tap fast to combo');
       setBtn($('bKick'),air?'air':'',air?'FLYING KICK!':'Hits harder');
     }
@@ -10773,6 +11130,7 @@
   });
   $('bFight').addEventListener('click',startFight);
   $('ovBtn').addEventListener('click',function(){
+    if(net&&net.after){ netRematch(); return; }
     if(ladder&&ladder.vs){ ladder.vs=false; enterArena(HEROES[save.sel]); return; }
     if(bo3&&bo3.between){ bo3.between=false; bo3Round(); return; }
     /* mid-raid this button is "go one floor deeper", otherwise it goes home */
@@ -10783,6 +11141,7 @@
     toHome();
   });
   $('ovBtn2').addEventListener('click',function(){
+    if(net&&net.after){ var wasLocal=(net.role==='local'); netLeave(!wasLocal); toHome(); if(!wasLocal){ lobbyOpen(false); netStatus(''); } return; }
     if(ladder){ toHome(); return; }
     if(raid) raidBank(true); else if(surv) survEnd(true);
   });
@@ -10842,6 +11201,14 @@
   $('bRush').addEventListener('click',function(){ startRush(); });
   $('bDummy').addEventListener('click',function(){ startDummy(); });
   $('bLadder').addEventListener('click',function(){ startLadder(); });
+  $('netCreate').addEventListener('click',netCreate);
+  $('netJoin').addEventListener('click',netJoin);
+  $('netCode').addEventListener('keydown',function(e){ if(e.key==='Enter') netJoin(); });
+  $('netStart').addEventListener('click',netStartFight);
+  $('netLeave').addEventListener('click',function(){ netLeave(false); });
+  $('bLocal2').addEventListener('click',startLocal2);
+  window.addEventListener('pagehide',function(){ if(net&&net.role!=='local') netSend({t:'bye'}); });
+  buildP2Pick();
   $('dcClaim').addEventListener('click',claimChallenge);
   $('bBo3').addEventListener('click',function(){ startBo3(); });
   $('bBrawl').addEventListener('click',function(){ startBrawl(); });
@@ -11210,11 +11577,16 @@
   function tap(id,kind){
     var el=$(id);
     press(el,function(){
-      request(me,foe,kind);
+      playerInput(1,kind);
       el.classList.add('flash'); setTimeout(function(){ el.classList.remove('flash'); },120);
     });
   }
   tap('bStrike','strike'); tap('bKick','kick'); tap('bLeap','leap'); tap('bSpecial','power');
+  function tap2(id,kind){
+    var el=$(id);
+    press(el,function(){ playerInput(2,kind); el.classList.add('flash'); setTimeout(function(){ el.classList.remove('flash'); },120); });
+  }
+  tap2('b2Strike','strike'); tap2('b2Kick','kick'); tap2('b2Leap','leap'); tap2('b2Power','power');
 
   window.addEventListener('keydown',function(e){
     if(e.target&&e.target.tagName==='BUTTON') return;
@@ -11225,18 +11597,27 @@
       return;
     }
     if(screen!=='fight') return;
-    if(e.code==='KeyA'){ e.preventDefault(); request(me,foe,'strike'); }
-    else if(e.code==='KeyK'){ e.preventDefault(); request(me,foe,'kick'); }
-    else if(e.code==='KeyG'){ e.preventDefault(); request(me,foe,'grab'); }
-    else if(e.code==='KeyS'){ e.preventDefault(); guardHeld=true; if(me&&!me.dead) me.guard=true; }
-    else if(e.code==='KeyD'||e.code==='KeyP'){ e.preventDefault(); request(me,foe,'power'); }
-    else if(e.code==='KeyJ'){ e.preventDefault(); request(me,foe,'strike'); }
-    else if(e.code==='KeyL'){ e.preventDefault(); request(me,foe,'kick'); }
-    else if(e.code==='KeyF'){ e.preventDefault(); request(me,foe,'heavy'); }
-    else if(e.code==='KeyW'||e.code==='Space'){ e.preventDefault(); request(me,foe,'leap'); }
+    if(e.code==='KeyA'){ e.preventDefault(); playerInput(1,'strike'); }
+    else if(e.code==='KeyK'){ e.preventDefault(); playerInput(1,'kick'); }
+    else if(e.code==='KeyG'){ e.preventDefault(); playerInput(1,'grab'); }
+    else if(e.code==='KeyS'){ e.preventDefault(); playerGuard(1,true); }
+    else if(e.code==='KeyD'||e.code==='KeyP'){ e.preventDefault(); playerInput(1,'power'); }
+    else if(e.code==='KeyJ'){ e.preventDefault(); playerInput(1,'strike'); }
+    else if(e.code==='KeyL'){ e.preventDefault(); playerInput(1,'kick'); }
+    else if(e.code==='KeyF'){ e.preventDefault(); playerInput(1,'heavy'); }
+    else if(e.code==='KeyW'||e.code==='Space'){ e.preventDefault(); playerInput(1,'leap'); }
+    /* player 2 on the same keyboard: the arrow keys, and / to block */
+    else if(net&&net.role==='local'){
+      if(e.code==='ArrowLeft'){ e.preventDefault(); playerInput(2,'strike'); }
+      else if(e.code==='ArrowDown'){ e.preventDefault(); playerInput(2,'kick'); }
+      else if(e.code==='ArrowUp'){ e.preventDefault(); playerInput(2,'leap'); }
+      else if(e.code==='ArrowRight'){ e.preventDefault(); playerInput(2,'power'); }
+      else if(e.code==='Slash'){ e.preventDefault(); playerGuard(2,true); }
+    }
   });
   window.addEventListener('keyup',function(e){
-    if(e.code==='KeyS'){ guardHeld=false; if(me) me.guard=false; }
+    if(e.code==='KeyS') playerGuard(1,false);
+    if(e.code==='Slash'&&net&&net.role==='local') playerGuard(2,false);
   });
   window.addEventListener('blur',function(){ guardHeld=false; if(me) me.guard=false; });
 

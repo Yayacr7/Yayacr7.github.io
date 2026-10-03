@@ -129,6 +129,44 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
+### Versus: online and 2 players on one device
+
+On the **Play** tab, **🌐 Versus a friend**:
+
+**Online**
+1. One player taps **Create a room** and gets a 4-letter code (like `K7QX`).
+2. The other types the code on their own phone or computer and taps **Join**.
+3. Both see who's fighting, and the room's creator presses **Start the fight!**
+
+How it works:
+
+- The two browsers connect directly (WebRTC, through the free PeerJS
+  service, loaded only when you open a room). There are no accounts and no
+  server of our own.
+- The room's creator runs the one real fight. The friend's presses are sent
+  to it, and it sends back everything 60 times a second: poses, health,
+  meter, effects, sounds and the announcer. Both screens always agree.
+- Name tags show **YOU** and **FRIEND** over the fighters. After a fight both
+  see the result; the room's creator can start a **Rematch**, and either
+  player can leave. The winner gets 400 credits, the other player 120.
+- If a friend closes their tab or loses connection, the other side notices
+  within a few seconds and goes back to the menu.
+
+**2 players, 1 device**
+
+- Pick Player 2's champion and tap **Start a 2-player fight**.
+- On a keyboard, Player 1 uses A K W D (hold S to block) and Player 2 uses
+  ← ↓ ↑ → (hold / to block).
+- On a phone, each player gets four big buttons on their own fighter's side
+  of the screen.
+
+**Fair fight** (on by default) sets both champions to level 30, so it comes
+down to skill. Owner-mode switches are off in versus fights.
+
+Caveat: some strict networks (some school Wi-Fi and some mobile data) block
+direct connections between devices. If joining a room never connects, try a
+different network.
+
 ### Boxing gloves, celebrities and world icons
 
 **Every fighter wears boxing gloves.** The plain round fists are replaced by
