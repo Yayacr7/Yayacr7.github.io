@@ -4,7 +4,7 @@ Things I'm making with Claude Code.
 
 ## Yahya.games.com — Skyforge Champions
 
-Two hundred and fifty characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
+Two hundred and eighty-seven characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
 and forge their armour into brighter and brighter finishes.
 
 **To play:** open `index.html` in any web browser.
@@ -128,6 +128,39 @@ five-hit sequence ends the fight. The computer opponents use it too.
 - **Arena weather**: lightning and shooting stars over Gotham, shooting stars
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
+
+### Boxing gloves, celebrities and world icons
+
+**Every fighter wears boxing gloves.** The plain round fists are replaced by
+a proper glove on both hands: a padded mitt pointing along the forearm, a
+thumb on top, a white wrist cuff with a stripe, a seam and a shine. Gloves
+come in each champion's own colour, get the same ink outline and armour
+gloss as the rest of the figure, and show everywhere: fights, cards, the
+movie and costume previews.
+
+**37 celebrities and world icons** have joined, bringing the roster to 287.
+Tap **⭐ Icons** in the champion picker to see only them, or search a
+category like "boxing", "music" or "history".
+
+| Group | Champions |
+| --- | --- |
+| Boxing | Muhammad Ali, Manny Pacquiao, Canelo Álvarez, Anthony Joshua, Oleksandr Usyk, Claressa Shields |
+| Martial arts and wrestling | Bruce Lee, Jackie Chan, The Rock, John Cena |
+| Sport | Usain Bolt, Serena Williams, Simone Biles, Michael Jordan, Kobe Bryant, Pelé, Diego Maradona, Zinedine Zidane, Roger Federer, Lewis Hamilton, Tom Brady, Shohei Ohtani, Sachin Tendulkar, Wayne Gretzky, Tiger Woods |
+| Entertainment | MrBeast, IShowSpeed, Taylor Swift, Beyoncé, Shakira, Ed Sheeran, Billie Eilish, Keanu Reeves |
+| History | Albert Einstein, Isaac Newton, Cleopatra, Leonardo da Vinci |
+
+Each one has:
+
+- their own look: hair, skin tone, face, and their real kit or outfit, plus
+  a second costume to unlock
+- a fighting trait (Ali floats out of reach, Biles and Jordan are deadly in
+  the air, Einstein reads you with the IQ bar)
+- a named super move (Rope-a-Dope Rally, People's Elbow, To Di World,
+  E = mc²)
+
+Boxers and The Rock fight shirtless in long boxing trunks. All are Common,
+Rare or Epic, so they are playable straight away.
 
 ### Home screen: picker and tabs
 
@@ -267,7 +300,7 @@ sky over the fire pits · **The Watchtower** in orbit, with Earth below.
 
 ### The roster
 
-Two hundred and fifty characters, each drawn to their own costume. This is
+Two hundred and eighty-seven characters, each drawn to their own costume. This is
 not every character from anywhere — each one here is hand-written drawing code
 — but it covers the Justice League, the Bat-family, a bench of villains, a
 Marvel and X-Men wing, and seventy-six anime fighters.

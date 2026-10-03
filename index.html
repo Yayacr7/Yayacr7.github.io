@@ -458,7 +458,7 @@
     <p class="brand">Yahya<span>.games</span><b>.com</b></p>
     <p class="eyebrow">Sky arena &middot; High noon</p>
     <h1>Skyforge Champions</h1>
-    <p class="sub">A hundred and forty-two characters &mdash; DC, Marvel, the X-Men and seventy-six anime fighters &mdash; battle across seven arenas. Winning is how you get stronger: every win pays experience, every third win is a free level, and missions pay out credits on top. Spend those on training, on new versions of a champion, and on forging their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
+    <p class="sub">Two hundred and eighty-seven characters &mdash; superheroes, anime fighters, sports stars, celebrities and world icons &mdash; battle across seven arenas, all in boxing gloves. Winning is how you get stronger: every win pays experience, every third win is a free level, and missions pay out credits on top. Spend those on training, on new versions of a champion, and on forging their armour through five finishes &mdash; from plain steel all the way to blazing legendary gold.</p>
   </header>
 
   <div class="topbar">
@@ -480,6 +480,7 @@
       <p class="gfxnow">Everything that's been added to Skyforge Champions. Tap a button to try it!</p>
       <div class="wngrid">
         <div class="wn"><span class="wi">🎮</span><div><b class="wt">Easier controls</b><p>Just four big buttons now: <b>Punch, Kick, Jump</b> and <b>Power</b>. Your champion even blocks on their own sometimes.</p></div></div>
+        <div class="wn"><span class="wi">🥊</span><div><b class="wt">Boxing gloves + 37 icons</b><p>Every fighter now wears <b>boxing gloves</b>. And <b>37 celebrities and world icons</b> joined: Ali, Bruce Lee, The Rock, Usain Bolt, Serena, Simone Biles, Jordan, Pelé, Taylor Swift, MrBeast, Einstein, Cleopatra and more. Tap <b>⭐ Icons</b> in the picker to find them.</p><button class="btn ghost" data-go="icons">Show me the icons</button></div></div>
         <div class="wn"><span class="wi">🧭</span><div><b class="wt">New champion picker</b><p>Your champion and all <b>250</b> fighters on one screen, with <b>sort</b>, <b>◀ ▶</b> arrows and <b>🎲 Random</b>. Everything else lives in tabs: <b>Champion, Play, Progress, How to play</b>. Much less scrolling!</p></div></div>
         <div class="wn"><span class="wi">🌆</span><div><b class="wt">Retro-Future style</b><p>Neon glow, a <b>CRT screen</b> shimmer, <b>arcade pixel</b> lettering, glitch flashes on big hits, a <b>chiptune soundtrack</b>, and a new arena: the <b>Neon Grid</b>. Switch back to Classic in Graphics.</p><button class="btn ghost" data-go="neon">Fight in the Neon Grid</button></div></div>
         <div class="wn"><span class="wi">⚡</span><div><b class="wt">Smoother, faster combat</b><p>Moves now flow straight into each other: <b>Punch, Punch, Punch, Kick</b> chains with no waiting. Attacks <b>step in</b> to close the gap, and the computer strings combos too.</p><button class="btn ghost" data-go="fight">Try it</button></div></div>
@@ -3173,6 +3174,266 @@
      superDesc:'Spins under the rim and lays it in off the wrong side',
      skins:[SK({name:'Home Kit',suit:'#00538C',suitLo:'#00294A',trim:'#B8C4CA',trimLo:'#00294A',leg:'#00538C',boot:'#1E2430',hair:'#181C26'}),
        SK({name:'Away Kit',cost:6000,suit:'#B8C4CA',suitLo:'#00294A',trim:'#00538C',trimLo:'#00294A',leg:'#B8C4CA',boot:'#F4F6FA',hair:'#181C26'})]},
+    /* ---- celebrities and world icons ---- */
+    {id:'ali',name:'Ali',real:'Muhammad Ali',cls:'The Greatest',
+     emblem:'none',head:'short',rar:'epic',athlete:'boxing',celeb:true,
+     trait:{name:'Float Like a Butterfly',kind:'evade',v:0.2,desc:'Dances out of reach of almost anything'},
+     pow:24,tough:110,spd:1.24,superName:'Rope-a-Dope Rally',
+     superDesc:'Leans on the ropes, lets them punch themselves out, then explodes',
+     skins:[SK({"name": "Rumble Trunks", "suit": "#8B5A34", "suitLo": "#5C3A1E", "trim": "#F4F6FA", "trimLo": "#F4F6FA", "leg": "#8B5A34", "boot": "#F4F6FA", "trunks": "#F4F6FA", "hair": "#14100C", "skin": "#8B5A34", "skinLo": "#5C3A1E"}),
+       SK({"name": "Thrilla Trunks", "suit": "#8B5A34", "suitLo": "#5C3A1E", "trim": "#C8102E", "trimLo": "#C8102E", "leg": "#8B5A34", "boot": "#F4F6FA", "trunks": "#C8102E", "cost": 6000, "hair": "#14100C", "skin": "#8B5A34", "skinLo": "#5C3A1E"})]},
+    {id:'pacquiao',name:'Pacquiao',real:'Manny Pacquiao',cls:'PacMan',
+     emblem:'none',head:'short',rar:'rare',athlete:'boxing',celeb:true,
+     trait:{name:'Eight-Division Speed',kind:'combo',v:0.16,desc:'Every punch in a flurry lands a little harder'},
+     pow:23,tough:100,spd:1.26,superName:'Southpaw Storm',
+     superDesc:'Steps in from the wrong side and empties both hands',
+     skins:[SK({"name": "Fight Night", "suit": "#C08A5E", "suitLo": "#8A5C38", "trim": "#1E4FB8", "trimLo": "#1E4FB8", "leg": "#C08A5E", "boot": "#F4F6FA", "trunks": "#1E4FB8", "hair": "#121014", "skin": "#C08A5E", "skinLo": "#8A5C38"}),
+       SK({"name": "Gold Trunks", "suit": "#C08A5E", "suitLo": "#8A5C38", "trim": "#D8A52A", "trimLo": "#D8A52A", "leg": "#C08A5E", "boot": "#1E2430", "trunks": "#D8A52A", "cost": 6000, "hair": "#121014", "skin": "#C08A5E", "skinLo": "#8A5C38"})]},
+    {id:'canelo',name:'Canelo',real:'Canelo Alvarez',cls:'The Redhead',
+     emblem:'none',head:'short',rar:'rare',athlete:'boxing',celeb:true,
+     trait:{name:'Head Movement',kind:'counter',v:0.38,desc:'Slips and fires back off a blocked shot'},
+     pow:25,tough:116,spd:1.06,superName:'Body-Shot Barrage',
+     superDesc:'Digs to the ribs until the guard drops, then goes upstairs',
+     skins:[SK({"name": "Mexico Trunks", "suit": "#EBC4A0", "suitLo": "#BC8C64", "trim": "#0B7A3E", "trimLo": "#0B7A3E", "leg": "#EBC4A0", "boot": "#C8102E", "trunks": "#0B7A3E", "hair": "#B5532A", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Red and Gold", "suit": "#EBC4A0", "suitLo": "#BC8C64", "trim": "#C8102E", "trimLo": "#C8102E", "leg": "#EBC4A0", "boot": "#D8A52A", "trunks": "#C8102E", "cost": 6000, "hair": "#B5532A", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'joshua',name:'Joshua',real:'Anthony Joshua',cls:'AJ',
+     emblem:'none',head:'bald',rar:'rare',athlete:'boxing',celeb:true,
+     trait:{name:'Heavyweight Power',kind:'power',v:0.18,desc:'Every heavyweight shot carries extra weight'},
+     pow:26,tough:124,spd:0.98,superName:'Big Right Hand',
+     superDesc:'Measures with the jab, then throws the right hand from the floor',
+     skins:[SK({"name": "Champion Trunks", "suit": "#5E3A22", "suitLo": "#3C2412", "trim": "#F4F6FA", "trimLo": "#F4F6FA", "leg": "#5E3A22", "boot": "#F4F6FA", "trunks": "#F4F6FA", "hair": "#14100C", "skin": "#5E3A22", "skinLo": "#3C2412"}),
+       SK({"name": "Night Trunks", "suit": "#5E3A22", "suitLo": "#3C2412", "trim": "#14181F", "trimLo": "#14181F", "leg": "#5E3A22", "boot": "#D8A52A", "trunks": "#14181F", "cost": 6000, "hair": "#14100C", "skin": "#5E3A22", "skinLo": "#3C2412"})]},
+    {id:'usyk',name:'Usyk',real:'Oleksandr Usyk',cls:'The Cat',
+     emblem:'none',head:'bald',rar:'rare',athlete:'boxing',celeb:true,
+     trait:{name:'Footwork',kind:'evade',v:0.16,desc:'Never quite where the punch was thrown'},
+     pow:24,tough:112,spd:1.12,superName:'Cruiser Combo',
+     superDesc:'Circles out, cuts the angle and throws five on the turn',
+     skins:[SK({"name": "Blue and Yellow", "suit": "#EBC4A0", "suitLo": "#BC8C64", "trim": "#1E5BB8", "trimLo": "#1E5BB8", "leg": "#EBC4A0", "boot": "#F2C21B", "trunks": "#1E5BB8", "hair": "#5A3A1E", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Cossack Trunks", "suit": "#EBC4A0", "suitLo": "#BC8C64", "trim": "#F2C21B", "trimLo": "#F2C21B", "leg": "#EBC4A0", "boot": "#1E5BB8", "trunks": "#F2C21B", "cost": 6000, "hair": "#5A3A1E", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'shields',name:'Shields',real:'Claressa Shields',cls:'The GWOAT',
+     emblem:'none',head:'braid',rar:'rare',athlete:'boxing',celeb:true,
+     trait:{name:'Undisputed',kind:'firststrike',v:1.8,desc:'The first punch of the fight hits like a truck'},
+     pow:23,tough:104,spd:1.14,superName:'Flint Fury',
+     superDesc:'Walks them down and doesn\'t stop throwing until the bell',
+     skins:[SK({"name": "Fight Night", "suit": "#A86E44", "suitLo": "#74482A", "trim": "#14181F", "trimLo": "#D8A52A", "leg": "#A86E44", "boot": "#14181F", "trunks": "#14181F", "hair": "#14100C", "skin": "#A86E44", "skinLo": "#74482A"}),
+       SK({"name": "Gold Kit", "suit": "#A86E44", "suitLo": "#74482A", "trim": "#D8A52A", "trimLo": "#8A6410", "leg": "#A86E44", "boot": "#F4F6FA", "trunks": "#D8A52A", "cost": 6000, "hair": "#14100C", "skin": "#A86E44", "skinLo": "#74482A"})]},
+    {id:'brucelee',name:'Bruce Lee',real:'Bruce Lee',cls:'The Dragon',
+     emblem:'none',head:'short',rar:'epic',athlete:'martial arts',celeb:true,
+     trait:{name:'One-Inch Punch',kind:'crit',v:0.26,desc:'Some punches travel an inch and land like a mile'},
+     pow:24,tough:96,spd:1.32,superName:'Way of the Dragon',
+     superDesc:'A blur of kicks, a flick of the thumb across the nose, and one inch-punch',
+     skins:[SK({"name": "Yellow Jumpsuit", "suit": "#F2C21B", "suitLo": "#B08A0C", "trim": "#14181F", "trimLo": "#000000", "boot": "#14181F", "hair": "#0E0C10", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Kung Fu Black", "suit": "#1A1C22", "suitLo": "#0A0B0E", "trim": "#E8E2D4", "trimLo": "#9A9488", "boot": "#1A1C22", "cost": 6000, "hair": "#0E0C10", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'jackiechan',name:'Jackie Chan',real:'Jackie Chan',cls:'The Stuntman',
+     emblem:'none',head:'short',rar:'rare',athlete:'martial arts',celeb:true,
+     trait:{name:'Improvised Everything',kind:'double',v:0.22,desc:'Sometimes a strike lands twice'},
+     pow:22,tough:102,spd:1.22,superName:'Ladder Routine',
+     superDesc:'Grabs whatever is nearby and turns it into a twelve-hit gag',
+     skins:[SK({"name": "Stunt Gear", "suit": "#E8E2D4", "suitLo": "#9A9488", "trim": "#B8352A", "trimLo": "#6E1C14", "boot": "#1A1C22", "hair": "#1A1410", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Drunken Master", "suit": "#B8352A", "suitLo": "#6E1C14", "trim": "#E8C26A", "trimLo": "#8A6A24", "boot": "#1A1C22", "cost": 6000, "hair": "#1A1410", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'therock',name:'The Rock',real:'Dwayne Johnson',cls:'The People\'s Champion',
+     emblem:'none',head:'bald',rar:'epic',athlete:'wrestling',celeb:true,
+     trait:{name:'The Eyebrow',kind:'stunner',v:0.24,desc:'One raised eyebrow and they freeze'},
+     pow:26,tough:126,spd:1.0,superName:'People\'s Elbow',
+     superDesc:'Drops the elbow pad, runs the ropes twice, and brings it down',
+     skins:[SK({"name": "Ring Gear", "suit": "#A86E44", "suitLo": "#74482A", "trim": "#14181F", "trimLo": "#14181F", "leg": "#A86E44", "boot": "#14181F", "trunks": "#14181F", "hair": "#14100C", "skin": "#A86E44", "skinLo": "#74482A"}),
+       SK({"name": "Brahma Bull", "suit": "#A86E44", "suitLo": "#74482A", "trim": "#8A1E1E", "trimLo": "#8A1E1E", "leg": "#A86E44", "boot": "#14181F", "trunks": "#8A1E1E", "cost": 6000, "hair": "#14100C", "skin": "#A86E44", "skinLo": "#74482A"})]},
+    {id:'cena',name:'Cena',real:'John Cena',cls:'You Can\'t See Me',
+     emblem:'none',head:'peakcap',rar:'rare',athlete:'wrestling',celeb:true,
+     trait:{name:'Never Give Up',kind:'lastStand',v:0.24,desc:'Refuses to stay down, once'},
+     pow:25,tough:120,spd:1.02,superName:'Five Knuckle Shuffle',
+     superDesc:'Waves a hand in front of his face, shuffles, and connects',
+     skins:[SK({"name": "Hustle Loyalty", "suit": "#2F9E5A", "suitLo": "#1C6638", "trim": "#F28C1E", "trimLo": "#A85A0C", "leg": "#5A6A8A", "boot": "#F4F6FA", "hair": "#4A3420", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Purple Shirt", "suit": "#6A3AA8", "suitLo": "#3C1E66", "trim": "#F2C21B", "trimLo": "#A88010", "leg": "#5A6A8A", "boot": "#F4F6FA", "cost": 6000, "hair": "#4A3420", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'bolt',name:'Bolt',real:'Usain Bolt',cls:'The Lightning Bolt',
+     emblem:'none',head:'short',rar:'epic',athlete:'track',celeb:true,
+     trait:{name:'Fastest Man Alive',kind:'opener',v:0.32,desc:'Hits hardest in the opening seconds'},
+     pow:21,tough:94,spd:1.4,superName:'To Di World',
+     superDesc:'Strikes the lightning pose, then crosses the arena in 9.58',
+     skins:[SK({"name": "Jamaica Kit", "suit": "#F2C21B", "suitLo": "#A88010", "trim": "#0B8A3E", "trimLo": "#05481E", "leg": "#0B8A3E", "boot": "#F2C21B", "hair": "#14100C", "skin": "#5E3A22", "skinLo": "#3C2412"}),
+       SK({"name": "Black Kit", "suit": "#14181F", "suitLo": "#05070A", "trim": "#F2C21B", "trimLo": "#0B8A3E", "leg": "#14181F", "boot": "#F2C21B", "cost": 6000, "hair": "#14100C", "skin": "#5E3A22", "skinLo": "#3C2412"})]},
+    {id:'serena',name:'Serena',real:'Serena Williams',cls:'The Queen of the Court',
+     emblem:'none',head:'ponytail',rar:'epic',athlete:'tennis',celeb:true,
+     trait:{name:'Big Serve',kind:'power',v:0.18,desc:'Everything she hits has extra pace on it'},
+     pow:24,tough:108,spd:1.08,superName:'Ace',
+     superDesc:'Tosses, coils and serves one nobody can see',
+     skins:[SK({"name": "Court Pink", "suit": "#E83E8C", "suitLo": "#9A1E58", "trim": "#14181F", "trimLo": "#000000", "boot": "#F4F6FA", "hair": "#14100C", "skin": "#5E3A22", "skinLo": "#3C2412"}),
+       SK({"name": "Catsuit", "suit": "#14181F", "suitLo": "#05070A", "trim": "#E83E8C", "trimLo": "#9A1E58", "boot": "#14181F", "cost": 6000, "hair": "#14100C", "skin": "#5E3A22", "skinLo": "#3C2412"})]},
+    {id:'biles',name:'Biles',real:'Simone Biles',cls:'The GOAT',
+     emblem:'none',head:'ponytail',rar:'epic',athlete:'gymnastics',celeb:true,
+     trait:{name:'The Biles II',kind:'airmaster',v:0.5,desc:'Flying attacks hit far harder'},
+     pow:21,tough:90,spd:1.3,superName:'Triple Double',
+     superDesc:'Launches into a triple-twisting double back and lands it on them',
+     skins:[SK({"name": "Team Leotard", "suit": "#C8102E", "suitLo": "#7A0A1C", "trim": "#F4F6FA", "trimLo": "#1E3A8A", "leg": "#A86E44", "boot": "#A86E44", "hair": "#14100C", "skin": "#A86E44", "skinLo": "#74482A"}),
+       SK({"name": "Sparkle Leotard", "suit": "#3A1E8A", "suitLo": "#1E0E4A", "trim": "#E8D4FF", "trimLo": "#7A5AC8", "leg": "#A86E44", "boot": "#A86E44", "cost": 6000, "hair": "#14100C", "skin": "#A86E44", "skinLo": "#74482A"})]},
+    {id:'jordan',name:'Jordan',real:'Michael Jordan',cls:'His Airness',
+     emblem:'none',head:'bald',rar:'epic',athlete:'basketball',celeb:true,
+     trait:{name:'Air Time',kind:'airmaster',v:0.45,desc:'Flying attacks hit far harder'},
+     pow:24,tough:110,spd:1.16,superName:'Free-Throw Line Dunk',
+     superDesc:'Takes off from the free-throw line, tongue out, and slams it',
+     skins:[SK({"name": "Chicago Red", "suit": "#CE1141", "suitLo": "#7A0A24", "trim": "#14181F", "trimLo": "#000000", "leg": "#CE1141", "boot": "#14181F", "hair": "#14100C", "skin": "#5E3A22", "skinLo": "#3C2412"}),
+       SK({"name": "Black Pinstripe", "suit": "#14181F", "suitLo": "#05070A", "trim": "#CE1141", "trimLo": "#7A0A24", "leg": "#14181F", "boot": "#CE1141", "cost": 6000, "hair": "#14100C", "skin": "#5E3A22", "skinLo": "#3C2412"})]},
+    {id:'kobe',name:'Kobe',real:'Kobe Bryant',cls:'The Black Mamba',
+     emblem:'none',head:'short',rar:'epic',athlete:'basketball',celeb:true,
+     trait:{name:'Mamba Mentality',kind:'closer',v:0.3,desc:'Hits harder the longer the fight goes'},
+     pow:24,tough:106,spd:1.18,superName:'Fadeaway',
+     superDesc:'Turns his back, rises, and fades away with the shot already in',
+     skins:[SK({"name": "Lakers Gold", "suit": "#FDB927", "suitLo": "#B08010", "trim": "#552583", "trimLo": "#2E1247", "leg": "#FDB927", "boot": "#552583", "hair": "#14100C", "skin": "#A86E44", "skinLo": "#74482A"}),
+       SK({"name": "Lakers Purple", "suit": "#552583", "suitLo": "#2E1247", "trim": "#FDB927", "trimLo": "#B08010", "leg": "#552583", "boot": "#FDB927", "cost": 6000, "hair": "#14100C", "skin": "#A86E44", "skinLo": "#74482A"})]},
+    {id:'pele',name:'Pele',real:'Pele',cls:'O Rei',
+     emblem:'none',head:'short',rar:'epic',athlete:'football',celeb:true,
+     trait:{name:'Bicycle Kick',kind:'airmaster',v:0.4,desc:'Flying attacks hit far harder'},
+     pow:23,tough:104,spd:1.2,superName:'Bicycle Kick',
+     superDesc:'Leaves the ground backwards and volleys it over his own head',
+     skins:[SK({"name": "Brazil Yellow", "suit": "#F2D01B", "suitLo": "#B09810", "trim": "#0B7A3E", "trimLo": "#05481E", "leg": "#1E4FB8", "boot": "#14181F", "hair": "#14100C", "skin": "#5E3A22", "skinLo": "#3C2412"}),
+       SK({"name": "Santos White", "suit": "#F4F6FA", "suitLo": "#A8AEB8", "trim": "#14181F", "trimLo": "#000000", "leg": "#F4F6FA", "boot": "#14181F", "cost": 6000, "hair": "#14100C", "skin": "#5E3A22", "skinLo": "#3C2412"})]},
+    {id:'maradona',name:'Maradona',real:'Diego Maradona',cls:'The Golden Boy',
+     emblem:'none',head:'longhair',rar:'epic',athlete:'football',celeb:true,
+     trait:{name:'Dribble of the Century',kind:'evade',v:0.18,desc:'Slaloms through things that should have stopped him'},
+     pow:23,tough:100,spd:1.22,superName:'Goal of the Century',
+     superDesc:'Picks it up in his own half and beats everyone',
+     skins:[SK({"name": "Albiceleste", "suit": "#75AADB", "suitLo": "#2A4E86", "trim": "#F4F6FA", "trimLo": "#2A4E86", "leg": "#14181F", "boot": "#14181F", "hair": "#14100C", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Napoli Blue", "suit": "#1E6FC8", "suitLo": "#0A3A78", "trim": "#F4F6FA", "trimLo": "#0A3A78", "leg": "#F4F6FA", "boot": "#14181F", "cost": 6000, "hair": "#14100C", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'zidane',name:'Zidane',real:'Zinedine Zidane',cls:'Zizou',
+     emblem:'none',head:'bald',rar:'epic',athlete:'football',celeb:true,
+     trait:{name:'Roulette',kind:'counter',v:0.36,desc:'Spins away from a blocked strike and hits back'},
+     pow:24,tough:112,spd:1.06,superName:'Volley',
+     superDesc:'Sets himself under a falling ball and hits it perfectly',
+     skins:[SK({"name": "France Blue", "suit": "#1E3A8A", "suitLo": "#0A1A4A", "trim": "#F4F6FA", "trimLo": "#C8102E", "leg": "#F4F6FA", "boot": "#14181F", "hair": "#14100C", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Madrid White", "suit": "#F4F6FA", "suitLo": "#A8AEB8", "trim": "#D8A52A", "trimLo": "#8A6410", "leg": "#F4F6FA", "boot": "#14181F", "cost": 6000, "hair": "#14100C", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'federer',name:'Federer',real:'Roger Federer',cls:'The Maestro',
+     emblem:'none',head:'bandana',rar:'epic',athlete:'tennis',celeb:true,
+     trait:{name:'Effortless',kind:'double',v:0.2,desc:'Sometimes a strike lands twice'},
+     pow:22,tough:98,spd:1.16,superName:'One-Handed Backhand',
+     superDesc:'Turns, flows, and paints the line',
+     skins:[SK({"name": "Wimbledon White", "suit": "#F4F6FA", "suitLo": "#A8AEB8", "trim": "#E8E2D4", "trimLo": "#9A9488", "boot": "#F4F6FA", "hair": "#3A2414", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Night Session", "suit": "#14181F", "suitLo": "#05070A", "trim": "#C8102E", "trimLo": "#7A0A1C", "boot": "#F4F6FA", "cost": 6000, "hair": "#3A2414", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'hamilton',name:'Hamilton',real:'Lewis Hamilton',cls:'Sir Lewis',
+     emblem:'none',head:'braid',rar:'epic',athlete:'racing',celeb:true,
+     trait:{name:'Pole Position',kind:'firststrike',v:1.8,desc:'The first hit of the fight is enormous'},
+     pow:22,tough:100,spd:1.24,superName:'Overtake',
+     superDesc:'Gets the slipstream, pulls out, and goes round the outside',
+     skins:[SK({"name": "Silver Arrow", "suit": "#A8B4BE", "suitLo": "#5E6A74", "trim": "#00A19C", "trimLo": "#00605C", "boot": "#14181F", "hair": "#14100C", "skin": "#C08A5E", "skinLo": "#8A5C38"}),
+       SK({"name": "Red Racer", "suit": "#DC0000", "suitLo": "#7A0000", "trim": "#F2C21B", "trimLo": "#A88010", "boot": "#14181F", "cost": 6000, "hair": "#14100C", "skin": "#C08A5E", "skinLo": "#8A5C38"})]},
+    {id:'brady',name:'Brady',real:'Tom Brady',cls:'TB12',
+     emblem:'none',head:'helmet',rar:'epic',athlete:'american football',celeb:true,
+     trait:{name:'Fourth-Quarter Comeback',kind:'closer',v:0.3,desc:'Hits harder the longer the fight goes'},
+     pow:24,tough:114,spd:1.0,superName:'Hail Mary',
+     superDesc:'Drops back, steps up, and throws one sixty yards',
+     skins:[SK({"name": "Navy Kit", "suit": "#002244", "suitLo": "#00111F", "trim": "#B0B7BC", "trimLo": "#5E6670", "leg": "#B0B7BC", "boot": "#14181F", "hair": "#3A2414", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Pewter Kit", "suit": "#D50A0A", "suitLo": "#7A0000", "trim": "#34302B", "trimLo": "#14120F", "leg": "#B5A68A", "boot": "#14181F", "cost": 6000, "hair": "#3A2414", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'ohtani',name:'Ohtani',real:'Shohei Ohtani',cls:'Shotime',
+     emblem:'none',head:'peakcap',rar:'epic',athlete:'baseball',celeb:true,
+     trait:{name:'Two-Way Star',kind:'double',v:0.24,desc:'Sometimes a strike lands twice'},
+     pow:24,tough:108,spd:1.12,superName:'Moonshot',
+     superDesc:'Fires a 100 mph fastball, then hits the next one out of the stadium',
+     skins:[SK({"name": "Home White", "suit": "#F4F6FA", "suitLo": "#A8AEB8", "trim": "#005A9C", "trimLo": "#002F52", "leg": "#F4F6FA", "boot": "#005A9C", "hair": "#14100C", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Japan Navy", "suit": "#1E2A5A", "suitLo": "#0A1230", "trim": "#C8102E", "trimLo": "#7A0A1C", "leg": "#F4F6FA", "boot": "#14181F", "cost": 6000, "hair": "#14100C", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'tendulkar',name:'Tendulkar',real:'Sachin Tendulkar',cls:'The Little Master',
+     emblem:'none',head:'short',rar:'epic',athlete:'cricket',celeb:true,
+     trait:{name:'Straight Drive',kind:'crit',v:0.24,desc:'Some shots simply go for six'},
+     pow:22,tough:102,spd:1.12,superName:'Desert Storm',
+     superDesc:'Dances down the pitch and hits every ball for four',
+     skins:[SK({"name": "India Blue", "suit": "#1F5BA7", "suitLo": "#0E3264", "trim": "#F2A21B", "trimLo": "#A8680C", "boot": "#F4F6FA", "hair": "#14100C", "skin": "#A86E44", "skinLo": "#74482A"}),
+       SK({"name": "Test Whites", "suit": "#F4F6FA", "suitLo": "#A8AEB8", "trim": "#1F5BA7", "trimLo": "#0E3264", "boot": "#F4F6FA", "cost": 6000, "hair": "#14100C", "skin": "#A86E44", "skinLo": "#74482A"})]},
+    {id:'gretzky',name:'Gretzky',real:'Wayne Gretzky',cls:'The Great One',
+     emblem:'none',head:'short',rar:'epic',athlete:'ice hockey',celeb:true,
+     trait:{name:'Office Behind the Net',kind:'combo',v:0.16,desc:'Every hit in a combo lands a little harder'},
+     pow:22,tough:104,spd:1.16,superName:'Wraparound',
+     superDesc:'Circles behind the net and tucks it in on the far side',
+     skins:[SK({"name": "Oilers Blue", "suit": "#041E42", "suitLo": "#000F22", "trim": "#FF4C00", "trimLo": "#A83000", "leg": "#041E42", "boot": "#F4F6FA", "hair": "#5A3A1E", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Kings Black", "suit": "#111111", "suitLo": "#000000", "trim": "#A2AAAD", "trimLo": "#5E6670", "leg": "#111111", "boot": "#F4F6FA", "cost": 6000, "hair": "#5A3A1E", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'tigerwoods',name:'Tiger',real:'Tiger Woods',cls:'Sunday Red',
+     emblem:'none',head:'peakcap',rar:'rare',athlete:'golf',celeb:true,
+     trait:{name:'Fist Pump',kind:'momentum',v:0.2,desc:'Hits harder while he is winning'},
+     pow:22,tough:104,spd:1.04,superName:'Chip-In',
+     superDesc:'Reads the green, chips, and pumps the fist before it drops',
+     skins:[SK({"name": "Sunday Red", "suit": "#C8102E", "suitLo": "#7A0A1C", "trim": "#14181F", "trimLo": "#000000", "leg": "#14181F", "boot": "#F4F6FA", "hair": "#14100C", "skin": "#C08A5E", "skinLo": "#8A5C38"}),
+       SK({"name": "Masters Green", "suit": "#0B6B3A", "suitLo": "#043A1E", "trim": "#F2D01B", "trimLo": "#A88010", "leg": "#E8E2D4", "boot": "#F4F6FA", "cost": 6000, "hair": "#14100C", "skin": "#C08A5E", "skinLo": "#8A5C38"})]},
+    {id:'mrbeast',name:'MrBeast',real:'Jimmy Donaldson',cls:'The Challenge King',
+     emblem:'none',head:'short',rar:'epic',athlete:'creator',celeb:true,
+     trait:{name:'Last to Leave',kind:'lastStand',v:0.26,desc:'Refuses to be the one who quits, once'},
+     pow:22,tough:112,spd:1.08,superName:'Ultimate Giveaway',
+     superDesc:'Rains prize money across the arena and nobody can concentrate',
+     skins:[SK({"name": "Beast Blue", "suit": "#1E7FE8", "suitLo": "#0A4A9A", "trim": "#F4F6FA", "trimLo": "#A8AEB8", "leg": "#2A3448", "boot": "#F4F6FA", "hair": "#5A3A1E", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Feastables Pink", "suit": "#E83E8C", "suitLo": "#9A1E58", "trim": "#F4F6FA", "trimLo": "#A8AEB8", "leg": "#2A3448", "boot": "#F4F6FA", "cost": 6000, "hair": "#5A3A1E", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'speed',name:'Speed',real:'IShowSpeed',cls:'The Siuuu Fan',
+     emblem:'none',head:'short',rar:'rare',athlete:'creator',celeb:true,
+     trait:{name:'Backflip Hype',kind:'airmaster',v:0.4,desc:'Flying attacks hit far harder'},
+     pow:22,tough:98,spd:1.26,superName:'SIUUU Celebration',
+     superDesc:'Sprints, leaps, spins in the air and lands the celebration on them',
+     skins:[SK({"name": "Portugal Red", "suit": "#C8102E", "suitLo": "#7A0A1C", "trim": "#0B6B3A", "trimLo": "#043A1E", "leg": "#C8102E", "boot": "#14181F", "hair": "#14100C", "skin": "#5E3A22", "skinLo": "#3C2412"}),
+       SK({"name": "Barking Black", "suit": "#14181F", "suitLo": "#05070A", "trim": "#F2C21B", "trimLo": "#A88010", "leg": "#14181F", "boot": "#F4F6FA", "cost": 6000, "hair": "#14100C", "skin": "#5E3A22", "skinLo": "#3C2412"})]},
+    {id:'taylorswift',name:'Taylor Swift',real:'Taylor Swift',cls:'The Eras',
+     emblem:'none',head:'longhair',rar:'epic',athlete:'music',celeb:true,
+     trait:{name:'Shake It Off',kind:'evade',v:0.18,desc:'Shakes off hits that should have landed'},
+     pow:21,tough:100,spd:1.12,superName:'The Eras Finale',
+     superDesc:'Fireworks, confetti, and a high note that knocks them flat',
+     skins:[SK({"name": "Sequin Bodysuit", "suit": "#8A6AE8", "suitLo": "#4A2EA8", "trim": "#E8D4FF", "trimLo": "#9A7AE8", "leg": "#8A6AE8", "boot": "#E8D4FF", "hair": "#E8C46A", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Red Era", "suit": "#C8102E", "suitLo": "#7A0A1C", "trim": "#14181F", "trimLo": "#000000", "leg": "#14181F", "boot": "#C8102E", "cost": 6000, "hair": "#E8C46A", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'beyonce',name:'Beyonce',real:'Beyonce',cls:'Queen B',
+     emblem:'none',head:'longhair',rar:'epic',athlete:'music',celeb:true,
+     trait:{name:'Crazy in Love',kind:'crit',v:0.24,desc:'Some strikes land with total confidence'},
+     pow:22,tough:102,spd:1.12,superName:'Halo',
+     superDesc:'Hits a note that lights the whole arena gold',
+     skins:[SK({"name": "Gold Stage", "suit": "#D8A52A", "suitLo": "#8A6410", "trim": "#14181F", "trimLo": "#000000", "leg": "#D8A52A", "boot": "#D8A52A", "hair": "#B88A3A", "skin": "#A86E44", "skinLo": "#74482A"}),
+       SK({"name": "Formation Black", "suit": "#14181F", "suitLo": "#05070A", "trim": "#D8A52A", "trimLo": "#8A6410", "leg": "#14181F", "boot": "#14181F", "cost": 6000, "hair": "#B88A3A", "skin": "#A86E44", "skinLo": "#74482A"})]},
+    {id:'shakira',name:'Shakira',real:'Shakira',cls:'Hips Don\'t Lie',
+     emblem:'none',head:'longhair',rar:'rare',athlete:'music',celeb:true,
+     trait:{name:'Hips Don\'t Lie',kind:'evade',v:0.18,desc:'Every hit somehow misses the hips'},
+     pow:21,tough:96,spd:1.18,superName:'Waka Waka',
+     superDesc:'Starts the World Cup anthem, and the whole arena moves with her',
+     skins:[SK({"name": "World Cup Gold", "suit": "#F2C21B", "suitLo": "#A88010", "trim": "#C8102E", "trimLo": "#7A0A1C", "leg": "#14181F", "boot": "#F2C21B", "hair": "#C89A4A", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "She Wolf", "suit": "#6A6A74", "suitLo": "#2A2A30", "trim": "#F4F6FA", "trimLo": "#A8AEB8", "leg": "#14181F", "boot": "#14181F", "cost": 6000, "hair": "#C89A4A", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'edsheeran',name:'Ed Sheeran',real:'Ed Sheeran',cls:'The Ginger Troubadour',
+     emblem:'none',head:'short',rar:'rare',athlete:'music',celeb:true,
+     trait:{name:'Loop Pedal',kind:'combo',v:0.16,desc:'Every hit in a combo builds on the last'},
+     pow:21,tough:104,spd:1.04,superName:'Shape of You',
+     superDesc:'Loops a beat, stacks it, and drops the whole song at once',
+     skins:[SK({"name": "Plain Tee", "suit": "#2A3448", "suitLo": "#141A26", "trim": "#C8642A", "trimLo": "#7A3A14", "leg": "#3A4A68", "boot": "#14181F", "hair": "#C8642A", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Tour Hoodie", "suit": "#C8102E", "suitLo": "#7A0A1C", "trim": "#F4F6FA", "trimLo": "#A8AEB8", "leg": "#3A4A68", "boot": "#F4F6FA", "cost": 6000, "hair": "#C8642A", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'billie',name:'Billie Eilish',real:'Billie Eilish',cls:'The Bad Guy',
+     emblem:'none',head:'longhair',rar:'rare',athlete:'music',celeb:true,
+     trait:{name:'Whisper',kind:'opener',v:0.3,desc:'Hits hardest in the opening seconds'},
+     pow:21,tough:96,spd:1.14,superName:'Bad Guy',
+     superDesc:'Drops the bass so hard the platform shakes',
+     skins:[SK({"name": "Baggy Green", "suit": "#4AC86A", "suitLo": "#1E7A3A", "trim": "#14181F", "trimLo": "#000000", "leg": "#14181F", "boot": "#4AC86A", "hair": "#1A1C22", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "All Black", "suit": "#14181F", "suitLo": "#05070A", "trim": "#4AC86A", "trimLo": "#1E7A3A", "leg": "#14181F", "boot": "#14181F", "cost": 6000, "hair": "#1A1C22", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'keanu',name:'Keanu',real:'Keanu Reeves',cls:'The Breathtaking',
+     emblem:'none',head:'longhair',rar:'epic',athlete:'movies',celeb:true,
+     trait:{name:'Focus',kind:'counter',v:0.42,desc:'Turns a blocked strike straight back on them'},
+     pow:24,tough:108,spd:1.12,superName:'Bullet Time',
+     superDesc:'Leans back as the world slows down, then finishes it',
+     skins:[SK({"name": "Black Suit", "suit": "#14181F", "suitLo": "#05070A", "trim": "#3A3E48", "trimLo": "#14181F", "leg": "#14181F", "boot": "#14181F", "hair": "#14100C", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Trench Coat", "suit": "#1A1C22", "suitLo": "#0A0B0E", "trim": "#2A6A3A", "trimLo": "#0E3A1A", "leg": "#14181F", "boot": "#14181F", "cost": 6000, "hair": "#14100C", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'einstein',name:'Einstein',real:'Albert Einstein',cls:'The Genius',
+     emblem:'none',head:'spiky',rar:'epic',athlete:'history',celeb:true,
+     trait:{name:'Relativity',kind:'iq',v:0.55,desc:'Reads the opponent until the counter is inevitable'},
+     pow:21,tough:100,spd:0.96,superName:'E = mc²',
+     superDesc:'Writes one equation in the air, and it detonates',
+     skins:[SK({"name": "Professor Tweed", "suit": "#6A5A48", "suitLo": "#3A2E22", "trim": "#E8E2D4", "trimLo": "#9A9488", "leg": "#4A3E30", "boot": "#2A2018", "hair": "#E8E8EC", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Lab Coat", "suit": "#F4F6FA", "suitLo": "#A8AEB8", "trim": "#3A4A68", "trimLo": "#1A2234", "leg": "#3A4A68", "boot": "#2A2018", "cost": 6000, "hair": "#E8E8EC", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'newton',name:'Newton',real:'Isaac Newton',cls:'The Gravity Man',
+     emblem:'none',head:'longhair',rar:'rare',athlete:'history',celeb:true,
+     trait:{name:'Law of Motion',kind:'momentum',v:0.2,desc:'Every action has a bigger reaction while he is ahead'},
+     pow:21,tough:102,spd:1.0,superName:'Falling Apple',
+     superDesc:'Points up. Something heavy and round arrives on their head',
+     skins:[SK({"name": "Royal Society", "suit": "#3A2A5A", "suitLo": "#1E142E", "trim": "#E8E2D4", "trimLo": "#9A9488", "leg": "#3A2A5A", "boot": "#14181F", "hair": "#E8E2D4", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Cambridge Red", "suit": "#8A1E1E", "suitLo": "#4A0E0E", "trim": "#E8C26A", "trimLo": "#8A6A24", "leg": "#14181F", "boot": "#14181F", "cost": 6000, "hair": "#E8E2D4", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
+    {id:'cleopatra',name:'Cleopatra',real:'Cleopatra',cls:'The Last Pharaoh',
+     emblem:'none',head:'braid',rar:'epic',athlete:'history',celeb:true,
+     trait:{name:'Queen of the Nile',kind:'guardbreak',v:0.3,desc:'Her strikes go through a guard'},
+     pow:22,tough:100,spd:1.1,superName:'Asp Strike',
+     superDesc:'Raises the golden staff, and the sands of the Nile rise with it',
+     skins:[SK({"name": "Nile Gold", "suit": "#E8D4A8", "suitLo": "#A8946A", "trim": "#D8A52A", "trimLo": "#1E5BB8", "leg": "#E8D4A8", "boot": "#D8A52A", "hair": "#0E0C10", "skin": "#C08A5E", "skinLo": "#8A5C38"}),
+       SK({"name": "Royal Blue", "suit": "#1E3A8A", "suitLo": "#0A1A4A", "trim": "#D8A52A", "trimLo": "#8A6410", "leg": "#1E3A8A", "boot": "#D8A52A", "cost": 6000, "hair": "#0E0C10", "skin": "#C08A5E", "skinLo": "#8A5C38"})]},
+    {id:'davinci',name:'Da Vinci',real:'Leonardo da Vinci',cls:'The Inventor',
+     emblem:'none',head:'longhair',rar:'rare',athlete:'history',celeb:true,
+     trait:{name:'Inventor',kind:'combo',v:0.16,desc:'Every hit in a combo is better engineered'},
+     pow:21,tough:100,spd:1.0,superName:'Flying Machine',
+     superDesc:'Climbs into a wooden glider and dives on them from above',
+     skins:[SK({"name": "Renaissance Red", "suit": "#8A1E1E", "suitLo": "#4A0E0E", "trim": "#D8A52A", "trimLo": "#8A6410", "leg": "#3A2A1A", "boot": "#2A2018", "hair": "#C8C8CC", "skin": "#EBC4A0", "skinLo": "#BC8C64"}),
+       SK({"name": "Workshop Brown", "suit": "#6A4A2A", "suitLo": "#3A2814", "trim": "#E8E2D4", "trimLo": "#9A9488", "leg": "#3A2A1A", "boot": "#2A2018", "cost": 6000, "hair": "#C8C8CC", "skin": "#EBC4A0", "skinLo": "#BC8C64"})]},
   ];
   /* ================= rarity =================
      Seven steps. The first three are simply how the roster was always sorted;
@@ -3727,6 +3988,44 @@
      facial hair, age and expression, set to match how that character looks
      on screen. Headgear is drawn over the top and declares which parts of
      the face it hides. */
+  /* faces for the celebrities and world icons */
+  FACES.ali={"eye": "#3A2414", "brow": "norm", "jaw": "oval", "mood": "smirk"};
+  FACES.pacquiao={"eye": "#2A1C10", "brow": "norm", "jaw": "oval", "mood": "set"};
+  FACES.canelo={"eye": "#5E3A20", "brow": "heavy", "jaw": "square", "beard": "stubble", "mood": "grim"};
+  FACES.joshua={"eye": "#2A1A10", "brow": "heavy", "jaw": "square", "beard": "stubble", "mood": "set"};
+  FACES.usyk={"eye": "#3E5A82", "brow": "norm", "jaw": "narrow", "mood": "smirk"};
+  FACES.shields={"eye": "#2A1A10", "brow": "arch", "jaw": "oval", "lips": "full", "lash": 1, "mood": "set"};
+  FACES.brucelee={"eye": "#1E1810", "brow": "angry", "jaw": "narrow", "mood": "grim"};
+  FACES.jackiechan={"eye": "#1E1810", "brow": "norm", "jaw": "oval", "mood": "smirk"};
+  FACES.therock={"eye": "#2A1A10", "brow": "arch", "jaw": "square", "mood": "smirk"};
+  FACES.cena={"eye": "#3E5A82", "brow": "norm", "jaw": "square", "mood": "set"};
+  FACES.bolt={"eye": "#2A1A10", "brow": "norm", "jaw": "narrow", "mood": "smirk"};
+  FACES.serena={"eye": "#2A1A10", "brow": "arch", "jaw": "oval", "lips": "full", "lash": 1, "mood": "set"};
+  FACES.biles={"eye": "#2A1A10", "brow": "arch", "jaw": "oval", "lips": "full", "lash": 1, "mood": "smirk"};
+  FACES.jordan={"eye": "#2A1A10", "brow": "norm", "jaw": "oval", "mood": "smirk"};
+  FACES.kobe={"eye": "#2A1A10", "brow": "heavy", "jaw": "square", "mood": "grim"};
+  FACES.pele={"eye": "#2A1A10", "brow": "norm", "jaw": "oval", "mood": "smirk"};
+  FACES.maradona={"eye": "#2A1A10", "brow": "heavy", "jaw": "oval", "mood": "smirk"};
+  FACES.zidane={"eye": "#3A2A18", "brow": "heavy", "jaw": "square", "mood": "set"};
+  FACES.federer={"eye": "#5E3A20", "brow": "norm", "jaw": "narrow", "mood": "smirk"};
+  FACES.hamilton={"eye": "#3A2A18", "brow": "norm", "jaw": "oval", "mood": "set"};
+  FACES.brady={"eye": "#3E5A82", "brow": "norm", "jaw": "square", "mood": "set"};
+  FACES.ohtani={"eye": "#1E1810", "brow": "norm", "jaw": "oval", "mood": "smirk"};
+  FACES.tendulkar={"eye": "#2A1A10", "brow": "norm", "jaw": "oval", "mood": "smirk"};
+  FACES.gretzky={"eye": "#3E5A82", "brow": "norm", "jaw": "narrow", "mood": "smirk"};
+  FACES.tigerwoods={"eye": "#2A1A10", "brow": "norm", "jaw": "oval", "mood": "set"};
+  FACES.mrbeast={"eye": "#3E5A82", "brow": "norm", "jaw": "oval", "beard": "full", "mood": "smirk"};
+  FACES.speed={"eye": "#2A1A10", "brow": "arch", "jaw": "oval", "mood": "smirk"};
+  FACES.taylorswift={"eye": "#3E7AB8", "brow": "arch", "jaw": "oval", "lips": "full", "lash": 1, "mood": "smirk"};
+  FACES.beyonce={"eye": "#3A2414", "brow": "arch", "jaw": "oval", "lips": "full", "lash": 1, "mood": "set"};
+  FACES.shakira={"eye": "#5E3A20", "brow": "arch", "jaw": "oval", "lips": "full", "lash": 1, "mood": "smirk"};
+  FACES.edsheeran={"eye": "#3E7AB8", "brow": "norm", "jaw": "oval", "beard": "stubble", "mood": "smirk"};
+  FACES.billie={"eye": "#3E7AB8", "brow": "thin", "jaw": "oval", "lips": "full", "lash": 1, "mood": "set"};
+  FACES.keanu={"eye": "#3A2414", "brow": "heavy", "jaw": "narrow", "beard": "full", "mood": "grim"};
+  FACES.einstein={"eye": "#5E3A20", "brow": "heavy", "jaw": "oval", "beard": "mus", "age": 0.55, "mood": "smirk"};
+  FACES.newton={"eye": "#3E5A82", "brow": "arch", "jaw": "narrow", "age": 0.45, "mood": "set"};
+  FACES.cleopatra={"eye": "#2A1C10", "brow": "arch", "jaw": "oval", "lips": "full", "lash": 1, "mood": "smirk"};
+  FACES.davinci={"eye": "#5E3A20", "brow": "heavy", "jaw": "oval", "beard": "full", "age": 0.55, "mood": "set"};
   var FACE_DEF={eye:'#4A5E78',brow:'norm',jaw:'oval',lips:'norm',
                 beard:'none',age:0,mood:'set',glow:null,lash:0};
   function faceOf(h){
@@ -3826,6 +4125,19 @@
     nezuko:'gi', zenitsu:'gi', inosuke:'gi', rengoku:'gi', kenshin:'gi',
     inuyasha:'gi', sesshomaru:'gi', luffy:'gi', zoro:'gi', shanks:'gi'
   };
+  MATS.ali='bare';
+  MATS.pacquiao='bare';
+  MATS.canelo='bare';
+  MATS.joshua='bare';
+  MATS.usyk='bare';
+  MATS.shields='bare';
+  MATS.brucelee='gi';
+  MATS.jackiechan='gi';
+  MATS.therock='bare';
+  MATS.keanu='formal';
+  MATS.einstein='formal';
+  MATS.newton='formal';
+  MATS.davinci='formal';
   /* Where the chest is, as a fraction down the torso. The emblem and the
      seam layout both read this, so they can never drift apart. */
   function chestAt(n,pv,lean,th){
@@ -4767,6 +5079,39 @@
     g.restore();
   }
 
+  /* ---- boxing gloves ----------------------------------------------------
+     Every champion fights gloved up: a padded mitt pointing along the
+     forearm, a thumb on top, and a white wrist cuff with a stripe in the
+     glove's own colour. Built from the same done() calls as everything
+     else, so it gets the ink outline and the armour gloss for free. */
+  function glove(g,el,ha,size,hi,lo,tier){
+    var s=size*(ha.s||1);
+    var ang=Math.atan2(ha[1]-el[1],ha[0]-el[0]);
+    g.save(); g.translate(ha[0],ha[1]); g.rotate(ang);
+    /* cuff, toward the elbow */
+    g.beginPath(); g.ellipse(-3.4*s,0,2.9*s,4.3*s,0,0,6.283);
+    if(!done(g,'#EEF1F6')){
+      g.fillStyle=lo; g.fillRect(-4.6*s,-3.9*s,1.25*s,7.8*s);
+    }
+    /* the padded mitt */
+    var lg=g.createLinearGradient(1*s,-6*s,2*s,6*s);
+    lg.addColorStop(0,lerpHex(hi,'#FFFFFF',0.3)); lg.addColorStop(0.45,hi); lg.addColorStop(1,lo);
+    g.beginPath(); g.ellipse(2.4*s,0.3*s,6.3*s,5.5*s,0,0,6.283);
+    done(g,lg);
+    /* thumb, tucked along the top */
+    g.beginPath(); g.ellipse(0.4*s,-4.5*s,3.1*s,1.9*s,-0.35,0,6.283);
+    done(g,lerpHex(hi,'#FFFFFF',0.12));
+    if(!PASS_INK){
+      /* the seam where the fist folds, and a shine on the padding */
+      g.strokeStyle='rgba(0,0,0,.28)'; g.lineWidth=0.9*s; g.lineCap='round';
+      g.beginPath(); g.arc(1.4*s,0.6*s,4.2*s,-0.9,1.3); g.stroke();
+      var T=TIERS[tier];
+      g.fillStyle='rgba(255,255,255,'+(0.28+T.gloss*0.5).toFixed(3)+')';
+      g.beginPath(); g.ellipse(4.2*s,-2.2*s,2.2*s,1.2*s,-0.4,0,6.283); g.fill();
+    }
+    g.restore();
+  }
+
   /* ---- turning the rig in space ---------------------------------------
      The poses are flat pairs of numbers, but they are not a flat *body*: the
      gap between the front shoulder and the back shoulder only exists because
@@ -4892,13 +5237,21 @@
 
     /* far limbs */
     limb(g,P0.hiB,P0.knB,7.4,5.6,legLo,lerpHex(legLo,'#000000',0.28),f.tier);
+    /* fighters in proper boxing trunks get them down to mid-thigh */
+    var shorts=(f.base&&f.base.celeb&&h.trunks&&MATS[f.base.id]==='bare')?h.trunks:null;
+    function thigh(a,b,w1,w2,hi,lo){
+      var m=[a[0]+(b[0]-a[0])*0.58,a[1]+(b[1]-a[1])*0.58]; m.s=b.s;
+      limb(g,a,m,w1,w2,hi,lo,f.tier);
+    }
+    if(shorts) thigh(P0.hiB,P0.knB,8.6,7.6,lerpHex(shorts,'#000000',0.18),lerpHex(shorts,'#000000',0.4));
     limb(g,P0.knB,P0.ftB,5.6,4.1,legLo,lerpHex(legLo,'#000000',0.3),f.tier);
     limb(g,P0.shB,P0.elB,5.9,4.8,lerpHex(suitLo,'#000000',0.1),lerpHex(suitLo,'#000000',0.34),f.tier);
     limb(g,P0.elB,P0.haB,4.6,3.7,lerpHex(foreLo,'#000000',0.1),lerpHex(foreLo,'#000000',0.3),f.tier);
-    blob(g,P0.haB[0],P0.haB[1],4.6,4.3,0,lerpHex(trimLo,'#FFFFFF',0.1),trimLo,f.tier);
+    glove(g,P0.elB,P0.haB,1.04,lerpHex(trimLo,'#FFFFFF',0.18),lerpHex(trimLo,'#000000',0.12),f.tier);
 
     /* near leg */
     limb(g,P0.hiF,P0.knF,8.3,6.3,legHi,legLo,f.tier);
+    if(shorts) thigh(P0.hiF,P0.knF,9.6,8.4,lerpHex(shorts,'#FFFFFF',0.08),lerpHex(shorts,'#000000',0.25));
     limb(g,P0.knF,P0.ftF,6.3,4.5,legHi,legLo,f.tier);
     /* boots */
     limb(g,shod(P0.ftF,-4),shod(P0.ftF,7),4.6,3.8,bootHi,bootLo,f.tier);
@@ -5731,7 +6084,7 @@
     /* near arm, drawn last */
     limb(g,P0.shF,P0.elF,6.7,5.2,suitHi,suitLo,f.tier);
     limb(g,P0.elF,P0.haF,5.2,4.1,foreHi,foreLo,f.tier);
-    blob(g,P0.haF[0],P0.haF[1],5.2,4.9,0,trimHi,trimLo,f.tier);
+    glove(g,P0.elF,P0.haF,1.18,trimHi,trimLo,f.tier);
     if(h.bracers){
       var bw=[P0.elF,P0.haF], bx2=bw[0][0]+(bw[1][0]-bw[0][0])*0.68, by2=bw[0][1]+(bw[1][1]-bw[0][1])*0.68;
       limb(g,[bx2,by2],[P0.haF[0],P0.haF[1]],5.6,5.2,'#E8ECF2','#9AA4B2',f.tier);
@@ -9720,7 +10073,7 @@
   /* ---------- What's New ----------
      Opens by itself the first time someone loads this version, and any
      time from the top bar. Remembered per browser. */
-  var NEW_VER='2026-10-d';
+  var NEW_VER='2026-10-e';
   function newSeen(){ try{ return localStorage.getItem('skyforge.seenNew')===NEW_VER; }catch(e){ return true; } }
   function markNewSeen(){ try{ localStorage.setItem('skyforge.seenNew',NEW_VER); }catch(e){} $('newBtn').classList.remove('unseen'); }
   function openNew(){
@@ -9731,6 +10084,10 @@
   function closeNew(){ $('newPanel').hidden=true; }
   var NEW_GO={
     fight:function(){ startFight(); },
+    icons:function(){
+      showTab('champ'); rarPick='celeb'; buildRarChips(); rosterFilter();
+      document.querySelector('.picker').scrollIntoView({behavior:'smooth',block:'start'});
+    },
     neon:function(){
       for(var ni=0;ni<ARENAS.length;ni++) if(ARENAS[ni].neon) save.arena=ni;
       store(); skyCache=null; startFight();
@@ -10073,7 +10430,7 @@
       var sg=g.createLinearGradient(0,0,0,46);
       sg.addColorStop(0,'#2F86D8'); sg.addColorStop(0.66,'#8FCBEF'); sg.addColorStop(1,'#E6F3FC');
       g.fillStyle=sg; g.fillRect(0,0,46,46);
-      var ghost={h:look(C.h,C.idx),tier:0,facing:1,x:0,lunge:0,dx:0,air:0,ph:i,
+      var ghost={base:C.h,h:look(C.h,C.idx),tier:0,facing:1,x:0,lunge:0,dx:0,air:0,ph:i,
         pose:lerpPose(POSE.idle,POSE.breathe,(Math.sin(tick*0.045+i)+1)/2)};
       g.save(); g.translate(23,44); g.translate(0,-GY);
       drawFighter(g,ghost,tick+i*30,0.36);
@@ -10088,7 +10445,7 @@
   function buildRarChips(){
     var wrap=$('rarChips'); if(!wrap) return;
     wrap.innerHTML='';
-    var all=[{k:'',n:'All',c:'#DCE7F5'}].concat(RARITY);
+    var all=[{k:'',n:'All',c:'#DCE7F5'},{k:'celeb',n:'\u2B50 Icons',c:'#FFD46B'}].concat(RARITY);
     all.forEach(function(R){
       var b=document.createElement('button');
       b.className='rarchip'+(rarPick===R.k?' on':'');
@@ -10108,12 +10465,13 @@
     var shown=0;
     for(var i=0;i<cards.length;i++){
       var h=cards[i].h;
-      var hit=(!rarPick||rarOf(h).k===rarPick);
+      var hit=(!rarPick||(rarPick==='celeb'?!!h.celeb:rarOf(h).k===rarPick));
       if(hit) hit=!q
         || h.name.toLowerCase().indexOf(q)>=0
         || (h.real||'').toLowerCase().indexOf(q)>=0
         || (h.cls||'').toLowerCase().indexOf(q)>=0
         || (h.athlete||'').indexOf(q)>=0
+        || (h.celeb&&('celebrity icon legend'.indexOf(q)>=0))
         || (h.pixar&&'pixar'.indexOf(q)===0)
         || rarOf(h).k.indexOf(q)===0;
       if(hit) shown++;
@@ -10144,7 +10502,7 @@
       g.fillStyle='rgba(255,255,255,.8)';
       g.beginPath(); g.ellipse(30,104,40,13,0,0,6.283); g.fill();
       g.beginPath(); g.ellipse(96,112,34,11,0,0,6.283); g.fill();
-      var ghost={h:look(h,p.skin),tier:p.tier,facing:1,x:0,lunge:0,dx:0,air:0,ph:i*1.3,
+      var ghost={base:h,h:look(h,p.skin),tier:p.tier,facing:1,x:0,lunge:0,dx:0,air:0,ph:i*1.3,
         pose:lerpPose(POSE.idle,POSE.breathe,(Math.sin(tick*0.045+i*1.3)+1)/2)};
       g.save(); g.translate(65,124); g.scale(1.02,1.02); g.translate(-0,-GY);
       drawFighter(g,ghost,tick+i*30,1.0);
