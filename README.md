@@ -129,6 +129,31 @@ five-hit sequence ends the fight. The computer opponents use it too.
   at the Watchtower, fire geysers on Apokolips, and birds over the daytime
   arenas.
 
+### 104 champions fight differently
+
+Every champion has a named trait. Until now 104 of them were the same quiet
+damage bonus with a different name. Each of those is now a real mechanic
+that fits the character, and the champion's details explain it in one line.
+
+New mechanics added for this:
+
+- **Shield**: starts the fight inside a bubble that soaks up the first part
+  of the damage (Violet, Russell, Doctor Fate).
+- **Growth**: below half health they get bigger and hit harder (Mei).
+- **Sprinter**: walks and dashes faster (Dash, Mbappé, Giannis, Saka, the
+  Black Racer).
+- **Long arm**: reaches further (Elastigirl, Wembanyama, Durant).
+- **Sapper**: every hit steals a chunk of the opponent's power meter
+  (Larfleeze, Kawhi, Benzema, Klarion, Neron).
+- **Mend**: heals slowly all fight long (Wall-E, Wade, Swamp Thing).
+- **Kicker / Puncher**: kicks or punches hit harder (Messi, Salah; Joshua).
+
+The rest reuse mechanics the game already had: thorns, counters, criticals,
+double hits, stuns, freezes, burns, guard breaks, last stands, meter head
+starts, and more. The 96 champions whose power fires by itself (heat vision,
+lightning, healing) are unchanged. Shields and growth show for both players
+online.
+
 ### Forge, the talking help robot
 
 Tap **🤖 Help** at the top of the page to meet Forge, a retro arena robot
