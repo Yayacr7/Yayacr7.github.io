@@ -69,7 +69,9 @@
 .trial .cta span{opacity:.75;font-size:.9rem}
 .plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
 .plan{position:relative;display:flex;flex-direction:column;gap:14px}
-.plan.best{border:2px solid var(--accent);box-shadow:var(--shadow)}
+.plan.best{border:2px solid var(--accent);box-shadow:0 0 0 6px rgba(255,106,43,.08),0 24px 60px -20px rgba(255,79,154,.45);background:linear-gradient(180deg,rgba(255,106,43,.13),var(--surface) 42%)}
+.plan.best li b{color:var(--ink)}
+.plan .value{margin:0;font-weight:700;font-size:.92rem;color:var(--accent-text);text-align:center}
 .plan .flag{position:absolute;top:-13px;left:22px;font:700 .7rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;background:var(--accent);color:var(--accent-ink);padding:5px 10px;border-radius:999px}
 .plan .name{font:800 1.25rem var(--f-display)}
 .plan .price{display:flex;align-items:baseline;gap:8px}
@@ -389,13 +391,15 @@
         <div class="name">Founder</div>
         <div class="price"><b>$75</b><span>one-time</span></div>
         <div class="depth" aria-label="Teaching level 3 of 3"><i class="on"></i><i class="on"></i><i class="on"></i><span>Everything</span></div>
-        <p class="for">Everything Sharp teaches.</p>
+        <p class="for">Everything Sharp teaches, plus the exact words and plan to use it.</p>
         <ul>
-          <li>Everything in Builder</li>
-          <li>Negotiation script library</li>
-          <li>Investor pitch kit: template + question bank</li>
-          <li>Early access to every new tool</li>
+          <li><span>Everything in Builder</span></li>
+          <li><span><b>14 negotiation scripts</b>, word for word: discounts, late payments, rent, raises, investors</span></li>
+          <li><span><b>Investor pitch kit</b>: 10-slide deck outline, 4 emails, 30 more tough questions, deal terms in plain English</span></li>
+          <li><span><b>30-day launch plan</b>: one task a day, from idea to first paying customer</span></li>
+          <li><span>Early access to every new tool</span></li>
         </ul>
+        <p class="value">One better deal can pay for it many times over.</p>
         <button class="btn" type="button" data-plan="founder">Get Founder</button>
         <p class="note" data-note="founder"></p>
         <a class="note" href="trial/index.html" style="margin-top:-8px">Or try it free for 3 days →</a>
@@ -427,7 +431,7 @@
     <span class="eyebrow">Questions</span>
     <h2 style="margin:10px 0 24px">FAQ</h2>
     <div class="faq">
-      <details><summary>Is Sharp free?</summary><p>The basics are: all lessons, quizzes and tools. Builder ($30) adds the Launch course, workbook and spreadsheets. Founder ($75) adds everything: scripts, the pitch kit and early access. Both are one-time payments.</p></details>
+      <details><summary>Is Sharp free?</summary><p>The basics are: all lessons, quizzes and tools. Builder ($30) adds the Launch course, workbook and spreadsheets. Founder ($75) adds 14 word-for-word negotiation scripts, an investor pitch kit and a 30-day launch plan, plus early access to new tools. Both are one-time payments.</p></details>
       <details><summary>Who is it for?</summary><p>People with a business idea, or the itch to start one, who want to understand money, marketing, deals and investors without the jargon. No business background needed.</p></details>
       <details><summary>Is it really that simple?</summary><p>The basics are, and that's most of what you need day to day. Where simplifying would mislead you, such as tax or legal details, the lessons say so and tell you when to ask a professional.</p></details>
       <details><summary>How does the free trial work?</summary><p>Every new account gets 3 days of Founder access, starting when you create it. No card is needed and nothing renews. After 3 days you keep the free plan, or buy Builder or Founder.</p></details>

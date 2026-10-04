@@ -25,6 +25,16 @@
 .mod b{display:block;font:700 .97rem/1.25 var(--f-display)}
 .mod small{color:var(--muted);font-size:.8rem}
 .mod.locked{opacity:.6}
+.mods-h{font:700 .74rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:10px 0 0}
+.mods-h:first-child{margin-top:0}
+article.module ol.toc{columns:2;column-gap:32px}
+article.module ol.toc li{break-inside:avoid}
+@media (max-width:600px){ article.module ol.toc{columns:1} }
+article.module .say{background:var(--surface);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:12px 16px;margin:10px 0;font-weight:600}
+article.module .when,article.module .prep{margin:.4em 0;color:var(--muted)}
+article.module .when b,article.module .prep b,article.module .avoid b{color:var(--ink)}
+article.module .avoid{background:rgba(255,90,90,.08);border-radius:12px;padding:10px 14px;margin:12px 0 0}
+article.module td small{color:var(--muted)}
 .mod.locked .n{background:var(--surface-2);color:var(--muted)}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:34px 36px;box-shadow:var(--shadow);display:grid;gap:14px}
 .panel h2{font-size:clamp(1.6rem,3.5vw,2.1rem)}
@@ -72,7 +82,7 @@ article.module details.cy p{margin:.6em 0 0}
   <div class="wrap course-head">
     <span class="eyebrow">Builder &amp; Founder plans</span>
     <h1>The Launch course</h1>
-    <p class="lede">Six short modules that take you from a business idea to your first sales. Each one ends with a task you do on your own business.</p>
+    <p class="lede">Six short modules that take you from a business idea to your first sales, plus three Founder kits: word-for-word negotiation scripts, an investor pitch kit and a 30-day launch plan.</p>
   </div>
   <div class="wrap layout">
     <nav class="mods" id="mods" aria-label="Modules"></nav>
@@ -99,6 +109,12 @@ article.module details.cy p{margin:.6em 0 0}
         <h2>Your account doesn't include the course.</h2>
         <p>Builder ($30) and Founder ($75) both include all six modules. One-time payment.</p>
         <div class="row"><a class="btn" href="../index.html#pricing">See plans</a><a class="btn ghost" href="../trial/index.html">Start the free trial</a></div>
+      </section>
+      <section class="panel" id="st-founder" hidden>
+        <span class="eyebrow">Founder plan</span>
+        <h2>This kit comes with Founder.</h2>
+        <p>Founder adds 14 negotiation scripts, the investor pitch kit and the 30-day launch plan to everything you already have. One-time payment of $75.</p>
+        <div class="row"><a class="btn" href="../index.html#pricing">See Founder</a><a class="btn ghost" href="#m1">Back to the course</a></div>
       </section>
       <section class="panel" id="st-err" hidden>
         <h2>Couldn't load the course.</h2>
