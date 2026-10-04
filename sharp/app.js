@@ -175,7 +175,7 @@ function payUrl(plan){
   return u + (q.length ? (u.indexOf('?') < 0 ? '?' : '&') + q.join('&') : '');
 }
 function reserve(plan){
-  var form = document.querySelector('.hero form[data-waitlist]');
+  var form = document.getElementById('join');
   form.tier.value = PLAN_NAMES[plan];
   var tag = document.getElementById('tierTag');
   tag.textContent = 'Reserving: ' + PLAN_NAMES[plan] + '. Join below and you\'ll get the link the day it opens.';

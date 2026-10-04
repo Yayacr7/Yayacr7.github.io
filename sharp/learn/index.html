@@ -419,6 +419,30 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 62px);max-height:calc(100vh - 6
   nav.side{top:auto}
 }
 @media (prefers-reduced-motion: reduce){ .node.next .node-c{animation:none} .ring-fg{transition:none} }
+
+/* ---- bold header + dashboard ---- */
+.site-head{background:#0d1020;border-bottom-color:rgba(255,255,255,.08)}
+.site-head .brand{color:#fff}
+.site-head .brand svg path:first-child{fill:#fff}
+.site-head .top-links a{color:#fff}
+.site-head .top-links a:hover,.site-head .top-links a[aria-current="page"]{background:rgba(255,255,255,.1)}
+.site-head .icon-btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.25)}
+.dash{position:relative;overflow:hidden;background:#0d1020;color:#fff;border:0;box-shadow:0 24px 50px -28px rgba(13,16,32,.8);background-image:none}
+.dash::before{content:"";position:absolute;inset:-30%;background:radial-gradient(35% 45% at 85% 20%,rgba(255,79,154,.45),transparent 70%),radial-gradient(35% 45% at 10% 90%,rgba(40,200,150,.35),transparent 70%),radial-gradient(30% 40% at 55% 0%,rgba(80,110,255,.35),transparent 70%);pointer-events:none}
+.dash > *{position:relative}
+.dash .eyebrow{color:rgba(255,255,255,.65)}
+.dash h1{color:#fff}
+.dash h1 em{background:linear-gradient(90deg,#ff8a3d,#ff4f9a 55%,#9b8cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dash .lede{color:rgba(255,255,255,.78)}
+.dash .tb{color:#fff}
+.dash .tb-track{background:rgba(255,255,255,.12)}
+.dash .tb.t-finance{--t:#3ddba5}.dash .tb.t-business{--t:#7f97ff}.dash .tb.t-marketing{--t:#ff8a57}.dash .tb.t-negotiation{--t:#c39bff}.dash .tb.t-investors{--t:#ff7fb6}
+.dash .ring-bg{stroke:rgba(255,255,255,.12)}
+.dash .ring-fg{stroke:url(#ringGrad)}
+.dash .ring-txt span{color:rgba(255,255,255,.7)}
+.dash .btn.go{background:linear-gradient(90deg,#ff6a2b,#ff4f9a);border:0;color:#fff;box-shadow:0 10px 30px -10px rgba(255,79,154,.7)}
+.world{background:var(--card)}
+#start .worlds{margin-top:4px}
 </style>
 </head>
 <body>
@@ -481,7 +505,7 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 62px);max-height:calc(100vh - 6
       <a class="btn go" id="continueBtn" href="#money">Start lesson 1 →</a>
     </div>
     <div class="dash-ring" aria-hidden="true">
-      <svg viewBox="0 0 120 120" width="160" height="160"><circle cx="60" cy="60" r="50" class="ring-bg"/><circle cx="60" cy="60" r="50" class="ring-fg" id="ringFg"/></svg>
+      <svg viewBox="0 0 120 120" width="160" height="160"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8a3d"/><stop offset=".55" stop-color="#ff4f9a"/><stop offset="1" stop-color="#9b8cff"/></linearGradient></defs><circle cx="60" cy="60" r="50" class="ring-bg"/><circle cx="60" cy="60" r="50" class="ring-fg" id="ringFg"/></svg>
       <div class="ring-txt"><b id="ringNum">0</b><span>of 13 done</span></div>
     </div>
   </div>

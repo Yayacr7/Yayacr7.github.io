@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://formspree.io https://formsubmit.co https://app.kit.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>Sharp</title>
-<meta name="description" content="Business, made simple. Plain-English courses in finance, marketing, negotiation and pitching investors, plus free tools that run your real numbers.">
-<meta property="og:title" content="Sharp">
-<meta property="og:description" content="Business, made simple: finance, marketing, negotiation and pitching investors, in plain English.">
+<title>Sharp | Business, made simple</title>
+<meta name="description" content="Finance, marketing, negotiation and investor pitching, made simple. Free lessons and tools.">
+<meta property="og:title" content="Sharp | Business, made simple">
+<meta property="og:description" content="Finance, marketing, negotiation and investor pitching, made simple. Free lessons and tools.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yayacr7.github.io/sharp/">
 <meta property="og:image" content="https://yayacr7.github.io/sharp/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#f4f5f8">
+<meta name="theme-color" content="#0d1020">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -95,6 +95,60 @@
   .trial{padding:30px 22px}
 }
 @media (min-width:901px) and (max-width:1100px){ .tools{grid-template-columns:repeat(2,minmax(0,1fr))} }
+
+/* ---- bold opening + colour bands ---- */
+.hero{position:relative;overflow:hidden;background:var(--hero-bg);color:#fff;padding-block:72px 84px}
+.hero::before{content:"";position:absolute;inset:-20%;background:
+  radial-gradient(35% 45% at 80% 30%,rgba(255,79,154,.45),transparent 70%),
+  radial-gradient(30% 40% at 65% 85%,rgba(255,106,43,.42),transparent 70%),
+  radial-gradient(35% 45% at 15% 20%,rgba(80,110,255,.40),transparent 70%),
+  radial-gradient(30% 40% at 30% 95%,rgba(40,200,150,.30),transparent 70%);filter:blur(10px);pointer-events:none}
+.hero-in{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:48px;align-items:center}
+.hero h1{font-size:clamp(3rem,8vw,5.6rem);line-height:.98;letter-spacing:-.04em;margin:0 0 20px;color:#fff}
+.grad{background:linear-gradient(90deg,#ff8a3d,#ff4f9a 55%,#9b8cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{font-size:1.25rem;color:rgba(255,255,255,.8);max-width:30ch}
+.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin:30px 0 26px}
+.hero .btn{background:linear-gradient(90deg,#ff6a2b,#ff4f9a);color:#fff;box-shadow:0 10px 30px -10px rgba(255,79,154,.7)}
+.btn.ghost-light{background:rgba(255,255,255,.08)!important;color:#fff;border-color:rgba(255,255,255,.3);box-shadow:none!important}
+.hpills{display:flex;flex-wrap:wrap;gap:8px}
+.hpill{font:700 .86rem var(--f-body);text-decoration:none;color:#fff;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);display:inline-flex;align-items:center;gap:8px}
+.hpill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--tc)}
+.hpill:hover{background:rgba(255,255,255,.16)}
+.hpill.t-finance{--tc:#3ddba5}.hpill.t-business{--tc:#7f97ff}.hpill.t-marketing{--tc:#ff8a57}.hpill.t-negotiation{--tc:#c39bff}.hpill.t-investors{--tc:#ff7fb6}
+.hero-art{position:relative;display:grid;gap:14px;justify-items:center}
+.hcard{width:min(360px,100%);transform:rotate(var(--r));border-radius:18px;padding:16px 20px;color:#fff;box-shadow:0 18px 40px -18px rgba(0,0,0,.6);display:grid;gap:4px}
+.hcard span{font:700 .72rem var(--f-body);text-transform:uppercase;letter-spacing:.14em;opacity:.85}
+.hcard b{font:800 1.3rem/1.2 var(--f-display);letter-spacing:-.01em}
+.hcard.t-finance{background:linear-gradient(135deg,#0f9d74,#1fc79a)}
+.hcard.t-marketing{background:linear-gradient(135deg,#e2560f,#ff8a3d)}
+.hcard.t-negotiation{background:linear-gradient(135deg,#6b3bd6,#9b7bff)}
+.hcard.t-investors{background:linear-gradient(135deg,#c2266f,#ff5a9e)}
+#topics{background:var(--tint)}
+.tryit{background:var(--bg)}
+.try-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center}
+.band-dark{background:var(--hero-bg);color:#fff}
+.band-dark .eyebrow{color:rgba(255,255,255,.65)}
+.band-dark h2{color:#fff}
+.band-dark .section-head p{color:rgba(255,255,255,.75)}
+.band-dark .btn.ghost{color:#fff;border-color:rgba(255,255,255,.3)}
+.band-dark .tool-card{background:#171b30;border-color:rgba(255,255,255,.1);color:#fff}
+.band-dark .tool-card p{color:rgba(255,255,255,.7)}
+.band-dark .tool-card .go{color:#ff9a6b}
+.band-cta{background:linear-gradient(120deg,#ff6a2b,#ff4f9a 55%,#7d6bff);color:#fff}
+.band-cta h2{color:#fff}
+.band-cta .final p,.band-cta .fine{color:rgba(255,255,255,.88)}
+.band-cta input[type=email],.band-cta select{border-color:transparent}
+.band-cta .btn.dark{background:#0d1020;color:#fff}
+.band-cta .msg.ok,.band-cta .msg.err,.band-cta .tier-tag{color:#fff}
+#pricing{background:var(--tint)}
+@media (max-width:900px){
+  .hero{padding-block:48px 56px}
+  .hero-in,.try-in{grid-template-columns:1fr;gap:36px}
+  .hero-art{grid-template-columns:1fr 1fr;gap:10px}
+  .hcard{padding:12px 14px}
+  .hcard b{font-size:1rem}
+  .site-head .main-nav a{color:#fff}
+}
 </style>
 </head>
 <body>
@@ -119,58 +173,21 @@
 
 <main>
 <section class="hero">
-  <div class="wrap">
-    <div>
-      <span class="eyebrow">Business, made simple</span>
-      <h1>Business is simpler than they <span class="mark">make it sound.</span></h1>
-      <p class="lede">Finance, marketing, negotiation and pitching investors, explained in plain English. Every lesson starts with a 30-second version, and every number comes with a tool to try it.</p>
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <h1>Business, made <span class="grad">simple.</span></h1>
+      <p class="hero-sub">Finance, marketing, negotiation and investor pitches, in plain English. Free.</p>
       <div class="cta">
-        <a class="btn" href="learn/index.html">Start learning free</a>
-        <a class="btn ghost" href="tools/index.html">Explore the tools</a>
+        <a class="btn" href="learn/index.html">Start learning</a>
+        <a class="btn ghost-light" href="tools/index.html">Try a tool</a>
       </div>
-      <form class="wl" id="join" data-waitlist novalidate>
-        <p class="wl-label">Get new courses and tools by email</p>
-        <div class="wl-row">
-          <label class="hp" aria-hidden="true">Leave this empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
-          <input type="email" name="email" id="wl-email-1" required placeholder="you@email.com" autocomplete="email" aria-label="Email address">
-          <button class="btn dark" type="submit">Join the waitlist</button>
-        </div>
-        <select name="stage" id="wl-stage-1" aria-label="Where are you right now?">
-          <option value="">Where are you right now? (optional)</option>
-          <option>I have an idea, nothing built yet</option>
-          <option>I'm building it on the side</option>
-          <option>I've made my first sales</option>
-          <option>Just learning</option>
-        </select>
-        <input type="hidden" name="tier" value="">
-        <p class="tier-tag" id="tierTag"></p>
-        <p class="fine">Free. No spam, unsubscribe any time.</p>
-        <p class="msg" role="status" aria-live="polite"></p>
-      </form>
+      <nav class="hpills" aria-label="Topics"><a class="hpill t-finance" href="learn/index.html#money">Finance</a><a class="hpill t-business" href="learn/index.html#business">Business</a><a class="hpill t-marketing" href="learn/index.html#mkt-basics">Marketing</a><a class="hpill t-negotiation" href="learn/index.html#negotiation">Negotiation</a><a class="hpill t-investors" href="learn/index.html#pitching">Investors</a></nav>
     </div>
-
-    <div class="napkin" id="napkin" aria-label="The napkin test: a live calculator">
-      <div class="napkin-head">
-        <span class="napkin-title">the napkin test</span>
-        <span class="napkin-tag">Free tool · change any number</span>
-      </div>
-      <div class="sum">
-        <label><span>I sell it for</span><span class="field">$<input type="number" id="n-price" value="49" min="0" step="1" inputmode="decimal"></span></label>
-        <label><span>each one costs me</span><span class="field">$<input type="number" id="n-cost" value="9" min="0" step="1" inputmode="decimal"></span></label>
-        <label><span>monthly bills (tools, ads…)</span><span class="field">$<input type="number" id="n-fixed" value="400" min="0" step="10" inputmode="decimal"></span></label>
-        <label><span>I want to take home</span><span class="field">$<input type="number" id="n-goal" value="3000" min="0" step="100" inputmode="decimal"></span></label>
-        <div class="rule"></div>
-      </div>
-      <div class="answer" id="n-answer" aria-live="polite"></div>
-      <div class="verdict" id="n-verdict"></div>
-    </div>
-  </div>
-  <div class="wrap" style="margin-top:46px">
-    <div class="facts num">
-      <span><b>5</b> topics</span>
-      <span><b>13</b> lessons with quizzes</span>
-      <span><b>19</b> free tools</span>
-      <span><b>$0</b> to start</span>
+    <div class="hero-art" aria-hidden="true">
+      <div class="hcard t-finance" style="--r:-6deg"><span>Finance</span><b>Runway = cash ÷ burn</b></div>
+      <div class="hcard t-marketing" style="--r:4deg"><span>Marketing</span><b>Customer worth ≥ 3× their cost</b></div>
+      <div class="hcard t-negotiation" style="--r:-3deg"><span>Negotiation</span><b>Your power is your walk-away</b></div>
+      <div class="hcard t-investors" style="--r:5deg"><span>Investors</span><b>Answer first. Then explain.</b></div>
     </div>
   </div>
 </section>
@@ -247,7 +264,33 @@
   </div>
 </section>
 
-<section class="block" id="tools">
+<section class="block tryit" id="try">
+  <div class="wrap try-in">
+    <div>
+      <span class="eyebrow">Try it in 10 seconds</span>
+      <h2 style="margin-top:10px">How many customers does your idea need?</h2>
+      <p class="lede" style="margin-top:12px">Change any number on the napkin. It works out how many customers a month you need to pay yourself, and whether that's realistic.</p>
+      <a class="btn dark" href="tools/index.html" style="margin-top:20px">See all 19 tools</a>
+    </div>
+    <div class="napkin" id="napkin" aria-label="The napkin test: a live calculator">
+      <div class="napkin-head">
+        <span class="napkin-title">the napkin test</span>
+        <span class="napkin-tag">Free tool · change any number</span>
+      </div>
+      <div class="sum">
+        <label><span>I sell it for</span><span class="field">$<input type="number" id="n-price" value="49" min="0" step="1" inputmode="decimal"></span></label>
+        <label><span>each one costs me</span><span class="field">$<input type="number" id="n-cost" value="9" min="0" step="1" inputmode="decimal"></span></label>
+        <label><span>monthly bills (tools, ads…)</span><span class="field">$<input type="number" id="n-fixed" value="400" min="0" step="10" inputmode="decimal"></span></label>
+        <label><span>I want to take home</span><span class="field">$<input type="number" id="n-goal" value="3000" min="0" step="100" inputmode="decimal"></span></label>
+        <div class="rule"></div>
+      </div>
+      <div class="answer" id="n-answer" aria-live="polite"></div>
+      <div class="verdict" id="n-verdict"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block band-dark" id="tools">
   <div class="wrap">
     <div class="section-head">
       <div>
@@ -369,21 +412,30 @@
   </div>
 </section>
 
-<section class="block">
+<section class="block band-cta" id="waitlist">
   <div class="wrap final">
     <div>
-      <h2>New courses and tools, straight to your inbox.</h2>
-      <p>Join the waitlist for the Launch course and every new tool as it ships.</p>
+      <h2>Get new lessons and tools first.</h2>
+      <p>Join the waitlist for the Launch course and every new tool.</p>
     </div>
-    <form class="wl" data-waitlist novalidate>
-      <div class="wl-row">
-        <label class="hp" aria-hidden="true">Leave this empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
-        <input type="email" name="email" id="wl-email-2" required placeholder="you@email.com" autocomplete="email" aria-label="Email address">
-        <button class="btn dark" type="submit">Join the waitlist</button>
-      </div>
-      <p class="fine">Free. No spam. Unsubscribe any time.</p>
-      <p class="msg" role="status" aria-live="polite"></p>
-    </form>
+    <form class="wl" id="join" data-waitlist novalidate>
+                <div class="wl-row">
+          <label class="hp" aria-hidden="true">Leave this empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
+          <input type="email" name="email" id="wl-email-1" required placeholder="you@email.com" autocomplete="email" aria-label="Email address">
+          <button class="btn dark" type="submit">Join the waitlist</button>
+        </div>
+        <select name="stage" id="wl-stage-1" aria-label="Where are you right now?">
+          <option value="">Where are you right now? (optional)</option>
+          <option>I have an idea, nothing built yet</option>
+          <option>I'm building it on the side</option>
+          <option>I've made my first sales</option>
+          <option>Just learning</option>
+        </select>
+        <input type="hidden" name="tier" value="">
+        <p class="tier-tag" id="tierTag"></p>
+        <p class="fine">Free. No spam, unsubscribe any time.</p>
+        <p class="msg" role="status" aria-live="polite"></p>
+      </form>
   </div>
 </section>
 </main>

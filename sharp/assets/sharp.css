@@ -13,6 +13,7 @@
   --good:#1a7a46;     --good-soft:#dcf0e3;
   --bad:#b3261e;      --bad-soft:#f8e0dd;
   --highlight:#ffe27a;--highlight-ink:#12151c;
+  --hero-bg:#0d1020; --tint:#eceffa;
   --napkin:#fbfcfc;   --napkin-fold:#e4e9ec; --napkin-dot:#e9eef1; --ballpoint:#2443b5;
   --readout:#12151c;  --readout-ink:#ffffff; --readout-dim:#a3abb9;
   --shadow:0 1px 2px rgba(18,21,28,.05),0 12px 32px -18px rgba(18,21,28,.28);
@@ -34,7 +35,8 @@
     --good:#6fd39b;     --good-soft:#163323;
     --bad:#ff8d7d;      --bad-soft:#3d1d19;
     --highlight:rgba(255,226,122,.42);--highlight-ink:#12151c;
-    --napkin:#1b2330;   --napkin-fold:#252f3e; --napkin-dot:#212a37; --ballpoint:#8ea6ff;
+      --hero-bg:#0b0d18; --tint:#131726;
+  --napkin:#1b2330;   --napkin-fold:#252f3e; --napkin-dot:#212a37; --ballpoint:#8ea6ff;
     --readout:#07090d;  --readout-ink:#ffffff; --readout-dim:#9ba4b3;
     --shadow:none; color-scheme:dark;
   }
@@ -51,6 +53,7 @@
   --good:#6fd39b;     --good-soft:#163323;
   --bad:#ff8d7d;      --bad-soft:#3d1d19;
   --highlight:rgba(255,226,122,.42);--highlight-ink:#12151c;
+  --hero-bg:#0b0d18; --tint:#131726;
   --napkin:#1b2330;   --napkin-fold:#252f3e; --napkin-dot:#212a37; --ballpoint:#8ea6ff;
   --readout:#07090d;  --readout-ink:#ffffff; --readout-dim:#9ba4b3;
   --shadow:none; color-scheme:dark;
@@ -224,3 +227,13 @@ dialog.auth::backdrop{background:rgba(10,12,16,.55)}
 .fields{align-items:end}
 .chip{align-self:flex-start;justify-self:start}
 @media (prefers-reduced-motion: reduce){ .topic:hover,.tool-card:hover{transform:none} }
+
+/* dark header on every page */
+.site-head{background:var(--hero-bg);border-bottom-color:rgba(255,255,255,.08)}
+.site-head .logo,.site-head .main-nav a{color:#fff}
+.site-head .logo svg path:first-child{fill:#fff}
+.site-head .main-nav a:hover{background:rgba(255,255,255,.1)}
+.site-head .theme{color:#fff;border-color:rgba(255,255,255,.25)}
+.site-head .signin{background:#fff;color:#0d1020;border-color:#fff}
+@media (max-width:900px){ .site-head .main-nav a{color:#fff} }
+.site-head .signin.in{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
