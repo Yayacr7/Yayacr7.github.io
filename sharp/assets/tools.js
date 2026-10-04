@@ -163,18 +163,27 @@ wire('f-spend', function(){
   // All text below is numbers and fixed wording only (no visitor-typed text), so it is safe as HTML.
   var html = '<div class="sc-sum"><div><span>Take-home pay</span><b>' + money(inc) + '</b></div><div><span>Spent + saved</span><b>' + money(total) + '</b></div><div><span>Left over</span><b class="' + (left < 0 ? 'neg' : '') + '">' + money(left) + '</b></div></div>';
   if(left < 0) html += '<p class="sc-alert"><span class="sc-ic bad" aria-hidden="true">✕</span><span><b>You spend ' + money(-left) + ' a month more than you earn.</b> Fix the red rows first.</span></p>';
-  html += '<div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Keep doing this</span><span><i class="sc-ic warn">!</i>Think about it</span><span><i class="sc-ic bad">✕</i>Cut back</span></div>';
-  html += '<ul class="sc-chart" aria-label="Your spending as a share of take-home pay">';
+  // A real chart: shared % scale with gridlines, a bar per category, and a marker for the guide amount.
+  var top = Math.max.apply(null, rows.map(function(r){ return r.share; }));
+  var max = Math.max(40, Math.ceil(top / 10) * 10), tick = max <= 50 ? 10 : max <= 100 ? 20 : 50;
+  var scale = ' style="--max:' + max + ';--tick:' + tick + '"';
+  html += '<div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Keep it</span><span><i class="sc-ic warn">!</i>Think about it</span><span><i class="sc-ic bad">✕</i>Cut back</span><span><i class="sc-mk"></i>How much you should spend</span></div>';
+  html += '<ul class="sc-chart"' + scale + ' aria-label="Your spending as a share of take-home pay, with the guide amount for each">';
   rows.forEach(function(r){
-    var S = STATUS[r.st], word = r.saving ? (r.st === 'good' ? 'Keep doing this' : r.st === 'warn' ? 'Try to save more' : 'Save more') : S.word;
-    var w = Math.min(100, r.share);
-    html += '<li class="' + S.cls + '" tabindex="0" title="' + r.name + ': ' + money(r.v) + ', ' + pct(r.share, 0) + ' of your pay. ' + word + '.">' +
+    var S = STATUS[r.st], word = r.saving ? (r.st === 'good' ? 'Keep it up' : 'Save more') : { good: 'Keep it', warn: 'Think about it', bad: 'Cut back' }[r.st];
+    var aimPct = r.saving ? 15 : r.target / inc * 100, aim = (r.saving ? 'aim ≥ ' : 'aim ≤ ') + money(r.target);
+    html += '<li class="' + S.cls + '" tabindex="0" title="' + r.name + ': ' + money(r.v) + ' (' + pct(r.share, 0) + ' of your pay). ' + (r.saving ? 'Aim for at least ' : 'Aim for at most ') + money(r.target) + '. ' + word + '.">' +
       '<span class="sc-name">' + r.name + '</span>' +
-      '<span class="sc-track"><i style="width:' + (r.v > 0 ? Math.max(1.5, w).toFixed(1) : 0) + '%"></i></span>' +
+      '<span class="sc-track"><i style="width:' + (r.v > 0 ? Math.max(.8, r.share / max * 100).toFixed(2) : 0) + '%"></i><b style="left:' + (aimPct / max * 100).toFixed(2) + '%"></b></span>' +
       '<span class="sc-val">' + money(r.v) + ' <small>' + pct(r.share, 0) + '</small></span>' +
+      '<span class="sc-aim">' + aim + '</span>' +
       '<span class="sc-st"><i class="sc-ic ' + S.cls + '" aria-hidden="true">' + S.icon + '</i><span class="sc-w">' + word + '</span></span></li>';
   });
   html += '</ul>';
+  var ticks = '';
+  for(var t = 0; t <= max; t += tick) ticks += '<span style="left:' + (t / max * 100).toFixed(2) + '%">' + t + '%</span>';
+  html += '<div class="sc-axis"' + scale + ' aria-hidden="true"><span class="sc-name"></span><span class="sc-ticks">' + ticks + '</span><span class="sc-val"></span><span class="sc-aim"></span><span class="sc-st"></span></div>';
+  html += '<p class="sc-axt" aria-hidden="true">Share of your take-home pay</p>';
   var bad = rows.filter(function(r){ return r.st === 'bad'; }), warn = rows.filter(function(r){ return r.st === 'warn'; });
   var todo = [];
   bad.concat(warn).forEach(function(r){

@@ -241,11 +241,22 @@ section.block + section.block{border-top:1px solid var(--line)}
 .sc-ic{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;font:800 .72rem/1 var(--f-body);font-style:normal;color:#0d1020;flex:none}
 .sc-ic.good{background:var(--st-good)}.sc-ic.warn{background:var(--st-warn)}.sc-ic.bad{background:var(--st-bad);color:#fff}
 .sc-chart{list-style:none;margin:0;padding:0;display:grid;gap:2px}
-.sc-chart li{display:grid;grid-template-columns:118px minmax(0,1fr) 92px 140px;align-items:center;gap:10px;padding:7px 8px;border-radius:10px;font-size:.9rem}
+.sc-chart,.sc-axis{--sc-cols:112px minmax(0,1fr) 66px 84px 132px}
+.sc-chart li{display:grid;grid-template-columns:var(--sc-cols);align-items:center;gap:10px;padding:5px 8px;border-radius:10px;font-size:.9rem}
 .sc-chart li:hover,.sc-chart li:focus{background:var(--surface-2);outline:none}
 .sc-name{font-weight:700}
-.sc-track{height:10px;background:var(--surface-2);border-radius:4px;overflow:hidden}
-.sc-track i{display:block;height:100%;border-radius:4px}
+.sc-track{position:relative;height:22px;border-left:1px solid rgba(255,255,255,.35);background-image:linear-gradient(to right,rgba(255,255,255,.09) 1px,transparent 1px);background-size:calc(100% * var(--tick) / var(--max)) 100%;box-shadow:inset -1px 0 0 rgba(255,255,255,.09)}
+.sc-track i{position:absolute;left:0;top:5px;height:12px;border-radius:0 4px 4px 0}
+.sc-track b{position:absolute;top:1px;bottom:1px;width:0;border-left:2px solid #fff;opacity:.85;transform:translateX(-1px)}
+.sc-track b::before{content:"";position:absolute;top:-3px;left:-5px;border:4px solid transparent;border-top-color:#fff}
+.sc-aim{color:var(--muted);font-size:.8rem;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+.sc-axis{display:grid;grid-template-columns:var(--sc-cols);gap:10px;padding:0 8px;margin-top:-2px}
+.sc-ticks{position:relative;height:16px;border-top:1px solid rgba(255,255,255,.35)}
+.sc-ticks span{position:absolute;top:3px;transform:translateX(-50%);font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.sc-ticks span:first-child{transform:none}
+.sc-ticks span:last-child{transform:translateX(-100%)}
+.sc-axt{margin:-4px 0 0;text-align:center;font-size:.72rem;color:var(--muted);font-weight:700;letter-spacing:.02em}
+.sc-mk{display:inline-block;width:2px;height:14px;background:#fff;opacity:.85;margin:0 4px}
 .sc-chart .good .sc-track i{background:var(--st-good)}.sc-chart .warn .sc-track i{background:var(--st-warn)}.sc-chart .bad .sc-track i{background:var(--st-bad)}
 .sc-val{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
 .sc-val small{color:var(--muted);font-weight:600}
@@ -260,5 +271,8 @@ section.block + section.block{border-top:1px solid var(--line)}
 @media (max-width:560px){
   .sc-chart li{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n v" "t t" "s s";row-gap:6px;padding:10px 8px;border-bottom:1px solid var(--line);border-radius:0}
   .sc-name{grid-area:n}.sc-val{grid-area:v}.sc-track{grid-area:t}.sc-st{grid-area:s}
+  .sc-chart li .sc-aim{display:none}
   .sc-sum b{font-size:1.1rem}
 }
+
+@media (max-width:560px){ .sc-ticks span:nth-child(even){display:none} .sc-ticks span:last-child{display:block} }
