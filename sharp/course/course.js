@@ -12,11 +12,12 @@ var OUTLINE = [
   ['m4', 'Cash: don\'t run out', 'The 13-week cash forecast'],
   ['m5', 'Negotiate your first deals', 'Suppliers, clients and partners'],
   ['m6', 'Fund it: save, borrow or raise', 'The cheapest money that does the job'],
-  ['f1', 'Negotiation script library', '14 word-for-word scripts'],
+  ['k1', 'Essential negotiation scripts', 'Price pushback, discounts, deposits, late pay'],
+  ['f1', 'The full script library', '10 more scripts for bigger deals'],
   ['f2', 'Investor pitch kit', 'Deck, emails, 30 questions, deal terms'],
   ['f3', '30-day launch plan', 'Idea to first paying customer']
 ];
-var GROUPS = { m1: 'Launch course', f1: 'Founder kits' };
+var GROUPS = { m1: 'Launch course', k1: 'Scripts & kits' };
 var sb = null, rows = null;
 function $(id){ return document.getElementById(id); }
 try{ var t = localStorage.getItem('np-theme'); if(t) document.documentElement.setAttribute('data-theme', t); }catch(e){}
@@ -26,7 +27,7 @@ try{ var t = localStorage.getItem('np-theme'); if(t) document.documentElement.se
 });
 
 function show(id){ ['st-off','st-out','st-none','st-founder','st-err'].forEach(function(s){ $(s).hidden = s !== id; }); $('moduleView').hidden = id !== 'module'; }
-function current(){ var h = location.hash.replace('#', ''); return /^(m[1-6]|f[1-3])$/.test(h) ? h : 'm1'; }
+function current(){ var h = location.hash.replace('#', ''); return /^(m[1-6]|k1|f[1-3])$/.test(h) ? h : 'm1'; }
 function have(slug){ return !!(rows && rows.some(function(r){ return r.slug === slug; })); }
 
 function renderNav(){
@@ -35,7 +36,7 @@ function renderNav(){
     if(GROUPS[o[0]]){ var gh = document.createElement('p'); gh.className = 'mods-h'; gh.textContent = GROUPS[o[0]]; nav.appendChild(gh); }
     var a = document.createElement('a'); a.className = 'mod' + (rows && !have(o[0]) ? ' locked' : ''); a.href = '#' + o[0];
     if(rows && o[0] === current()) a.setAttribute('aria-current', 'page');
-    var n = document.createElement('span'); n.className = 'n'; n.textContent = (o[0].charAt(0) === 'f' ? 'F' : '') + o[0].slice(1);
+    var n = document.createElement('span'); n.className = 'n'; n.textContent = o[0].charAt(0) === 'm' ? o[0].slice(1) : o[0] === 'k1' ? 'S' : 'F' + o[0].slice(1);
     var tx = document.createElement('span'); var b = document.createElement('b'); b.textContent = o[1]; var sm = document.createElement('small'); sm.textContent = o[2];
     tx.appendChild(b); tx.appendChild(sm); a.appendChild(n); a.appendChild(tx); nav.appendChild(a);
   });
@@ -48,7 +49,7 @@ function renderModule(){
   if(!row){ show(slug.charAt(0) === 'f' && have('m2') ? 'st-founder' : 'st-none'); return; }
   var idx = OUTLINE.map(function(o){ return o[0]; }).indexOf(slug), view = $('moduleView');
   view.textContent = '';
-  var eb = document.createElement('span'); eb.className = 'eyebrow'; eb.textContent = slug.charAt(0) === 'f' ? 'Founder kit ' + slug.slice(1) + ' of 3' : 'Module ' + slug.slice(1) + ' of 6'; view.appendChild(eb);
+  var eb = document.createElement('span'); eb.className = 'eyebrow'; eb.textContent = slug === 'k1' ? 'Scripts 1 to 4 of 14' : slug.charAt(0) === 'f' ? 'Founder kit ' + slug.slice(1) + ' of 3' : 'Module ' + slug.slice(1) + ' of 6'; view.appendChild(eb);
   var h = document.createElement('h1'); h.textContent = row.title; view.appendChild(h);
   var body = document.createElement('div');
   // Module HTML is written by the site owner and stored where only the owner can edit it.
