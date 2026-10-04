@@ -107,6 +107,30 @@ var QUIZZES = {
     {type:'mc', q:'Which is a vanity number?', c:['Revenue per subscriber','Profit after ad spend','Number of likes on a post','Customer payback in months'], a:2,
       e:'Likes feel good but don\'t pay bills. Track what turns into sign-ups and sales.'}
   ],
+  'mkt-words': [
+    {type:'mc', q:'Which headline is strongest?', c:['"Welcome to our website"','"Innovative solutions for you"','"Raise your maths grade in 6 weeks"','"We are the best!"'], a:2,
+      e:'It says the result and the time. Specific beats clever.'},
+    {type:'mc', q:'What are the four parts of a message that sells?', c:['Logo, colours, font, photo','Problem, promise, proof, ask','Price, discount, deadline, bonus','Hello, story, thanks, goodbye'], a:1,
+      e:'Name the problem, promise the result, prove it, then ask for one clear next step.'},
+    {type:'mc', q:'Which button text is best?', c:['Submit','Click here','Get my free plan','Learn more about our many offerings'], a:2,
+      e:'Start with a verb and say what they get.'},
+    {type:'mc', q:'Where does the best marketing wording usually come from?', c:['A thesaurus','Your competitors','Your customers\' own words','Long, impressive words'], a:2,
+      e:'Customers say their problem in the words other customers use. Write those down and reuse them.'},
+    {type:'mc', q:'Is it OK to write a few fake 5-star reviews to get started?', c:['Yes, everyone does it','Only if they sound real','No: it destroys trust and can break the law','Only on social media'], a:2,
+      e:'Fake reviews can break US consumer-protection law and ruin trust. Small, real proof is better.'}
+  ],
+  'mkt-social': [
+    {type:'mc', q:'You\'re starting out with little time. How many social platforms should you focus on?', c:['All of them','One, where your customers already are','None','Whichever is newest'], a:1,
+      e:'One platform done well beats four done badly.'},
+    {type:'mc', q:'What is the job of a hook?', c:['To end the video','To stop people scrolling in the first two seconds','To list your prices','To thank followers'], a:1,
+      e:'If the first two seconds don\'t earn attention, nobody sees the rest.'},
+    {type:'mc', q:'Which number best shows a post is helping your business?', c:['Likes','Clicks to your site and email sign-ups','Follower count','Number of hashtags'], a:1,
+      e:'Likes feel good. Clicks and sign-ups move people towards buying.'},
+    {type:'mc', q:'Why move followers onto an email list?', c:['Emails look more professional','A platform can change its rules or close your account; your list is yours','It\'s required by law','Emails are always opened'], a:1,
+      e:'You don\'t own your followers. You do own your email list.'},
+    {type:'num', q:'A post gets 2,000 views and 30 people click your link. What is the click rate in %?', a:1.5, tol:0.01, unit:'%',
+      e:'30 ÷ 2,000 = 0.015 = 1.5%.'}
+  ],
   money: [
     {type:'mc', q:'You have a $4,000 credit card balance at 24% APR and $4,000 in savings beyond your emergency fund. What usually makes the most financial sense?',
       c:['Invest the $4,000 in an index fund','Pay off the credit card','Keep the cash and pay the minimum','Split it 50/50'], a:1,
@@ -203,8 +227,8 @@ var progress = load('mds-progress', {});
 function el(tag, attrs, html){ var n = document.createElement(tag); if(attrs) for(var k in attrs) n.setAttribute(k, attrs[k]); if(html != null) n.innerHTML = html; return n; }
 function fmt(n, d){ return Number(n).toLocaleString(undefined, {minimumFractionDigits:d||0, maximumFractionDigits:d||0}); }
 
-var LESSON_ORDER = ['money','investing','funding','business','statements','mkt-basics','mkt-channels','mkt-measure','negotiation','scripts','persuasion','pitching','pressure'];
-var TOPIC_LESSONS = { finance: ['money','investing','funding'], business: ['business','statements'], marketing: ['mkt-basics','mkt-channels','mkt-measure'], negotiation: ['negotiation','scripts','persuasion'], investors: ['pitching','pressure'] };
+var LESSON_ORDER = ['money','investing','funding','business','statements','mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social','negotiation','scripts','persuasion','pitching','pressure'];
+var TOPIC_LESSONS = { finance: ['money','investing','funding'], business: ['business','statements'], marketing: ['mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social'], negotiation: ['negotiation','scripts','persuasion'], investors: ['pitching','pressure'] };
 function updateProgressUI(){
   var passed = QUIZ_IDS.filter(function(id){ return progress[id] && progress[id].passed; }).length;
   var total = QUIZ_IDS.length;
