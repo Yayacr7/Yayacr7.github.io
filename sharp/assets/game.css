@@ -1,0 +1,47 @@
+/* Sharp game layer styles. Works on pages using sharp.css (--surface/--accent)
+   and on the courses page (--card/--note) through fallbacks. */
+.g-hud{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);padding:5px 12px 5px 5px;border:1px solid var(--line,var(--rule));border-radius:999px;background:var(--surface,var(--card));font:700 .82rem var(--f-body);white-space:nowrap}
+.g-hud:hover{border-color:var(--ink)}
+.g-lvl{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent,var(--note)),var(--investors));color:#fff;font:800 .85rem var(--f-display)}
+.g-hud-mid{display:grid;gap:3px;min-width:84px}
+.g-hud-mid small{font:700 .7rem var(--f-body);color:var(--muted);letter-spacing:.02em}
+.g-track{height:6px;border-radius:3px;background:var(--surface-2,var(--paper-2));overflow:hidden}
+.g-fill{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,var(--accent,var(--note)),var(--investors));transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.g-streak{display:inline-flex;align-items:center;gap:3px;color:var(--marketing)}
+.g-streak svg{width:16px;height:16px}
+@media (max-width:560px){ .g-hud-mid{display:none} .g-hud{padding-right:10px} }
+
+/* toasts */
+.g-toasts{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:80;display:grid;gap:8px;justify-items:center;pointer-events:none}
+.g-toast{display:flex;align-items:baseline;gap:8px;background:var(--ink);color:var(--surface,var(--card));padding:10px 16px;border-radius:999px;box-shadow:0 14px 30px -12px rgba(0,0,0,.5);animation:g-pop .35s cubic-bezier(.2,1.4,.4,1) both}
+.g-toast b{font:800 1rem var(--f-display);color:var(--highlight,var(--gold-soft))}
+.g-toast span{font:600 .88rem var(--f-body)}
+.g-toast.bump{animation:g-bump .3s ease-out}
+@keyframes g-bump{50%{transform:scale(1.08)}}
+.g-toast.out{opacity:0;transform:translateY(10px);transition:all .35s}
+@keyframes g-pop{from{opacity:0;transform:translateY(16px) scale(.9)}to{opacity:1;transform:none}}
+.g-confetti{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:90}
+
+/* badge popup */
+.g-modal{position:fixed;inset:0;z-index:85;display:grid;place-items:center;background:rgba(10,12,16,.55);padding:16px}
+.g-modal-card{background:var(--surface,var(--card));color:var(--ink);border-radius:22px;padding:30px 28px 24px;max-width:340px;width:100%;text-align:center;display:grid;gap:8px;justify-items:center;animation:g-pop .4s cubic-bezier(.2,1.4,.4,1) both}
+.g-modal-card h2{font:800 1.7rem var(--f-display);margin:0}
+.g-modal-card p{margin:0;color:var(--muted)}
+.g-kicker{font:700 .74rem var(--f-body)!important;text-transform:uppercase;letter-spacing:.14em;color:var(--accent,var(--note))!important;margin-top:8px!important}
+.g-btn{margin-top:12px;font:700 1rem var(--f-body);padding:11px 26px;border-radius:12px;border:0;background:var(--ink);color:var(--surface,var(--card));cursor:pointer}
+
+/* medals and badge shelf */
+.g-medal{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--surface-2,var(--paper-2));color:var(--muted);border:2px dashed var(--line,var(--rule));flex:none}
+.g-medal.earned{background:var(--t);color:#fff;border:3px solid var(--ts);box-shadow:0 8px 20px -10px var(--t)}
+.g-medal.big{width:88px;height:88px}
+.g-badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.g-badge{display:grid;justify-items:center;text-align:center;gap:6px;padding:16px 10px;border-radius:16px;background:var(--surface,var(--card));border:1px solid var(--line,var(--rule))}
+.g-badge b{font:700 .95rem var(--f-display)}
+.g-badge span{font-size:.8rem;color:var(--muted);line-height:1.35}
+.g-badge:not(.earned) b{color:var(--muted)}
+.t-finance{--t:var(--finance);--ts:var(--finance-soft)}
+.t-business{--t:var(--business);--ts:var(--business-soft)}
+.t-marketing{--t:var(--marketing);--ts:var(--marketing-soft)}
+.t-negotiation{--t:var(--negotiation);--ts:var(--negotiation-soft)}
+.t-investors{--t:var(--investors);--ts:var(--investors-soft)}
+@media (prefers-reduced-motion: reduce){ .g-toast,.g-modal-card{animation:none} .g-fill{transition:none} }

@@ -19,6 +19,7 @@ function result(k, big, lines, verdict){
 function wire(formId, fn){
   var f = $(formId); if(!f) return;
   f.addEventListener('input', fn); f.addEventListener('change', fn);
+  f.addEventListener('input', function(){ if(window.SharpGame) window.SharpGame.tool(formId); }, { once: true });
   f.addEventListener('submit', function(e){ e.preventDefault(); });
   fn();
 }
@@ -302,6 +303,7 @@ if(dirSel) dirSel.addEventListener('change', function(){
   Array.prototype.forEach.call(document.querySelectorAll('[data-rate]'), function(b){
     b.addEventListener('click', function(){
       var r = b.getAttribute('data-rate'); tally[r]++;
+      if(r === 'nailed' && window.SharpGame) window.SharpGame.drill();
       if(r !== 'nailed' && cur) deck.splice(Math.min(deck.length, 3), 0, cur);
       $('dr-tally').textContent = 'This session: ' + tally.nailed + ' nailed · ' + tally.shaky + ' shaky · ' + tally.again + ' to practise again';
       next();

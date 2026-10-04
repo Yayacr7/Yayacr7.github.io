@@ -223,3 +223,4 @@ dialog.auth::backdrop{background:rgba(10,12,16,.55)}
 .fields.wide{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .fields{align-items:end}
 .chip{align-self:flex-start;justify-self:start}
+@media (prefers-reduced-motion: reduce){ .topic:hover,.tool-card:hover{transform:none} }

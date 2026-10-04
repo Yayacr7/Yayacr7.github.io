@@ -196,108 +196,140 @@ function fmt(n, d){ return Number(n).toLocaleString(undefined, {minimumFractionD
 function updateProgressUI(){
   var passed = QUIZ_IDS.filter(function(id){ return progress[id] && progress[id].passed; }).length;
   var total = QUIZ_IDS.length;
-  document.getElementById('progressPill').textContent = passed + '/' + total + ' passed';
-  document.getElementById('meterText').textContent = passed + '/' + total;
-  document.getElementById('meterFill').style.width = (passed / total * 100) + '%';
-  var serial = document.getElementById('serial');
-  if(serial) serial.textContent = passed === total ? 'All ' + total + ' lessons passed ✓' : passed + ' of ' + total + ' lessons passed';
+  var set = function(id, v){ var e = document.getElementById(id); if(e) e.textContent = v; };
+  set('progressPill', passed + '/' + total + ' passed');
+  set('meterText', passed + '/' + total);
+  var mf = document.getElementById('meterFill'); if(mf) mf.style.width = (passed / total * 100) + '%';
   QUIZ_IDS.forEach(function(id){
     var rec = progress[id] || {};
-    var t = document.querySelector('[data-tick="' + id + '"]');
-    if(t) t.textContent = rec.passed ? '✓' : '';
-    var c = document.querySelector('[data-chip="' + id + '"]');
-    if(c){
-      c.textContent = rec.passed ? 'Passed · ' + rec.best + '%' : (rec.best != null ? 'Best ' + rec.best + '%' : 'Not started');
-      c.classList.toggle('done', !!rec.passed);
+    var t = document.querySelector('[data-tick="' + id + '"]'); if(t) t.textContent = rec.passed ? '✓' : '';
+  });
+  // learning path
+  var G = window.SharpGame, order = G ? G.ALL : QUIZ_IDS, next = null;
+  order.forEach(function(id){
+    var rec = progress[id] || {}, node = document.querySelector('[data-node="' + id + '"]');
+    var done = !!rec.passed;
+    if(!done && !next) next = id;
+    if(node){
+      node.classList.toggle('done', done);
+      node.classList.toggle('next', id === next);
+      var st = document.querySelector('[data-node-s="' + id + '"]');
+      if(st) st.textContent = done ? 'Passed · ' + rec.best + '%' : id === next ? 'Start here' : (rec.best != null ? 'Best ' + rec.best + '%' : st.getAttribute('data-min') || st.textContent);
     }
   });
+  if(G) Object.keys(G.TOPICS).forEach(function(k){
+    var c = document.querySelector('[data-world="' + k + '"]'); if(!c) return;
+    var ls = G.TOPICS[k]; c.textContent = ls.filter(function(l){ return progress[l] && progress[l].passed; }).length + '/' + ls.length;
+  });
+  var ring = document.getElementById('ringFg'); if(ring) ring.style.strokeDashoffset = (314.16 * (1 - passed / total)).toFixed(1);
+  set('ringNum', passed);
+  var cont = document.getElementById('continueBtn');
+  if(cont){
+    if(next){ var idx = order.indexOf(next) + 1, nav = document.querySelector('nav.side a[data-page="' + next + '"]');
+      cont.href = '#' + next; cont.textContent = (passed ? 'Continue: ' : 'Start: ') + 'Lesson ' + idx + (nav ? ' · ' + nav.childNodes[1].textContent : '') + ' →'; }
+    else { cont.href = '#money'; cont.textContent = 'All passed. Review any lesson →'; }
+  }
+  if(G){ var bc = document.getElementById('badgeCount'); if(bc) bc.textContent = Object.keys(G.state().badges).length; }
 }
+document.querySelectorAll('[data-node-s]').forEach(function(e){ e.setAttribute('data-min', e.textContent); });
+if(window.SharpGame) window.SharpGame.onChange(function(){ updateProgressUI(); });
 
 function buildQuiz(container){
   var id = container.getAttribute('data-quiz');
   var qs = QUIZZES[id]; if(!qs) return;
-  container.appendChild(el('span', {'class':'eyebrow'}, 'Practice')); container.appendChild(el('h2', null, 'Check your work'));
-  container.appendChild(el('p', {'class':'muted'}, 'Answer each, then press <strong>Check answers</strong>. 80% or more marks this lesson as passed.'));
+  container.appendChild(el('span', {'class':'eyebrow'}, 'Practice'));
+  container.appendChild(el('h2', null, 'Check your work'));
+  container.appendChild(el('p', {'class':'muted'}, 'Instant feedback on every answer, +10 XP for each one you get right. Score 80% to pass the lesson.'));
   var best = progress[id] && progress[id].best;
   if(best != null) container.appendChild(el('p', {'class':'muted'}, 'Your best so far: ' + best + '%'));
+  var dots = el('div', {'class':'qdots', 'aria-hidden':'true'});
+  qs.forEach(function(){ dots.appendChild(el('i')); });
+  container.appendChild(dots);
 
+  var results = [], boxes = [];
   qs.forEach(function(q, i){
     var box = el('div', {'class':'q'});
-    box.appendChild(el('div', {'class':'prompt'}, '<span class="qn">Q' + String(i+1).padStart(2,'0') + '</span><span>' + q.q + '</span>'));
+    box.appendChild(el('div', {'class':'prompt'}, '<span class="qn">Q' + (i+1) + '</span><span>' + q.q + '</span>'));
     if(q.type === 'mc'){
       q.c.forEach(function(choice, j){
         var lab = el('label', {'class':'opt'});
         var inp = el('input', {type:'radio', name:id + '-' + i, value:String(j)});
+        inp.addEventListener('change', function(){ grade(i, j); });
         lab.appendChild(inp); lab.appendChild(el('span', null, choice));
         box.appendChild(lab);
       });
     } else {
       var row = el('div', {'class':'numrow'});
       if(q.unit === '$') row.appendChild(el('span', null, '$'));
-      row.appendChild(el('input', {type:'number', step:'any', inputmode:'decimal', 'aria-label':'Your answer', name:id + '-' + i}));
+      var ni = el('input', {type:'number', step:'any', inputmode:'decimal', 'aria-label':'Your answer', name:id + '-' + i});
+      row.appendChild(ni);
       if(q.unit && q.unit !== '$') row.appendChild(el('span', {'class':'muted'}, q.unit));
+      var cb = el('button', {type:'button', 'class':'btn'}, 'Check');
+      row.appendChild(cb);
+      var go = function(){ var raw = ni.value.replace(/,/g,'').trim(); if(raw === '' || isNaN(Number(raw))){ ni.focus(); return; } grade(i, Number(raw)); };
+      cb.addEventListener('click', go);
+      ni.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); go(); } });
       box.appendChild(row);
     }
-    box.appendChild(el('div', {'class':'fb'}));
-    container.appendChild(box);
+    box.appendChild(el('div', {'class':'fb', 'aria-live':'polite'}));
+    container.appendChild(box); boxes.push(box);
   });
 
-  var btns = el('div', {'class':'btnrow'});
-  var check = el('button', {type:'button', 'class':'btn'}, 'Check answers');
-  var reset = el('button', {type:'button', 'class':'btn ghost'}, 'Try again');
-  btns.appendChild(check); btns.appendChild(reset);
-  container.appendChild(btns);
   var result = el('div', {'class':'result'});
   var scoreEl = el('div', {'class':'score', 'aria-live':'polite'});
-  var stampEl = el('div', {'class':'stamp', 'aria-hidden':'true'});
-  stampEl.hidden = true;
+  var stampEl = el('div', {'class':'stamp', 'aria-hidden':'true'}); stampEl.hidden = true;
   result.appendChild(scoreEl); result.appendChild(stampEl);
   container.appendChild(result);
+  var btns = el('div', {'class':'btnrow'});
+  var reset = el('button', {type:'button', 'class':'btn ghost'}, 'Try again');
+  reset.hidden = true; btns.appendChild(reset); container.appendChild(btns);
 
-  var boxes = container.querySelectorAll('.q');
-
-  check.addEventListener('click', function(){
-    var right = 0, blank = 0;
-    qs.forEach(function(q, i){
-      var box = boxes[i], fb = box.querySelector('.fb'), ok = false, answered = true, correctText;
-      if(q.type === 'mc'){
-        var sel = box.querySelector('input:checked');
-        if(!sel) answered = false; else ok = Number(sel.value) === q.a;
-        correctText = q.c[q.a];
-      } else {
-        var raw = box.querySelector('input').value.replace(/,/g,'').trim();
-        if(raw === '' || isNaN(Number(raw))) answered = false;
-        else ok = Math.abs(Number(raw) - q.a) <= q.tol;
-        correctText = (q.unit === '$' ? '$' : '') + fmt(q.a, q.a % 1 ? 2 : 0) + (q.unit && q.unit !== '$' ? ' ' + q.unit : '');
-      }
-      if(!answered) blank++;
-      if(ok) right++;
-      fb.className = 'fb show ' + (ok ? 'ok' : 'no');
-      fb.innerHTML = ok ? '<strong>Correct.</strong> ' + q.e
-        : '<strong>' + (answered ? 'Not quite.' : 'No answer.') + '</strong> Answer: ' + correctText + '. ' + q.e;
-    });
-    var pct = Math.round(right / qs.length * 100);
-    var passed = pct >= 80;
-    var msg = 'Score: ' + right + '/' + qs.length + ' (' + pct + '%). ';
-    msg += passed ? 'Passed ✓' : 'Not yet — reread the explanations above, then try again.';
-    if(blank) msg += ' (' + blank + ' left blank)';
-    scoreEl.textContent = msg;
+  function grade(i, val){
+    if(results[i] != null) return;
+    var q = qs[i], box = boxes[i], fb = box.querySelector('.fb'), ok, correctText;
+    if(q.type === 'mc'){
+      ok = val === q.a; correctText = q.c[q.a];
+      box.querySelectorAll('label.opt').forEach(function(l, j){ if(j === q.a) l.classList.add('right'); else if(j === val) l.classList.add('wrong'); });
+    } else {
+      ok = Math.abs(val - q.a) <= q.tol;
+      correctText = (q.unit === '$' ? '$' : '') + fmt(q.a, q.a % 1 ? 2 : 0) + (q.unit && q.unit !== '$' ? ' ' + q.unit : '');
+    }
+    results[i] = ok;
+    box.classList.add(ok ? 'is-ok' : 'is-no', 'locked');
+    box.querySelectorAll('input,button').forEach(function(x){ x.disabled = true; });
+    dots.children[i].className = ok ? 'ok' : 'no';
+    fb.className = 'fb show ' + (ok ? 'ok' : 'no');
+    fb.innerHTML = ok ? '<strong>Correct.</strong> ' + q.e : '<strong>Not quite.</strong> Answer: ' + correctText + '. ' + q.e;
+    if(ok && window.SharpGame && window.SharpGame.correct(id + ':' + i)){
+      var pop = el('span', {'class':'xp-pop', 'aria-hidden':'true'}, '+10 XP'); box.appendChild(pop); setTimeout(function(){ pop.remove(); }, 1500);
+    }
+    if(results.filter(function(r){ return r != null; }).length === qs.length) finish();
+  }
+  function finish(){
+    var right = results.filter(Boolean).length, pct = Math.round(right / qs.length * 100), passed = pct >= 80;
+    scoreEl.textContent = 'Score: ' + right + '/' + qs.length + ' (' + pct + '%). ' + (passed ? 'Passed ✓' : 'Not yet. Reread the explanations, then try again.');
     stampEl.className = 'stamp ' + (passed ? 'pass' : 'review');
     stampEl.innerHTML = (passed ? 'Passed' : 'Review') + '<small>' + right + ' / ' + qs.length + ' correct</small>';
-    stampEl.hidden = false;
-    void stampEl.offsetWidth; stampEl.classList.add('hit');
+    stampEl.hidden = false; void stampEl.offsetWidth; stampEl.classList.add('hit');
+    reset.hidden = false;
     var prev = progress[id] || {};
     progress[id] = {best: Math.max(prev.best || 0, pct), passed: !!(prev.passed || passed)};
     save('mds-progress', progress);
+    if(passed && window.SharpGame) window.SharpGame.passLesson(id, pct);
     updateProgressUI();
-  });
-
+    result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
   reset.addEventListener('click', function(){
-    container.querySelectorAll('input[type=radio]').forEach(function(r){ r.checked = false; });
-    container.querySelectorAll('input[type=number]').forEach(function(r){ r.value = ''; });
-    container.querySelectorAll('.fb').forEach(function(f){ f.className = 'fb'; f.innerHTML = ''; });
-    scoreEl.textContent = '';
-    stampEl.hidden = true;
+    results = [];
+    boxes.forEach(function(box){
+      box.className = 'q';
+      box.querySelectorAll('input').forEach(function(x){ x.disabled = false; if(x.type === 'radio') x.checked = false; else x.value = ''; });
+      box.querySelectorAll('button').forEach(function(x){ x.disabled = false; });
+      box.querySelectorAll('label.opt').forEach(function(l){ l.classList.remove('right', 'wrong'); });
+      var fb = box.querySelector('.fb'); fb.className = 'fb'; fb.innerHTML = '';
+    });
+    Array.prototype.forEach.call(dots.children, function(d){ d.className = ''; });
+    scoreEl.textContent = ''; stampEl.hidden = true; reset.hidden = true;
   });
 }
 
@@ -312,6 +344,7 @@ function calc(id, fn){
     out.innerHTML = fn(v);
   }
   root.addEventListener('input', run); run();
+  root.addEventListener('input', function(){ if(window.SharpGame) window.SharpGame.tool('learn-' + id); }, { once: true });
 }
 calc('c-compound', function(v){
   var n = Math.round(v.y * 12), r = v.r / 100 / 12, fv;

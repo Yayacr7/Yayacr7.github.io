@@ -8,6 +8,7 @@
 <script src="early.js"></script>
 <title>Sharp Courses</title>
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/game.css">
 <meta name="description" content="Plain-English lessons on personal finance, business finance and negotiation — with calculators, practice problems that check your work, and ready-to-use AI prompts.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -333,30 +334,96 @@ nav.side .group{display:flex;align-items:center;gap:7px}
 .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
 .dot.t-finance{background:var(--finance)} .dot.t-business{background:var(--business)} .dot.t-marketing{background:var(--marketing)} .dot.t-negotiation{background:var(--negotiation)}
 .formula{background-image:none}
+
+/* ---- Sharp game skin ---- */
+.site-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+.head-in{display:flex;align-items:center;gap:14px;max-width:1220px;margin:0 auto;padding:10px 20px}
+.brand{font-size:1.3rem}
+.icon-btn{padding:8px 10px;line-height:0}
+nav.side{top:calc(env(safe-area-inset-top,0px) + 66px);max-height:calc(100vh - 66px)}
+.eyebrow,nav.side .group,nav.side a .n,.meter-label,.progress-pill,th,.chip,.q .prompt .qn,.score,.stamp small,.callout b:first-child,.calc label,.zopa .tick-l{font-family:var(--f-body)!important}
+.callout b:first-child{font-weight:700}
+#start{max-width:none}
+.dash{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:center;background:var(--card);border:1px solid var(--rule);border-radius:24px;padding:30px 32px;box-shadow:var(--shadow);
+  background-image:radial-gradient(circle at 100% 0,var(--investors-soft),transparent 40%),radial-gradient(circle at 0 100%,var(--finance-soft),transparent 45%)}
+.dash h1{font-size:clamp(2.2rem,5vw,3.2rem);margin:8px 0 10px}
+.dash h1 em{font-style:normal;color:var(--note)}
+.lvl-row{display:flex;align-items:center;gap:14px;margin:22px 0 18px;max-width:440px}
+.lvl-big{width:54px;height:54px;font-size:1.5rem;flex:none}
+.lvl-info{flex:1;display:grid;gap:6px;font-weight:700}
+.lvl-info small{color:var(--muted);font-weight:600}
+.lvl-info .g-track{height:10px;border-radius:5px}
+.dash-stats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+.dash-stats div{background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:10px 16px;display:grid}
+.dash-stats b{font:800 1.5rem var(--f-display);line-height:1.1}
+.dash-stats span{font-size:.8rem;color:var(--muted);font-weight:600}
+.btn.go{font-size:1.05rem;padding:13px 22px;background:var(--note);border-color:var(--note);color:var(--note-ink);box-shadow:0 5px 0 rgba(0,0,0,.18)}
+.btn.go:hover{transform:translateY(-1px)}
+.dash-ring{position:relative;display:grid;place-items:center}
+.ring-bg{fill:none;stroke:var(--paper-2);stroke-width:12}
+.ring-fg{fill:none;stroke:var(--note);stroke-width:12;stroke-linecap:round;transform:rotate(-90deg);transform-origin:60px 60px;stroke-dasharray:314.16;stroke-dashoffset:314.16;transition:stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1)}
+.ring-txt{position:absolute;display:grid;justify-items:center}
+.ring-txt b{font:800 2.4rem/1 var(--f-display)}
+.ring-txt span{font-size:.8rem;color:var(--muted);font-weight:600}
+.path-h{margin:44px 0 16px}
+.worlds{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.world{background:var(--card);border:1px solid var(--rule);border-radius:22px;padding:20px 18px 18px;display:flex;flex-direction:column;gap:14px;border-top:5px solid var(--t)}
+.world-h{display:flex;align-items:center;gap:12px}
+.world-ic{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--ts);color:var(--t);flex:none}
+.world-h h3{margin:0;font-size:1.2rem}
+.world-h p{margin:0;font-size:.85rem;color:var(--muted)}
+.world-count{margin-left:auto;font:800 .9rem var(--f-display);color:var(--t);background:var(--ts);padding:4px 10px;border-radius:999px}
+.path{position:relative;display:grid;gap:16px;justify-items:center;padding:4px 0}
+.path::before{content:"";position:absolute;top:34px;bottom:44px;left:50%;border-left:3px dashed var(--rule);transform:translateX(-1.5px)}
+.node{position:relative;z-index:1;display:grid;justify-items:center;gap:4px;text-decoration:none;color:var(--ink);text-align:center}
+.node-c{display:grid;place-items:center;width:66px;height:66px;border-radius:50%;background:var(--card);border:3px solid var(--rule);box-shadow:0 5px 0 var(--rule);font:800 1.35rem var(--f-display);color:var(--muted);transition:transform .15s}
+.node:hover .node-c{transform:translateY(-2px)}
+.node-ok{display:none}
+.node-l{font-weight:700;font-size:.93rem;max-width:190px;line-height:1.25;background:var(--card);padding:0 4px}
+.node-s{font-size:.78rem;color:var(--muted);font-weight:600;background:var(--card);padding:0 4px}
+.node.done .node-c{background:var(--t);border-color:var(--t);color:#fff;box-shadow:0 5px 0 var(--ts)}
+.node.done .node-n{display:none}
+.node.done .node-ok{display:block}
+.node.done .node-s{color:var(--t)}
+.node.next .node-c{border-color:var(--t);color:var(--t);box-shadow:0 5px 0 var(--t);animation:node-pulse 1.8s ease-in-out infinite}
+.node.next .node-s{color:var(--t);font-weight:800}
+@keyframes node-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.world-tool{margin-top:auto;font-weight:700;font-size:.9rem;color:var(--t);text-decoration:none;text-align:center;padding:9px;border-radius:12px;background:var(--ts)}
+/* instant-feedback quizzes */
+.qdots{display:flex;gap:6px;margin:4px 0 14px}
+.qdots i{width:28px;height:8px;border-radius:4px;background:var(--paper-2)}
+.qdots i.ok{background:var(--good)} .qdots i.no{background:var(--bad)}
+.q{position:relative;transition:border-color .2s}
+.q.is-ok{border-color:var(--good)} .q.is-no{border-color:var(--bad)}
+.q.locked label.opt{cursor:default}
+.q.locked label.opt.right{border-color:var(--good);background:var(--good-soft)}
+.q.locked label.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.q.locked label.opt:not(.right):not(.wrong){opacity:.6}
+.q .numrow .btn{padding:8px 14px}
+.xp-pop{position:absolute;right:14px;top:10px;font:800 1rem var(--f-display);color:var(--good);animation:xp-up 1.4s ease-out forwards;pointer-events:none}
+@keyframes xp-up{0%{opacity:0;transform:translateY(8px)}15%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0;transform:translateY(-14px)}}
+@media (max-width:860px){
+  .head-in{padding:10px 16px;gap:10px}
+  .dash{grid-template-columns:1fr;padding:24px 20px}
+  .dash-ring{order:-1;justify-self:start}
+  .dash-ring svg{width:110px;height:110px}
+  .ring-txt b{font-size:1.8rem}
+  nav.side{top:auto}
+}
+@media (prefers-reduced-motion: reduce){ .node.next .node-c{animation:none} .xp-pop{animation:none;opacity:0} .ring-fg{transition:none} }
 </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="bar">
-    <a class="brand" href="../index.html"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 28 16 4l11 24z" fill="var(--ink)"/><path d="M12.6 11.4 16 4l3.4 7.4z" fill="var(--note)"/></svg>Sharp <i>courses</i></a>
-    <nav class="top-links" aria-label="Main"><a href="../learn/index.html" aria-current="page">Courses</a><a href="../tools/index.html">Tools</a><a href="../index.html#pricing">Pricing</a><a href="../trial/index.html">Free trial</a></nav>
+<header class="site-head">
+  <div class="head-in">
+    <a class="brand" href="../index.html"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 28 16 4l11 24z" fill="var(--ink)"/><path d="M12.6 11.4 16 4l3.4 7.4z" fill="var(--note)"/></svg>Sharp</a>
+    <nav class="top-links" aria-label="Main"><a href="index.html" aria-current="page">Courses</a><a href="../tools/index.html">Tools</a><a href="../index.html#pricing">Pricing</a><a href="../trial/index.html">Free trial</a></nav>
     <div class="spacer"></div>
-    <span class="progress-pill" id="progressPill">0/7 passed</span>
-    <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch between light and dark">Light / Dark</button>
+    <a class="g-hud" href="#start" aria-label="Your level and XP"><span class="g-lvl" data-g="levelnum">1</span><span class="g-hud-mid"><small><span data-g="level">Rookie</span> · <span data-g="xp">0 XP</span></small><span class="g-track"><span class="g-fill" data-g="bar"></span></span></span><span class="g-streak"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c1 3 4 4.5 4 8.5a4 4 0 0 1-8 0c0-1.6.7-2.8 1.6-3.7.2 1.4 1 2.2 1.9 2.2 0-2.6-.5-4.7.5-7z"/></svg><span data-g="streak">0</span></span></a>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch between light and dark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="display:block"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
+    <span id="progressPill" hidden></span>
   </div>
-  <div class="ticker" aria-label="Key rules"><div class="ticker-track" id="tickerTrack">
-    <span>Rule of 72 <b>72 ÷ 8% = 9 yrs to double</b></span>
-    <span>1% fee on $100k <b>−$187k over 30 yrs</b></span>
-    <span>24% APR card <b>debt doubles in ~3 yrs</b></span>
-    <span>Margin ≠ markup <b>40% vs 66.7%</b></span>
-    <span>Break-even <b>fixed ÷ (price − variable)</b></span>
-    <span>Profit ≠ cash <b>watch the bank balance</b></span>
-    <span>LTV : CAC <b>aim for 3 : 1</b></span>
-    <span>BATNA <b>your power is your alternative</b></span>
-    <span>Concessions <b>trade, never give</b></span>
-    <span>Assets <b>= liabilities + equity</b></span>
-  </div></div>
 </header>
 
 <div class="layout">
@@ -392,60 +459,79 @@ nav.side .group{display:flex;align-items:center;gap:7px}
 
 <!-- ============ START ============ -->
 <section class="page" id="start">
-  <div class="note"><div class="note-inner">
-    <div class="note-content">
-      <span class="eyebrow">Free courses · 5 topics · 13 lessons</span>
+  <div class="dash">
+    <div class="dash-main">
+      <span class="eyebrow">Your learning path</span>
       <h1>Business, made <em>simple.</em></h1>
-      <p>Finance, marketing, negotiation and pitching investors, explained in plain English. Every lesson starts with a 30-second version, and you can tap any <span class="term-demo">underlined word</span> to see what it means.</p>
-      <div class="cta"><a class="btn" href="#money">Start lesson 01</a><a class="btn ghost" href="#calculators">Open the calculators</a></div>
-      <span class="serial" id="serial">0 of 13 lessons passed</span>
+      <p class="lede">Short lessons, instant feedback, and XP for every right answer. Pass lessons to light up your path and unlock badges.</p>
+      <div class="lvl-row">
+        <span class="g-lvl lvl-big" data-g="levelnum">1</span>
+        <div class="lvl-info"><div><b data-g="level">Rookie</b> · <span data-g="xp">0 XP</span></div><div class="g-track"><span class="g-fill" data-g="bar"></span></div><small data-g="tonext"></small></div>
+      </div>
+      <div class="dash-stats">
+        <div><b data-g="passed">0</b><span>lessons passed</span></div>
+        <div><b data-g="streak">0</b><span>day streak</span></div>
+        <div><b id="badgeCount">0</b><span>badges</span></div>
+      </div>
+      <a class="btn go" id="continueBtn" href="#money">Start lesson 1 →</a>
     </div>
-  </div></div>
-
-  <div class="callout honest">
-    <b>Straight talk</b>
-    <p>This site covers the <em>foundations</em>: the ideas that do most of the work in everyday money and business decisions. It is <strong>not</strong> "everything there is to know about finance". No single site is, and anyone who claims otherwise is selling something. Tax rules and account types differ by country; examples use US terms where noted. This is education, not personal financial advice.</p>
+    <div class="dash-ring" aria-hidden="true">
+      <svg viewBox="0 0 120 120" width="150" height="150"><circle cx="60" cy="60" r="50" class="ring-bg"/><circle cx="60" cy="60" r="50" class="ring-fg" id="ringFg"/></svg>
+      <div class="ring-txt"><b id="ringNum">0</b><span>of 13 lessons</span></div>
+    </div>
   </div>
 
-  <h2>The courses</h2>
-  <h3 class="topic-h"><span class="chip t-finance">Finance</span></h3>
-  <ol class="lessons">
-    <li><a href="#money"><span class="num">01</span><span class="t">Your money<span class="d">Budgets, emergency funds, debt, compound interest, inflation, credit.</span></span><span class="chip" data-chip="money">Not started</span></a></li>
-    <li><a href="#investing"><span class="num">02</span><span class="t">Investing<span class="d">Risk vs return, index funds, fees, diversification, scams.</span></span><span class="chip" data-chip="investing">Not started</span></a></li>
-    <li><a href="#funding"><span class="num">03</span><span class="t">Funding &amp; valuation<span class="d">Debt vs equity, dilution, time value of money.</span></span><span class="chip" data-chip="funding">Not started</span></a></li>
-  </ol>
-  <h3 class="topic-h"><span class="chip t-business">Business</span></h3>
-  <ol class="lessons">
-    <li><a href="#business"><span class="num">04</span><span class="t">How a business makes money<span class="d">Margin, markup, break-even, unit economics, cash flow.</span></span><span class="chip" data-chip="business">Not started</span></a></li>
-    <li><a href="#statements"><span class="num">05</span><span class="t">Financial statements<span class="d">Income statement, balance sheet, cash flow, key ratios.</span></span><span class="chip" data-chip="statements">Not started</span></a></li>
-  </ol>
-  <h3 class="topic-h"><span class="chip t-marketing">Marketing</span></h3>
-  <ol class="lessons">
-    <li><a href="#mkt-basics"><span class="num">06</span><span class="t">Marketing basics<span class="d">Your customer, positioning, benefits, the offer.</span></span><span class="chip" data-chip="mkt-basics">Not started</span></a></li>
-    <li><a href="#mkt-channels"><span class="num">07</span><span class="t">Getting customers<span class="d">Channels, the funnel, and where first customers come from.</span></span><span class="chip" data-chip="mkt-channels">Not started</span></a></li>
-    <li><a href="#mkt-measure"><span class="num">08</span><span class="t">Measuring marketing<span class="d">Conversion, CAC, ROAS, LTV, payback, and testing.</span></span><span class="chip" data-chip="mkt-measure">Not started</span></a></li>
-  </ol>
-  <h3 class="topic-h"><span class="chip t-negotiation">Negotiation</span></h3>
-  <ol class="lessons">
-    <li><a href="#negotiation"><span class="num">09</span><span class="t">Negotiation<span class="d">BATNA, ZOPA, anchoring, interests, concessions, listening.</span></span><span class="chip" data-chip="negotiation">Not started</span></a></li>
-    <li><a href="#scripts"><span class="num">10</span><span class="t">Negotiation scripts<span class="d">Salary, raises, buying, selling, rent. Word for word.</span></span><span class="chip" data-chip="scripts">Not started</span></a></li>
-    <li><a href="#persuasion"><span class="num">11</span><span class="t">Getting people to say yes<span class="d">Listening, what's in it for them, clear asks, objections.</span></span><span class="chip" data-chip="persuasion">Not started</span></a></li>
-  </ol>
-  <h3 class="topic-h"><span class="chip t-investors">Investors</span></h3>
-  <ol class="lessons">
-    <li><a href="#pitching"><span class="num">12</span><span class="t">Pitching investors, simply<span class="d">The six-line pitch and the numbers investors ask about.</span></span><span class="chip" data-chip="pitching">Not started</span></a></li>
-    <li><a href="#pressure"><span class="num">13</span><span class="t">Staying calm under pressure<span class="d">Preparing hard questions, five habits, breathing, hostile questions.</span></span><span class="chip" data-chip="pressure">Not started</span></a></li>
-  </ol>
-  <p class="muted">Read a lesson, then do the practice problems without scrolling back up. Pass at 80% and the lesson gets a ✓. Progress is saved in this browser only.</p>
+  <h2 class="path-h">Your path</h2>
+  <div class="worlds">
+    <section class="world t-finance" aria-label="Finance">
+      <header class="world-h"><span class="world-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></span><div><h3>Finance</h3><p>Money, investing and funding</p></div><span class="world-count" data-world="finance">0/3</span></header>
+      <div class="path">
+        <a class="node" href="#money" data-node="money"><span class="node-c"><span class="node-n">1</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Your money</span><span class="node-s" data-node-s="money">10 min</span></a>
+        <a class="node" href="#investing" data-node="investing"><span class="node-c"><span class="node-n">2</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Investing</span><span class="node-s" data-node-s="investing">12 min</span></a>
+        <a class="node" href="#funding" data-node="funding"><span class="node-c"><span class="node-n">3</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Funding &amp; valuation</span><span class="node-s" data-node-s="funding">12 min</span></a>
+      </div>
+      <a class="world-tool" href="../tools/budget/index.html">Practise: Budget &amp; savings planner →</a>
+    </section>
+    <section class="world t-business" aria-label="Business">
+      <header class="world-h"><span class="world-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg></span><div><h3>Business</h3><p>How businesses make money</p></div><span class="world-count" data-world="business">0/2</span></header>
+      <div class="path">
+        <a class="node" href="#business" data-node="business"><span class="node-c"><span class="node-n">4</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">How a business makes money</span><span class="node-s" data-node-s="business">12 min</span></a>
+        <a class="node" href="#statements" data-node="statements"><span class="node-c"><span class="node-n">5</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Financial statements</span><span class="node-s" data-node-s="statements">10 min</span></a>
+      </div>
+      <a class="world-tool" href="../tools/business-plan/index.html">Practise: Business plan &amp; pricing →</a>
+    </section>
+    <section class="world t-marketing" aria-label="Marketing">
+      <header class="world-h"><span class="world-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10v4h4l7 5V5l-7 5H3z"/><path d="M18 9a4 4 0 0 1 0 6"/></svg></span><div><h3>Marketing</h3><p>Find customers, know what they cost</p></div><span class="world-count" data-world="marketing">0/3</span></header>
+      <div class="path">
+        <a class="node" href="#mkt-basics" data-node="mkt-basics"><span class="node-c"><span class="node-n">6</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Marketing basics</span><span class="node-s" data-node-s="mkt-basics">10 min</span></a>
+        <a class="node" href="#mkt-channels" data-node="mkt-channels"><span class="node-c"><span class="node-n">7</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Getting customers</span><span class="node-s" data-node-s="mkt-channels">12 min</span></a>
+        <a class="node" href="#mkt-measure" data-node="mkt-measure"><span class="node-c"><span class="node-n">8</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Measuring marketing</span><span class="node-s" data-node-s="mkt-measure">10 min</span></a>
+      </div>
+      <a class="world-tool" href="../tools/marketing/index.html">Practise: Marketing calculators →</a>
+    </section>
+    <section class="world t-negotiation" aria-label="Negotiation">
+      <header class="world-h"><span class="world-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h11v8H8l-3 3v-3H3z"/><path d="M14 9h7v8h-2v3l-3-3h-5v-2"/></svg></span><div><h3>Negotiation</h3><p>Better deals and getting to yes</p></div><span class="world-count" data-world="negotiation">0/3</span></header>
+      <div class="path">
+        <a class="node" href="#negotiation" data-node="negotiation"><span class="node-c"><span class="node-n">9</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Negotiation</span><span class="node-s" data-node-s="negotiation">14 min</span></a>
+        <a class="node" href="#scripts" data-node="scripts"><span class="node-c"><span class="node-n">10</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Negotiation scripts</span><span class="node-s" data-node-s="scripts">8 min</span></a>
+        <a class="node" href="#persuasion" data-node="persuasion"><span class="node-c"><span class="node-n">11</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Getting people to say yes</span><span class="node-s" data-node-s="persuasion">8 min</span></a>
+      </div>
+      <a class="world-tool" href="../tools/negotiation/index.html">Practise: Negotiation prep →</a>
+    </section>
+    <section class="world t-investors" aria-label="Investors">
+      <header class="world-h"><span class="world-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span><div><h3>Investors</h3><p>Pitch, and stay calm under pressure</p></div><span class="world-count" data-world="investors">0/2</span></header>
+      <div class="path">
+        <a class="node" href="#pitching" data-node="pitching"><span class="node-c"><span class="node-n">12</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Pitching investors, simply</span><span class="node-s" data-node-s="pitching">10 min</span></a>
+        <a class="node" href="#pressure" data-node="pressure"><span class="node-c"><span class="node-n">13</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Staying calm under pressure</span><span class="node-s" data-node-s="pressure">10 min</span></a>
+      </div>
+      <a class="world-tool" href="../tools/investors/index.html">Practise: Investor pressure drill →</a>
+    </section>
+  </div>
 
-  <h2>The five ideas that matter most</h2>
-  <ul class="big-ideas">
-    <li><strong>Spend less than you earn</strong>, automatically. Everything else in personal finance sits on top of this.</li>
-    <li><strong>Compound growth works both ways.</strong> It builds wealth in investments and destroys it in high-interest debt.</li>
-    <li><strong>Profit is not cash.</strong> Profitable businesses go bankrupt when the cash runs out before the customers pay.</li>
-    <li><strong>Fees and taxes are guaranteed losses</strong>; returns are not. Control what you can control.</li>
-    <li><strong>In a negotiation, your power is your alternative.</strong> The person who can walk away calmly usually gets the better deal.</li>
-  </ul>
+  <h2 class="path-h">Badges</h2>
+  <div class="g-badges" data-g="badges"></div>
+
+  <div class="callout honest" style="margin-top:36px"><b>Straight talk</b><p>This covers the foundations: the ideas that do most of the work in everyday money and business decisions. It's education, not personal financial advice, and tax and account rules differ by country. Your progress is saved in this browser only.</p></div>
 </section>
 
 <!-- ============ 1. MONEY ============ -->
@@ -1274,6 +1360,7 @@ Repeat 3 times.</div>
 </main>
 </div>
 
+<script src="../assets/gamify.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
