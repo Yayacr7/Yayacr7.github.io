@@ -159,6 +159,17 @@
   .hcard b{font-size:1rem}
   .site-head .main-nav a{color:#fff}
 }
+
+/* chart-first opening */
+.hero.hero{padding-block:34px 56px}
+.hero .wrap.hc{display:block;position:relative}
+.hc-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 28px;margin-bottom:22px}
+.hc-head h1{font-size:clamp(2.2rem,5vw,3.4rem);margin:0 0 8px}
+.hc-head .hero-sub{max-width:52ch;font-size:1.05rem}
+.hc-head .cta{margin:0}
+.sc.sc-first{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}
+.hero .sc-out,.hero .sc form{color:var(--ink)}
+@media (max-width:900px){ .sc.sc-first{grid-template-columns:1fr} .hc-head{align-items:flex-start} }
 </style>
 </head>
 <body>
@@ -181,21 +192,32 @@
 </header>
 
 <main>
-<section class="hero">
-  <div class="wrap hero-in">
-    <div class="hero-copy">
-      <h1>Business, made <span class="grad">simple.</span></h1>
-      <p class="hero-sub">Finance, marketing, negotiation and investor pitches, in plain English. Free.</p>
-      <div class="cta">
-        <a class="btn" href="learn/index.html">Start learning free</a>
-        <a class="btn ghost-light" href="#pricing">See prices</a>
+<section class="hero" id="check">
+  <div class="wrap hc">
+    <div class="hc-head">
+      <div>
+        <h1>Business, made <span class="grad">simple.</span></h1>
+        <p class="hero-sub">Start here: type what you spend in a month. Green, keep it. Yellow, think about it. Red, cut back.</p>
       </div>
+      <div class="cta"><a class="btn" href="learn/index.html">Start learning free</a><a class="btn ghost-light" href="tools/index.html">All 21 tools</a></div>
     </div>
-    <div class="hero-art" aria-hidden="true">
-      <div class="hcard t-finance" style="--r:-6deg"><span>Finance</span><b>Runway = cash ÷ burn</b></div>
-      <div class="hcard t-marketing" style="--r:4deg"><span>Marketing</span><b>Customer worth ≥ 3× their cost</b></div>
-      <div class="hcard t-negotiation" style="--r:-3deg"><span>Negotiation</span><b>Your power is your walk-away</b></div>
-      <div class="hcard t-investors" style="--r:5deg"><span>Investors</span><b>Answer first. Then explain.</b></div>
+    <div class="sc sc-first">
+      <div class="sc-out" id="s-out" aria-live="polite"></div>
+      <form id="f-spend" novalidate aria-label="Your monthly spending">
+        <div class="fields">
+<label for="s-income" class="full">Take-home pay a month ($)<input type="number" id="s-income" value="3200" min="0" step="any" inputmode="decimal"></label>
+<label for="s-housing">Rent or mortgage<input type="number" id="s-housing" value="1100" min="0" step="any" inputmode="decimal"></label>
+<label for="s-bills">Bills (phone, power, insurance)<input type="number" id="s-bills" value="280" min="0" step="any" inputmode="decimal"></label>
+<label for="s-food">Groceries<input type="number" id="s-food" value="350" min="0" step="any" inputmode="decimal"></label>
+<label for="s-transport">Transport<input type="number" id="s-transport" value="220" min="0" step="any" inputmode="decimal"></label>
+<label for="s-eat">Eating out<input type="number" id="s-eat" value="380" min="0" step="any" inputmode="decimal"></label>
+<label for="s-shop">Shopping<input type="number" id="s-shop" value="220" min="0" step="any" inputmode="decimal"></label>
+<label for="s-subs">Subscriptions<input type="number" id="s-subs" value="60" min="0" step="any" inputmode="decimal"></label>
+<label for="s-fun">Fun &amp; hobbies<input type="number" id="s-fun" value="140" min="0" step="any" inputmode="decimal"></label>
+<label for="s-save" class="full">Saving<input type="number" id="s-save" value="200" min="0" step="any" inputmode="decimal"></label>
+        </div>
+        <p class="fine" style="margin-top:12px">Example numbers: change them to yours. Nothing you type leaves your browser. Guides, not rules, and not financial advice.</p>
+      </form>
     </div>
   </div>
 </section>
@@ -216,37 +238,6 @@
       <a class="card topic t-marketing" href="learn/index.html#mkt-basics"><div class="topic-top"><span class="t-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10v4h4l7 5V5l-7 5H3z"/><path d="M18 9a4 4 0 0 1 0 6"/></svg></span><span class="chip t-marketing">Marketing</span></div><h3>Finding customers</h3><p>What works, and what it costs you.</p></a>
       <a class="card topic t-negotiation" href="learn/index.html#negotiation"><div class="topic-top"><span class="t-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h11v8H8l-3 3v-3H3z"/><path d="M14 9h7v8h-2v3l-3-3h-5v-2"/></svg></span><span class="chip t-negotiation">Negotiation</span></div><h3>Better deals</h3><p>Walk-away points and what to say.</p></a>
       <a class="card topic t-investors" href="learn/index.html#pitching"><div class="topic-top"><span class="t-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span><span class="chip t-investors">Investors</span></div><h3>Pitching investors</h3><p>The pitch, the numbers, staying calm.</p></a>
-    </div>
-  </div>
-</section>
-
-<section class="block" id="check">
-  <div class="wrap">
-    <div class="section-head">
-      <div>
-        <span class="eyebrow">Try it</span>
-        <h2 style="margin-top:10px">Where is your money going?</h2>
-        <p>Type what you spend in a month. Green: keep doing it. Yellow: think about it. Red: cut back.</p>
-      </div>
-      <a class="btn ghost" href="tools/index.html">See all 21 tools</a>
-    </div>
-    <div class="sc">
-      <form id="f-spend" novalidate aria-label="Your monthly spending">
-        <div class="fields">
-<label for="s-income" class="full">Take-home pay a month ($)<input type="number" id="s-income" value="3200" min="0" step="any" inputmode="decimal"></label>
-<label for="s-housing">Rent or mortgage<input type="number" id="s-housing" value="1100" min="0" step="any" inputmode="decimal"></label>
-<label for="s-bills">Bills (phone, power, insurance)<input type="number" id="s-bills" value="280" min="0" step="any" inputmode="decimal"></label>
-<label for="s-food">Groceries<input type="number" id="s-food" value="350" min="0" step="any" inputmode="decimal"></label>
-<label for="s-transport">Transport<input type="number" id="s-transport" value="220" min="0" step="any" inputmode="decimal"></label>
-<label for="s-eat">Eating out<input type="number" id="s-eat" value="380" min="0" step="any" inputmode="decimal"></label>
-<label for="s-shop">Shopping<input type="number" id="s-shop" value="220" min="0" step="any" inputmode="decimal"></label>
-<label for="s-subs">Subscriptions<input type="number" id="s-subs" value="60" min="0" step="any" inputmode="decimal"></label>
-<label for="s-fun">Fun &amp; hobbies<input type="number" id="s-fun" value="140" min="0" step="any" inputmode="decimal"></label>
-<label for="s-save" class="full">Saving<input type="number" id="s-save" value="200" min="0" step="any" inputmode="decimal"></label>
-        </div>
-        <p class="fine" style="margin-top:12px">Example numbers: change them to yours. Nothing you type leaves your browser. Guides, not rules, and not financial advice.</p>
-      </form>
-      <div class="sc-out" id="s-out" aria-live="polite"></div>
     </div>
   </div>
 </section>
