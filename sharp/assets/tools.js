@@ -138,7 +138,8 @@ var SPEND = [
   ['s-eat', 'Eating out', 5, 10, 'Cook two more meals a week at home.'],
   ['s-shop', 'Shopping', 5, 10, 'Wait 48 hours before buying anything that isn\'t a need.'],
   ['s-subs', 'Subscriptions', 2, 4, 'Cancel anything you didn\'t use in the last 30 days.'],
-  ['s-fun', 'Fun & hobbies', 5, 10, 'Keep some fun, just set a monthly limit and stick to it.']
+  ['s-fun', 'Fun & hobbies', 5, 10, 'Keep some fun, just set a monthly limit and stick to it.'],
+  ['s-personal', 'Personal items', 4, 7, 'Haircuts, toiletries and clothes add up. Buy basics in bulk and skip impulse buys.']
 ];
 var STATUS = {
   good: { cls: 'good', icon: '✓', word: 'Keep doing this' },
@@ -152,7 +153,7 @@ wire('f-spend', function(){
   SPEND.forEach(function(c){
     var v = pos(c[0]); total += v;
     var share = v / inc * 100, st = share <= c[2] ? 'good' : share <= c[3] ? 'warn' : 'bad';
-    rows.push({ name: c[1], v: v, share: share, st: st, tip: c[4], target: inc * c[2] / 100 });
+    rows.push({ name: c[1], v: v, share: share, st: st, tip: c[4], target: inc * c[2] / 100, g: c[2], y: c[3] });
   });
   var save = pos('s-save'), saveShare = save / inc * 100;
   var saveSt = saveShare >= 15 ? 'good' : saveShare >= 5 ? 'warn' : 'bad';
@@ -167,14 +168,17 @@ wire('f-spend', function(){
   var top = Math.max.apply(null, rows.map(function(r){ return r.share; }));
   var max = Math.max(40, Math.ceil(top / 10) * 10), tick = max <= 50 ? 10 : max <= 100 ? 20 : 50;
   var scale = ' style="--max:' + max + ';--tick:' + tick + '"';
-  html += '<div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Keep it</span><span><i class="sc-ic warn">!</i>Think about it</span><span><i class="sc-ic bad">✕</i>Cut back</span><span><i class="sc-mk"></i>How much you should spend</span></div>';
+  html += '<div class="sc-legend" aria-hidden="true"><span><i class="sc-sw good"></i>Good amount</span><span><i class="sc-sw warn"></i>Spend barely</span><span><i class="sc-sw bad"></i>Too much</span><span><i class="sc-bar"></i>What you spend</span></div>';
   html += '<ul class="sc-chart"' + scale + ' aria-label="Your spending as a share of take-home pay, with the guide amount for each">';
   rows.forEach(function(r){
     var S = STATUS[r.st], word = r.saving ? (r.st === 'good' ? 'Keep it up' : 'Save more') : { good: 'Keep it', warn: 'Think about it', bad: 'Cut back' }[r.st];
     var aimPct = r.saving ? 15 : r.target / inc * 100, aim = (r.saving ? 'aim ≥ ' : 'aim ≤ ') + money(r.target);
+    // Bullet chart: zones behind the bar show good / careful / too much for this category.
+    var z = r.saving ? [[0, 5, 'bad'], [5, 15, 'warn'], [15, max, 'good']] : [[0, r.g, 'good'], [r.g, r.y, 'warn'], [r.y, max, 'bad']];
+    var zones = z.map(function(q){ var a = Math.min(q[0], max), b2 = Math.min(q[1], max); return b2 > a ? '<em class="z ' + q[2] + '" style="left:' + (a / max * 100).toFixed(2) + '%;width:' + ((b2 - a) / max * 100).toFixed(2) + '%"></em>' : ''; }).join('');
     html += '<li class="' + S.cls + '" tabindex="0" title="' + r.name + ': ' + money(r.v) + ' (' + pct(r.share, 0) + ' of your pay). ' + (r.saving ? 'Aim for at least ' : 'Aim for at most ') + money(r.target) + '. ' + word + '.">' +
       '<span class="sc-name">' + r.name + '</span>' +
-      '<span class="sc-track"><i style="width:' + (r.v > 0 ? Math.max(.8, r.share / max * 100).toFixed(2) : 0) + '%"></i><b style="left:' + (aimPct / max * 100).toFixed(2) + '%"></b></span>' +
+      '<span class="sc-track">' + zones + '<i style="width:' + (r.v > 0 ? Math.max(.8, Math.min(100, r.share / max * 100)).toFixed(2) : 0) + '%"></i></span>' +
       '<span class="sc-val">' + money(r.v) + ' <small>' + pct(r.share, 0) + '</small></span>' +
       '<span class="sc-aim">' + aim + '</span>' +
       '<span class="sc-st"><i class="sc-ic ' + S.cls + '" aria-hidden="true">' + S.icon + '</i><span class="sc-w">' + word + '</span></span></li>';
