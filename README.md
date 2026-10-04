@@ -4,7 +4,7 @@ Things I'm making with Claude Code.
 
 ## Sharp — business school for aspiring entrepreneurs
 
-[`sharp/`](sharp/index.html) is a "business, made simple" learning site: free courses in five topics (Finance, Business, Marketing, Negotiation, Investors; 19 lessons, each with a 30-second version, tap-to-define jargon and a self-checking quiz), a library of 21 tools including a spending check, a personal money plan and an investor pressure drill, a 3-day free trial, and Free $0 / Builder $29.99 / Founder $74.99 plans with a 30-day money-back guarantee, an About section, and draft privacy, terms and refund pages (to be checked by a legal professional before launch).
+[`sharp/`](sharp/index.html) is a "business, made simple" learning site: free courses in five topics (Finance, Business, Marketing, Negotiation, Investors; 20 lessons, each with a 30-second version, tap-to-define jargon and a self-checking quiz), a library of 21 tools including a spending check, a personal money plan and an investor pressure drill, a 3-day free trial, and Free $0 / Builder $29.99 / Founder $74.99 plans with a 30-day money-back guarantee, an About section, and draft privacy, terms and refund pages (to be checked by a legal professional before launch).
 
 - `sharp/index.html` — home page (topics, live napkin-test tool, pricing, waitlist, sign-in)
 - `sharp/learn/` — the courses

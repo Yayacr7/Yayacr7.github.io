@@ -179,6 +179,18 @@ var QUIZZES = {
     {type:'mc', q:'Why have a lawyer read investment terms?', c:['It\'s a tradition','Bad terms can cost you more than no money','Lawyers write the pitch','To slow things down'], a:1,
       e:'Small words in a deal can cost you a lot later.'}
   ],
+  'buy-back-time': [
+    {type:'num', q:'You earn $40,000 a year. Using 2,000 working hours, what is your hourly value in $?', a:20, tol:0.01, unit:'$',
+      e:'$40,000 ÷ 2,000 = $20 an hour.'},
+    {type:'num', q:'Your hourly value is $20. What is your buyback rate in $ (hourly value ÷ 4)?', a:5, tol:0.01, unit:'$',
+      e:'$20 ÷ 4 = $5. Tasks you can hand off for less than $5 an hour are worth buying back.'},
+    {type:'mc', q:'A task makes little money and drains your energy (like sorting your inbox). In the DRIP idea, what do you do?', c:['Produce','Invest','Delegate it first','Do more of it'], a:2,
+      e:'Low money, low energy: hand it off first.'},
+    {type:'mc', q:'What is the "camcorder method"?', c:['Filming ads','Recording yourself doing a task so the video trains someone else','Buying a camera','Watching videos to relax'], a:1,
+      e:'Teach once on video, so you never explain the same task twice.'},
+    {type:'mc', q:'What does the 1-3-1 rule ask someone to bring?', c:['1 excuse, 3 complaints, 1 apology','1 problem, 3 possible solutions, 1 recommendation','1 idea, 3 slides, 1 joke','1 question, 3 people, 1 meeting'], a:1,
+      e:'It turns "What should I do?" into a decision.'}
+  ],
   money: [
     {type:'mc', q:'You have a $4,000 credit card balance at 24% APR and $4,000 in savings beyond your emergency fund. What usually makes the most financial sense?',
       c:['Invest the $4,000 in an index fund','Pay off the credit card','Keep the cash and pay the minimum','Split it 50/50'], a:1,
@@ -275,8 +287,8 @@ var progress = load('mds-progress', {});
 function el(tag, attrs, html){ var n = document.createElement(tag); if(attrs) for(var k in attrs) n.setAttribute(k, attrs[k]); if(html != null) n.innerHTML = html; return n; }
 function fmt(n, d){ return Number(n).toLocaleString(undefined, {minimumFractionDigits:d||0, maximumFractionDigits:d||0}); }
 
-var LESSON_ORDER = ['money','investing','funding','business','statements','why-business','mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social','negotiation','scripts','persuasion','pitching','pressure','voice','investor-interest','best-of-investors'];
-var TOPIC_LESSONS = { finance: ['money','investing','funding'], business: ['business','statements','why-business'], marketing: ['mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social'], negotiation: ['negotiation','scripts','persuasion'], investors: ['pitching','pressure','voice','investor-interest','best-of-investors'] };
+var LESSON_ORDER = ['money','investing','funding','business','statements','why-business','buy-back-time','mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social','negotiation','scripts','persuasion','pitching','pressure','voice','investor-interest','best-of-investors'];
+var TOPIC_LESSONS = { finance: ['money','investing','funding'], business: ['business','statements','why-business','buy-back-time'], marketing: ['mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social'], negotiation: ['negotiation','scripts','persuasion'], investors: ['pitching','pressure','voice','investor-interest','best-of-investors'] };
 function updateProgressUI(){
   var passed = QUIZ_IDS.filter(function(id){ return progress[id] && progress[id].passed; }).length;
   var total = QUIZ_IDS.length;
