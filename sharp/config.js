@@ -20,7 +20,7 @@ window.NP_CONFIG = {
 
   /* Contact email shown on the privacy, terms and refund pages.
      Use a business address, not a personal one. Blank = "listed here before launch". */
-  CONTACT_EMAIL: "",
+  CONTACT_EMAIL: "contact.yayabuilds@gmail.com",
 
   /* Free trial: days of Founder access, counted from when the account was created. */
   TRIAL_DAYS: 3
