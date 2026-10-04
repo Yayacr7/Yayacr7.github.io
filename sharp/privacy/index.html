@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0d1020">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="canonical" href="https://sharpbasics.com/privacy/">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Privacy policy · Sharp Basics</title>
 <meta name="description" content="What Sharp collects, why, who it is shared with, and how to get it deleted.">
@@ -15,9 +15,7 @@
 <meta property="og:description" content="What Sharp collects, why, who it is shared with, and how to get it deleted.">
 <meta property="og:image" content="https://sharpbasics.com/og.png">
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Karla:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="../assets/sharp.css">
 <style>
 .tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
@@ -55,7 +53,7 @@
 
 <div class="short"><b>The short version</b><ul>
 <li>We collect as little as we can: mainly your email address, and what you bought.</li>
-<li>Numbers you type into the tools never leave your browser.</li>
+<li>What you type into the tools never leaves your device.</li>
 <li>We don't sell your data, show ads, or use tracking cookies.</li>
 <li>Ask us and we'll delete your data.</li></ul></div>
 
@@ -64,8 +62,8 @@
 <li><b>If you join the waitlist:</b> your email address and the plan you reserved. FormSubmit, a form service, passes them to our business inbox (Gmail), where we keep them.</li>
 <li><b>If you create an account:</b> your email address, when the account was created (so the 3-day trial knows when to end) and which plan you own. If you sign in with Google, Google shares your name and email address with us. Accounts are stored with Supabase.</li>
 <li><b>If you buy a plan:</b> Stripe handles the payment. We never see or store your card number. Stripe tells us your email address, what you bought, the amount and the date.</li>
-<li><b>On your own device:</b> your lesson progress, quiz answers and sign-in session are saved in your browser's storage so they're there next time. They are not sent to us. The numbers you type into the tools stay in your browser and are never sent or saved.</li>
-<li><b>When any page loads:</b> like every website, the services that deliver Sharp see your IP address and browser type. They are our host (GitHub Pages), Google Fonts (for the lettering) and jsDelivr (for the sign-in code). We don't run analytics or advertising trackers. If that changes, this page will say so first.</li>
+<li><b>On your own device:</b> your lesson progress, quiz answers, sign-in session and the text of your one-page business plan are saved in your browser's storage so they're there next time. They are never sent to us. Other numbers you type into the tools aren't saved at all. On a shared computer, use the plan's Clear button when you're done.</li>
+<li><b>When any page loads:</b> like every website, the services that deliver Sharp see your IP address and browser type. They are our host (Cloudflare) and, on pages with sign-in, jsDelivr (for the sign-in code). Our fonts are served from our own site, so loading a page doesn't contact Google. We don't run analytics or advertising trackers. If that changes, this page will say so first.</li>
 </ul>
 
 <h2>Why we use it</h2>
@@ -88,7 +86,7 @@
 <p>Sharp isn't for children under 13, and we don't knowingly collect their data. If you think a child under 13 has signed up, tell us and we'll delete the account. If you're under 18, you need a parent or guardian's permission to make an account, and they need to make any purchase.</p>
 
 <h2>Security</h2>
-<p>Every page is served over an encrypted connection (HTTPS). There are no passwords to steal: you sign in with a one-time email link or Google. Paid course content sits behind database rules that check what you own. No system is perfectly secure, but if a breach ever affects your data, we'll tell you.</p>
+<p>Every page is served over an encrypted connection (HTTPS), and strict browser security rules stop other sites from loading or embedding our pages. There are no passwords to steal: you sign in with a one-time email link or Google. Paid course content sits behind database rules that check what you own. No system is perfectly secure, but if a breach ever affects your data, we'll tell you.</p>
 
 <h2>Changes and contact</h2>
 <p>If this policy changes in a way that matters, we'll update the date above and, if you have an account, email you. Questions: <span data-contact>the contact email listed here before launch</span>.</p>

@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0d1020">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="canonical" href="https://sharpbasics.com/tools/business-plan/">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Business plan & pricing · Sharp Basics</title>
 <meta name="description" content="Free one-page business plan builder, pricing calculator and simple profit and loss for new businesses.">
@@ -15,9 +15,7 @@
 <meta property="og:description" content="Free one-page business plan builder, pricing calculator and simple profit and loss for new businesses.">
 <meta property="og:image" content="https://sharpbasics.com/og.png">
 <link rel="icon" href="../../icon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Karla:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/fonts.css">
 <link rel="stylesheet" href="../../assets/sharp.css">
 <style>
 .tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
@@ -54,7 +52,7 @@
       <div class="tool-grid">
         <form id="f-plan" novalidate>
           <h2>One-page business plan</h2>
-          <p class="intro">Ten questions. If you can't answer one, that's the part of the idea to work on. Your answers are saved in this browser only.</p>
+          <p class="intro">Ten questions. If you can't answer one, that's the part of the idea to work on. Your answers are saved on this device only, never sent anywhere. On a shared computer, tap Clear when you're done.</p>
           <div class="field-col">
 <label for="pl-name">Business name<input type="text" id="pl-name" maxlength="80" placeholder="e.g. Brightside Meal Prep"></label>
 <label for="pl-problem">What problem do you solve?<textarea id="pl-problem" rows="2" maxlength="600" placeholder="Busy parents waste evenings cooking and still order takeaway 3 nights a week."></textarea></label>
