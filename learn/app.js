@@ -138,7 +138,7 @@ function updateProgressUI(){
   document.getElementById('meterText').textContent = passed + '/' + total;
   document.getElementById('meterFill').style.width = (passed / total * 100) + '%';
   var serial = document.getElementById('serial');
-  if(serial) serial.textContent = 'Nº MDS-' + String(passed).padStart(3,'0') + '-' + String(total).padStart(3,'0') + (passed === total ? ' · FULLY PAID UP' : '');
+  if(serial) serial.textContent = passed === total ? 'All ' + total + ' lessons passed ✓' : passed + ' of ' + total + ' lessons passed';
   QUIZ_IDS.forEach(function(id){
     var rec = progress[id] || {};
     var t = document.querySelector('[data-tick="' + id + '"]');

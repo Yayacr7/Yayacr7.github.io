@@ -6,51 +6,52 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script src="early.js"></script>
-<title>Money &amp; Deals School</title>
+<title>Napkin Proof Lessons</title>
+<link rel="icon" href="../napkinproof/icon.svg" type="image/svg+xml">
 <meta name="description" content="Plain-English lessons on personal finance, business finance and negotiation — with calculators, practice problems that check your work, and ready-to-use AI prompts.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700;6..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Caveat:wght@500;700&family=IBM+Plex+Mono:wght@400;500;600&family=Karla:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
-/* Layout concept: a banknote-and-ledger school. Engraved display type, one guilloche
-   rosette on the opening note, a ticker tape of rules, ledger-ruled formulas,
-   calculator readouts, and a rubber stamp when you pass. */
+/* Layout concept: Napkin Proof lessons. The diner table is the page, lessons sit on
+   white napkins, ballpoint blue is the one accent, highlighter yellow marks key numbers. */
 :root{
-  --paper:#edf1ea;   --paper-2:#e2e8df;  --card:#f8faf6;
-  --ink:#15262a;     --muted:#55655f;    --rule:#c5cfc4;
-  --note:#1c5a49;    --note-ink:#f3f7f2; --note-soft:#d6e6dd;
-  --engrave:#33428a; --gold:#a97b1e;     --gold-soft:#f1e5c6;
-  --good:#22744a;    --good-soft:#dcefe2;
-  --bad:#b0312a;     --bad-soft:#f6e0dc;
-  --ledger-line:#cfdccf; --ledger-margin:#d98b84;
-  --readout-bg:#15262a;  --readout-fg:#cfeedd; --readout-dim:#86a99a;
-  --shadow:0 1px 0 rgba(21,38,42,.06),0 10px 30px -18px rgba(21,38,42,.35);
-  --f-display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
-  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --paper:#e6ecef;   --paper-2:#d9e1e6;  --card:#fbfcfc;
+  --ink:#1b2130;     --muted:#556072;    --rule:#c9d3da;
+  --note:#2443b5;    --note-ink:#ffffff; --note-soft:#dfe5fa;
+  --engrave:#2443b5; --gold:#556072;     --gold-soft:#f6e66a; --hl-ink:#1b2130;
+  --good:#1f7a4a;    --good-soft:#dcefe2;
+  --bad:#b23a2c;     --bad-soft:#f8e1dd;
+  --ledger-line:#e9eef1; --ledger-margin:#e4e9ec;
+  --readout-bg:#1b2130;  --readout-fg:#ffffff; --readout-dim:#9aa6b8;
+  --shadow:0 1px 1px rgba(27,33,48,.06),0 18px 40px -22px rgba(27,33,48,.45);
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Karla","Helvetica Neue",Arial,system-ui,sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --f-hand:"Caveat","Segoe Print","Bradley Hand",cursive;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#0e1614;   --paper-2:#14201d;  --card:#16221f;
-    --ink:#e5ece6;     --muted:#9cafa6;    --rule:#2b3c37;
-    --note:#6fc6a6;    --note-ink:#0b1a15; --note-soft:#1b3a31;
-    --engrave:#9eacf0; --gold:#dcb65e;     --gold-soft:#3a3018;
-    --good:#74d39a;    --good-soft:#173525;
-    --bad:#f08376;     --bad-soft:#3d1d19;
-    --ledger-line:#22322d; --ledger-margin:#7a3b36;
-    --readout-bg:#07100d;  --readout-fg:#8ff0c0; --readout-dim:#5f8c78;
+    --paper:#0f141c;   --paper-2:#161d28;  --card:#1b2330;
+    --ink:#e7ebf1;     --muted:#9aa6b8;    --rule:#2c3746;
+    --note:#8ea6ff;    --note-ink:#0d1430; --note-soft:#1e2950;
+    --engrave:#8ea6ff; --gold:#9aa6b8;     --gold-soft:#e3cf4a; --hl-ink:#16130a;
+    --good:#6fd39b;    --good-soft:#173525;
+    --bad:#ff8d7d;     --bad-soft:#3d1d19;
+    --ledger-line:#212a37; --ledger-margin:#252f3e;
+    --readout-bg:#0a0e14;  --readout-fg:#ffffff; --readout-dim:#9aa6b8;
     --shadow:none; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#0e1614;   --paper-2:#14201d;  --card:#16221f;
-  --ink:#e5ece6;     --muted:#9cafa6;    --rule:#2b3c37;
-  --note:#6fc6a6;    --note-ink:#0b1a15; --note-soft:#1b3a31;
-  --engrave:#9eacf0; --gold:#dcb65e;     --gold-soft:#3a3018;
-  --good:#74d39a;    --good-soft:#173525;
-  --bad:#f08376;     --bad-soft:#3d1d19;
-  --ledger-line:#22322d; --ledger-margin:#7a3b36;
-  --readout-bg:#07100d;  --readout-fg:#8ff0c0; --readout-dim:#5f8c78;
+    --paper:#0f141c;   --paper-2:#161d28;  --card:#1b2330;
+  --ink:#e7ebf1;     --muted:#9aa6b8;    --rule:#2c3746;
+  --note:#8ea6ff;    --note-ink:#0d1430; --note-soft:#1e2950;
+  --engrave:#8ea6ff; --gold:#9aa6b8;     --gold-soft:#e3cf4a; --hl-ink:#16130a;
+  --good:#6fd39b;    --good-soft:#173525;
+  --bad:#ff8d7d;     --bad-soft:#3d1d19;
+  --ledger-line:#212a37; --ledger-margin:#252f3e;
+  --readout-bg:#0a0e14;  --readout-fg:#ffffff; --readout-dim:#9aa6b8;
   --shadow:none; color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -263,13 +264,42 @@ dl.gloss dd{margin:2px 0 0 0;color:var(--muted);font-size:.95rem}
   .stamp.hit{animation:none}
   .meter-fill{transition:none}
 }
+
+/* ---- Napkin Proof skin ---- */
+h1,h2,h3{letter-spacing:-.02em;line-height:1.1}
+h1{font-weight:800}
+h2{font-weight:800}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-display);letter-spacing:-.02em}
+.brand i{font:700 1.25rem var(--f-hand);font-style:normal;color:var(--note)}
+.ticker{background:var(--readout-bg);color:var(--readout-fg)}
+.ticker span b{color:var(--gold-soft)}
+.note{background:var(--card);border:0;border-radius:6px;padding:0;transform:rotate(-.6deg);
+  background-image:linear-gradient(90deg,transparent calc(50% - .5px),var(--ledger-margin) calc(50% - .5px),var(--ledger-margin) calc(50% + .5px),transparent calc(50% + .5px)),
+  linear-gradient(transparent calc(50% - .5px),var(--ledger-margin) calc(50% - .5px),var(--ledger-margin) calc(50% + .5px),transparent calc(50% + .5px)),
+  radial-gradient(var(--ledger-line) 1.2px,transparent 1.4px);background-size:100% 100%,100% 100%,9px 9px}
+.note-inner{border:1.5px dashed var(--ledger-margin);outline:0;margin:10px;border-radius:3px;padding:40px 34px 32px}
+.note-content{max-width:560px}
+.note h1 em{font:700 1.15em/1 var(--f-hand);font-style:normal;color:var(--note);padding-right:.14em}
+.serial{font:700 1.5rem var(--f-hand);letter-spacing:0;color:var(--note)}
+.lesson-num{font-family:var(--f-hand);font-weight:700;color:var(--note)}
+.lessons .num{font-family:var(--f-hand);font-weight:700;font-size:2.4rem}
+.eyebrow{font-family:var(--f-body);font-weight:700;letter-spacing:.14em}
+.formula{line-height:1.7;padding:12px 16px;background:var(--card);
+  background-image:radial-gradient(var(--ledger-line) 1.2px,transparent 1.4px);background-size:9px 9px;background-position:0 0}
+.callout.warn b:first-child{background:var(--gold-soft);color:var(--hl-ink)}
+.btn{border-radius:12px}
+.btn:hover{background:var(--note);border-color:var(--note);color:var(--note-ink)}
+.stamp{font-family:var(--f-display)}
+nav.side a.active{background:var(--note);color:var(--note-ink)}
+nav.side a.active .n,nav.side a.active .tick{color:var(--note-ink)}
+@media (max-width:860px){ .note-inner{padding:32px 20px 26px} }
 </style>
 </head>
 <body>
 
 <header class="topbar">
   <div class="bar">
-    <a class="brand" href="#start">Money <i>&amp;</i> Deals School</a>
+    <a class="brand" href="../napkinproof/index.html"><svg width="24" height="24" viewBox="0 0 30 30" aria-hidden="true"><rect x="3" y="3" width="24" height="24" rx="3" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/><path d="M15 3v24M3 15h24" stroke="var(--rule)" stroke-width="1.2"/><path d="M8 17.5l4 4 9-11" fill="none" stroke="var(--note)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Napkin Proof <i>lessons</i></a>
     <div class="spacer"></div>
     <span class="progress-pill" id="progressPill">0/7 passed</span>
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch between light and dark">Light / Dark</button>
@@ -311,14 +341,12 @@ dl.gloss dd{margin:2px 0 0 0;color:var(--muted);font-size:.95rem}
 <!-- ============ START ============ -->
 <section class="page" id="start">
   <div class="note"><div class="note-inner">
-    <canvas id="guilloche" width="680" height="680" aria-hidden="true"></canvas>
-    <span class="denom tl">07</span><span class="denom br">07</span>
     <div class="note-content">
       <span class="eyebrow">Seven lessons · plain English · no fluff</span>
       <h1>Learn money, business <em>and</em> the art of the deal.</h1>
       <p>Short lessons with practice problems that check your answers and explain the ones you miss. Calculators and copy-paste AI prompts are in the Tools section.</p>
       <div class="cta"><a class="btn" href="#money">Start lesson 01</a><a class="btn ghost" href="#calculators">Open the calculators</a></div>
-      <span class="serial" id="serial">Nº MDS-000-000</span>
+      <span class="serial" id="serial">0 of 7 lessons passed</span>
     </div>
   </div></div>
 

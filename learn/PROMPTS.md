@@ -1,4 +1,4 @@
-# AI Prompts — Money & Deals School
+# AI Prompts — Napkin Proof Lessons
 
 Copy-paste prompts for learning business, finance and negotiation with Claude or any AI assistant. The same prompts are on the site at `learn/#prompts`, each with a copy button.
 
