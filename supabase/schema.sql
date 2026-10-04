@@ -63,3 +63,25 @@ create policy "Read content your plan includes"
 -- from the Supabase dashboard or with the service_role key, never from the site.
 
 -- Rule for every table you add later: turn on RLS the moment you create it.
+
+-- =====================================================================
+-- Paid spreadsheets: a PRIVATE storage bucket. Files can only be fetched
+-- through a short-lived signed link, and only by people whose plan
+-- includes them (Builder, Founder, or an active trial).
+-- After running this, upload the four .xlsx files in
+-- Supabase > Storage > sharp-files.
+-- =====================================================================
+insert into storage.buckets (id, name, public)
+values ('sharp-files', 'sharp-files', false)
+on conflict (id) do update set public = false;
+
+drop policy if exists "Download files your plan includes" on storage.objects;
+create policy "Download files your plan includes"
+  on storage.objects
+  for select
+  to authenticated
+  using (
+    bucket_id = 'sharp-files'
+    and public.np_access_level() in ('founder', 'builder', 'trial')
+  );
+-- No insert, update or delete policies: only you can change files, from the dashboard.

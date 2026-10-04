@@ -12,7 +12,7 @@ Things I'm making with Claude Code.
 - `sharp/course/` — the Launch course player. Module text is not in this repo: it loads from Supabase (`premium_content`), which only returns modules the signed-in person has paid for or has on trial
 - `sharp/trial/` — the 3-day Founder trial area
 - `sharp/config.js` — **the only settings file**: waitlist provider, Supabase keys, Stripe Payment Links, trial length
-- `supabase/schema.sql` — server-side lock for paid content; [`SECURITY.md`](SECURITY.md) — security checklist
+- `supabase/schema.sql` — server-side lock for paid content, plus the private `sharp-files` storage bucket for the paid spreadsheets (upload the .xlsx files there; they are not in this repo); [`SECURITY.md`](SECURITY.md) — security checklist
 
 Old `napkinproof/` and `learn/` addresses redirect to Sharp.
 

@@ -12,12 +12,14 @@ var OUTLINE = [
   ['m4', 'Cash: don\'t run out', 'The 13-week cash forecast'],
   ['m5', 'Negotiate your first deals', 'Suppliers, clients and partners'],
   ['m6', 'Fund it: save, borrow or raise', 'The cheapest money that does the job'],
+  ['d1', 'Workbook & spreadsheets', '4 files for your own numbers'],
   ['k1', 'Essential negotiation scripts', 'Price pushback, discounts, deposits, late pay'],
   ['f1', 'The full script library', '10 more scripts for bigger deals'],
   ['f2', 'Investor pitch kit', 'Deck, emails, 30 questions, deal terms'],
   ['f3', '30-day launch plan', 'Idea to first paying customer']
 ];
-var GROUPS = { m1: 'Launch course', k1: 'Scripts & kits' };
+var GROUPS = { m1: 'Launch course', d1: 'Files, scripts & kits' };
+var FILE_RE = /^[A-Za-z0-9-]+\.xlsx$/, DEMO = false;
 var sb = null, rows = null;
 function $(id){ return document.getElementById(id); }
 try{ var t = localStorage.getItem('np-theme'); if(t) document.documentElement.setAttribute('data-theme', t); }catch(e){}
@@ -27,7 +29,7 @@ try{ var t = localStorage.getItem('np-theme'); if(t) document.documentElement.se
 });
 
 function show(id){ ['st-off','st-out','st-none','st-founder','st-err'].forEach(function(s){ $(s).hidden = s !== id; }); $('moduleView').hidden = id !== 'module'; }
-function current(){ var h = location.hash.replace('#', ''); return /^(m[1-6]|k1|f[1-3])$/.test(h) ? h : 'm1'; }
+function current(){ var h = location.hash.replace('#', ''); return /^(m[1-6]|d1|k1|f[1-3])$/.test(h) ? h : 'm1'; }
 function have(slug){ return !!(rows && rows.some(function(r){ return r.slug === slug; })); }
 
 function renderNav(){
@@ -36,7 +38,7 @@ function renderNav(){
     if(GROUPS[o[0]]){ var gh = document.createElement('p'); gh.className = 'mods-h'; gh.textContent = GROUPS[o[0]]; nav.appendChild(gh); }
     var a = document.createElement('a'); a.className = 'mod' + (rows && !have(o[0]) ? ' locked' : ''); a.href = '#' + o[0];
     if(rows && o[0] === current()) a.setAttribute('aria-current', 'page');
-    var n = document.createElement('span'); n.className = 'n'; n.textContent = o[0].charAt(0) === 'm' ? o[0].slice(1) : o[0] === 'k1' ? 'S' : 'F' + o[0].slice(1);
+    var n = document.createElement('span'); n.className = 'n'; n.textContent = o[0].charAt(0) === 'm' ? o[0].slice(1) : o[0] === 'k1' ? 'S' : o[0] === 'd1' ? 'W' : 'F' + o[0].slice(1);
     var tx = document.createElement('span'); var b = document.createElement('b'); b.textContent = o[1]; var sm = document.createElement('small'); sm.textContent = o[2];
     tx.appendChild(b); tx.appendChild(sm); a.appendChild(n); a.appendChild(tx); nav.appendChild(a);
   });
@@ -49,19 +51,36 @@ function renderModule(){
   if(!row){ show(slug.charAt(0) === 'f' && have('m2') ? 'st-founder' : 'st-none'); return; }
   var idx = OUTLINE.map(function(o){ return o[0]; }).indexOf(slug), view = $('moduleView');
   view.textContent = '';
-  var eb = document.createElement('span'); eb.className = 'eyebrow'; eb.textContent = slug === 'k1' ? 'Scripts 1 to 4 of 14' : slug.charAt(0) === 'f' ? 'Founder kit ' + slug.slice(1) + ' of 3' : 'Module ' + slug.slice(1) + ' of 6'; view.appendChild(eb);
+  var eb = document.createElement('span'); eb.className = 'eyebrow'; eb.textContent = slug === 'd1' ? 'Your files' : slug === 'k1' ? 'Scripts 1 to 4 of 14' : slug.charAt(0) === 'f' ? 'Founder kit ' + slug.slice(1) + ' of 3' : 'Module ' + slug.slice(1) + ' of 6'; view.appendChild(eb);
   var h = document.createElement('h1'); h.textContent = row.title; view.appendChild(h);
   var body = document.createElement('div');
   // Module HTML is written by the site owner and stored where only the owner can edit it.
   // The page's security policy also blocks any script inside it.
   body.innerHTML = row.body_html;
   view.appendChild(body);
+  wireFiles(body);
   var pg = document.createElement('div'); pg.className = 'pager';
   var prev = OUTLINE[idx - 1], next = OUTLINE[idx + 1];
   var l = document.createElement('a'); if(prev){ l.href = '#' + prev[0]; l.textContent = '← ' + prev[1]; } pg.appendChild(l);
   var r = document.createElement('a'); if(next){ r.href = '#' + next[0]; r.textContent = next[1] + ' →'; } pg.appendChild(r);
   view.appendChild(pg);
   show('module'); window.scrollTo(0, 0);
+}
+// Spreadsheets live in a private storage bucket; a short-lived link is made only for people whose plan includes them.
+function wireFiles(root){
+  Array.prototype.forEach.call(root.querySelectorAll('[data-file]'), function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      var f = btn.getAttribute('data-file'); if(!FILE_RE.test(f)) return;
+      if(DEMO){ location.href = 'files/' + f; return; }
+      if(!sb) return;
+      btn.textContent = 'Preparing…';
+      sb.storage.from('sharp-files').createSignedUrl(f, 60, { download: f }).then(function(r){
+        if(r.error || !r.data){ btn.textContent = 'Couldn\'t download. Try again'; return; }
+        btn.textContent = 'Download'; location.href = r.data.signedUrl;
+      });
+    });
+  });
 }
 window.addEventListener('hashchange', renderModule);
 
@@ -75,7 +94,7 @@ function load(){
 
 if(window.SHARP_COURSE_DEMO && location.hash.indexOf('demo') >= 0){
   // private preview only: demo data is never part of the live site
-  $('previewBar').hidden = false; rows = window.SHARP_COURSE_DEMO; history.replaceState(null, '', '#m1'); renderModule(); return;
+  $('previewBar').hidden = false; DEMO = true; rows = window.SHARP_COURSE_DEMO; history.replaceState(null, '', '#m1'); renderModule(); return;
 }
 renderNav();
 if(!authReady){ show('st-off'); return; }

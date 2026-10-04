@@ -27,6 +27,12 @@
 .mod.locked{opacity:.6}
 .mods-h{font:700 .74rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:10px 0 0}
 .mods-h:first-child{margin-top:0}
+article.module .files{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+article.module .file{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px}
+article.module .file b{font:700 1.05rem var(--f-display)}
+article.module .file p{margin:0;color:var(--muted);font-size:.95rem;flex:1}
+article.module .file .btn{align-self:flex-start}
+@media (max-width:600px){ article.module .files{grid-template-columns:1fr} }
 article.module ol.toc{columns:2;column-gap:32px}
 article.module ol.toc li{break-inside:avoid}
 @media (max-width:600px){ article.module ol.toc{columns:1} }
@@ -82,7 +88,7 @@ article.module details.cy p{margin:.6em 0 0}
   <div class="wrap course-head">
     <span class="eyebrow">Builder &amp; Founder plans</span>
     <h1>The Launch course</h1>
-    <p class="lede">Six short modules that take you from a business idea to your first sales, plus word-for-word negotiation scripts. Founder adds the full script library, an investor pitch kit and a 30-day launch plan.</p>
+    <p class="lede">Six short modules that take you from a business idea to your first sales, plus a workbook, money spreadsheets and word-for-word negotiation scripts. Founder adds the full script library, an investor pitch kit and a 30-day launch plan.</p>
   </div>
   <div class="wrap layout">
     <nav class="mods" id="mods" aria-label="Modules"></nav>
