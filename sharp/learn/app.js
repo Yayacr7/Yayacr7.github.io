@@ -191,6 +191,18 @@ var QUIZZES = {
     {type:'mc', q:'What does the 1-3-1 rule ask someone to bring?', c:['1 excuse, 3 complaints, 1 apology','1 problem, 3 possible solutions, 1 recommendation','1 idea, 3 slides, 1 joke','1 question, 3 people, 1 meeting'], a:1,
       e:'It turns "What should I do?" into a decision.'}
   ],
+  'ai-at-work': [
+    {type:'num', q:'A task took 6 hours a week. With AI it takes 1 hour to write plus 2 hours to check. How many hours a week does AI save?', a:3, tol:0.01, unit:'hours',
+      e:'6 − (1 + 2) = 3 hours. Always count the checking.'},
+    {type:'mc', q:'Your AI support bot is asked about your refund rules. What should happen?', c:['Let it make up a friendly answer','It answers from your real rules, and says it will check with the team if unsure','Turn off refunds','Ignore the customer'], a:1,
+      e:'Numbers, promises and policies need real sources and a person checking.'},
+    {type:'mc', q:'A prompt that worked last month gives worse answers now. Why might that be?', c:['Prompts expire after 30 days','The AI company updated its tool','Your internet is slow','It never worked'], a:1,
+      e:'AI tools change. Keep prompts saved and re-test them monthly.'},
+    {type:'mc', q:'Which is safe to paste into a free AI tool?', c:['A customer\'s card number','Your password','A general question with private details removed','A signed contract with names'], a:2,
+      e:'Remove emails, numbers, passwords and names first.'},
+    {type:'mc', q:'A client saw a perfect AI demo online. What do you tell them?', c:['"Ours will be perfect too."','"A demo works once. We\'ll test it on your real examples first."','"AI never makes mistakes."','Nothing'], a:1,
+      e:'Set honest expectations before you start. It saves the relationship later.'}
+  ],
   money: [
     {type:'mc', q:'You have a $4,000 credit card balance at 24% APR and $4,000 in savings beyond your emergency fund. What usually makes the most financial sense?',
       c:['Invest the $4,000 in an index fund','Pay off the credit card','Keep the cash and pay the minimum','Split it 50/50'], a:1,
@@ -287,8 +299,8 @@ var progress = load('mds-progress', {});
 function el(tag, attrs, html){ var n = document.createElement(tag); if(attrs) for(var k in attrs) n.setAttribute(k, attrs[k]); if(html != null) n.innerHTML = html; return n; }
 function fmt(n, d){ return Number(n).toLocaleString(undefined, {minimumFractionDigits:d||0, maximumFractionDigits:d||0}); }
 
-var LESSON_ORDER = ['money','investing','funding','business','statements','why-business','buy-back-time','mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social','negotiation','scripts','persuasion','pitching','pressure','voice','investor-interest','best-of-investors'];
-var TOPIC_LESSONS = { finance: ['money','investing','funding'], business: ['business','statements','why-business','buy-back-time'], marketing: ['mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social'], negotiation: ['negotiation','scripts','persuasion'], investors: ['pitching','pressure','voice','investor-interest','best-of-investors'] };
+var LESSON_ORDER = ['money','investing','funding','business','statements','why-business','buy-back-time','ai-at-work','mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social','negotiation','scripts','persuasion','pitching','pressure','voice','investor-interest','best-of-investors'];
+var TOPIC_LESSONS = { finance: ['money','investing','funding'], business: ['business','statements','why-business','buy-back-time','ai-at-work'], marketing: ['mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social'], negotiation: ['negotiation','scripts','persuasion'], investors: ['pitching','pressure','voice','investor-interest','best-of-investors'] };
 function updateProgressUI(){
   var passed = QUIZ_IDS.filter(function(id){ return progress[id] && progress[id].passed; }).length;
   var total = QUIZ_IDS.length;

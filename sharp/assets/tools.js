@@ -294,6 +294,114 @@ wire('f-mplan', function(){
   out.innerHTML = html;
 });
 
+/* ================= AI AT WORK ================= */
+wire('f-aisave', function(){
+  var before = pos('as-before'), after = pos('as-after'), rate = pos('as-rate'), cost = pos('as-cost');
+  var hrs = (before - after) * 52 / 12, value = hrs * rate, net = value - cost, v;
+  if(before <= 0) v = 'Enter how long the task took without AI.';
+  else if(hrs <= 0) v = '<b>AI isn\'t saving time here.</b> Checking and fixing take as long as doing it yourself. Try a better prompt or a different task.';
+  else if(net <= 0) v = '<b>It saves time, but costs more than that time is worth.</b> Cut the tool or use it for more tasks.';
+  else v = '<b>Worth it.</b> AI gives you back about ' + Math.round(hrs) + ' hours a month. Decide now what you\'ll do with them, or they turn into more email.';
+  $('as-out').innerHTML = result('Value saved each month, after the AI bill', money(net), [
+    ['Hours saved a month', hrs.toFixed(1)], ['Value of that time', money(value)], ['AI cost', money(cost)]
+  ], v);
+});
+
+wire('f-aicost', function(){
+  var subs = pos('ac-subs'), use = pos('ac-usage'), cust = pos('ac-cust'), price = pos('ac-price'), unused = Math.min(pos('ac-unused'), subs);
+  var total = subs + use, per = cust > 0 ? total / cust : 0, share = price > 0 ? per / price * 100 : 0, v;
+  if(cust <= 0) v = 'Enter how many customers you have a month.';
+  else if(share > 20) v = '<b>AI eats ' + pct(share, 0) + ' of each sale.</b> That\'s a lot. Cut unused tools, set spending limits, or raise your price.';
+  else if(share > 10) v = '<b>Watch it.</b> AI costs ' + pct(share, 0) + ' of each sale. Set a monthly spending limit with each AI provider so one big job can\'t surprise you.';
+  else v = '<b>Healthy.</b> AI is ' + pct(share, 0) + ' of each sale. Keep a monthly limit on pay-per-use tools anyway.';
+  if(unused > 0) v += ' Cancelling unused subscriptions saves ' + money(unused * 12) + ' a year.';
+  $('ac-out').innerHTML = result('AI cost per customer', money(per, 2), [
+    ['Total AI cost a month', money(total)], ['Share of each sale', pct(share, 0)], ['Wasted on unused tools a year', money(unused * 12)]
+  ], v);
+});
+
+// Before-you-paste check: runs only on this device. Results are shown with textContent only.
+var PC_RULES = [
+  ['Email addresses', /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, '[EMAIL]'],
+  ['Passwords or API keys', /\b(?:sk|pk|rk)[-_][A-Za-z0-9_-]{16,}\b|\b(?:password|passcode|pwd)\s*[:=]\s*\S+/gi, '[SECRET]'],
+  ['Card numbers', /\b(?:\d[ -]?){13,19}\b/g, '[CARD]', function(m){ var d = m.replace(/\D/g, ''), sum = 0; for(var i = 0; i < d.length; i++){ var n = +d[d.length - 1 - i]; if(i % 2){ n *= 2; if(n > 9) n -= 9; } sum += n; } return d.length >= 13 && sum % 10 === 0; }],
+  ['ID numbers (like SSNs)', /\b\d{3}-\d{2}-\d{4}\b/g, '[ID]'],
+  ['Phone numbers', /(?:\+?\d{1,3}[ .-]?)?\(?\d{3}\)?[ .-]?\d{3}[ .-]?\d{4}\b/g, '[PHONE]']
+];
+function pcCheck(){
+  var text = $('pc-text').value, clean = text, found = [], out = $('pc-out');
+  PC_RULES.forEach(function(r){
+    var n = 0;
+    clean = clean.replace(r[1], function(m){ if(r[3] && !r[3](m)) return m; n++; return r[2]; });
+    if(n) found.push([r[0], n]);
+  });
+  out.textContent = '';
+  var k = document.createElement('div'); k.className = 'k'; k.textContent = text.trim() ? (found.length ? 'Found private info' : 'Nothing obvious found') : 'Paste some text to check it'; out.appendChild(k);
+  if(!text.trim()) return clean;
+  if(found.length){
+    var ul = document.createElement('ul'); ul.className = 'pc-list';
+    found.forEach(function(f){ var li = document.createElement('li'), a = document.createElement('span'), b = document.createElement('span'); a.textContent = f[0]; b.textContent = f[1]; li.appendChild(a); li.appendChild(b); ul.appendChild(li); });
+    out.appendChild(ul);
+  }
+  var p = document.createElement('p'); p.className = 'fine'; p.textContent = found.length ? 'Cleaned copy (private info replaced):' : 'No emails, phone, card or ID numbers, or keys found. Still read it: names, addresses and money details can\'t all be caught automatically.'; out.appendChild(p);
+  if(found.length){ var pre = document.createElement('div'); pre.className = 'pc-clean'; pre.textContent = clean; out.appendChild(pre); }
+  return clean;
+}
+if($('f-paste')){
+  $('pc-text').addEventListener('input', pcCheck); pcCheck();
+  $('f-paste').addEventListener('submit', function(e){ e.preventDefault(); });
+  $('pc-clear').addEventListener('click', function(){ $('pc-text').value = ''; pcCheck(); });
+  $('pc-copy').addEventListener('click', function(){
+    var t = pcCheck(), btn = this;
+    function done(ok){ btn.textContent = ok ? 'Copied ✓' : 'Select the text and copy it'; setTimeout(function(){ btn.textContent = 'Copy cleaned text'; }, 1800); }
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function(){ done(true); }, function(){ done(false); }); else done(false);
+  });
+}
+
+// Prompt library: saved on this device only (localStorage). Rendered with textContent only.
+var PR_KEY = 'sharp-prompts', DAY = 86400000;
+function prLoad(){ try{ var v = JSON.parse(localStorage.getItem(PR_KEY) || '[]'); return Array.isArray(v) ? v : []; }catch(e){ return []; } }
+function prSave(list){ try{ localStorage.setItem(PR_KEY, JSON.stringify(list)); return true; }catch(e){ return false; } }
+function prCopy(text, btn, label){
+  function done(ok){ btn.textContent = ok ? 'Copied ✓' : 'Select and copy'; setTimeout(function(){ btn.textContent = label; }, 1600); }
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(false); }); else done(false);
+}
+function prRender(){
+  var list = prLoad(), box = $('pr-list'); box.textContent = '';
+  var k = document.createElement('div'); k.className = 'k'; k.textContent = list.length ? 'Your prompts (' + list.length + ')' : 'No prompts saved yet'; box.appendChild(k);
+  if(!list.length){ var e = document.createElement('p'); e.className = 'fine'; e.textContent = 'Save your first prompt on the left. It stays on this device only.'; box.appendChild(e); return; }
+  list.forEach(function(item, i){
+    var d = document.createElement('div'); d.className = 'pr-item';
+    var h = document.createElement('h3'); h.textContent = item.name; d.appendChild(h);
+    var pre = document.createElement('pre'); pre.textContent = item.text; d.appendChild(pre);
+    var row = document.createElement('div'); row.className = 'row';
+    var age = Math.floor((Date.now() - (item.tested || 0)) / DAY), st = document.createElement('span');
+    st.className = age > 30 ? 'pr-old' : 'pr-ok'; st.textContent = age > 30 ? '! Last tested ' + age + ' days ago. Test it again.' : 'Tested ' + (age === 0 ? 'today' : age + (age === 1 ? ' day ago' : ' days ago'));
+    var c = document.createElement('button'); c.type = 'button'; c.className = 'btn sm'; c.textContent = 'Copy';
+    c.addEventListener('click', function(){ prCopy(item.text, c, 'Copy'); });
+    var t = document.createElement('button'); t.type = 'button'; t.className = 'btn sm ghost'; t.textContent = 'I tested it today';
+    t.addEventListener('click', function(){ var l = prLoad(); if(l[i]){ l[i].tested = Date.now(); prSave(l); prRender(); } });
+    var x = document.createElement('button'); x.type = 'button'; x.className = 'btn sm ghost'; x.textContent = 'Delete';
+    x.addEventListener('click', function(){ var l = prLoad(); l.splice(i, 1); prSave(l); prRender(); });
+    row.appendChild(c); row.appendChild(t); row.appendChild(x); row.appendChild(st); d.appendChild(row); box.appendChild(d);
+  });
+}
+if($('f-prompts')){
+  $('f-prompts').addEventListener('submit', function(e){ e.preventDefault(); });
+  $('pr-save').addEventListener('click', function(){
+    var name = txt('pr-name'), text = txt('pr-text'), msg = $('pr-msg');
+    if(!name || !text){ msg.textContent = 'Add a name and the prompt first.'; return; }
+    var list = prLoad(); list.unshift({ name: name.slice(0, 80), text: text.slice(0, 4000), tested: Date.now() });
+    if(!prSave(list.slice(0, 100))){ msg.textContent = 'Couldn\'t save: your browser is blocking storage (private mode?).'; return; }
+    $('pr-name').value = ''; $('pr-text').value = ''; msg.textContent = 'Saved on this device.'; prRender();
+  });
+  $('pr-copyall').addEventListener('click', function(){
+    var all = prLoad().map(function(p){ return p.name + '\n' + p.text; }).join('\n\n---\n\n');
+    prCopy(all || 'No prompts saved yet.', this, 'Copy all prompts');
+  });
+  prRender();
+}
+
 /* ================= BUSINESS PLAN & PRICING ================= */
 var PLAN_FIELDS = [
   ['pl-name', 'Business'], ['pl-problem', 'The problem'], ['pl-customer', 'Who it\'s for'], ['pl-solution', 'What I sell'],
