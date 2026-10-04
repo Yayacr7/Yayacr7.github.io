@@ -23,6 +23,15 @@ function wire(formId, fn){
   fn();
 }
 
+/* contact email from config.js (legal pages); built with textContent only */
+(function(){
+  var e = (window.NP_CONFIG || {}).CONTACT_EMAIL;
+  if(!e || !/^[^\s@<>"']+@[^\s@<>"']+\.[a-z]{2,}$/i.test(e)) return;
+  Array.prototype.forEach.call(document.querySelectorAll('[data-contact]'), function(el){
+    var a = document.createElement('a'); a.href = 'mailto:' + e; a.textContent = e; el.textContent = ''; el.appendChild(a);
+  });
+})();
+
 /* theme */
 try{ var t = localStorage.getItem('np-theme'); if(t) document.documentElement.setAttribute('data-theme', t); }catch(e){}
 var tb = $('themeBtn');

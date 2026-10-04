@@ -18,6 +18,10 @@ window.NP_CONFIG = {
   /* Payments: Stripe Payment Links (Stripe > Payment Links). */
   PAY: { builder: "", founder: "" },
 
+  /* Contact email shown on the privacy, terms and refund pages.
+     Use a business address, not a personal one. Blank = "listed here before launch". */
+  CONTACT_EMAIL: "",
+
   /* Free trial: days of Founder access, counted from when the account was created. */
   TRIAL_DAYS: 3
 };
