@@ -27,10 +27,20 @@ function route(){
   navLinks.forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-page') === id); });
   window.scrollTo(0,0);
   requestAnimationFrame(function(){ window.scrollTo(0,0); });
+  var cur = document.querySelector('nav.side a[data-page="' + id + '"]');
+  openGroup(cur ? cur.getAttribute('data-g') : null);
   var active = document.querySelector('nav.side a.active');
   if(active && active.scrollIntoView && window.innerWidth <= 820){ active.scrollIntoView({block:'nearest', inline:'center'}); }
 }
 window.addEventListener('hashchange', route);
+// Side menu: only one topic's lessons open at a time (desktop).
+function openGroup(g){
+  document.querySelectorAll('nav.side .gbtn').forEach(function(b){ b.setAttribute('aria-expanded', b.getAttribute('data-grp') === g ? 'true' : 'false'); });
+  document.querySelectorAll('nav.side a[data-g]').forEach(function(a){ a.classList.toggle('in', a.getAttribute('data-g') === g); });
+}
+document.querySelectorAll('nav.side .gbtn').forEach(function(b){
+  b.addEventListener('click', function(){ openGroup(b.getAttribute('aria-expanded') === 'true' ? null : b.getAttribute('data-grp')); });
+});
 
 /* ---------- quizzes ---------- */
 // type "mc": choices + answer index. type "num": answer + tol (absolute) + unit.

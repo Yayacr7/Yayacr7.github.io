@@ -416,6 +416,21 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 62px);max-height:calc(100vh - 6
 .dash .btn.go{background:linear-gradient(90deg,#ff6a2b,#ff4f9a);border:0;color:#fff;box-shadow:0 10px 30px -10px rgba(255,79,154,.7)}
 .world{background:var(--card)}
 #start .worlds{margin-top:4px}
+
+/* collapsible topics in the side menu (desktop); phones keep the swipe strip */
+nav.side .gbtn{display:flex;align-items:center;gap:8px;width:100%;margin:2px 0;padding:9px 10px;border:0;border-radius:8px;background:none;color:var(--ink);font:700 .95rem var(--f-body)!important;text-transform:none;letter-spacing:0;cursor:pointer;text-align:left}
+nav.side .gbtn:hover{background:var(--paper-2)}
+nav.side .gbtn .gcount{margin-left:auto;color:var(--muted);font-weight:600;font-size:.8rem}
+nav.side .gbtn .chev{color:var(--muted);transition:transform .15s;display:inline-block;width:1em;text-align:center}
+nav.side .gbtn:not(:has(.gcount)) .chev{margin-left:auto}
+nav.side .gbtn[aria-expanded="true"] .chev{transform:rotate(90deg)}
+nav.side a[data-g]{padding-left:28px}
+@media (min-width:861px){ nav.side a[data-g]:not(.in){display:none} }
+@media (max-width:860px){ nav.side .gbtn{display:none!important} nav.side a[data-g]{padding-left:10px} }
+/* previous / next stay on screen while you read */
+section.page > .pager{position:sticky;bottom:0;z-index:5;margin-top:44px;padding:12px 4px calc(12px + env(safe-area-inset-bottom,0px));background:var(--paper);border-top:1px solid var(--rule);box-shadow:0 -10px 24px -14px rgba(0,0,0,.6)}
+section.page > .pager a{padding:6px 10px;border-radius:8px}
+section.page > .pager a:hover{background:var(--paper-2)}
 </style>
 </head>
 <body>
@@ -433,29 +448,29 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 62px);max-height:calc(100vh - 6
 <nav class="side" id="nav" aria-label="Courses">
   <div class="meter"><div class="meter-label"><span>Progress</span><span id="meterText">0/13</span></div><div class="meter-track"><div class="meter-fill" id="meterFill"></div></div></div>
   <a href="#start" data-page="start"><span class="n">§</span>All courses</a>
-  <div class="group"><span class="dot t-finance"></span>Finance</div>
-  <a href="#money" data-page="money"><span class="n">01</span>Your money<span class="tick" data-tick="money"></span></a>
-  <a href="#investing" data-page="investing"><span class="n">02</span>Investing<span class="tick" data-tick="investing"></span></a>
-  <a href="#funding" data-page="funding"><span class="n">03</span>Funding &amp; valuation<span class="tick" data-tick="funding"></span></a>
-  <div class="group"><span class="dot t-business"></span>Business</div>
-  <a href="#business" data-page="business"><span class="n">04</span>How a business makes money<span class="tick" data-tick="business"></span></a>
-  <a href="#statements" data-page="statements"><span class="n">05</span>Financial statements<span class="tick" data-tick="statements"></span></a>
-  <div class="group"><span class="dot t-marketing"></span>Marketing</div>
-  <a href="#mkt-basics" data-page="mkt-basics"><span class="n">06</span>Marketing basics<span class="tick" data-tick="mkt-basics"></span></a>
-  <a href="#mkt-channels" data-page="mkt-channels"><span class="n">07</span>Getting customers<span class="tick" data-tick="mkt-channels"></span></a>
-  <a href="#mkt-measure" data-page="mkt-measure"><span class="n">08</span>Measuring marketing<span class="tick" data-tick="mkt-measure"></span></a>
-  <div class="group"><span class="dot t-negotiation"></span>Negotiation</div>
-  <a href="#negotiation" data-page="negotiation"><span class="n">09</span>Negotiation<span class="tick" data-tick="negotiation"></span></a>
-  <a href="#scripts" data-page="scripts"><span class="n">10</span>Negotiation scripts<span class="tick" data-tick="scripts"></span></a>
-  <a href="#persuasion" data-page="persuasion"><span class="n">11</span>Getting people to say yes<span class="tick" data-tick="persuasion"></span></a>
-  <div class="group"><span class="dot t-investors"></span>Investors</div>
-  <a href="#pitching" data-page="pitching"><span class="n">12</span>Pitching investors, simply<span class="tick" data-tick="pitching"></span></a>
-  <a href="#pressure" data-page="pressure"><span class="n">13</span>Staying calm under pressure<span class="tick" data-tick="pressure"></span></a>
-  <div class="group">Tools</div>
-  <a href="../tools/index.html"><span class="n">↗</span>All business tools</a>
-  <a href="#calculators" data-page="calculators"><span class="n">=</span>Money calculators</a>
-  <a href="#prompts" data-page="prompts"><span class="n">&gt;_</span>AI prompts</a>
-  <a href="#glossary" data-page="glossary"><span class="n">Aa</span>Glossary</a>
+  <button type="button" class="group gbtn" data-grp="finance" aria-expanded="false"><span class="dot t-finance"></span>Finance<span class="gcount" data-world="finance">0/3</span><span class="chev" aria-hidden="true">›</span></button>
+  <a data-g="finance" href="#money" data-page="money"><span class="n">01</span>Your money<span class="tick" data-tick="money"></span></a>
+  <a data-g="finance" href="#investing" data-page="investing"><span class="n">02</span>Investing<span class="tick" data-tick="investing"></span></a>
+  <a data-g="finance" href="#funding" data-page="funding"><span class="n">03</span>Funding &amp; valuation<span class="tick" data-tick="funding"></span></a>
+  <button type="button" class="group gbtn" data-grp="business" aria-expanded="false"><span class="dot t-business"></span>Business<span class="gcount" data-world="business">0/2</span><span class="chev" aria-hidden="true">›</span></button>
+  <a data-g="business" href="#business" data-page="business"><span class="n">04</span>How a business makes money<span class="tick" data-tick="business"></span></a>
+  <a data-g="business" href="#statements" data-page="statements"><span class="n">05</span>Financial statements<span class="tick" data-tick="statements"></span></a>
+  <button type="button" class="group gbtn" data-grp="marketing" aria-expanded="false"><span class="dot t-marketing"></span>Marketing<span class="gcount" data-world="marketing">0/3</span><span class="chev" aria-hidden="true">›</span></button>
+  <a data-g="marketing" href="#mkt-basics" data-page="mkt-basics"><span class="n">06</span>Marketing basics<span class="tick" data-tick="mkt-basics"></span></a>
+  <a data-g="marketing" href="#mkt-channels" data-page="mkt-channels"><span class="n">07</span>Getting customers<span class="tick" data-tick="mkt-channels"></span></a>
+  <a data-g="marketing" href="#mkt-measure" data-page="mkt-measure"><span class="n">08</span>Measuring marketing<span class="tick" data-tick="mkt-measure"></span></a>
+  <button type="button" class="group gbtn" data-grp="negotiation" aria-expanded="false"><span class="dot t-negotiation"></span>Negotiation<span class="gcount" data-world="negotiation">0/3</span><span class="chev" aria-hidden="true">›</span></button>
+  <a data-g="negotiation" href="#negotiation" data-page="negotiation"><span class="n">09</span>Negotiation<span class="tick" data-tick="negotiation"></span></a>
+  <a data-g="negotiation" href="#scripts" data-page="scripts"><span class="n">10</span>Negotiation scripts<span class="tick" data-tick="scripts"></span></a>
+  <a data-g="negotiation" href="#persuasion" data-page="persuasion"><span class="n">11</span>Getting people to say yes<span class="tick" data-tick="persuasion"></span></a>
+  <button type="button" class="group gbtn" data-grp="investors" aria-expanded="false"><span class="dot t-investors"></span>Investors<span class="gcount" data-world="investors">0/2</span><span class="chev" aria-hidden="true">›</span></button>
+  <a data-g="investors" href="#pitching" data-page="pitching"><span class="n">12</span>Pitching investors, simply<span class="tick" data-tick="pitching"></span></a>
+  <a data-g="investors" href="#pressure" data-page="pressure"><span class="n">13</span>Staying calm under pressure<span class="tick" data-tick="pressure"></span></a>
+  <button type="button" class="group gbtn" data-grp="more" aria-expanded="false">More: tools, glossary<span class="chev" aria-hidden="true">›</span></button>
+  <a data-g="more" href="../tools/index.html"><span class="n">↗</span>All business tools</a>
+  <a data-g="more" href="#calculators" data-page="calculators"><span class="n">=</span>Money calculators</a>
+  <a data-g="more" href="#prompts" data-page="prompts"><span class="n">&gt;_</span>AI prompts</a>
+  <a data-g="more" href="#glossary" data-page="glossary"><span class="n">Aa</span>Glossary</a>
 </nav>
 
 <main id="main">
