@@ -16,7 +16,7 @@ window.NP_CONFIG = {
   AUTH: { supabaseUrl: "", supabaseAnonKey: "", google: false },
 
   /* Payments: Stripe Payment Links (Stripe > Payment Links). */
-  PAY: { starter: "", builder: "", founder: "" },
+  PAY: { builder: "", founder: "" },
 
   /* Free trial: days of Founder access, counted from when the account was created. */
   TRIAL_DAYS: 3

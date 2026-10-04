@@ -67,8 +67,7 @@
 .trial li::before{content:"✓";color:var(--accent-text);font-weight:800}
 .trial .cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:22px}
 .trial .cta span{opacity:.75;font-size:.9rem}
-.plans{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:stretch}
-@media (min-width:901px) and (max-width:1150px){.plans{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
 .plan{position:relative;display:flex;flex-direction:column;gap:14px}
 .plan.best{border:2px solid var(--accent);box-shadow:var(--shadow)}
 .plan .flag{position:absolute;top:-13px;left:22px;font:700 .7rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;background:var(--accent);color:var(--accent-ink);padding:5px 10px;border-radius:999px}
@@ -360,7 +359,7 @@
       <article class="card plan">
         <div class="name">Free</div>
         <div class="price"><b>$0</b><span>forever</span></div>
-        <div class="depth" aria-label="Teaching level 1 of 4"><i class="on"></i><i></i><i></i><i></i><span>Basics</span></div>
+        <div class="depth" aria-label="Teaching level 1 of 3"><i class="on"></i><i></i><i></i><span>Basics</span></div>
         <p class="for">The core ideas and tools.</p>
         <ul>
           <li>All 13 lessons with quizzes</li>
@@ -371,37 +370,25 @@
         <p class="note">No card needed.</p>
       </article>
       <article class="card plan">
-        <div class="name">Starter</div>
-        <div class="price"><b>$10</b><span>one-time</span></div>
-        <div class="depth" aria-label="Teaching level 2 of 4"><i class="on"></i><i class="on"></i><i></i><i></i><span>Regular</span></div>
-        <p class="for">The full course, step by step.</p>
+        <div class="name">Builder</div>
+        <div class="price"><b>$40</b><span>one-time</span></div>
+        <div class="depth" aria-label="Teaching level 2 of 3"><i class="on"></i><i class="on"></i><i></i><span>Good</span></div>
+        <p class="for">The course plus the tools to do it.</p>
         <ul>
           <li>Everything in Free</li>
           <li>The 6-module Launch course</li>
-          <li>Course updates included</li>
-        </ul>
-        <button class="btn" type="button" data-plan="starter">Get Starter</button>
-        <p class="note" data-note="starter"></p>
-        <a class="note" href="course/index.html" style="margin-top:-8px">See the 6 modules →</a>
-      </article>
-      <article class="card plan">
-        <div class="name">Builder</div>
-        <div class="price"><b>$40</b><span>one-time</span></div>
-        <div class="depth" aria-label="Teaching level 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><span>Good</span></div>
-        <p class="for">The course plus the tools to do it.</p>
-        <ul>
-          <li>Everything in Starter</li>
           <li>Workbook for your own numbers</li>
           <li>Money spreadsheets: pricing, cash flow, startup costs</li>
         </ul>
         <button class="btn" type="button" data-plan="builder">Get Builder</button>
         <p class="note" data-note="builder"></p>
+        <a class="note" href="course/index.html" style="margin-top:-8px">See the 6 modules →</a>
       </article>
       <article class="card plan best">
         <span class="flag">The best</span>
         <div class="name">Founder</div>
         <div class="price"><b>$75</b><span>one-time</span></div>
-        <div class="depth" aria-label="Teaching level 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><span>Everything</span></div>
+        <div class="depth" aria-label="Teaching level 3 of 3"><i class="on"></i><i class="on"></i><i class="on"></i><span>Everything</span></div>
         <p class="for">Everything Sharp teaches.</p>
         <ul>
           <li>Everything in Builder</li>
@@ -423,7 +410,7 @@
     <span class="eyebrow">Questions</span>
     <h2 style="margin:10px 0 24px">FAQ</h2>
     <div class="faq">
-      <details><summary>Is Sharp free?</summary><p>The basics are: all lessons, quizzes and tools. Starter ($10) adds the Launch course. Builder ($40) adds the workbook and spreadsheets. Founder ($75) adds everything: scripts, the pitch kit and early access. All one-time payments.</p></details>
+      <details><summary>Is Sharp free?</summary><p>The basics are: all lessons, quizzes and tools. Builder ($40) adds the Launch course, workbook and spreadsheets. Founder ($75) adds everything: scripts, the pitch kit and early access. Both are one-time payments.</p></details>
       <details><summary>Who is it for?</summary><p>People with a business idea, or the itch to start one, who want to understand money, marketing, deals and investors without the jargon. No business background needed.</p></details>
       <details><summary>Is it really that simple?</summary><p>The basics are, and that's most of what you need day to day. Where simplifying would mislead you, such as tax or legal details, the lessons say so and tell you when to ask a professional.</p></details>
       <details><summary>How does the free trial work?</summary><p>Every new account gets 3 days of Founder access, starting when you create it. No card is needed and nothing renews. After 3 days you keep the free plan, or buy Builder or Founder.</p></details>

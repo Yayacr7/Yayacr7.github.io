@@ -95,7 +95,7 @@ var dlg = document.getElementById('authDialog'), signinBtn = document.getElement
 var authMsg = document.getElementById('authMsg'), reasonEl = document.getElementById('authReason');
 var sb = null, user = null, pendingPlan = null;
 var authReady = !!(AUTH.supabaseUrl && AUTH.supabaseAnonKey);
-var PLAN_NAMES = { starter: 'Starter ($10)', builder: 'Builder ($40)', founder: 'Founder ($75)' };
+var PLAN_NAMES = { builder: 'Builder ($40)', founder: 'Founder ($75)' };
 
 function openAuth(reason){
   reasonEl.textContent = reason || ''; reasonEl.classList.toggle('on', !!reason);

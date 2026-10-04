@@ -61,11 +61,10 @@ function payUrl(plan, u){
   return base + (q.length ? (base.indexOf('?') < 0 ? '?' : '&') + q.join('&') : '');
 }
 function setBuyLinks(u){
-  var st = payUrl('starter', u), b = payUrl('builder', u), f = payUrl('founder', u);
-  if(st) $('buyStarter').href = st;
+  var b = payUrl('builder', u), f = payUrl('founder', u);
   if(b) $('buyBuilder').href = b;
   if(f) $('buyFounder').href = f;
-  $('buyNote').textContent = (st || b || f) ? 'Secure checkout by Stripe.' : 'Paid plans open soon. These buttons take you to pricing to reserve a spot.';
+  $('buyNote').textContent = (b || f) ? 'Secure checkout by Stripe.' : 'Paid plans open soon. These buttons take you to pricing to reserve a spot.';
 }
 
 /* ---------- demo / preview (#demo, #demo-ended) ---------- */
