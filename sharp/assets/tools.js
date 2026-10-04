@@ -128,6 +128,80 @@ wire('f-efund', function(){
   ], gap === 0 ? '<b>Fully funded.</b> Keep it in an easy-to-reach savings account, separate from spending money.' : 'Keep this in a separate savings account you can reach in a day, not invested.');
 });
 
+/* ================= SPENDING CHECK ================= */
+// Each category is judged as a share of take-home pay. Guides, not laws: [green up to %, yellow up to %].
+var SPEND = [
+  ['s-housing', 'Rent or mortgage', 30, 40, 'It\'s hard to change fast. At your next lease, look at a cheaper place or a roommate.'],
+  ['s-bills', 'Bills', 10, 15, 'Call your phone and insurance companies and ask for a cheaper plan. It often works.'],
+  ['s-food', 'Groceries', 15, 20, 'Plan meals for the week and shop with a list.'],
+  ['s-transport', 'Transport', 10, 15, 'Check your car payment, insurance and fuel. Could you share rides or take transit sometimes?'],
+  ['s-eat', 'Eating out', 5, 10, 'Cook two more meals a week at home.'],
+  ['s-shop', 'Shopping', 5, 10, 'Wait 48 hours before buying anything that isn\'t a need.'],
+  ['s-subs', 'Subscriptions', 2, 4, 'Cancel anything you didn\'t use in the last 30 days.'],
+  ['s-fun', 'Fun & hobbies', 5, 10, 'Keep some fun, just set a monthly limit and stick to it.']
+];
+var STATUS = {
+  good: { cls: 'good', icon: '✓', word: 'Keep doing this' },
+  warn: { cls: 'warn', icon: '!', word: 'Think about it' },
+  bad:  { cls: 'bad',  icon: '✕', word: 'Cut back' }
+};
+wire('f-spend', function(){
+  var inc = pos('s-income'), out = $('s-out');
+  if(inc <= 0){ out.innerHTML = '<p class="sc-empty">Enter your monthly take-home pay to see your chart.</p>'; return; }
+  var rows = [], total = 0;
+  SPEND.forEach(function(c){
+    var v = pos(c[0]); total += v;
+    var share = v / inc * 100, st = share <= c[2] ? 'good' : share <= c[3] ? 'warn' : 'bad';
+    rows.push({ name: c[1], v: v, share: share, st: st, tip: c[4], target: inc * c[2] / 100 });
+  });
+  var save = pos('s-save'), saveShare = save / inc * 100;
+  var saveSt = saveShare >= 15 ? 'good' : saveShare >= 5 ? 'warn' : 'bad';
+  rows.push({ name: 'Saving', v: save, share: saveShare, st: saveSt, saving: true, target: inc * .15 });
+  total += save;
+  var left = inc - total;
+
+  // All text below is numbers and fixed wording only (no visitor-typed text), so it is safe as HTML.
+  var html = '<div class="sc-sum"><div><span>Take-home pay</span><b>' + money(inc) + '</b></div><div><span>Spent + saved</span><b>' + money(total) + '</b></div><div><span>Left over</span><b class="' + (left < 0 ? 'neg' : '') + '">' + money(left) + '</b></div></div>';
+  if(left < 0) html += '<p class="sc-alert"><span class="sc-ic bad" aria-hidden="true">✕</span><span><b>You spend ' + money(-left) + ' a month more than you earn.</b> Fix the red rows first.</span></p>';
+  html += '<div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Keep doing this</span><span><i class="sc-ic warn">!</i>Think about it</span><span><i class="sc-ic bad">✕</i>Cut back</span></div>';
+  html += '<ul class="sc-chart" aria-label="Your spending as a share of take-home pay">';
+  rows.forEach(function(r){
+    var S = STATUS[r.st], word = r.saving ? (r.st === 'good' ? 'Keep doing this' : r.st === 'warn' ? 'Try to save more' : 'Save more') : S.word;
+    var w = Math.min(100, r.share);
+    html += '<li class="' + S.cls + '" tabindex="0" title="' + r.name + ': ' + money(r.v) + ', ' + pct(r.share, 0) + ' of your pay. ' + word + '.">' +
+      '<span class="sc-name">' + r.name + '</span>' +
+      '<span class="sc-track"><i style="width:' + (r.v > 0 ? Math.max(1.5, w).toFixed(1) : 0) + '%"></i></span>' +
+      '<span class="sc-val">' + money(r.v) + ' <small>' + pct(r.share, 0) + '</small></span>' +
+      '<span class="sc-st"><i class="sc-ic ' + S.cls + '" aria-hidden="true">' + S.icon + '</i>' + word + '</span></li>';
+  });
+  html += '</ul>';
+  var bad = rows.filter(function(r){ return r.st === 'bad'; }), warn = rows.filter(function(r){ return r.st === 'warn'; });
+  var todo = [];
+  bad.concat(warn).forEach(function(r){
+    if(r.saving) todo.push('<li class="' + r.st + '"><b>Saving:</b> aim for about ' + money(r.target) + ' a month (15% of your pay). Set it to move automatically on payday.</li>');
+    else todo.push('<li class="' + r.st + '"><b>' + r.name + ':</b> ' + (r.st === 'bad' ? 'cut back to about ' + money(r.target) + ' a month. ' : 'a little high. ') + r.tip + '</li>');
+  });
+  html += todo.length ? '<h3 class="sc-h">What to do</h3><ul class="sc-todo">' + todo.join('') + '</ul>' : '<p class="sc-ok"><span class="sc-ic good" aria-hidden="true">✓</span> Everything is inside the usual guides. Keep doing what you\'re doing.</p>';
+  out.innerHTML = html;
+});
+
+/* ================= IDEA CHECK ================= */
+wire('f-idea', function(){
+  var price = pos('i-price'), cost = pos('i-cost'), fixed = pos('i-fixed'), goal = pos('i-goal'), per = price - cost;
+  if(per <= 0){
+    $('i-out').innerHTML = result('Customers needed each month', 'Never', [['Each sale loses', money(-per, 2)]], '<b>Doesn\'t add up yet.</b> Each sale costs more than it earns, so more customers means bigger losses. Raise the price or cut the cost per sale.');
+    return;
+  }
+  var need = Math.ceil((fixed + goal) / per), be = Math.ceil(fixed / per), day = need / 30, margin = per / price * 100, v;
+  if(day <= 3) v = '<b>Doable on paper.</b> About ' + (day < 1 ? 'one sale every ' + Math.round(1 / day) + ' days' : day.toFixed(1) + ' sales a day') + '. Next question: will strangers actually pay ' + money(price) + '? Prove that before you build more.';
+  else if(day <= 20) v = '<b>Possible, but it\'s a real business.</b> ' + Math.round(day) + ' sales a day takes steady marketing. Test whether a higher price still sells; it cuts this number fast.';
+  else v = '<b>That\'s a lot of sales for one person.</b> ' + Math.round(day).toLocaleString() + ' a day needs serious traffic or a team. Raise the price, cut costs, or sell something bigger.';
+  if(margin < 30) v += ' Your margin is thin (' + pct(margin, 0) + '), so small cost increases will hurt.';
+  $('i-out').innerHTML = result('Customers needed each month', need.toLocaleString(), [
+    ['Per day', day < 10 ? day.toFixed(1) : Math.round(day).toLocaleString()], ['Each sale keeps', money(per, 2)], ['Break-even (bills only)', be.toLocaleString() + ' a month'], ['Margin', pct(margin, 0)]
+  ], v);
+});
+
 /* ================= MONEY PLAN ================= */
 function monthName(k){ var d = new Date(); d.setDate(1); d.setMonth(d.getMonth() + k); return d.toLocaleDateString(undefined, { month: 'short', year: 'numeric' }); }
 function round5(v){ return Math.round(v / 5) * 5; }

@@ -17,30 +17,6 @@ if(t) root.setAttribute('data-theme', t);
   t = dark ? 'light' : 'dark'; root.setAttribute('data-theme', t); save('np-theme', t);
 });
 
-/* ---------- the napkin test ---------- */
-function num(id){ var v = parseFloat(document.getElementById(id).value); return isFinite(v) && v > 0 ? v : 0; }
-function money(n){ return '$' + Math.round(n).toLocaleString(); }
-function napkin(){
-  var price = num('n-price'), cost = num('n-cost'), fixed = num('n-fixed'), goal = num('n-goal');
-  var per = price - cost, ans = document.getElementById('n-answer'), ver = document.getElementById('n-verdict');
-  if(per <= 0){
-    ans.innerHTML = '<div class="big"><span class="mark">∞</span> customers</div><div class="line">every sale loses ' + money(-per) + '</div>';
-    ver.innerHTML = '<b>Doesn\'t add up yet.</b> Each sale costs more than it earns, so more customers means bigger losses. Raise the price or cut the cost per sale.';
-    return;
-  }
-  var need = Math.ceil((fixed + goal) / per), breakeven = Math.ceil(fixed / per), perDay = need / 30;
-  var margin = Math.round(per / price * 100);
-  ans.innerHTML = '<div class="big"><span class="mark">' + need.toLocaleString() + '</span> customers</div>' +
-    '<div class="line">a month · ≈ ' + (perDay < 10 ? perDay.toFixed(1) : Math.round(perDay)) + ' a day · break-even at ' + breakeven.toLocaleString() + ' · ' + margin + '% margin</div>';
-  var v;
-  if(perDay <= 3) v = '<b>Doable on paper.</b> About ' + (perDay < 1 ? 'one sale every ' + Math.round(1 / perDay) + ' days' : perDay.toFixed(1) + ' sales a day') + '. The math works. Next question: will strangers actually pay ' + money(price) + '? Prove that before you build more.';
-  else if(perDay <= 20) v = '<b>Possible, but it\'s a real business.</b> ' + Math.round(perDay) + ' sales a day takes steady marketing. Test whether a higher price still sells; it cuts this number fast.';
-  else v = '<b>That\'s a lot of sales for one person.</b> ' + Math.round(perDay).toLocaleString() + ' a day needs serious traffic or a team. Raise the price, cut costs, or sell something bigger.';
-  if(margin < 30 && per > 0) v += ' Your margin is thin (' + margin + '%), so small cost increases will hurt.';
-  ver.innerHTML = v;
-}
-['n-price','n-cost','n-fixed','n-goal'].forEach(function(id){ document.getElementById(id).addEventListener('input', napkin); });
-napkin();
 
 /* ---------- waitlist ---------- */
 var ENDPOINTS = {

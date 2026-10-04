@@ -6,7 +6,7 @@
 var CFG = window.NP_CONFIG || {}, AUTH = CFG.AUTH || {};
 var authReady = !!(AUTH.supabaseUrl && AUTH.supabaseAnonKey);
 var OUTLINE = [
-  ['m1', 'The napkin test', 'Is the idea worth your evenings?'],
+  ['m1', 'The idea check', 'Is the idea worth your evenings?'],
   ['m2', 'Price it so it pays you', 'Value-based pricing, rises and discounts'],
   ['m3', 'Unit economics without the jargon', 'What one customer is really worth'],
   ['m4', 'Cash: don\'t run out', 'The 13-week cash forecast'],

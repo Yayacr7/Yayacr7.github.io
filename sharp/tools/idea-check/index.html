@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>Investor pressure drill · Sharp Basics</title>
-<meta name="description" content="Practise tough investor questions against a timer: what they are really asking, a strong answer shape, and what to avoid.">
-<meta property="og:title" content="Investor pressure drill · Sharp Basics">
-<meta property="og:description" content="Practise tough investor questions against a timer: what they are really asking, a strong answer shape, and what to avoid.">
+<title>Idea check · Sharp Basics</title>
+<meta name="description" content="Free idea check: how many customers a business idea needs to pay you a real income.">
+<meta property="og:title" content="Idea check · Sharp Basics">
+<meta property="og:description" content="Free idea check: how many customers a business idea needs to pay you a real income.">
 <meta property="og:image" content="https://sharpbasics.com/og.png">
 <link rel="icon" href="../../icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,7 @@
 .tool-grid .result{margin-top:0;position:sticky;top:90px}
 .tool h2{margin-bottom:4px}
 @media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
-.dr-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:grid;gap:14px}.dr-q{font:800 clamp(1.4rem,3.4vw,1.9rem)/1.2 var(--f-display);letter-spacing:-.02em}.dr-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.dr-clock{font:800 1.6rem var(--f-display);font-variant-numeric:tabular-nums;min-width:4.2em}.dr-clock.low{color:var(--bad)}.dr-reveal{margin-top:16px;background:var(--surface-2);border-radius:var(--radius);padding:20px 22px}.dr-reveal h3{font-size:1rem;margin:12px 0 4px}.dr-reveal h3:first-child{margin-top:0}.dr-tips{margin:0 0 12px;padding-left:1.2em;display:grid;gap:6px}
+
 </style>
 </head>
 <body>
@@ -39,50 +39,30 @@
 </header>
 <main>
   <div class="wrap page-head">
-    <p class="crumbs"><a href="../../index.html">Sharp</a> / <a href="../../tools/index.html">Tools</a> / Investor pressure drill</p>
-    <span class="eyebrow" style="display:block;margin-top:18px">Investor tools</span>
-    <h1>Investor pressure drill</h1>
-    <p class="lede">Twenty tough questions investors really ask. Answer out loud before the timer runs out, then see what a strong answer looks like.</p>
+    <p class="crumbs"><a href="../../index.html">Sharp</a> / <a href="../../tools/index.html">Tools</a> / Idea check</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Business tools</span>
+    <h1>Idea check</h1>
+    <p class="lede">Will your idea pay you? See how many customers you need a month, and a day.</p>
   </div>
   <div class="wrap" style="padding-bottom:80px">
-    <section class="tool" id="drill">
+    <section class="tool" id="idea">
       <div class="tool-grid">
+        <form id="f-idea" novalidate>
+          <h2>Your numbers</h2>
+          <p class="intro">Four numbers decide whether an idea can pay you. Rough guesses are fine.</p>
+          <div class="fields">
+<label for="i-price">Price per sale ($)<input type="number" id="i-price" value="49" min="0" step="any" inputmode="decimal"></label>
+<label for="i-cost">Cost to deliver one sale ($)<input type="number" id="i-cost" value="9" min="0" step="any" inputmode="decimal"></label>
+<label for="i-fixed">Monthly bills: tools, ads, rent ($)<input type="number" id="i-fixed" value="400" min="0" step="any" inputmode="decimal"></label>
+<label for="i-goal">What you want to take home a month ($)<input type="number" id="i-goal" value="3000" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
         <div>
-          <div class="fields wide" style="margin-bottom:16px">
-            <label for="dr-cat">Topic<select id="dr-cat"></select></label>
-            <label for="dr-time">Time to answer<select id="dr-time"><option value="30">30 seconds</option><option value="60" selected>60 seconds</option><option value="90">90 seconds</option></select></label>
-          </div>
-          <div class="dr-card">
-            <span class="chip t-investors" id="dr-chip"></span>
-            <p class="dr-q" id="dr-q" aria-live="polite"></p>
-            <div class="dr-row"><span class="dr-clock" id="dr-clock" aria-live="off">1:00</span>
-              <button class="btn" type="button" id="dr-start">Start timer</button>
-              <button class="btn ghost" type="button" id="dr-show">Show a strong answer</button>
-              <button class="btn ghost" type="button" id="dr-next">Skip</button></div>
-          </div>
-          <div class="dr-reveal" id="dr-reveal" hidden>
-            <h3>What they're really asking</h3><p id="dr-real"></p>
-            <h3>A strong answer shape</h3><p id="dr-shape"></p>
-            <h3>Avoid</h3><p id="dr-trap"></p>
-            <p class="fine" style="margin-top:14px">How did your answer go?</p>
-            <div class="dr-row"><button class="btn sm" type="button" data-rate="nailed">Nailed it</button><button class="btn sm ghost" type="button" data-rate="shaky">Shaky</button><button class="btn sm ghost" type="button" data-rate="again">Practise again</button></div>
-          </div>
-          <p class="fine" id="dr-tally" style="margin-top:12px"></p>
+          <div class="result" id="i-out" aria-live="polite"></div>
         </div>
-        <aside class="card" style="position:sticky;top:90px">
-          <h3 style="margin-bottom:8px">Five habits under pressure</h3>
-          <ol class="dr-tips">
-            <li><b>Pause</b> two seconds before you answer.</li>
-            <li><b>Answer first</b> in one sentence, then give one or two reasons.</li>
-            <li><b>Clarify</b> if the question is unclear.</li>
-            <li><b>"I don't know, I'll send it tomorrow"</b> beats a confident guess.</li>
-            <li><b>Steer back</b> to what you're sure of, honestly.</li>
-          </ol>
-          <p class="fine">Say your answers out loud. Practising silently in your head doesn't build the same calm.</p>
-          <p class="fine" style="margin-top:8px"><a href="../../learn/index.html#pressure">Read the lesson: Staying calm under pressure →</a></p>
-        </aside>
       </div>
     </section>
+    <p class="fine">Customers needed = (monthly bills + take-home goal) ÷ what each sale keeps. Module 1 of the Launch course walks through it step by step.</p>
   </div>
 </main>
 <footer class="site-foot">
