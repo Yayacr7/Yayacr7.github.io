@@ -1,0 +1,10 @@
+# Cloudflare Pages response headers (each page also sets its own Content-Security-Policy).
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=31536000
+
+/course/*
+  X-Robots-Tag: noindex
