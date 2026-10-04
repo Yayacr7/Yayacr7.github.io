@@ -138,8 +138,7 @@ var SPEND = [
   ['s-eat', 'Eating out', 5, 10, 'Cook two more meals a week at home.'],
   ['s-shop', 'Shopping', 5, 10, 'Wait 48 hours before buying anything that isn\'t a need.'],
   ['s-subs', 'Subscriptions', 2, 4, 'Cancel anything you didn\'t use in the last 30 days.'],
-  ['s-fun', 'Fun & hobbies', 5, 10, 'Keep some fun, just set a monthly limit and stick to it.'],
-  ['s-personal', 'Personal items', 4, 7, 'Haircuts, toiletries and clothes add up. Buy basics in bulk and skip impulse buys.']
+  ['s-fun', 'Fun & hobbies', 5, 10, 'Keep some fun, just set a monthly limit and stick to it.']
 ];
 var STATUS = {
   good: { cls: 'good', icon: '✓', word: 'Keep doing this' },
