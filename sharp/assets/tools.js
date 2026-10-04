@@ -1,4 +1,4 @@
-/* Erupt tools. Each tool starts only if its form is on the page.
+/* Sharp tools. Each tool starts only if its form is on the page.
    Rule: visitor-typed text is only ever inserted with textContent, never innerHTML. */
 (function(){
 "use strict";
@@ -136,10 +136,10 @@ function buildPlan(){
     var p = document.createElement('p'); p.textContent = v; out.appendChild(p);
   });
   if(!any){ var e = document.createElement('p'); e.className = 'fine'; e.textContent = 'Fill in the boxes and your plan appears here.'; out.appendChild(e); }
-  try{ var d = {}; PLAN_FIELDS.forEach(function(f){ d[f[0]] = txt(f[0]); }); localStorage.setItem('erupt-plan', JSON.stringify(d)); }catch(e){}
+  try{ var d = {}; PLAN_FIELDS.forEach(function(f){ d[f[0]] = txt(f[0]); }); localStorage.setItem('sharp-plan', JSON.stringify(d)); }catch(e){}
 }
 if($('f-plan')){
-  try{ var saved = JSON.parse(localStorage.getItem('erupt-plan') || 'null'); if(saved) PLAN_FIELDS.forEach(function(f){ if(saved[f[0]] && $(f[0])) $(f[0]).value = saved[f[0]]; }); }catch(e){}
+  try{ var saved = JSON.parse(localStorage.getItem('sharp-plan') || 'null'); if(saved) PLAN_FIELDS.forEach(function(f){ if(saved[f[0]] && $(f[0])) $(f[0]).value = saved[f[0]]; }); }catch(e){}
   wire('f-plan', buildPlan);
   $('pl-copy').addEventListener('click', function(){
     var lines = []; PLAN_FIELDS.forEach(function(f){ var v = txt(f[0]); if(v) lines.push(f[0] === 'pl-name' ? v.toUpperCase() + ': ONE-PAGE PLAN' : f[1] + ':\n' + v); });

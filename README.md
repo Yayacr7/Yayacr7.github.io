@@ -2,18 +2,18 @@
 
 Things I'm making with Claude Code.
 
-## Erupt — business school for aspiring entrepreneurs
+## Sharp — business school for aspiring entrepreneurs
 
-[`erupt/`](erupt/index.html) is a finance and business learning site: free courses in four topics (Finance, Business, Marketing, Negotiation; 10 lessons with self-checking quizzes), a library of 18 calculators and planners, a 3-day free trial, and Free / Builder $30 / Founder $80 plans.
+[`sharp/`](sharp/index.html) is a finance and business learning site: free courses in four topics (Finance, Business, Marketing, Negotiation; 10 lessons with self-checking quizzes), a library of 18 calculators and planners, a 3-day free trial, and Free / Builder $30 / Founder $80 plans.
 
-- `erupt/index.html` — home page (topics, live napkin-test tool, pricing, waitlist, sign-in)
-- `erupt/learn/` — the courses
-- `erupt/tools/` — marketing calculators, budget & savings planner, business plan & pricing, negotiation prep
-- `erupt/trial/` — the 3-day Founder trial area
-- `erupt/config.js` — **the only settings file**: waitlist provider, Supabase keys, Stripe Payment Links, trial length
+- `sharp/index.html` — home page (topics, live napkin-test tool, pricing, waitlist, sign-in)
+- `sharp/learn/` — the courses
+- `sharp/tools/` — marketing calculators, budget & savings planner, business plan & pricing, negotiation prep
+- `sharp/trial/` — the 3-day Founder trial area
+- `sharp/config.js` — **the only settings file**: waitlist provider, Supabase keys, Stripe Payment Links, trial length
 - `supabase/schema.sql` — server-side lock for paid content; [`SECURITY.md`](SECURITY.md) — security checklist
 
-Old `napkinproof/` and `learn/` addresses redirect to Erupt.
+Old `napkinproof/` and `learn/` addresses redirect to Sharp.
 
 ## Yahya.games.com — Skyforge Champions
 

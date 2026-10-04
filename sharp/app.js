@@ -60,7 +60,7 @@ function send(email, stage){
   return fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify({ email: email, stage: stage || '', source: 'erupt-home', _subject: 'New Erupt waitlist signup' })
+    body: JSON.stringify({ email: email, stage: stage || '', source: 'sharp-home', _subject: 'New Sharp waitlist signup' })
   }).then(function(r){ if(!r.ok) throw new Error('http-' + r.status); return r; });
 }
 Array.prototype.forEach.call(document.querySelectorAll('form[data-waitlist]'), function(form){
@@ -114,7 +114,7 @@ function render(){
   signinBtn.classList.toggle('in', !!who);
   dlg.classList.toggle('is-in', !!who);
   document.getElementById('authWho').textContent = who;
-  document.getElementById('authTitle').textContent = who ? 'Your account' : 'Sign in to Erupt';
+  document.getElementById('authTitle').textContent = who ? 'Your account' : 'Sign in to Sharp';
 }
 
 function notOpenYet(){
