@@ -172,7 +172,7 @@ wire('f-spend', function(){
       '<span class="sc-name">' + r.name + '</span>' +
       '<span class="sc-track"><i style="width:' + (r.v > 0 ? Math.max(1.5, w).toFixed(1) : 0) + '%"></i></span>' +
       '<span class="sc-val">' + money(r.v) + ' <small>' + pct(r.share, 0) + '</small></span>' +
-      '<span class="sc-st"><i class="sc-ic ' + S.cls + '" aria-hidden="true">' + S.icon + '</i>' + word + '</span></li>';
+      '<span class="sc-st"><i class="sc-ic ' + S.cls + '" aria-hidden="true">' + S.icon + '</i><span class="sc-w">' + word + '</span></span></li>';
   });
   html += '</ul>';
   var bad = rows.filter(function(r){ return r.st === 'bad'; }), warn = rows.filter(function(r){ return r.st === 'warn'; });
@@ -182,7 +182,22 @@ wire('f-spend', function(){
     else todo.push('<li class="' + r.st + '"><b>' + r.name + ':</b> ' + (r.st === 'bad' ? 'cut back to about ' + money(r.target) + ' a month. ' : 'a little high. ') + r.tip + '</li>');
   });
   html += todo.length ? '<h3 class="sc-h">What to do</h3><ul class="sc-todo">' + todo.join('') + '</ul>' : '<p class="sc-ok"><span class="sc-ic good" aria-hidden="true">✓</span> Everything is inside the usual guides. Keep doing what you\'re doing.</p>';
+  // Short version for wide screens, where the chart and the boxes share one screen.
+  if(todo.length){
+    var mini = bad.map(function(r){ return '<li class="bad"><b>Cut back:</b> ' + (r.saving ? 'save about ' + money(r.target) + ' a month' : r.name + ' to about ' + money(r.target) + ' a month') + '.</li>'; });
+    if(warn.length) mini.push('<li class="warn"><b>Think about:</b> ' + warn.map(function(r){ return r.name; }).join(', ') + '.</li>');
+    html += '<ul class="sc-mini">' + mini.join('') + '</ul>';
+  }
   out.innerHTML = html;
+});
+
+// Phone view of the home page: one panel at a time so nothing needs scrolling.
+Array.prototype.forEach.call(document.querySelectorAll('[data-sctab]'), function(b){
+  b.addEventListener('click', function(){
+    var box = document.querySelector('.sc-first'); if(!box) return;
+    box.setAttribute('data-view', b.getAttribute('data-sctab'));
+    Array.prototype.forEach.call(document.querySelectorAll('[data-sctab]'), function(x){ x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+  });
 });
 
 /* ================= IDEA CHECK ================= */
