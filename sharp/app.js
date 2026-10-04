@@ -40,7 +40,6 @@ function napkin(){
   ver.innerHTML = v;
 }
 ['n-price','n-cost','n-fixed','n-goal'].forEach(function(id){ document.getElementById(id).addEventListener('input', napkin); });
-['n-price','n-cost','n-fixed','n-goal'].forEach(function(id){ document.getElementById(id).addEventListener('input', function(){ if(window.SharpGame) window.SharpGame.tool('napkin'); }, { once: true }); });
 napkin();
 
 /* ---------- waitlist ---------- */

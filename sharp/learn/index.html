@@ -8,7 +8,6 @@
 <script src="early.js"></script>
 <title>Sharp Courses</title>
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../assets/game.css">
 <meta name="description" content="Plain-English lessons on personal finance, business finance and negotiation — with calculators, practice problems that check your work, and ready-to-use AI prompts.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -335,12 +334,22 @@ nav.side .group{display:flex;align-items:center;gap:7px}
 .dot.t-finance{background:var(--finance)} .dot.t-business{background:var(--business)} .dot.t-marketing{background:var(--marketing)} .dot.t-negotiation{background:var(--negotiation)}
 .formula{background-image:none}
 
-/* ---- Sharp game skin ---- */
+/* ---- Sharp course skin ---- */
+.t-finance{--t:var(--finance);--ts:var(--finance-soft)}
+.t-business{--t:var(--business);--ts:var(--business-soft)}
+.t-marketing{--t:var(--marketing);--ts:var(--marketing-soft)}
+.t-negotiation{--t:var(--negotiation);--ts:var(--negotiation-soft)}
+.t-investors{--t:var(--investors);--ts:var(--investors-soft)}
+.topic-bars{display:grid;gap:9px;margin:22px 0 24px;max-width:460px}
+.tb{display:grid;grid-template-columns:96px minmax(0,1fr) 40px;align-items:center;gap:12px;font-weight:700;font-size:.92rem}
+.tb-track{height:10px;border-radius:5px;background:var(--paper-2);overflow:hidden}
+.tb-track i{display:block;height:100%;width:0;border-radius:5px;background:var(--t);transition:width .7s cubic-bezier(.2,.8,.2,1)}
+.tb-n{color:var(--t);text-align:right;font-variant-numeric:tabular-nums}
 .site-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
 .head-in{display:flex;align-items:center;gap:14px;max-width:1220px;margin:0 auto;padding:10px 20px}
 .brand{font-size:1.3rem}
 .icon-btn{padding:8px 10px;line-height:0}
-nav.side{top:calc(env(safe-area-inset-top,0px) + 66px);max-height:calc(100vh - 66px)}
+nav.side{top:calc(env(safe-area-inset-top,0px) + 62px);max-height:calc(100vh - 66px)}
 .eyebrow,nav.side .group,nav.side a .n,.meter-label,.progress-pill,th,.chip,.q .prompt .qn,.score,.stamp small,.callout b:first-child,.calc label,.zopa .tick-l{font-family:var(--f-body)!important}
 .callout b:first-child{font-weight:700}
 #start{max-width:none}
@@ -400,9 +409,8 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 66px);max-height:calc(100vh - 6
 .q.locked label.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
 .q.locked label.opt:not(.right):not(.wrong){opacity:.6}
 .q .numrow .btn{padding:8px 14px}
-.xp-pop{position:absolute;right:14px;top:10px;font:800 1rem var(--f-display);color:var(--good);animation:xp-up 1.4s ease-out forwards;pointer-events:none}
-@keyframes xp-up{0%{opacity:0;transform:translateY(8px)}15%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0;transform:translateY(-14px)}}
 @media (max-width:860px){
+  nav.side .group,nav.side .meter{display:none!important}
   .head-in{padding:10px 16px;gap:10px}
   .dash{grid-template-columns:1fr;padding:24px 20px}
   .dash-ring{order:-1;justify-self:start}
@@ -410,7 +418,7 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 66px);max-height:calc(100vh - 6
   .ring-txt b{font-size:1.8rem}
   nav.side{top:auto}
 }
-@media (prefers-reduced-motion: reduce){ .node.next .node-c{animation:none} .xp-pop{animation:none;opacity:0} .ring-fg{transition:none} }
+@media (prefers-reduced-motion: reduce){ .node.next .node-c{animation:none} .ring-fg{transition:none} }
 </style>
 </head>
 <body>
@@ -420,7 +428,6 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 66px);max-height:calc(100vh - 6
     <a class="brand" href="../index.html"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 28 16 4l11 24z" fill="var(--ink)"/><path d="M12.6 11.4 16 4l3.4 7.4z" fill="var(--note)"/></svg>Sharp</a>
     <nav class="top-links" aria-label="Main"><a href="index.html" aria-current="page">Courses</a><a href="../tools/index.html">Tools</a><a href="../index.html#pricing">Pricing</a><a href="../trial/index.html">Free trial</a></nav>
     <div class="spacer"></div>
-    <a class="g-hud" href="#start" aria-label="Your level and XP"><span class="g-lvl" data-g="levelnum">1</span><span class="g-hud-mid"><small><span data-g="level">Rookie</span> · <span data-g="xp">0 XP</span></small><span class="g-track"><span class="g-fill" data-g="bar"></span></span></span><span class="g-streak"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c1 3 4 4.5 4 8.5a4 4 0 0 1-8 0c0-1.6.7-2.8 1.6-3.7.2 1.4 1 2.2 1.9 2.2 0-2.6-.5-4.7.5-7z"/></svg><span data-g="streak">0</span></span></a>
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch between light and dark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="display:block"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
     <span id="progressPill" hidden></span>
   </div>
@@ -461,27 +468,25 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 66px);max-height:calc(100vh - 6
 <section class="page" id="start">
   <div class="dash">
     <div class="dash-main">
-      <span class="eyebrow">Your learning path</span>
+      <span class="eyebrow">Your courses</span>
       <h1>Business, made <em>simple.</em></h1>
-      <p class="lede">Short lessons, instant feedback, and XP for every right answer. Pass lessons to light up your path and unlock badges.</p>
-      <div class="lvl-row">
-        <span class="g-lvl lvl-big" data-g="levelnum">1</span>
-        <div class="lvl-info"><div><b data-g="level">Rookie</b> · <span data-g="xp">0 XP</span></div><div class="g-track"><span class="g-fill" data-g="bar"></span></div><small data-g="tonext"></small></div>
-      </div>
-      <div class="dash-stats">
-        <div><b data-g="passed">0</b><span>lessons passed</span></div>
-        <div><b data-g="streak">0</b><span>day streak</span></div>
-        <div><b id="badgeCount">0</b><span>badges</span></div>
+      <p class="lede">13 short lessons in five topics. Each one starts with a 30-second version. Follow the path, or jump to whatever you need today.</p>
+      <div class="topic-bars">
+        <div class="tb t-finance"><span class="tb-name">Finance</span><span class="tb-track"><i data-bar="finance"></i></span><span class="tb-n" data-world="finance">0/3</span></div>
+        <div class="tb t-business"><span class="tb-name">Business</span><span class="tb-track"><i data-bar="business"></i></span><span class="tb-n" data-world="business">0/2</span></div>
+        <div class="tb t-marketing"><span class="tb-name">Marketing</span><span class="tb-track"><i data-bar="marketing"></i></span><span class="tb-n" data-world="marketing">0/3</span></div>
+        <div class="tb t-negotiation"><span class="tb-name">Negotiation</span><span class="tb-track"><i data-bar="negotiation"></i></span><span class="tb-n" data-world="negotiation">0/3</span></div>
+        <div class="tb t-investors"><span class="tb-name">Investors</span><span class="tb-track"><i data-bar="investors"></i></span><span class="tb-n" data-world="investors">0/2</span></div>
       </div>
       <a class="btn go" id="continueBtn" href="#money">Start lesson 1 →</a>
     </div>
     <div class="dash-ring" aria-hidden="true">
-      <svg viewBox="0 0 120 120" width="150" height="150"><circle cx="60" cy="60" r="50" class="ring-bg"/><circle cx="60" cy="60" r="50" class="ring-fg" id="ringFg"/></svg>
-      <div class="ring-txt"><b id="ringNum">0</b><span>of 13 lessons</span></div>
+      <svg viewBox="0 0 120 120" width="160" height="160"><circle cx="60" cy="60" r="50" class="ring-bg"/><circle cx="60" cy="60" r="50" class="ring-fg" id="ringFg"/></svg>
+      <div class="ring-txt"><b id="ringNum">0</b><span>of 13 done</span></div>
     </div>
   </div>
 
-  <h2 class="path-h">Your path</h2>
+  <h2 class="path-h">The course map</h2>
   <div class="worlds">
     <section class="world t-finance" aria-label="Finance">
       <header class="world-h"><span class="world-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></span><div><h3>Finance</h3><p>Money, investing and funding</p></div><span class="world-count" data-world="finance">0/3</span></header>
@@ -528,8 +533,6 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 66px);max-height:calc(100vh - 6
     </section>
   </div>
 
-  <h2 class="path-h">Badges</h2>
-  <div class="g-badges" data-g="badges"></div>
 
   <div class="callout honest" style="margin-top:36px"><b>Straight talk</b><p>This covers the foundations: the ideas that do most of the work in everyday money and business decisions. It's education, not personal financial advice, and tax and account rules differ by country. Your progress is saved in this browser only.</p></div>
 </section>
@@ -1360,7 +1363,6 @@ Repeat 3 times.</div>
 </main>
 </div>
 
-<script src="../assets/gamify.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

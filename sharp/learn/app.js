@@ -193,6 +193,8 @@ var progress = load('mds-progress', {});
 function el(tag, attrs, html){ var n = document.createElement(tag); if(attrs) for(var k in attrs) n.setAttribute(k, attrs[k]); if(html != null) n.innerHTML = html; return n; }
 function fmt(n, d){ return Number(n).toLocaleString(undefined, {minimumFractionDigits:d||0, maximumFractionDigits:d||0}); }
 
+var LESSON_ORDER = ['money','investing','funding','business','statements','mkt-basics','mkt-channels','mkt-measure','negotiation','scripts','persuasion','pitching','pressure'];
+var TOPIC_LESSONS = { finance: ['money','investing','funding'], business: ['business','statements'], marketing: ['mkt-basics','mkt-channels','mkt-measure'], negotiation: ['negotiation','scripts','persuasion'], investors: ['pitching','pressure'] };
 function updateProgressUI(){
   var passed = QUIZ_IDS.filter(function(id){ return progress[id] && progress[id].passed; }).length;
   var total = QUIZ_IDS.length;
@@ -205,7 +207,7 @@ function updateProgressUI(){
     var t = document.querySelector('[data-tick="' + id + '"]'); if(t) t.textContent = rec.passed ? '✓' : '';
   });
   // learning path
-  var G = window.SharpGame, order = G ? G.ALL : QUIZ_IDS, next = null;
+  var order = LESSON_ORDER, next = null;
   order.forEach(function(id){
     var rec = progress[id] || {}, node = document.querySelector('[data-node="' + id + '"]');
     var done = !!rec.passed;
@@ -217,9 +219,10 @@ function updateProgressUI(){
       if(st) st.textContent = done ? 'Passed · ' + rec.best + '%' : id === next ? 'Start here' : (rec.best != null ? 'Best ' + rec.best + '%' : st.getAttribute('data-min') || st.textContent);
     }
   });
-  if(G) Object.keys(G.TOPICS).forEach(function(k){
-    var c = document.querySelector('[data-world="' + k + '"]'); if(!c) return;
-    var ls = G.TOPICS[k]; c.textContent = ls.filter(function(l){ return progress[l] && progress[l].passed; }).length + '/' + ls.length;
+  Object.keys(TOPIC_LESSONS).forEach(function(k){
+    var ls = TOPIC_LESSONS[k], n = ls.filter(function(l){ return progress[l] && progress[l].passed; }).length;
+    document.querySelectorAll('[data-world="' + k + '"]').forEach(function(c){ c.textContent = n + '/' + ls.length; });
+    var bar = document.querySelector('[data-bar="' + k + '"]'); if(bar) bar.style.width = (n / ls.length * 100) + '%';
   });
   var ring = document.getElementById('ringFg'); if(ring) ring.style.strokeDashoffset = (314.16 * (1 - passed / total)).toFixed(1);
   set('ringNum', passed);
@@ -229,17 +232,15 @@ function updateProgressUI(){
       cont.href = '#' + next; cont.textContent = (passed ? 'Continue: ' : 'Start: ') + 'Lesson ' + idx + (nav ? ' · ' + nav.childNodes[1].textContent : '') + ' →'; }
     else { cont.href = '#money'; cont.textContent = 'All passed. Review any lesson →'; }
   }
-  if(G){ var bc = document.getElementById('badgeCount'); if(bc) bc.textContent = Object.keys(G.state().badges).length; }
 }
 document.querySelectorAll('[data-node-s]').forEach(function(e){ e.setAttribute('data-min', e.textContent); });
-if(window.SharpGame) window.SharpGame.onChange(function(){ updateProgressUI(); });
 
 function buildQuiz(container){
   var id = container.getAttribute('data-quiz');
   var qs = QUIZZES[id]; if(!qs) return;
   container.appendChild(el('span', {'class':'eyebrow'}, 'Practice'));
   container.appendChild(el('h2', null, 'Check your work'));
-  container.appendChild(el('p', {'class':'muted'}, 'Instant feedback on every answer, +10 XP for each one you get right. Score 80% to pass the lesson.'));
+  container.appendChild(el('p', {'class':'muted'}, 'You\'ll see right away whether each answer is correct, and why. Score 80% to pass the lesson.'));
   var best = progress[id] && progress[id].best;
   if(best != null) container.appendChild(el('p', {'class':'muted'}, 'Your best so far: ' + best + '%'));
   var dots = el('div', {'class':'qdots', 'aria-hidden':'true'});
@@ -300,9 +301,6 @@ function buildQuiz(container){
     dots.children[i].className = ok ? 'ok' : 'no';
     fb.className = 'fb show ' + (ok ? 'ok' : 'no');
     fb.innerHTML = ok ? '<strong>Correct.</strong> ' + q.e : '<strong>Not quite.</strong> Answer: ' + correctText + '. ' + q.e;
-    if(ok && window.SharpGame && window.SharpGame.correct(id + ':' + i)){
-      var pop = el('span', {'class':'xp-pop', 'aria-hidden':'true'}, '+10 XP'); box.appendChild(pop); setTimeout(function(){ pop.remove(); }, 1500);
-    }
     if(results.filter(function(r){ return r != null; }).length === qs.length) finish();
   }
   function finish(){
@@ -315,7 +313,6 @@ function buildQuiz(container){
     var prev = progress[id] || {};
     progress[id] = {best: Math.max(prev.best || 0, pct), passed: !!(prev.passed || passed)};
     save('mds-progress', progress);
-    if(passed && window.SharpGame) window.SharpGame.passLesson(id, pct);
     updateProgressUI();
     result.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
@@ -344,7 +341,6 @@ function calc(id, fn){
     out.innerHTML = fn(v);
   }
   root.addEventListener('input', run); run();
-  root.addEventListener('input', function(){ if(window.SharpGame) window.SharpGame.tool('learn-' + id); }, { once: true });
 }
 calc('c-compound', function(v){
   var n = Math.round(v.y * 12), r = v.r / 100 / 12, fv;
