@@ -1,5 +1,5 @@
 /* =====================================================================
-   NAPKIN PROOF SETTINGS — the only file you need to edit.
+   ERUPT SETTINGS — the only file you need to edit.
    Anything left blank stays switched off, and the site says so honestly.
    ===================================================================== */
 window.NP_CONFIG = {

@@ -2,22 +2,18 @@
 
 Things I'm making with Claude Code.
 
-## Napkin Proof — landing page and waitlist
+## Erupt — business school for aspiring entrepreneurs
 
-[`napkinproof/`](napkinproof/index.html) is the landing page for **Napkin Proof**: free tools and a course that show aspiring entrepreneurs whether a business idea makes money before they quit their job. It has a live "napkin test" calculator and a waitlist form.
+[`erupt/`](erupt/index.html) is a finance and business learning site: free courses in four topics (Finance, Business, Marketing, Negotiation; 10 lessons with self-checking quizzes), a library of 18 calculators and planners, a 3-day free trial, and Free / Builder $30 / Founder $80 plans.
 
-**Settings:** everything is configured in [`napkinproof/config.js`](napkinproof/config.js): the waitlist provider (`kit`, `formspree` or `formsubmit`), Supabase keys for sign-in, Stripe Payment Links, and the free-trial length. Until then, the form tells visitors the list opens soon and saves nothing.
+- `erupt/index.html` — home page (topics, live napkin-test tool, pricing, waitlist, sign-in)
+- `erupt/learn/` — the courses
+- `erupt/tools/` — marketing calculators, budget & savings planner, business plan & pricing, negotiation prep
+- `erupt/trial/` — the 3-day Founder trial area
+- `erupt/config.js` — **the only settings file**: waitlist provider, Supabase keys, Stripe Payment Links, trial length
+- `supabase/schema.sql` — server-side lock for paid content; [`SECURITY.md`](SECURITY.md) — security checklist
 
-**Security:** see [`SECURITY.md`](SECURITY.md) for what's built in and the owner checklist. [`supabase/schema.sql`](supabase/schema.sql) locks paid content on the server.
-
-## Napkin Proof Lessons — business, finance and negotiation
-
-A plain-English learning site in [`learn/`](learn/index.html): seven short lessons (your money, investing, how a business makes money, financial statements, funding and valuation, negotiation, negotiation scripts). Each lesson ends with practice problems that check your answers and explain the ones you miss. There are also five calculators (compound growth, loan payment, break-even, margin vs markup, card payoff), a glossary, and copy-paste AI system and master prompts.
-
-**To use:** open `learn/index.html` in a browser, or visit `/learn/` on the published site. The prompts are also in [`learn/PROMPTS.md`](learn/PROMPTS.md).
-
-Educational only, not personal financial advice. Account and tax examples use US terms where noted.
-
+Old `napkinproof/` and `learn/` addresses redirect to Erupt.
 
 ## Yahya.games.com — Skyforge Champions
 

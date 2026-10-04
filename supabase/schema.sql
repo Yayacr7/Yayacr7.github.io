@@ -1,5 +1,5 @@
 -- =====================================================================
--- Napkin Proof: server-side lock for paid content.
+-- Erupt: server-side lock for paid content.
 -- Run once in Supabase > SQL Editor, after creating your project.
 --
 -- How it works:

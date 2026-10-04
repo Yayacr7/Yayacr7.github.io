@@ -35,6 +35,38 @@ window.addEventListener('hashchange', route);
 /* ---------- quizzes ---------- */
 // type "mc": choices + answer index. type "num": answer + tol (absolute) + unit.
 var QUIZZES = {
+  'mkt-basics': [
+    {type:'mc', q:'Which customer description will make your marketing easiest?', c:['Everyone who likes good food','Small businesses','Two-income parents with young kids within 5 miles who order takeaway 3+ nights a week','Anyone with a phone'], a:2,
+      e:'The more specific the customer, the easier it is to find them, write to them, and know what they care about.'},
+    {type:'mc', q:'Which of these is a BENEFIT rather than a feature?', c:['256-bit encryption','Weekly delivery on Sundays','Five evenings a week back with your kids','Made with stainless steel'], a:2,
+      e:'A benefit is what the customer gets out of it. Features are the proof behind the benefit.'},
+    {type:'mc', q:'You have no customers yet and $500. What should usually come first?', c:['Spend it all on ads','Talk to 10 people who match your customer and test your message','Design a logo','Build a bigger website'], a:1,
+      e:'Ads amplify a message. Find out which message works, cheaply, before paying to amplify it.'},
+    {type:'mc', q:'Your real competition is…', c:['Only companies selling the exact same thing','Whatever the customer does today instead, including doing nothing','The biggest brand in your industry','Nobody, if your idea is new'], a:1,
+      e:'People compare you with their current habit: a spreadsheet, a competitor, or just living with the problem.'}
+  ],
+  'mkt-channels': [
+    {type:'mc', q:'Where do most businesses find their first 10 customers?', c:['Paid ads','Search engine traffic','People they can reach directly: their network, communities, outreach','TV'], a:2,
+      e:'Early on nobody is searching for you. Go to where your customers already are and talk to them.'},
+    {type:'mc', q:'Why is an email list more valuable than the same number of social followers?', c:['Emails are prettier','You own the list; a platform can change its rules and hide your posts','Followers can\'t buy things','It isn\'t'], a:1,
+      e:'You rent your social audience from the platform. You own your list.'},
+    {type:'num', q:'2,000 people visit your page. 4% sign up, and 5% of those sign-ups buy. How many customers is that?', a:4, tol:0.01, unit:'customers',
+      e:'2,000 × 4% = 80 sign-ups. 80 × 5% = 4 customers.'},
+    {type:'mc', q:'When do paid ads make the most sense?', c:['Before you know who your customer is','Once your message and numbers already work and you want more of the same','When you have no budget','Never'], a:1,
+      e:'Ads pour fuel on something that already sells. On a message that doesn\'t work, they just burn money faster.'}
+  ],
+  'mkt-measure': [
+    {type:'num', q:'You spend $600 on marketing and win 12 customers. What is your CAC (cost per customer) in $?', a:50, tol:0.01, unit:'$',
+      e:'$600 ÷ 12 = $50 per customer.'},
+    {type:'num', q:'A customer pays $25/month at a 60% gross margin and stays 10 months. What is their LTV in $?', a:150, tol:0.01, unit:'$',
+      e:'25 × 0.60 × 10 = $150.'},
+    {type:'num', q:'Ads cost $500 and bring in $1,500 of sales. What is the ROAS?', a:3, tol:0.01, unit:'×',
+      e:'$1,500 ÷ $500 = 3×. Whether that\'s profitable depends on your margin.'},
+    {type:'num', q:'1,500 people visit and 30 buy. What is the conversion rate in %?', a:2, tol:0.01, unit:'%',
+      e:'30 ÷ 1,500 = 0.02 = 2%.'},
+    {type:'mc', q:'Which is a vanity number?', c:['Revenue per subscriber','Profit after ad spend','Number of likes on a post','Customer payback in months'], a:2,
+      e:'Likes feel good but don\'t pay bills. Track what turns into sign-ups and sales.'}
+  ],
   money: [
     {type:'mc', q:'You have a $4,000 credit card balance at 24% APR and $4,000 in savings beyond your emergency fund. What usually makes the most financial sense?',
       c:['Invest the $4,000 in an index fund','Pay off the credit card','Keep the cash and pay the minimum','Split it 50/50'], a:1,

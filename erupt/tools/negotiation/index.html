@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Negotiation prep · Erupt</title>
+<meta name="description" content="Free negotiation planner: set your target, walk-away point and alternative, and get an opening offer, concession plan and scripts.">
+<meta property="og:title" content="Negotiation prep · Erupt">
+<meta property="og:description" content="Free negotiation planner: set your target, walk-away point and alternative, and get an opening offer, concession plan and scripts.">
+<meta property="og:image" content="https://yayacr7.github.io/erupt/og.png">
+<link rel="icon" href="../../icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Karla:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/erupt.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.neg-out h3{margin:18px 0 6px}.neg-out h3:first-child{margin-top:0}.neg-out p{margin:.4em 0}.neg-out ul{margin:.3em 0;padding-left:1.2em}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../../index.html" aria-label="Erupt home"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 28 11.5 14.5h9L29 28z" fill="var(--ink)"/><path d="M16 11V3.5M11.6 11.4 8.4 6.2M20.4 11.4l3.2-5.2" stroke="var(--accent)" stroke-width="2.8" stroke-linecap="round"/></svg>Erupt</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../../learn/index.html">Courses</a>
+      <a href="../../tools/index.html" aria-current="page">Tools</a>
+      <a href="../../index.html#pricing">Pricing</a>
+      <a href="../../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <button class="theme" id="themeBtn" type="button" aria-label="Switch between light and dark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
+    <a class="signin" href="../../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../../index.html">Erupt</a> / <a href="../../tools/index.html">Tools</a> / Negotiation prep</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Negotiation tools</span>
+    <h1>Negotiation prep</h1>
+    <p class="lede">Walk in with a plan: your numbers, your alternative, what to trade, and exactly what to say.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <section class="tool" id="prep">
+      <div class="tool-grid">
+        <form id="f-neg" novalidate>
+          <h2>Negotiation prep</h2>
+          <p class="intro">Fill this in before any negotiation. You'll get your opening offer, a concession plan and word-for-word lines.</p>
+          <div class="fields wide">
+            <label for="ng-type">What are you negotiating?<select id="ng-type"><option value="salary">Salary or job offer</option><option value="selling">Selling or pricing my work</option><option value="buying">Buying something</option><option value="rent">Rent</option><option value="supplier">A supplier deal</option><option value="other">Something else</option></select></label>
+            <label for="ng-dir">You want the number to go<select id="ng-dir"><option value="up">Up (I'm being paid)</option><option value="down">Down (I'm paying)</option></select></label>
+          </div>
+          <div class="fields" style="margin-top:12px">
+            <label for="ng-target">Your target ($)<input type="number" id="ng-target" value="85000" min="0" step="any" inputmode="decimal"></label>
+            <label for="ng-walk" id="ng-walk-label">Walk-away: the lowest you'd accept ($)<input type="number" id="ng-walk" value="75000" min="0" step="any" inputmode="decimal"></label>
+            <label for="ng-theirs">Their likely limit ($, optional)<input type="number" id="ng-theirs" value="90000" min="0" step="any" inputmode="decimal"></label>
+          </div>
+          <div class="field-col" style="margin-top:12px">
+            <label for="ng-batna">If this falls through, what will you do? (your BATNA)<textarea id="ng-batna" rows="2" maxlength="600" placeholder="Stay in my current job and keep interviewing; I have a second interview next week."></textarea></label>
+            <label for="ng-trade">What could you offer that's cheap for you but valuable to them?<textarea id="ng-trade" rows="2" maxlength="600" placeholder="Start two weeks earlier; cover the weekend launch."></textarea></label>
+            <label for="ng-ask">What could you ask for besides money?<textarea id="ng-ask" rows="2" maxlength="600" placeholder="Remote Fridays, a 6-month salary review, a training budget."></textarea></label>
+          </div>
+        </form>
+        <div class="card" style="position:sticky;top:90px" aria-live="polite"><div id="ng-out" class="neg-out"></div></div>
+      </div>
+    </section>
+    <p class="fine">The opening offer is a rule of thumb: about halfway again past your target. Adjust it to what you can justify out loud. Never lie about facts; you can decline to share them.</p>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../../index.html" style="display:inline-flex;margin-bottom:10px"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 28 11.5 14.5h9L29 28z" fill="var(--ink)"/><path d="M16 11V3.5M11.6 11.4 8.4 6.2M20.4 11.4l3.2-5.2" stroke="var(--accent)" stroke-width="2.8" stroke-linecap="round"/></svg>Erupt</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Erupt</p></div>
+    <div><h4>Courses</h4><a href="../../learn/index.html#money">Finance</a><a href="../../learn/index.html#business">Business</a><a href="../../learn/index.html#mkt-basics">Marketing</a><a href="../../learn/index.html#negotiation">Negotiation</a></div>
+    <div><h4>Tools</h4><a href="../../tools/marketing/index.html">Marketing calculators</a><a href="../../tools/budget/index.html">Budget planner</a><a href="../../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../../tools/negotiation/index.html">Negotiation prep</a></div>
+    <div><h4>Erupt</h4><a href="../../index.html#pricing">Pricing</a><a href="../../trial/index.html">Free trial</a><a href="../../learn/index.html#prompts">AI prompts</a><a href="../../learn/index.html#glossary">Glossary</a></div>
+  </div>
+</footer>
+<script src="../../assets/tools.js"></script>
+</body>
+</html>

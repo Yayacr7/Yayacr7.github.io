@@ -60,7 +60,7 @@ function send(email, stage){
   return fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify({ email: email, stage: stage || '', source: 'napkinproof-landing', _subject: 'New Napkin Proof waitlist signup' })
+    body: JSON.stringify({ email: email, stage: stage || '', source: 'erupt-home', _subject: 'New Erupt waitlist signup' })
   }).then(function(r){ if(!r.ok) throw new Error('http-' + r.status); return r; });
 }
 Array.prototype.forEach.call(document.querySelectorAll('form[data-waitlist]'), function(form){
@@ -114,7 +114,7 @@ function render(){
   signinBtn.classList.toggle('in', !!who);
   dlg.classList.toggle('is-in', !!who);
   document.getElementById('authWho').textContent = who;
-  document.getElementById('authTitle').textContent = who ? 'Your account' : 'Sign in to Napkin Proof';
+  document.getElementById('authTitle').textContent = who ? 'Your account' : 'Sign in to Erupt';
 }
 
 function notOpenYet(){
@@ -184,7 +184,7 @@ function reserve(plan){
   setTimeout(function(){ document.getElementById('wl-email-1').focus({ preventScroll: true }); }, 400);
 }
 function choose(plan){
-  if(plan === 'free'){ openAuth(user ? '' : 'Free account: every tool and lesson, saved under one sign-in.'); return; }
+  if(plan === 'free'){ openAuth(user ? '' : 'Free account: every lesson and tool, under one sign-in.'); return; }
   if(!PAY[plan]){ reserve(plan); return; }
   if(authReady && !user){
     pendingPlan = plan;

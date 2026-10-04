@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Budget & savings planner · Erupt</title>
+<meta name="description" content="Free budget planner with a 50/30/20 check, a savings goal calculator, and an emergency fund target.">
+<meta property="og:title" content="Budget & savings planner · Erupt">
+<meta property="og:description" content="Free budget planner with a 50/30/20 check, a savings goal calculator, and an emergency fund target.">
+<meta property="og:image" content="https://yayacr7.github.io/erupt/og.png">
+<link rel="icon" href="../../icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Karla:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/erupt.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../../index.html" aria-label="Erupt home"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 28 11.5 14.5h9L29 28z" fill="var(--ink)"/><path d="M16 11V3.5M11.6 11.4 8.4 6.2M20.4 11.4l3.2-5.2" stroke="var(--accent)" stroke-width="2.8" stroke-linecap="round"/></svg>Erupt</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../../learn/index.html">Courses</a>
+      <a href="../../tools/index.html" aria-current="page">Tools</a>
+      <a href="../../index.html#pricing">Pricing</a>
+      <a href="../../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <button class="theme" id="themeBtn" type="button" aria-label="Switch between light and dark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
+    <a class="signin" href="../../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../../index.html">Erupt</a> / <a href="../../tools/index.html">Tools</a> / Budget & savings planner</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Finance tools</span>
+    <h1>Budget &amp; savings planner</h1>
+    <p class="lede">Plan your month, time your savings goals, and size your emergency fund. Everything stays in your browser.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <nav class="tabs" aria-label="Planners on this page"><a href="#budget">Monthly budget</a><a href="#goal">Savings goal</a><a href="#efund">Emergency fund</a></nav>
+    <section class="tool" id="budget">
+      <div class="tool-grid">
+        <form id="f-budget" novalidate>
+          <h2>Monthly budget</h2>
+          <p class="intro">Where your money goes, checked against the 50/30/20 guide: about 50% needs, 30% wants, 20% savings. It's a guide, not a law; in expensive cities needs often run higher.</p>
+          <div class="fields">
+<label for="b-income" style="grid-column:1/-1">Take-home pay / month ($)<input type="number" id="b-income" value="3200" min="0" step="any" inputmode="decimal"></label>
+<p class="eyebrow" style="grid-column:1/-1;margin-top:6px">Needs</p>
+<label for="b-rent">Rent or mortgage<input type="number" id="b-rent" value="1100" min="0" step="any" inputmode="decimal"></label>
+<label for="b-util">Utilities & phone<input type="number" id="b-util" value="180" min="0" step="any" inputmode="decimal"></label>
+<label for="b-food">Groceries<input type="number" id="b-food" value="350" min="0" step="any" inputmode="decimal"></label>
+<label for="b-transport">Transport<input type="number" id="b-transport" value="200" min="0" step="any" inputmode="decimal"></label>
+<label for="b-insure">Insurance<input type="number" id="b-insure" value="120" min="0" step="any" inputmode="decimal"></label>
+<label for="b-debtmin">Minimum debt payments<input type="number" id="b-debtmin" value="150" min="0" step="any" inputmode="decimal"></label>
+<p class="eyebrow" style="grid-column:1/-1;margin-top:6px">Wants</p>
+<label for="b-eat">Eating out<input type="number" id="b-eat" value="180" min="0" step="any" inputmode="decimal"></label>
+<label for="b-subs">Subscriptions<input type="number" id="b-subs" value="45" min="0" step="any" inputmode="decimal"></label>
+<label for="b-shop">Shopping<input type="number" id="b-shop" value="150" min="0" step="any" inputmode="decimal"></label>
+<label for="b-fun">Fun & hobbies<input type="number" id="b-fun" value="120" min="0" step="any" inputmode="decimal"></label>
+<p class="eyebrow" style="grid-column:1/-1;margin-top:6px">Savings &amp; goals</p>
+<label for="b-save">Savings<input type="number" id="b-save" value="300" min="0" step="any" inputmode="decimal"></label>
+<label for="b-debtextra">Extra debt payments<input type="number" id="b-debtextra" value="100" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="b-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <section class="tool" id="goal">
+      <div class="tool-grid">
+        <form id="f-goal" novalidate>
+          <h2>Savings goal</h2>
+          <p class="intro">How long until you hit a goal, and what you'd need to save to hit it by a date.</p>
+          <div class="fields">
+<label for="g-goal">Goal ($)<input type="number" id="g-goal" value="10000" min="0" step="any" inputmode="decimal"></label>
+<label for="g-have">Saved already ($)<input type="number" id="g-have" value="1500" min="0" step="any" inputmode="decimal"></label>
+<label for="g-monthly">Saving per month ($)<input type="number" id="g-monthly" value="400" min="0" step="any" inputmode="decimal"></label>
+<label for="g-rate">Interest per year (%)<input type="number" id="g-rate" value="4" min="0" step="any" inputmode="decimal"></label>
+<label for="g-months">Hit it in (months)<input type="number" id="g-months" value="18" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="g-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <section class="tool" id="efund">
+      <div class="tool-grid">
+        <form id="f-efund" novalidate>
+          <h2>Emergency fund</h2>
+          <p class="intro">3 to 6 months of essential costs, kept somewhere safe, so a surprise bill doesn't become debt. Aim higher if your income is irregular.</p>
+          <div class="fields">
+<label for="e-ess">Essential costs / month ($)<input type="number" id="e-ess" value="2100" min="0" step="any" inputmode="decimal"></label>
+<label for="e-months">Months to cover<input type="number" id="e-months" value="4" min="0" step="1" inputmode="decimal"></label>
+<label for="e-have">Saved so far ($)<input type="number" id="e-have" value="2000" min="0" step="any" inputmode="decimal"></label>
+<label for="e-save">Can save / month ($)<input type="number" id="e-save" value="300" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="e-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../../index.html" style="display:inline-flex;margin-bottom:10px"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 28 11.5 14.5h9L29 28z" fill="var(--ink)"/><path d="M16 11V3.5M11.6 11.4 8.4 6.2M20.4 11.4l3.2-5.2" stroke="var(--accent)" stroke-width="2.8" stroke-linecap="round"/></svg>Erupt</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Erupt</p></div>
+    <div><h4>Courses</h4><a href="../../learn/index.html#money">Finance</a><a href="../../learn/index.html#business">Business</a><a href="../../learn/index.html#mkt-basics">Marketing</a><a href="../../learn/index.html#negotiation">Negotiation</a></div>
+    <div><h4>Tools</h4><a href="../../tools/marketing/index.html">Marketing calculators</a><a href="../../tools/budget/index.html">Budget planner</a><a href="../../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../../tools/negotiation/index.html">Negotiation prep</a></div>
+    <div><h4>Erupt</h4><a href="../../index.html#pricing">Pricing</a><a href="../../trial/index.html">Free trial</a><a href="../../learn/index.html#prompts">AI prompts</a><a href="../../learn/index.html#glossary">Glossary</a></div>
+  </div>
+</footer>
+<script src="../../assets/tools.js"></script>
+</body>
+</html>

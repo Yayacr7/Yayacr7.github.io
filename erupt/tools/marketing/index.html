@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Marketing calculators · Erupt</title>
+<meta name="description" content="Free marketing calculators: return on ad spend, customer acquisition cost and payback, sales funnel, and email list value.">
+<meta property="og:title" content="Marketing calculators · Erupt">
+<meta property="og:description" content="Free marketing calculators: return on ad spend, customer acquisition cost and payback, sales funnel, and email list value.">
+<meta property="og:image" content="https://yayacr7.github.io/erupt/og.png">
+<link rel="icon" href="../../icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Karla:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/erupt.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.fn-row{display:grid;grid-template-columns:90px minmax(0,1fr) 64px;align-items:center;gap:10px;font-size:.9rem;padding:4px 0}.fn-row span{color:var(--muted);font-weight:700}.fn-track{height:12px;background:var(--surface-2);border-radius:6px;overflow:hidden}.fn-track i{display:block;height:100%;background:var(--marketing);border-radius:6px}.fn-row b{text-align:right}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../../index.html" aria-label="Erupt home"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 28 11.5 14.5h9L29 28z" fill="var(--ink)"/><path d="M16 11V3.5M11.6 11.4 8.4 6.2M20.4 11.4l3.2-5.2" stroke="var(--accent)" stroke-width="2.8" stroke-linecap="round"/></svg>Erupt</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../../learn/index.html">Courses</a>
+      <a href="../../tools/index.html" aria-current="page">Tools</a>
+      <a href="../../index.html#pricing">Pricing</a>
+      <a href="../../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <button class="theme" id="themeBtn" type="button" aria-label="Switch between light and dark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
+    <a class="signin" href="../../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../../index.html">Erupt</a> / <a href="../../tools/index.html">Tools</a> / Marketing calculators</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Marketing tools</span>
+    <h1>Marketing calculators</h1>
+    <p class="lede">Four calculators that answer the questions every new business asks about marketing: is it working, and what can I afford to spend?</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <nav class="tabs" aria-label="Calculators on this page"><a href="#roas">Ad return</a><a href="#cac">Cost per customer</a><a href="#funnel">Sales funnel</a><a href="#email">Email list value</a></nav>
+    <section class="tool" id="roas">
+      <div class="tool-grid">
+        <form id="f-roas" novalidate>
+          <h2>Ad return (ROAS)</h2>
+          <p class="intro">Did your ads make money? Return on ad spend is revenue from ads divided by what the ads cost.</p>
+          <div class="fields">
+<label for="roas-spend">Ad spend ($)<input type="number" id="roas-spend" value="500" min="0" step="any" inputmode="decimal"></label>
+<label for="roas-sales">Sales from those ads<input type="number" id="roas-sales" value="25" min="0" step="any" inputmode="decimal"></label>
+<label for="roas-price">Price per sale ($)<input type="number" id="roas-price" value="49" min="0" step="any" inputmode="decimal"></label>
+<label for="roas-cost">Cost to deliver each sale ($)<input type="number" id="roas-cost" value="9" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="roas-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <section class="tool" id="cac">
+      <div class="tool-grid">
+        <form id="f-cac" novalidate>
+          <h2>Cost per customer and payback</h2>
+          <p class="intro">What it costs to win a customer, how long they take to pay that back, and what they're worth over their lifetime.</p>
+          <div class="fields">
+<label for="cac-spend">Marketing spend / month ($)<input type="number" id="cac-spend" value="1000" min="0" step="any" inputmode="decimal"></label>
+<label for="cac-new">New customers / month<input type="number" id="cac-new" value="20" min="0" step="any" inputmode="decimal"></label>
+<label for="cac-rev">Revenue per customer / month ($)<input type="number" id="cac-rev" value="30" min="0" step="any" inputmode="decimal"></label>
+<label for="cac-margin">Gross margin (%)<input type="number" id="cac-margin" value="70" min="0" step="any" inputmode="decimal"></label>
+<label for="cac-life">Months a customer stays<input type="number" id="cac-life" value="12" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="cac-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <section class="tool" id="funnel">
+      <div class="tool-grid">
+        <form id="f-funnel" novalidate>
+          <h2>Sales funnel</h2>
+          <p class="intro">Visitors become sign-ups, sign-ups become customers. See where the money comes from, and what traffic your goal needs.</p>
+          <div class="fields">
+<label for="fn-visitors">Visitors / month<input type="number" id="fn-visitors" value="3000" min="0" step="any" inputmode="decimal"></label>
+<label for="fn-signup">Visitors who sign up (%)<input type="number" id="fn-signup" value="3" min="0" step="any" inputmode="decimal"></label>
+<label for="fn-buy">Sign-ups who buy (%)<input type="number" id="fn-buy" value="2" min="0" step="any" inputmode="decimal"></label>
+<label for="fn-price">Average sale ($)<input type="number" id="fn-price" value="45" min="0" step="any" inputmode="decimal"></label>
+<label for="fn-goal">Revenue goal / month ($)<input type="number" id="fn-goal" value="3000" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="fn-out" aria-live="polite"></div>
+          <div class="card" style="margin-top:14px" id="fn-bars" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+    <section class="tool" id="email">
+      <div class="tool-grid">
+        <form id="f-email" novalidate>
+          <h2>Email list value</h2>
+          <p class="intro">What one email subscriber is worth to you. Use it to decide how much you can spend to get one.</p>
+          <div class="fields">
+<label for="em-subs">Subscribers<input type="number" id="em-subs" value="1000" min="0" step="any" inputmode="decimal"></label>
+<label for="em-sends">Sales emails / month<input type="number" id="em-sends" value="4" min="0" step="any" inputmode="decimal"></label>
+<label for="em-open">Open rate (%)<input type="number" id="em-open" value="35" min="0" step="any" inputmode="decimal"></label>
+<label for="em-click">Opens that click (%)<input type="number" id="em-click" value="8" min="0" step="any" inputmode="decimal"></label>
+<label for="em-buy">Clicks that buy (%)<input type="number" id="em-buy" value="3" min="0" step="any" inputmode="decimal"></label>
+<label for="em-aov">Average order ($)<input type="number" id="em-aov" value="40" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="em-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <p class="fine">Starting numbers are examples, not benchmarks. Rates vary a lot by industry, so use your own data as soon as you have it.</p>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../../index.html" style="display:inline-flex;margin-bottom:10px"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 28 11.5 14.5h9L29 28z" fill="var(--ink)"/><path d="M16 11V3.5M11.6 11.4 8.4 6.2M20.4 11.4l3.2-5.2" stroke="var(--accent)" stroke-width="2.8" stroke-linecap="round"/></svg>Erupt</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Erupt</p></div>
+    <div><h4>Courses</h4><a href="../../learn/index.html#money">Finance</a><a href="../../learn/index.html#business">Business</a><a href="../../learn/index.html#mkt-basics">Marketing</a><a href="../../learn/index.html#negotiation">Negotiation</a></div>
+    <div><h4>Tools</h4><a href="../../tools/marketing/index.html">Marketing calculators</a><a href="../../tools/budget/index.html">Budget planner</a><a href="../../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../../tools/negotiation/index.html">Negotiation prep</a></div>
+    <div><h4>Erupt</h4><a href="../../index.html#pricing">Pricing</a><a href="../../trial/index.html">Free trial</a><a href="../../learn/index.html#prompts">AI prompts</a><a href="../../learn/index.html#glossary">Glossary</a></div>
+  </div>
+</footer>
+<script src="../../assets/tools.js"></script>
+</body>
+</html>
