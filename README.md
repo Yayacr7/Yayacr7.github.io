@@ -8,6 +8,8 @@ Things I'm making with Claude Code.
 
 **Settings:** everything is configured in [`napkinproof/config.js`](napkinproof/config.js): the waitlist provider (`kit`, `formspree` or `formsubmit`), Supabase keys for sign-in, Stripe Payment Links, and the free-trial length. Until then, the form tells visitors the list opens soon and saves nothing.
 
+**Security:** see [`SECURITY.md`](SECURITY.md) for what's built in and the owner checklist. [`supabase/schema.sql`](supabase/schema.sql) locks paid content on the server.
+
 ## Money & Deals School — business, finance and negotiation lessons
 
 A plain-English learning site in [`learn/`](learn/index.html): seven short lessons (your money, investing, how a business makes money, financial statements, funding and valuation, negotiation, negotiation scripts). Each lesson ends with practice problems that check your answers and explain the ones you miss. There are also five calculators (compound growth, loan payment, break-even, margin vs markup, card payoff), a glossary, and copy-paste AI system and master prompts.
