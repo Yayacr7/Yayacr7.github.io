@@ -131,6 +131,54 @@ var QUIZZES = {
     {type:'num', q:'A post gets 2,000 views and 30 people click your link. What is the click rate in %?', a:1.5, tol:0.01, unit:'%',
       e:'30 ÷ 2,000 = 0.015 = 1.5%.'}
   ],
+  'why-business': [
+    {type:'mc', q:'What is the main reason a business exists?', c:['To look impressive','To solve a problem people will pay to have solved','To post on social media','To avoid having a boss'], a:1,
+      e:'No problem worth paying for, no business. Profit is the reward for solving it well.'},
+    {type:'mc', q:'Each sale costs you $12 to deliver and customers pay $10. What do you have?', c:['A great business','A business that loses money on every sale','A subscription','A charity that works'], a:1,
+      e:'If delivering costs more than people pay, more sales mean bigger losses.'},
+    {type:'mc', q:'AI tools are cheap for everyone. What becomes your biggest edge?', c:['Having AI at all','Knowing your customers better than anyone','Using more fonts','Working longer hours'], a:1,
+      e:'Your competitors have the same tools. Understanding your customer is harder to copy.'},
+    {type:'mc', q:'Which group does a lasting business keep reasonably happy?', c:['Only owners','Only customers','Customers, owners, workers and the community','Nobody, profit is all that matters'], a:2,
+      e:'Squeezing one group hard usually comes back to hurt the business.'},
+    {type:'mc', q:'Why can subscriptions be risky?', c:['They are illegal','People cancel ones they don\'t use, so you must keep earning them','They never make money','Banks block them'], a:1,
+      e:'Monthly income is great, but only while customers keep getting value.'}
+  ],
+  voice: [
+    {type:'mc', q:'You feel nervous and start talking fast. What helps most?', c:['Talk even faster to finish','Slow down and pause on purpose','Read your slides word for word','Make jokes'], a:1,
+      e:'Slower speech sounds confident and gives you time to think.'},
+    {type:'mc', q:'What is better than saying "um"?', c:['Saying "like"','A short silent pause','Coughing','Talking louder'], a:1,
+      e:'A one-second pause sounds thoughtful. Fillers sound unsure.'},
+    {type:'mc', q:'How should your voice end a confident statement?', c:['Going up, like a question','Going down, landing the sentence','Whispering','Speeding up'], a:1,
+      e:'Rising at the end makes a fact sound like a question.'},
+    {type:'mc', q:'On a video call, where should you look when you make your key point?', c:['At your own picture','At the camera lens','At your notes','Out of the window'], a:1,
+      e:'Looking at the lens feels like eye contact to the other person.'},
+    {type:'mc', q:'What matters most to investors?', c:['A perfect speaking voice','Knowing your business and telling the truth','Expensive clothes','A long presentation'], a:1,
+      e:'A slightly nervous founder who knows the numbers beats a smooth talker who doesn\'t.'}
+  ],
+  'investor-interest': [
+    {type:'mc', q:'Which opening line grabs an investor fastest?', c:['"We\'re passionate about innovation."','"140 landlords pay us every month, mostly by word of mouth."','"We have no competition."','"This could be huge."'], a:1,
+      e:'Real proof (traction) beats big claims.'},
+    {type:'mc', q:'What usually gets a meeting more easily?', c:['A cold email to 500 investors','A warm introduction from someone they trust','Calling them at home','A long PDF'], a:1,
+      e:'Investors trust people they already know. Ask for introductions.'},
+    {type:'mc', q:'What is a good follow-up email?', c:['"Just checking in!"','"Since we last wrote, we added 30 customers."','"Why haven\'t you replied?"','Sending the same email again'], a:1,
+      e:'Progress gives them a reason to reply.'},
+    {type:'mc', q:'A great question to ask an investor in the meeting is:', c:['"Will you invest today?"','"What would you need to see to invest?"','"How rich are you?"','"Do you like my logo?"'], a:1,
+      e:'Their answer becomes your to-do list.'},
+    {type:'mc', q:'Is it OK to say other investors are interested when they aren\'t?', c:['Yes, it creates pressure','Only if you\'re desperate','No: investors talk, and one lie can close every door','Only in emails'], a:2,
+      e:'Real progress is the only pressure that works.'}
+  ],
+  'best-of-investors': [
+    {type:'mc', q:'Before taking an investor\'s money, what should you do?', c:['Sign quickly before they change their mind','Talk to founders they\'ve backed, including one that struggled','Ask them to sign your terms unread','Nothing, money is money'], a:1,
+      e:'How they act when things go wrong tells you what working with them is like.'},
+    {type:'mc', q:'Which ask gets the most useful help?', c:['"Let me know if you can help."','"Could you introduce us to two people who buy for small landlords?"','"Help!"','"Any thoughts?"'], a:1,
+      e:'Specific asks get specific help.'},
+    {type:'mc', q:'What should a monthly investor update include?', c:['Only good news','Wins, numbers, one honest problem, one ask','Just your revenue','Nothing, only update yearly'], a:1,
+      e:'Investors who hear bad news early can help. Surprises break trust.'},
+    {type:'mc', q:'An investor gives advice you disagree with. What should you do?', c:['Always obey','Ignore them forever','Listen, thank them, then decide yourself','Stop sending updates'], a:2,
+      e:'Advice is input. Unless your agreement says otherwise, you make the call.'},
+    {type:'mc', q:'Why have a lawyer read investment terms?', c:['It\'s a tradition','Bad terms can cost you more than no money','Lawyers write the pitch','To slow things down'], a:1,
+      e:'Small words in a deal can cost you a lot later.'}
+  ],
   money: [
     {type:'mc', q:'You have a $4,000 credit card balance at 24% APR and $4,000 in savings beyond your emergency fund. What usually makes the most financial sense?',
       c:['Invest the $4,000 in an index fund','Pay off the credit card','Keep the cash and pay the minimum','Split it 50/50'], a:1,
@@ -227,8 +275,8 @@ var progress = load('mds-progress', {});
 function el(tag, attrs, html){ var n = document.createElement(tag); if(attrs) for(var k in attrs) n.setAttribute(k, attrs[k]); if(html != null) n.innerHTML = html; return n; }
 function fmt(n, d){ return Number(n).toLocaleString(undefined, {minimumFractionDigits:d||0, maximumFractionDigits:d||0}); }
 
-var LESSON_ORDER = ['money','investing','funding','business','statements','mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social','negotiation','scripts','persuasion','pitching','pressure'];
-var TOPIC_LESSONS = { finance: ['money','investing','funding'], business: ['business','statements'], marketing: ['mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social'], negotiation: ['negotiation','scripts','persuasion'], investors: ['pitching','pressure'] };
+var LESSON_ORDER = ['money','investing','funding','business','statements','why-business','mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social','negotiation','scripts','persuasion','pitching','pressure','voice','investor-interest','best-of-investors'];
+var TOPIC_LESSONS = { finance: ['money','investing','funding'], business: ['business','statements','why-business'], marketing: ['mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social'], negotiation: ['negotiation','scripts','persuasion'], investors: ['pitching','pressure','voice','investor-interest','best-of-investors'] };
 function updateProgressUI(){
   var passed = QUIZ_IDS.filter(function(id){ return progress[id] && progress[id].passed; }).length;
   var total = QUIZ_IDS.length;
