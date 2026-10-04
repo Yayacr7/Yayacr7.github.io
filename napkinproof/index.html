@@ -193,6 +193,18 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 .tier-tag{display:none;margin-top:10px;font-weight:700;font-size:.9rem;color:var(--ballpoint)}
 .tier-tag.on{display:block}
 
+/* free trial band */
+.trial{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center;background:var(--ballpoint);color:var(--ballpoint-ink);border-radius:22px;padding:44px 44px}
+.trial .eyebrow{color:var(--ballpoint-ink);opacity:.8}
+.trial h2{color:var(--ballpoint-ink);margin-top:12px}
+.trial p{margin-top:12px;opacity:.9;max-width:44ch}
+.trial ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.trial li{display:grid;grid-template-columns:2.2rem minmax(0,1fr);align-items:baseline;font-weight:600}
+.trial li b{font:700 1.7rem/1 var(--f-hand)}
+.trial .cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:22px}
+.trial .btn.light{background:var(--ballpoint-ink);color:var(--ballpoint);text-decoration:none;display:inline-block}
+.trial .cta span{font-size:.9rem;opacity:.85}
+
 /* sign-in dialog */
 dialog.auth{border:0;padding:0;border-radius:18px;background:var(--napkin);color:var(--graphite);width:min(440px,calc(100vw - 32px));box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
 dialog.auth::backdrop{background:rgba(15,20,28,.55)}
@@ -223,6 +235,7 @@ dialog.auth::backdrop{background:rgba(15,20,28,.55)}
 
 @media (max-width:900px){
   .plans{grid-template-columns:1fr;gap:26px}
+  .trial{grid-template-columns:1fr;padding:32px 22px;gap:26px}
   .hero .wrap,.split,.final .box{grid-template-columns:1fr;gap:36px}
   .perks{grid-template-columns:1fr;gap:22px}
   .fit{grid-template-columns:1fr}
@@ -250,6 +263,7 @@ dialog.auth::backdrop{background:rgba(15,20,28,.55)}
     <a class="navlink" href="../learn/">Free lessons</a>
     <a class="navlink" href="#inside">What's inside</a>
     <a class="navlink" href="#pricing">Pricing</a>
+    <a class="navlink" href="trial/index.html">Free trial</a>
     <button class="theme" id="themeBtn" type="button" aria-label="Switch between light and dark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="display:block"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
     <button class="signin" id="signinBtn" type="button">Sign in</button>
   </div>
@@ -262,7 +276,7 @@ dialog.auth::backdrop{background:rgba(15,20,28,.55)}
       <span class="eyebrow">For people with an idea and a day job</span>
       <h1>Prove it on a napkin before you bet your <span class="mark">savings</span> on it.</h1>
       <p class="sub">Free tools and a no-fluff course that show you whether your business idea actually makes money, before you quit anything.</p>
-      <form class="wl" data-waitlist novalidate>
+      <form class="wl" id="join" data-waitlist novalidate>
         <div class="wl-row">
           <label class="hp" aria-hidden="true">Leave this empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
           <input type="email" name="email" id="wl-email-1" required placeholder="you@email.com" autocomplete="email" aria-label="Email address">
@@ -361,6 +375,24 @@ dialog.auth::backdrop{background:rgba(15,20,28,.55)}
   </div>
 </section>
 
+<section class="block" id="free-trial">
+  <div class="wrap">
+    <div class="trial">
+      <div>
+        <span class="eyebrow">Free trial</span>
+        <h2>Try Founder free for 3 days.</h2>
+        <p>Create a free account and get 3 days of Founder access. No card, nothing to cancel. When it ends you keep the free plan, or upgrade if it helped.</p>
+        <div class="cta"><a class="btn light" href="trial/index.html">Start free trial</a><span>No card needed</span></div>
+      </div>
+      <ul>
+        <li><b>1</b><span>Module 1 of the course: the napkin test, step by step</span></li>
+        <li><b>2</b><span>The startup cost calculator (a Founder tool)</span></li>
+        <li><b>3</b><span>New modules and tools as they're released during your trial</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <section class="block" id="pricing">
   <div class="wrap">
     <span class="eyebrow">Pricing</span>
@@ -405,6 +437,7 @@ dialog.auth::backdrop{background:rgba(15,20,28,.55)}
         </ul>
         <button class="btn" type="button" data-plan="founder">Get Founder</button>
         <p class="note" data-note="founder"></p>
+        <a class="note" href="trial/index.html" style="margin-top:-8px">Or try it free for 3 days →</a>
       </article>
     </div>
     <p class="plans-foot">One-time payments, no subscription. Prices in US dollars.</p>
@@ -417,6 +450,7 @@ dialog.auth::backdrop{background:rgba(15,20,28,.55)}
     <h2 style="margin-top:12px">FAQ</h2>
     <div class="faq">
       <details><summary>Is it free?</summary><p>The tools, the lessons and an account are free. The course is $30 (Builder), or $80 with the Founder toolkit and negotiation scripts. Both are one-time payments.</p></details>
+      <details><summary>How does the free trial work?</summary><p>Every new account gets 3 days of Founder access, starting when you create it. No card is needed and nothing renews. After 3 days you keep the free plan, or buy Builder or Founder.</p></details>
       <details><summary>Do I need to sign in?</summary><p>No. Every free tool works without an account. Signing in keeps your purchases in one place, and it's how you'll open the course.</p></details>
       <details><summary>When does the course launch?</summary><p>When it's ready, not before. The waitlist gets an email the day doors open, plus every new tool along the way.</p></details>
       <details><summary>Will you spam me?</summary><p>No. You'll get the welcome email, new tools as they ship, and the launch. Unsubscribe with one click any time.</p></details>
@@ -484,28 +518,16 @@ dialog.auth::backdrop{background:rgba(15,20,28,.55)}
   </div>
 </footer>
 
+<script src="config.js"></script>
 <script>
 (function(){
 "use strict";
 
-/* ================= WAITLIST SETTINGS =================
-   Pick ONE provider and paste its ID. Until both are set, the form
-   tells visitors the list isn't open yet (it never pretends to save).
-   - "kit":        ID = the number in your Kit form URL (app.kit.com/forms/1234567)
-   - "formspree":  ID = the code in https://formspree.io/f/xxxxxxx
-   - "formsubmit": ID = the random alias FormSubmit emails you after activation
-====================================================== */
-var WAITLIST = { provider: "", id: "" };
-
-/* ================= ACCOUNTS & PAYMENTS =================
-   Sign-in uses Supabase (free tier). Paste your project's URL and
-   "anon public" key from Supabase > Project Settings > API.
-   Set google: true after enabling Google in Supabase > Authentication.
-   Payments use Stripe Payment Links (Stripe > Payment Links).
-   Anything left blank falls back to the waitlist, honestly labelled.
-====================================================== */
-var AUTH = { supabaseUrl: "", supabaseAnonKey: "", google: false };
-var PAY  = { builder: "", founder: "" };
+var CFG = window.NP_CONFIG || {};
+var WAITLIST = CFG.WAITLIST || { provider: "", id: "" };
+var AUTH = CFG.AUTH || { supabaseUrl: "", supabaseAnonKey: "", google: false };
+var PAY  = CFG.PAY  || { builder: "", founder: "" };
+var TRIAL_DAYS = CFG.TRIAL_DAYS || 3;
 
 /* ---------- theme ---------- */
 function load(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }

@@ -6,7 +6,7 @@ Things I'm making with Claude Code.
 
 [`napkinproof/`](napkinproof/index.html) is the landing page for **Napkin Proof**: free tools and a course that show aspiring entrepreneurs whether a business idea makes money before they quit their job. It has a live "napkin test" calculator and a waitlist form.
 
-**Turn the waitlist on:** in `napkinproof/index.html`, set `WAITLIST = { provider: "...", id: "..." }` (`kit`, `formspree` or `formsubmit`). Until then, the form tells visitors the list opens soon and saves nothing.
+**Settings:** everything is configured in [`napkinproof/config.js`](napkinproof/config.js): the waitlist provider (`kit`, `formspree` or `formsubmit`), Supabase keys for sign-in, Stripe Payment Links, and the free-trial length. Until then, the form tells visitors the list opens soon and saves nothing.
 
 ## Money & Deals School — business, finance and negotiation lessons
 
