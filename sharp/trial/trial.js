@@ -20,7 +20,7 @@ function show(id){
    content must be served from Supabase behind a server-side check. */
 function access(u, now){
   var plan = u && u.app_metadata && u.app_metadata.plan;
-  if(plan === 'builder' || plan === 'founder') return { kind: 'paid', plan: plan };
+  if(plan === 'starter' || plan === 'builder' || plan === 'founder') return { kind: 'paid', plan: plan };
   var start = new Date(u.created_at).getTime(), end = start + DAYS * DAY;
   return end > now ? { kind: 'trial', end: end } : { kind: 'ended', end: end };
 }
@@ -39,7 +39,7 @@ function render(u, now){
   var a = access(u, now);
   pill.hidden = false; pill.className = 'pill';
   if(a.kind === 'paid'){
-    pill.textContent = (a.plan === 'founder' ? 'Founder' : 'Builder') + ' plan';
+    pill.textContent = a.plan.charAt(0).toUpperCase() + a.plan.slice(1) + ' plan';
     $('countdown').hidden = true; show('st-area'); return;
   }
   if(a.kind === 'ended'){
@@ -61,10 +61,11 @@ function payUrl(plan, u){
   return base + (q.length ? (base.indexOf('?') < 0 ? '?' : '&') + q.join('&') : '');
 }
 function setBuyLinks(u){
-  var b = payUrl('builder', u), f = payUrl('founder', u);
+  var st = payUrl('starter', u), b = payUrl('builder', u), f = payUrl('founder', u);
+  if(st) $('buyStarter').href = st;
   if(b) $('buyBuilder').href = b;
   if(f) $('buyFounder').href = f;
-  $('buyNote').textContent = (b || f) ? 'Secure checkout by Stripe.' : 'Paid plans open soon. These buttons take you to pricing to reserve a spot.';
+  $('buyNote').textContent = (st || b || f) ? 'Secure checkout by Stripe.' : 'Paid plans open soon. These buttons take you to pricing to reserve a spot.';
 }
 
 /* ---------- demo / preview (#demo, #demo-ended) ---------- */

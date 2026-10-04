@@ -15,14 +15,14 @@ create table if not exists public.premium_content (
   title      text not null,
   body_html  text not null,
   min_plan   text not null default 'trial'
-             check (min_plan in ('trial', 'builder', 'founder')),
+             check (min_plan in ('trial', 'starter', 'builder', 'founder')),
   updated_at timestamptz not null default now()
 );
 
 -- Locked by default: with RLS on and no matching policy, nobody can read or write.
 alter table public.premium_content enable row level security;
 
--- What the signed-in person may see: 'founder', 'builder', 'trial' or 'none'.
+-- What the signed-in person may see: 'founder', 'builder', 'starter', 'trial' or 'none'.
 create or replace function public.np_access_level()
 returns text
 language sql
@@ -33,6 +33,7 @@ as $$
   select case
     when u.raw_app_meta_data ->> 'plan' = 'founder' then 'founder'
     when u.raw_app_meta_data ->> 'plan' = 'builder' then 'builder'
+    when u.raw_app_meta_data ->> 'plan' = 'starter' then 'starter'
     when u.created_at > now() - interval '3 days'   then 'trial'
     else 'none'
   end
@@ -52,7 +53,8 @@ create policy "Read content your plan includes"
     case public.np_access_level()
       when 'founder' then true
       when 'trial'   then true                          -- the trial is Founder access
-      when 'builder' then min_plan in ('trial', 'builder')
+      when 'builder' then min_plan in ('trial', 'starter', 'builder')
+      when 'starter' then min_plan in ('trial', 'starter')
       else false
     end
   );

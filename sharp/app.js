@@ -95,7 +95,7 @@ var dlg = document.getElementById('authDialog'), signinBtn = document.getElement
 var authMsg = document.getElementById('authMsg'), reasonEl = document.getElementById('authReason');
 var sb = null, user = null, pendingPlan = null;
 var authReady = !!(AUTH.supabaseUrl && AUTH.supabaseAnonKey);
-var PLAN_NAMES = { builder: 'Builder ($20)', founder: 'Founder ($50)' };
+var PLAN_NAMES = { starter: 'Starter ($10)', builder: 'Builder ($40)', founder: 'Founder ($75)' };
 
 function openAuth(reason){
   reasonEl.textContent = reason || ''; reasonEl.classList.toggle('on', !!reason);
@@ -206,7 +206,7 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-plan]'), function(
   var plan = b.getAttribute('data-plan');
   b.addEventListener('click', function(){ choose(plan); });
   if(plan !== 'free' && !PAY[plan]){
-    b.textContent = 'Reserve ' + (plan === 'builder' ? 'Builder' : 'Founder');
+    b.textContent = 'Reserve ' + PLAN_NAMES[plan].split(' ')[0];
     var n = document.querySelector('[data-note="' + plan + '"]');
     if(n) n.textContent = 'Opens soon. Reserve your spot, no payment yet.';
   } else if(plan !== 'free'){
