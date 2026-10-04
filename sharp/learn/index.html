@@ -16,50 +16,23 @@
 /* Layout concept: Sharp courses. Structured learning layout, white cards on cool grey,
    four colour-coded topics, one hot orange accent for action. */
 :root{
-  --paper:#f4f5f8;   --paper-2:#eceff4;  --card:#ffffff;
-  --ink:#12151c;     --muted:#5a6373;    --rule:#dbe0e8;
-  --note:#d9430a;    --note-ink:#ffffff; --note-soft:#ffe9df;
-  --engrave:#bf3905; --gold:#5a6373;     --gold-soft:#ffe27a; --hl-ink:#12151c;
-  --good:#1a7a46;    --good-soft:#dcf0e3;
-  --bad:#b3261e;     --bad-soft:#f8e0dd;
-  --ledger-line:#e9edf2; --ledger-margin:#e3e7ee;
-  --readout-bg:#12151c;  --readout-fg:#ffffff; --readout-dim:#a3abb9;
-  --finance:#11775a; --business:#2c49cf; --marketing:#c03a07; --negotiation:#7b3ec6;
-  --finance-soft:#dcf1e9; --business-soft:#e1e7fb; --marketing-soft:#fde5da; --negotiation-soft:#ece2f9;
-  --investors:#b42a68; --investors-soft:#fbe1ee;
-  --shadow:0 1px 1px rgba(27,33,48,.06),0 18px 40px -22px rgba(27,33,48,.45);
+  --paper:#0d1020;   --paper-2:#1e2442;  --card:#151a30;
+  --ink:#f2f3f9;     --muted:#a4aac4;    --rule:#283050;
+  --note:#ff6a2b;    --note-ink:#ffffff; --note-soft:#3a1d18;
+  --engrave:#ff8f5e; --gold:#a4aac4;     --gold-soft:#ffb37a; --hl-ink:#0d1020;
+  --good:#5fd99a;    --good-soft:#123326;
+  --bad:#ff8d7d;     --bad-soft:#3d1d1d;
+  --ledger-line:#1e2442; --ledger-margin:#283050;
+  --readout-bg:#090b17;  --readout-fg:#ffffff; --readout-dim:#a4aac4;
+  --finance:#3ddba5; --business:#8ea4ff; --marketing:#ff8f5e; --negotiation:#c3a2ff;
+  --finance-soft:#10302a; --business-soft:#1c2550; --marketing-soft:#3a1d18; --negotiation-soft:#2b1e4a;
+  --investors:#ff7fb6; --investors-soft:#3d1830;
+  --shadow:0 18px 40px -24px rgba(0,0,0,.8);
   --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
   --f-body:"Karla","Helvetica Neue",Arial,system-ui,sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   --f-hand:"Caveat","Segoe Print","Bradley Hand",cursive;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#0e1015;   --paper-2:#1f242e;  --card:#161a22;
-    --ink:#eef0f4;     --muted:#9ba4b3;    --rule:#2a303c;
-    --note:#ff6a2b;    --note-ink:#1a0902; --note-soft:#3a1a0c;
-    --engrave:#ff8a57; --gold:#9ba4b3;     --gold-soft:#ffe27a; --hl-ink:#12151c;
-    --good:#6fd39b;    --good-soft:#163323;
-    --bad:#ff8d7d;     --bad-soft:#3d1d19;
-    --ledger-line:#1f242e; --ledger-margin:#2a303c;
-    --readout-bg:#07090d;  --readout-fg:#ffffff; --readout-dim:#9ba4b3;
-    --finance:#5fd3a8; --business:#8ea4ff; --marketing:#ff8a57; --negotiation:#c39bff;
-    --finance-soft:#12302a; --business-soft:#1b2347; --marketing-soft:#3a1a0c; --negotiation-soft:#2a1b40; --investors:#ff8fc0; --investors-soft:#3a1528;
-    --shadow:none; color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0e1015;   --paper-2:#1f242e;  --card:#161a22;
-  --ink:#eef0f4;     --muted:#9ba4b3;    --rule:#2a303c;
-  --note:#ff6a2b;    --note-ink:#1a0902; --note-soft:#3a1a0c;
-  --engrave:#ff8a57; --gold:#9ba4b3;     --gold-soft:#ffe27a; --hl-ink:#12151c;
-  --good:#6fd39b;    --good-soft:#163323;
-  --bad:#ff8d7d;     --bad-soft:#3d1d19;
-  --ledger-line:#1f242e; --ledger-margin:#2a303c;
-  --readout-bg:#07090d;  --readout-fg:#ffffff; --readout-dim:#9ba4b3;
-  --finance:#5fd3a8; --business:#8ea4ff; --marketing:#ff8a57; --negotiation:#c39bff;
-  --finance-soft:#12302a; --business-soft:#1b2347; --marketing-soft:#3a1a0c; --negotiation-soft:#2a1b40; --investors:#ff8fc0; --investors-soft:#3a1528;
-  --shadow:none; color-scheme:dark;
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -427,7 +400,7 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 62px);max-height:calc(100vh - 6
 .site-head .top-links a{color:#fff}
 .site-head .top-links a:hover,.site-head .top-links a[aria-current="page"]{background:rgba(255,255,255,.1)}
 .site-head .icon-btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.25)}
-.dash{position:relative;overflow:hidden;background:#0d1020;color:#fff;border:0;box-shadow:0 24px 50px -28px rgba(13,16,32,.8);background-image:none}
+.dash{position:relative;overflow:hidden;background:#151a30;border:1px solid var(--rule)!important;color:#fff;border:0;box-shadow:0 24px 50px -28px rgba(13,16,32,.8);background-image:none}
 .dash::before{content:"";position:absolute;inset:-30%;background:radial-gradient(35% 45% at 85% 20%,rgba(255,79,154,.45),transparent 70%),radial-gradient(35% 45% at 10% 90%,rgba(40,200,150,.35),transparent 70%),radial-gradient(30% 40% at 55% 0%,rgba(80,110,255,.35),transparent 70%);pointer-events:none}
 .dash > *{position:relative}
 .dash .eyebrow{color:rgba(255,255,255,.65)}
@@ -452,7 +425,6 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 62px);max-height:calc(100vh - 6
     <a class="brand" href="../index.html"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 28 16 4l11 24z" fill="var(--ink)"/><path d="M12.6 11.4 16 4l3.4 7.4z" fill="var(--note)"/></svg>Sharp</a>
     <nav class="top-links" aria-label="Main"><a href="index.html" aria-current="page">Courses</a><a href="../tools/index.html">Tools</a><a href="../index.html#pricing">Pricing</a><a href="../trial/index.html">Free trial</a></nav>
     <div class="spacer"></div>
-    <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch between light and dark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="display:block"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
     <span id="progressPill" hidden></span>
   </div>
 </header>
@@ -494,7 +466,7 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 62px);max-height:calc(100vh - 6
     <div class="dash-main">
       <span class="eyebrow">Your courses</span>
       <h1>Business, made <em>simple.</em></h1>
-      <p class="lede">13 short lessons in five topics. Each one starts with a 30-second version. Follow the path, or jump to whatever you need today.</p>
+      <p class="lede">13 short lessons. Start anywhere.</p>
       <div class="topic-bars">
         <div class="tb t-finance"><span class="tb-name">Finance</span><span class="tb-track"><i data-bar="finance"></i></span><span class="tb-n" data-world="finance">0/3</span></div>
         <div class="tb t-business"><span class="tb-name">Business</span><span class="tb-track"><i data-bar="business"></i></span><span class="tb-n" data-world="business">0/2</span></div>

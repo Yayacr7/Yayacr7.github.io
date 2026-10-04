@@ -1,62 +1,27 @@
 /* Sharp design system.
-   Layout concept: a clear, structured learning site. Four colour-coded topics,
-   white cards on a cool grey page, one hot orange accent for action. */
+   Layout concept: one bold look. Deep navy everywhere, glowing topic colours,
+   an orange-to-pink gradient for action. Dark only, by design. */
 :root{
-  --bg:#f4f5f8;       --surface:#ffffff;   --surface-2:#eceff4;
-  --ink:#12151c;      --muted:#5a6373;     --line:#dbe0e8;
-  --accent:#d9430a;   --accent-ink:#ffffff; --accent-text:#bf3905; --accent-soft:#ffe9df;
-  --finance:#11775a;  --finance-soft:#dcf1e9;
-  --business:#2c49cf; --business-soft:#e1e7fb;
-  --marketing:#c03a07;--marketing-soft:#fde5da;
-  --negotiation:#7b3ec6;--negotiation-soft:#ece2f9;
-  --investors:#b42a68; --investors-soft:#fbe1ee;
-  --good:#1a7a46;     --good-soft:#dcf0e3;
-  --bad:#b3261e;      --bad-soft:#f8e0dd;
-  --highlight:#ffe27a;--highlight-ink:#12151c;
-  --hero-bg:#0d1020; --tint:#eceffa;
-  --napkin:#fbfcfc;   --napkin-fold:#e4e9ec; --napkin-dot:#e9eef1; --ballpoint:#2443b5;
-  --readout:#12151c;  --readout-ink:#ffffff; --readout-dim:#a3abb9;
-  --shadow:0 1px 2px rgba(18,21,28,.05),0 12px 32px -18px rgba(18,21,28,.28);
+  --bg:#0d1020;       --surface:#151a30;   --surface-2:#1e2442;
+  --ink:#f2f3f9;      --muted:#a4aac4;     --line:#283050;
+  --accent:#ff6a2b;   --accent-ink:#ffffff; --accent-text:#ff8f5e; --accent-soft:#3a1d18;
+  --finance:#3ddba5;  --finance-soft:#10302a;
+  --business:#8ea4ff; --business-soft:#1c2550;
+  --marketing:#ff8f5e;--marketing-soft:#3a1d18;
+  --negotiation:#c3a2ff;--negotiation-soft:#2b1e4a;
+  --investors:#ff7fb6; --investors-soft:#3d1830;
+  --good:#5fd99a;     --good-soft:#123326;
+  --bad:#ff8d7d;      --bad-soft:#3d1d1d;
+  --highlight:rgba(255,154,90,.45);--highlight-ink:#ffffff;
+  --hero-bg:#090b17; --tint:#11152a;
+  --napkin:#1a2038;   --napkin-fold:#2a3254; --napkin-dot:#232a48; --ballpoint:#9fb3ff;
+  --readout:#090b17;  --readout-ink:#ffffff; --readout-dim:#a4aac4;
+  --shadow:0 18px 40px -24px rgba(0,0,0,.8);
   --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
   --f-body:"Karla","Helvetica Neue",Arial,system-ui,sans-serif;
   --f-hand:"Caveat","Segoe Print","Bradley Hand",cursive;
   --radius:16px;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0e1015;       --surface:#161a22;   --surface-2:#1f242e;
-    --ink:#eef0f4;      --muted:#9ba4b3;     --line:#2a303c;
-    --accent:#ff6a2b;   --accent-ink:#1a0902; --accent-text:#ff8a57; --accent-soft:#3a1a0c;
-    --finance:#5fd3a8;  --finance-soft:#12302a;
-    --business:#8ea4ff; --business-soft:#1b2347;
-    --marketing:#ff8a57;--marketing-soft:#3a1a0c;
-    --negotiation:#c39bff;--negotiation-soft:#2a1b40;
-    --investors:#ff8fc0; --investors-soft:#3a1528;
-    --good:#6fd39b;     --good-soft:#163323;
-    --bad:#ff8d7d;      --bad-soft:#3d1d19;
-    --highlight:rgba(255,226,122,.42);--highlight-ink:#12151c;
-      --hero-bg:#0b0d18; --tint:#131726;
-  --napkin:#1b2330;   --napkin-fold:#252f3e; --napkin-dot:#212a37; --ballpoint:#8ea6ff;
-    --readout:#07090d;  --readout-ink:#ffffff; --readout-dim:#9ba4b3;
-    --shadow:none; color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0e1015;       --surface:#161a22;   --surface-2:#1f242e;
-  --ink:#eef0f4;      --muted:#9ba4b3;     --line:#2a303c;
-  --accent:#ff6a2b;   --accent-ink:#1a0902; --accent-text:#ff8a57; --accent-soft:#3a1a0c;
-  --finance:#5fd3a8;  --finance-soft:#12302a;
-  --business:#8ea4ff; --business-soft:#1b2347;
-  --marketing:#ff8a57;--marketing-soft:#3a1a0c;
-  --negotiation:#c39bff;--negotiation-soft:#2a1b40;
-  --investors:#ff8fc0; --investors-soft:#3a1528;
-  --good:#6fd39b;     --good-soft:#163323;
-  --bad:#ff8d7d;      --bad-soft:#3d1d19;
-  --highlight:rgba(255,226,122,.42);--highlight-ink:#12151c;
-  --hero-bg:#0b0d18; --tint:#131726;
-  --napkin:#1b2330;   --napkin-fold:#252f3e; --napkin-dot:#212a37; --ballpoint:#8ea6ff;
-  --readout:#07090d;  --readout-ink:#ffffff; --readout-dim:#9ba4b3;
-  --shadow:none; color-scheme:dark;
+  color-scheme:dark;
 }
 
 *{box-sizing:border-box}
@@ -168,7 +133,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
 .result .lines{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;font-size:.95rem;font-variant-numeric:tabular-nums}
 .result .lines span{display:block;color:var(--readout-dim);font-size:.78rem}
 .result .verdict-line{font-weight:600;line-height:1.45}
-.result .verdict-line b{color:var(--highlight)}
+.result .verdict-line b{color:#ffb37a}
 .bar{height:10px;border-radius:5px;background:rgba(255,255,255,.12);overflow:hidden;display:flex}
 .bar i{display:block;height:100%}
 .legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.82rem;color:var(--readout-dim)}
@@ -237,3 +202,12 @@ dialog.auth::backdrop{background:rgba(10,12,16,.55)}
 .site-head .signin{background:#fff;color:#0d1020;border-color:#fff}
 @media (max-width:900px){ .site-head .main-nav a{color:#fff} }
 .site-head .signin.in{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+
+/* one bold look everywhere */
+body{background:var(--bg)}
+.card,.tool{box-shadow:var(--shadow)}
+.btn{background:linear-gradient(90deg,#ff6a2b,#ff4f9a);color:#fff;box-shadow:0 10px 26px -12px rgba(255,79,154,.7)}
+.btn.dark{background:#fff;color:#0d1020;box-shadow:none}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--ink)}
+section.block + section.block{border-top:1px solid var(--line)}

@@ -6,7 +6,7 @@ function load(key, fallback){ try{ var v = localStorage.getItem(key); return v ?
 function save(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
 
 /* ---------- theme ---------- */
-var themeBtn = document.getElementById('themeBtn');
+var themeBtn = document.getElementById('themeBtn') || document.createElement('i');
 var theme = load('mds-theme', null);
 function applyTheme(t){ if(t){ document.documentElement.setAttribute('data-theme', t); } else { document.documentElement.removeAttribute('data-theme'); } }
 applyTheme(theme);

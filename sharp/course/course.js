@@ -16,7 +16,7 @@ var OUTLINE = [
 var sb = null, rows = null;
 function $(id){ return document.getElementById(id); }
 try{ var t = localStorage.getItem('np-theme'); if(t) document.documentElement.setAttribute('data-theme', t); }catch(e){}
-$('themeBtn').addEventListener('click', function(){
+($('themeBtn') || document.createElement('i')).addEventListener('click', function(){
   var r = document.documentElement, dark = r.getAttribute('data-theme') === 'dark' || (!r.getAttribute('data-theme') && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
   r.setAttribute('data-theme', dark ? 'light' : 'dark'); try{ localStorage.setItem('np-theme', dark ? 'light' : 'dark'); }catch(e){}
 });

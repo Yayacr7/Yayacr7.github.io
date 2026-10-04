@@ -12,7 +12,7 @@ function load(k){ try{ return localStorage.getItem(k); }catch(e){ return null; }
 function save(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 var root = document.documentElement, t = load('np-theme');
 if(t) root.setAttribute('data-theme', t);
-document.getElementById('themeBtn').addEventListener('click', function(){
+(document.getElementById('themeBtn') || document.createElement('i')).addEventListener('click', function(){
   var dark = root.getAttribute('data-theme') === 'dark' || (!root.getAttribute('data-theme') && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
   t = dark ? 'light' : 'dark'; root.setAttribute('data-theme', t); save('np-theme', t);
 });

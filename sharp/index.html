@@ -58,9 +58,9 @@
 .steps div::before{content:counter(s);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--ink);color:var(--bg);font:800 1.1rem var(--f-display);margin-bottom:14px}
 .steps h3{margin-bottom:6px}
 .steps p{color:var(--muted)}
-.trial{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center;background:var(--ink);color:var(--bg);border-radius:22px;padding:44px}
+.trial{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center;background:linear-gradient(135deg,#2b1e4a,#3d1830 55%,#3a1d18);color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:44px;box-shadow:var(--shadow)}
 .trial .eyebrow{color:var(--accent-text)}
-.trial h2{margin-top:10px;color:var(--bg)}
+.trial h2{margin-top:10px;color:#fff}
 .trial p{margin-top:12px;opacity:.85;max-width:46ch}
 .trial ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 .trial li{display:grid;grid-template-columns:28px minmax(0,1fr);font-weight:600}
@@ -129,6 +129,8 @@
 .hcard.t-investors{background:linear-gradient(135deg,#c2266f,#ff5a9e)}
 #topics{background:var(--tint)}
 .tryit{background:var(--bg)}
+#tools.band-dark{background:var(--hero-bg)}
+.band-dark .tool-card{background:var(--surface)!important}
 .try-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center}
 .band-dark{background:var(--hero-bg);color:#fff}
 .band-dark .eyebrow{color:rgba(255,255,255,.65)}
@@ -170,7 +172,6 @@
       <a href="trial/index.html">Free trial</a>
     </nav>
     <div class="spacer"></div>
-    <button class="theme" id="themeBtn" type="button" aria-label="Switch between light and dark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
     <button class="signin" id="signinBtn" type="button">Sign in</button>
   </div>
 </header>
@@ -202,7 +203,7 @@
       <div>
         <span class="eyebrow">Courses</span>
         <h2 style="margin-top:10px">Five topics, explained simply</h2>
-        <p>Each lesson starts with the 30-second version. Tap any underlined word to see what it means. Practice problems check your answers and explain the ones you miss.</p>
+        <p>Each lesson starts with a 30-second version.</p>
       </div>
       <a class="btn ghost" href="learn/index.html">All courses</a>
     </div>
@@ -255,7 +256,7 @@
           <div>
             <div class="topic-top"><span class="t-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span><span class="chip t-investors">Investors · New</span></div>
             <h3 style="margin-top:12px">Pitch investors, and stay calm when they push back</h3>
-            <p style="margin-top:8px">The six-line pitch, the numbers investors always ask about, and five habits for tough questions.</p>
+            <p style="margin-top:8px">The pitch, the numbers, and staying calm.</p>
             <a class="tool-link" href="tools/investors/index.html" style="display:inline-block;margin-top:14px">Tool: Investor pressure drill →</a>
           </div>
           <ul>
@@ -273,7 +274,7 @@
     <div>
       <span class="eyebrow">Try it in 10 seconds</span>
       <h2 style="margin-top:10px">How many customers does your idea need?</h2>
-      <p class="lede" style="margin-top:12px">Change any number on the napkin. It works out how many customers a month you need to pay yourself, and whether that's realistic.</p>
+      <p class="lede" style="margin-top:12px">Change any number. See how many customers you need.</p>
       <a class="btn dark" href="tools/index.html" style="margin-top:20px">See all 19 tools</a>
     </div>
     <div class="napkin" id="napkin" aria-label="The napkin test: a live calculator">
@@ -300,7 +301,7 @@
       <div>
         <span class="eyebrow">Tools</span>
         <h2 style="margin-top:10px">Run your real numbers</h2>
-        <p>Free calculators and planners. No sign-up needed. The maths is shown, so nothing is a black box.</p>
+        <p>Free. No sign-up. The maths is always shown.</p>
       </div>
       <a class="btn ghost" href="tools/index.html">All tools</a>
     </div>
@@ -320,9 +321,9 @@
     <span class="eyebrow">How it works</span>
     <h2 style="margin:10px 0 30px">Simple, then practical</h2>
     <div class="steps">
-      <div><h3>Get the simple version</h3><p>Read the 30-second version first, then the 10-minute lesson with real examples.</p></div>
-      <div><h3>Check your work</h3><p>Practice problems mark your answers and explain every mistake.</p></div>
-      <div><h3>Run your numbers</h3><p>Use the matching tool on your own idea, budget or deal.</p></div>
+      <div><h3>Get the simple version</h3><p>30 seconds first, then 10 minutes.</p></div>
+      <div><h3>Check your work</h3><p>Instant answers, with the why.</p></div>
+      <div><h3>Run your numbers</h3><p>Use a tool on your own idea.</p></div>
     </div>
   </div>
 </section>
@@ -333,7 +334,7 @@
       <div>
         <span class="eyebrow">Free trial</span>
         <h2>Try Founder free for 3 days.</h2>
-        <p>Create a free account and get 3 days of Founder access. No card, nothing to cancel. When it ends you keep the free plan, or upgrade if it helped.</p>
+        <p>3 days of everything. No card, nothing to cancel.</p>
         <div class="cta"><a class="btn" href="trial/index.html">Start free trial</a><span>No card needed</span></div>
       </div>
       <ul>
@@ -351,7 +352,7 @@
       <div>
         <span class="eyebrow">Pricing</span>
         <h2 style="margin-top:10px">Start free. Pay once if you want the course.</h2>
-        <p>Every lesson and tool above is free. The paid plans add the <a href="course/index.html">Launch course</a>: six modules that take you from idea to first sales, each with a task you do on your own business.</p>
+        <p>Lessons and tools are free. Pay once for the <a href="course/index.html">Launch course</a>.</p>
       </div>
     </div>
     <div class="plans">
@@ -359,7 +360,7 @@
         <div class="name">Free</div>
         <div class="price"><b>$0</b><span>forever</span></div>
         <div class="depth" aria-label="Teaching level: basics"><i class="on"></i><i></i><i></i><span>The basics</span></div>
-        <p class="for">Learn the core ideas and try the tools.</p>
+        <p class="for">The core ideas and tools.</p>
         <ul>
           <li>All 13 lessons with quizzes</li>
           <li>Every tool, including the investor drill</li>
@@ -372,7 +373,7 @@
         <div class="name">Builder</div>
         <div class="price"><b>$20</b><span>one-time</span></div>
         <div class="depth" aria-label="Teaching level: in depth"><i class="on"></i><i class="on"></i><i></i><span>In depth</span></div>
-        <p class="for">Turn your idea into a real plan, step by step.</p>
+        <p class="for">Turn your idea into a plan.</p>
         <ul>
           <li>Everything in Free</li>
           <li>The 6-module Launch course</li>
@@ -388,7 +389,7 @@
         <div class="name">Founder</div>
         <div class="price"><b>$50</b><span>one-time</span></div>
         <div class="depth" aria-label="Teaching level: everything"><i class="on"></i><i class="on"></i><i class="on"></i><span>Everything Sharp teaches</span></div>
-        <p class="for">The most complete version, for people about to put real money in.</p>
+        <p class="for">Everything, for people about to invest real money.</p>
         <ul>
           <li>Everything in Builder</li>
           <li>Founder toolkit: pricing, cash-flow and startup-cost spreadsheets</li>
@@ -423,7 +424,7 @@
   <div class="wrap final">
     <div>
       <h2>Get new lessons and tools first.</h2>
-      <p>Join the waitlist for the Launch course and every new tool.</p>
+      <p>No spam. Leave any time.</p>
     </div>
     <form class="wl" id="join" data-waitlist novalidate>
                 <div class="wl-row">
