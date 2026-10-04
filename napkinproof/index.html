@@ -67,7 +67,7 @@ p{margin:0}
 .spacer{flex:1}
 .top a.navlink{color:var(--graphite);text-decoration:none;font-weight:600;font-size:.95rem}
 .top a.navlink:hover{color:var(--ballpoint)}
-.theme{background:transparent;border:1px solid var(--line);color:var(--graphite);border-radius:999px;padding:6px 12px;font:600 .82rem var(--f-body);cursor:pointer}
+.theme{background:transparent;border:1px solid var(--line);color:var(--graphite);border-radius:999px;padding:8px 10px;font:600 .82rem var(--f-body);cursor:pointer}
 
 /* hero */
 .hero{padding-block:28px 72px}
@@ -166,7 +166,63 @@ section.block{padding-block:72px;border-top:1px solid var(--line)}
 footer{padding-block:36px 48px;color:var(--muted);font-size:.9rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
 
+/* account button */
+.signin{font:700 .9rem var(--f-body);padding:8px 16px;border-radius:999px;border:1.5px solid var(--ballpoint);background:transparent;color:var(--ballpoint);cursor:pointer;white-space:nowrap}
+.signin:hover{background:var(--ballpoint);color:var(--ballpoint-ink)}
+.signin.in{border-color:var(--line);color:var(--graphite)}
+.signin.in:hover{background:var(--table-2);color:var(--graphite)}
+
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:34px;align-items:stretch}
+.plan{position:relative;display:flex;flex-direction:column;gap:14px;background:var(--napkin);border:1px solid var(--line);border-radius:16px;padding:26px 24px 24px}
+.plan.best{border:2px solid var(--ballpoint);box-shadow:var(--shadow)}
+.plan .flag{position:absolute;top:-13px;left:22px;font:700 .7rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;background:var(--ballpoint);color:var(--ballpoint-ink);padding:5px 10px;border-radius:999px}
+.plan .name{font:800 1.25rem var(--f-display);letter-spacing:-.01em}
+.plan .price{display:flex;align-items:baseline;gap:8px}
+.plan .price b{font:800 3.2rem/1 var(--f-display);letter-spacing:-.03em}
+.plan .price span{color:var(--muted);font-size:.92rem}
+.plan .for{color:var(--muted);font-size:.98rem}
+.plan ul{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:8px;flex:1}
+.plan li{display:grid;grid-template-columns:1.3em minmax(0,1fr);gap:6px;font-size:.98rem}
+.plan li::before{content:"✓";color:var(--ballpoint);font-weight:700}
+.plan .btn{width:100%;text-align:center}
+.plan .btn.ghost{background:transparent;color:var(--graphite);border:1.5px solid var(--line)}
+.plan .btn.ghost:hover{border-color:var(--graphite)}
+.plan .note{font-size:.82rem;color:var(--muted);text-align:center;min-height:1.2em}
+.plans-foot{margin-top:18px;color:var(--muted);font-size:.92rem}
+.tier-tag{display:none;margin-top:10px;font-weight:700;font-size:.9rem;color:var(--ballpoint)}
+.tier-tag.on{display:block}
+
+/* sign-in dialog */
+dialog.auth{border:0;padding:0;border-radius:18px;background:var(--napkin);color:var(--graphite);width:min(440px,calc(100vw - 32px));box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
+dialog.auth::backdrop{background:rgba(15,20,28,.55)}
+.auth-in{padding:30px 28px 26px;display:grid;gap:14px}
+.auth-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.auth h2{font-size:1.7rem}
+.auth .x{background:transparent;border:0;color:var(--muted);font-size:1.6rem;line-height:1;cursor:pointer;padding:2px 6px}
+.auth .lead{color:var(--muted);font-size:.98rem}
+.auth .reason{display:none;background:var(--ballpoint-soft);color:var(--graphite);border-radius:10px;padding:10px 12px;font-size:.92rem}
+.auth .reason.on{display:block}
+.g-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;font:700 1rem var(--f-body);padding:13px 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--table);color:var(--graphite);cursor:pointer}
+.g-btn:hover{border-color:var(--graphite)}
+.or{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:.85rem}
+.or::before,.or::after{content:"";flex:1;border-top:1px solid var(--line)}
+.auth label.lbl{font-weight:700;font-size:.9rem}
+.auth input[type=email]{width:100%;font:600 1rem var(--f-body);padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--table);color:var(--graphite);margin-top:6px}
+.auth input[type=email]:focus{outline:none;border-color:var(--ballpoint)}
+.auth .btn{width:100%}
+.auth .msg{font-weight:600;font-size:.95rem}
+.auth .msg.ok{color:var(--good)}
+.auth .msg.err{color:var(--bad)}
+.auth .fine{font-size:.8rem;color:var(--muted)}
+[hidden]{display:none!important}
+.signed-out{display:grid;gap:14px}
+.auth .signed{display:none}
+.auth.is-in .signed{display:grid;gap:12px}
+.auth.is-in .signed-out{display:none}
+
 @media (max-width:900px){
+  .plans{grid-template-columns:1fr;gap:26px}
   .hero .wrap,.split,.final .box{grid-template-columns:1fr;gap:36px}
   .perks{grid-template-columns:1fr;gap:22px}
   .fit{grid-template-columns:1fr}
@@ -193,7 +249,9 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
     <div class="spacer"></div>
     <a class="navlink" href="../learn/">Free lessons</a>
     <a class="navlink" href="#inside">What's inside</a>
-    <button class="theme" id="themeBtn" type="button">Light / Dark</button>
+    <a class="navlink" href="#pricing">Pricing</a>
+    <button class="theme" id="themeBtn" type="button" aria-label="Switch between light and dark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="display:block"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
+    <button class="signin" id="signinBtn" type="button">Sign in</button>
   </div>
 </header>
 
@@ -217,6 +275,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
           <option>I've made my first sales</option>
           <option>Just curious</option>
         </select>
+        <input type="hidden" name="tier" value="">
+        <p class="tier-tag" id="tierTag"></p>
         <p class="fine">Free. Early access to every tool and a founding-member price on the course. No spam, unsubscribe any time.</p>
         <p class="msg" role="status" aria-live="polite"></p>
       </form>
@@ -301,15 +361,53 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
   </div>
 </section>
 
-<section class="block">
+<section class="block" id="pricing">
   <div class="wrap">
-    <span class="eyebrow">Why join now</span>
-    <h2 style="margin-top:12px">Founding members get</h2>
-    <div class="perks">
-      <div><span class="n">1</span><h3>Every tool first</h3><p>New tools go to the waitlist before they're public.</p></div>
-      <div><span class="n">2</span><h3>The founding price</h3><p>A launch discount on the course that later buyers won't get.</p></div>
-      <div><span class="n">3</span><h3>A say in what gets built</h3><p>Tell us where you're stuck. That's what the next tool and lesson will cover.</p></div>
+    <span class="eyebrow">Pricing</span>
+    <h2 style="margin-top:12px">Start free. Pay once if you want the course.</h2>
+    <div class="plans">
+      <article class="plan">
+        <div class="name">Napkin</div>
+        <div class="price"><b>$0</b><span>free forever</span></div>
+        <p class="for">For testing ideas on your own.</p>
+        <ul>
+          <li>The napkin test and every free tool</li>
+          <li>7 plain-English lessons with quizzes</li>
+          <li>Pricing, break-even and loan calculators</li>
+          <li>One free account for all of it</li>
+        </ul>
+        <button class="btn ghost" type="button" data-plan="free">Create free account</button>
+        <p class="note">No card needed.</p>
+      </article>
+      <article class="plan">
+        <div class="name">Builder</div>
+        <div class="price"><b>$30</b><span>one-time</span></div>
+        <p class="for">For turning an idea into a plan.</p>
+        <ul>
+          <li>Everything in Napkin</li>
+          <li>The full 6-module course</li>
+          <li>Workbook to run your own numbers</li>
+          <li>Course updates included</li>
+        </ul>
+        <button class="btn" type="button" data-plan="builder">Get Builder</button>
+        <p class="note" data-note="builder"></p>
+      </article>
+      <article class="plan best">
+        <span class="flag">Most complete</span>
+        <div class="name">Founder</div>
+        <div class="price"><b>$80</b><span>one-time</span></div>
+        <p class="for">For people about to put real money in.</p>
+        <ul>
+          <li>Everything in Builder</li>
+          <li>Founder toolkit: pricing, cash-flow and startup-cost spreadsheets</li>
+          <li>Negotiation script library for suppliers, clients and partners</li>
+          <li>Early access to every new tool</li>
+        </ul>
+        <button class="btn" type="button" data-plan="founder">Get Founder</button>
+        <p class="note" data-note="founder"></p>
+      </article>
     </div>
+    <p class="plans-foot">One-time payments, no subscription. Prices in US dollars.</p>
   </div>
 </section>
 
@@ -318,7 +416,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
     <span class="eyebrow">Questions</span>
     <h2 style="margin-top:12px">FAQ</h2>
     <div class="faq">
-      <details><summary>Is it free?</summary><p>The tools and the lessons are free. The course will be paid. Waitlist members hear the price first and get a founding-member discount.</p></details>
+      <details><summary>Is it free?</summary><p>The tools, the lessons and an account are free. The course is $30 (Builder), or $80 with the Founder toolkit and negotiation scripts. Both are one-time payments.</p></details>
+      <details><summary>Do I need to sign in?</summary><p>No. Every free tool works without an account. Signing in keeps your purchases in one place, and it's how you'll open the course.</p></details>
       <details><summary>When does the course launch?</summary><p>When it's ready, not before. The waitlist gets an email the day doors open, plus every new tool along the way.</p></details>
       <details><summary>Will you spam me?</summary><p>No. You'll get the welcome email, new tools as they ship, and the launch. Unsubscribe with one click any time.</p></details>
       <details><summary>Is this financial advice?</summary><p>No. It's education and calculators. For legal, tax or big irreversible decisions, pay a professional who knows your situation.</p></details>
@@ -348,6 +447,36 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 </section>
 </main>
 
+<dialog class="auth" id="authDialog" aria-labelledby="authTitle">
+  <div class="auth-in">
+    <div class="auth-top">
+      <h2 id="authTitle">Sign in to Napkin Proof</h2>
+      <button class="x" type="button" data-close aria-label="Close">×</button>
+    </div>
+    <p class="reason" id="authReason"></p>
+    <div class="signed-out">
+      <p class="lead">New here? The same steps create your free account. No password to remember.</p>
+      <button class="g-btn" type="button" id="googleBtn">
+        <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+        Continue with Google
+      </button>
+      <div class="or">or</div>
+      <form id="emailForm" novalidate style="display:grid;gap:12px">
+        <label class="lbl" for="authEmail">Email
+          <input type="email" id="authEmail" name="email" required placeholder="you@email.com" autocomplete="email">
+        </label>
+        <button class="btn" type="submit">Email me a sign-in link</button>
+      </form>
+      <p class="msg" id="authMsg" role="status" aria-live="polite"></p>
+      <p class="fine">We use your email for your account and the updates you choose. Nothing else.</p>
+    </div>
+    <div class="signed">
+      <p class="lead">Signed in as <strong id="authWho"></strong>.</p>
+      <button class="btn ghost" type="button" id="signOutBtn" style="background:transparent;color:var(--graphite);border:1.5px solid var(--line)">Sign out</button>
+    </div>
+  </div>
+</dialog>
+
 <footer>
   <div class="wrap">
     <span>© 2026 Napkin Proof. Education, not financial advice.</span>
@@ -367,6 +496,16 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
    - "formsubmit": ID = the random alias FormSubmit emails you after activation
 ====================================================== */
 var WAITLIST = { provider: "", id: "" };
+
+/* ================= ACCOUNTS & PAYMENTS =================
+   Sign-in uses Supabase (free tier). Paste your project's URL and
+   "anon public" key from Supabase > Project Settings > API.
+   Set google: true after enabling Google in Supabase > Authentication.
+   Payments use Stripe Payment Links (Stripe > Payment Links).
+   Anything left blank falls back to the waitlist, honestly labelled.
+====================================================== */
+var AUTH = { supabaseUrl: "", supabaseAnonKey: "", google: false };
+var PAY  = { builder: "", founder: "" };
 
 /* ---------- theme ---------- */
 function load(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
@@ -429,6 +568,7 @@ Array.prototype.forEach.call(document.querySelectorAll('form[data-waitlist]'), f
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var email = form.email.value.trim(), stage = form.stage ? form.stage.value : '';
+    if(form.tier && form.tier.value) stage = (stage ? stage + ' · ' : '') + 'Wants: ' + form.tier.value;
     msg.className = 'msg';
     if(form._honey.value){ return; }
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){
@@ -449,6 +589,133 @@ Array.prototype.forEach.call(document.querySelectorAll('form[data-waitlist]'), f
     }).then(function(){ btn.disabled = false; btn.textContent = 'Join the waitlist'; });
   });
 });
+
+/* ---------- accounts ---------- */
+var dlg = document.getElementById('authDialog'), signinBtn = document.getElementById('signinBtn');
+var authMsg = document.getElementById('authMsg'), reasonEl = document.getElementById('authReason');
+var sb = null, user = null, pendingPlan = null;
+var authReady = !!(AUTH.supabaseUrl && AUTH.supabaseAnonKey);
+var PLAN_NAMES = { builder: 'Builder ($30)', founder: 'Founder ($80)' };
+
+function openAuth(reason){
+  reasonEl.textContent = reason || ''; reasonEl.classList.toggle('on', !!reason);
+  authMsg.className = 'msg'; authMsg.textContent = '';
+  if(dlg.showModal){ if(!dlg.open) dlg.showModal(); } else { dlg.setAttribute('open', ''); }
+}
+function closeAuth(){ if(dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
+dlg.addEventListener('click', function(e){ if(e.target === dlg || e.target.hasAttribute('data-close')) closeAuth(); });
+signinBtn.addEventListener('click', function(){ openAuth(); });
+document.getElementById('googleBtn').hidden = !(authReady && AUTH.google);
+document.querySelector('.or').hidden = !(authReady && AUTH.google);
+
+function render(){
+  var who = user && user.email ? user.email : '';
+  signinBtn.textContent = who ? 'Account' : 'Sign in';
+  signinBtn.classList.toggle('in', !!who);
+  dlg.classList.toggle('is-in', !!who);
+  document.getElementById('authWho').textContent = who;
+  document.getElementById('authTitle').textContent = who ? 'Your account' : 'Sign in to Napkin Proof';
+}
+
+function notOpenYet(){
+  authMsg.className = 'msg err';
+  authMsg.innerHTML = 'Accounts open very soon. <a href="#top-form" data-close>Join the waitlist</a> and you\'ll be first in.';
+}
+
+if(authReady){
+  var sc = document.createElement('script');
+  sc.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js';
+  sc.onload = function(){
+    sb = window.supabase.createClient(AUTH.supabaseUrl, AUTH.supabaseAnonKey);
+    sb.auth.getSession().then(function(r){ user = r.data && r.data.session ? r.data.session.user : null; render(); resumePlan(); });
+    sb.auth.onAuthStateChange(function(_e, session){ user = session ? session.user : null; render(); if(user) resumePlan(); });
+  };
+  sc.onerror = function(){ authReady = false; };
+  document.head.appendChild(sc);
+}
+
+function redirectUrl(){ return location.origin + location.pathname; }
+
+document.getElementById('emailForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var f = e.target, email = f.email.value.trim(), btn = f.querySelector('button');
+  authMsg.className = 'msg';
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ authMsg.className = 'msg err'; authMsg.textContent = 'That email doesn\'t look right. Check it and try again.'; return; }
+  if(!authReady || !sb){ notOpenYet(); return; }
+  btn.disabled = true; btn.textContent = 'Sending…';
+  sb.auth.signInWithOtp({ email: email, options: { emailRedirectTo: redirectUrl() } }).then(function(r){
+    if(r.error) throw r.error;
+    authMsg.className = 'msg ok';
+    authMsg.textContent = 'Check your inbox for a sign-in link (and your spam folder). You can close this window.';
+  }).catch(function(err){
+    authMsg.className = 'msg err';
+    authMsg.textContent = err && err.status === 429 ? 'Too many tries. Wait a minute, then try again.' : 'Couldn\'t send the link. Check your email address and try again.';
+  }).then(function(){ btn.disabled = false; btn.textContent = 'Email me a sign-in link'; });
+});
+
+document.getElementById('googleBtn').addEventListener('click', function(){
+  if(!authReady || !sb){ notOpenYet(); return; }
+  sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: redirectUrl() } });
+});
+document.getElementById('signOutBtn').addEventListener('click', function(){
+  if(sb) sb.auth.signOut().then(function(){ user = null; render(); closeAuth(); });
+});
+dlg.addEventListener('click', function(e){
+  var a = e.target.closest && e.target.closest('a[href="#top-form"]');
+  if(a){ e.preventDefault(); closeAuth(); document.getElementById('wl-email-1').focus(); }
+});
+
+/* ---------- pricing ---------- */
+function payUrl(plan){
+  var u = PAY[plan]; if(!u) return '';
+  var q = [];
+  if(user && user.email) q.push('prefilled_email=' + encodeURIComponent(user.email));
+  if(user && user.id) q.push('client_reference_id=' + encodeURIComponent(user.id));
+  return u + (q.length ? (u.indexOf('?') < 0 ? '?' : '&') + q.join('&') : '');
+}
+function reserve(plan){
+  var form = document.querySelector('.hero form[data-waitlist]');
+  form.tier.value = PLAN_NAMES[plan];
+  var tag = document.getElementById('tierTag');
+  tag.textContent = 'Reserving: ' + PLAN_NAMES[plan] + '. Join below and you\'ll get the link the day it opens.';
+  tag.classList.add('on');
+  form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(function(){ document.getElementById('wl-email-1').focus({ preventScroll: true }); }, 400);
+}
+function choose(plan){
+  if(plan === 'free'){ openAuth(user ? '' : 'Free account: every tool and lesson, saved under one sign-in.'); return; }
+  if(!PAY[plan]){ reserve(plan); return; }
+  if(authReady && !user){
+    pendingPlan = plan;
+    try{ sessionStorage.setItem('np-plan', plan); }catch(e){}
+    openAuth('Sign in first so your ' + PLAN_NAMES[plan] + ' purchase is saved to your account. You\'ll go straight to checkout after.');
+    return;
+  }
+  location.href = payUrl(plan);
+}
+function resumePlan(){
+  var plan = pendingPlan;
+  if(!plan){ try{ plan = sessionStorage.getItem('np-plan'); }catch(e){} }
+  if(plan && user && PAY[plan]){
+    try{ sessionStorage.removeItem('np-plan'); }catch(e){}
+    pendingPlan = null; location.href = payUrl(plan);
+  }
+}
+Array.prototype.forEach.call(document.querySelectorAll('[data-plan]'), function(b){
+  var plan = b.getAttribute('data-plan');
+  b.addEventListener('click', function(){ choose(plan); });
+  if(plan !== 'free' && !PAY[plan]){
+    b.textContent = 'Reserve ' + (plan === 'builder' ? 'Builder' : 'Founder');
+    var n = document.querySelector('[data-note="' + plan + '"]');
+    if(n) n.textContent = 'Opens soon. Reserve your spot, no payment yet.';
+  } else if(plan !== 'free'){
+    var n2 = document.querySelector('[data-note="' + plan + '"]');
+    if(n2) n2.textContent = 'Secure checkout by Stripe.';
+  }
+});
+
+if(location.hash === '#signin') openAuth();
+render();
 })();
 </script>
 </body>
