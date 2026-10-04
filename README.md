@@ -9,6 +9,7 @@ Things I'm making with Claude Code.
 - `sharp/index.html` — home page (topics, live napkin-test tool, pricing, waitlist, sign-in)
 - `sharp/learn/` — the courses
 - `sharp/tools/` — marketing calculators, budget & savings planner, business plan & pricing, negotiation prep, investor pressure drill
+- `sharp/course/` — the Launch course player. Module text is not in this repo: it loads from Supabase (`premium_content`), which only returns modules the signed-in person has paid for or has on trial
 - `sharp/trial/` — the 3-day Founder trial area
 - `sharp/config.js` — **the only settings file**: waitlist provider, Supabase keys, Stripe Payment Links, trial length
 - `supabase/schema.sql` — server-side lock for paid content; [`SECURITY.md`](SECURITY.md) — security checklist
