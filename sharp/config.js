@@ -8,7 +8,7 @@ window.NP_CONFIG = {
      - "kit":        the number in your Kit form URL (app.kit.com/forms/1234567)
      - "formspree":  the code in https://formspree.io/f/xxxxxxx
      - "formsubmit": the random alias FormSubmit emails you after activation */
-  WAITLIST: { provider: "", id: "" },
+  WAITLIST: { provider: "formsubmit", id: "996f64300d619d189bccbba1113b1856" },
 
   /* Accounts (Supabase, free tier). From Supabase > Project Settings > API:
      the Project URL and the "anon public" key. NEVER paste the service_role key.
