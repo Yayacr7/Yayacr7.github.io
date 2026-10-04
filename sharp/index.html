@@ -6,9 +6,9 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://formspree.io https://formsubmit.co https://app.kit.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Sharp</title>
-<meta name="description" content="Free plain-English courses in finance, business, marketing and negotiation for aspiring entrepreneurs, plus calculators that run your real numbers.">
+<meta name="description" content="Business, made simple. Plain-English courses in finance, marketing, negotiation and pitching investors, plus free tools that run your real numbers.">
 <meta property="og:title" content="Sharp">
-<meta property="og:description" content="Learn money, marketing and deal-making before you launch.">
+<meta property="og:description" content="Business, made simple: finance, marketing, negotiation and pitching investors, in plain English.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yayacr7.github.io/sharp/">
 <meta property="og:image" content="https://yayacr7.github.io/sharp/og.png">
@@ -38,6 +38,8 @@
 .topic li a{display:flex;justify-content:space-between;gap:10px;color:var(--ink);text-decoration:none;padding:8px 0;border-bottom:1px solid var(--line);font-weight:600}
 .topic li a:hover{color:var(--t)}
 .topic li a span{color:var(--muted);font-weight:500;font-size:.88rem;white-space:nowrap}
+.topic.wide{grid-column:1/-1}
+.wide-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center}
 .topic .tool-link{margin-top:auto;padding-top:6px;font-weight:700;color:var(--t);text-decoration:none}
 .tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .tool-card{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);transition:border-color .15s}
@@ -82,7 +84,7 @@
 .final p{color:var(--muted);margin-top:12px}
 @media (max-width:900px){
   .hero .wrap,.trial,.final{grid-template-columns:1fr;gap:34px}
-  .topics,.tools,.steps,.plans{grid-template-columns:1fr}
+  .topics,.tools,.steps,.plans,.wide-in{grid-template-columns:1fr}
   .trial{padding:30px 22px}
 }
 @media (min-width:901px) and (max-width:1100px){ .tools{grid-template-columns:repeat(2,minmax(0,1fr))} }
@@ -112,9 +114,9 @@
 <section class="hero">
   <div class="wrap">
     <div>
-      <span class="eyebrow">Business school for aspiring entrepreneurs</span>
-      <h1>Learn money, marketing and deal-making <span class="mark">before you launch.</span></h1>
-      <p class="lede">Free, plain-English courses in finance, business, marketing and negotiation, plus calculators that run your real numbers.</p>
+      <span class="eyebrow">Business, made simple</span>
+      <h1>Business is simpler than they <span class="mark">make it sound.</span></h1>
+      <p class="lede">Finance, marketing, negotiation and pitching investors, explained in plain English. Every lesson starts with a 30-second version, and every number comes with a tool to try it.</p>
       <div class="cta">
         <a class="btn" href="learn/index.html">Start learning free</a>
         <a class="btn ghost" href="tools/index.html">Explore the tools</a>
@@ -158,9 +160,9 @@
   </div>
   <div class="wrap" style="margin-top:46px">
     <div class="facts num">
-      <span><b>4</b> topics</span>
-      <span><b>10</b> lessons with quizzes</span>
-      <span><b>18</b> calculators &amp; tools</span>
+      <span><b>5</b> topics</span>
+      <span><b>13</b> lessons with quizzes</span>
+      <span><b>19</b> free tools</span>
       <span><b>$0</b> to start</span>
     </div>
   </div>
@@ -171,8 +173,8 @@
     <div class="section-head">
       <div>
         <span class="eyebrow">Courses</span>
-        <h2 style="margin-top:10px">Four topics every founder needs</h2>
-        <p>Short lessons in plain English. Each one ends with practice problems that check your answers and explain the ones you miss.</p>
+        <h2 style="margin-top:10px">Five topics, explained simply</h2>
+        <p>Each lesson starts with the 30-second version. Tap any underlined word to see what it means. Practice problems check your answers and explain the ones you miss.</p>
       </div>
       <a class="btn ghost" href="learn/index.html">All courses</a>
     </div>
@@ -216,8 +218,23 @@
         <ul>
           <li><a href="learn/index.html#negotiation">Negotiation <span>14 min</span></a></li>
           <li><a href="learn/index.html#scripts">Negotiation scripts <span>8 min</span></a></li>
+          <li><a href="learn/index.html#persuasion">Getting people to say yes <span>8 min</span></a></li>
         </ul>
         <a class="tool-link" href="tools/negotiation/index.html">Tool: Negotiation prep →</a>
+      </article>
+      <article class="card topic t-investors wide">
+        <div class="wide-in">
+          <div>
+            <span class="chip t-investors">Investors · New</span>
+            <h3 style="margin-top:12px">Pitch investors, and stay calm when they push back</h3>
+            <p style="margin-top:8px">The six-line pitch, the numbers investors always ask about, and five habits for tough questions.</p>
+            <a class="tool-link" href="tools/investors/index.html" style="display:inline-block;margin-top:14px">Tool: Investor pressure drill →</a>
+          </div>
+          <ul>
+            <li><a href="learn/index.html#pitching">Pitching investors, simply <span>10 min</span></a></li>
+            <li><a href="learn/index.html#pressure">Staying calm under pressure <span>10 min</span></a></li>
+          </ul>
+        </div>
       </article>
     </div>
   </div>
@@ -238,7 +255,7 @@
       <a class="card tool-card" href="tools/budget/index.html"><span class="chip t-finance">Finance</span><h3>Budget &amp; savings planner</h3><p>A monthly budget with a 50/30/20 check, a savings-goal timeline, and an emergency fund target.</p><span class="go">Open →</span></a>
       <a class="card tool-card" href="tools/business-plan/index.html"><span class="chip t-business">Business</span><h3>Business plan &amp; pricing</h3><p>A one-page business plan you can copy, a pricing calculator, and a simple profit and loss.</p><span class="go">Open →</span></a>
       <a class="card tool-card" href="tools/negotiation/index.html"><span class="chip t-negotiation">Negotiation</span><h3>Negotiation prep</h3><p>Enter your target, walk-away point and alternative. Get a game plan, an opening line and concessions to trade.</p><span class="go">Open →</span></a>
-      <a class="card tool-card" href="#napkin"><span class="chip t-business">Business</span><h3>The napkin test</h3><p>How many customers you need for an idea to pay you a real income. It's at the top of this page.</p><span class="go">Try it →</span></a>
+      <a class="card tool-card" href="tools/investors/index.html"><span class="chip t-investors">Investors</span><h3>Investor pressure drill</h3><p>Answer tough investor questions out loud against a timer, then see what a strong answer looks like.</p><span class="go">Practise →</span></a>
       <a class="card tool-card" href="learn/index.html#calculators"><span class="chip t-finance">Finance</span><h3>Money calculators</h3><p>Compound growth, loan payments, break-even, margin vs markup, and credit card payoff.</p><span class="go">Open →</span></a>
     </div>
   </div>
@@ -247,9 +264,9 @@
 <section class="block">
   <div class="wrap">
     <span class="eyebrow">How it works</span>
-    <h2 style="margin:10px 0 30px">Learn it, practise it, use it</h2>
+    <h2 style="margin:10px 0 30px">Simple, then practical</h2>
     <div class="steps">
-      <div><h3>Learn the idea</h3><p>A 10-minute lesson in plain English with a real example.</p></div>
+      <div><h3>Get the simple version</h3><p>Read the 30-second version first, then the 10-minute lesson with real examples.</p></div>
       <div><h3>Check your work</h3><p>Practice problems mark your answers and explain every mistake.</p></div>
       <div><h3>Run your numbers</h3><p>Use the matching tool on your own idea, budget or deal.</p></div>
     </div>
@@ -289,8 +306,8 @@
         <div class="price"><b>$0</b><span>forever</span></div>
         <p class="for">For learning the basics.</p>
         <ul>
-          <li>All 10 lessons with quizzes</li>
-          <li>Every calculator and planner</li>
+          <li>All 13 lessons with quizzes</li>
+          <li>Every tool, including the investor drill</li>
           <li>One free account for all of it</li>
         </ul>
         <button class="btn ghost" type="button" data-plan="free">Create free account</button>
@@ -335,7 +352,8 @@
     <h2 style="margin:10px 0 24px">FAQ</h2>
     <div class="faq">
       <details><summary>Is Sharp free?</summary><p>Yes. All lessons, quizzes and tools are free. The Launch course is $30 (Builder), or $80 with the Founder toolkit and negotiation scripts. Both are one-time payments.</p></details>
-      <details><summary>Who is it for?</summary><p>People with a business idea, or the itch to start one, who want to understand money, marketing and deals before they risk their savings. No business background needed.</p></details>
+      <details><summary>Who is it for?</summary><p>People with a business idea, or the itch to start one, who want to understand money, marketing, deals and investors without the jargon. No business background needed.</p></details>
+      <details><summary>Is it really that simple?</summary><p>The basics are, and that's most of what you need day to day. Where simplifying would mislead you, such as tax or legal details, the lessons say so and tell you when to ask a professional.</p></details>
       <details><summary>How does the free trial work?</summary><p>Every new account gets 3 days of Founder access, starting when you create it. No card is needed and nothing renews. After 3 days you keep the free plan, or buy Builder or Founder.</p></details>
       <details><summary>Do I need to sign in?</summary><p>No. Every lesson and tool works without an account. Signing in keeps your purchases in one place, and it's how you'll open the course.</p></details>
       <details><summary>Is this financial advice?</summary><p>No. It's education and calculators. For legal, tax or big irreversible decisions, pay a professional who knows your situation.</p></details>
@@ -399,8 +417,8 @@
       <p>Business school for aspiring entrepreneurs. Education, not financial advice.</p>
       <p style="margin-top:8px">© 2026 Sharp</p>
     </div>
-    <div><h4>Courses</h4><a href="learn/index.html#money">Finance</a><a href="learn/index.html#business">Business</a><a href="learn/index.html#mkt-basics">Marketing</a><a href="learn/index.html#negotiation">Negotiation</a></div>
-    <div><h4>Tools</h4><a href="tools/marketing/index.html">Marketing calculators</a><a href="tools/budget/index.html">Budget planner</a><a href="tools/business-plan/index.html">Business plan &amp; pricing</a><a href="tools/negotiation/index.html">Negotiation prep</a></div>
+    <div><h4>Courses</h4><a href="learn/index.html#money">Finance</a><a href="learn/index.html#business">Business</a><a href="learn/index.html#mkt-basics">Marketing</a><a href="learn/index.html#negotiation">Negotiation</a><a href="learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="tools/marketing/index.html">Marketing calculators</a><a href="tools/budget/index.html">Budget planner</a><a href="tools/business-plan/index.html">Business plan &amp; pricing</a><a href="tools/negotiation/index.html">Negotiation prep</a><a href="tools/investors/index.html">Investor pressure drill</a></div>
     <div><h4>Sharp</h4><a href="#pricing">Pricing</a><a href="trial/index.html">Free trial</a><a href="learn/index.html#prompts">AI prompts</a><a href="learn/index.html#glossary">Glossary</a></div>
   </div>
 </footer>

@@ -4,11 +4,11 @@ Things I'm making with Claude Code.
 
 ## Sharp — business school for aspiring entrepreneurs
 
-[`sharp/`](sharp/index.html) is a finance and business learning site: free courses in four topics (Finance, Business, Marketing, Negotiation; 10 lessons with self-checking quizzes), a library of 18 calculators and planners, a 3-day free trial, and Free / Builder $30 / Founder $80 plans.
+[`sharp/`](sharp/index.html) is a "business, made simple" learning site: free courses in five topics (Finance, Business, Marketing, Negotiation, Investors; 13 lessons, each with a 30-second version, tap-to-define jargon and a self-checking quiz), a library of 19 tools including an investor pressure drill, a 3-day free trial, and Free / Builder $30 / Founder $80 plans.
 
 - `sharp/index.html` — home page (topics, live napkin-test tool, pricing, waitlist, sign-in)
 - `sharp/learn/` — the courses
-- `sharp/tools/` — marketing calculators, budget & savings planner, business plan & pricing, negotiation prep
+- `sharp/tools/` — marketing calculators, budget & savings planner, business plan & pricing, negotiation prep, investor pressure drill
 - `sharp/trial/` — the 3-day Founder trial area
 - `sharp/config.js` — **the only settings file**: waitlist provider, Supabase keys, Stripe Payment Links, trial length
 - `supabase/schema.sql` — server-side lock for paid content; [`SECURITY.md`](SECURITY.md) — security checklist

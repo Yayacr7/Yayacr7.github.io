@@ -9,6 +9,7 @@
   --business:#2c49cf; --business-soft:#e1e7fb;
   --marketing:#c03a07;--marketing-soft:#fde5da;
   --negotiation:#7b3ec6;--negotiation-soft:#ece2f9;
+  --investors:#b42a68; --investors-soft:#fbe1ee;
   --good:#1a7a46;     --good-soft:#dcf0e3;
   --bad:#b3261e;      --bad-soft:#f8e0dd;
   --highlight:#ffe27a;--highlight-ink:#12151c;
@@ -29,6 +30,7 @@
     --business:#8ea4ff; --business-soft:#1b2347;
     --marketing:#ff8a57;--marketing-soft:#3a1a0c;
     --negotiation:#c39bff;--negotiation-soft:#2a1b40;
+    --investors:#ff8fc0; --investors-soft:#3a1528;
     --good:#6fd39b;     --good-soft:#163323;
     --bad:#ff8d7d;      --bad-soft:#3d1d19;
     --highlight:rgba(255,226,122,.42);--highlight-ink:#12151c;
@@ -45,6 +47,7 @@
   --business:#8ea4ff; --business-soft:#1b2347;
   --marketing:#ff8a57;--marketing-soft:#3a1a0c;
   --negotiation:#c39bff;--negotiation-soft:#2a1b40;
+  --investors:#ff8fc0; --investors-soft:#3a1528;
   --good:#6fd39b;     --good-soft:#163323;
   --bad:#ff8d7d;      --bad-soft:#3d1d19;
   --highlight:rgba(255,226,122,.42);--highlight-ink:#12151c;
@@ -98,6 +101,7 @@ p{margin:0}
 .t-business{--t:var(--business);--ts:var(--business-soft)}
 .t-marketing{--t:var(--marketing);--ts:var(--marketing-soft)}
 .t-negotiation{--t:var(--negotiation);--ts:var(--negotiation-soft)}
+.t-investors{--t:var(--investors);--ts:var(--investors-soft)}
 .chip[class*="t-"]{background:var(--ts);color:var(--t)}
 
 /* cards */
@@ -218,3 +222,4 @@ dialog.auth::backdrop{background:rgba(10,12,16,.55)}
 @media (prefers-reduced-motion: reduce){ .btn{transition:none} }
 .fields.wide{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .fields{align-items:end}
+.chip{align-self:flex-start;justify-self:start}

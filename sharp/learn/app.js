@@ -35,6 +35,36 @@ window.addEventListener('hashchange', route);
 /* ---------- quizzes ---------- */
 // type "mc": choices + answer index. type "num": answer + tol (absolute) + unit.
 var QUIZZES = {
+  persuasion: [
+    {type:'mc', q:'A client says "That\'s too expensive." What\'s the best first response?', c:['Drop the price straight away','"That\'s fair. Compared with what you\'re using now?"','Explain that they\'re wrong','Change the subject'], a:1,
+      e:'Acknowledge, then ask. You need to know what they\'re comparing you with before you can answer well.'},
+    {type:'mc', q:'Which ask is easiest to say yes to?', c:['"Will you sign a two-year contract?"','"Can we try it for one month, then decide?"','"Think about it and let me know."','"Will you buy everything we offer?"'], a:1,
+      e:'Small, clear, low-risk first steps get more yeses. A vague ask gets a vague answer.'},
+    {type:'mc', q:'Which line is about THEM, not you?', c:['"I really need this deal."','"We have 40 features."','"You\'ll stop doing the invoicing by hand."','"Our company was founded in 2020."'], a:2,
+      e:'People decide based on what they get. Translate every point into their benefit.'},
+    {type:'mc', q:'Why avoid fake scarcity like "only 2 left!" when it isn\'t true?', c:['It\'s too slow','It can win one sale but destroys trust, and the relationship, when they find out','Customers like it','It\'s required by law'], a:1,
+      e:'Honest persuasion keeps customers. Tricks win once and cost you later.'}
+  ],
+  pitching: [
+    {type:'num', q:'You have $90,000 in the bank and burn $15,000 a month. How many months of runway?', a:6, tol:0.01, unit:'months',
+      e:'Runway = cash ÷ burn = 90,000 ÷ 15,000 = 6 months.'},
+    {type:'num', q:'You have $120,000 and burn $8,000 a month. How many months of runway?', a:15, tol:0.01, unit:'months',
+      e:'120,000 ÷ 8,000 = 15 months.'},
+    {type:'mc', q:'Why does "We have no competition" worry investors?', c:['It sounds too modest','Everyone has competition, even if it\'s doing nothing, so it suggests you don\'t understand your market','Investors only fund big markets','It\'s fine to say'], a:1,
+      e:'Customers always have an alternative. Name it and explain why you win.'},
+    {type:'mc', q:'What is "use of funds"?', c:['Your salary','Exactly what the investment will pay for, and what it will achieve','Your total revenue','The investor\'s fee'], a:1,
+      e:'Investors want to see the money turn into specific results, such as hires or launches, and how much runway it buys.'}
+  ],
+  pressure: [
+    {type:'mc', q:'An investor asks for a number you don\'t know exactly. Best answer?', c:['Guess confidently','"I don\'t know that exactly. It\'s around X, and I\'ll send the exact figure tomorrow."','Change the subject','Say it\'s confidential'], a:1,
+      e:'Honest plus a follow-up builds trust. A confident wrong guess destroys it, and investors check.'},
+    {type:'mc', q:'What\'s the best shape for an answer under pressure?', c:['Long background first, answer at the end','The answer in one sentence, then one or two reasons','A joke, then the answer','Answer a different question you prefer'], a:1,
+      e:'Answer first. Rambling is what pressure looks like from the outside.'},
+    {type:'mc', q:'Box breathing is…', c:['Breathe in 4, hold 4, out 4, hold 4','Breathe as fast as possible','Hold your breath for 30 seconds','Breathe into a paper bag'], a:0,
+      e:'Four slow counts each way, three rounds. It steadies your voice and slows you down.'},
+    {type:'mc', q:'Before an investor meeting, the most useful preparation is…', c:['Memorising a script word for word','Writing and practising answers to the 20 questions you least want to be asked','Buying a new outfit','Hoping they don\'t ask hard questions'], a:1,
+      e:'Most hard questions are predictable. Preparing them is where calm comes from.'}
+  ],
   'mkt-basics': [
     {type:'mc', q:'Which customer description will make your marketing easiest?', c:['Everyone who likes good food','Small businesses','Two-income parents with young kids within 5 miles who order takeaway 3+ nights a week','Anyone with a phone'], a:2,
       e:'The more specific the customer, the easier it is to find them, write to them, and know what they care about.'},
@@ -486,6 +516,71 @@ if(window.matchMedia){ var mq = matchMedia('(prefers-color-scheme: dark)'); if(m
 var track = document.getElementById('tickerTrack');
 if(track) track.innerHTML += track.innerHTML.replace(/<span>/g, '<span aria-hidden="true">');
 
+
+/* ---------- tap any jargon word for a plain-English definition ---------- */
+(function initTerms(){
+  var defs = {}, names = [];
+  document.querySelectorAll('dl.gloss div').forEach(function(d){
+    var t = d.querySelector('dt'), v = d.querySelector('dd'); if(!t || !v) return;
+    defs[t.textContent.trim().toLowerCase()] = { name: t.textContent.trim(), def: v.textContent.trim() };
+    names.push(t.textContent.trim());
+  });
+  if(!names.length) return;
+  names.sort(function(a, b){ return b.length - a.length; });
+  var esc = function(x){ return x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); };
+  var re = new RegExp('\\b(' + names.map(esc).join('|') + ')s?\\b', 'gi');
+  var SKIP = 'h1,h2,h3,.tldr,.quiz,.formula,.pager,a,button,.lesson-head,th,code,.callout > b,.zopa,.eyebrow';
+  var MAX = 8;
+  document.querySelectorAll('section.page').forEach(function(sec){
+    if(!sec.querySelector('.quiz')) return;
+    var used = {}, count = 0;
+    var walker = document.createTreeWalker(sec, NodeFilter.SHOW_TEXT, { acceptNode: function(n){
+      return n.parentElement && !n.parentElement.closest(SKIP) && n.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }});
+    var nodes = []; while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function(node){
+      if(count >= MAX) return;
+      var text = node.nodeValue, m, hit = null; re.lastIndex = 0;
+      while((m = re.exec(text))){ var key = m[1].toLowerCase(); if(!used[key] && defs[key]){ hit = { m: m, key: key }; break; } }
+      if(!hit) return;
+      used[hit.key] = true; count++;
+      var after = node.splitText(hit.m.index); after.splitText(hit.m[0].length);
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'term'; b.setAttribute('data-term', hit.key);
+      b.textContent = after.nodeValue; b.setAttribute('aria-label', after.nodeValue + ': ' + defs[hit.key].def);
+      after.parentNode.replaceChild(b, after);
+    });
+  });
+  var tip = document.createElement('div'); tip.id = 'termTip'; tip.setAttribute('role', 'tooltip'); tip.hidden = true; document.body.appendChild(tip);
+  var current = null;
+  function show(el){
+    var d = defs[el.getAttribute('data-term')]; if(!d) return;
+    tip.textContent = ''; var bb = document.createElement('b'); bb.textContent = d.name; tip.appendChild(bb); tip.appendChild(document.createTextNode(d.def));
+    tip.hidden = false; current = el; place();
+  }
+  function place(){
+    if(!current) return;
+    var r = current.getBoundingClientRect();
+    if(r.bottom < 0 || r.top > window.innerHeight){ hide(); return; }
+    var w = tip.offsetWidth, h = tip.offsetHeight;
+    var left = Math.min(Math.max(12, r.left + r.width / 2 - w / 2), window.innerWidth - w - 12);
+    var top = r.bottom + 8; if(top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 8);
+    tip.style.left = left + 'px'; tip.style.top = top + 'px';
+  }
+  function hide(){ tip.hidden = true; current = null; }
+  document.addEventListener('click', function(e){
+    var t = e.target.closest && e.target.closest('.term');
+    if(t) show(t); else if(!tip.contains(e.target)) hide();
+  });
+  document.addEventListener('focusin', function(e){ if(e.target.classList && e.target.classList.contains('term')) show(e.target); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') hide(); });
+  window.addEventListener('scroll', place, { passive: true });
+  window.addEventListener('resize', place);
+  window.addEventListener('hashchange', hide);
+  if(window.matchMedia && matchMedia('(hover: hover)').matches){
+    document.addEventListener('mouseover', function(e){ var t = e.target.closest && e.target.closest('.term'); if(t && t !== current) show(t); });
+    document.addEventListener('mouseout', function(e){ var t = e.target.closest && e.target.closest('.term'); if(t && !(e.relatedTarget && t.contains(e.relatedTarget))) hide(); });
+  }
+})();
 updateProgressUI();
 route();
 })();

@@ -238,3 +238,74 @@ if(dirSel) dirSel.addEventListener('change', function(){
   var lbl = $('ng-walk-label'); if(lbl) lbl.firstChild.nodeValue = this.value === 'up' ? 'Walk-away: the lowest you\'d accept ($)' : 'Walk-away: the most you\'d pay ($)';
 });
 })();
+
+/* ================= INVESTOR PRESSURE DRILL ================= */
+(function(){
+  if(!document.getElementById('drill')) return;
+  function $(id){ return document.getElementById(id); }
+  var Q = [
+    ['Numbers','What\'s your monthly revenue, and how fast is it growing?','Do you know your numbers, and is there momentum?','Exact number, growth rate, time period: "$4,200 last month, up 18% a month for four months."','Rounding up, or quoting a forecast as if it were real.'],
+    ['Numbers','How much runway do you have?','When do you run out of money, and how desperate are you?','Months, then the plan: "Seven months at our current burn. This round takes us to 20 months and break-even."','Not knowing. Runway = cash ÷ monthly burn; know it cold.'],
+    ['Numbers','What does it cost you to win a customer?','Can you grow without burning cash?','CAC, LTV and payback: "About $40 to win, worth $160 over a year, paid back in three months."','"We don\'t really track that yet."'],
+    ['Market','How big is the market?','Can this become big enough to matter?','Build it bottom-up: number of real customers × what each pays per year.','"If we get just 1% of a $50 billion market…" Top-down guesses sound lazy.'],
+    ['Competition','Who are your competitors?','Do you understand the alternatives, and why you win?','Name two or three, including "doing nothing", then one clear difference.','"We have no competition." Everyone does.'],
+    ['Competition','What stops a big company from copying you?','What\'s your real edge?','Something specific: focus on a niche, speed, customer relationships, data, or know-how.','"They won\'t bother." Hope isn\'t a strategy.'],
+    ['Team','Why are you the right person to build this?','Will you get through the hard parts?','One relevant experience plus one proof you get things done.','A generic list of strengths with no evidence.'],
+    ['Team','What\'s the hardest thing you\'ve dealt with in this business so far?','How do you handle setbacks?','A short story: the problem, what you did, the result, what you learned.','Pretending nothing has gone wrong.'],
+    ['Risk','What\'s the biggest risk to this business?','Are you honest and self-aware?','Name a real risk, then how you\'re testing or reducing it.','"There isn\'t really one."'],
+    ['Risk','Why hasn\'t someone done this already?','Is there a hidden reason this fails?','What changed recently (why now), or what you know that others don\'t.','"Nobody thought of it." Usually someone did.'],
+    ['Money','How much are you raising, and what will you do with it?','Have you planned how money becomes results?','Amount, two or three uses with rough shares, the milestone it reaches, and the runway it buys.','"We\'ll use it to grow." Too vague.'],
+    ['Money','What valuation are you looking for?','Are you reasonable and informed?','A range with a reason (comparable companies, traction), or invite their view while stating your priorities.','A big number you can\'t explain.'],
+    ['Customers','Why do customers choose you?','Is there real demand, in customers\' own words?','Quote a real customer and give one specific result they got.','Listing features instead of customer reasons.'],
+    ['Customers','How many customers have left, and why?','Do people stay, and are you honest about churn?','The number, the main reason, and what you changed.','Hiding it. They\'ll find out in due diligence.'],
+    ['Pressure','This seems like a small idea. Why should we care?','Can you think big and stay calm when challenged?','Agree it starts small, then show the path from this niche to a bigger market.','Getting defensive or overselling.'],
+    ['Pressure','Your numbers look weak. Convince me.','Can you face facts without panicking?','Agree on the facts, show the trend or what you learned, and say what changes next.','Arguing with the data.'],
+    ['Pressure','Other investors passed. Why?','Do you learn from feedback?','The honest reason, and what you changed because of it.','Blaming the investors.'],
+    ['Plan','Where will you be in 18 months?','Is there a concrete plan?','Two or three measurable milestones: customers, revenue, a key hire or launch.','Vague dreams with no numbers.'],
+    ['Plan','What happens if you don\'t raise this money?','Are you desperate, or do you have a plan B?','A real plan B: slower growth funded by revenue. It shows you\'re not desperate.','"We\'d have to shut down." It hands them all the power.'],
+    ['Plan','Why now?','Is the timing right?','What changed in the world, technology or customer behaviour that makes this work now.','"Because I\'m ready." Investors care about the market\'s timing.']
+  ];
+  var cat = $('dr-cat'), time = $('dr-time'), qEl = $('dr-q'), chip = $('dr-chip'), clock = $('dr-clock'), reveal = $('dr-reveal');
+  var startBtn = $('dr-start'), showBtn = $('dr-show'), nextBtn = $('dr-next');
+  var tally = { nailed: 0, shaky: 0, again: 0 }, deck = [], cur = null, timer = null, left = 0;
+  var cats = ['All'].concat(Q.map(function(q){ return q[0]; }).filter(function(c, i, a){ return a.indexOf(c) === i; }));
+  cats.forEach(function(c){ var o = document.createElement('option'); o.value = c; o.textContent = c === 'All' ? 'All topics' : c; cat.appendChild(o); });
+  function shuffle(a){ for(var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function build(){ deck = shuffle(Q.filter(function(q){ return cat.value === 'All' || q[0] === cat.value; }).slice()); }
+  function stop(){ clearInterval(timer); timer = null; startBtn.textContent = 'Start timer'; }
+  function fmt(s){ return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+  function next(){
+    stop(); if(!deck.length) build();
+    cur = deck.shift();
+    chip.textContent = cur[0]; qEl.textContent = cur[1];
+    left = parseInt(time.value, 10); clock.textContent = fmt(left); clock.className = 'dr-clock';
+    reveal.hidden = true; showBtn.hidden = false;
+  }
+  startBtn.addEventListener('click', function(){
+    if(timer){ stop(); return; }
+    if(left <= 0) left = parseInt(time.value, 10);
+    startBtn.textContent = 'Pause';
+    timer = setInterval(function(){
+      left--; clock.textContent = fmt(Math.max(0, left));
+      if(left <= 10) clock.className = 'dr-clock low';
+      if(left <= 0){ stop(); clock.textContent = 'Time\'s up'; showAnswer(); }
+    }, 1000);
+  });
+  function showAnswer(){
+    $('dr-real').textContent = cur[2]; $('dr-shape').textContent = cur[3]; $('dr-trap').textContent = cur[4];
+    reveal.hidden = false; showBtn.hidden = true;
+  }
+  showBtn.addEventListener('click', function(){ stop(); showAnswer(); });
+  nextBtn.addEventListener('click', next);
+  cat.addEventListener('change', function(){ build(); next(); });
+  time.addEventListener('change', function(){ stop(); left = parseInt(time.value, 10); clock.textContent = fmt(left); clock.className = 'dr-clock'; });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-rate]'), function(b){
+    b.addEventListener('click', function(){
+      var r = b.getAttribute('data-rate'); tally[r]++;
+      if(r !== 'nailed' && cur) deck.splice(Math.min(deck.length, 3), 0, cur);
+      $('dr-tally').textContent = 'This session: ' + tally.nailed + ' nailed · ' + tally.shaky + ' shaky · ' + tally.again + ' to practise again';
+      next();
+    });
+  });
+  build(); next();
+})();

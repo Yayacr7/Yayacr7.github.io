@@ -26,6 +26,7 @@
   --readout-bg:#12151c;  --readout-fg:#ffffff; --readout-dim:#a3abb9;
   --finance:#11775a; --business:#2c49cf; --marketing:#c03a07; --negotiation:#7b3ec6;
   --finance-soft:#dcf1e9; --business-soft:#e1e7fb; --marketing-soft:#fde5da; --negotiation-soft:#ece2f9;
+  --investors:#b42a68; --investors-soft:#fbe1ee;
   --shadow:0 1px 1px rgba(27,33,48,.06),0 18px 40px -22px rgba(27,33,48,.45);
   --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
   --f-body:"Karla","Helvetica Neue",Arial,system-ui,sans-serif;
@@ -43,7 +44,7 @@
     --ledger-line:#1f242e; --ledger-margin:#2a303c;
     --readout-bg:#07090d;  --readout-fg:#ffffff; --readout-dim:#9ba4b3;
     --finance:#5fd3a8; --business:#8ea4ff; --marketing:#ff8a57; --negotiation:#c39bff;
-    --finance-soft:#12302a; --business-soft:#1b2347; --marketing-soft:#3a1a0c; --negotiation-soft:#2a1b40;
+    --finance-soft:#12302a; --business-soft:#1b2347; --marketing-soft:#3a1a0c; --negotiation-soft:#2a1b40; --investors:#ff8fc0; --investors-soft:#3a1528;
     --shadow:none; color-scheme:dark;
   }
 }
@@ -57,7 +58,7 @@
   --ledger-line:#1f242e; --ledger-margin:#2a303c;
   --readout-bg:#07090d;  --readout-fg:#ffffff; --readout-dim:#9ba4b3;
   --finance:#5fd3a8; --business:#8ea4ff; --marketing:#ff8a57; --negotiation:#c39bff;
-  --finance-soft:#12302a; --business-soft:#1b2347; --marketing-soft:#3a1a0c; --negotiation-soft:#2a1b40;
+  --finance-soft:#12302a; --business-soft:#1b2347; --marketing-soft:#3a1a0c; --negotiation-soft:#2a1b40; --investors:#ff8fc0; --investors-soft:#3a1528;
   --shadow:none; color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -301,6 +302,17 @@ nav.side a.active .n,nav.side a.active .tick{color:var(--note-ink)}
 @media (max-width:860px){ .note-inner{padding:32px 20px 26px} }
 
 /* ---- Sharp skin ---- */
+.chip.t-investors{background:var(--investors-soft);color:var(--investors);border-color:transparent}
+.dot.t-investors{background:var(--investors)}
+.tldr{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:16px 18px 14px;margin:6px 0 26px;box-shadow:var(--shadow)}
+.tldr b{display:block;font:700 .74rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;color:var(--note);margin-bottom:6px}
+.tldr ul{margin:0;padding-left:1.15em}
+.tldr li{margin:.25em 0;font-weight:600}
+.term,.term-demo{text-decoration:underline dotted var(--note) 2px;text-underline-offset:4px;cursor:help}
+.term{background:none;border:0;padding:0;font:inherit;color:inherit}
+.term:focus-visible{outline:2px solid var(--note);outline-offset:2px;border-radius:3px}
+#termTip{position:fixed;z-index:50;max-width:min(300px,calc(100vw - 24px));background:var(--ink);color:var(--paper);font:500 .92rem/1.45 var(--f-body);padding:10px 12px;border-radius:10px;box-shadow:0 12px 30px -10px rgba(0,0,0,.45)}
+#termTip b{display:block;margin-bottom:2px}
 .top-links{display:flex;gap:2px;margin-left:14px}
 .top-links a{color:var(--ink);text-decoration:none;font-weight:600;font-size:.94rem;padding:7px 11px;border-radius:8px}
 .top-links a:hover,.top-links a[aria-current="page"]{background:var(--paper-2)}
@@ -349,7 +361,7 @@ nav.side .group{display:flex;align-items:center;gap:7px}
 
 <div class="layout">
 <nav class="side" id="nav" aria-label="Courses">
-  <div class="meter"><div class="meter-label"><span>Progress</span><span id="meterText">0/10</span></div><div class="meter-track"><div class="meter-fill" id="meterFill"></div></div></div>
+  <div class="meter"><div class="meter-label"><span>Progress</span><span id="meterText">0/13</span></div><div class="meter-track"><div class="meter-fill" id="meterFill"></div></div></div>
   <a href="#start" data-page="start"><span class="n">§</span>All courses</a>
   <div class="group"><span class="dot t-finance"></span>Finance</div>
   <a href="#money" data-page="money"><span class="n">01</span>Your money<span class="tick" data-tick="money"></span></a>
@@ -365,6 +377,10 @@ nav.side .group{display:flex;align-items:center;gap:7px}
   <div class="group"><span class="dot t-negotiation"></span>Negotiation</div>
   <a href="#negotiation" data-page="negotiation"><span class="n">09</span>Negotiation<span class="tick" data-tick="negotiation"></span></a>
   <a href="#scripts" data-page="scripts"><span class="n">10</span>Negotiation scripts<span class="tick" data-tick="scripts"></span></a>
+  <a href="#persuasion" data-page="persuasion"><span class="n">11</span>Getting people to say yes<span class="tick" data-tick="persuasion"></span></a>
+  <div class="group"><span class="dot t-investors"></span>Investors</div>
+  <a href="#pitching" data-page="pitching"><span class="n">12</span>Pitching investors, simply<span class="tick" data-tick="pitching"></span></a>
+  <a href="#pressure" data-page="pressure"><span class="n">13</span>Staying calm under pressure<span class="tick" data-tick="pressure"></span></a>
   <div class="group">Tools</div>
   <a href="../tools/index.html"><span class="n">↗</span>All business tools</a>
   <a href="#calculators" data-page="calculators"><span class="n">=</span>Money calculators</a>
@@ -378,11 +394,11 @@ nav.side .group{display:flex;align-items:center;gap:7px}
 <section class="page" id="start">
   <div class="note"><div class="note-inner">
     <div class="note-content">
-      <span class="eyebrow">Free courses · 4 topics · 10 lessons</span>
-      <h1>Learn finance, business, marketing <em>and</em> negotiation.</h1>
-      <p>Short lessons with practice problems that check your answers and explain the ones you miss. Business tools, calculators and AI prompts are in the Tools section.</p>
+      <span class="eyebrow">Free courses · 5 topics · 13 lessons</span>
+      <h1>Business, made <em>simple.</em></h1>
+      <p>Finance, marketing, negotiation and pitching investors, explained in plain English. Every lesson starts with a 30-second version, and you can tap any <span class="term-demo">underlined word</span> to see what it means.</p>
       <div class="cta"><a class="btn" href="#money">Start lesson 01</a><a class="btn ghost" href="#calculators">Open the calculators</a></div>
-      <span class="serial" id="serial">0 of 10 lessons passed</span>
+      <span class="serial" id="serial">0 of 13 lessons passed</span>
     </div>
   </div></div>
 
@@ -413,6 +429,12 @@ nav.side .group{display:flex;align-items:center;gap:7px}
   <ol class="lessons">
     <li><a href="#negotiation"><span class="num">09</span><span class="t">Negotiation<span class="d">BATNA, ZOPA, anchoring, interests, concessions, listening.</span></span><span class="chip" data-chip="negotiation">Not started</span></a></li>
     <li><a href="#scripts"><span class="num">10</span><span class="t">Negotiation scripts<span class="d">Salary, raises, buying, selling, rent. Word for word.</span></span><span class="chip" data-chip="scripts">Not started</span></a></li>
+    <li><a href="#persuasion"><span class="num">11</span><span class="t">Getting people to say yes<span class="d">Listening, what's in it for them, clear asks, objections.</span></span><span class="chip" data-chip="persuasion">Not started</span></a></li>
+  </ol>
+  <h3 class="topic-h"><span class="chip t-investors">Investors</span></h3>
+  <ol class="lessons">
+    <li><a href="#pitching"><span class="num">12</span><span class="t">Pitching investors, simply<span class="d">The six-line pitch and the numbers investors ask about.</span></span><span class="chip" data-chip="pitching">Not started</span></a></li>
+    <li><a href="#pressure"><span class="num">13</span><span class="t">Staying calm under pressure<span class="d">Preparing hard questions, five habits, breathing, hostile questions.</span></span><span class="chip" data-chip="pressure">Not started</span></a></li>
   </ol>
   <p class="muted">Read a lesson, then do the practice problems without scrolling back up. Pass at 80% and the lesson gets a ✓. Progress is saved in this browser only.</p>
 
@@ -430,10 +452,12 @@ nav.side .group{display:flex;align-items:center;gap:7px}
 <section class="page" id="money">
   <header class="lesson-head">
     <span class="lesson-num">01</span>
-    <span class="eyebrow">Finance · Lesson 01 of 10</span>
+    <span class="eyebrow">Finance · Lesson 01 of 13</span>
     <h1>Your money</h1>
     <p class="lede">Personal finance is mostly behaviour, not maths. But the maths explains why the behaviour matters.</p>
   </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Spend less than you earn, automatically: save on payday, before you can spend it.</li><li>Keep 3–6 months of essential costs as an emergency fund.</li><li>Pay off expensive debt first. Compound interest works for you in savings and against you in debt.</li></ul></div>
 
   <h2>Know where it goes</h2>
   <p>You can't fix what you don't measure. Track every expense for one month before writing any budget — most people underestimate their spending by a wide margin, especially on food and subscriptions.</p>
@@ -479,17 +503,19 @@ Example: $10,000 at 7% for 30 years
   <p class="muted">Other countries use different scoring systems, though paying on time and using little of your limit help almost everywhere.</p>
 
   <div class="quiz" data-quiz="money"></div>
-  <div class="pager"><a href="#start">← Start here</a><a href="#investing">2. Investing →</a></div>
+  <div class="pager"><a href="#start">← All courses</a><a href="#investing">2. Investing →</a></div>
 </section>
 
 <!-- ============ 2. INVESTING ============ -->
 <section class="page" id="investing">
   <header class="lesson-head">
     <span class="lesson-num">02</span>
-    <span class="eyebrow">Finance · Lesson 02 of 10</span>
+    <span class="eyebrow">Finance · Lesson 02 of 13</span>
     <h1>Investing</h1>
     <p class="lede">Investing is buying things you expect to be worth more later, or that pay you while you own them. The hard part isn't picking winners. It's not sabotaging yourself.</p>
   </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Higher returns come with bigger swings. "Guaranteed high returns" is a red flag.</li><li>Cheap index funds beat most professionals once fees are counted.</li><li>Fees compound too: 1% a year can cost a fortune over decades.</li></ul></div>
 
   <h2>Risk and return are linked</h2>
   <p>Higher expected return comes with bigger swings in value. There's no free lunch. Anyone offering high returns with "no risk" is mistaken or lying.</p>
@@ -548,10 +574,12 @@ Example: $10,000 at 7% for 30 years
 <section class="page" id="business">
   <header class="lesson-head">
     <span class="lesson-num">04</span>
-    <span class="eyebrow">Business · Lesson 04 of 10</span>
+    <span class="eyebrow">Business · Lesson 04 of 13</span>
     <h1>How a business makes money</h1>
     <p class="lede">Every business, from a lemonade stand to Apple, comes down to: sell something for more than it costs, and don't run out of cash on the way.</p>
   </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Margin = profit ÷ price. Markup = profit ÷ cost. They are not the same.</li><li>Break-even = fixed costs ÷ what each sale contributes.</li><li>Profit is not cash. Watch the bank balance.</li></ul></div>
 
   <h2>The profit ladder</h2>
   <div class="formula">Revenue                     (what customers paid)
@@ -611,10 +639,12 @@ Example: $5,000/month fixed, $25 price, $15 variable
 <section class="page" id="statements">
   <header class="lesson-head">
     <span class="lesson-num">05</span>
-    <span class="eyebrow">Business · Lesson 05 of 10</span>
+    <span class="eyebrow">Business · Lesson 05 of 13</span>
     <h1>Financial statements</h1>
     <p class="lede">Three reports tell you almost everything about a company's health. Learn to read them and you can judge any business, including your own.</p>
   </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Income statement: did we make money?</li><li>Balance sheet: what we own and owe. Assets = liabilities + equity.</li><li>Cash flow statement: where the cash actually went.</li></ul></div>
 
   <h2>Income statement — "Did we make money this period?"</h2>
   <p>Revenue, minus costs, equals profit, over a period such as a quarter or year. It's the profit ladder from Lesson 3.</p>
@@ -655,10 +685,12 @@ Example: $5,000/month fixed, $25 price, $15 variable
 <section class="page" id="funding">
   <header class="lesson-head">
     <span class="lesson-num">03</span>
-    <span class="eyebrow">Finance · Lesson 03 of 10</span>
+    <span class="eyebrow">Finance · Lesson 03 of 13</span>
     <h1>Funding &amp; valuation</h1>
     <p class="lede">Where the money to start or grow a business comes from, what it costs you, and how people decide what a business is worth.</p>
   </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>You can fund a business from savings, a loan, or by selling shares. Each costs you something different.</li><li>An investor's share = their money ÷ the value after they invest.</li><li>Money tomorrow is worth less than money today.</li></ul></div>
 
   <h2>Three ways to fund a business</h2>
   <div class="table-wrap"><table>
@@ -701,10 +733,12 @@ $1,000 received in 3 years at a 10% rate
 <section class="page" id="mkt-basics">
   <header class="lesson-head">
     <span class="lesson-num">06</span>
-    <span class="eyebrow">Marketing · Lesson 06 of 10</span>
+    <span class="eyebrow">Marketing · Lesson 06 of 13</span>
     <h1>Marketing basics</h1>
     <p class="lede">Marketing is getting the right people to know you exist, understand why you're worth it, and buy. "The right people" does most of the work.</p>
   </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Pick one specific customer, not everyone.</li><li>Say why you in one sentence.</li><li>Lead with the benefit; use the feature as proof.</li></ul></div>
 
   <h2>Pick one customer, not everyone</h2>
   <p>"My product is for everyone" means your message lands with no one. Describe one specific customer so clearly you could find ten of them this week:</p>
@@ -721,7 +755,7 @@ $1,000 received in 3 years at a 10% rate
 [product] is the [category] that [main benefit].
 Unlike [alternative], we [key difference].</div>
   <p>Example: "For first-time landlords who dread tax season, RentLedger is the bookkeeping app that sorts every receipt automatically. Unlike a spreadsheet, it's ready for your accountant in one click."</p>
-  <p>Test it on a stranger. If they can't repeat what you do and who it's for after 5 seconds, simplify.</p>
+  <p>That sentence is your positioning. Test it on a stranger. If they can't repeat what you do and who it's for after 5 seconds, simplify.</p>
 
   <h2>Benefits beat features</h2>
   <div class="table-wrap"><table>
@@ -745,10 +779,12 @@ Unlike [alternative], we [key difference].</div>
 <section class="page" id="mkt-channels">
   <header class="lesson-head">
     <span class="lesson-num">07</span>
-    <span class="eyebrow">Marketing · Lesson 07 of 10</span>
+    <span class="eyebrow">Marketing · Lesson 07 of 13</span>
     <h1>Getting customers</h1>
     <p class="lede">A channel is how customers find you. You don't need all of them. You need one or two that work, done well.</p>
   </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Your first customers come from people you can reach directly.</li><li>Pick one or two channels and do them well.</li><li>Own your audience with email. Ads come last.</li></ul></div>
 
   <h2>The main channels</h2>
   <div class="table-wrap"><table>
@@ -789,10 +825,12 @@ Return   → they buy again and tell friends</div>
 <section class="page" id="mkt-measure">
   <header class="lesson-head">
     <span class="lesson-num">08</span>
-    <span class="eyebrow">Marketing · Lesson 08 of 10</span>
+    <span class="eyebrow">Marketing · Lesson 08 of 13</span>
     <h1>Measuring marketing</h1>
     <p class="lede">If you can't measure it, you can't tell good marketing from expensive guessing. Five numbers cover most of what matters.</p>
   </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Five numbers matter: conversion rate, CAC, ROAS, LTV and payback.</li><li>Likes and views feel good; sales pay the bills.</li><li>Change one thing at a time so you know what worked.</li></ul></div>
 
   <h2>The five numbers</h2>
   <div class="formula">Conversion rate = people who did it ÷ people who could have
@@ -830,10 +868,12 @@ Payback = CAC ÷ (revenue per month × gross margin)</div>
 <section class="page" id="negotiation">
   <header class="lesson-head">
     <span class="lesson-num">09</span>
-    <span class="eyebrow">Negotiation · Lesson 09 of 10</span>
+    <span class="eyebrow">Negotiation · Lesson 09 of 13</span>
     <h1>Negotiation</h1>
     <p class="lede">Negotiation isn't a talent you're born with. It's mostly preparation, plus a handful of habits you can practise.</p>
   </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Your power is your alternative if the deal fails.</li><li>Decide your walk-away point before you start.</li><li>Trade concessions. Never give them away for free.</li></ul></div>
 
   <h2>Step 1: prepare four numbers and one plan</h2>
   <ul>
@@ -910,10 +950,12 @@ Payback = CAC ÷ (revenue per month × gross margin)</div>
 <section class="page" id="scripts">
   <header class="lesson-head">
     <span class="lesson-num">10</span>
-    <span class="eyebrow">Negotiation · Lesson 10 of 10</span>
+    <span class="eyebrow">Negotiation · Lesson 10 of 13</span>
     <h1>Negotiation scripts</h1>
     <p class="lede">Word-for-word starting points. Adapt the wording so it sounds like you — scripts read robotically are worse than none.</p>
   </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Make your ask, then stop talking.</li><li>Bring results and market data, not personal needs.</li><li>Cut scope, not price.</li></ul></div>
 
   <h2>Salary — new job offer</h2>
   <div class="card">
@@ -961,7 +1003,137 @@ Payback = CAC ÷ (revenue per month × gross margin)</div>
   </table></div>
 
   <div class="quiz" data-quiz="scripts"></div>
-  <div class="pager"><a href="#negotiation">← 9. Negotiation</a><a href="#calculators">Calculators →</a></div>
+  <div class="pager"><a href="#negotiation">← 9. Negotiation</a><a href="#persuasion">11. Getting people to say yes →</a></div>
+</section>
+
+<!-- ============ PERSUASION ============ -->
+<section class="page" id="persuasion">
+  <header class="lesson-head">
+    <span class="lesson-num">11</span>
+    <span class="eyebrow">Negotiation · Lesson 11 of 13</span>
+    <h1>Getting people to say yes</h1>
+    <p class="lede">People agree with you when they feel understood, see what's in it for them, and find it easy to say yes. None of that needs tricks.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Listen first, then show what's in it for them.</li><li>Make the ask small and clear.</li><li>Treat objections as questions: acknowledge, ask, answer, check.</li></ul></div>
+
+  <h2>1. Listen before you pitch</h2>
+  <p>Ask what they want and what worries them, then repeat it back in your own words: "So the real concern is the timeline, not the price?" People say yes far more readily to someone who has shown they understand the problem.</p>
+
+  <h2>2. Make it about them</h2>
+  <p>Your reasons are not their reasons. Translate every point into what <em>they</em> get.</p>
+  <div class="table-wrap"><table>
+    <tr><th>About you</th><th>About them</th></tr>
+    <tr><td>"I need this deal to hit my target."</td><td>"This gets your launch done two weeks early."</td></tr>
+    <tr><td>"Our product has 40 features."</td><td>"You'll stop doing the invoicing by hand."</td></tr>
+  </table></div>
+
+  <h2>3. Make the ask small and clear</h2>
+  <p>A vague ask gets a vague answer. Say exactly what you want, and make the first step easy: "Can we try it for one month?" is easier to agree to than "Will you sign a year-long contract?"</p>
+
+  <h2>4. Back it up honestly</h2>
+  <ul>
+    <li><strong>Proof:</strong> a number, a result, a short example. "Three local gyms use it" beats "it's great".</li>
+    <li><strong>Give first:</strong> share something useful before you ask. People like to return a favour.</li>
+    <li><strong>Be consistent:</strong> link your ask to something they've already said they want.</li>
+  </ul>
+
+  <h2>5. Treat objections as questions</h2>
+  <p>An objection usually means "I'm not sure yet", not "no". Answer the worry behind it:</p>
+  <div class="formula">Acknowledge:  "That's fair, price matters."
+Ask:          "Compared with what you're using now?"
+Answer:       one clear reason, with proof.
+Check:        "Does that cover it?"</div>
+
+  <div class="callout honest"><b>Straight talk</b><p>Fake scarcity ("only 2 left!"), invented deadlines and pressure tactics can win one yes and lose the relationship. If the deal is good for them, honest persuasion is enough. If it isn't, it shouldn't happen.</p></div>
+
+  <div class="quiz" data-quiz="persuasion"></div>
+  <div class="pager"><a href="#scripts">← 10. Negotiation scripts</a><a href="#pitching">12. Pitching investors, simply →</a></div>
+</section>
+
+<!-- ============ PITCHING INVESTORS ============ -->
+<section class="page" id="pitching">
+  <header class="lesson-head">
+    <span class="lesson-num">12</span>
+    <span class="eyebrow">Investors · Lesson 12 of 13</span>
+    <h1>Pitching investors, simply</h1>
+    <p class="lede">An investor wants to know three things: is the problem real, can you win, and can they make money? Answer those clearly and you've done the hard part.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Problem, solution, proof, market, why you, the ask: in 60 seconds.</li><li>Know your numbers: revenue, growth, margin, CAC and LTV, burn and runway.</li><li>Runway = cash ÷ monthly burn.</li></ul></div>
+
+  <h2>The pitch in six lines</h2>
+  <div class="formula">1. Problem:   who has it, and how much it hurts
+2. Solution:  what you do about it, in one sentence
+3. Proof:     customers, sales, growth (traction)
+4. Market:    how many people have this problem
+5. Why you:   why your team wins
+6. The ask:   how much you're raising and what it pays for</div>
+  <p>Practise saying the whole thing in 60 seconds. If you can't, it isn't clear yet.</p>
+
+  <h2>The numbers they'll ask about</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Number</th><th>Plain English</th></tr>
+    <tr><td>Revenue and growth</td><td>How much you sell, and how fast that's rising each month</td></tr>
+    <tr><td>Gross margin</td><td>How much of each sale you keep after direct costs</td></tr>
+    <tr><td>CAC and LTV</td><td>What a customer costs to win vs what they're worth</td></tr>
+    <tr><td>Burn rate</td><td>How much cash you spend each month beyond what comes in</td></tr>
+    <tr><td>Runway</td><td>Months until the cash runs out: cash ÷ burn rate</td></tr>
+    <tr><td>Use of funds</td><td>Exactly what the money will pay for, and what it will achieve</td></tr>
+  </table></div>
+  <div class="formula">Runway = cash in the bank ÷ monthly burn
+Example: $90,000 ÷ $15,000 a month = 6 months</div>
+
+  <h2>What makes investors nervous</h2>
+  <ul>
+    <li>Not knowing your own numbers.</li>
+    <li>"We have no competition." Everyone has competition, even if it's doing nothing.</li>
+    <li>Huge market claims with no customers yet.</li>
+    <li>Not being able to say what the money is for.</li>
+  </ul>
+
+  <div class="callout"><b>Remember</b><p>Investors are buying a share of your company, so this is a negotiation too. Your BATNA (another investor, or growing without them) is your power. The Funding &amp; valuation lesson explains dilution.</p></div>
+
+  <div class="quiz" data-quiz="pitching"></div>
+  <div class="pager"><a href="#persuasion">← 11. Getting people to say yes</a><a href="#pressure">13. Staying calm under pressure →</a></div>
+</section>
+
+<!-- ============ PRESSURE ============ -->
+<section class="page" id="pressure">
+  <header class="lesson-head">
+    <span class="lesson-num">13</span>
+    <span class="eyebrow">Investors · Lesson 13 of 13</span>
+    <h1>Staying calm under pressure</h1>
+    <p class="lede">Tough questions aren't attacks. They're investors checking whether you know your business. Calm comes from preparation and a few simple habits.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Prepare the 20 hardest questions before the meeting.</li><li>Pause, give the answer in one sentence, then explain.</li><li>"I don't know, here's how I'll find out" beats a confident guess.</li></ul></div>
+
+  <h2>Before: prepare the hard questions</h2>
+  <p>Write down the 20 questions you'd least like to be asked, and an answer for each. Most tough questions are predictable: your numbers (especially your runway and burn rate), your competition, your biggest risk, why you, and why now. Practise them out loud with a timer, using the <a href="../tools/investors/index.html">Investor pressure drill</a>.</p>
+
+  <h2>During: five habits</h2>
+  <ol>
+    <li><strong>Pause.</strong> Two seconds of silence before answering looks thoughtful, not lost.</li>
+    <li><strong>Answer first, then explain.</strong> Lead with the answer in one sentence, then give one or two reasons. Rambling is what pressure looks like.</li>
+    <li><strong>Clarify if you need to.</strong> "Do you mean this year's numbers or the forecast?" buys time and avoids answering the wrong question.</li>
+    <li><strong>Say "I don't know" well.</strong> "I don't know that number exactly. It's around X, and I'll send the exact figure tomorrow." Then actually send it. Guessing confidently and being wrong is far worse.</li>
+    <li><strong>Steer back to your strengths.</strong> Answer the question honestly, then connect it to something you're confident about: "That's a real risk, and here's how we're testing it."</li>
+  </ol>
+
+  <h2>In your body</h2>
+  <div class="formula">Box breathing (before you walk in, or during a pause):
+breathe in 4 seconds → hold 4 → breathe out 4 → hold 4
+Repeat 3 times.</div>
+  <p>Slow your speaking pace a little more than feels natural. Nerves speed you up; slower sounds sure.</p>
+
+  <h2>Hostile or unfair questions</h2>
+  <p>Stay polite and specific. Acknowledge the concern, answer with facts, and don't argue tone. "Fair challenge. Here's what our data shows…" You're also judging whether you want this investor. How they treat you now is how they'll treat you when things go wrong.</p>
+
+  <div class="callout honest"><b>Straight talk</b><p>No technique replaces knowing your numbers. Most pressure in investor meetings comes from not being sure of your own business. Learn the numbers cold, and most of the nerves go with it.</p></div>
+
+  <div class="quiz" data-quiz="pressure"></div>
+  <div class="pager"><a href="#pitching">← 12. Pitching investors, simply</a><a href="#calculators">Calculators →</a></div>
 </section>
 
 <!-- ============ CALCULATORS ============ -->
@@ -1055,21 +1227,28 @@ Payback = CAC ÷ (revenue per month × gross margin)</div>
     <p class="lede">Plain-English definitions.</p>
   </header>
   <dl class="gloss">
+    <div><dt>Anchoring</dt><dd>The first number put on the table, which pulls the final deal towards it.</dd></div>
     <div><dt>APR</dt><dd>Annual percentage rate — the yearly cost of borrowing, including some fees.</dd></div>
     <div><dt>Asset</dt><dd>Something you own that has value: cash, equipment, property, money owed to you.</dd></div>
     <div><dt>BATNA</dt><dd>Best Alternative To a Negotiated Agreement — what you'll do if no deal happens.</dd></div>
     <div><dt>Bond</dt><dd>A loan you make to a government or company in exchange for interest.</dd></div>
     <div><dt>Break-even</dt><dd>The sales level where revenue exactly covers all costs: zero profit, zero loss.</dd></div>
+    <div><dt>Burn rate</dt><dd>How much more cash a business spends each month than it brings in.</dd></div>
     <div><dt>CAC</dt><dd>Customer acquisition cost — sales and marketing spend ÷ new customers won.</dd></div>
     <div><dt>Cash flow</dt><dd>Money actually moving in and out of the bank, as opposed to accounting profit.</dd></div>
+    <div><dt>Channel</dt><dd>A way customers find you: social media, search, ads, word of mouth, partnerships.</dd></div>
+    <div><dt>Churn</dt><dd>The share of customers who stop buying or cancel in a period.</dd></div>
     <div><dt>COGS</dt><dd>Cost of goods sold — direct costs of making or buying what you sold.</dd></div>
     <div><dt>Compound interest</dt><dd>Earning interest on previous interest, so growth accelerates over time.</dd></div>
+    <div><dt>Concession</dt><dd>Something you give up in a negotiation, ideally in exchange for something back.</dd></div>
     <div><dt>Contribution margin</dt><dd>Price minus variable cost per unit — what each sale adds towards fixed costs.</dd></div>
+    <div><dt>Conversion rate</dt><dd>The share of people who take an action, such as buying, out of everyone who could have.</dd></div>
     <div><dt>Dilution</dt><dd>Your ownership percentage shrinking when new shares are issued to investors.</dd></div>
     <div><dt>Diversification</dt><dd>Spreading money across many investments so one failure doesn't sink you.</dd></div>
     <div><dt>Equity</dt><dd>Ownership. On a balance sheet: assets minus liabilities.</dd></div>
     <div><dt>Expense ratio</dt><dd>The yearly fee a fund charges, as a percentage of your money in it.</dd></div>
-    <div><dt>Gross margin</dt><dd>(Revenue − COGS) ÷ Revenue.</dd></div>
+    <div><dt>Funnel</dt><dd>The stages people move through on the way to buying: aware, interested, decide, buy.</dd></div>
+    <div><dt>Gross margin</dt><dd>(Revenue − cost of goods) ÷ revenue: how much of each sale you keep after direct costs.</dd></div>
     <div><dt>Index fund</dt><dd>A fund that buys everything in a market index instead of picking stocks. Usually very cheap.</dd></div>
     <div><dt>Inflation</dt><dd>The general rise in prices over time, which reduces what money can buy.</dd></div>
     <div><dt>Liability</dt><dd>Something you owe: loans, unpaid bills, taxes due.</dd></div>
@@ -1077,9 +1256,16 @@ Payback = CAC ÷ (revenue per month × gross margin)</div>
     <div><dt>LTV</dt><dd>Lifetime value — gross profit you expect from a customer over the whole relationship.</dd></div>
     <div><dt>Markup</dt><dd>Profit ÷ cost. Not the same as margin.</dd></div>
     <div><dt>Net profit</dt><dd>What's left after every cost, interest payment and tax.</dd></div>
+    <div><dt>Objection</dt><dd>A reason someone gives for not saying yes yet, often a question in disguise.</dd></div>
+    <div><dt>Pitch</dt><dd>A short, clear explanation of your business and what you're asking for.</dd></div>
+    <div><dt>Positioning</dt><dd>One clear sentence on who you're for, what you do for them, and why you instead of the alternative.</dd></div>
     <div><dt>Present value</dt><dd>What a future amount of money is worth today, after discounting.</dd></div>
     <div><dt>Receivables</dt><dd>Money customers owe you for things already delivered.</dd></div>
     <div><dt>Reservation price</dt><dd>Your walk-away point in a negotiation.</dd></div>
+    <div><dt>ROAS</dt><dd>Return on ad spend: revenue from ads divided by what the ads cost.</dd></div>
+    <div><dt>Runway</dt><dd>How many months until the cash runs out: cash in the bank ÷ monthly burn rate.</dd></div>
+    <div><dt>Traction</dt><dd>Proof that people want your product: customers, sales, growth.</dd></div>
+    <div><dt>Use of funds</dt><dd>What an investor's money will pay for, and what it will achieve.</dd></div>
     <div><dt>Valuation</dt><dd>An estimate of what a business is worth.</dd></div>
     <div><dt>ZOPA</dt><dd>Zone Of Possible Agreement — the overlap between both sides' walk-away points.</dd></div>
   </dl>
