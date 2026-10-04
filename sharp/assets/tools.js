@@ -119,6 +119,79 @@ wire('f-efund', function(){
   ], gap === 0 ? '<b>Fully funded.</b> Keep it in an easy-to-reach savings account, separate from spending money.' : 'Keep this in a separate savings account you can reach in a day, not invested.');
 });
 
+/* ================= MONEY PLAN ================= */
+function monthName(k){ var d = new Date(); d.setDate(1); d.setMonth(d.getMonth() + k); return d.toLocaleDateString(undefined, { month: 'short', year: 'numeric' }); }
+function round5(v){ return Math.round(v / 5) * 5; }
+// Month-by-month: safety fund first, then high-interest debt, then full emergency fund, then the business fund.
+function simulate(A, o){
+  var cash = o.saved, debt = o.debt, biz = 0, done = {}, m;
+  for(m = 0; m <= 600; m++){
+    if(done.starter == null && cash >= o.starter) done.starter = m;
+    if(done.debt == null && debt <= 0.5) done.debt = m;
+    if(done.full == null && done.starter != null && done.debt != null && cash >= o.full) done.full = m;
+    if(done.goal == null && done.full != null && biz >= o.goal) done.goal = m;
+    if(done.goal != null) break;
+    var avail = A;
+    if(debt > 0){ debt = debt * (1 + o.r) - o.min; if(debt < 0){ avail += -debt; debt = 0; } } else avail += o.min;
+    if(avail <= 0) continue;
+    var put;
+    if(cash < o.starter){ put = Math.min(avail, o.starter - cash); cash += put; avail -= put; }
+    if(avail > 0 && debt > 0){ put = Math.min(avail, debt); debt -= put; avail -= put; }
+    if(avail > 0 && cash < o.full){ put = Math.min(avail, o.full - cash); cash += put; avail -= put; }
+    if(avail > 0 && biz < o.goal){ put = Math.min(avail, o.goal - biz); biz += put; avail -= put; }
+  }
+  return done;
+}
+wire('f-mplan', function(){
+  var inc = pos('m-income'), housing = pos('m-housing'), must = housing + pos('m-bills') + pos('m-food') + pos('m-transport');
+  var WANT = [['m-eat', 'Eating out'], ['m-shop', 'Shopping'], ['m-fun', 'Fun & hobbies'], ['m-subs', 'Subscriptions']];
+  var wants = WANT.reduce(function(a, w){ return a + pos(w[0]); }, 0);
+  var rate = pos('m-rate'), min = pos('m-min'), debtBal = pos('m-debt'), high = debtBal > 0 && rate >= 8;
+  var steady = !$('m-steady') || $('m-steady').value !== 'irregular';
+  var free = inc - must - wants - min, p = function(x){ return inc > 0 ? x / inc * 100 : 0; };
+  var o = { saved: pos('m-saved'), debt: high ? debtBal : 0, r: rate / 100 / 12, min: high ? min : 0, starter: must, full: must * (steady ? 3 : 6), goal: pos('m-goal') };
+  var out = $('m-out');
+  if(inc <= 0){ out.innerHTML = result('Your money plan', '—', [], 'Enter your monthly take-home pay to start.'); return; }
+
+  // What to stop or cut
+  var tight = high || o.saved < must, target = inc * (tight ? .2 : .3), cut = Math.max(0, wants - target), cuts = [];
+  if(free < 0) cuts.push('<b>You spend ' + money(-free) + ' a month more than you earn.</b> This comes first: nothing else works until it\'s fixed.');
+  if(cut >= 5){
+    var parts = WANT.filter(function(w){ return pos(w[0]) > 0; }).map(function(w){ return w[1] + ' −' + money(round5(pos(w[0]) / wants * cut)); });
+    cuts.push('<b>Trim nice-to-haves by ' + money(round5(cut)) + ' a month</b>, to ' + (tight ? '20%' : '30%') + ' of your pay' + (tight ? ' until your safety fund is built and high-interest debt is gone' : '') + ': ' + parts.join(', ') + '.');
+  }
+  if(high) cuts.push('<b>Stop putting new spending on the ' + rate + '% debt.</b> Pay with money you already have until it\'s paid off.');
+  if(pos('m-subs') > 0) cuts.push('<b>Cancel any subscription you haven\'t used in the last 30 days.</b> Check your bank statement; most people find at least one.');
+  if(p(housing) > 40) cuts.push('<b>Housing is ' + pct(p(housing), 0) + ' of your pay.</b> It\'s the hardest cost to change but the biggest. At your next lease, look at a cheaper place or a roommate.');
+  if(p(pos('m-transport')) > 15) cuts.push('<b>Transport is ' + pct(p(pos('m-transport')), 0) + ' of your pay.</b> Check car payment, insurance and fuel; it\'s often the second-biggest leak.');
+  if(debtBal > 0 && !high) cuts.push('Your debt\'s rate is under 8%, so keep paying the minimum and don\'t rush it. Building savings matters more. (8% is a common rule of thumb, not a law.)');
+  if(!cuts.length) cuts.push('<b>Nothing big to cut.</b> Your spending is inside the usual guides. Keep it that way as your pay grows.');
+
+  var A = free + (cut >= 5 ? round5(cut) : 0);
+  var html = result('Money to put to work each month', money(Math.max(0, A)), [
+    ['Take-home pay', money(inc)], ['Must-pays', money(must) + ' · ' + pct(p(must), 0)], ['Nice-to-haves', money(wants) + ' · ' + pct(p(wants), 0)], ['Debt minimums', money(min)]
+  ], A > 0 ? (cut >= 5 ? 'That includes the ' + money(round5(cut)) + ' freed up by the cuts below.' : '') : '<b>No money left to plan with.</b> Make the cuts below first.');
+
+  // What to spend on, and when
+  var steps = [];
+  function when(m){ return m == null ? 'Not within 50 years at this rate' : m === 0 ? 'Done already' : 'By ' + monthName(m) + ' · ' + m + (m === 1 ? ' month' : ' months'); }
+  steps.push(['Every payday, first', 'Must-pays and minimum payments: ' + money(must + min) + ' a month.', 'Now, every month']);
+  if(A > 0){
+    var d = simulate(A, o), base = free > 0 && free < A ? simulate(free, o) : null;
+    steps.push(['Starter safety fund: ' + money(o.starter), 'One month of must-pays, so a surprise bill doesn\'t go on a card.', when(d.starter)]);
+    if(high) steps.push(['Pay off the ' + rate + '% debt: ' + money(debtBal), 'High interest costs more than almost any investment earns. Every extra dollar here is a guaranteed return.', when(d.debt)]);
+    steps.push(['Full emergency fund: ' + money(o.full), (steady ? '3' : '6') + ' months of must-pays' + (steady ? '' : ', because irregular income needs a bigger cushion') + '. Keep it in a separate savings account.', when(d.full)]);
+    if(o.goal > 0) steps.push(['Business fund: ' + money(o.goal), 'Money to start your business without borrowing.', when(d.goal)]);
+    var last = o.goal > 0 ? d.goal : d.full;
+    steps.push(['Then: invest for the long term', 'About ' + money(A + (high ? min : 0)) + ' a month. The Investing lesson explains the basics.', last == null ? '—' : 'From ' + monthName(last)]);
+    var lastBase = base ? (o.goal > 0 ? base.goal : base.full) : null;
+    if(base && last != null) html += '<p class="mp-note">' + (lastBase == null ? 'Without the cuts, this plan doesn\'t finish within 50 years.' : 'Without the cuts it takes ' + lastBase + ' months instead of ' + last + '.') + '</p>';
+  }
+  html += '<h3 class="mp-h">Spend on this, in this order</h3><ol class="mp-steps">' + steps.map(function(s){ return '<li><b>' + s[0] + '</b><span>' + s[1] + '</span><em>' + s[2] + '</em></li>'; }).join('') + '</ol>';
+  html += '<h3 class="mp-h">Stop or cut</h3><ul class="mp-cuts">' + cuts.map(function(c){ return '<li>' + c + '</li>'; }).join('') + '</ul>';
+  out.innerHTML = html;
+});
+
 /* ================= BUSINESS PLAN & PRICING ================= */
 var PLAN_FIELDS = [
   ['pl-name', 'Business'], ['pl-problem', 'The problem'], ['pl-customer', 'Who it\'s for'], ['pl-solution', 'What I sell'],

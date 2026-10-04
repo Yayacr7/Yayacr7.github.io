@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Money plan: what to spend on, and what to stop · Sharp</title>
+<meta name="description" content="Free money plan: enter what you earn and spend, and see what to spend on, in what order and by when, plus what to cut.">
+<meta property="og:title" content="Money plan: what to spend on, and what to stop · Sharp">
+<meta property="og:description" content="Free money plan: enter what you earn and spend, and see what to spend on, in what order and by when, plus what to cut.">
+<meta property="og:image" content="https://yayacr7.github.io/sharp/og.png">
+<link rel="icon" href="../../icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Karla:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/sharp.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.mp-h{font-size:1.05rem;margin:22px 0 10px}.mp-steps{list-style:none;counter-reset:mp;margin:0;padding:0;display:grid;gap:10px}.mp-steps li{counter-increment:mp;position:relative;background:var(--surface-2);border-radius:var(--radius);padding:14px 16px 14px 52px;display:grid;gap:4px}.mp-steps li::before{content:counter(mp);position:absolute;left:14px;top:14px;width:26px;height:26px;border-radius:50%;background:var(--finance);color:#06120c;font:800 .9rem/26px var(--f-display);text-align:center}.mp-steps span{color:var(--muted);font-size:.94rem}.mp-steps em{font-style:normal;font-weight:700;color:var(--finance);font-size:.92rem}.mp-cuts{margin:0;padding-left:1.2em;display:grid;gap:8px}.mp-cuts li{font-size:.96rem}.mp-note{margin-top:10px;color:var(--muted);font-size:.92rem}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../../index.html" aria-label="Sharp home"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 28 16 4l11 24z" fill="var(--ink)"/><path d="M12.6 11.4 16 4l3.4 7.4z" fill="var(--accent)"/></svg>Sharp</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../../learn/index.html">Courses</a>
+      <a href="../../tools/index.html" aria-current="page">Tools</a>
+      <a href="../../index.html#pricing">Pricing</a>
+      <a href="../../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="signin" href="../../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../../index.html">Sharp</a> / <a href="../../tools/index.html">Tools</a> / Money plan: what to spend on, and what to stop</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Finance tools</span>
+    <h1>Your money plan</h1>
+    <p class="lede">Tell it what you earn and spend. It tells you what to pay for first, when you'll get there, and what to stop spending on.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <section class="tool" id="mplan">
+      <div class="tool-grid">
+        <form id="f-mplan" novalidate>
+          <h2>Your numbers</h2>
+          <p class="intro">Fill in what you earn and spend in a normal month. Rough numbers are fine; your bank app has the real ones.</p>
+          <div class="fields">
+<label for="m-income" style="grid-column:1/-1">Take-home pay / month ($)<input type="number" id="m-income" value="3200" min="0" step="any" inputmode="decimal"></label>
+<label for="m-steady" style="grid-column:1/-1">Your income is<select id="m-steady"><option value="steady">Steady (same paycheck every month)</option><option value="irregular">Irregular (freelance, tips, commission)</option></select></label>
+<p class="eyebrow" style="grid-column:1/-1;margin-top:6px">Must-pays / month</p>
+<label for="m-housing">Rent or mortgage<input type="number" id="m-housing" value="1100" min="0" step="any" inputmode="decimal"></label>
+<label for="m-bills">Bills (utilities, phone, insurance)<input type="number" id="m-bills" value="280" min="0" step="any" inputmode="decimal"></label>
+<label for="m-food">Groceries<input type="number" id="m-food" value="350" min="0" step="any" inputmode="decimal"></label>
+<label for="m-transport">Transport<input type="number" id="m-transport" value="220" min="0" step="any" inputmode="decimal"></label>
+<p class="eyebrow" style="grid-column:1/-1;margin-top:6px">Nice-to-haves / month</p>
+<label for="m-eat">Eating out<input type="number" id="m-eat" value="260" min="0" step="any" inputmode="decimal"></label>
+<label for="m-shop">Shopping<input type="number" id="m-shop" value="220" min="0" step="any" inputmode="decimal"></label>
+<label for="m-fun">Fun &amp; hobbies<input type="number" id="m-fun" value="140" min="0" step="any" inputmode="decimal"></label>
+<label for="m-subs">Subscriptions<input type="number" id="m-subs" value="55" min="0" step="any" inputmode="decimal"></label>
+<p class="eyebrow" style="grid-column:1/-1;margin-top:6px">Savings &amp; debt</p>
+<label for="m-saved">Cash saved now ($)<input type="number" id="m-saved" value="800" min="0" step="any" inputmode="decimal"></label>
+<label for="m-debt">Card or loan balance ($)<input type="number" id="m-debt" value="2500" min="0" step="any" inputmode="decimal"></label>
+<label for="m-rate">Its interest rate (%)<input type="number" id="m-rate" value="24" min="0" step="any" inputmode="decimal"></label>
+<label for="m-min">Its minimum payment / month ($)<input type="number" id="m-min" value="75" min="0" step="any" inputmode="decimal"></label>
+<p class="eyebrow" style="grid-column:1/-1;margin-top:6px">Goal (optional)</p>
+<label for="m-goal" style="grid-column:1/-1">Saving to start a business? How much ($)<input type="number" id="m-goal" value="3000" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="m-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <p class="fine">This is education, not personal financial advice. It uses common rules of thumb (one month of must-pays as a starter fund, 3–6 months as a full one, 8% as "high interest", the 50/30/20 guide). Your situation may need a different order; for big decisions, talk to a qualified adviser. Everything stays in your browser: nothing you type is sent or saved.</p>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../../index.html" style="display:inline-flex;margin-bottom:10px"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 28 16 4l11 24z" fill="var(--ink)"/><path d="M12.6 11.4 16 4l3.4 7.4z" fill="var(--accent)"/></svg>Sharp</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Sharp</p></div>
+    <div><h4>Courses</h4><a href="../../learn/index.html#money">Finance</a><a href="../../learn/index.html#business">Business</a><a href="../../learn/index.html#mkt-basics">Marketing</a><a href="../../learn/index.html#negotiation">Negotiation</a><a href="../../learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="../../tools/marketing/index.html">Marketing calculators</a><a href="../../tools/money-plan/index.html">Money plan</a><a href="../../tools/budget/index.html">Budget planner</a><a href="../../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../../tools/negotiation/index.html">Negotiation prep</a><a href="../../tools/investors/index.html">Investor pressure drill</a></div>
+    <div><h4>Sharp</h4><a href="../../index.html#pricing">Pricing</a><a href="../../trial/index.html">Free trial</a><a href="../../learn/index.html#prompts">AI prompts</a><a href="../../learn/index.html#glossary">Glossary</a></div>
+  </div>
+</footer>
+<script src="../../assets/tools.js"></script>
+</body>
+</html>
