@@ -92,6 +92,16 @@ function renderToday(){
   var count = mk('span', 'today-count', state.done.length + ' of 4 done today'); head.appendChild(count);
   todayBox.appendChild(head);
   todayBox.appendChild(mk('p', 'today-sub', 'One lesson, one challenge, one tool and one question. About 15 minutes. Tick them off as you go.'));
+  // Quote of the day, from the Book notes (assets/quotes.js). Not a task, so it doesn't change the 4 ticks.
+  var Q = window.SHARP_QUOTES || [];
+  if(Q.length){
+    var qd = Q[dn % Q.length], fig = mk('figure', 'today-quote');
+    fig.appendChild(mk('span', 'today-k', 'Quote of the day'));
+    var bq = mk('blockquote'); bq.appendChild(mk('p', null, '“' + qd.q + '”')); fig.appendChild(bq);
+    var cap = mk('figcaption'); cap.appendChild(document.createTextNode(qd.author + ', ' + qd.book + ' · '));
+    var qa = mk('a', null, 'What it means →'); qa.href = '../books/index.html#' + qd.id; cap.appendChild(qa); fig.appendChild(cap);
+    todayBox.appendChild(fig);
+  }
   var list = mk('ol', 'today-list');
   items.forEach(function(it){
     var li = mk('li', 'today-item' + (state.done.indexOf(it.k) > -1 ? ' is-done' : ''));

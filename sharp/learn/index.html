@@ -395,6 +395,7 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 62px);max-height:calc(100vh - 6
 .q label.opt.right .opt-tag{color:var(--good)} .q label.opt.wrong .opt-tag{color:var(--bad)}
 .q .opt-why{font-size:.9rem;line-height:1.5;color:var(--muted)}
 .q.locked label.opt.right .opt-why,.q.locked label.opt.wrong .opt-why{color:var(--ink)}
+.today-quote{margin:0 0 14px;padding:14px 16px;border-left:4px solid var(--note);background:var(--paper-2);border-radius:0 12px 12px 0}.today-quote blockquote{margin:4px 0 0}.today-quote blockquote p{margin:0;font-weight:800;font-size:1.08rem;line-height:1.4}.today-quote figcaption{margin-top:6px;font-size:.88rem;color:var(--muted)}.today-quote figcaption a{font-weight:700}
 .q-review{margin-top:12px}.q-review p{margin:0 0 8px;font-weight:700}.q-review-row{display:flex;flex-wrap:wrap;gap:8px}
 .q .numrow .btn{padding:8px 14px}
 @media (max-width:860px){
@@ -511,8 +512,9 @@ section.page > .pager a:hover{background:var(--paper-2)}
   <a data-g="investors" href="#voice" data-page="voice"><span class="n">19</span>Your voice in the room<span class="tick" data-tick="voice"></span></a>
   <a data-g="investors" href="#investor-interest" data-page="investor-interest"><span class="n">20</span>Getting an investor interested<span class="tick" data-tick="investor-interest"></span></a>
   <a data-g="investors" href="#best-of-investors" data-page="best-of-investors"><span class="n">21</span>Getting the best out of investors<span class="tick" data-tick="best-of-investors"></span></a>
-  <button type="button" class="group gbtn" data-grp="more" aria-expanded="false">More: tools, glossary<span class="chev" aria-hidden="true">›</span></button>
+  <button type="button" class="group gbtn" data-grp="more" aria-expanded="false">More: tools, books, glossary<span class="chev" aria-hidden="true">›</span></button>
   <a data-g="more" href="../tools/index.html"><span class="n">↗</span>All business tools</a>
+  <a data-g="more" href="../books/index.html"><span class="n">↗</span>Book notes</a>
   <a data-g="more" href="#calculators" data-page="calculators"><span class="n">=</span>Money calculators</a>
   <a data-g="more" href="#prompts" data-page="prompts"><span class="n">&gt;_</span>AI prompts</a>
   <a data-g="more" href="#glossary" data-page="glossary"><span class="n">Aa</span>Glossary</a>
@@ -1807,6 +1809,6 @@ Asks:      one specific thing they can help with</div>
 </div>
 
 <script src="app.js"></script>
-<script src="today.js"></script>
+<script src="../assets/quotes.js"></script><script src="today.js"></script>
 </body>
 </html>
