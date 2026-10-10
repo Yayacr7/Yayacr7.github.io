@@ -436,6 +436,26 @@ nav.side a[data-g]{padding-left:28px}
 section.page > .pager{position:sticky;bottom:0;z-index:5;margin-top:44px;padding:12px 4px calc(12px + env(safe-area-inset-bottom,0px));background:var(--paper);border-top:1px solid var(--rule);box-shadow:0 -10px 24px -14px rgba(0,0,0,.6)}
 section.page > .pager a{padding:6px 10px;border-radius:8px}
 section.page > .pager a:hover{background:var(--paper-2)}
+/* Sharp Daily, notes, saved lessons */
+.today,.saved-box{background:var(--card);border:1px solid var(--rule);border-radius:20px;padding:22px 24px;margin:22px 0 0;box-shadow:var(--shadow)}
+.today-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.today h2,.saved-box h2{margin:0;font-size:1.35rem}.today-count{font-weight:700;color:var(--note);font-size:.92rem}
+.today-sub,.today-foot{color:var(--muted);margin:6px 0 0;font-size:.95rem}.today-foot{margin-top:12px}
+.today-list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:560px){.today-list{grid-template-columns:1fr}.today,.saved-box{padding:18px 16px}}
+.today-item{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;align-items:start;background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:14px 16px}
+.today-item input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--note);cursor:pointer}
+.today-item label{display:grid;gap:4px;cursor:pointer}.today-k{font:700 .72rem var(--f-body);text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.today-t{font-weight:600;line-height:1.45}.today-item.is-done .today-t{color:var(--muted);text-decoration:line-through}
+.today-go{grid-column:2;font-weight:700;color:var(--note);text-decoration:none;padding:6px 0;min-height:32px}.today-go:hover{text-decoration:underline}
+.saved-list{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}.saved-list li{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.saved-list a{color:var(--ink);font-weight:700}.saved-tag{font-size:.82rem;color:var(--muted)}
+.save-lesson{grid-column:1/-1;justify-self:start;margin-top:12px;background:transparent;color:var(--ink);border:1px solid var(--rule);border-radius:999px;padding:8px 14px;font:600 .9rem var(--f-body);cursor:pointer;min-height:40px}
+.save-lesson[aria-pressed="true"]{border-color:var(--note);color:var(--note)}
+.notes-box{margin-top:36px;display:grid;gap:8px}.notes-h{font-weight:800;font-size:1.05rem}
+.notes-box textarea{font:500 1rem/1.5 var(--f-body);padding:12px 14px;border-radius:12px;border:1.5px solid var(--rule);background:var(--card);color:var(--ink);width:100%;resize:vertical;min-height:90px}
+.notes-box textarea:focus{outline:none;border-color:var(--note)}.notes-st{font-size:.85rem;color:var(--muted)}
+.notes-box + .ask-cta{margin-top:18px}
 /* Ask Sharp box at the end of each lesson */
 .ask-cta{margin-top:36px;background:var(--paper-2);border:1px solid var(--rule);border-radius:14px;padding:16px 18px;display:grid;gap:10px}.ask-cta p{margin:0;color:var(--muted)}.ask-cta b{color:var(--ink)}.ask-cta-row{display:flex;flex-wrap:wrap;gap:8px}.ask-cta-row .btn{min-height:44px}
 </style>
@@ -657,14 +677,14 @@ Example: $10,000 at 7% for 30 years
 
   <h2>Fees matter more than you think</h2>
   <p>A 1% yearly fee sounds tiny. It's charged every year on your whole balance, forever.</p>
-  <div class="formula">$100,000 for 30 years
+  <div class="formula">Made-up example: $100,000 for 30 years
   at 7% (≈0.05% index fund)  → about $761,000
   at 6% (same, minus 1% fee) → about $574,000
   The 1% fee cost ≈ $187,000</div>
 
   <h2>Retirement accounts (US examples)</h2>
   <ul>
-    <li><strong>401(k) employer match</strong>: if your employer matches contributions, contribute at least enough to get the full match. It's an instant 50–100% return.</li>
+    <li><strong>401(k) employer match</strong>: some employers add money when you save for retirement. The rules vary by employer and plan: how much they match, up to what limit, and how long you must stay before the money is fully yours (called vesting). If your plan has a match, contributing at least enough to get all of it is usually the first step, because a 50% or 100% match is an instant 50–100% return on that money. Check your own plan's rules.</li>
     <li><strong>Traditional vs Roth</strong>: Traditional gives a tax break now and you pay tax later; Roth is taxed now and grows tax-free. Roth tends to suit people who expect a higher tax rate later.</li>
     <li>Other countries have their own versions (UK ISA/SIPP, Canada TFSA/RRSP, Australia super). The logic is similar: use tax-advantaged accounts first.</li>
   </ul>
@@ -672,7 +692,7 @@ Example: $10,000 at 7% for 30 years
   <h2>A sensible order of operations</h2>
   <ol>
     <li>Small starter emergency fund.</li>
-    <li>Get any employer match.</li>
+    <li>Get any employer match your plan offers.</li>
     <li>Pay off high-interest debt.</li>
     <li>Full emergency fund (3–6 months).</li>
     <li>Max tax-advantaged accounts with low-cost diversified funds.</li>
@@ -837,7 +857,7 @@ Post-money = $1,250,000 → investor owns 250k ÷ 1.25M = 20%</div>
   <p>A dollar today is worth more than a dollar next year, because today's dollar can be invested and because the future is uncertain. To compare money at different times, <strong>discount</strong> future amounts back to today:</p>
   <div class="formula">Present value = Future amount ÷ (1 + rate)^years
 
-$1,000 received in 3 years at a 10% rate
+Made-up example: $1,000 received in 3 years at a 10% rate
 = 1,000 ÷ 1.1^3 ≈ $751.31 today</div>
 
   <h2>How businesses are valued</h2>
@@ -1777,5 +1797,6 @@ Asks:      one specific thing they can help with</div>
 </div>
 
 <script src="app.js"></script>
+<script src="today.js"></script>
 </body>
 </html>

@@ -80,7 +80,7 @@ section.block + section.block{border-top:1px solid var(--line)}
 .section-head p{color:var(--muted);max-width:52ch;margin-top:10px}
 
 /* forms */
-input[type=email],input[type=text],input[type=number],select,textarea{font:600 1rem var(--f-body);padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);width:100%}
+input[type=email],input[type=text],input[type=search],input[type=number],select,textarea{font:600 1rem var(--f-body);padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);width:100%}
 textarea{font-weight:500;line-height:1.5;resize:vertical;min-height:84px}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}

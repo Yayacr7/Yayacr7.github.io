@@ -592,3 +592,31 @@ if(dirSel) dirSel.addEventListener('change', function(){
   });
   build(); next();
 })();
+
+/* ---------- Tools page: search and topic filter ---------- */
+(function(){
+  var q = document.getElementById('tool-q'); if(!q) return;
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.tool-card'));
+  var btns = Array.prototype.slice.call(document.querySelectorAll('.tool-cat'));
+  var none = document.getElementById('tool-none'), count = document.getElementById('tool-n'), cat = 'all';
+  // Everyday words people search for, mapped to the words used on the cards.
+  var ALSO = { price:'pricing', prices:'pricing', pitch:'investor', pitches:'investor', save:'savings', saving:'savings', spend:'spending', spending:'budget',
+    ads:'ad', advert:'ad', customer:'customers', deal:'negotiation', deals:'negotiation', loan:'loan', debt:'card payoff', profit:'profit', startup:'startup', chatgpt:'ai', interest:'compound' };
+  function words(s){ return s.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean); }
+  function apply(){
+    var ws = words(q.value), shown = 0;
+    cards.forEach(function(c){
+      var text = c.textContent.toLowerCase();
+      var okText = ws.every(function(w){ return text.indexOf(w) > -1 || (ALSO[w] && text.indexOf(ALSO[w]) > -1); });
+      var ok = okText && (cat === 'all' || c.getAttribute('data-cat') === cat);
+      c.hidden = !ok; if(ok) shown++;
+    });
+    none.hidden = shown > 0;
+    count.textContent = (ws.length || cat !== 'all') ? 'Showing ' + shown + ' of ' + cards.length : '';
+  }
+  btns.forEach(function(b){ b.addEventListener('click', function(){
+    cat = b.getAttribute('data-cat'); btns.forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); apply();
+  }); });
+  q.addEventListener('input', apply);
+  apply();
+})();
