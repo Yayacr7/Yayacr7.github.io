@@ -226,7 +226,7 @@ var LESSON_ORDER = ['money','investing','funding','business','statements','why-b
 LESSON_ORDER.concat(['glossary']).forEach(function(id){
   var sec = document.getElementById(id), pager = sec && sec.querySelector(':scope > .pager');
   if(!sec || !pager) return;
-  var box = document.createElement('aside'); box.className = 'ask-cta'; box.setAttribute('aria-label', 'Ask Sharp about this lesson');
+  var box = document.createElement('aside'); box.className = 'ask-cta'; box.setAttribute('aria-label', 'Ask Sharp about this lesson'); box.setAttribute('data-ai', ''); // hidden until Ask Sharp is switched on (assets/shell.js)
   var t = document.createElement('p'); var b = document.createElement('b'); b.textContent = 'Stuck on something? '; t.appendChild(b);
   t.appendChild(document.createTextNode('Ask Sharp, our AI helper. It answers from these lessons only.'));
   var row = document.createElement('div'); row.className = 'ask-cta-row';

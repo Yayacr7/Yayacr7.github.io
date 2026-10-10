@@ -161,6 +161,15 @@ function downloadNotes(){
 
 order.forEach(function(id){
   var sec = document.getElementById(id); if(!sec) return;
+  // "Spotted a mistake?" line at the end of each lesson: opens an email to the contact address in config.js.
+  var mail = window.NP_CONFIG && window.NP_CONFIG.CONTACT_EMAIL, pager = sec.querySelector(':scope > .pager');
+  if(mail && pager && !sec.querySelector('.lesson-report')){
+    var rp = mk('p', 'lesson-report', 'Spotted a mistake or something unclear? ');
+    var ra = mk('a', null, 'Tell us');
+    ra.href = 'mailto:' + mail + '?subject=' + encodeURIComponent('Sharp lesson ' + num(id) + ': ' + title(id));
+    rp.appendChild(ra); rp.appendChild(document.createTextNode('.'));
+    sec.insertBefore(rp, pager);
+  }
   // Save button next to the lesson title.
   var head = sec.querySelector('.lesson-head');
   if(head){

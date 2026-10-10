@@ -6,6 +6,8 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0d1020">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
 <link rel="canonical" href="https://sharpbasics.com/learn/">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -396,6 +398,8 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 62px);max-height:calc(100vh - 6
 .q .opt-why{font-size:.9rem;line-height:1.5;color:var(--muted)}
 .q.locked label.opt.right .opt-why,.q.locked label.opt.wrong .opt-why{color:var(--ink)}
 .today-quote{margin:0 0 14px;padding:14px 16px;border-left:4px solid var(--note);background:var(--paper-2);border-radius:0 12px 12px 0}.today-quote blockquote{margin:4px 0 0}.today-quote blockquote p{margin:0;font-weight:800;font-size:1.08rem;line-height:1.4}.today-quote figcaption{margin-top:6px;font-size:.88rem;color:var(--muted)}.today-quote figcaption a{font-weight:700}
+html:not(.ai-on) [data-ai]{display:none!important}html.ai-on [data-ai-off]{display:none!important}
+.lesson-report{margin:18px 0 0;font-size:.88rem;color:var(--muted)}.lesson-report a{color:inherit;font-weight:700}
 .q-review{margin-top:12px}.q-review p{margin:0 0 8px;font-weight:700}.q-review-row{display:flex;flex-wrap:wrap;gap:8px}
 .q .numrow .btn{padding:8px 14px}
 @media (max-width:860px){
@@ -1809,6 +1813,7 @@ Asks:      one specific thing they can help with</div>
 </div>
 
 <script src="app.js"></script>
-<script src="../assets/quotes.js"></script><script src="today.js"></script>
+<script src="../config.js"></script><script src="../assets/quotes.js"></script><script src="today.js"></script>
+<script src="../assets/shell.js"></script>
 </body>
 </html>

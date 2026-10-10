@@ -282,3 +282,7 @@ section.block + section.block{border-top:1px solid var(--line)}
 .upsell p.fine{font-weight:400;margin-top:6px}
 .upsell .btn{white-space:nowrap}
 @media (max-width:640px){.upsell{grid-template-columns:1fr;padding:18px}.upsell .btn{justify-self:start}}
+/* AI helpers: hidden until /api/status says they're switched on (assets/shell.js adds .ai-on to <html>). */
+html:not(.ai-on) [data-ai]{display:none!important}
+html.ai-on [data-ai-off]{display:none!important}
+.ai-soon{margin-bottom:24px}.ai-soon h2{margin:0 0 8px}.ai-soon p{margin:0 0 12px;line-height:1.55}.ai-soon .btn{margin:4px 8px 4px 0}

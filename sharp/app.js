@@ -75,7 +75,7 @@ var PLAN_NAMES = { builder: 'Builder ($29.99)', founder: 'Founder ($74.99)' };
 
 function openAuth(reason){
   reasonEl.textContent = reason || ''; reasonEl.classList.toggle('on', !!reason);
-  authMsg.className = 'msg'; authMsg.textContent = '';
+  if(authReady){ authMsg.className = 'msg'; authMsg.textContent = ''; }
   if(dlg.showModal){ if(!dlg.open) dlg.showModal(); } else { dlg.setAttribute('open', ''); }
 }
 function closeAuth(){ if(dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
@@ -90,12 +90,23 @@ function render(){
   signinBtn.classList.toggle('in', !!who);
   dlg.classList.toggle('is-in', !!who);
   document.getElementById('authWho').textContent = who;
-  document.getElementById('authTitle').textContent = who ? 'Your account' : 'Sign in to Sharp';
+  document.getElementById('authTitle').textContent = who ? 'Your account' : (authReady ? 'Sign in to Sharp' : 'Accounts open soon');
 }
 
 function notOpenYet(){
-  authMsg.className = 'msg err';
-  authMsg.innerHTML = 'Accounts open very soon. <a href="#top-form" data-close>Join the waitlist</a> and you\'ll be first in.';
+  authMsg.className = 'msg err'; authMsg.textContent = 'Accounts open very soon. ';
+  var a = document.createElement('a'); a.href = '#join'; a.setAttribute('data-close', ''); a.textContent = 'Join the waitlist';
+  authMsg.appendChild(a); authMsg.appendChild(document.createTextNode(' and you\'ll be first in.'));
+}
+// Until accounts are switched on, the Sign in window says so plainly instead of showing a form that can't work.
+if(!authReady){
+  var so = dlg.querySelector('.signed-out');
+  so.querySelector('.lead').textContent = 'Accounts aren\'t open yet, and you don\'t need one. Every lesson, quiz and tool is free, and your progress is saved on this device.';
+  document.getElementById('emailForm').hidden = true;
+  so.querySelector('.fine').hidden = true;
+  authMsg.className = 'msg'; authMsg.textContent = '';
+  var wl = document.createElement('a'); wl.href = '#join'; wl.setAttribute('data-close', ''); wl.textContent = 'Join the waitlist';
+  authMsg.appendChild(wl); authMsg.appendChild(document.createTextNode(' to hear when they open.'));
 }
 
 if(authReady){
