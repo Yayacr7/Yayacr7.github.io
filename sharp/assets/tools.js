@@ -90,22 +90,8 @@ wire('f-email', function(){
   ], 'Use the yearly value per subscriber as the most you\'d pay to win one new subscriber.');
 });
 
-/* ================= BUDGET ================= */
-var NEEDS = ['b-rent','b-util','b-food','b-transport','b-insure','b-debtmin'], WANTS = ['b-eat','b-subs','b-shop','b-fun'], SAVE = ['b-save','b-debtextra'];
-function sum(ids){ return ids.reduce(function(a, id){ return a + pos(id); }, 0); }
-wire('f-budget', function(){
-  var inc = pos('b-income'), needs = sum(NEEDS), wants = sum(WANTS), save = sum(SAVE), spent = needs + wants + save, left = inc - spent;
-  var p = function(x){ return inc > 0 ? x / inc * 100 : 0; };
-  var v;
-  if(inc <= 0) v = 'Enter your monthly take-home pay.';
-  else if(left < 0) v = '<b>You\'re over by ' + money(-left) + ' a month.</b> Cut wants first; they\'re the easiest to change.';
-  else if(p(save) < 10) v = '<b>Saving ' + pct(p(save), 0) + ' of income.</b> Aim for 20%. Move ' + money(Math.max(0, inc * .2 - save)) + ' a month from wants or leftovers into savings, automatically on payday.';
-  else v = '<b>Solid.</b> You save ' + pct(p(save), 0) + '. ' + (left > 0 ? 'Give the leftover ' + money(left) + ' a job, or it tends to disappear.' : '');
-  $('b-out').innerHTML = result('Left over each month', money(left), [
-    ['Needs', money(needs) + ' · ' + pct(p(needs), 0)], ['Wants', money(wants) + ' · ' + pct(p(wants), 0)], ['Savings & extra debt', money(save) + ' · ' + pct(p(save), 0)]
-  ], v) + '<div class="bar" aria-hidden="true"><i style="width:' + Math.min(100, p(needs)) + '%;background:var(--business)"></i><i style="width:' + Math.min(100, p(wants)) + '%;background:var(--marketing)"></i><i style="width:' + Math.min(100, p(save)) + '%;background:var(--finance)"></i></div>' +
-    '<div class="legend"><span><b style="background:var(--business)"></b>Needs (guide 50%)</span><span><b style="background:var(--marketing)"></b>Wants (guide 30%)</span><span><b style="background:var(--finance)"></b>Savings (guide 20%)</span></div>';
-});
+/* ================= BUDGET =================
+   The monthly budget dashboard lives in tools/budget/budget.js. */
 
 wire('f-goal', function(){
   var goal = pos('g-goal'), have = pos('g-have'), monthly = pos('g-monthly'), r = n('g-rate') / 100 / 12, months = pos('g-months');
@@ -194,6 +180,15 @@ wire('f-spend', function(){
   }
   out.innerHTML = html;
 });
+
+// "See the full breakdown": hand this browser's numbers to the budget dashboard (stays on this device).
+(function(){
+  var a = $('s-full'); if(!a) return;
+  a.addEventListener('click', function(){
+    var h = {}; ['income','housing','bills','food','transport','eat','shop','subs','fun','save'].forEach(function(k){ h[k] = pos('s-' + k); });
+    try{ localStorage.setItem('sharp-budget-handoff', JSON.stringify(h)); }catch(e){}
+  });
+})();
 
 // Phone view of the home page: one panel at a time so nothing needs scrolling.
 Array.prototype.forEach.call(document.querySelectorAll('[data-sctab]'), function(b){
