@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0d1020">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="canonical" href="https://sharpbasics.com/learn/">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script src="early.js"></script>
 <title>Free business courses · Sharp Basics</title>
@@ -390,7 +390,12 @@ nav.side{top:calc(env(safe-area-inset-top,0px) + 62px);max-height:calc(100vh - 6
 .q.locked label.opt{cursor:default}
 .q.locked label.opt.right{border-color:var(--good);background:var(--good-soft)}
 .q.locked label.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
-.q.locked label.opt:not(.right):not(.wrong){opacity:.6}
+.q .opt-b{display:grid;gap:4px;min-width:0}
+.q .opt-tag{font:800 .74rem var(--f-body);letter-spacing:.06em;text-transform:uppercase}
+.q label.opt.right .opt-tag{color:var(--good)} .q label.opt.wrong .opt-tag{color:var(--bad)}
+.q .opt-why{font-size:.9rem;line-height:1.5;color:var(--muted)}
+.q.locked label.opt.right .opt-why,.q.locked label.opt.wrong .opt-why{color:var(--ink)}
+.q-review{margin-top:12px}.q-review p{margin:0 0 8px;font-weight:700}.q-review-row{display:flex;flex-wrap:wrap;gap:8px}
 .q .numrow .btn{padding:8px 14px}
 @media (max-width:860px){
   nav.side .group,nav.side .meter{display:none!important}

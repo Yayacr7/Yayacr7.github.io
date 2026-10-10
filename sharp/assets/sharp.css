@@ -275,3 +275,10 @@ section.block + section.block{border-top:1px solid var(--line)}
 .sc-mk{display:inline-block;width:2px;height:14px;background:#f4f5fb;margin:0 4px}
 .sc-bar{display:inline-block;width:18px;height:8px;border-radius:3px;background:var(--st-good);margin-right:2px}
 .sc-legend span{align-items:center}
+/* "Go further" box on free tools: points to the matching paid plan */
+.upsell{margin-top:40px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 24px;align-items:center;padding:22px 24px;border-radius:16px;border:1px solid rgba(255,106,43,.45);background:linear-gradient(135deg,var(--accent-soft),var(--surface) 70%)}
+.upsell .eyebrow{color:var(--accent-text)}
+.upsell p{margin:6px 0 0;font-weight:600;line-height:1.5;max-width:62ch}
+.upsell p.fine{font-weight:400;margin-top:6px}
+.upsell .btn{white-space:nowrap}
+@media (max-width:640px){.upsell{grid-template-columns:1fr;padding:18px}.upsell .btn{justify-self:start}}
