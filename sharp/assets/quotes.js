@@ -125,5 +125,101 @@ window.SHARP_QUOTES = [
 "book": "A Happy Pocket Full of Money",
 "author": "David Cameron Gikandi",
 "id": "happy-pocket"
+},
+{
+"q": "…we should try to repay, in kind, what another person has provided us.",
+"book": "Influence: The Psychology of Persuasion",
+"author": "Robert B. Cialdini",
+"id": "influence"
+},
+{
+"q": "…as a rule, we most prefer to say yes to the requests of someone we know and like.",
+"book": "Influence: The Psychology of Persuasion",
+"author": "Robert B. Cialdini",
+"id": "influence"
+},
+{
+"q": "…opportunities seem more valuable to us when their availability is limited.",
+"book": "Influence: The Psychology of Persuasion",
+"author": "Robert B. Cialdini",
+"id": "influence"
+},
+{
+"q": "What you have learned is that the capacity of the plant is equal to the capacity of its bottlenecks",
+"book": "The Goal",
+"author": "Eliyahu M. Goldratt",
+"id": "the-goal"
+},
+{
+"q": "An hour saved at a non-bottleneck is a mirage.",
+"book": "The Goal",
+"author": "Eliyahu M. Goldratt",
+"id": "the-goal"
+},
+{
+"q": "So this is the goal: To make money by increasing net profit, while simultaneously increasing return on investment, and simultaneously increasing cash flow.",
+"book": "The Goal",
+"author": "Eliyahu M. Goldratt",
+"id": "the-goal"
+},
+{
+"q": "Effective executives do first things first and they do one thing at a time.",
+"book": "The Effective Executive",
+"author": "Peter F. Drucker",
+"id": "effective-executive"
+},
+{
+"q": "Time is the scarcest resource, and unless it is managed nothing else can be managed.",
+"book": "The Effective Executive",
+"author": "Peter F. Drucker",
+"id": "effective-executive"
+},
+{
+"q": "Effective executives know where their time goes.",
+"book": "The Effective Executive",
+"author": "Peter F. Drucker",
+"id": "effective-executive"
+},
+{
+"q": "Morale in an organization does not mean that 'people get along together'; the test is performance not conformance.",
+"book": "The Effective Executive",
+"author": "Peter F. Drucker",
+"id": "effective-executive"
+},
+{
+"q": "To feel a state as hopeless or impossible is to impress the subconscious with the idea of failure.",
+"book": "Feeling Is the Secret",
+"author": "Neville Goddard",
+"id": "feeling-is-the-secret"
+},
+{
+"q": "Control of your feeling is all important to a full and happy life.",
+"book": "Feeling Is the Secret",
+"author": "Neville Goddard",
+"id": "feeling-is-the-secret"
+},
+{
+"q": "Mastery of self-control of your thoughts and feelings is your highest achievement.",
+"book": "Feeling Is the Secret",
+"author": "Neville Goddard",
+"id": "feeling-is-the-secret"
+},
+{
+"q": "Most of us have had it backwards, trying to be successful in order to be happy.",
+"book": "Inner Excellence",
+"author": "Jim Murphy",
+"id": "inner-excellence"
+},
+{
+"q": "The greatest freedom you have is where to place your thoughts.",
+"book": "Inner Excellence",
+"author": "Jim Murphy",
+"id": "inner-excellence"
+},
+{
+"q": "Fear is one of the main barriers to learning from suffering.",
+"book": "Inner Excellence",
+"author": "Jim Murphy",
+"id": "inner-excellence"
 }
 ];
