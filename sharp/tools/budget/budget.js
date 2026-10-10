@@ -53,40 +53,50 @@ function read(){
 /* ---------- 1. overview cards ---------- */
 function cards(d){
   var box = clear($('bd-cards'));
-  [['Income', money(d.income), d.other ? money(d.main || 0) + ' pay + ' + money(d.other) + ' other' : 'each month'],
-   ['Expenses', money(d.expenses), pct(d.expenses, d.income) + ' of income'],
-   ['Savings', money(d.save), d.goal != null ? 'goal ' + money(d.goal) : 'kept separate from expenses'],
-   ['Remaining', money(d.left), d.left < 0 ? 'short this month' : 'not given a job yet', d.left < 0],
-   ['Savings rate', pct(d.save, d.income), 'of income saved']].forEach(function(k){
-    var c = mk('div', 'kpi'); c.appendChild(mk('span', null, k[0])); c.appendChild(mk('b', k[3] ? 'neg' : null, k[1])); c.appendChild(mk('small', null, k[2])); box.appendChild(c);
+  [['Income', money(d.income), d.other ? money(d.main || 0) + ' pay + ' + money(d.other) + ' other' : 'what comes in each month', 'pay + other income'],
+   ['Expenses', money(d.expenses), pct(d.expenses, d.income) + ' of income', 'all spending boxes added up'],
+   ['Savings', money(d.save), d.goal != null ? 'goal ' + money(d.goal) : 'kept separate from expenses', 'what you put away this month'],
+   ['Remaining', money(d.left), d.left < 0 ? 'you are short this month' : 'not given a job yet', 'income − expenses − savings', d.left < 0],
+   ['Savings rate', pct(d.save, d.income), 'of your income is saved', 'savings ÷ income']].forEach(function(k){
+    var c = mk('div', 'kpi'); c.appendChild(mk('span', null, k[0])); c.appendChild(mk('b', k[4] ? 'neg' : null, k[1])); c.appendChild(mk('small', null, k[2]));
+    c.appendChild(mk('em', null, '= ' + k[3])); box.appendChild(c);
   });
 }
 
 /* ---------- 2. plain-words summary, using the real numbers ---------- */
+function part(box, title){ var sec = mk('div', 'sum-part'); sec.appendChild(mk('h4', null, title)); box.appendChild(sec); return sec; }
+function item(list, icon, cls, text){ var li = mk('li', cls); li.appendChild(mk('i', 'ic ' + cls, icon)); li.appendChild(mk('span', null, text)); list.appendChild(li); }
 function summary(d){
   var box = clear($('bd-summary'));
   if(d.income <= 0){ box.appendChild(mk('p', null, 'Enter your take-home pay to see your summary. Every other number depends on it.')); return; }
-  var p1 = mk('p');
-  p1.textContent = 'You bring home ' + money(d.income) + ' a month. You spend ' + money(d.expenses) + ' (' + pct(d.expenses, d.income) + ') and save ' + money(d.save) + ' (' + pct(d.save, d.income) + '), ' +
-    (d.left >= 0 ? 'which leaves ' + money(d.left) + '.' : 'which is ' + money(-d.left) + ' more than you bring in.');
-  box.appendChild(p1);
+  var big = part(box, '1. The big picture');
+  big.appendChild(mk('p', null, 'You bring home ' + money(d.income) + ' a month. You spend ' + money(d.expenses) + ' (' + pct(d.expenses, d.income) + ' of it) and save ' + money(d.save) + ' (' + pct(d.save, d.income) + '). ' +
+    (d.left > 0 ? 'That leaves ' + money(d.left) + ' with no plan yet.' : d.left === 0 ? 'Every dollar has a job. Nice.' : 'That is ' + money(-d.left) + ' more than you bring in, so something has to give.')));
   var top = d.cats.filter(function(c){ return c.spent > 0; }).sort(function(a, b){ return b.spent - a.spent; }).slice(0, 3);
-  if(top.length) box.appendChild(mk('p', null, 'Your biggest costs: ' + top.map(function(c){ return c.name + ' ' + money(c.spent) + ' (' + pct(c.spent, d.expenses) + ' of spending)'; }).join(', ') + '.'));
+  if(top.length){
+    var tp = part(box, '2. Where most of your money goes'), ul = mk('ul', 'sum-list');
+    top.forEach(function(c){ var li = mk('li'); li.appendChild(mk('span', null, c.name + ': ' + money(c.spent) + ', which is ' + pct(c.spent, d.expenses) + ' of your spending and ' + pct(c.spent, d.income) + ' of your income.')); ul.appendChild(li); });
+    tp.appendChild(ul);
+  }
   var over = d.cats.filter(function(c){ return c.status === 'bad'; }).sort(function(a, b){ return b.diff - a.diff; });
+  var close = d.cats.filter(function(c){ return c.status === 'warn'; });
   var overTotal = over.reduce(function(a, c){ return a + c.diff; }, 0);
-  box.appendChild(mk('p', null, over.length ? (over.length === 1 ? '1 category is' : over.length + ' categories are') + ' over budget by ' + money(overTotal) + ' in total: ' +
-    over.map(function(c){ return c.name + ' by ' + money(c.diff) + ' (' + pct(c.spent, c.budget) + ' of budget)'; }).join(', ') + '.' : 'Nothing is over budget this month.'));
-  // Next steps, worked out from the numbers above.
+  var ob = part(box, '3. Budget check'), ul2 = mk('ul', 'sum-list');
+  if(over.length) over.forEach(function(c){ item(ul2, '✕', 'bad', c.name + ' is over by ' + money(c.diff) + '. You planned ' + money(c.budget) + ' and spent ' + money(c.spent) + ' (' + pct(c.spent, c.budget) + ' of budget).'); });
+  close.forEach(function(c){ item(ul2, '!', 'warn', c.name + ' is close: ' + money(c.spent) + ' of ' + money(c.budget) + ' (' + pct(c.spent, c.budget) + '). Only ' + money(-c.diff) + ' left in it.'); });
+  if(!over.length && !close.length) item(ul2, '✓', 'good', 'Every category with a budget is under or on budget.');
+  else if(over.length) item(ul2, '=', 'none', 'Total over budget: ' + money(overTotal) + ' a month.');
+  ob.appendChild(ul2);
   var steps = [];
-  if(d.left < 0) steps.push('You are short ' + money(-d.left) + '. Cover it before anything else: cut the categories over budget first.');
+  if(d.left < 0) steps.push('You are short ' + money(-d.left) + '. Cover it first by cutting the categories marked ✕.');
   over.slice(0, 2).forEach(function(c){ steps.push('Bring ' + c.name + ' back to ' + money(c.budget) + '. That frees ' + money(c.diff) + ' a month.'); });
   if(d.goal != null && d.save < d.goal){
     var gap = d.goal - d.save;
-    steps.push('You are ' + money(gap) + ' short of your ' + money(d.goal) + ' savings goal.' + (overTotal > 0 ? ' Getting the over-budget categories back on budget would free ' + money(Math.min(overTotal, gap)) + ' of that.' : ''));
+    steps.push('Save ' + money(gap) + ' more to reach your ' + money(d.goal) + ' monthly goal.' + (overTotal > 0 ? ' Fixing the over-budget categories would free ' + money(Math.min(overTotal, gap)) + ' of that.' : ''));
   }
-  if(d.left > 0) steps.push('Give the leftover ' + money(d.left) + ' a job. Moving it to savings would make your rate ' + pct(d.save + d.left, d.income) + '.');
-  if(d.save / d.income < 0.2 && d.income > 0) steps.push('Your savings rate is ' + pct(d.save, d.income) + '. Sharp\'s rule of thumb is 20%, which is ' + money(d.income * 0.2) + ' a month for you.');
-  if(steps.length){ box.appendChild(mk('p', null, 'Next steps:')); var ul = mk('ul'); steps.slice(0, 4).forEach(function(s){ ul.appendChild(mk('li', null, s)); }); box.appendChild(ul); }
+  if(d.left > 0) steps.push('Give the leftover ' + money(d.left) + ' a job. If you saved it, your savings rate would go from ' + pct(d.save, d.income) + ' to ' + pct(d.save + d.left, d.income) + '.');
+  if(d.save / d.income < 0.2) steps.push('A common rule of thumb is to save 20% of income. For you that is ' + money(d.income * 0.2) + ' a month; you save ' + money(d.save) + '.');
+  if(steps.length){ var ns = part(box, '4. What to do next'), ol = mk('ol', 'sum-steps'); steps.slice(0, 4).forEach(function(t){ ol.appendChild(mk('li', null, t)); }); ns.appendChild(ol); }
 }
 
 /* ---------- 3. spent vs budget chart (one dollar scale for every row) ---------- */
@@ -111,7 +121,15 @@ function compare(d){
   var axis = mk('div', 'bd-axis'); axis.setAttribute('aria-hidden', 'true'); axis.appendChild(mk('span', null, 'Category'));
   var ticks = mk('div', 'ticks'); for(var i = 0; i <= 4; i++){ var s = mk('span', null, money(max * i / 4)); s.style.left = (i * 25) + '%'; if(i === 4){ s.style.left = 'auto'; s.style.right = '0'; s.style.transform = 'none'; } ticks.appendChild(s); }
   axis.appendChild(ticks); axis.appendChild(mk('span', null, 'Spent / budget')); box.appendChild(axis);
+  var lastGroup = null;
   d.cats.forEach(function(c){
+    if(c.group !== lastGroup){
+      lastGroup = c.group;
+      var g = d.cats.filter(function(x){ return x.group === c.group; }), gs = g.reduce(function(a, x){ return a + x.spent; }, 0);
+      var gb = g.filter(function(x){ return x.budget != null; }).reduce(function(a, x){ return a + x.budget; }, 0);
+      var gh = mk('p', 'cmp-group', (c.group === 'needs' ? 'Needs and debt' : 'Wants') + ': spent ' + money(gs) + (gb > 0 ? ' of ' + money(gb) + ' budgeted (' + pct(gs, gb) + ')' : '') + (d.income > 0 ? ' · ' + pct(gs, d.income) + ' of income' : ''));
+      box.appendChild(gh);
+    }
     var row = mk('button', 'cmp-row ' + c.status); row.type = 'button';
     row.setAttribute('aria-pressed', picked === c.id ? 'true' : 'false');
     row.setAttribute('aria-label', detail(c, d));
