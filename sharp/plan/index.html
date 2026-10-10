@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://sharpbasics.com/plan/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Idea to Plan · Sharp Basics</title>
+<meta name="description" content="Describe your business idea and get an honest rating, the key numbers and a 4-week action plan, based on Sharp's lessons.">
+<meta property="og:title" content="Idea to Plan · Sharp Basics">
+<meta property="og:description" content="Describe your business idea and get an honest rating, the key numbers and a 4-week action plan, based on Sharp's lessons.">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/sharp.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.ask-box{margin:0;display:grid;gap:10px}.ask-label{font-weight:800;font-size:1.05rem}.ask-label.sm{font-size:.92rem;color:var(--muted);font-weight:700}.ask-meta{display:flex;justify-content:flex-end;margin-top:-4px}.ask-modes{border:0;margin:4px 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}.ask-modes legend{font-size:.92rem;font-weight:700;color:var(--muted);margin-bottom:8px;padding:0}.ask-modes label{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;cursor:pointer;font-weight:700;font-size:.95rem;min-height:44px}.ask-modes label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}.ask-modes input{accent-color:var(--accent);width:18px;height:18px;margin:0}.ask-go{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px}.ask-go .btn{min-width:150px}#ask-status.err{color:var(--bad);font-weight:700}#ask-status.ok{color:var(--good)}.ask-box .fine a,.ask-warn a{color:var(--accent-text)}.ask-out{scroll-margin-top:130px}.ask-out,.ask-hist{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:grid;gap:12px;box-shadow:var(--shadow)}.ask-out-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.ask-out h2,.ask-hist h2{font-size:1.25rem}.ask-answer{line-height:1.65;font-size:1.05rem;outline:none}.ask-answer p{margin:0 0 10px}.ask-answer ul{margin:0 0 10px;padding-left:1.2em;display:grid;gap:6px}.ask-k{font:700 .74rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:4px 0 6px}.ask-src{list-style:none;margin:0;padding:0;display:grid;gap:6px}.ask-src a{color:var(--accent-text);font-weight:700}.ask-warn{font-size:.9rem;color:var(--muted);border-left:3px solid var(--accent);padding-left:12px;margin:0}.ask-warn b{color:var(--ink)}.ask-row{display:flex;flex-wrap:wrap;gap:8px}.ask-row .btn{min-height:44px}.chip.ok{background:var(--good-soft);color:var(--good)}.chip.no{background:var(--surface-2);color:var(--muted)}.ask-hist-list{margin:0;padding-left:1.2em;display:grid;gap:10px}.ask-hist-list button{background:none;border:0;padding:4px 0;color:var(--ink);font:600 1rem var(--f-body);text-align:left;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;min-height:32px}@media (max-width:560px){.ask-modes label{flex:1 1 100%}.ask-go .btn{width:100%}}.pl{max-width:820px;display:grid;gap:18px}.pl-box{margin:0;display:grid;gap:14px}.pl-box h2{font-size:1.3rem}.pl-box label{display:grid;gap:6px;font-weight:700;font-size:.92rem}.req{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-text);margin-left:6px}.pl-out{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:grid;gap:16px;box-shadow:var(--shadow);scroll-margin-top:130px}.pl-score{font:800 1rem var(--f-body);padding:6px 12px;border-radius:999px;background:var(--surface-2)}.pl-score.hi{background:var(--good-soft);color:var(--good)}.pl-score.mid{background:var(--accent-soft);color:var(--accent-text)}.pl-score.lo{background:var(--bad-soft);color:var(--bad)}.pl-verdict{font-size:1.08rem;line-height:1.6;margin:0}.pl-nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}.pl-nums div{background:var(--readout);color:var(--readout-ink);border-radius:12px;padding:12px 14px}.pl-nums b{display:block;font:800 1.4rem var(--f-display);font-variant-numeric:tabular-nums}.pl-nums span{font-size:.8rem;color:var(--readout-dim)}.pl-two{display:grid;grid-template-columns:1fr 1fr;gap:16px}.pl-list{margin:0;padding-left:1.2em;display:grid;gap:6px}.pl-today{border-left:3px solid var(--accent);padding-left:12px}.pl-today p{margin:0;font-weight:700}.pl-weeks{display:grid;gap:12px}.pl-week{border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:8px}.pl-week h3{font-size:1.05rem;margin:0}.pl-task{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center}.pl-task input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent)}.pl-task input[type=text]{padding:9px 12px;font-weight:500}.pl-task.done input[type=text]{text-decoration:line-through;color:var(--muted)}#pl-status.err{color:var(--bad);font-weight:700}#pl-status.ok{color:var(--good)}.pl-box [aria-invalid=true]{border-color:var(--bad)}@media (max-width:640px){.pl-two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="Sharp home"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 28 16 4l11 24z" fill="var(--ink)"/><path d="M12.6 11.4 16 4l3.4 7.4z" fill="var(--accent)"/></svg>Sharp</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../learn/index.html">Courses</a>
+      <a href="../tools/index.html">Tools</a>
+      <a href="../pricing/index.html">Pricing</a>
+      <a href="../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="signin" href="../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../index.html">Sharp</a> / Idea to Plan</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">AI helper · Beta</span>
+    <h1>Idea to Plan</h1>
+    <p class="lede">Tell us your idea. Get an honest score, the numbers that matter, and a 4-week plan you can edit and keep.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <div class="pl">
+      <form id="pl-form" class="tool pl-box" novalidate>
+        <h2>Your idea</h2>
+        <label for="pl-idea">What would you sell? <span class="req">Required</span><textarea id="pl-idea" rows="2" maxlength="300" placeholder="e.g. Dog walking for busy families in my neighbourhood"></textarea></label>
+        <label for="pl-customer">Who would buy it? <span class="req">Required</span><input type="text" id="pl-customer" maxlength="200" placeholder="e.g. Parents who work long days"></label>
+        <div class="fields wide">
+          <label for="pl-stage">Where are you now?<select id="pl-stage"><option value="idea">Just an idea</option><option value="made">I have made or tried it</option><option value="selling">I already have some customers</option></select></label>
+          <label for="pl-hours">Hours a week you can spend<select id="pl-hours"><option value="2">About 2</option><option value="5" selected>About 5</option><option value="10">About 10</option><option value="20">20 or more</option></select></label>
+        </div>
+        <div class="fields">
+          <label for="pl-price">Price per sale ($)<input type="number" id="pl-price" min="0" step="any" inputmode="decimal" placeholder="optional"></label>
+          <label for="pl-cost">Cost per sale ($)<input type="number" id="pl-cost" min="0" step="any" inputmode="decimal" placeholder="optional"></label>
+          <label for="pl-goal">Monthly goal ($)<input type="number" id="pl-goal" min="0" step="any" inputmode="decimal" placeholder="optional"></label>
+        </div>
+        <label for="pl-worry">Your biggest worry <span class="fine">(optional)</span><input type="text" id="pl-worry" maxlength="200" placeholder="e.g. I don't know if anyone will pay"></label>
+        <div class="ask-go"><button class="btn" type="submit" id="pl-btn">Build my plan</button><span id="pl-status" class="fine" role="status" aria-live="polite"></span></div>
+        <p class="fine">Your answers go to our AI provider (Anthropic) to write the plan. Don't include names or contact details. Your saved plan stays on this device. <a href="../privacy/index.html#ask">Privacy</a></p>
+      </form>
+      <section id="pl-out" class="pl-out" hidden aria-labelledby="pl-out-h">
+        <div class="ask-out-top"><h2 id="pl-out-h">Your plan</h2><span class="pl-score" id="pl-score"></span></div>
+        <p id="pl-verdict" class="pl-verdict"></p>
+        <div id="pl-nums" class="pl-nums"></div>
+        <div class="pl-two"><div><h3 class="ask-k">Strengths</h3><ul id="pl-good" class="pl-list good"></ul></div><div><h3 class="ask-k">Risks to check</h3><ul id="pl-risk" class="pl-list risk"></ul></div></div>
+        <div class="pl-today"><h3 class="ask-k">Do this today</h3><p id="pl-today"></p></div>
+        <div id="pl-weeks" class="pl-weeks"></div>
+        <div id="pl-les-wrap"><h3 class="ask-k">Lessons that help</h3><ul id="pl-les" class="ask-src"></ul></div>
+        <p class="ask-warn"><b>AI can be wrong.</b> This plan is a starting point, not advice. Edit any task to make it yours. Changes save on this device.</p>
+        <div class="ask-row"><button class="btn sm ghost" type="button" id="pl-dl">Download plan</button><button class="btn sm ghost" type="button" id="pl-new">Start a new plan</button></div>
+        <p id="pl-saved" class="fine" role="status" aria-live="polite"></p>
+      </section>
+    </div>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../index.html" style="display:inline-flex;margin-bottom:10px"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 28 16 4l11 24z" fill="var(--ink)"/><path d="M12.6 11.4 16 4l3.4 7.4z" fill="var(--accent)"/></svg>Sharp</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Sharp</p></div>
+    <div><h4>Courses</h4><a href="../learn/index.html#money">Finance</a><a href="../learn/index.html#business">Business</a><a href="../learn/index.html#mkt-basics">Marketing</a><a href="../learn/index.html#negotiation">Negotiation</a><a href="../learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="../tools/marketing/index.html">Marketing calculators</a><a href="../index.html#check">Spending check</a><a href="../tools/idea-check/index.html">Idea check</a><a href="../tools/ai/index.html">AI at work</a><a href="../tools/money-plan/index.html">Money plan</a><a href="../tools/budget/index.html">Budget planner</a><a href="../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../tools/negotiation/index.html">Negotiation prep</a><a href="../tools/investors/index.html">Investor pressure drill</a></div>
+    <div><h4>Sharp</h4><a href="../ask/index.html">Ask Sharp (AI)</a><a href="../plan/index.html">Idea to Plan (AI)</a><a href="../pricing/index.html">Pricing</a><a href="../trial/index.html">Free trial</a><a href="../learn/index.html#prompts">AI prompts</a><a href="../learn/index.html#glossary">Glossary</a><a href="../about/index.html">About</a><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a><a href="../refunds/index.html">Refunds</a></div>
+  </div>
+</footer>
+<script src="../plan/plan.js"></script>
+</body>
+</html>
