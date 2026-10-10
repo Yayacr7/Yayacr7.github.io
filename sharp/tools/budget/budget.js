@@ -97,6 +97,15 @@ function item(list, icon, cls, text){ var li = mk('li', cls); li.appendChild(mk(
 function summary(d){
   var box = clear($('bd-summary'));
   if(d.income <= 0){ box.appendChild(mk('p', null, 'Enter your take-home pay to see your summary. Every other number depends on it.')); return; }
+  // Start with what really went well (only true things, from the numbers).
+  var wins = [];
+  if(d.mode === 'teen' && d.sales > 0 && d.profit > 0) wins.push('You kept ' + pct(d.profit, d.sales) + ' of every sale: ' + money(d.profit) + ' profit from your business.');
+  if(d.goal != null && d.goal > 0 && d.save >= d.goal) wins.push('You hit your ' + money(d.goal) + ' savings goal this month.');
+  var under = d.cats.filter(function(c){ return c.diff != null && c.diff < 0; }).sort(function(a, b){ return a.diff - b.diff; })[0];
+  if(under) wins.push(under.name + ' came in ' + money(-under.diff) + ' under budget.');
+  if(d.left > 0) wins.push('You finished the month with ' + money(d.left) + ' spare.');
+  if(d.save > 0 && d.save / d.income >= 0.2) wins.push('You saved ' + pct(d.save, d.income) + ' of your income. That beats the 20% rule of thumb.');
+  if(wins.length){ var wp = part(box, 'What went well'), wl = mk('ul', 'sum-list'); wins.slice(0, 2).forEach(function(t){ item(wl, '✓', 'good', t); }); wp.appendChild(wl); }
   var big = part(box, 'The big picture');
   big.appendChild(mk('p', null, 'You bring home ' + money(d.income) + ' a month. You spend ' + money(d.expenses) + ' (' + pct(d.expenses, d.income) + ' of it) and save ' + money(d.save) + ' (' + pct(d.save, d.income) + '). ' +
     (d.left > 0 ? 'That leaves ' + money(d.left) + ' with no plan yet.' : d.left === 0 ? 'Every dollar has a job. Nice.' : 'That is ' + money(-d.left) + ' more than you bring in, so something has to give.')));
@@ -116,11 +125,19 @@ function summary(d){
   var over = d.cats.filter(function(c){ return c.status === 'bad'; }).sort(function(a, b){ return b.diff - a.diff; });
   var close = d.cats.filter(function(c){ return c.status === 'warn'; });
   var overTotal = over.reduce(function(a, c){ return a + c.diff; }, 0);
-  var ob = part(box, 'Budget check'), ul2 = mk('ul', 'sum-list');
-  if(over.length) over.forEach(function(c){ item(ul2, '✕', 'bad', c.name + ' is over by ' + money(c.diff) + '. You planned ' + money(c.budget) + ' and spent ' + money(c.spent) + ' (' + pct(c.spent, c.budget) + ' of budget).'); });
+  var ob = part(box, over.length || close.length ? 'Where you can win back money' : 'Budget check'), ul2 = mk('ul', 'sum-list');
+  if(over.length) over.forEach(function(c){ item(ul2, '✕', 'bad', c.name + ': ' + money(c.diff) + ' to win back. You planned ' + money(c.budget) + ' and spent ' + money(c.spent) + ' (' + pct(c.spent, c.budget) + ' of budget).'); });
   close.forEach(function(c){ item(ul2, '!', 'warn', c.name + ' is close: ' + money(c.spent) + ' of ' + money(c.budget) + ' (' + pct(c.spent, c.budget) + '). Only ' + money(-c.diff) + ' left in it.'); });
   if(!over.length && !close.length) item(ul2, '✓', 'good', 'Every category with a budget is under or on budget.');
-  else if(over.length) item(ul2, '=', 'none', 'Total over budget: ' + money(overTotal) + ' a month.');
+  else if(over.length){
+    var win = 'Win all of it back and you free ' + money(overTotal) + ' a month.';
+    // If they're saving toward a target, show how much sooner they'd get there (simple maths, no interest).
+    if(d.target != null && d.saved != null && d.save > 0 && d.target > d.saved){
+      var gapT = d.target - d.saved, now = Math.ceil(gapT / d.save), faster = Math.ceil(gapT / (d.save + overTotal));
+      if(now > faster) win += ' Saved, that gets you to your ' + money(d.target) + ' target ' + (now - faster) + (now - faster === 1 ? ' month' : ' months') + ' sooner (' + faster + ' instead of ' + now + ', not counting interest).';
+    }
+    item(ul2, '↑', 'good', win);
+  }
   ob.appendChild(ul2);
   var steps = [];
   if(d.left < 0) steps.push('You are short ' + money(-d.left) + '. Cover it first by cutting the categories marked ✕.');
@@ -177,7 +194,7 @@ function compare(d){
     var v = mk('span', 'cmp-val');
     v.appendChild(mk('b', null, money(c.spent) + (c.budget != null ? ' / ' + money(c.budget) : '')));
     var st = mk('span', 'cmp-st'); st.appendChild(mk('i', 'ic ' + c.status, STATUS[c.status][0]));
-    st.appendChild(document.createTextNode(c.budget == null ? 'No budget' : c.diff > 0 ? money(c.diff) + ' over · ' + pct(c.spent, c.budget) : c.diff < 0 ? money(-c.diff) + ' under · ' + pct(c.spent, c.budget) : 'On budget'));
+    st.appendChild(document.createTextNode(c.budget == null ? 'No budget' : c.diff > 0 ? money(c.diff) + ' to win back · ' + pct(c.spent, c.budget) : c.diff < 0 ? money(-c.diff) + ' under · ' + pct(c.spent, c.budget) : 'On budget'));
     v.appendChild(st); row.appendChild(v);
     row.addEventListener('click', function(){ picked = c.id; $('bd-detail').textContent = detail(c, d); box.querySelectorAll('.cmp-row').forEach(function(x){ x.setAttribute('aria-pressed', x === row ? 'true' : 'false'); }); });
     box.appendChild(row);
@@ -229,7 +246,7 @@ function incomeChart(d){
     if(guide) tr.appendChild(mk('td', null, r[2] == null ? '—' : money(d.income * r[2]) + ' · ' + Math.round(r[2] * 100) + '%'));
     t.appendChild(tr);
   });
-  box.appendChild(t);
+  var fold = mk('details', 'bd-more'); fold.appendChild(mk('summary', null, 'See the exact numbers')); fold.appendChild(t); box.appendChild(fold);
   // Two shares of one total: round the first, give the second the rest, so they always add to 100%.
   var split = function(a){ var p1 = Math.round(a / d.income * 100); return [p1 + '%', (100 - p1) + '%']; };
   if(d.mode === 'teen' && d.income > 0){ var sp = split(d.main || 0); box.appendChild(mk('p', 'fine', 'Income sources: jobs and allowance ' + money(d.main || 0) + ' (' + sp[0] + '), business sales ' + money(d.other || 0) + ' (' + sp[1] + ').')); }
@@ -300,6 +317,27 @@ $('bd-save-month').addEventListener('click', function(){
   trend();
 });
 
+/* ---------- phones and iPads: "My numbers" / "Results" tabs and a result bar ---------- */
+var grid = form.closest('.bd-grid');
+function view(v, scroll){
+  grid.setAttribute('data-view', v);
+  Array.prototype.forEach.call(document.querySelectorAll('.bd-tabs [data-bdtab]'), function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-bdtab') === v ? 'true' : 'false'); });
+  if(scroll){
+    // Scroll so the tabs sit just below the site's top bar.
+    var t = document.querySelector('.bd-tabs'), head = document.querySelector('.site-head');
+    if(t) window.scrollTo(0, t.getBoundingClientRect().top + window.pageYOffset - (head ? head.offsetHeight : 0) - 8);
+  }
+}
+Array.prototype.forEach.call(document.querySelectorAll('[data-bdtab]'), function(b){
+  b.addEventListener('click', function(){ view(b.getAttribute('data-bdtab'), !b.closest('.bd-tabs')); });
+});
+function mini(d){
+  var over = d.cats.filter(function(c){ return c.status === 'bad'; }).length;
+  $('bd-mini-txt').textContent = (d.left < 0 ? 'Short ' + money(-d.left) : 'Left over ' + money(d.left)) +
+    (d.mode === 'teen' ? ' · Profit ' + money(d.profit || 0) : ' · Saving ' + pct(d.save, d.income)) +
+    ' · ' + (over ? over + ' to win back' : 'all on budget');
+}
+
 /* ---------- run ---------- */
 function update(){
   var d = read();
@@ -307,7 +345,7 @@ function update(){
   $('bd-inc-help').textContent = d.mode === 'teen'
     ? 'Your money split into business costs, everyday spending, savings and what\'s left. Tap a part for details.'
     : 'Your income split into needs, wants, savings and what\'s left, next to Sharp\'s 50/30/20 guide (a rule of thumb, not a law). Tap a part for details.';
-  cards(d); summary(d); compare(d); incomeChart(d); savings(d);
+  cards(d); summary(d); compare(d); incomeChart(d); savings(d); mini(d);
 }
 form.addEventListener('input', update); form.addEventListener('change', update);
 form.addEventListener('submit', function(e){ e.preventDefault(); });
@@ -327,6 +365,7 @@ form.addEventListener('submit', function(e){ e.preventDefault(); });
   });
   saveTouched = true;
   set('b-save', +h.save || 0); set('b-savegoal', Math.round(inc * 15) / 100); set('b-saved', ''); set('b-target', '');
+  view('res');
   $('bd-src').textContent = 'Your numbers from the spending check. Budgets are set from Sharp\'s guide; change them to yours.';
   var b = $('budget'); if(b) b.scrollIntoView();
 })();
