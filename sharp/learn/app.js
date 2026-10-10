@@ -300,6 +300,20 @@ function el(tag, attrs, html){ var n = document.createElement(tag); if(attrs) fo
 function fmt(n, d){ return Number(n).toLocaleString(undefined, {minimumFractionDigits:d||0, maximumFractionDigits:d||0}); }
 
 var LESSON_ORDER = ['money','investing','funding','business','statements','why-business','buy-back-time','ai-at-work','mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social','negotiation','scripts','persuasion','pitching','pressure','voice','investor-interest','best-of-investors'];
+/* ---------- Ask Sharp: a small "stuck?" box above each lesson's Previous/Next bar ---------- */
+LESSON_ORDER.concat(['glossary']).forEach(function(id){
+  var sec = document.getElementById(id), pager = sec && sec.querySelector(':scope > .pager');
+  if(!sec || !pager) return;
+  var box = document.createElement('aside'); box.className = 'ask-cta'; box.setAttribute('aria-label', 'Ask Sharp about this lesson');
+  var t = document.createElement('p'); var b = document.createElement('b'); b.textContent = 'Stuck on something? '; t.appendChild(b);
+  t.appendChild(document.createTextNode('Ask Sharp, our AI helper. It answers from these lessons only.'));
+  var row = document.createElement('div'); row.className = 'ask-cta-row';
+  [['', 'Ask a question'], ['simpler', 'Explain it simpler'], ['example', 'Give me an example']].forEach(function(x){
+    var a = document.createElement('a'); a.className = 'btn sm ghost';
+    a.href = '../ask/index.html?lesson=' + id + (x[0] ? '&mode=' + x[0] : ''); a.textContent = x[1]; row.appendChild(a);
+  });
+  box.appendChild(t); box.appendChild(row); sec.insertBefore(box, pager);
+});
 var TOPIC_LESSONS = { finance: ['money','investing','funding'], business: ['business','statements','why-business','buy-back-time','ai-at-work'], marketing: ['mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social'], negotiation: ['negotiation','scripts','persuasion'], investors: ['pitching','pressure','voice','investor-interest','best-of-investors'] };
 function updateProgressUI(){
   var passed = QUIZ_IDS.filter(function(id){ return progress[id] && progress[id].passed; }).length;
@@ -664,7 +678,7 @@ if(track) track.innerHTML += track.innerHTML.replace(/<span>/g, '<span aria-hidd
   names.sort(function(a, b){ return b.length - a.length; });
   var esc = function(x){ return x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); };
   var re = new RegExp('\\b(' + names.map(esc).join('|') + ')s?\\b', 'gi');
-  var SKIP = 'h1,h2,h3,.tldr,.quiz,.formula,.pager,a,button,.lesson-head,th,code,.callout > b,.zopa,.eyebrow';
+  var SKIP = 'h1,h2,h3,.tldr,.quiz,.ask-cta,.formula,.pager,a,button,.lesson-head,th,code,.callout > b,.zopa,.eyebrow';
   var MAX = 8;
   document.querySelectorAll('section.page').forEach(function(sec){
     if(!sec.querySelector('.quiz')) return;

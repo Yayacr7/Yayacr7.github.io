@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://sharpbasics.com/ask/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Ask Sharp · Sharp Basics</title>
+<meta name="description" content="Ask a question about money, business, marketing, negotiation or investing. Answers come only from Sharp's own free lessons, with links to check them.">
+<meta property="og:title" content="Ask Sharp · Sharp Basics">
+<meta property="og:description" content="Ask a question about money, business, marketing, negotiation or investing. Answers come only from Sharp's own free lessons, with links to check them.">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/sharp.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.ask{max-width:760px;display:grid;gap:18px}.ask-box{margin:0;display:grid;gap:10px}.ask-label{font-weight:800;font-size:1.05rem}.ask-label.sm{font-size:.92rem;color:var(--muted);font-weight:700}.ask-meta{display:flex;justify-content:flex-end;margin-top:-4px}.ask-modes{border:0;margin:4px 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}.ask-modes legend{font-size:.92rem;font-weight:700;color:var(--muted);margin-bottom:8px;padding:0}.ask-modes label{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;cursor:pointer;font-weight:700;font-size:.95rem;min-height:44px}.ask-modes label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}.ask-modes input{accent-color:var(--accent);width:18px;height:18px;margin:0}.ask-go{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px}.ask-go .btn{min-width:150px}#ask-status.err{color:var(--bad);font-weight:700}#ask-status.ok{color:var(--good)}.ask-box .fine a,.ask-warn a{color:var(--accent-text)}.ask-out{scroll-margin-top:130px}.ask-out,.ask-hist{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:grid;gap:12px;box-shadow:var(--shadow)}.ask-out-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.ask-out h2,.ask-hist h2{font-size:1.25rem}.ask-answer{line-height:1.65;font-size:1.05rem;outline:none}.ask-answer p{margin:0 0 10px}.ask-answer ul{margin:0 0 10px;padding-left:1.2em;display:grid;gap:6px}.ask-k{font:700 .74rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:4px 0 6px}.ask-src{list-style:none;margin:0;padding:0;display:grid;gap:6px}.ask-src a{color:var(--accent-text);font-weight:700}.ask-warn{font-size:.9rem;color:var(--muted);border-left:3px solid var(--accent);padding-left:12px;margin:0}.ask-warn b{color:var(--ink)}.ask-row{display:flex;flex-wrap:wrap;gap:8px}.ask-row .btn{min-height:44px}.chip.ok{background:var(--good-soft);color:var(--good)}.chip.no{background:var(--surface-2);color:var(--muted)}.ask-hist-list{margin:0;padding-left:1.2em;display:grid;gap:10px}.ask-hist-list button{background:none;border:0;padding:4px 0;color:var(--ink);font:600 1rem var(--f-body);text-align:left;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;min-height:32px}@media (max-width:560px){.ask-modes label{flex:1 1 100%}.ask-go .btn{width:100%}}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="Sharp home"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 28 16 4l11 24z" fill="var(--ink)"/><path d="M12.6 11.4 16 4l3.4 7.4z" fill="var(--accent)"/></svg>Sharp</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../learn/index.html">Courses</a>
+      <a href="../tools/index.html">Tools</a>
+      <a href="../pricing/index.html">Pricing</a>
+      <a href="../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="signin" href="../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../index.html">Sharp</a> / Ask Sharp</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">AI helper · Beta</span>
+    <h1>Ask Sharp</h1>
+    <p class="lede">Stuck on an idea? Ask in your own words. Sharp answers using only its own lessons, and shows you where to check.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <div class="ask">
+      <form id="ask-form" class="tool ask-box" novalidate>
+        <label for="ask-q" class="ask-label">Your question</label>
+        <textarea id="ask-q" rows="3" maxlength="500" placeholder="e.g. What is an emergency fund, and how big should it be?" aria-describedby="ask-count ask-note"></textarea>
+        <div class="ask-meta"><span id="ask-count" class="fine">0 / 500</span></div>
+        <fieldset class="ask-modes"><legend>How should Sharp answer?</legend>
+          <label><input type="radio" name="mode" value="answer" checked> Answer it</label>
+          <label><input type="radio" name="mode" value="simpler"> Explain it simpler</label>
+          <label><input type="radio" name="mode" value="example"> Give me an example</label>
+        </fieldset>
+        <label for="ask-lesson" class="ask-label sm">About a lesson? <span class="fine">(optional)</span></label>
+        <select id="ask-lesson"><option value="">Any lesson</option><option value="money">1. Your money</option><option value="investing">2. Investing</option><option value="business">4. How a business makes money</option><option value="statements">5. Financial statements</option><option value="funding">3. Funding &amp; valuation</option><option value="why-business">6. Why businesses exist, and what's changing now</option><option value="buy-back-time">7. Buy back your time</option><option value="ai-at-work">8. Using AI at work without the headaches</option><option value="mkt-basics">9. Marketing basics</option><option value="mkt-channels">10. Getting customers</option><option value="mkt-measure">11. Measuring marketing</option><option value="mkt-words">12. Words that sell</option><option value="mkt-social">13. Social media and short video</option><option value="negotiation">14. Negotiation</option><option value="scripts">15. Negotiation scripts</option><option value="persuasion">16. Getting people to say yes</option><option value="pitching">17. Pitching investors, simply</option><option value="pressure">18. Staying calm under pressure</option><option value="voice">19. Your voice in the room</option><option value="investor-interest">20. Getting an investor interested</option><option value="best-of-investors">21. Getting the best out of investors</option></select>
+        <div class="ask-go"><button class="btn" type="submit" id="ask-btn">Ask Sharp</button><span id="ask-status" class="fine" role="status" aria-live="polite"></span></div>
+        <p id="ask-note" class="fine">Don't type names, card numbers or account details. Sharp doesn't need them. Your question goes to our AI provider (Anthropic) to be answered and isn't linked to you. <a href="../privacy/index.html#ask">Privacy</a></p>
+      </form>
+      <section id="ask-out" class="ask-out" hidden aria-labelledby="ask-out-h">
+        <div class="ask-out-top"><h2 id="ask-out-h">Sharp's answer</h2><span id="ask-badge" class="chip"></span></div>
+        <div id="ask-answer" class="ask-answer" tabindex="-1"></div>
+        <div id="ask-src-wrap"><h3 class="ask-k">Check it in these lessons</h3><ul id="ask-src" class="ask-src"></ul></div>
+        <p class="ask-warn"><b>AI can be wrong.</b> Answers only use Sharp's lessons, but read the lesson to be sure. This is education, not personal financial advice.</p>
+        <div class="ask-row"><button class="btn sm ghost" type="button" id="ask-copy">Copy answer</button><button class="btn sm ghost" type="button" id="ask-simpler">Explain it simpler</button><button class="btn sm ghost" type="button" id="ask-example">Give me an example</button></div>
+      </section>
+      <section class="ask-hist" id="ask-hist-wrap" hidden aria-labelledby="ask-hist-h">
+        <div class="ask-out-top"><h2 id="ask-hist-h">Your recent questions</h2><button class="btn sm ghost" type="button" id="ask-clear">Clear</button></div>
+        <p class="fine">Saved on this device only, never sent to us.</p>
+        <ol id="ask-hist" class="ask-hist-list"></ol>
+      </section>
+    </div>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../index.html" style="display:inline-flex;margin-bottom:10px"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 28 16 4l11 24z" fill="var(--ink)"/><path d="M12.6 11.4 16 4l3.4 7.4z" fill="var(--accent)"/></svg>Sharp</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Sharp</p></div>
+    <div><h4>Courses</h4><a href="../learn/index.html#money">Finance</a><a href="../learn/index.html#business">Business</a><a href="../learn/index.html#mkt-basics">Marketing</a><a href="../learn/index.html#negotiation">Negotiation</a><a href="../learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="../tools/marketing/index.html">Marketing calculators</a><a href="../index.html#check">Spending check</a><a href="../tools/idea-check/index.html">Idea check</a><a href="../tools/ai/index.html">AI at work</a><a href="../tools/money-plan/index.html">Money plan</a><a href="../tools/budget/index.html">Budget planner</a><a href="../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../tools/negotiation/index.html">Negotiation prep</a><a href="../tools/investors/index.html">Investor pressure drill</a></div>
+    <div><h4>Sharp</h4><a href="../ask/index.html">Ask Sharp (AI)</a><a href="../pricing/index.html">Pricing</a><a href="../trial/index.html">Free trial</a><a href="../learn/index.html#prompts">AI prompts</a><a href="../learn/index.html#glossary">Glossary</a><a href="../about/index.html">About</a><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a><a href="../refunds/index.html">Refunds</a></div>
+  </div>
+</footer>
+<script src="../ask/ask.js"></script>
+</body>
+</html>
