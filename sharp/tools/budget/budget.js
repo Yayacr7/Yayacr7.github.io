@@ -381,40 +381,74 @@ function trend(){
     var steps = mk('div', 'tr-steps'); [0, 1].forEach(function(i){ steps.appendChild(mk('span', 'tr-step' + (i < months.length ? ' on' : ''), i < months.length ? '✓ ' + label(months[i].m, true) : 'Month ' + (i + 1))); });
     e.appendChild(steps); box.appendChild(e); return;
   }
-  var SER = [['i', 'Income', 'tr-inc'], ['e', 'Spent', 'tr-spent'], ['s', 'Saved', 'tr-saved']];
-  var W = 560, H = 230, L = 50, R = 16, T = 16, B = 30, max = niceMax(Math.max.apply(null, months.map(function(r){ return Math.max(r.e, r.s, r.i); })));
-  var n = months.length, x = function(i){ return L + i * (W - L - R) / (n - 1); }, y = function(v){ return T + (1 - v / max) * (H - T - B); };
-  var lg = mk('div', 'viz-legend'); SER.forEach(function(s){ var sp = mk('span'); sp.appendChild(mk('i', 'key ' + s[2])); sp.appendChild(document.createTextNode(s[1])); lg.appendChild(sp); }); box.appendChild(lg);
-  var wrap = mk('div', 'sv-proj'), svg = document.createElementNS(NS, 'svg');
-  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svg.setAttribute('class', 'viz'); svg.setAttribute('role', 'img');
-  svg.setAttribute('aria-label', 'Income, spending and saving by month: ' + months.map(function(r){ return label(r.m) + ' income ' + money(r.i) + ', spent ' + money(r.e) + ', saved ' + money(r.s); }).join('; '));
-  for(var i = 0; i <= 4; i++){ var v = max * i / 4; svgEl(svg, 'line', { x1: L, x2: W - R, y1: y(v), y2: y(v), class: 'viz-grid' }); svgEl(svg, 'text', { x: L - 8, y: y(v) + 4, 'text-anchor': 'end', class: 'viz-tick' }, compact(v)); }
-  var every = Math.ceil(n / 6);
-  months.forEach(function(r, i){ if(i % every === 0 || i === n - 1) svgEl(svg, 'text', { x: x(i), y: H - 8, 'text-anchor': i === 0 ? 'start' : i === n - 1 ? 'end' : 'middle', class: 'viz-tick' }, label(r.m, true)); });
-  svgEl(svg, 'path', { d: 'M' + x(0) + ' ' + y(0) + months.map(function(r, i){ return ' L' + x(i) + ' ' + y(r.s); }).join('') + ' L' + x(n - 1) + ' ' + y(0) + 'Z', class: 'viz-area tr-saved' });
-  SER.forEach(function(s){
-    svgEl(svg, 'polyline', { points: months.map(function(r, i){ return x(i) + ',' + y(r[s[0]]); }).join(' '), class: 'viz-line ' + s[2] });
-    var last = months[n - 1]; svgEl(svg, 'circle', { cx: x(n - 1), cy: y(last[s[0]]), r: 4.5, class: 'viz-dot ' + s[2] });
-  });
-  var cross = svgEl(svg, 'line', { y1: T, y2: H - B, class: 'viz-cross', visibility: 'hidden' });
-  var dots = SER.map(function(s){ return svgEl(svg, 'circle', { r: 5, class: 'viz-dot ' + s[2], visibility: 'hidden' }); });
-  var tip = mk('div', 'viz-tip'); tip.hidden = true;
-  function at(i){ var r = months[i], px = x(i);
-    cross.setAttribute('x1', px); cross.setAttribute('x2', px); cross.setAttribute('visibility', 'visible');
-    SER.forEach(function(s, k){ dots[k].setAttribute('cx', px); dots[k].setAttribute('cy', y(r[s[0]])); dots[k].setAttribute('visibility', 'visible'); });
-    tip.textContent = ''; tip.appendChild(mk('span', 'tip-h', label(r.m)));
-    SER.forEach(function(s){ var row = mk('span', 'tip-r'); row.appendChild(mk('i', 'key ' + s[2])); row.appendChild(mk('b', null, money(r[s[0]]))); row.appendChild(mk('span', null, s[1])); tip.appendChild(row); });
-    tip.hidden = false; tip.style.left = (px / W * 100) + '%'; $('bd-tr-msg').textContent = label(r.m) + ': income ' + money(r.i) + ', spent ' + money(r.e) + ', saved ' + money(r.s) + '.'; }
+  stock(box, months);
+}
+/* Stock-app style chart: one line at a time, like a share price. Pick what to track and how far back.
+   The header shows the value and the change since the start of the range (it follows your finger).
+   Green = moving the good way, red = the bad way (for Spent, going down is good). */
+var TR_SER = 'c', TR_RANGE = 0;
+function stock(box, all){
+  var SER = { c: ['Total saved', true], s: ['Saved a month', true], e: ['Spent a month', false], i: ['Income', true] };
+  var run = 0, rows = all.map(function(r){ run += r.s; return { m: r.m, i: r.i, e: r.e, s: r.s, c: run }; });
+  var bar = mk('div', 'stk-bar'), tabs = mk('div', 'stk-tabs'), rng = mk('div', 'stk-tabs stk-rng');
+  tabs.setAttribute('role', 'group'); tabs.setAttribute('aria-label', 'What to show');
+  rng.setAttribute('role', 'group'); rng.setAttribute('aria-label', 'How far back');
+  Object.keys(SER).forEach(function(k){ var b = mk('button', null, SER[k][0]); b.type = 'button'; b.setAttribute('aria-pressed', String(k === TR_SER));
+    b.addEventListener('click', function(){ TR_SER = k; trend(); }); tabs.appendChild(b); });
+  [[3, '3M'], [6, '6M'], [12, '1Y'], [0, 'All']].forEach(function(o){ if(o[0] && o[0] >= rows.length + 2) return; var b = mk('button', null, o[1]); b.type = 'button';
+    b.setAttribute('aria-pressed', String(o[0] === TR_RANGE || (!o[0] && TR_RANGE >= rows.length)));
+    b.addEventListener('click', function(){ TR_RANGE = o[0]; trend(); }); rng.appendChild(b); });
+  bar.appendChild(tabs); bar.appendChild(rng); box.appendChild(bar);
+  var data = TR_RANGE && TR_RANGE < rows.length ? rows.slice(-TR_RANGE) : rows;
+  if(data.length < 2) data = rows.slice(-2);
+  var key = TR_SER, upGood = SER[key][1], n = data.length, first = data[0][key];
+  // Header: big number + change, like a stock price.
+  var hd = mk('div', 'stk-hd'), hv = mk('b', 'stk-val'), hc = mk('span', 'stk-ch'), hl = mk('span', 'stk-when');
+  hd.appendChild(mk('span', 'stk-name', SER[key][0])); hd.appendChild(hv); hd.appendChild(hc); hd.appendChild(hl); box.appendChild(hd);
+  function head(i){ var v = data[i][key], d = v - first, good = d === 0 ? null : (d > 0) === upGood;
+    hv.textContent = money(v);
+    hc.textContent = (d > 0 ? '▲ +' : d < 0 ? '▼ −' : '') + money(Math.abs(d)) + (first ? ' (' + (d >= 0 ? '+' : '−') + Math.abs(d / first * 100).toFixed(1) + '%)' : '') + (good == null ? '' : good ? ' · good' : ' · watch this');
+    hc.className = 'stk-ch ' + (good == null ? '' : good ? 'up' : 'down');
+    hl.textContent = i === n - 1 ? 'since ' + label(data[0].m, true) : label(data[i].m) + ' vs ' + label(data[0].m, true); }
+  var last = data[n - 1][key], dirGood = last === first ? null : (last > first) === upGood, tone = dirGood === false ? 'down' : 'up';
+  var W = Math.max(300, Math.min(760, box.clientWidth || 560)), H = W < 480 ? 210 : 240, L = 10, R = 58, T = 14, B = 26;   // drawn at real size so text stays readable on phones
+  var vals = data.map(function(r){ return r[key]; }), lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+  if(hi === lo){ hi += Math.max(10, hi * .1); lo = Math.max(0, lo - Math.max(10, lo * .1)); }
+  var pad = (hi - lo) * .12; lo = Math.max(0, lo - pad); hi += pad;
+  var x = function(i){ return L + i * (W - L - R) / (n - 1); }, y = function(v){ return T + (1 - (v - lo) / (hi - lo)) * (H - T - B); };
+  var wrap = mk('div', 'sv-proj stk'), svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svg.setAttribute('class', 'viz stk-svg ' + tone); svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', SER[key][0] + ' by month: ' + data.map(function(r){ return label(r.m) + ' ' + money(r[key]); }).join('; '));
+  var gid = 'stkg' + Math.floor(Math.random() * 1e6), defs = svgEl(svg, 'defs', {}), g = svgEl(defs, 'linearGradient', { id: gid, x1: 0, x2: 0, y1: 0, y2: 1 });
+  svgEl(g, 'stop', { offset: '0%', class: 'stk-g0' }); svgEl(g, 'stop', { offset: '100%', class: 'stk-g1' });
+  var st = (function(r){ var p = Math.pow(10, Math.floor(Math.log(r) / Math.LN10)), f = r / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p; })((hi - lo) / 3);
+  for(var v = Math.ceil(lo / st) * st; v <= hi; v += st){ svgEl(svg, 'line', { x1: L, x2: W - R, y1: y(v), y2: y(v), class: 'stk-grid' }); if(Math.abs(y(v) - y(data[n - 1][key])) > 16) svgEl(svg, 'text', { x: W - R + 8, y: y(v) + 4, class: 'stk-ax' }, compact(Math.round(v))); }   // round price levels
+  var every = Math.ceil(n / (W < 480 ? 3 : 6));
+  data.forEach(function(r, i){ if((i % every === 0 && (n - 1 - i) * (W - L - R) / (n - 1) > 60) || i === n - 1) svgEl(svg, 'text', { x: x(i), y: H - 7, 'text-anchor': i === 0 ? 'start' : i === n - 1 ? 'end' : 'middle', class: 'stk-ax' }, label(r.m, true)); });
+  svgEl(svg, 'line', { x1: L, x2: W - R, y1: y(first), y2: y(first), class: 'stk-base' });   // where the range started, like "previous close"
+  var pts = data.map(function(r, i){ return x(i).toFixed(1) + ' ' + y(r[key]).toFixed(1); });
+  svgEl(svg, 'path', { d: 'M' + pts.join(' L') + ' L' + x(n - 1) + ' ' + (H - B) + ' L' + x(0) + ' ' + (H - B) + 'Z', fill: 'url(#' + gid + ')', class: 'stk-area' });
+  svgEl(svg, 'path', { d: 'M' + pts.join(' L'), class: 'stk-line', pathLength: 1 });
+  svgEl(svg, 'circle', { cx: x(n - 1), cy: y(last), r: 9, class: 'stk-pulse' }); svgEl(svg, 'circle', { cx: x(n - 1), cy: y(last), r: 4.5, class: 'stk-dot' });
+  var tag = svgEl(svg, 'g', { transform: 'translate(' + (W - R + 2) + ',' + y(last) + ')', class: 'stk-tag' }); svgEl(tag, 'rect', { x: 0, y: -10, width: R - 4, height: 20, rx: 3 }); svgEl(tag, 'text', { x: (R - 4) / 2, y: 4 }, last < 100000 ? money(last) : compact(last));
+  // Crosshair + its own price tag.
+  var ch = svgEl(svg, 'g', { class: 'stk-ch-g', visibility: 'hidden' }), cv = svgEl(ch, 'line', { y1: T, y2: H - B }), chh = svgEl(ch, 'line', { x1: L, x2: W - R }), cd = svgEl(ch, 'circle', { r: 5 });
+  var ct = svgEl(ch, 'g', {}); svgEl(ct, 'rect', { x: W - R + 2, y: -10, width: R - 4, height: 20, rx: 3 }); var ctt = svgEl(ct, 'text', { x: W - R + 2 + (R - 4) / 2, y: 4 });
+  function at(i){ var r = data[i], px = x(i), py = y(r[key]);
+    cv.setAttribute('x1', px); cv.setAttribute('x2', px); chh.setAttribute('y1', py); chh.setAttribute('y2', py); cd.setAttribute('cx', px); cd.setAttribute('cy', py);
+    ct.setAttribute('transform', 'translate(0,' + py + ')'); ctt.textContent = r[key] < 100000 ? money(r[key]) : compact(r[key]); ch.setAttribute('visibility', 'visible'); head(i);
+    $('bd-tr-msg').textContent = label(r.m) + ': income ' + money(r.i) + ', spent ' + money(r.e) + ', saved ' + money(r.s) + ', total saved ' + money(r.c) + '.'; }
+  function reset(){ ch.setAttribute('visibility', 'hidden'); head(n - 1); }
   function move(e){ var rc = svg.getBoundingClientRect(), px = (e.clientX - rc.left) / rc.width * W; at(Math.max(0, Math.min(n - 1, Math.round((px - L) / (W - L - R) * (n - 1))))); }
-  svg.addEventListener('pointermove', move); svg.addEventListener('pointerdown', move);
-  svg.addEventListener('pointerleave', function(){ cross.setAttribute('visibility', 'hidden'); dots.forEach(function(dt){ dt.setAttribute('visibility', 'hidden'); }); tip.hidden = true; });
+  svg.addEventListener('pointermove', move); svg.addEventListener('pointerdown', move); svg.addEventListener('pointerleave', reset);
   svg.setAttribute('tabindex', '0'); var kb = n - 1; svg.addEventListener('keydown', function(e){ if(e.key === 'ArrowLeft'){ kb = Math.max(0, kb - 1); at(kb); } if(e.key === 'ArrowRight'){ kb = Math.min(n - 1, kb + 1); at(kb); } });
-  wrap.appendChild(svg); wrap.appendChild(tip); box.appendChild(wrap);
+  svg.addEventListener('blur', reset);
+  wrap.appendChild(svg); box.appendChild(wrap); head(n - 1);
   // Change since the first saved month, in plain words.
-  var a0 = months[0], z = months[n - 1], ch = mk('div', 'tr-change');
+  var a0 = rows[0], z = rows[rows.length - 1], chg = mk('div', 'tr-change');
   [['Spent', z.e - a0.e, false], ['Saved', z.s - a0.s, true]].forEach(function(c){ var good = c[2] ? c[1] >= 0 : c[1] <= 0, sp = mk('span', 'tr-ch ' + (c[1] === 0 ? '' : good ? 'up' : 'down'));
-    sp.appendChild(mk('b', null, (c[1] > 0 ? '▲ +' : c[1] < 0 ? '▼ −' : '') + money(Math.abs(c[1])))); sp.appendChild(document.createTextNode(' ' + c[0].toLowerCase() + ' since ' + label(a0.m, true))); ch.appendChild(sp); });
-  box.appendChild(ch);
+    sp.appendChild(mk('b', null, (c[1] > 0 ? '▲ +' : c[1] < 0 ? '▼ −' : '') + money(Math.abs(c[1])))); sp.appendChild(document.createTextNode(' ' + c[0].toLowerCase() + ' a month since ' + label(a0.m, true))); chg.appendChild(sp); });
+  box.appendChild(chg);
 }
 function label(m, short){ var p = m.split('-'), d = new Date(+p[0], +p[1] - 1, 1); return d.toLocaleDateString('en-US', short ? { month: 'short', year: '2-digit' } : { month: 'long', year: 'numeric' }); }
 var monthIn = $('bd-month'), now = new Date(); monthIn.value = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2);
@@ -432,7 +466,7 @@ $('bd-save-month').addEventListener('click', function(){
 /* ---------- phones and iPads: "My numbers" / "Results" tabs and a result bar ---------- */
 var grid = form.closest('.bd-grid');
 function view(v, scroll){
-  grid.setAttribute('data-view', v);
+  grid.setAttribute('data-view', v); trend();   // redraw at the size it now has
   Array.prototype.forEach.call(document.querySelectorAll('.bd-tabs [data-bdtab]'), function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-bdtab') === v ? 'true' : 'false'); });
   if(scroll){
     // Scroll so the tabs sit just below the site's top bar.
@@ -483,4 +517,8 @@ form.addEventListener('submit', function(e){ e.preventDefault(); });
 })();
 Array.prototype.forEach.call(document.querySelectorAll('[data-set-mode]'), function(b){ b.addEventListener('click', function(){ setMode(b.getAttribute('data-set-mode')); }); });
 setMode(mode); trend();
+var trT; window.addEventListener('resize', function(){ clearTimeout(trT); trT = setTimeout(trend, 200); });
+// With 2+ saved months there's a chart to see, so open the month-by-month box.
+var fold = $('bd-trend').closest('details');
+if(fold){ fold.addEventListener('toggle', function(){ if(fold.open) trend(); }); if(load(MKEY, []).length >= 2) fold.open = true; }
 })();
