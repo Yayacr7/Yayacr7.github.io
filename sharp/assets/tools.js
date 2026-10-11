@@ -126,6 +126,8 @@ wire('f-efund', function(){
 });
 
 /* ================= SPENDING CHECK ================= */
+var SC_VIEW = 'blocks', SC_LAST = null, SC_SIZE = '', SC_WORD = { good: 'Fine', warn: 'A bit over', bad: 'Too much' }, SC_SHORT = { 'Rent or mortgage': 'Rent', 'Subscriptions': 'Subs', 'Fun & hobbies': 'Fun', 'Groceries': 'Food', 'Transport': 'Travel', 'Eating out': 'Eat out', 'Shopping': 'Shop', 'Left over': 'Left' };  // blocks picture state (see drawTree below)
+var scWatched = null, scRO = window.ResizeObserver ? new ResizeObserver(function(){ drawTree(false); }) : null;
 // Each category is judged as a share of take-home pay. Guides, not laws: [green up to %, yellow up to %].
 var SPEND = [
   ['s-housing', 'Rent or mortgage', 30, 40, 'It\'s hard to change fast. At your next lease, look at a cheaper place or a roommate.'],
@@ -162,7 +164,11 @@ wire('f-spend', function(){
   if(left < 0) html += '<p class="sc-alert"><span class="sc-ic bad" aria-hidden="true">✕</span><span><b>You spend ' + money(-left) + ' a month more than you earn.</b> Fix the red rows first.</span></p>';
   // Simple limit chart: each row's line in the middle is that category's limit (a goal for saving).
   // Before the line = fine, past the line = too much. Plain dollars, no percent scale.
-  html += '<div class="sc-legend" aria-hidden="true"><span><i class="sc-bar"></i>What you spend</span><span><i class="sc-mk"></i>Your limit</span><span><i class="sc-ic good">✓</i>Fine</span><span><i class="sc-ic warn">!</i>A bit over</span><span><i class="sc-ic bad">✕</i>Too much</span></div>';
+  // Toolbar: what the colours mean, and a switch between the blocks picture and the bar list.
+  html += '<div class="sc-bar-row"><div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Fine</span><span><i class="sc-ic warn">!</i>A bit over</span><span><i class="sc-ic bad">✕</i>Too much</span><span class="sc-size">Bigger block = more money</span></div>' +
+    '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
+  html += '<div class="sc-tree" role="group" aria-label="Your take-home pay as blocks: the bigger the block, the more money goes there"' + (SC_VIEW === 'list' ? ' hidden' : '') + '></div>';
+  html += '<div class="sc-listview"' + (SC_VIEW === 'blocks' ? ' hidden' : '') + '>';
   html += '<div class="sc-axis" aria-hidden="true"><span></span><span><b style="left:0">$0</b><b class="lim" style="left:50%">Limit</b><b style="left:100%">2× limit</b></span><span>Spent / limit</span><span></span></div>';
   html += '<ul class="sc-chart" aria-label="What you spend in each category compared with your limit">';
   rows.forEach(function(r){
@@ -176,7 +182,8 @@ wire('f-spend', function(){
       '<span class="sc-st"><i class="sc-ic ' + S.cls + '" aria-hidden="true">' + S.icon + '</i><span class="sc-w">' + word + '</span></span></li>';
   });
   html += '</ul>';
-  html += '<p class="sc-axt">The line is your limit. A bar past the line means too much. For saving, the line is your goal: try to reach it.</p>';
+  html += '<p class="sc-axt">The line is your limit. A bar past the line means too much. For saving, the line is your goal: try to reach it.</p></div>';
+  html += '<p class="sc-detail" aria-live="polite"></p>';
   var bad = rows.filter(function(r){ return r.st === 'bad'; }), warn = rows.filter(function(r){ return r.st === 'warn'; });
   var todo = [];
   bad.concat(warn).forEach(function(r){
@@ -191,7 +198,90 @@ wire('f-spend', function(){
     html += '<ul class="sc-mini">' + mini.join('') + '</ul>';
   }
   out.innerHTML = html;
+  SC_LAST = { rows: rows, inc: inc, left: left, total: total };
+  drawTree(true);
 });
+
+/* ---------- Spending check: the "blocks" picture (a treemap) ----------
+   Each block's area is its share of the money. Colour + icon + word give the status.
+   Squarified layout keeps blocks close to square so they're easy to compare. */
+function scWorst(row, side){ var s = 0, mx = 0, mn = Infinity; row.forEach(function(r){ s += r.a; mx = Math.max(mx, r.a); mn = Math.min(mn, r.a); }); return Math.max(side * side * mx / (s * s), s * s / (side * side * mn)); }
+function squarify(items, W, H){
+  var total = items.reduce(function(a, it){ return a + it.v; }, 0), rects = [], x = 0, y = 0, w = W, h = H;
+  var rest = items.map(function(it){ return { it: it, a: it.v / total * W * H }; });
+  while(rest.length){
+    var side = Math.min(w, h), row = [], best = Infinity, i = 0;
+    while(i < rest.length){ var cand = row.concat([rest[i]]), r = scWorst(cand, side); if(r <= best){ row = cand; best = r; i++; } else break; }
+    var sum = row.reduce(function(a, r){ return a + r.a; }, 0), thick = sum / side;
+    if(w >= h){ var yy = y; row.forEach(function(r){ var hh = r.a / thick; rects.push({ it: r.it, x: x, y: yy, w: thick, h: hh }); yy += hh; }); x += thick; w -= thick; }
+    else { var xx = x; row.forEach(function(r){ var ww = r.a / thick; rects.push({ it: r.it, x: xx, y: y, w: ww, h: thick }); xx += ww; }); y += thick; h -= thick; }
+    rest = rest.slice(row.length);
+  }
+  return rects;
+}
+function scInfo(r, inc){
+  if(r.left) return { title: 'Left over', line: money(r.v) + ' · ' + pct(r.v / inc * 100, 0) + ' of your pay not spent or saved yet. Give it a job: savings or debt.' };
+  var word = r.saving ? (r.st === 'good' ? 'Goal met' : 'Save more') : SC_WORD[r.st];
+  var base = money(r.v) + ' · ' + pct(r.share, 0) + ' of pay · ' + (r.saving ? 'goal ' : 'limit ') + money(r.target) + ' · ' + word;
+  var tip = r.saving ? (r.st === 'good' ? 'Nice: you save at least 15% of your pay.' : 'Aim for about ' + money(r.target) + ' a month (15% of your pay), moved automatically on payday.')
+    : r.st === 'good' ? 'Inside the guide. Keep it there.' : r.tip;
+  return { title: r.name, line: base + '. ' + tip };
+}
+function scShow(r, inc){
+  var p = document.querySelector('#s-out .sc-detail'); if(!p) return;
+  var info = scInfo(r, inc); p.textContent = '';
+  var b = document.createElement('b'); b.textContent = info.title + ': '; p.appendChild(b); p.appendChild(document.createTextNode(info.line));
+  Array.prototype.forEach.call(document.querySelectorAll('#s-out .sc-tile'), function(t){ t.classList.toggle('on', t.getAttribute('data-name') === info.title); });
+}
+function drawTree(animate){
+  var box = document.querySelector('#s-out .sc-tree'); if(!box || !SC_LAST || box.hidden) return;
+  var W = box.clientWidth, H = box.clientHeight; if(W < 40 || H < 40) return;
+  if(!animate && W + 'x' + H === SC_SIZE && box.firstChild) return;  // same size as last time: nothing to redraw
+  SC_SIZE = W + 'x' + H;
+  if(scRO && box !== scWatched){ if(scWatched) scRO.unobserve(scWatched); scRO.observe(box); scWatched = box; }
+  var d = SC_LAST, items = d.rows.filter(function(r){ return r.v > 0; }).map(function(r){ return r; });
+  if(d.left > 0) items.push({ name: 'Left over', v: d.left, left: true });
+  items.sort(function(a, b){ return b.v - a.v; });
+  box.textContent = '';
+  if(!items.length){ var e = document.createElement('p'); e.className = 'sc-empty'; e.textContent = 'Enter what you spend to see your blocks.'; box.appendChild(e); return; }
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  squarify(items, W, H).forEach(function(rc, i){
+    var r = rc.it, st = r.left ? 'left' : r.st, t = document.createElement('button');
+    t.type = 'button'; t.className = 'sc-tile st-' + st; t.setAttribute('data-name', r.left ? 'Left over' : r.name);
+    t.style.left = rc.x + 'px'; t.style.top = rc.y + 'px'; t.style.width = Math.max(0, rc.w - 3) + 'px'; t.style.height = Math.max(0, rc.h - 3) + 'px';
+    var info = scInfo(r, d.inc); t.setAttribute('aria-label', info.title + ': ' + info.line);
+    var size = rc.w >= 118 && rc.h >= 74 ? 'l' : rc.w >= 76 && rc.h >= 46 ? 'm' : rc.w >= 44 && rc.h >= 28 ? 's' : 'xs';
+    t.classList.add('sz-' + size);
+    var top = document.createElement('span'); top.className = 't-top';
+    if(!r.left){ var ic = document.createElement('i'); ic.className = 'sc-ic ' + r.st; ic.setAttribute('aria-hidden', 'true'); ic.textContent = STATUS[r.st].icon; top.appendChild(ic); }
+    if(size !== 'xs'){ var full = r.left ? 'Left over' : r.name, nm = document.createElement('b'); nm.className = 't-name';
+      // Short names in narrow blocks so nothing gets cut off; the full name is in the detail line and for screen readers.
+      nm.textContent = (rc.w < 130 || size === 's') && SC_SHORT[full] ? SC_SHORT[full] : full; top.appendChild(nm); }
+    t.appendChild(top);
+    if(size === 'l' || size === 'm'){ var v = document.createElement('b'); v.className = 't-val'; v.textContent = money(r.v); t.appendChild(v); }
+    if(size === 'l'){ var sub = document.createElement('span'); sub.className = 't-sub';
+      sub.textContent = r.left || rc.w < 165 ? pct((r.left ? r.v / d.inc * 100 : r.share), 0) + ' of pay' : pct(r.share, 0) + ' of pay · ' + (r.saving ? 'goal ' : 'limit ') + money(r.target); t.appendChild(sub);
+      if(!r.left){ var w = document.createElement('span'); w.className = 't-word'; w.textContent = r.saving ? (r.st === 'good' ? 'Goal met' : 'Save more') : SC_WORD[r.st]; t.appendChild(w); } }
+    if(animate && !reduce){ t.style.animationDelay = (i * 35) + 'ms'; t.classList.add('grow'); }
+    var show = function(){ scShow(r, d.inc); };
+    t.addEventListener('click', show); t.addEventListener('focus', show); t.addEventListener('pointerenter', function(e){ if(e.pointerType === 'mouse') show(); });
+    box.appendChild(t);
+  });
+  // Start on the most useful block: the biggest overspend, else the biggest block.
+  var worst = d.rows.filter(function(r){ return r.st === 'bad' && !r.saving; }).sort(function(a, b){ return (b.v - b.target) - (a.v - a.target); })[0] || d.rows.filter(function(r){ return r.st !== 'good'; })[0] || items[0];
+  scShow(worst, d.inc);
+}
+document.addEventListener('click', function(e){
+  var b = e.target.closest && e.target.closest('[data-scview]'); if(!b) return;
+  SC_VIEW = b.getAttribute('data-scview');
+  var out = document.getElementById('s-out');
+  out.querySelector('.sc-tree').hidden = SC_VIEW !== 'blocks'; out.querySelector('.sc-listview').hidden = SC_VIEW !== 'list';
+  Array.prototype.forEach.call(out.querySelectorAll('[data-scview]'), function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+  if(SC_VIEW === 'blocks') drawTree(false);
+});
+// Redraw only when the blocks area itself changes size (not when the detail text below changes).
+if(!scRO) window.addEventListener('resize', function(){ drawTree(false); });
+
 
 // "See the full breakdown": hand this browser's numbers to the budget dashboard (stays on this device).
 (function(){

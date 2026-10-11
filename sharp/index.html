@@ -195,6 +195,9 @@ body.fs .hc-head .hero-sub{font-size:.98rem;margin:0}
 body.fs .sc.sc-first{flex:1;min-height:0;align-items:stretch;gap:16px}
 body.fs .sc-out,body.fs .sc form{min-height:0;overflow:auto;padding:16px 18px}
 body.fs .sc-out{gap:10px}
+body.fs .sc-out{display:flex;flex-direction:column}
+body.fs .sc-out>*{flex:none}
+body.fs .sc-out>.sc-tree{flex:1 1 180px;height:auto;min-height:130px}
 body.fs .sc-chart li{padding:4px 8px}
 body.fs .sc .fields{gap:8px 12px}
 body.fs .sc .fields input{padding:8px 12px}
@@ -220,7 +223,7 @@ body.fs .sc-todo li{padding:8px 10px;font-size:.9rem}
   body.fs .sc-first > *{flex:1}
   .sc-first[data-view="chart"] > form,.sc-first[data-view="nums"] > .sc-out,.sc-first[data-view="todo"] > form{display:none}
   .sc-first[data-view="chart"] .sc-h,.sc-first[data-view="chart"] .sc-todo,.sc-first[data-view="chart"] .sc-ok{display:none}
-  .sc-first[data-view="todo"] .sc-sum,.sc-first[data-view="todo"] .sc-legend,.sc-first[data-view="todo"] .sc-axis,.sc-first[data-view="todo"] .sc-chart,.sc-first[data-view="todo"] .sc-axt,.sc-first[data-view="todo"] .sc-alert{display:none}
+  .sc-first[data-view="todo"] .sc-sum,.sc-first[data-view="todo"] .sc-bar-row,.sc-first[data-view="todo"] .sc-tree,.sc-first[data-view="todo"] .sc-listview,.sc-first[data-view="todo"] .sc-detail,.sc-first[data-view="todo"] .sc-legend,.sc-first[data-view="todo"] .sc-axis,.sc-first[data-view="todo"] .sc-chart,.sc-first[data-view="todo"] .sc-axt,.sc-first[data-view="todo"] .sc-alert{display:none}
   body.fs .sc-legend{font-size:.78rem}
   body.fs .sc-sum b{font-size:1.05rem}
   .fs-bar{padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));gap:6px}
