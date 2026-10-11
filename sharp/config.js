@@ -18,7 +18,7 @@ window.NP_CONFIG = {
   AUTH: { supabaseUrl: "", supabaseAnonKey: "", google: false },
 
   /* Payments: Stripe Payment Links (Stripe > Payment Links). */
-  PAY: { builder: "", founder: "" },
+  PAY: { learner: "", builder: "", founder: "" },
 
   /* Contact email shown on the privacy, terms and refund pages.
      Use a business address, not a personal one. Blank = "listed here before launch". */

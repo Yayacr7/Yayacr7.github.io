@@ -28,7 +28,7 @@ try{ var t = localStorage.getItem('np-theme'); if(t) document.documentElement.se
   r.setAttribute('data-theme', dark ? 'light' : 'dark'); try{ localStorage.setItem('np-theme', dark ? 'light' : 'dark'); }catch(e){}
 });
 
-function show(id){ ['st-off','st-out','st-none','st-founder','st-err'].forEach(function(s){ $(s).hidden = s !== id; }); $('moduleView').hidden = id !== 'module'; }
+function show(id){ ['st-off','st-out','st-none','st-builder','st-founder','st-err'].forEach(function(s){ $(s).hidden = s !== id; }); $('moduleView').hidden = id !== 'module'; }
 function current(){ var h = location.hash.replace('#', ''); return /^(m[1-6]|d1|k1|f[1-3])$/.test(h) ? h : 'm1'; }
 function have(slug){ return !!(rows && rows.some(function(r){ return r.slug === slug; })); }
 
@@ -48,7 +48,8 @@ function renderModule(){
   if(!rows) return;
   if(!rows.length){ show('st-none'); return; }
   var slug = current(), row = rows.filter(function(r){ return r.slug === slug; })[0];
-  if(!row){ show(slug.charAt(0) === 'f' && have('m2') ? 'st-founder' : 'st-none'); return; }
+  // Learner has the modules but not Builder's files and scripts; Builder has those but not Founder's kits.
+  if(!row){ show(!have('m2') ? 'st-none' : slug.charAt(0) === 'f' ? 'st-founder' : (slug === 'd1' || slug === 'k1') ? 'st-builder' : 'st-none'); return; }
   var idx = OUTLINE.map(function(o){ return o[0]; }).indexOf(slug), view = $('moduleView');
   view.textContent = '';
   var eb = document.createElement('span'); eb.className = 'eyebrow'; eb.textContent = slug === 'd1' ? 'Your files' : slug === 'k1' ? 'Scripts 1 to 4 of 14' : slug.charAt(0) === 'f' ? 'Founder kit ' + slug.slice(1) + ' of 3' : 'Module ' + slug.slice(1) + ' of 6'; view.appendChild(eb);

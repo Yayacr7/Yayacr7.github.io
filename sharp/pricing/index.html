@@ -12,9 +12,9 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://*.supabase.co wss://*.supabase.co https://formsubmit.co; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Pricing · Sharp Basics</title>
-<meta name="description" content="Sharp Basics plans: free lessons and tools, Builder $29.99 and Founder $74.99, one-time, with a 30-day money-back guarantee.">
+<meta name="description" content="Sharp Basics plans: free lessons and tools, Learner $19.99, Builder $29.99 and Founder $74.99, one-time, with a 30-day money-back guarantee.">
 <meta property="og:title" content="Sharp Basics | Business, made simple">
-<meta property="og:description" content="Sharp Basics plans: free lessons and tools, Builder $29.99 and Founder $74.99, one-time, with a 30-day money-back guarantee.">
+<meta property="og:description" content="Sharp Basics plans: free lessons and tools, Learner $19.99, Builder $29.99 and Founder $74.99, one-time, with a 30-day money-back guarantee.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sharpbasics.com/pricing/">
 <meta property="og:image" content="https://sharpbasics.com/og.png">
@@ -72,7 +72,8 @@
 .trial li::before{content:"✓";color:var(--accent-text);font-weight:800}
 .trial .cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:22px}
 .trial .cta span{opacity:.75;font-size:.9rem}
-.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.plans{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:stretch}
+@media (max-width:1100px){ .plans{grid-template-columns:repeat(2,minmax(0,1fr))} }
 .plan{position:relative;display:flex;flex-direction:column;gap:14px}
 .plan.best{border:2px solid var(--accent);box-shadow:0 0 0 6px rgba(255,106,43,.08),0 24px 60px -20px rgba(255,79,154,.45);background:linear-gradient(180deg,rgba(255,106,43,.13),var(--surface) 42%)}
 .plan.best li b{color:var(--ink)}
@@ -208,7 +209,7 @@
       <article class="card plan">
         <div class="name">Free</div>
         <div class="price"><b>$0</b><span>forever</span></div>
-        <div class="depth" aria-label="Teaching level 1 of 3"><i class="on"></i><i></i><i></i><span>Basics</span></div>
+        <div class="depth" aria-label="Teaching level 1 of 4"><i class="on"></i><i></i><i></i><i></i><span>Basics</span></div>
         <p class="for">The core ideas and tools.</p>
         <ul>
           <li>All 21 lessons with quizzes</li>
@@ -219,13 +220,25 @@
         <p class="note">No card needed.</p>
       </article>
       <article class="card plan">
-        <div class="name">Builder</div>
-        <div class="price"><b>$29.99</b><span>one-time</span></div>
-        <div class="depth" aria-label="Teaching level 2 of 3"><i class="on"></i><i class="on"></i><i></i><span>Good</span></div>
-        <p class="for">The course plus the tools to do it.</p>
+        <div class="name">Learner</div>
+        <div class="price"><b>$19.99</b><span>one-time</span></div>
+        <div class="depth" aria-label="Teaching level 2 of 4"><i class="on"></i><i class="on"></i><i></i><i></i><span>Course</span></div>
+        <p class="for">The full course, nothing extra.</p>
         <ul>
           <li><span>Everything in Free</span></li>
-          <li><span>The 6-module Launch course</span></li>
+          <li><span><b>The 6-module Launch course</b>: from idea to your first sales</span></li>
+        </ul>
+        <button class="btn" type="button" data-plan="learner">Get Learner</button>
+        <p class="note" data-note="learner"></p>
+        <a class="note" href="../course/index.html" style="margin-top:-8px">See the 6 modules →</a>
+      </article>
+      <article class="card plan">
+        <div class="name">Builder</div>
+        <div class="price"><b>$29.99</b><span>one-time</span></div>
+        <div class="depth" aria-label="Teaching level 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><span>Good</span></div>
+        <p class="for">The course plus the tools to do it.</p>
+        <ul>
+          <li><span>Everything in Learner</span></li>
           <li><span><b>4 essential negotiation scripts</b>: price pushback, discounts, deposits, late payments</span></li>
           <li><span>Workbook for your own numbers</span></li>
           <li><span>Money spreadsheets: pricing, cash flow, startup costs</span></li>
@@ -238,7 +251,7 @@
         <span class="flag">The best</span>
         <div class="name">Founder</div>
         <div class="price"><b>$74.99</b><span>one-time</span></div>
-        <div class="depth" aria-label="Teaching level 3 of 3"><i class="on"></i><i class="on"></i><i class="on"></i><span>Everything</span></div>
+        <div class="depth" aria-label="Teaching level 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><span>Everything</span></div>
         <p class="for">Everything Sharp teaches, plus the exact words and plan to use it.</p>
         <ul>
           <li><span>Everything in Builder</span></li>
@@ -262,7 +275,7 @@
     <span class="eyebrow">Questions</span>
     <h2 style="margin:10px 0 24px">FAQ</h2>
     <div class="faq">
-      <details><summary>Is Sharp free?</summary><p>The basics are: all lessons, quizzes and tools. Builder ($29.99) adds the Launch course, 4 essential negotiation scripts, a workbook and spreadsheets. Founder ($74.99) adds all 14 word-for-word negotiation scripts, an investor pitch kit and a 30-day launch plan, plus early access to new tools. Both are one-time payments.</p></details>
+      <details><summary>Is Sharp free?</summary><p>The basics are: all lessons, quizzes and tools. Learner ($19.99) adds the 6-module Launch course. Builder ($29.99) adds 4 essential negotiation scripts, a workbook and spreadsheets on top. Founder ($74.99) adds all 14 word-for-word negotiation scripts, an investor pitch kit and a 30-day launch plan, plus early access to new tools. All are one-time payments.</p></details>
       <details><summary>Do I need to sign in?</summary><p>No. Every lesson and tool works without an account. Signing in keeps your purchases in one place, and it's how you'll open the course.</p></details>
       <details><summary>Can I get a refund?</summary><p>Yes. Ask within 30 days of buying and you get all your money back, no reason needed. See the <a href="../refunds/index.html">refund policy</a>.</p></details>
       <details><summary>Is this financial advice?</summary><p>No. It's education and calculators. For legal, tax or big irreversible decisions, pay a professional who knows your situation.</p></details>

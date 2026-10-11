@@ -4,7 +4,7 @@
 var CFG = window.NP_CONFIG || {};
 var WAITLIST = CFG.WAITLIST || { provider: "", id: "" };
 var AUTH = CFG.AUTH || { supabaseUrl: "", supabaseAnonKey: "", google: false };
-var PAY  = CFG.PAY  || { builder: "", founder: "" };
+var PAY  = CFG.PAY  || { learner: "", builder: "", founder: "" };
 var TRIAL_DAYS = CFG.TRIAL_DAYS || 3;
 
 /* ---------- theme ---------- */
@@ -71,7 +71,7 @@ var dlg = document.getElementById('authDialog'), signinBtn = document.getElement
 var authMsg = document.getElementById('authMsg'), reasonEl = document.getElementById('authReason');
 var sb = null, user = null, pendingPlan = null;
 var authReady = !!(AUTH.supabaseUrl && AUTH.supabaseAnonKey);
-var PLAN_NAMES = { builder: 'Builder ($29.99)', founder: 'Founder ($74.99)' };
+var PLAN_NAMES = { learner: 'Learner ($19.99)', builder: 'Builder ($29.99)', founder: 'Founder ($74.99)' };
 
 function openAuth(reason){
   reasonEl.textContent = reason || ''; reasonEl.classList.toggle('on', !!reason);
