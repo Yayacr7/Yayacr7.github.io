@@ -315,3 +315,39 @@ html.ai-on [data-ai-off]{display:none!important}
 @keyframes scgrow{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
 .sc-detail{margin:0;font-size:.86rem;line-height:1.45;color:var(--muted)}.sc-detail b{color:var(--ink)}
 .sc-tile.more .t-name::after{content:" ›";opacity:.7}
+/* Spending check: candles (money-flow chart in trading-chart style) */
+.sc-tree.flow{background:#0b0f1d;border:1px solid rgba(255,255,255,.07);overflow:hidden;touch-action:pan-y}
+.fl-svg{position:absolute;inset:0;display:block}
+.fl-grid line{stroke:rgba(255,255,255,.055);stroke-width:1}
+.fl-grid line.zero{stroke:rgba(255,255,255,.28)}
+.fl-edge{stroke:rgba(255,255,255,.12)}
+.fl-ax{fill:#8f97b8;font:600 11px var(--f-body);font-variant-numeric:tabular-nums}
+.fl-hd{font:800 13px var(--f-body);font-variant-numeric:tabular-nums}
+.fl-hd .pos{fill:var(--st-good)}.fl-hd .neg{fill:var(--st-bad)}.fl-hd .fl-hl{fill:#8f97b8;font-weight:600}
+.fl-c .body{stroke:none}
+.fl-c.st-pay .body,.fl-c.st-good .body{fill:var(--st-good)}
+.fl-c.st-warn .body{fill:var(--st-warn)}
+.fl-c.st-bad .body{fill:var(--st-bad)}
+.fl-c .wick{stroke-width:1.5}
+.fl-c.st-good .wick{stroke:var(--st-good)}.fl-c.st-warn .wick{stroke:var(--st-warn)}.fl-c.st-bad .wick{stroke:var(--st-bad)}
+.fl-c .notch{stroke:#fff;stroke-width:2}
+.fl-c.on .body{stroke:#fff;stroke-width:2}
+.fl-c.grow .body{transform-box:fill-box;animation:flgrow .55s cubic-bezier(.2,.9,.3,1) both}
+.fl-c.grow.up .body{transform-origin:50% 100%}.fl-c.grow.down .body{transform-origin:50% 0}
+@keyframes flgrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.fl-x{fill:#a9b0cc;font:700 11px var(--f-body);text-anchor:middle}
+.fl-ic circle{stroke:none}.fl-ic.good circle{fill:var(--st-good)}.fl-ic.warn circle{fill:var(--st-warn)}.fl-ic.bad circle{fill:var(--st-bad)}
+.fl-ic text{fill:#0d1020;font:900 10px var(--f-body);text-anchor:middle}
+.fl-trend,.fl-arrow{fill:none;stroke:#fff;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
+.fl-trend.draw{stroke-dasharray:1;animation:fldraw 1.1s .35s ease-out both}
+@keyframes fldraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.fl-arrow.pop{animation:flpop .3s ease-out both}
+@keyframes flpop{from{opacity:0}to{opacity:1}}
+.fl-now{stroke-width:1;stroke-dasharray:2 3}.fl-now.pos{stroke:var(--st-good)}.fl-now.neg{stroke:var(--st-bad)}
+.fl-dot.pos{fill:var(--st-good)}.fl-dot.neg{fill:var(--st-bad)}
+.fl-tag rect{stroke:none}.fl-tag.pos rect{fill:var(--st-good)}.fl-tag.neg rect{fill:var(--st-bad)}
+.fl-tag text,.fl-ch text{fill:#0d1020;font:800 11px var(--f-body);text-anchor:middle;font-variant-numeric:tabular-nums}
+.fl-ch line{stroke:rgba(255,255,255,.45);stroke-width:1;stroke-dasharray:4 4}
+.fl-ch rect{fill:#e8ebf7}
+.fl-hit{position:absolute;border:0;background:transparent;padding:0;margin:0;cursor:crosshair}
+.fl-hit:focus-visible{outline:2px solid #fff;outline-offset:-2px;border-radius:6px}

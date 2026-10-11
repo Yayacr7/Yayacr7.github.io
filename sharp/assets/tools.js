@@ -18,9 +18,13 @@ function result(k, big, lines, verdict){
 }
 function wire(formId, fn){
   var f = $(formId); if(!f) return;
-  f.addEventListener('input', fn); f.addEventListener('change', fn);
+  // "change" fires again when you leave a box; skip it if nothing changed, so the chart isn't redrawn
+  // under your finger and your next tap still lands.
+  var key = function(){ return Array.prototype.map.call(f.elements, function(el){ return el.type === 'checkbox' || el.type === 'radio' ? el.checked : el.value; }).join('\u0001'); };
+  var last = null, run = function(){ last = key(); fn(); };
+  f.addEventListener('input', run); f.addEventListener('change', function(){ if(key() !== last) run(); });
   f.addEventListener('submit', function(e){ e.preventDefault(); });
-  fn();
+  run();
 }
 
 /* contact email from config.js (legal pages); built with textContent only */
@@ -126,7 +130,7 @@ wire('f-efund', function(){
 });
 
 /* ================= SPENDING CHECK ================= */
-var SC_VIEW = 'blocks', SC_LAST = null, SC_SIZE = '', SC_WORD = { good: 'Fine', warn: 'A bit over', bad: 'Too much' }, SC_SHORT = { 'Rent or mortgage': 'Rent', 'Subscriptions': 'Subs', 'Fun & hobbies': 'Fun', 'Groceries': 'Food', 'Transport': 'Travel', 'Eating out': 'Eat out', 'Shopping': 'Shop', 'Left over': 'Left' };  // blocks picture state (see drawTree below)
+var SC_VIEW = 'flow', SC_LAST = null, SC_SIZE = '', SC_WORD = { good: 'Fine', warn: 'A bit over', bad: 'Too much' }, SC_SHORT = { 'Rent or mortgage': 'Rent', 'Subscriptions': 'Subs', 'Fun & hobbies': 'Fun', 'Groceries': 'Food', 'Transport': 'Travel', 'Eating out': 'Eat out', 'Shopping': 'Shop', 'Left over': 'Left' };  // blocks picture state (see drawTree below)
 var scWatched = null, scRO = window.ResizeObserver ? new ResizeObserver(function(){ drawTree(false); }) : null;
 // Each category is judged as a share of take-home pay. Guides, not laws: [green up to %, yellow up to %].
 var SPEND = [
@@ -165,10 +169,10 @@ wire('f-spend', function(){
   // Simple limit chart: each row's line in the middle is that category's limit (a goal for saving).
   // Before the line = fine, past the line = too much. Plain dollars, no percent scale.
   // Toolbar: what the colours mean, and a switch between the blocks picture and the bar list.
-  html += '<div class="sc-bar-row"><div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Fine</span><span><i class="sc-ic warn">!</i>A bit over</span><span><i class="sc-ic bad">✕</i>Too much</span><span class="sc-size">Bigger block = more money</span></div>' +
-    '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
-  html += '<div class="sc-tree" role="group" aria-label="Your take-home pay as blocks: the bigger the block, the more money goes there"' + (SC_VIEW === 'list' ? ' hidden' : '') + '></div>';
-  html += '<div class="sc-listview"' + (SC_VIEW === 'blocks' ? ' hidden' : '') + '>';
+  html += '<div class="sc-bar-row"><div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Fine</span><span><i class="sc-ic warn">!</i>A bit over</span><span><i class="sc-ic bad">✕</i>Too much</span><span class="sc-size">' + (SC_VIEW === 'blocks' ? 'Bigger block = more money' : 'Line = limit') + '</span></div>' +
+    '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="flow" aria-pressed="' + (SC_VIEW === 'flow') + '">Candles</button><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
+  html += '<div class="sc-tree" role="group" aria-label="Where your take-home pay goes"' + (SC_VIEW === 'list' ? ' hidden' : '') + '></div>';
+  html += '<div class="sc-listview"' + (SC_VIEW !== 'list' ? ' hidden' : '') + '>';
   html += '<div class="sc-axis" aria-hidden="true"><span></span><span><b style="left:0">$0</b><b class="lim" style="left:50%">Limit</b><b style="left:100%">2× limit</b></span><span>Spent / limit</span><span></span></div>';
   html += '<ul class="sc-chart" aria-label="What you spend in each category compared with your limit">';
   rows.forEach(function(r){
@@ -220,6 +224,7 @@ function squarify(items, W, H){
   return rects;
 }
 function scInfo(r, inc){
+  if(r.pay) return { title: 'Take-home pay', line: money(r.v) + ' comes in each month. Every candle after it is money going out.' };
   if(r.more) return { title: r.name, line: money(r.v) + ' in ' + r.more.length + ' smaller ones: ' + r.more.map(function(m){ return (SC_SHORT[m.name] || m.name) + ' ' + money(m.v); }).join(', ') + '. Tap it, or tap List, to check each one.' };
   if(r.left) return { title: 'Left over', line: money(r.v) + ' · ' + pct(r.v / inc * 100, 0) + ' of your pay not spent or saved yet. Give it a job: savings or debt.' };
   var word = r.saving ? (r.st === 'good' ? 'Goal met' : 'Save more') : SC_WORD[r.st];
@@ -232,14 +237,17 @@ function scShow(r, inc){
   var p = document.querySelector('#s-out .sc-detail'); if(!p) return;
   var info = scInfo(r, inc); p.textContent = '';
   var b = document.createElement('b'); b.textContent = info.title + ': '; p.appendChild(b); p.appendChild(document.createTextNode(info.line));
-  Array.prototype.forEach.call(document.querySelectorAll('#s-out .sc-tile'), function(t){ t.classList.toggle('on', t.getAttribute('data-name') === info.title || (t.getAttribute('data-has') || '').split('|').indexOf(info.title) >= 0); });
+  Array.prototype.forEach.call(document.querySelectorAll('#s-out [data-name]'), function(t){ t.classList.toggle('on', t.getAttribute('data-name') === info.title || (t.getAttribute('data-has') || '').split('|').indexOf(info.title) >= 0); });
 }
 function drawTree(animate){
   var box = document.querySelector('#s-out .sc-tree'); if(!box || !SC_LAST || box.hidden) return;
   var W = box.clientWidth, H = box.clientHeight; if(W < 40 || H < 40) return;
-  if(!animate && W + 'x' + H === SC_SIZE && box.firstChild) return;  // same size as last time: nothing to redraw
-  SC_SIZE = W + 'x' + H;
+  if(!animate && SC_VIEW + W + 'x' + H === SC_SIZE && box.firstChild) return;  // same size as last time: nothing to redraw
+  SC_SIZE = SC_VIEW + W + 'x' + H;
   if(scRO && box !== scWatched){ if(scWatched) scRO.unobserve(scWatched); scRO.observe(box); scWatched = box; }
+  box.classList.toggle('flow', SC_VIEW === 'flow');
+  var key = document.querySelector('#s-out .sc-size'); if(key) key.textContent = SC_VIEW === 'flow' ? 'Line = limit' : 'Bigger block = more money';
+  if(SC_VIEW === 'flow'){ drawFlow(box, W, H, animate); return; }
   var d = SC_LAST, items = d.rows.filter(function(r){ return r.v > 0; }).map(function(r){ return r; });
   if(d.left > 0) items.push({ name: 'Left over', v: d.left, left: true });
   items.sort(function(a, b){ return b.v - a.v; });
@@ -287,10 +295,101 @@ document.addEventListener('click', function(e){
   var b = e.target.closest && e.target.closest('[data-scview]'); if(!b) return;
   SC_VIEW = b.getAttribute('data-scview');
   var out = document.getElementById('s-out');
-  out.querySelector('.sc-tree').hidden = SC_VIEW !== 'blocks'; out.querySelector('.sc-listview').hidden = SC_VIEW !== 'list';
+  out.querySelector('.sc-tree').hidden = SC_VIEW === 'list'; out.querySelector('.sc-listview').hidden = SC_VIEW !== 'list';
   Array.prototype.forEach.call(out.querySelectorAll('[data-scview]'), function(x){ x.setAttribute('aria-pressed', String(x === b)); });
-  if(SC_VIEW === 'blocks') drawTree(false);
+  if(SC_VIEW !== 'list') drawTree(true);
 });
+/* ---------- Spending check: the "candles" picture (a money-flow chart in trading-chart style) ----------
+   Pay is one green candle going up. Each thing you spend on is a candle stepping down from where the money was,
+   coloured by its status (colour + icon under it + word in the detail line). The thin line under each candle
+   reaches down as far as its limit; a white notch marks the limit when the candle goes past it.
+   The dotted line and tag on the right show what's left over, like the price line on a trading chart. */
+function scEl(tag, at, parent){ var e = document.createElementNS('http://www.w3.org/2000/svg', tag); for(var k in at) e.setAttribute(k, at[k]); if(parent) parent.appendChild(e); return e; }
+function scStep(span){ var raw = span / 5, p = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10)), f = raw / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p; }
+function scK(v){ var a = Math.abs(v), s = v < 0 ? '−$' : '$'; return a >= 1000 ? s + (a / 1000).toFixed(a % 1000 ? 1 : 0).replace(/\.0$/, '') + 'k' : s + Math.round(a); }
+function drawFlow(box, W, H, animate){
+  var d = SC_LAST, inc = d.inc;
+  var spend = d.rows.filter(function(r){ return r.v > 0 && !r.saving; }).sort(function(a, b){ return b.v - a.v; });
+  var saving = d.rows.filter(function(r){ return r.saving && r.v > 0; });
+  var cols = [{ name: 'Take-home pay', short: 'Pay', pay: true, v: inc, open: 0, close: inc }], lvl = inc;
+  spend.concat(saving).forEach(function(r){ cols.push({ r: r, name: r.name, short: SC_SHORT[r.name] || r.name, v: r.v, open: lvl, close: lvl - r.v }); lvl -= r.v; });
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var AX = W < 420 ? 44 : 54, TOP = 34, narrow = (W - AX) / (cols.length + 1) < 46, BOT = narrow ? 24 : 40;
+  var PW = W - AX - 8, PH = H - TOP - BOT; box.textContent = '';
+  if(PH < 50){ return; }
+  var lo = Math.min(0, d.left), step = scStep(inc - lo), yMin = Math.floor(lo / step) * step, yMax = Math.ceil(inc * 1.06 / (step / 2)) * (step / 2);   // a little headroom above the pay candle
+  var Y = function(v){ return TOP + (yMax - v) / (yMax - yMin) * PH; }, cw = PW / (cols.length + 1), bw = Math.max(6, Math.min(34, cw * .56));
+  var X = function(i){ return 8 + cw * (i + .5); };
+  var svg = scEl('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, 'aria-hidden': 'true', class: 'fl-svg' }, box);
+  // Grid: horizontal at each price step, vertical at each candle (faint, like a trading chart).
+  var grid = scEl('g', { class: 'fl-grid' }, svg);
+  for(var v = yMin; v <= yMax + 1e-6; v += step){
+    scEl('line', { x1: 0, x2: W - AX, y1: Y(v), y2: Y(v), class: v === 0 ? 'zero' : '' }, grid);
+    var t = scEl('text', { x: W - AX + 8, y: Y(v) + 4, class: 'fl-ax' }, svg); t.textContent = scK(v);
+  }
+  cols.concat([{}]).forEach(function(c, i){ scEl('line', { x1: X(i), x2: X(i), y1: TOP - 6, y2: TOP + PH }, grid); });
+  scEl('line', { x1: W - AX, x2: W - AX, y1: 0, y2: H, class: 'fl-edge' }, svg);
+  // Header, like a ticker: what's left and what share of pay that is.
+  var hd = scEl('text', { x: 10, y: 21, class: 'fl-hd' }, svg), hv = scEl('tspan', { class: d.left < 0 ? 'neg' : 'pos' }, hd);
+  hv.textContent = (d.left < 0 ? '' : '+') + money(d.left) + ' (' + (d.left < 0 ? '' : '+') + pct(d.left / inc * 100, 1) + ')';
+  var hl = scEl('tspan', { class: 'fl-hl', dx: 8 }, hd); hl.textContent = d.left < 0 ? 'over your pay' : 'left over this month';
+  // Candles.
+  var layer = scEl('g', {}, svg);
+  cols.forEach(function(c, i){
+    var st = c.pay ? 'pay' : c.r.st, g = scEl('g', { class: 'fl-c st-' + st, 'data-name': c.name }, layer), x = X(i);
+    var y1 = Y(Math.max(c.open, c.close)), y2 = Y(Math.min(c.open, c.close));
+    if(!c.pay){
+      var lim = c.open - c.r.target;   // where the money would be if this spend sat exactly on its limit
+      scEl('line', { x1: x, x2: x, y1: Y(c.open) - 6, y2: Math.max(Y(lim), y2), class: 'wick' }, g);
+      if(c.r.target < c.v) scEl('line', { x1: x - bw / 2 - 3, x2: x + bw / 2 + 3, y1: Y(lim), y2: Y(lim), class: 'notch' }, g);
+    }
+    var body = scEl('rect', { x: x - bw / 2, y: y1, width: bw, height: Math.max(2, y2 - y1), rx: 2, class: 'body' }, g);
+    if(c.r && c.r.target < c.v) g.appendChild(g.querySelector('.notch'));   // keep the limit notch on top of the body
+    if(animate && !reduce){ body.style.animationDelay = (i * 70) + 'ms'; g.classList.add('grow', c.pay ? 'up' : 'down'); }
+    // Axis label and status icon under each candle.
+    if(!narrow){ var lb = scEl('text', { x: x, y: TOP + PH + 16, class: 'fl-x' }, svg); lb.textContent = c.short; }
+    if(c.pay){ var pt = scEl('text', { x: x, y: H - 7, class: 'fl-x pay' }, svg); pt.textContent = narrow ? 'Pay' : ''; }
+    else { var ic = scEl('g', { class: 'fl-ic ' + st, transform: 'translate(' + x + ',' + (H - 12) + ')' }, svg);
+      scEl('circle', { r: 7.5 }, ic); var it = scEl('text', { y: 3.5 }, ic); it.textContent = STATUS[st].icon; }
+  });
+  // White trend line from the top of pay, then down step by step, ending in an arrow at what's left.
+  var pts = [[X(0), Y(inc)]];
+  cols.slice(1).forEach(function(c, i){ pts.push([X(i + 1), Y(c.close)]); });
+  var end = [X(cols.length) - 4, Y(d.left)]; pts.push(end);
+  var path = scEl('polyline', { points: pts.map(function(p){ return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' '), class: 'fl-trend', pathLength: 1 }, svg);
+  var prev = pts[pts.length - 2], ang = Math.atan2(end[1] - prev[1], end[0] - prev[0]);
+  var head = function(a){ return (end[0] - 11 * Math.cos(ang + a)).toFixed(1) + ',' + (end[1] - 11 * Math.sin(ang + a)).toFixed(1); };
+  var arrow = scEl('polyline', { points: head(.5) + ' ' + end[0].toFixed(1) + ',' + end[1].toFixed(1) + ' ' + head(-.5), class: 'fl-arrow' }, svg);
+  if(animate && !reduce){ path.classList.add('draw'); arrow.classList.add('pop'); arrow.style.animationDelay = (cols.length * 70 + 450) + 'ms'; }
+  // Left-over price line + tag on the axis.
+  scEl('line', { x1: 0, x2: W - AX, y1: Y(d.left), y2: Y(d.left), class: 'fl-now ' + (d.left < 0 ? 'neg' : 'pos') }, svg);
+  scEl('circle', { cx: end[0] + 4, cy: Y(d.left), r: 3.5, class: 'fl-dot ' + (d.left < 0 ? 'neg' : 'pos') }, svg);
+  var tag = scEl('g', { class: 'fl-tag ' + (d.left < 0 ? 'neg' : 'pos'), transform: 'translate(' + (W - AX + 2) + ',' + Y(d.left) + ')' }, svg);
+  scEl('rect', { x: 0, y: -10, width: AX - 4, height: 20, rx: 3 }, tag); var tt = scEl('text', { x: (AX - 4) / 2, y: 4 }, tag); tt.textContent = scK(d.left);
+  // Crosshair that follows the finger or mouse, with its own price tag.
+  var ch = scEl('g', { class: 'fl-ch' }, svg); ch.style.display = 'none';
+  var chv = scEl('line', { y1: TOP - 6, y2: TOP + PH }, ch), chh = scEl('line', { x1: 0, x2: W - AX }, ch), cht = scEl('g', {}, ch);
+  scEl('rect', { x: W - AX + 2, y: -10, width: AX - 4, height: 20, rx: 3 }, cht); var chx = scEl('text', { x: W - AX + 2 + (AX - 4) / 2, y: 4 }, cht);
+  var pick = function(i){ var c = cols[i]; scShow(c.pay ? { left: false, name: 'Take-home pay', pay: true, v: inc } : c.r, inc); chv.setAttribute('x1', X(i)); chv.setAttribute('x2', X(i)); };
+  box.onpointermove = function(e){
+    var rc = box.getBoundingClientRect(), px = e.clientX - rc.left, py = Math.max(TOP, Math.min(TOP + PH, e.clientY - rc.top));
+    var i = Math.max(0, Math.min(cols.length - 1, Math.floor((px - 8) / cw)));
+    ch.style.display = ''; chh.setAttribute('y1', py); chh.setAttribute('y2', py); cht.setAttribute('transform', 'translate(0,' + py + ')');
+    chx.textContent = scK(Math.round(yMax - (py - TOP) / PH * (yMax - yMin))); pick(i);
+  };
+  box.onpointerleave = function(){ ch.style.display = 'none'; };
+  // Invisible buttons over each candle so keyboards and screen readers can use the chart too.
+  cols.forEach(function(c, i){
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'fl-hit'; b.setAttribute('data-name', c.name);
+    b.style.left = (X(i) - cw / 2) + 'px'; b.style.width = cw + 'px'; b.style.top = TOP + 'px'; b.style.height = PH + 'px';
+    var info = c.pay ? { title: 'Take-home pay', line: money(inc) + ' comes in.' } : scInfo(c.r, inc); b.setAttribute('aria-label', info.title + ': ' + info.line);
+    b.addEventListener('focus', function(){ ch.style.display = ''; chh.setAttribute('y1', Y(c.close)); chh.setAttribute('y2', Y(c.close)); cht.setAttribute('transform', 'translate(0,' + Y(c.close) + ')'); chx.textContent = scK(c.close); pick(i); });
+    b.addEventListener('click', function(){ pick(i); });
+    box.appendChild(b);
+  });
+  var worst = d.rows.filter(function(r){ return r.st === 'bad' && !r.saving; }).sort(function(a, b){ return (b.v - b.target) - (a.v - a.target); })[0] || d.rows.filter(function(r){ return r.st !== 'good'; })[0] || d.rows[0];
+  scShow(worst, inc);
+}
 // Redraw only when the blocks area itself changes size (not when the detail text below changes).
 if(!scRO) window.addEventListener('resize', function(){ drawTree(false); });
 
