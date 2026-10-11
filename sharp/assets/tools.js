@@ -220,6 +220,7 @@ function squarify(items, W, H){
   return rects;
 }
 function scInfo(r, inc){
+  if(r.more) return { title: r.name, line: money(r.v) + ' in ' + r.more.length + ' smaller ones: ' + r.more.map(function(m){ return (SC_SHORT[m.name] || m.name) + ' ' + money(m.v); }).join(', ') + '. Tap it, or tap List, to check each one.' };
   if(r.left) return { title: 'Left over', line: money(r.v) + ' · ' + pct(r.v / inc * 100, 0) + ' of your pay not spent or saved yet. Give it a job: savings or debt.' };
   var word = r.saving ? (r.st === 'good' ? 'Goal met' : 'Save more') : SC_WORD[r.st];
   var base = money(r.v) + ' · ' + pct(r.share, 0) + ' of pay · ' + (r.saving ? 'goal ' : 'limit ') + money(r.target) + ' · ' + word;
@@ -231,7 +232,7 @@ function scShow(r, inc){
   var p = document.querySelector('#s-out .sc-detail'); if(!p) return;
   var info = scInfo(r, inc); p.textContent = '';
   var b = document.createElement('b'); b.textContent = info.title + ': '; p.appendChild(b); p.appendChild(document.createTextNode(info.line));
-  Array.prototype.forEach.call(document.querySelectorAll('#s-out .sc-tile'), function(t){ t.classList.toggle('on', t.getAttribute('data-name') === info.title); });
+  Array.prototype.forEach.call(document.querySelectorAll('#s-out .sc-tile'), function(t){ t.classList.toggle('on', t.getAttribute('data-name') === info.title || (t.getAttribute('data-has') || '').split('|').indexOf(info.title) >= 0); });
 }
 function drawTree(animate){
   var box = document.querySelector('#s-out .sc-tree'); if(!box || !SC_LAST || box.hidden) return;
@@ -242,6 +243,14 @@ function drawTree(animate){
   var d = SC_LAST, items = d.rows.filter(function(r){ return r.v > 0; }).map(function(r){ return r; });
   if(d.left > 0) items.push({ name: 'Left over', v: d.left, left: true });
   items.sort(function(a, b){ return b.v - a.v; });
+  // Narrow screens: blocks under 7.5% of the total would be too small to read, so they share one "More" block.
+  var sum = items.reduce(function(a, r){ return a + r.v; }, 0), small = W < 480 ? items.filter(function(r){ return r.v / sum < 0.075; }) : [];
+  if(small.length >= 2){
+    var rank = { bad: 3, warn: 2, good: 1 }, worstSt = small.reduce(function(a, r){ return !r.left && rank[r.st] > rank[a] ? r.st : a; }, 'good');
+    items = items.filter(function(r){ return small.indexOf(r) < 0; });
+    items.push({ name: small.length + ' more', v: small.reduce(function(a, r){ return a + r.v; }, 0), more: small, st: worstSt });
+    items.sort(function(a, b){ return b.v - a.v; });
+  }
   box.textContent = '';
   if(!items.length){ var e = document.createElement('p'); e.className = 'sc-empty'; e.textContent = 'Enter what you spend to see your blocks.'; box.appendChild(e); return; }
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -250,6 +259,7 @@ function drawTree(animate){
     t.type = 'button'; t.className = 'sc-tile st-' + st; t.setAttribute('data-name', r.left ? 'Left over' : r.name);
     t.style.left = rc.x + 'px'; t.style.top = rc.y + 'px'; t.style.width = Math.max(0, rc.w - 3) + 'px'; t.style.height = Math.max(0, rc.h - 3) + 'px';
     var info = scInfo(r, d.inc); t.setAttribute('aria-label', info.title + ': ' + info.line);
+    if(r.more){ t.classList.add('more'); t.setAttribute('data-has', r.more.map(function(m){ return m.name; }).join('|')); }
     var size = rc.w >= 118 && rc.h >= 74 ? 'l' : rc.w >= 76 && rc.h >= 46 ? 'm' : rc.w >= 44 && rc.h >= 28 ? 's' : 'xs';
     t.classList.add('sz-' + size);
     var top = document.createElement('span'); top.className = 't-top';
@@ -258,13 +268,15 @@ function drawTree(animate){
       // Short names in narrow blocks so nothing gets cut off; the full name is in the detail line and for screen readers.
       nm.textContent = (rc.w < 130 || size === 's') && SC_SHORT[full] ? SC_SHORT[full] : full; top.appendChild(nm); }
     t.appendChild(top);
-    if(size === 'l' || size === 'm'){ var v = document.createElement('b'); v.className = 't-val'; v.textContent = money(r.v); t.appendChild(v); }
-    if(size === 'l'){ var sub = document.createElement('span'); sub.className = 't-sub';
-      sub.textContent = r.left || rc.w < 165 ? pct((r.left ? r.v / d.inc * 100 : r.share), 0) + ' of pay' : pct(r.share, 0) + ' of pay · ' + (r.saving ? 'goal ' : 'limit ') + money(r.target); t.appendChild(sub);
-      if(!r.left){ var w = document.createElement('span'); w.className = 't-word'; w.textContent = r.saving ? (r.st === 'good' ? 'Goal met' : 'Save more') : SC_WORD[r.st]; t.appendChild(w); } }
+    if(size === 'l' || size === 'm' || (size === 's' && rc.h >= 76)){ var v = document.createElement('b'); v.className = 't-val'; v.textContent = money(r.v); t.appendChild(v); }
+    // Short "l" blocks drop the sub-line first, then the word, so nothing is cut in half (the icon and detail line still say it).
+    if(size === 'l' && rc.h >= 112){ var sub = document.createElement('span'); sub.className = 't-sub';
+      sub.textContent = r.left || r.more || rc.w < 165 ? pct((r.left || r.more ? r.v / d.inc * 100 : r.share), 0) + ' of pay' : pct(r.share, 0) + ' of pay · ' + (r.saving ? 'goal ' : 'limit ') + money(r.target); t.appendChild(sub); }
+    if(size === 'l' && rc.h >= 96){
+      if(!r.left){ var w = document.createElement('span'); w.className = 't-word'; w.textContent = r.more ? (r.st === 'good' ? 'All fine' : 'Worst: ' + SC_WORD[r.st]) : r.saving ? (r.st === 'good' ? 'Goal met' : 'Save more') : SC_WORD[r.st]; t.appendChild(w); } }
     if(animate && !reduce){ t.style.animationDelay = (i * 35) + 'ms'; t.classList.add('grow'); }
     var show = function(){ scShow(r, d.inc); };
-    t.addEventListener('click', show); t.addEventListener('focus', show); t.addEventListener('pointerenter', function(e){ if(e.pointerType === 'mouse') show(); });
+    t.addEventListener('click', r.more ? function(){ var lb = document.querySelector('#s-out [data-scview="list"]'); if(lb) lb.click(); } : show); t.addEventListener('focus', show); t.addEventListener('pointerenter', function(e){ if(e.pointerType === 'mouse') show(); });
     box.appendChild(t);
   });
   // Start on the most useful block: the biggest overspend, else the biggest block.

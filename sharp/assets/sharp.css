@@ -309,8 +309,9 @@ html.ai-on [data-ai-off]{display:none!important}
 .sz-l .t-val{font-size:1.5rem;margin-top:auto}
 .t-sub{font-size:.74rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .t-word{font:800 .68rem var(--f-body);text-transform:uppercase;letter-spacing:.08em}
-.sz-s{padding:6px 8px}.sz-s .t-name{font-size:.76rem}
+.sz-s{padding:6px 8px}.sz-s .t-name{font-size:.76rem}.sz-s .t-top{flex-direction:column;align-items:flex-start;gap:4px}.sz-s .t-val{font-size:.9rem}
 .sz-xs{padding:0;align-items:center;justify-content:center}.sz-xs .sc-ic{width:16px;height:16px;font-size:.6rem}
 .sc-tile.grow{animation:scgrow .5s cubic-bezier(.2,.9,.3,1) both}
 @keyframes scgrow{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
 .sc-detail{margin:0;font-size:.86rem;line-height:1.45;color:var(--muted)}.sc-detail b{color:var(--ink)}
+.sc-tile.more .t-name::after{content:" ›";opacity:.7}
