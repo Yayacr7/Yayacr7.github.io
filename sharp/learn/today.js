@@ -16,6 +16,7 @@ var PRACTICE = {
   'why-business':     ['List three problems you or people you know complained about this week. Circle the one someone would pay to fix.', '../tools/idea-check/index.html', 'Idea check'],
   'buy-back-time':    ['List five things you did today. Mark one you could hand off, automate or drop.', '../tools/ai/index.html', 'AI at work'],
   'ai-at-work':       ['Use an AI tool for one real task. Check every fact it gave you, and count how many were wrong.', '../tools/ai/index.html', 'AI at work'],
+  'automate-ai':      ['List every task you did for your business last week. Circle the one that repeats, follows the same steps, and is cheap to get wrong.', '../tools/ai/index.html', 'AI at work'],
   'mkt-basics':       ['Write one sentence: who your customer is, what problem they have, and why they would pick you.', '../tools/marketing/index.html', 'Marketing calculators'],
   'mkt-channels':     ['Pick one place your customers already spend time. Write how you would reach them there for free.', '../tools/marketing/index.html', 'Marketing calculators'],
   'mkt-measure':      ['Made-up example: $200 of ads brought 8 customers. Work out the cost per customer.', '../tools/marketing/index.html', 'Marketing calculators'],
