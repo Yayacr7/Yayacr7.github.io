@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
+<link rel="canonical" href="https://sharpbasics.com/tools/marketing/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Marketing calculators · Sharp Basics</title>
+<meta name="description" content="Free marketing calculators: return on ad spend, customer acquisition cost and payback, sales funnel, and email list value.">
+<meta property="og:title" content="Marketing calculators · Sharp Basics">
+<meta property="og:description" content="Free marketing calculators: return on ad spend, customer acquisition cost and payback, sales funnel, and email list value.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpbasics.com/tools/marketing/">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/sharp.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.fx{display:grid;gap:0;margin-top:4px}.fx-step,.fx-g{display:grid;grid-template-columns:minmax(0,120px) minmax(0,1fr) 72px;gap:12px;align-items:center}.fx-lab b{display:block;font-size:.92rem}.fx-lab span{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}.fx-plot{position:relative;height:22px;display:flex;justify-content:center;background:linear-gradient(90deg,transparent calc(50% - .5px),rgba(255,255,255,.08) calc(50% - .5px) calc(50% + .5px),transparent calc(50% + .5px))}.fx-bar{display:block;height:100%;border-radius:4px;background:var(--marketing)}.fx-pct{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}.fx-pct small{display:block;font:600 .7rem var(--f-body);color:var(--muted)}.fx-conv{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;margin:4px 0 4px 132px;padding:5px 10px;border-left:2px solid rgba(255,255,255,.14);font-size:.84rem;color:var(--muted)}.fx-conv b{color:var(--ink);font-variant-numeric:tabular-nums}.fx-ar{color:var(--muted)}.fx-lost{font-variant-numeric:tabular-nums}.fx-conv.leak{border-left-color:#f5b324}.fx-tag{font:800 .7rem var(--f-body);text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:999px;background:rgba(245,179,36,.16);color:#f5c45a}.fx-goal{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);display:grid;gap:8px}.fx-gh{margin:0;font-weight:800}.fx-g{grid-template-columns:minmax(0,80px) minmax(0,1fr) 72px}.fx-g span{font-size:.84rem;color:var(--muted);font-weight:700}.fx-g .fx-plot{justify-content:flex-start;background:rgba(255,255,255,.05);border-radius:4px}.fx-g b{text-align:right;font-variant-numeric:tabular-nums}.fx-bar.need{background:rgba(255,255,255,.1);outline:1.5px solid rgba(255,255,255,.55);outline-offset:-1.5px}.fx-gn{margin:0;font-size:.88rem;color:var(--muted)}.fx-gn b{color:var(--ink)}.fx-ok{color:#5fd99a;font-weight:800}@media (max-width:560px){.fx-step{grid-template-columns:minmax(0,1fr) 64px}.fx-step .fx-plot{grid-column:1/-1;grid-row:2}.fx-conv{margin-left:0}}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../../index.html" aria-label="Sharp home"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../../learn/index.html">Courses</a>
+      <a href="../../tools/index.html" aria-current="page">Tools</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="signin" href="../../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../../index.html">Sharp</a> / <a href="../../tools/index.html">Tools</a> / Marketing calculators</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Marketing tools</span>
+    <h1>Marketing calculators</h1>
+    <p class="lede">Four calculators that answer the questions every new business asks about marketing: is it working, and what can I afford to spend?</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <nav class="tabs" aria-label="Calculators on this page"><a href="#roas">Ad return</a><a href="#cac">Cost per customer</a><a href="#funnel">Sales funnel</a><a href="#email">Email list value</a></nav>
+    <section class="tool" id="roas">
+      <div class="tool-grid">
+        <form id="f-roas" novalidate>
+          <h2>Ad return (ROAS)</h2>
+          <p class="intro">Did your ads make money? Return on ad spend is revenue from ads divided by what the ads cost.</p>
+          <div class="fields">
+<label for="roas-spend">Ad spend ($)<input type="number" id="roas-spend" value="500" min="0" step="any" inputmode="decimal"></label>
+<label for="roas-sales">Sales from those ads<input type="number" id="roas-sales" value="25" min="0" step="any" inputmode="decimal"></label>
+<label for="roas-price">Price per sale ($)<input type="number" id="roas-price" value="49" min="0" step="any" inputmode="decimal"></label>
+<label for="roas-cost">Cost to deliver each sale ($)<input type="number" id="roas-cost" value="9" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="roas-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <section class="tool" id="cac">
+      <div class="tool-grid">
+        <form id="f-cac" novalidate>
+          <h2>Cost per customer and payback</h2>
+          <p class="intro">What it costs to win a customer, how long they take to pay that back, and what they're worth over their lifetime.</p>
+          <div class="fields">
+<label for="cac-spend">Marketing spend / month ($)<input type="number" id="cac-spend" value="1000" min="0" step="any" inputmode="decimal"></label>
+<label for="cac-new">New customers / month<input type="number" id="cac-new" value="20" min="0" step="any" inputmode="decimal"></label>
+<label for="cac-rev">Revenue per customer / month ($)<input type="number" id="cac-rev" value="30" min="0" step="any" inputmode="decimal"></label>
+<label for="cac-margin">Gross margin (%)<input type="number" id="cac-margin" value="70" min="0" step="any" inputmode="decimal"></label>
+<label for="cac-life">Months a customer stays<input type="number" id="cac-life" value="12" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="cac-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <section class="tool" id="funnel">
+      <div class="tool-grid">
+        <form id="f-funnel" novalidate>
+          <h2>Sales funnel</h2>
+          <p class="intro">Visitors become sign-ups, sign-ups become customers. See where the money comes from, and what traffic your goal needs.</p>
+          <div class="fields">
+<label for="fn-visitors">Visitors / month<input type="number" id="fn-visitors" value="3000" min="0" step="any" inputmode="decimal"></label>
+<label for="fn-signup">Visitors who sign up (%)<input type="number" id="fn-signup" value="3" min="0" step="any" inputmode="decimal"></label>
+<label for="fn-buy">Sign-ups who buy (%)<input type="number" id="fn-buy" value="2" min="0" step="any" inputmode="decimal"></label>
+<label for="fn-price">Average sale ($)<input type="number" id="fn-price" value="45" min="0" step="any" inputmode="decimal"></label>
+<label for="fn-goal">Revenue goal / month ($)<input type="number" id="fn-goal" value="3000" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="fn-out" aria-live="polite"></div>
+          <div class="card" style="margin-top:14px" id="fn-bars"></div>
+        </div>
+      </div>
+    </section>
+    <section class="tool" id="email">
+      <div class="tool-grid">
+        <form id="f-email" novalidate>
+          <h2>Email list value</h2>
+          <p class="intro">What one email subscriber is worth to you. Use it to decide how much you can spend to get one.</p>
+          <div class="fields">
+<label for="em-subs">Subscribers<input type="number" id="em-subs" value="1000" min="0" step="any" inputmode="decimal"></label>
+<label for="em-sends">Sales emails / month<input type="number" id="em-sends" value="4" min="0" step="any" inputmode="decimal"></label>
+<label for="em-open">Open rate (%)<input type="number" id="em-open" value="35" min="0" step="any" inputmode="decimal"></label>
+<label for="em-click">Opens that click (%)<input type="number" id="em-click" value="8" min="0" step="any" inputmode="decimal"></label>
+<label for="em-buy">Clicks that buy (%)<input type="number" id="em-buy" value="3" min="0" step="any" inputmode="decimal"></label>
+<label for="em-aov">Average order ($)<input type="number" id="em-aov" value="40" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="em-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <p class="fine">Starting numbers are examples, not benchmarks. Rates vary a lot by industry, so use your own data as soon as you have it.</p>
+<aside class="upsell" aria-label="Go further with Founder"><div><span class="eyebrow">Go further · Founder $74.99 one-time</span><p>Founder includes a 30-day launch plan: one task a day, from idea to your first paying customer.</p><p class="fine">One payment, no subscription. 30-day money-back guarantee.</p></div><a class="btn" href="../../pricing/index.html#pricing">See Founder →</a></aside>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../../index.html" style="display:inline-flex;margin-bottom:10px"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Sharp</p></div>
+    <div><h4>Courses</h4><a href="../../learn/index.html#money">Finance</a><a href="../../learn/index.html#business">Business</a><a href="../../learn/index.html#mkt-basics">Marketing</a><a href="../../learn/index.html#negotiation">Negotiation</a><a href="../../learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="../../tools/marketing/index.html">Marketing calculators</a><a href="../../index.html#check">Spending check</a><a href="../../tools/idea-check/index.html">Idea check</a><a href="../../tools/ai/index.html">AI at work</a><a href="../../tools/money-plan/index.html">Money plan</a><a href="../../tools/budget/index.html">Budget planner</a><a href="../../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../../tools/negotiation/index.html">Negotiation prep</a><a href="../../tools/investors/index.html">Investor pressure drill</a></div>
+    <div><h4>Sharp</h4><a href="../../ask/index.html" data-ai>Ask Sharp (AI)</a><a href="../../plan/index.html" data-ai>Idea to Plan (AI)</a><a href="../../pricing/index.html">Pricing</a><a href="../../trial/index.html">Free trial</a><a href="../../books/index.html">Book notes</a><a href="../../learn/index.html#prompts">AI prompts</a><a href="../../learn/index.html#glossary">Glossary</a><a href="../../about/index.html">About</a><a href="../../about/index.html#install">Install the app</a><a href="../../privacy/index.html">Privacy</a><a href="../../terms/index.html">Terms</a><a href="../../refunds/index.html">Refunds</a></div>
+  </div>
+</footer>
+<script src="../../assets/tools.js"></script><script src="../../assets/shell.js"></script>
+</body>
+</html>

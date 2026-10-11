@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
+<link rel="canonical" href="https://sharpbasics.com/tools/investors/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Investor pressure drill · Sharp Basics</title>
+<meta name="description" content="Practise tough investor questions against a timer: what they are really asking, a strong answer shape, and what to avoid.">
+<meta property="og:title" content="Investor pressure drill · Sharp Basics">
+<meta property="og:description" content="Practise tough investor questions against a timer: what they are really asking, a strong answer shape, and what to avoid.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpbasics.com/tools/investors/">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/sharp.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.dr-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:grid;gap:14px}.dr-q{font:800 clamp(1.4rem,3.4vw,1.9rem)/1.2 var(--f-display);letter-spacing:-.02em}.dr-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.dr-clock{font:800 1.6rem var(--f-display);font-variant-numeric:tabular-nums;min-width:4.2em}.dr-clock.low{color:var(--bad)}.dr-reveal{margin-top:16px;background:var(--surface-2);border-radius:var(--radius);padding:20px 22px}.dr-reveal h3{font-size:1rem;margin:12px 0 4px}.dr-reveal h3:first-child{margin-top:0}.dr-tips{margin:0 0 12px;padding-left:1.2em;display:grid;gap:6px}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../../index.html" aria-label="Sharp home"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../../learn/index.html">Courses</a>
+      <a href="../../tools/index.html" aria-current="page">Tools</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="signin" href="../../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../../index.html">Sharp</a> / <a href="../../tools/index.html">Tools</a> / Investor pressure drill</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Investor tools</span>
+    <h1>Investor pressure drill</h1>
+    <p class="lede">Twenty tough questions investors really ask. Answer out loud before the timer runs out, then see what a strong answer looks like.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <section class="tool" id="drill">
+      <div class="tool-grid">
+        <div>
+          <div class="fields wide" style="margin-bottom:16px">
+            <label for="dr-cat">Topic<select id="dr-cat"></select></label>
+            <label for="dr-time">Time to answer<select id="dr-time"><option value="30">30 seconds</option><option value="60" selected>60 seconds</option><option value="90">90 seconds</option></select></label>
+          </div>
+          <div class="dr-card">
+            <span class="chip t-investors" id="dr-chip"></span>
+            <p class="dr-q" id="dr-q" aria-live="polite"></p>
+            <div class="dr-row"><span class="dr-clock" id="dr-clock" aria-live="off">1:00</span>
+              <button class="btn" type="button" id="dr-start">Start timer</button>
+              <button class="btn ghost" type="button" id="dr-show">Show a strong answer</button>
+              <button class="btn ghost" type="button" id="dr-next">Skip</button></div>
+          </div>
+          <div class="dr-reveal" id="dr-reveal" hidden>
+            <h3>What they're really asking</h3><p id="dr-real"></p>
+            <h3>A strong answer shape</h3><p id="dr-shape"></p>
+            <h3>Avoid</h3><p id="dr-trap"></p>
+            <p class="fine" style="margin-top:14px">How did your answer go?</p>
+            <div class="dr-row"><button class="btn sm" type="button" data-rate="nailed">Nailed it</button><button class="btn sm ghost" type="button" data-rate="shaky">Shaky</button><button class="btn sm ghost" type="button" data-rate="again">Practise again</button></div>
+          </div>
+          <p class="fine" id="dr-tally" style="margin-top:12px"></p>
+        </div>
+        <aside class="card" style="position:sticky;top:90px">
+          <h3 style="margin-bottom:8px">Five habits under pressure</h3>
+          <ol class="dr-tips">
+            <li><b>Pause</b> two seconds before you answer.</li>
+            <li><b>Answer first</b> in one sentence, then give one or two reasons.</li>
+            <li><b>Clarify</b> if the question is unclear.</li>
+            <li><b>"I don't know, I'll send it tomorrow"</b> beats a confident guess.</li>
+            <li><b>Steer back</b> to what you're sure of, honestly.</li>
+          </ol>
+          <p class="fine">Say your answers out loud. Practising silently in your head doesn't build the same calm.</p>
+          <p class="fine" style="margin-top:8px"><a href="../../learn/index.html#pressure">Read the lesson: Staying calm under pressure →</a></p>
+        </aside>
+      </div>
+    </section>
+<aside class="upsell" aria-label="Go further with Founder"><div><span class="eyebrow">Go further · Founder $74.99 one-time</span><p>Founder includes the investor pitch kit: a 10-slide deck outline, 4 emails, 30 more tough questions and deal terms in plain English.</p><p class="fine">One payment, no subscription. 30-day money-back guarantee.</p></div><a class="btn" href="../../pricing/index.html#pricing">See Founder →</a></aside>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../../index.html" style="display:inline-flex;margin-bottom:10px"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Sharp</p></div>
+    <div><h4>Courses</h4><a href="../../learn/index.html#money">Finance</a><a href="../../learn/index.html#business">Business</a><a href="../../learn/index.html#mkt-basics">Marketing</a><a href="../../learn/index.html#negotiation">Negotiation</a><a href="../../learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="../../tools/marketing/index.html">Marketing calculators</a><a href="../../index.html#check">Spending check</a><a href="../../tools/idea-check/index.html">Idea check</a><a href="../../tools/ai/index.html">AI at work</a><a href="../../tools/money-plan/index.html">Money plan</a><a href="../../tools/budget/index.html">Budget planner</a><a href="../../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../../tools/negotiation/index.html">Negotiation prep</a><a href="../../tools/investors/index.html">Investor pressure drill</a></div>
+    <div><h4>Sharp</h4><a href="../../ask/index.html" data-ai>Ask Sharp (AI)</a><a href="../../plan/index.html" data-ai>Idea to Plan (AI)</a><a href="../../pricing/index.html">Pricing</a><a href="../../trial/index.html">Free trial</a><a href="../../books/index.html">Book notes</a><a href="../../learn/index.html#prompts">AI prompts</a><a href="../../learn/index.html#glossary">Glossary</a><a href="../../about/index.html">About</a><a href="../../about/index.html#install">Install the app</a><a href="../../privacy/index.html">Privacy</a><a href="../../terms/index.html">Terms</a><a href="../../refunds/index.html">Refunds</a></div>
+  </div>
+</footer>
+<script src="../../assets/tools.js"></script><script src="../../assets/shell.js"></script>
+</body>
+</html>

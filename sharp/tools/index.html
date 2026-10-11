@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
+<link rel="canonical" href="https://sharpbasics.com/tools/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>All tools · Sharp Basics</title>
+<meta name="description" content="Free business tools for aspiring entrepreneurs: marketing calculators, budget planner, business plan builder, pricing, negotiation prep and an investor pressure drill.">
+<meta property="og:title" content="All tools · Sharp Basics">
+<meta property="og:description" content="Free business tools for aspiring entrepreneurs: marketing calculators, budget planner, business plan builder, pricing, negotiation prep and an investor pressure drill.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpbasics.com/tools/">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/sharp.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.tool-index{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}.tool-card{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink)}.tool-card:hover{border-color:var(--ink)}.tool-card p{color:var(--muted);font-size:.96rem}.tool-card .count{margin-top:auto;font-weight:700;color:var(--accent-text);font-size:.9rem;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.tool-card .try{color:var(--ink)}.tool-card:hover .try{color:var(--accent-text)}.tool-find{display:grid;gap:10px;margin:0 0 22px;max-width:760px}.tool-find-l{font-weight:800}.tool-cats{display:flex;flex-wrap:wrap;gap:8px}.tool-cat{background:transparent;color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;font:700 .9rem var(--f-body);cursor:pointer;min-height:40px}.tool-cat[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}#tool-none a{color:var(--accent-text)}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="Sharp home"><img src="../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../learn/index.html">Courses</a>
+      <a href="../tools/index.html" aria-current="page">Tools</a>
+      <a href="../pricing/index.html">Pricing</a>
+      <a href="../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="signin" href="../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../index.html">Sharp</a> / Tools</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Tools</span>
+    <h1>Free business tools</h1>
+    <p class="lede">Free tools for money, marketing, pricing, deals and investor pitches. No sign-up needed, and the maths is always shown.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <div class="tool-find" role="search">
+      <label for="tool-q" class="tool-find-l">Find a tool</label>
+      <input type="search" id="tool-q" placeholder="Try &quot;budget&quot;, &quot;price&quot; or &quot;pitch&quot;" autocomplete="off">
+      <div class="tool-cats" role="group" aria-label="Filter by topic"><button type="button" class="tool-cat" data-cat="all" aria-pressed="true">All</button><button type="button" class="tool-cat" data-cat="finance" aria-pressed="false">Money</button><button type="button" class="tool-cat" data-cat="business" aria-pressed="false">Business</button><button type="button" class="tool-cat" data-cat="marketing" aria-pressed="false">Marketing</button><button type="button" class="tool-cat" data-cat="negotiation" aria-pressed="false">Negotiation</button><button type="button" class="tool-cat" data-cat="investors" aria-pressed="false">Investors</button><button type="button" class="tool-cat" data-cat="ai" aria-pressed="false">AI</button></div>
+      <p class="fine" id="tool-n" aria-live="polite"></p>
+    </div>
+    <div class="tool-index">
+      <a class="card tool-card" href="../plan/index.html" data-cat="ai" data-ai><span class="chip t-business">AI helper</span><h3>Idea to Plan</h3><p>Describe your idea. Get an honest score, the key numbers and a 4-week plan you can edit.</p><span class="count">Beta<span class="try">Try this tool →</span></span></a>
+      <a class="card tool-card" href="../ask/index.html" data-cat="ai" data-ai><span class="chip t-business">AI helper</span><h3>Ask Sharp</h3><p>Ask a question about any lesson. Answers come only from Sharp's own lessons, with links to check them.</p><span class="count">Beta<span class="try">Try this tool →</span></span></a>
+      <a class="card tool-card" href="ai/index.html" data-cat="ai"><span class="chip t-business">AI</span><h3>AI at work</h3><p>AI savings, AI cost per customer, a private before-you-paste check and a prompt library.</p><span class="count">4 tools<span class="try">Try this tool →</span></span></a>
+      <a class="card tool-card" href="money-plan/index.html" data-cat="finance"><span class="chip t-finance">Finance</span><h3>Money plan</h3><p>What to spend on first, by when, and what to stop spending on.</p><span class="count">1 planner<span class="try">Try this tool →</span></span></a>
+      <a class="card tool-card" href="marketing/index.html" data-cat="marketing"><span class="chip t-marketing">Marketing</span><h3>Marketing calculators</h3><p>Ad return, cost per customer and payback, sales funnel, email list value.</p><span class="count">4 calculators<span class="try">Try this tool →</span></span></a>
+      <a class="card tool-card" href="budget/index.html" data-cat="finance"><span class="chip t-finance">Finance</span><h3>Budget &amp; savings planner</h3><p>Budget dashboard: spent vs budget by category, income split, savings progress and trends.</p><span class="count">3 planners<span class="try">Try this tool →</span></span></a>
+      <a class="card tool-card" href="business-plan/index.html" data-cat="business"><span class="chip t-business">Business</span><h3>Business plan &amp; pricing</h3><p>One-page business plan, pricing calculator, simple profit and loss.</p><span class="count">3 tools<span class="try">Try this tool →</span></span></a>
+      <a class="card tool-card" href="negotiation/index.html" data-cat="negotiation"><span class="chip t-negotiation">Negotiation</span><h3>Negotiation prep</h3><p>Your opening offer, concession plan and word-for-word scripts.</p><span class="count">1 planner<span class="try">Try this tool →</span></span></a>
+      <a class="card tool-card" href="investors/index.html" data-cat="investors"><span class="chip t-investors">Investors</span><h3>Investor pressure drill</h3><p>Tough investor questions against a timer, with strong answer shapes.</p><span class="count">20 questions<span class="try">Try this tool →</span></span></a>
+      <a class="card tool-card" href="idea-check/index.html" data-cat="business"><span class="chip t-business">Business</span><h3>Idea check</h3><p>How many customers you need for an idea to pay you a real income.</p><span class="count">1 calculator<span class="try">Try this tool →</span></span></a>
+      <a class="card tool-card" href="../index.html#check" data-cat="finance"><span class="chip t-finance">Finance</span><h3>Spending check</h3><p>A colour-coded chart of your spending: what to keep, rethink or cut.</p><span class="count">1 chart<span class="try">Try this tool →</span></span></a>
+      <a class="card tool-card" href="../learn/index.html#calculators" data-cat="finance"><span class="chip t-finance">Finance</span><h3>Money calculators</h3><p>Compound growth, loan payment, break-even, margin vs markup, card payoff.</p><span class="count">5 calculators<span class="try">Try this tool →</span></span></a>
+      <a class="card tool-card" href="../trial/index.html" data-cat="business"><span class="chip t-business">Founder trial</span><h3>Startup cost calculator</h3><p>Cash you need to start and how long your savings last. Free with the 3-day trial.</p><span class="count">1 calculator<span class="try">Try this tool →</span></span></a>
+    </div>
+    <p class="fine" id="tool-none" hidden>No tools match that. Try a shorter word<span data-ai>, or <a href="../ask/index.html">ask Sharp</a></span>.</p>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../index.html" style="display:inline-flex;margin-bottom:10px"><img src="../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Sharp</p></div>
+    <div><h4>Courses</h4><a href="../learn/index.html#money">Finance</a><a href="../learn/index.html#business">Business</a><a href="../learn/index.html#mkt-basics">Marketing</a><a href="../learn/index.html#negotiation">Negotiation</a><a href="../learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="../tools/marketing/index.html">Marketing calculators</a><a href="../index.html#check">Spending check</a><a href="../tools/idea-check/index.html">Idea check</a><a href="../tools/ai/index.html">AI at work</a><a href="../tools/money-plan/index.html">Money plan</a><a href="../tools/budget/index.html">Budget planner</a><a href="../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../tools/negotiation/index.html">Negotiation prep</a><a href="../tools/investors/index.html">Investor pressure drill</a></div>
+    <div><h4>Sharp</h4><a href="../ask/index.html" data-ai>Ask Sharp (AI)</a><a href="../plan/index.html" data-ai>Idea to Plan (AI)</a><a href="../pricing/index.html">Pricing</a><a href="../trial/index.html">Free trial</a><a href="../books/index.html">Book notes</a><a href="../learn/index.html#prompts">AI prompts</a><a href="../learn/index.html#glossary">Glossary</a><a href="../about/index.html">About</a><a href="../about/index.html#install">Install the app</a><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a><a href="../refunds/index.html">Refunds</a></div>
+  </div>
+</footer>
+<script src="../assets/tools.js"></script><script src="../assets/shell.js"></script>
+</body>
+</html>

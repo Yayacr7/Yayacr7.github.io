@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
+<link rel="canonical" href="https://sharpbasics.com/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://*.supabase.co wss://*.supabase.co https://formsubmit.co; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Sharp Basics | Business, made simple</title>
+<meta name="description" content="Finance, marketing, negotiation and investor pitching, made simple. Free lessons and tools.">
+<meta property="og:title" content="Sharp Basics | Business, made simple">
+<meta property="og:description" content="Finance, marketing, negotiation and investor pitching, made simple. Free lessons and tools.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpbasics.com/">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/sharp.css">
+<style>
+.hero{padding-block:40px 64px;background:radial-gradient(600px 380px at 85% 30%,var(--investors-soft),transparent 70%),radial-gradient(520px 340px at 10% 85%,var(--finance-soft),transparent 70%),radial-gradient(420px 300px at 60% 0%,var(--business-soft),transparent 70%)}
+.topic-top{display:flex;align-items:center;gap:10px}
+.topic-top .chip{align-self:center}
+.t-ic{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--ts);color:var(--t);flex:none}
+.topic,.tool-card{transition:transform .15s,box-shadow .15s}
+.topic:hover,.tool-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.facts span{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px 14px}
+.facts{border:0;padding:0}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center}
+.hero h1{font-size:clamp(2.6rem,6vw,4.4rem);margin:14px 0 18px}
+.hero .lede{max-width:36ch}
+.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 30px}
+.hero .wl-label{font-weight:700;font-size:.95rem;margin-bottom:8px}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;padding-block:18px;border-block:1px solid var(--line);font-weight:700}
+.facts span{display:flex;align-items:baseline;gap:8px}
+.facts b{font:800 1.5rem var(--f-display);letter-spacing:-.02em}
+.topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.topic h3{font-size:1.1rem}
+.topic{text-decoration:none;color:var(--ink)}
+.topic{display:flex;flex-direction:column;gap:12px;border-top:4px solid var(--t)}
+.topic p{color:var(--muted)}
+.topic ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.topic li a{display:flex;justify-content:space-between;gap:10px;color:var(--ink);text-decoration:none;padding:8px 0;border-bottom:1px solid var(--line);font-weight:600}
+.topic li a:hover{color:var(--t)}
+.topic li a span{color:var(--muted);font-weight:500;font-size:.88rem;white-space:nowrap}
+.topic.wide{grid-column:1/-1}
+.wide-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center}
+.topic .tool-link{margin-top:auto;padding-top:6px;font-weight:700;color:var(--t);text-decoration:none}
+.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tool-card{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);transition:border-color .15s}
+.tool-card:hover{border-color:var(--ink)}
+.tool-card p{color:var(--muted);font-size:.96rem}
+.tool-card .go{margin-top:auto;font-weight:700;color:var(--accent-text)}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;counter-reset:s}
+.steps div{counter-increment:s}
+.steps div::before{content:counter(s);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--ink);color:var(--bg);font:800 1.1rem var(--f-display);margin-bottom:14px}
+.steps h3{margin-bottom:6px}
+.steps p{color:var(--muted)}
+.trial{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center;background:linear-gradient(135deg,#2b1e4a,#3d1830 55%,#3a1d18);color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:44px;box-shadow:var(--shadow)}
+.trial .eyebrow{color:var(--accent-text)}
+.trial h2{margin-top:10px;color:#fff}
+.trial p{margin-top:12px;opacity:.85;max-width:46ch}
+.trial ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.trial li{display:grid;grid-template-columns:28px minmax(0,1fr);font-weight:600}
+.trial li::before{content:"✓";color:var(--accent-text);font-weight:800}
+.trial .cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:22px}
+.trial .cta span{opacity:.75;font-size:.9rem}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.plan{position:relative;display:flex;flex-direction:column;gap:14px}
+.plan.best{border:2px solid var(--accent);box-shadow:0 0 0 6px rgba(255,106,43,.08),0 24px 60px -20px rgba(255,79,154,.45);background:linear-gradient(180deg,rgba(255,106,43,.13),var(--surface) 42%)}
+.plan.best li b{color:var(--ink)}
+.plan .value{margin:0;font-weight:700;font-size:.92rem;color:var(--accent-text);text-align:center}
+.plan .flag{position:absolute;top:-13px;left:22px;font:700 .7rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;background:var(--accent);color:var(--accent-ink);padding:5px 10px;border-radius:999px}
+.plan .name{font:800 1.25rem var(--f-display)}
+.plan .price{display:flex;align-items:baseline;gap:8px}
+.plan .price b{font:800 3rem/1 var(--f-display);letter-spacing:-.03em}
+.plan .price span,.plan .for{color:var(--muted);font-size:.95rem}
+.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;flex:1;align-content:start}
+.plan li{display:grid;grid-template-columns:1.4em minmax(0,1fr);font-size:.97rem}
+.plan li::before{content:"✓";color:var(--accent-text);font-weight:800}
+.plan .btn{width:100%}
+.depth{display:flex;align-items:center;gap:5px;font:700 .8rem var(--f-body);color:var(--muted)}
+.depth i{width:22px;height:7px;border-radius:4px;background:var(--surface-2)}
+.depth i.on{background:linear-gradient(90deg,#ff6a2b,#ff4f9a)}
+.depth span{margin-left:6px}
+.plan .note{font-size:.82rem;color:var(--muted);text-align:center;min-height:1.2em}
+.faq{border-top:2px solid var(--ink)}
+.faq details{border-bottom:1px solid var(--line);padding:16px 2px}
+.faq summary{cursor:pointer;font:700 1.08rem var(--f-display);list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:1.4rem;line-height:1;color:var(--accent-text)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{color:var(--muted);margin-top:8px;max-width:64ch}
+.final{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+.final p{color:var(--muted);margin-top:12px}
+@media (max-width:900px){
+  .hero .wrap,.trial,.final{grid-template-columns:1fr;gap:34px}
+  .topics,.tools,.steps,.plans,.wide-in{grid-template-columns:1fr}
+  .trial{padding:30px 22px}
+}
+@media (min-width:901px) and (max-width:1100px){ .tools{grid-template-columns:repeat(2,minmax(0,1fr))} }
+
+/* ---- bold opening + colour bands ---- */
+.hero{position:relative;overflow:hidden;background:var(--hero-bg);color:#fff;padding-block:72px 84px}
+.hero::before{content:"";position:absolute;inset:-20%;background:
+  radial-gradient(35% 45% at 80% 30%,rgba(255,79,154,.45),transparent 70%),
+  radial-gradient(30% 40% at 65% 85%,rgba(255,106,43,.42),transparent 70%),
+  radial-gradient(35% 45% at 15% 20%,rgba(80,110,255,.40),transparent 70%),
+  radial-gradient(30% 40% at 30% 95%,rgba(40,200,150,.30),transparent 70%);filter:blur(10px);pointer-events:none}
+.hero-in{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:48px;align-items:center}
+.hero h1{font-size:clamp(3rem,8vw,5.6rem);line-height:.98;letter-spacing:-.04em;margin:0 0 20px;color:#fff}
+.grad{background:linear-gradient(90deg,#ff8a3d,#ff4f9a 55%,#9b8cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{font-size:1.25rem;color:rgba(255,255,255,.8);max-width:30ch}
+.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin:30px 0 26px}
+.hero .btn{background:linear-gradient(90deg,#ff6a2b,#ff4f9a);color:#fff;box-shadow:0 10px 30px -10px rgba(255,79,154,.7)}
+.btn.ghost-light{background:rgba(255,255,255,.08)!important;color:#fff;border-color:rgba(255,255,255,.3);box-shadow:none!important}
+.hpills{display:flex;flex-wrap:wrap;gap:8px}
+.hpill{font:700 .86rem var(--f-body);text-decoration:none;color:#fff;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);display:inline-flex;align-items:center;gap:8px}
+.hpill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--tc)}
+.hpill:hover{background:rgba(255,255,255,.16)}
+.hpill.t-finance{--tc:#3ddba5}.hpill.t-business{--tc:#7f97ff}.hpill.t-marketing{--tc:#ff8a57}.hpill.t-negotiation{--tc:#c39bff}.hpill.t-investors{--tc:#ff7fb6}
+.hero-art{position:relative;display:grid;gap:14px;justify-items:center}
+.hcard{width:min(360px,100%);transform:rotate(var(--r));border-radius:18px;padding:16px 20px;color:#fff;box-shadow:0 18px 40px -18px rgba(0,0,0,.6);display:grid;gap:4px}
+.hcard span{font:700 .72rem var(--f-body);text-transform:uppercase;letter-spacing:.14em;opacity:.85}
+.hcard b{font:800 1.3rem/1.2 var(--f-display);letter-spacing:-.01em}
+.hcard.t-finance{background:linear-gradient(135deg,#0f9d74,#1fc79a)}
+.hcard.t-marketing{background:linear-gradient(135deg,#e2560f,#ff8a3d)}
+.hcard.t-negotiation{background:linear-gradient(135deg,#6b3bd6,#9b7bff)}
+.hcard.t-investors{background:linear-gradient(135deg,#c2266f,#ff5a9e)}
+#topics{background:var(--tint)}
+.tryit{background:var(--bg)}
+#tools.band-dark{background:var(--hero-bg)}
+.band-dark .tool-card{background:var(--surface)!important}
+.try-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center}
+.band-dark{background:var(--hero-bg);color:#fff}
+.band-dark .eyebrow{color:rgba(255,255,255,.65)}
+.band-dark h2{color:#fff}
+.band-dark .section-head p{color:rgba(255,255,255,.75)}
+.band-dark .btn.ghost{color:#fff;border-color:rgba(255,255,255,.3)}
+.band-dark .tool-card{background:#171b30;border-color:rgba(255,255,255,.1);color:#fff}
+.band-dark .tool-card p{color:rgba(255,255,255,.7)}
+.band-dark .tool-card .go{color:#ff9a6b}
+.band-cta{background:linear-gradient(120deg,#ff6a2b,#ff4f9a 55%,#7d6bff);color:#fff}
+.band-cta h2{color:#fff}
+.band-cta .final p,.band-cta .fine{color:rgba(255,255,255,.88)}
+.band-cta input[type=email],.band-cta select{border-color:transparent}
+.band-cta .btn.dark{background:#0d1020;color:#fff}
+.band-cta .msg.ok,.band-cta .msg.err,.band-cta .tier-tag{color:#fff}
+#pricing{background:var(--tint)}
+@media (max-width:900px){
+  .hero{padding-block:48px 56px}
+  .hero-in,.try-in{grid-template-columns:1fr;gap:36px}
+  .hero-art{grid-template-columns:1fr 1fr;gap:10px}
+  .hcard{padding:12px 14px}
+  .hcard b{font-size:1rem}
+  .site-head .main-nav a{color:#fff}
+}
+
+/* chart-first opening */
+.hero.hero{padding-block:34px 56px}
+.hero .wrap.hc{display:block;position:relative}
+.hc-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 28px;margin-bottom:22px}
+.hc-head h1{font-size:clamp(2.2rem,5vw,3.4rem);margin:0 0 8px}
+.hc-head .hero-sub{max-width:52ch;font-size:1.05rem}
+.hc-head .cta{margin:0}
+.sc.sc-first{grid-template-columns:minmax(0,1.45fr) minmax(0,.85fr)}
+body.fs .sc-chart,body.fs .sc-axis{--sc-cols:112px minmax(0,1fr) 116px 100px}
+body.fs .sc-chart li{column-gap:10px}
+body.fs .sc-st{white-space:nowrap;font-size:.8rem}
+body.fs .sc-chart{gap:0}
+body.fs .sc-val{white-space:nowrap}
+.hero .sc-out,.hero .sc form{color:var(--ink)}
+@media (max-width:900px){ .sc.sc-first{grid-template-columns:1fr} .hc-head{align-items:flex-start} }
+
+/* ===== home fits one screen: no page scrolling ===== */
+body.fs{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+body.fs > header{flex:none}
+body.fs main{flex:1;min-height:0;display:flex}
+body.fs .hero{flex:1;min-height:0;display:flex;padding-block:14px 0}
+body.fs .hero .wrap.hc{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;align-items:stretch;gap:0}
+body.fs .hc-head{display:flex;justify-content:space-between}
+body.fs .hc-head > div:first-child{flex:1 1 auto;min-width:0}
+body.fs .hc-head .cta{flex:none}
+body.fs .wl-inline{margin:0;max-width:none}
+body.fs .hc-head{flex:none;margin-bottom:12px;align-items:center}
+body.fs .hc-head h1{font-size:clamp(1.7rem,3.4vw,2.5rem);margin:0 0 4px}
+body.fs .hc-head .hero-sub{font-size:.98rem;margin:0}
+body.fs .sc.sc-first{flex:1;min-height:0;align-items:stretch;gap:16px}
+body.fs .sc-out,body.fs .sc form{min-height:0;overflow:auto;padding:16px 18px}
+body.fs .sc-out{gap:10px}
+body.fs .sc-out{display:flex;flex-direction:column}
+body.fs .sc-out>*{flex:none}
+body.fs .sc-out>.sc-tree{flex:1 1 180px;height:auto;min-height:130px}
+body.fs .sc-chart li{padding:4px 8px}
+body.fs .sc .fields{gap:8px 12px}
+body.fs .sc .fields input{padding:8px 12px}
+body.fs .sc-todo li{padding:8px 10px;font-size:.9rem}
+.sc-tabs{display:none}
+.fs-bar{flex:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 20px;padding:10px 0 12px}
+.wl-inline .wl-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.wl-inline .wl-lead{font-weight:700;color:#fff}
+.wl-inline input[type=email]{width:220px;padding:9px 12px}
+.wl-inline .btn{padding:9px 16px}
+.wl-inline .msg{margin:4px 0 0;font-size:.88rem}
+.fs-links{display:flex;gap:16px;font-size:.88rem}
+.fs-links a{color:rgba(255,255,255,.7);text-decoration:none}
+.fs-links a:hover{color:#fff}
+@media (max-width:900px){
+  body.fs .hc-head{margin-bottom:8px;gap:8px}
+  body.fs .hc-head .hero-sub{display:none}
+  body.fs .hc-head .cta .btn{padding:8px 14px;font-size:.9rem}
+  .sc-tabs{display:flex;gap:6px;margin-bottom:8px;flex:none}
+  .sc-tabs button{flex:1;padding:9px 6px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#fff;font:700 .88rem var(--f-body)}
+  .sc-tabs button[aria-selected="true"]{background:#fff;color:#0d1020}
+  body.fs .sc.sc-first{display:flex;flex-direction:column}
+  body.fs .sc-first > *{flex:1}
+  .sc-first[data-view="chart"] > form,.sc-first[data-view="nums"] > .sc-out,.sc-first[data-view="todo"] > form{display:none}
+  .sc-first[data-view="chart"] .sc-h,.sc-first[data-view="chart"] .sc-todo,.sc-first[data-view="chart"] .sc-ok{display:none}
+  .sc-first[data-view="todo"] .sc-sum,.sc-first[data-view="todo"] .sc-bar-row,.sc-first[data-view="todo"] .sc-tree,.sc-first[data-view="todo"] .sc-listview,.sc-first[data-view="todo"] .sc-detail,.sc-first[data-view="todo"] .sc-legend,.sc-first[data-view="todo"] .sc-axis,.sc-first[data-view="todo"] .sc-chart,.sc-first[data-view="todo"] .sc-axt,.sc-first[data-view="todo"] .sc-alert{display:none}
+  body.fs .sc-legend{font-size:.78rem}
+  body.fs .sc-sum b{font-size:1.05rem}
+  .fs-bar{padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));gap:6px}
+  .wl-inline .wl-lead{display:none}
+  .wl-inline .wl-row{flex-wrap:nowrap;width:100%}
+  .wl-inline input[type=email]{flex:1;width:auto;min-width:0}
+  .fs-links{width:100%;justify-content:center;font-size:.8rem}
+}
+
+/* tighter spacing so the home fits one screen */
+.sc-mini{display:none;list-style:none;margin:0;padding:0;gap:6px}
+.sc-mini li{padding:7px 10px;border-radius:8px;background:var(--surface-2);border-left:4px solid var(--st-warn);font-size:.88rem}
+.sc-mini li.bad{border-left-color:var(--st-bad)}
+@media (min-width:901px){
+  body.fs .sc-out .sc-h,body.fs .sc-out .sc-todo{display:none}
+  body.fs .sc-out .sc-mini{display:grid}
+}
+body.fs .sc-sum b{font-size:1.15rem}
+body.fs .sc-sum span{font-size:.74rem}
+body.fs .sc-legend{font-size:.78rem;gap:6px 14px}
+body.fs .sc-chart li{padding:2px 8px;font-size:.86rem}
+body.fs .sc .fields label{font-size:.8rem;gap:4px}
+body.fs .sc .fields input{padding:7px 10px;font-size:.95rem}
+body.fs .sc form .fine{font-size:.76rem;margin-top:8px!important}
+@media (max-width:900px){ body.fs .sc .fields{gap:6px 10px} }
+@media (max-height:760px){
+  body.fs .hc-head .hero-sub{display:none}
+  body.fs .hc-head h1{font-size:clamp(1.5rem,3vw,2rem)}
+  body.fs .sc-chart li{padding:2px 8px}
+  body.fs .sc form .fine{display:none}
+  body.fs .sc .fields input{padding:5px 10px}
+}
+@media (max-height:700px) and (max-width:900px){
+  body.fs .sc-legend,body.fs .sc-axis{display:none}
+  body.fs .sc-chart li{padding:1px 2px;font-size:.8rem}
+  body.fs .sc-sum b{font-size:.98rem}
+  body.fs .sc .fields label{font-size:.74rem}
+  .fs-links{display:none}
+  body.fs .hc-head .cta .ghost-light{display:none}
+  body.fs .hc-head h1{font-size:1.45rem;margin:0}
+  body.fs .hero{padding-top:8px}
+  .sc-tabs button{padding:7px 4px}
+  body.fs .sc-out,body.fs .sc form{padding:12px 14px}
+  body.fs .sc-todo li{padding:6px 8px;font-size:.84rem}
+  body.fs .sc .fields input{padding:4px 8px}
+  body.fs .sc .fields{gap:3px 10px}
+}
+
+body.fs .sc-out{align-content:start}
+@media (min-width:561px) and (max-width:900px){ body.fs .sc-chart,body.fs .sc-axis{--sc-cols:130px minmax(0,1fr) 130px 120px} body.fs .sc-chart li{font-size:.92rem;padding:5px 8px} }
+@media (max-width:560px){
+  body.fs .sc-chart,body.fs .sc-axis{--sc-cols:104px minmax(0,1fr) 98px 20px}
+  body.fs .sc-chart li{column-gap:8px}
+  body.fs .sc-axis{column-gap:8px;padding:0 2px}
+  body.fs .sc-axis b:not(.lim){display:none}
+  body.fs .sc-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.8rem}
+  body.fs .sc-legend{gap:4px 10px}
+  body.fs .sc-chart li{grid-template-columns:var(--sc-cols);grid-template-areas:none;row-gap:0;padding:3px 2px;border-bottom:0;font-size:.84rem;border-radius:6px}
+  body.fs .sc-track{height:20px}
+  body.fs .sc-chart .sc-name,body.fs .sc-chart .sc-val,body.fs .sc-chart .sc-track,body.fs .sc-chart .sc-st{grid-area:auto}
+  body.fs .sc-chart .sc-w{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+}
+@media (max-width:560px) and (max-height:700px){ body.fs .sc-chart li{padding:0 2px;font-size:.8rem} body.fs .sc-track{height:16px} body.fs .sc-track i{top:3px;bottom:3px} body.fs .sc-axt{display:none} }
+@media (min-width:561px) and (max-width:900px) and (min-height:900px){
+  .sc-first[data-view="chart"] .sc-h,.sc-first[data-view="chart"] .sc-todo,.sc-first[data-view="chart"] .sc-ok{display:revert}
+  .sc-first[data-view="chart"] .sc-todo{display:grid}
+  .sc-tabs [data-sctab="todo"]{display:none}
+}
+</style>
+</head>
+<body class="fs">
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="Sharp home">
+      <img src="icon.svg" width="30" height="30" alt="" class="logo-mark">
+      Sharp
+    </a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="learn/index.html">Courses</a>
+      <a href="tools/index.html">Tools</a>
+      <a href="pricing/index.html">Pricing</a>
+      <a href="trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <button class="signin" id="signinBtn" type="button">Sign in</button>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="check">
+  <div class="wrap hc">
+    <div class="hc-head">
+      <div>
+        <h1>Business, made <span class="grad">simple.</span></h1>
+        <p class="hero-sub">Type what you spend in a month. Green: keep it. Yellow: think about it. Red: cut back.</p>
+      </div>
+      <div class="cta"><a class="btn" href="learn/index.html">Start learning free</a><a class="btn ghost-light" href="tools/index.html">All tools</a></div>
+    </div>
+    <div class="sc-tabs" role="tablist" aria-label="Spending check">
+      <button type="button" role="tab" data-sctab="chart" aria-selected="true">Chart</button>
+      <button type="button" role="tab" data-sctab="nums" aria-selected="false">My numbers</button>
+      <button type="button" role="tab" data-sctab="todo" aria-selected="false">What to do</button>
+    </div>
+    <div class="sc sc-first" data-view="chart">
+      <div class="sc-out" id="s-out" aria-live="polite"></div>
+      <form id="f-spend" novalidate aria-label="Your monthly spending">
+        <div class="fields">
+<label for="s-income" class="full">Take-home pay a month ($)<input type="number" id="s-income" value="3200" min="0" step="any" inputmode="decimal"></label>
+<label for="s-housing">Rent or mortgage<input type="number" id="s-housing" value="1100" min="0" step="any" inputmode="decimal"></label>
+<label for="s-bills">Bills (phone, power, insurance)<input type="number" id="s-bills" value="280" min="0" step="any" inputmode="decimal"></label>
+<label for="s-food">Groceries<input type="number" id="s-food" value="350" min="0" step="any" inputmode="decimal"></label>
+<label for="s-transport">Transport<input type="number" id="s-transport" value="220" min="0" step="any" inputmode="decimal"></label>
+<label for="s-eat">Eating out<input type="number" id="s-eat" value="380" min="0" step="any" inputmode="decimal"></label>
+<label for="s-shop">Shopping<input type="number" id="s-shop" value="220" min="0" step="any" inputmode="decimal"></label>
+<label for="s-subs">Subscriptions<input type="number" id="s-subs" value="60" min="0" step="any" inputmode="decimal"></label>
+<label for="s-fun">Fun &amp; hobbies<input type="number" id="s-fun" value="140" min="0" step="any" inputmode="decimal"></label>
+<label for="s-save" class="full">Saving<input type="number" id="s-save" value="200" min="0" step="any" inputmode="decimal"></label>
+        </div>
+        <p class="fine" style="margin-top:12px">Example numbers: change them to yours. Nothing you type leaves your browser. Guides, not rules, and not financial advice. <a href="tools/budget/index.html#from-check" id="s-full">See the full breakdown →</a></p>
+      </form>
+    </div>
+    <div class="fs-bar">
+      <form class="wl wl-inline" id="join" data-waitlist novalidate>
+        <div class="wl-row">
+          <label class="hp" aria-hidden="true">Leave this empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
+          <span class="wl-lead">Get new tools first</span>
+          <input type="email" name="email" id="wl-email-1" required placeholder="you@email.com" autocomplete="email" aria-label="Email address">
+          <button class="btn" type="submit">Join the waitlist</button>
+        </div>
+        <input type="hidden" name="tier" value="">
+        <p class="tier-tag" id="tierTag" hidden></p>
+        <p class="msg" role="status" aria-live="polite"></p>
+      </form>
+      <nav class="fs-links" aria-label="More"><a href="about/index.html">About</a><a href="privacy/index.html">Privacy</a><a href="terms/index.html">Terms</a><a href="refunds/index.html">Refunds</a></nav>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<dialog class="auth" id="authDialog" aria-labelledby="authTitle">
+  <div class="auth-in">
+    <div class="auth-top">
+      <h2 id="authTitle">Sign in to Sharp</h2>
+      <button class="x" type="button" data-close aria-label="Close">×</button>
+    </div>
+    <p class="reason" id="authReason"></p>
+    <div class="signed-out">
+      <p class="lead">New here? The same steps create your free account. No password to remember.</p>
+      <button class="g-btn" type="button" id="googleBtn">
+        <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+        Continue with Google
+      </button>
+      <div class="or">or</div>
+      <form id="emailForm" novalidate style="display:grid;gap:12px">
+        <label class="lbl" for="authEmail">Email
+          <input type="email" id="authEmail" name="email" required placeholder="you@email.com" autocomplete="email">
+        </label>
+        <button class="btn" type="submit">Email me a sign-in link</button>
+      </form>
+      <p class="msg" id="authMsg" role="status" aria-live="polite"></p>
+      <p class="fine">We use your email for your account and the updates you choose. Nothing else.</p>
+    </div>
+    <div class="signed">
+      <p class="lead">Signed in as <strong id="authWho"></strong>.</p>
+      <button class="btn ghost" type="button" id="signOutBtn">Sign out</button>
+    </div>
+  </div>
+</dialog>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script src="assets/tools.js"></script>
+<script src="assets/shell.js"></script>
+</body>
+</html>

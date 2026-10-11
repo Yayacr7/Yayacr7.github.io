@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
+<link rel="canonical" href="https://sharpbasics.com/tools/ai/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>AI at work tools · Sharp Basics</title>
+<meta name="description" content="Free tools for using AI in a small business: AI savings calculator, AI cost per customer, a private before-you-paste check and a prompt library.">
+<meta property="og:title" content="AI at work tools · Sharp Basics">
+<meta property="og:description" content="Free tools for using AI in a small business: AI savings calculator, AI cost per customer, a private before-you-paste check and a prompt library.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpbasics.com/tools/ai/">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/sharp.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.pc-list{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:6px}.pc-list li{display:flex;justify-content:space-between;gap:10px;background:var(--surface-2);border-radius:8px;padding:8px 12px;font-weight:700}.pc-clean{white-space:pre-wrap;word-break:break-word;background:var(--surface-2);border-radius:10px;padding:12px;font-size:.92rem;max-height:260px;overflow:auto}.pr-item{background:var(--surface-2);border-radius:12px;padding:12px 14px;margin:0 0 10px;display:grid;gap:6px}.pr-item h3{margin:0;font-size:1rem}.pr-item pre{margin:0;white-space:pre-wrap;word-break:break-word;font:inherit;font-size:.9rem;color:var(--muted);max-height:120px;overflow:auto}.pr-item .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.pr-old{color:var(--st-warn,#fab219);font-weight:700;font-size:.85rem}.pr-ok{color:var(--muted);font-size:.85rem}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../../index.html" aria-label="Sharp home"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../../learn/index.html">Courses</a>
+      <a href="../../tools/index.html" aria-current="page">Tools</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="signin" href="../../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../../index.html">Sharp</a> / <a href="../../tools/index.html">Tools</a> / AI at work tools</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">AI tools</span>
+    <h1>AI at work</h1>
+    <p class="lede">Four tools for the everyday problems of using AI at work: is it saving time, what does it cost, is it safe to paste, and where are your best prompts.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <nav class="tabs" aria-label="Tools on this page"><a href="#aisave">AI savings</a><a href="#aicost">AI cost check</a><a href="#paste">Before you paste</a><a href="#prompts">Prompt library</a></nav>
+    <section class="tool" id="aisave">
+      <div class="tool-grid">
+        <form id="f-aisave" novalidate>
+          <h2>AI savings</h2>
+          <p class="intro">Is AI really saving you time? Count the checking and fixing too, not just the 10 seconds it takes to write.</p>
+          <div class="fields">
+<label for="as-before">Hours a week the task took without AI<input type="number" id="as-before" value="6" min="0" step="any" inputmode="decimal"></label>
+<label for="as-after">Hours a week with AI, including checking and fixing<input type="number" id="as-after" value="2.5" min="0" step="any" inputmode="decimal"></label>
+<label for="as-rate">What an hour of your time is worth ($)<input type="number" id="as-rate" value="25" min="0" step="any" inputmode="decimal"></label>
+<label for="as-cost">AI tools for this task, per month ($)<input type="number" id="as-cost" value="20" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="as-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <section class="tool" id="aicost">
+      <div class="tool-grid">
+        <form id="f-aicost" novalidate>
+          <h2>AI cost check</h2>
+          <p class="intro">What AI really costs you for each customer, and what unused subscriptions waste.</p>
+          <div class="fields">
+<label for="ac-subs">AI subscriptions, per month ($)<input type="number" id="ac-subs" value="60" min="0" step="any" inputmode="decimal"></label>
+<label for="ac-usage">Pay-per-use AI bill, per month ($)<input type="number" id="ac-usage" value="40" min="0" step="any" inputmode="decimal"></label>
+<label for="ac-cust">Customers per month<input type="number" id="ac-cust" value="25" min="0" step="any" inputmode="decimal"></label>
+<label for="ac-price">Average price per customer ($)<input type="number" id="ac-price" value="50" min="0" step="any" inputmode="decimal"></label>
+<label for="ac-unused">Subscriptions nobody used last month ($)<input type="number" id="ac-unused" value="20" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="ac-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <section class="tool" id="paste">
+      <div class="tool-grid">
+        <form id="f-paste" novalidate>
+          <h2>Before you paste</h2>
+          <p class="intro">About to paste something into an AI tool? Check it first. This finds emails, phone numbers, card numbers, ID numbers and passwords or keys, and gives you a cleaned copy. It runs only on your device: nothing is sent anywhere.</p>
+          <label for="pc-text">Text to check<textarea id="pc-text" rows="8" maxlength="20000" placeholder="Paste the email, document or notes here."></textarea></label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn sm" type="button" id="pc-copy">Copy cleaned text</button><button class="btn sm ghost" type="button" id="pc-clear">Clear</button></div>
+        </form>
+        <div>
+          <div class="result" id="pc-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <section class="tool" id="prompts">
+      <div class="tool-grid">
+        <form id="f-prompts" novalidate>
+          <h2>Prompt library</h2>
+          <p class="intro">Keep your best prompts in one place instead of lost in old chats. Saved on this device only. Re-test each one every month: AI tools change, and a prompt that worked last month can quietly stop working.</p>
+          <label for="pr-name">Name<input type="text" id="pr-name" maxlength="80" placeholder="Reply to an unhappy customer"></label>
+          <label for="pr-text">Prompt<textarea id="pr-text" rows="5" maxlength="4000" placeholder="You are a friendly support person for a small bakery. Write a short, kind reply that apologises once, offers [fix], and signs off as [name]."></textarea></label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn sm" type="button" id="pr-save">Save prompt</button><button class="btn sm ghost" type="button" id="pr-copyall">Copy all prompts</button></div>
+          <p class="fine" id="pr-msg" role="status" aria-live="polite"></p>
+        </form>
+        <div>
+          <div class="result" id="pr-list" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <p class="fine">Estimates and checks, not guarantees: the paste check can miss things, so read before you share. Learn the habits in the lesson <a href="../../learn/index.html#ai-at-work">Using AI at work without the headaches</a>.</p>
+<aside class="upsell" aria-label="Go further with Builder"><div><span class="eyebrow">Go further · Builder $29.99 one-time</span><p>Builder adds the 6-module Launch course, money spreadsheets and a workbook for your own numbers.</p><p class="fine">One payment, no subscription. 30-day money-back guarantee.</p></div><a class="btn" href="../../pricing/index.html#pricing">See Builder →</a></aside>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../../index.html" style="display:inline-flex;margin-bottom:10px"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Sharp</p></div>
+    <div><h4>Courses</h4><a href="../../learn/index.html#money">Finance</a><a href="../../learn/index.html#business">Business</a><a href="../../learn/index.html#mkt-basics">Marketing</a><a href="../../learn/index.html#negotiation">Negotiation</a><a href="../../learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="../../tools/marketing/index.html">Marketing calculators</a><a href="../../index.html#check">Spending check</a><a href="../../tools/idea-check/index.html">Idea check</a><a href="../../tools/ai/index.html">AI at work</a><a href="../../tools/money-plan/index.html">Money plan</a><a href="../../tools/budget/index.html">Budget planner</a><a href="../../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../../tools/negotiation/index.html">Negotiation prep</a><a href="../../tools/investors/index.html">Investor pressure drill</a></div>
+    <div><h4>Sharp</h4><a href="../../ask/index.html" data-ai>Ask Sharp (AI)</a><a href="../../plan/index.html" data-ai>Idea to Plan (AI)</a><a href="../../pricing/index.html">Pricing</a><a href="../../trial/index.html">Free trial</a><a href="../../books/index.html">Book notes</a><a href="../../learn/index.html#prompts">AI prompts</a><a href="../../learn/index.html#glossary">Glossary</a><a href="../../about/index.html">About</a><a href="../../about/index.html#install">Install the app</a><a href="../../privacy/index.html">Privacy</a><a href="../../terms/index.html">Terms</a><a href="../../refunds/index.html">Refunds</a></div>
+  </div>
+</footer>
+<script src="../../assets/tools.js"></script><script src="../../assets/shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
+<link rel="canonical" href="https://sharpbasics.com/tools/business-plan/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Business plan & pricing · Sharp Basics</title>
+<meta name="description" content="Free one-page business plan builder, pricing calculator and simple profit and loss for new businesses.">
+<meta property="og:title" content="Business plan & pricing · Sharp Basics">
+<meta property="og:description" content="Free one-page business plan builder, pricing calculator and simple profit and loss for new businesses.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpbasics.com/tools/business-plan/">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/sharp.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../../index.html" aria-label="Sharp home"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../../learn/index.html">Courses</a>
+      <a href="../../tools/index.html" aria-current="page">Tools</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="signin" href="../../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../../index.html">Sharp</a> / <a href="../../tools/index.html">Tools</a> / Business plan & pricing</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Business tools</span>
+    <h1>Business plan &amp; pricing</h1>
+    <p class="lede">Write a one-page plan, price your product, and see your monthly profit before you spend a dollar.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <nav class="tabs" aria-label="Tools on this page"><a href="#plan">One-page plan</a><a href="#price">Pricing</a><a href="#pnl">Profit &amp; loss</a></nav>
+    <section class="tool" id="plan">
+      <div class="tool-grid">
+        <form id="f-plan" novalidate>
+          <h2>One-page business plan</h2>
+          <p class="intro">Ten questions. If you can't answer one, that's the part of the idea to work on. Your answers are saved on this device only, never sent anywhere. On a shared computer, tap Clear when you're done.</p>
+          <div class="field-col">
+<label for="pl-name">Business name<input type="text" id="pl-name" maxlength="80" placeholder="e.g. Brightside Meal Prep"></label>
+<label for="pl-problem">What problem do you solve?<textarea id="pl-problem" rows="2" maxlength="600" placeholder="Busy parents waste evenings cooking and still order takeaway 3 nights a week."></textarea></label>
+<label for="pl-customer">Who exactly is it for?<textarea id="pl-customer" rows="2" maxlength="600" placeholder="Two-income families with young kids, within 5 miles."></textarea></label>
+<label for="pl-solution">What do you sell?<textarea id="pl-solution" rows="2" maxlength="600" placeholder="Weekly packs of 5 healthy dinners, delivered Sunday."></textarea></label>
+<label for="pl-why">Why you?<textarea id="pl-why" rows="2" maxlength="600" placeholder="Trained chef, already cook for 3 neighbours."></textarea></label>
+<label for="pl-price">Price<input type="text" id="pl-price" maxlength="120" placeholder="$75 a week"></label>
+<label for="pl-channels">How will customers find you?<textarea id="pl-channels" rows="2" maxlength="600" placeholder="School parent groups, a local Facebook group, flyers at two gyms."></textarea></label>
+<label for="pl-costs">What will it cost?<textarea id="pl-costs" rows="2" maxlength="600" placeholder="$1,200 to start (containers, permit). About $40 food cost per pack."></textarea></label>
+<label for="pl-goal">90-day goal<textarea id="pl-goal" rows="2" maxlength="600" placeholder="20 paying families by the end of the quarter."></textarea></label>
+<label for="pl-risk">Biggest risk, and how you'll test it<textarea id="pl-risk" rows="2" maxlength="600" placeholder="Families may not pay $75. Pre-sell 10 packs before buying equipment."></textarea></label>
+          </div>
+        </form>
+        <div style="position:sticky;top:90px">
+          <div class="card"><div id="pl-out"></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px"><button class="btn sm" type="button" id="pl-copy">Copy plan</button><button class="btn sm ghost" type="button" id="pl-clear">Clear</button></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="tool" id="price">
+      <div class="tool-grid">
+        <form id="f-price" novalidate>
+          <h2>Pricing calculator</h2>
+          <p class="intro">Set the margin you want and get the price. Add a competitor's price to see how you compare.</p>
+          <div class="fields">
+<label for="pr-cost">Cost per unit ($)<input type="number" id="pr-cost" value="12" min="0" step="any" inputmode="decimal"></label>
+<label for="pr-margin">Margin you want (%)<input type="number" id="pr-margin" value="60" min="0" step="any" inputmode="decimal"></label>
+<label for="pr-comp">Competitor price ($, optional)<input type="number" id="pr-comp" value="29" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="pr-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <section class="tool" id="pnl">
+      <div class="tool-grid">
+        <form id="f-pnl" novalidate>
+          <h2>Profit &amp; loss (monthly)</h2>
+          <p class="intro">A simple profit and loss: what you sell, what it costs, and what's left after everything.</p>
+          <div class="fields">
+<label for="pn-units">Units sold / month<input type="number" id="pn-units" value="150" min="0" step="any" inputmode="decimal"></label>
+<label for="pn-price">Price per unit ($)<input type="number" id="pn-price" value="29" min="0" step="any" inputmode="decimal"></label>
+<label for="pn-cost">Cost per unit ($)<input type="number" id="pn-cost" value="12" min="0" step="any" inputmode="decimal"></label>
+<label for="pn-rent">Rent / space ($)<input type="number" id="pn-rent" value="0" min="0" step="any" inputmode="decimal"></label>
+<label for="pn-soft">Software & tools ($)<input type="number" id="pn-soft" value="80" min="0" step="any" inputmode="decimal"></label>
+<label for="pn-mkt">Marketing ($)<input type="number" id="pn-mkt" value="400" min="0" step="any" inputmode="decimal"></label>
+<label for="pn-pay">Pay & contractors ($)<input type="number" id="pn-pay" value="500" min="0" step="any" inputmode="decimal"></label>
+<label for="pn-tax">Tax rate estimate (%)<input type="number" id="pn-tax" value="20" min="0" step="any" inputmode="decimal"></label>
+          </div>
+        </form>
+        <div>
+          <div class="result" id="pn-out" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <p class="fine">Tax here is a rough estimate on profit only. Real tax depends on your country and business type; check with a local accountant.</p>
+<aside class="upsell" aria-label="Go further with Builder"><div><span class="eyebrow">Go further · Builder $29.99 one-time</span><p>Builder adds ready-made money spreadsheets for pricing, cash flow and startup costs, plus the 6-module Launch course.</p><p class="fine">One payment, no subscription. 30-day money-back guarantee.</p></div><a class="btn" href="../../pricing/index.html#pricing">See Builder →</a></aside>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../../index.html" style="display:inline-flex;margin-bottom:10px"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Sharp</p></div>
+    <div><h4>Courses</h4><a href="../../learn/index.html#money">Finance</a><a href="../../learn/index.html#business">Business</a><a href="../../learn/index.html#mkt-basics">Marketing</a><a href="../../learn/index.html#negotiation">Negotiation</a><a href="../../learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="../../tools/marketing/index.html">Marketing calculators</a><a href="../../index.html#check">Spending check</a><a href="../../tools/idea-check/index.html">Idea check</a><a href="../../tools/ai/index.html">AI at work</a><a href="../../tools/money-plan/index.html">Money plan</a><a href="../../tools/budget/index.html">Budget planner</a><a href="../../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../../tools/negotiation/index.html">Negotiation prep</a><a href="../../tools/investors/index.html">Investor pressure drill</a></div>
+    <div><h4>Sharp</h4><a href="../../ask/index.html" data-ai>Ask Sharp (AI)</a><a href="../../plan/index.html" data-ai>Idea to Plan (AI)</a><a href="../../pricing/index.html">Pricing</a><a href="../../trial/index.html">Free trial</a><a href="../../books/index.html">Book notes</a><a href="../../learn/index.html#prompts">AI prompts</a><a href="../../learn/index.html#glossary">Glossary</a><a href="../../about/index.html">About</a><a href="../../about/index.html#install">Install the app</a><a href="../../privacy/index.html">Privacy</a><a href="../../terms/index.html">Terms</a><a href="../../refunds/index.html">Refunds</a></div>
+  </div>
+</footer>
+<script src="../../assets/tools.js"></script><script src="../../assets/shell.js"></script>
+</body>
+</html>

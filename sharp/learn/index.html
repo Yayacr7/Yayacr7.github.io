@@ -1,0 +1,1819 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
+<link rel="canonical" href="https://sharpbasics.com/learn/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; form-action 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script src="early.js"></script>
+<title>Free business courses · Sharp Basics</title>
+<meta property="og:title" content="Free business courses · Sharp Basics">
+<meta property="og:description" content="Plain-English lessons on personal finance, business finance and negotiation — with calculators, practice problems that check your work, and ready-to-use AI prompts.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpbasics.com/learn/">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<meta name="description" content="Plain-English lessons on personal finance, business finance and negotiation — with calculators, practice problems that check your work, and ready-to-use AI prompts.">
+<link rel="stylesheet" href="../assets/fonts.css">
+<style>
+/* Layout concept: Sharp courses. Structured learning layout, white cards on cool grey,
+   four colour-coded topics, one hot orange accent for action. */
+:root{
+  --paper:#0d1020;   --paper-2:#1e2442;  --card:#151a30;
+  --ink:#f2f3f9;     --muted:#a4aac4;    --rule:#283050;
+  --note:#ff6a2b;    --note-ink:#ffffff; --note-soft:#3a1d18;
+  --engrave:#ff8f5e; --gold:#a4aac4;     --gold-soft:#ffb37a; --hl-ink:#0d1020;
+  --good:#5fd99a;    --good-soft:#123326;
+  --bad:#ff8d7d;     --bad-soft:#3d1d1d;
+  --ledger-line:#1e2442; --ledger-margin:#283050;
+  --readout-bg:#090b17;  --readout-fg:#ffffff; --readout-dim:#a4aac4;
+  --finance:#3ddba5; --business:#8ea4ff; --marketing:#ff8f5e; --negotiation:#c3a2ff;
+  --finance-soft:#10302a; --business-soft:#1c2550; --marketing-soft:#3a1d18; --negotiation-soft:#2b1e4a;
+  --investors:#ff7fb6; --investors-soft:#3d1830;
+  --shadow:0 18px 40px -24px rgba(0,0,0,.8);
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Karla","Helvetica Neue",Arial,system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --f-hand:"Caveat","Segoe Print","Bradley Hand",cursive;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16.5px/1.65 var(--f-body)}
+a{color:var(--note);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--engrave);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:1.5em 0 .45em;font-weight:700}
+h1{font-size:clamp(2rem,4.6vw,2.9rem);font-weight:800;margin-top:0;letter-spacing:-.01em}
+h2{font-size:1.55rem}
+h3{font-family:var(--f-body);font-size:1.02rem;font-weight:700}
+p,ul,ol{margin:.6em 0}
+li{margin:.3em 0}
+li::marker{color:var(--note)}
+strong{font-weight:700}
+code{font-family:var(--f-mono);background:var(--paper-2);padding:.08em .35em;border-radius:3px;font-size:.88em}
+.muted{color:var(--muted)}
+.mono{font-family:var(--f-mono)}
+
+/* tables: ledger columns */
+.table-wrap{overflow-x:auto;margin:1em 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;font-variant-numeric:tabular-nums}
+th,td{padding:.6em .7em;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule)}
+th{font-family:var(--f-mono);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);border-bottom:2px solid var(--ink)}
+
+/* top bar + ticker */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--rule)}
+.bar{display:flex;align-items:center;gap:14px;padding:10px 16px;max-width:1220px;margin:0 auto}
+.brand{white-space:nowrap;font-family:var(--f-display);font-weight:800;font-size:1.2rem;text-decoration:none;color:var(--ink);letter-spacing:-.01em}
+.brand i{font-style:italic;font-weight:500;color:var(--gold)}
+.spacer{flex:1}
+.progress-pill{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);white-space:nowrap;letter-spacing:.03em}
+.icon-btn{background:var(--card);border:1px solid var(--rule);color:var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer;font:500 .8rem var(--f-mono)}
+.ticker{overflow:hidden;background:var(--note);color:var(--note-ink);font:500 .78rem/1 var(--f-mono);letter-spacing:.04em;white-space:nowrap}
+.ticker-track{display:inline-flex;padding:8px 0;animation:tick 70s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker span{padding:0 22px;text-transform:uppercase}
+.ticker span b{color:var(--gold-soft);font-weight:600}
+.ticker span::after{content:"◆";margin-left:44px;opacity:.45;font-size:.6rem}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* layout */
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);max-width:1220px;margin:0 auto}
+nav.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 88px);align-self:start;max-height:calc(100vh - 88px);overflow-y:auto;padding:24px 14px 24px 16px}
+.meter{margin:0 10px 18px}
+.meter-label{display:flex;justify-content:space-between;font:600 .7rem var(--f-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.meter-track{height:6px;background:var(--paper-2);border-radius:3px;margin-top:6px;overflow:hidden}
+.meter-fill{height:100%;width:0;background:var(--note);transition:width .5s ease}
+nav.side .group{font:600 .68rem var(--f-mono);text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:18px 10px 6px}
+nav.side a{display:flex;align-items:baseline;gap:10px;padding:7px 10px;border-radius:6px;color:var(--ink);text-decoration:none;font-size:.93rem;line-height:1.35}
+nav.side a .n{font:500 .74rem var(--f-mono);color:var(--muted);min-width:1.4em}
+nav.side a:hover{background:var(--paper-2)}
+nav.side a.active{background:var(--ink);color:var(--paper)}
+nav.side a.active .n{color:var(--gold-soft)}
+nav.side .tick{margin-left:auto;color:var(--good);font-weight:700}
+nav.side a.active .tick{color:var(--gold-soft)}
+
+main{padding:36px 40px 90px;min-width:0}
+section.page{max-width:740px;scroll-margin-top:100vh}
+.js section.page{display:none}
+.js section.page.show{display:block}
+.lede{font-size:1.14rem;color:var(--muted);max-width:62ch}
+
+/* lesson header */
+.lesson-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 22px;align-items:end;padding-bottom:22px;margin-bottom:10px;border-bottom:1px solid var(--rule)}
+.lesson-num{grid-row:span 2;font-family:var(--f-display);font-weight:800;font-size:clamp(4.2rem,10vw,6.4rem);line-height:.8;color:var(--note);font-variant-numeric:lining-nums}
+.eyebrow{font:600 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.14em;color:var(--gold)}
+.lesson-head h1{margin:0}
+.lesson-head .lede{grid-column:1/-1;margin-top:14px}
+
+/* the opening note (hero) */
+.note{position:relative;background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:12px;box-shadow:var(--shadow);margin-bottom:34px}
+.note-inner{position:relative;border:1.5px solid var(--note);border-radius:8px;padding:52px 34px 30px;overflow:hidden;outline:1px solid var(--note);outline-offset:-6px}
+.note canvas{position:absolute;right:-120px;top:50%;transform:translateY(-50%);width:340px;height:340px;opacity:.9;pointer-events:none}
+.note-content{position:relative;max-width:440px}
+.note .denom{position:absolute;font-family:var(--f-display);font-weight:800;color:var(--note);font-size:1.6rem;line-height:1}
+.note .denom.tl{top:14px;left:18px}
+.note .denom.br{bottom:12px;right:20px}
+.note .eyebrow{display:block;margin:0 0 12px}
+.note h1{font-size:clamp(2.2rem,5.6vw,3.5rem);line-height:1.02;margin:0 0 14px}
+.note h1 em{font-style:italic;font-weight:500;color:var(--engrave)}
+.note p{color:var(--muted);font-size:1.06rem;margin:0 0 20px}
+.serial{display:inline-block;font:600 .8rem var(--f-mono);letter-spacing:.16em;color:var(--bad);margin-top:18px}
+.cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* lesson list on the start page */
+.lessons{list-style:none;padding:0;margin:14px 0;border-top:2px solid var(--ink)}
+.lessons li{margin:0;border-bottom:1px solid var(--rule)}
+.lessons a{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:16px;align-items:center;padding:14px 6px;text-decoration:none;color:var(--ink)}
+.lessons a:hover{background:var(--card)}
+.lessons .num{font-family:var(--f-display);font-weight:800;font-size:2.1rem;line-height:1;color:var(--note)}
+.lessons .t{font-weight:700}
+.lessons .d{display:block;color:var(--muted);font-size:.9rem;font-weight:400}
+.chip{font:600 .68rem var(--f-mono);text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;border-radius:999px;border:1px solid var(--rule);color:var(--muted);white-space:nowrap}
+.chip.done{background:var(--good-soft);border-color:transparent;color:var(--good)}
+
+.big-ideas{list-style:none;padding:0;display:grid;gap:10px}
+.big-ideas li{margin:0;padding:12px 16px;background:var(--card);border:1px solid var(--rule);border-radius:10px}
+
+/* formulas: ledger paper */
+.formula{font-family:var(--f-mono);font-size:.88rem;line-height:28px;white-space:pre;overflow-x:auto;margin:1em 0;padding:6px 16px 6px 34px;border-radius:6px;border:1px solid var(--rule);font-variant-numeric:tabular-nums;
+  background:
+    linear-gradient(90deg,transparent 22px,var(--ledger-margin) 22px,var(--ledger-margin) 23px,transparent 23px),
+    repeating-linear-gradient(to bottom,var(--card) 0,var(--card) 27px,var(--ledger-line) 27px,var(--ledger-line) 28px);
+  background-position:0 6px}
+
+/* fine print notes (callouts) */
+.callout{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:14px 16px 14px;margin:1.2em 0}
+.callout b:first-child{display:inline-block;font:600 .68rem var(--f-mono);text-transform:uppercase;letter-spacing:.1em;padding:3px 8px;border-radius:4px;background:var(--note-soft);color:var(--note);margin-bottom:8px}
+.callout.warn b:first-child{background:var(--gold-soft);color:var(--gold)}
+.callout.honest{border-style:dashed;border-color:var(--bad)}
+.callout.honest b:first-child{background:var(--bad-soft);color:var(--bad)}
+.callout b:first-child::after{content:""}
+.callout{display:block}
+.callout > b:first-child + *{margin-top:0}
+
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:16px 18px;margin:14px 0}
+.card h3{margin-top:0}
+
+/* ZOPA diagram */
+.zopa{margin:1.2em 0;padding:14px 12px 6px;background:var(--card);border:1px solid var(--rule);border-radius:12px}
+.zopa svg{display:block;width:100%;height:auto}
+.zopa .axis{stroke:var(--muted);stroke-width:1}
+.zopa .tick-l{fill:var(--muted);font:500 11px var(--f-mono)}
+.zopa .seller{fill:var(--engrave);opacity:.22}
+.zopa .buyer{fill:var(--gold);opacity:.28}
+.zopa .zone{fill:var(--note);opacity:.85}
+.zopa .zone-t{fill:var(--note-ink);font:700 12px var(--f-mono);letter-spacing:.08em}
+.zopa .lbl{fill:var(--ink);font:600 12px var(--f-body)}
+.zopa .mark{stroke:var(--ink);stroke-width:1.5}
+.zopa figcaption{font-size:.85rem;color:var(--muted);padding:4px 4px 6px}
+
+/* quiz: check your work */
+.quiz{margin-top:44px;padding-top:22px;border-top:2px solid var(--ink);position:relative}
+.quiz h2{margin-top:0}
+.q{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:16px 18px;margin:12px 0}
+.q .prompt{font-weight:700;margin-bottom:10px;display:flex;gap:10px}
+.q .prompt .qn{font:600 .8rem var(--f-mono);color:var(--note);padding-top:3px;flex:none}
+.q label.opt{display:flex;gap:10px;align-items:flex-start;padding:8px 11px;border:1px solid var(--rule);border-radius:8px;margin:6px 0;cursor:pointer;transition:border-color .15s,background .15s}
+.q label.opt:hover{border-color:var(--note)}
+.q label.opt:has(input:checked){border-color:var(--note);background:var(--note-soft)}
+.q label.opt input{margin-top:6px;accent-color:var(--note)}
+.q .numrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-family:var(--f-mono)}
+.calc input{width:100% !important}
+.q input[type=number],.calc input{font:500 1rem var(--f-mono);padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);width:170px;max-width:100%;font-variant-numeric:tabular-nums}
+.q .fb{margin-top:10px;padding:10px 12px;border-radius:8px;display:none;font-size:.95rem}
+.q .fb.show{display:block}
+.q .fb.ok{background:var(--good-soft)}
+.q .fb.ok strong{color:var(--good)}
+.q .fb.no{background:var(--bad-soft)}
+.q .fb.no strong{color:var(--bad)}
+.btn{background:var(--ink);color:var(--paper);border:1px solid var(--ink);border-radius:999px;padding:9px 18px;font:600 .92rem var(--f-body);cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:var(--note);border-color:var(--note);color:var(--note-ink)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink);background:transparent;color:var(--ink)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.result{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:18px}
+.score{font:600 .95rem var(--f-mono);flex:1;min-width:200px}
+.stamp{flex:none;font:800 1.5rem/1 var(--f-display);text-transform:uppercase;letter-spacing:.12em;padding:10px 16px 8px;border:3px double currentColor;border-radius:6px;transform:rotate(-8deg);text-align:center;opacity:.92}
+.stamp small{display:block;font:600 .66rem var(--f-mono);letter-spacing:.14em;margin-top:5px}
+.stamp.pass{color:var(--good)}
+.stamp.review{color:var(--bad)}
+.stamp.hit{animation:stamp .38s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes stamp{from{transform:rotate(-14deg) scale(1.9);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:.92}}
+
+/* calculators */
+.calc{padding:18px 18px 16px}
+.calc h3{font-family:var(--f-display);font-size:1.3rem;margin:0 0 10px}
+.calc .row{display:flex;flex-wrap:wrap;gap:12px;margin:8px 0}
+.calc label{flex:1 1 140px;max-width:220px;display:flex;flex-direction:column;font:600 .7rem var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);gap:5px}
+.calc .out{margin-top:14px;background:var(--readout-bg);color:var(--readout-fg);border-radius:10px;padding:14px 16px;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.calc .out .k{font-size:.68rem;text-transform:uppercase;letter-spacing:.14em;color:var(--readout-dim)}
+.calc .out .big{font-size:clamp(1.6rem,5vw,2.2rem);font-weight:600;line-height:1.15;letter-spacing:-.01em}
+.calc .out .sub{font-size:.82rem;color:var(--readout-dim);margin-top:4px}
+.calc .out .warnline{color:var(--readout-fg);font-size:.95rem}
+.calc .formula{margin-bottom:0}
+
+/* prompts */
+.prompt-box{position:relative}
+.prompt-box pre{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px;padding-top:44px;white-space:pre-wrap;word-wrap:break-word;font:.84rem/1.6 var(--f-mono);max-height:420px;overflow:auto;margin:.5em 0}
+.prompt-box .tag{position:absolute;top:12px;left:14px;font:600 .66rem var(--f-mono);text-transform:uppercase;letter-spacing:.12em;color:var(--gold)}
+.copy{position:absolute;top:8px;right:8px;font-size:.78rem;padding:5px 12px}
+
+/* glossary */
+dl.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 28px}
+dl.gloss div{padding:12px 0;border-bottom:1px solid var(--rule)}
+dl.gloss dt{font-family:var(--f-display);font-weight:700;font-size:1.15rem}
+dl.gloss dd{margin:2px 0 0 0;color:var(--muted);font-size:.95rem}
+
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:44px;border-top:1px solid var(--rule);padding-top:18px;font-weight:600}
+.pager a{text-decoration:none}
+
+@media (max-width:860px){
+  .layout{display:block}
+  nav.side{position:static;max-height:none;display:flex;overflow-x:auto;gap:4px;padding:10px 16px;border-bottom:1px solid var(--rule)}
+  nav.side .group,nav.side .meter{display:none}
+  nav.side a{white-space:nowrap;flex:0 0 auto}
+  main{padding:24px 16px 70px}
+  .note-inner{padding:48px 20px 26px}
+  .note canvas{right:-120px;top:auto;bottom:-140px;transform:none;opacity:.45}
+  .lessons a{grid-template-columns:44px minmax(0,1fr);}
+  .lessons .chip{grid-column:2;justify-self:start}
+  .lessons .num{font-size:1.7rem}
+  .progress-pill{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  .ticker-track{animation:none}
+  .ticker{overflow-x:auto}
+  .stamp.hit{animation:none}
+  .meter-fill{transition:none}
+}
+
+/* ---- base skin ---- */
+h1,h2,h3{letter-spacing:-.02em;line-height:1.1}
+h1{font-weight:800}
+h2{font-weight:800}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-display);letter-spacing:-.02em}
+.brand i{font:700 1.25rem var(--f-hand);font-style:normal;color:var(--note)}
+.ticker{background:var(--readout-bg);color:var(--readout-fg)}
+.ticker span b{color:var(--gold-soft)}
+.note{background:var(--card);border:0;border-radius:6px;padding:0;transform:rotate(-.6deg);
+  background-image:linear-gradient(90deg,transparent calc(50% - .5px),var(--ledger-margin) calc(50% - .5px),var(--ledger-margin) calc(50% + .5px),transparent calc(50% + .5px)),
+  linear-gradient(transparent calc(50% - .5px),var(--ledger-margin) calc(50% - .5px),var(--ledger-margin) calc(50% + .5px),transparent calc(50% + .5px)),
+  radial-gradient(var(--ledger-line) 1.2px,transparent 1.4px);background-size:100% 100%,100% 100%,9px 9px}
+.note-inner{border:1.5px dashed var(--ledger-margin);outline:0;margin:10px;border-radius:3px;padding:40px 34px 32px}
+.note-content{max-width:560px}
+.note h1 em{font:700 1.15em/1 var(--f-hand);font-style:normal;color:var(--note);padding-right:.14em}
+.serial{font:700 1.5rem var(--f-hand);letter-spacing:0;color:var(--note)}
+.lesson-num{font-family:var(--f-hand);font-weight:700;color:var(--note)}
+.lessons .num{font-family:var(--f-hand);font-weight:700;font-size:2.4rem}
+.eyebrow{font-family:var(--f-body);font-weight:700;letter-spacing:.14em}
+.formula{line-height:1.7;padding:12px 16px;background:var(--card);
+  background-image:radial-gradient(var(--ledger-line) 1.2px,transparent 1.4px);background-size:9px 9px;background-position:0 0}
+.callout.warn b:first-child{background:var(--gold-soft);color:var(--hl-ink)}
+.btn{border-radius:12px}
+.btn:hover{background:var(--note);border-color:var(--note);color:var(--note-ink)}
+.stamp{font-family:var(--f-display)}
+nav.side a.active{background:var(--note);color:#1a0b04}
+nav.side a.active .n,nav.side a.active .tick{color:#1a0b04}
+@media (max-width:860px){ .note-inner{padding:32px 20px 26px} }
+
+/* ---- Sharp skin ---- */
+.chip.t-investors{background:var(--investors-soft);color:var(--investors);border-color:transparent}
+.dot.t-investors{background:var(--investors)}
+.tldr{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:16px 18px 14px;margin:6px 0 26px;box-shadow:var(--shadow)}
+.tldr b{display:block;font:700 .74rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;color:var(--note);margin-bottom:6px}
+.tldr ul{margin:0;padding-left:1.15em}
+.tldr li{margin:.25em 0;font-weight:600}
+.term,.term-demo{text-decoration:underline dotted var(--note) 2px;text-underline-offset:4px;cursor:help}
+.term{background:none;border:0;padding:0;font:inherit;color:inherit}
+.term:focus-visible{outline:2px solid var(--note);outline-offset:2px;border-radius:3px}
+#termTip{position:fixed;z-index:50;max-width:min(300px,calc(100vw - 24px));background:var(--ink);color:var(--paper);font:500 .92rem/1.45 var(--f-body);padding:10px 12px;border-radius:10px;box-shadow:0 12px 30px -10px rgba(0,0,0,.45)}
+#termTip b{display:block;margin-bottom:2px}
+.top-links{display:flex;gap:2px;margin-left:14px}
+.top-links a{color:var(--ink);text-decoration:none;font-weight:600;font-size:.94rem;padding:7px 11px;border-radius:8px}
+.top-links a:hover,.top-links a[aria-current="page"]{background:var(--paper-2)}
+@media (max-width:860px){ .head-in{flex-wrap:wrap;row-gap:2px;padding-bottom:6px} .top-links{order:3;flex:1 0 100%;margin-left:0;overflow-x:auto;scrollbar-width:none} .top-links a{white-space:nowrap} }
+.note{transform:none;background:var(--card);background-image:none;border:1px solid var(--rule);border-radius:18px}
+.note-inner{border:0;margin:0;padding:38px 36px 32px}
+.note h1 em{font:inherit;font-style:normal;color:var(--note);padding-right:0}
+.serial{font:700 .95rem var(--f-body);color:var(--muted)}
+.lesson-num{font-family:var(--f-display);font-weight:800;color:var(--note)}
+.lessons .num{font-family:var(--f-display);font-weight:800;font-size:1.8rem}
+.brand i{font:600 1rem var(--f-body);font-style:normal;color:var(--muted)}
+.topic-h{margin:26px 0 8px}
+.chip.t-finance{background:var(--finance-soft);color:var(--finance);border-color:transparent}
+.chip.t-business{background:var(--business-soft);color:var(--business);border-color:transparent}
+.chip.t-marketing{background:var(--marketing-soft);color:var(--marketing);border-color:transparent}
+.chip.t-negotiation{background:var(--negotiation-soft);color:var(--negotiation);border-color:transparent}
+nav.side .group{display:flex;align-items:center;gap:7px}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.dot.t-finance{background:var(--finance)} .dot.t-business{background:var(--business)} .dot.t-marketing{background:var(--marketing)} .dot.t-negotiation{background:var(--negotiation)}
+.formula{background-image:none}
+
+/* ---- Sharp course skin ---- */
+.t-finance{--t:var(--finance);--ts:var(--finance-soft)}
+.t-business{--t:var(--business);--ts:var(--business-soft)}
+.t-marketing{--t:var(--marketing);--ts:var(--marketing-soft)}
+.t-negotiation{--t:var(--negotiation);--ts:var(--negotiation-soft)}
+.t-investors{--t:var(--investors);--ts:var(--investors-soft)}
+.topic-bars{display:grid;gap:9px;margin:22px 0 24px;max-width:460px}
+.tb{display:grid;grid-template-columns:96px minmax(0,1fr) 40px;align-items:center;gap:12px;font-weight:700;font-size:.92rem}
+.tb-track{height:10px;border-radius:5px;background:var(--paper-2);overflow:hidden}
+.tb-track i{display:block;height:100%;width:0;border-radius:5px;background:var(--t);transition:width .7s cubic-bezier(.2,.8,.2,1)}
+.tb-n{color:var(--t);text-align:right;font-variant-numeric:tabular-nums}
+.site-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+.head-in{display:flex;align-items:center;gap:14px;max-width:1220px;margin:0 auto;padding:10px 20px}
+.brand{font-size:1.3rem}
+.icon-btn{padding:8px 10px;line-height:0}
+nav.side{top:calc(env(safe-area-inset-top,0px) + 62px);max-height:calc(100vh - 66px)}
+.eyebrow,nav.side .group,nav.side a .n,.meter-label,.progress-pill,th,.chip,.q .prompt .qn,.score,.stamp small,.callout b:first-child,.calc label,.zopa .tick-l{font-family:var(--f-body)!important}
+.callout b:first-child{font-weight:700}
+#start{max-width:none}
+.dash{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:center;background:var(--card);border:1px solid var(--rule);border-radius:24px;padding:30px 32px;box-shadow:var(--shadow);
+  background-image:radial-gradient(circle at 100% 0,var(--investors-soft),transparent 40%),radial-gradient(circle at 0 100%,var(--finance-soft),transparent 45%)}
+.dash h1{font-size:clamp(2.2rem,5vw,3.2rem);margin:8px 0 10px}
+.dash h1 em{font-style:normal;color:var(--note)}
+.lvl-row{display:flex;align-items:center;gap:14px;margin:22px 0 18px;max-width:440px}
+.lvl-big{width:54px;height:54px;font-size:1.5rem;flex:none}
+.lvl-info{flex:1;display:grid;gap:6px;font-weight:700}
+.lvl-info small{color:var(--muted);font-weight:600}
+.lvl-info .g-track{height:10px;border-radius:5px}
+.dash-stats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+.dash-stats div{background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:10px 16px;display:grid}
+.dash-stats b{font:800 1.5rem var(--f-display);line-height:1.1}
+.dash-stats span{font-size:.8rem;color:var(--muted);font-weight:600}
+.btn.go{font-size:1.05rem;padding:13px 22px;background:var(--note);border-color:var(--note);color:var(--note-ink);box-shadow:0 5px 0 rgba(0,0,0,.18)}
+.btn.go:hover{transform:translateY(-1px)}
+.dash-ring{position:relative;display:grid;place-items:center}
+.ring-bg{fill:none;stroke:var(--paper-2);stroke-width:12}
+.ring-fg{fill:none;stroke:var(--note);stroke-width:12;stroke-linecap:round;transform:rotate(-90deg);transform-origin:60px 60px;stroke-dasharray:314.16;stroke-dashoffset:314.16;transition:stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1)}
+.ring-txt{position:absolute;display:grid;justify-items:center}
+.ring-txt b{font:800 2.4rem/1 var(--f-display)}
+.ring-txt span{font-size:.8rem;color:var(--muted);font-weight:600}
+.path-h{margin:44px 0 16px}
+.worlds{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.world{background:var(--card);border:1px solid var(--rule);border-radius:22px;padding:20px 18px 18px;display:flex;flex-direction:column;gap:14px;border-top:5px solid var(--t)}
+.world-h{display:flex;align-items:center;gap:12px}
+.world-ic{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--ts);color:var(--t);flex:none}
+.world-h h3{margin:0;font-size:1.2rem}
+.world-h p{margin:0;font-size:.85rem;color:var(--muted)}
+.world-count{margin-left:auto;font:800 .9rem var(--f-display);color:var(--t);background:var(--ts);padding:4px 10px;border-radius:999px}
+.path{position:relative;display:grid;gap:16px;justify-items:center;padding:4px 0}
+.path::before{content:"";position:absolute;top:34px;bottom:44px;left:50%;border-left:3px dashed var(--rule);transform:translateX(-1.5px)}
+.node{position:relative;z-index:1;display:grid;justify-items:center;gap:4px;text-decoration:none;color:var(--ink);text-align:center}
+.node-c{display:grid;place-items:center;width:66px;height:66px;border-radius:50%;background:var(--card);border:3px solid var(--rule);box-shadow:0 5px 0 var(--rule);font:800 1.35rem var(--f-display);color:var(--muted);transition:transform .15s}
+.node:hover .node-c{transform:translateY(-2px)}
+.node-ok{display:none}
+.node-l{font-weight:700;font-size:.93rem;max-width:190px;line-height:1.25;background:var(--card);padding:0 4px}
+.node-s{font-size:.78rem;color:var(--muted);font-weight:600;background:var(--card);padding:0 4px}
+.node.done .node-c{background:var(--t);border-color:var(--t);color:#fff;box-shadow:0 5px 0 var(--ts)}
+.node.done .node-n{display:none}
+.node.done .node-ok{display:block}
+.node.done .node-s{color:var(--t)}
+.node.next .node-c{border-color:var(--t);color:var(--t);box-shadow:0 5px 0 var(--t);animation:node-pulse 1.8s ease-in-out infinite}
+.node.next .node-s{color:var(--t);font-weight:800}
+@keyframes node-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.world-tool{margin-top:auto;font-weight:700;font-size:.9rem;color:var(--t);text-decoration:none;text-align:center;padding:9px;border-radius:12px;background:var(--ts)}
+/* instant-feedback quizzes */
+.qdots{display:flex;gap:6px;margin:4px 0 14px}
+.qdots i{width:28px;height:8px;border-radius:4px;background:var(--paper-2)}
+.qdots i.ok{background:var(--good)} .qdots i.no{background:var(--bad)}
+.q{position:relative;transition:border-color .2s}
+.q.is-ok{border-color:var(--good)} .q.is-no{border-color:var(--bad)}
+.q.locked label.opt{cursor:default}
+.q.locked label.opt.right{border-color:var(--good);background:var(--good-soft)}
+.q.locked label.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.q .opt-b{display:grid;gap:4px;min-width:0}
+.q .opt-tag{font:800 .74rem var(--f-body);letter-spacing:.06em;text-transform:uppercase}
+.q label.opt.right .opt-tag{color:var(--good)} .q label.opt.wrong .opt-tag{color:var(--bad)}
+.q .opt-why{font-size:.9rem;line-height:1.5;color:var(--muted)}
+.q.locked label.opt.right .opt-why,.q.locked label.opt.wrong .opt-why{color:var(--ink)}
+.today-quote{margin:0 0 14px;padding:14px 16px;border-left:4px solid var(--note);background:var(--paper-2);border-radius:0 12px 12px 0}.today-quote blockquote{margin:4px 0 0}.today-quote blockquote p{margin:0;font-weight:800;font-size:1.08rem;line-height:1.4}.today-quote figcaption{margin-top:6px;font-size:.88rem;color:var(--muted)}.today-quote figcaption a{font-weight:700}
+html:not(.ai-on) [data-ai]{display:none!important}html.ai-on [data-ai-off]{display:none!important}
+.lesson-report{margin:18px 0 0;font-size:.88rem;color:var(--muted)}.lesson-report a{color:inherit;font-weight:700}
+.q-review{margin-top:12px}.q-review p{margin:0 0 8px;font-weight:700}.q-review-row{display:flex;flex-wrap:wrap;gap:8px}
+.q .numrow .btn{padding:8px 14px}
+@media (max-width:860px){
+  nav.side .group,nav.side .meter{display:none!important}
+  .head-in{padding:10px 16px;gap:10px}
+  .dash{grid-template-columns:1fr;padding:24px 20px}
+  .dash-ring{order:-1;justify-self:start}
+  .dash-ring svg{width:110px;height:110px}
+  .ring-txt b{font-size:1.8rem}
+  nav.side{top:auto}
+}
+@media (prefers-reduced-motion: reduce){ .node.next .node-c{animation:none} .ring-fg{transition:none} }
+
+/* ---- bold header + dashboard ---- */
+.site-head{background:#0d1020;border-bottom-color:rgba(255,255,255,.08)}
+.site-head .brand{color:#fff}
+.site-head .brand svg path:first-child{fill:#fff}
+.site-head .top-links a{color:#fff}
+.site-head .top-links a:hover,.site-head .top-links a[aria-current="page"]{background:rgba(255,255,255,.1)}
+.site-head .icon-btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.25)}
+.dash{position:relative;overflow:hidden;background:#151a30;border:1px solid var(--rule)!important;color:#fff;border:0;box-shadow:0 24px 50px -28px rgba(13,16,32,.8);background-image:none}
+.dash::before{content:"";position:absolute;inset:-30%;background:radial-gradient(35% 45% at 85% 20%,rgba(255,79,154,.45),transparent 70%),radial-gradient(35% 45% at 10% 90%,rgba(40,200,150,.35),transparent 70%),radial-gradient(30% 40% at 55% 0%,rgba(80,110,255,.35),transparent 70%);pointer-events:none}
+.dash > *{position:relative}
+.dash .eyebrow{color:rgba(255,255,255,.65)}
+.dash h1{color:#fff}
+.dash h1 em{background:linear-gradient(90deg,#ff8a3d,#ff4f9a 55%,#9b8cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dash .lede{color:rgba(255,255,255,.78)}
+.dash .tb{color:#fff}
+.dash .tb-track{background:rgba(255,255,255,.12)}
+.dash .tb.t-finance{--t:#3ddba5}.dash .tb.t-business{--t:#7f97ff}.dash .tb.t-marketing{--t:#ff8a57}.dash .tb.t-negotiation{--t:#c39bff}.dash .tb.t-investors{--t:#ff7fb6}
+.dash .ring-bg{stroke:rgba(255,255,255,.12)}
+.dash .ring-fg{stroke:url(#ringGrad)}
+.dash .ring-txt span{color:rgba(255,255,255,.7)}
+.dash .btn.go{background:linear-gradient(90deg,#ff6a2b,#ff4f9a);border:0;color:#fff;box-shadow:0 10px 30px -10px rgba(255,79,154,.7)}
+.world{background:var(--card)}
+#start .worlds{margin-top:4px}
+
+/* collapsible topics in the side menu (desktop); phones keep the swipe strip */
+nav.side .gbtn{display:flex;align-items:center;gap:8px;width:100%;margin:2px 0;padding:9px 10px;border:0;border-radius:8px;background:none;color:var(--ink);font:700 .95rem var(--f-body)!important;text-transform:none;letter-spacing:0;cursor:pointer;text-align:left}
+nav.side .gbtn:hover{background:var(--paper-2)}
+nav.side .gbtn .gcount{margin-left:auto;color:var(--muted);font-weight:600;font-size:.8rem}
+nav.side .gbtn .chev{color:var(--muted);transition:transform .15s;display:inline-block;width:1em;text-align:center}
+nav.side .gbtn:not(:has(.gcount)) .chev{margin-left:auto}
+nav.side .gbtn[aria-expanded="true"] .chev{transform:rotate(90deg)}
+nav.side a[data-g]{padding-left:28px}
+@media (min-width:861px){ nav.side a[data-g]:not(.in){display:none} }
+@media (max-width:860px){ nav.side .gbtn{display:none!important} nav.side a[data-g]{padding-left:10px} }
+/* previous / next stay on screen while you read */
+section.page > .pager{position:sticky;bottom:0;z-index:5;margin-top:44px;padding:12px 4px calc(12px + env(safe-area-inset-bottom,0px));background:var(--paper);border-top:1px solid var(--rule);box-shadow:0 -10px 24px -14px rgba(0,0,0,.6)}
+section.page > .pager a{padding:6px 10px;border-radius:8px}
+section.page > .pager a:hover{background:var(--paper-2)}
+/* Sharp Daily, notes, saved lessons */
+.today,.saved-box{background:var(--card);border:1px solid var(--rule);border-radius:20px;padding:22px 24px;margin:22px 0 0;box-shadow:var(--shadow)}
+.today-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.today h2,.saved-box h2{margin:0;font-size:1.35rem}.today-count{font-weight:700;color:var(--note);font-size:.92rem}
+.today-sub,.today-foot{color:var(--muted);margin:6px 0 0;font-size:.95rem}.today-foot{margin-top:12px}
+.today-list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:560px){.today-list{grid-template-columns:1fr}.today,.saved-box{padding:18px 16px}}
+.today-item{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;align-items:start;background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:14px 16px}
+.today-item input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--note);cursor:pointer}
+.today-item label{display:grid;gap:4px;cursor:pointer}.today-k{font:700 .72rem var(--f-body);text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.today-t{font-weight:600;line-height:1.45}.today-item.is-done .today-t{color:var(--muted);text-decoration:line-through}
+.today-go{grid-column:2;font-weight:700;color:var(--note);text-decoration:none;padding:6px 0;min-height:32px}.today-go:hover{text-decoration:underline}
+.saved-list{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}.saved-list li{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.saved-list a{color:var(--ink);font-weight:700}.saved-tag{font-size:.82rem;color:var(--muted)}
+.save-lesson{grid-column:1/-1;justify-self:start;margin-top:12px;background:transparent;color:var(--ink);border:1px solid var(--rule);border-radius:999px;padding:8px 14px;font:600 .9rem var(--f-body);cursor:pointer;min-height:40px}
+.save-lesson[aria-pressed="true"]{border-color:var(--note);color:var(--note)}
+.notes-box{margin-top:36px;display:grid;gap:8px}.notes-h{font-weight:800;font-size:1.05rem}
+.notes-box textarea{font:500 1rem/1.5 var(--f-body);padding:12px 14px;border-radius:12px;border:1.5px solid var(--rule);background:var(--card);color:var(--ink);width:100%;resize:vertical;min-height:90px}
+.notes-box textarea:focus{outline:none;border-color:var(--note)}.notes-st{font-size:.85rem;color:var(--muted)}
+.notes-box + .ask-cta{margin-top:18px}
+/* Ask Sharp box at the end of each lesson */
+.ask-cta{margin-top:36px;background:var(--paper-2);border:1px solid var(--rule);border-radius:14px;padding:16px 18px;display:grid;gap:10px}.ask-cta p{margin:0;color:var(--muted)}.ask-cta b{color:var(--ink)}.ask-cta-row{display:flex;flex-wrap:wrap;gap:8px}.ask-cta-row .btn{min-height:44px}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="head-in">
+    <a class="brand" href="../index.html"><img src="../icon.svg" width="26" height="26" alt="" class="logo-mark">Sharp</a>
+    <nav class="top-links" aria-label="Main"><a href="index.html" aria-current="page">Courses</a><a href="../tools/index.html">Tools</a><a href="../pricing/index.html">Pricing</a><a href="../trial/index.html">Free trial</a></nav>
+    <div class="spacer"></div>
+    <span id="progressPill" hidden></span>
+  </div>
+</header>
+
+<div class="layout">
+<nav class="side" id="nav" aria-label="Courses">
+  <div class="meter"><div class="meter-label"><span>Progress</span><span id="meterText">0/21</span></div><div class="meter-track"><div class="meter-fill" id="meterFill"></div></div></div>
+  <a href="#start" data-page="start"><span class="n">§</span>All courses</a>
+  <button type="button" class="group gbtn" data-grp="finance" aria-expanded="false"><span class="dot t-finance"></span>Finance<span class="gcount" data-world="finance">0/3</span><span class="chev" aria-hidden="true">›</span></button>
+  <a data-g="finance" href="#money" data-page="money"><span class="n">01</span>Your money<span class="tick" data-tick="money"></span></a>
+  <a data-g="finance" href="#investing" data-page="investing"><span class="n">02</span>Investing<span class="tick" data-tick="investing"></span></a>
+  <a data-g="finance" href="#funding" data-page="funding"><span class="n">03</span>Funding &amp; valuation<span class="tick" data-tick="funding"></span></a>
+  <button type="button" class="group gbtn" data-grp="business" aria-expanded="false"><span class="dot t-business"></span>Business<span class="gcount" data-world="business">0/5</span><span class="chev" aria-hidden="true">›</span></button>
+  <a data-g="business" href="#business" data-page="business"><span class="n">04</span>How a business makes money<span class="tick" data-tick="business"></span></a>
+  <a data-g="business" href="#statements" data-page="statements"><span class="n">05</span>Financial statements<span class="tick" data-tick="statements"></span></a>
+  <a data-g="business" href="#why-business" data-page="why-business"><span class="n">06</span>Why businesses exist<span class="tick" data-tick="why-business"></span></a>
+  <a data-g="business" href="#buy-back-time" data-page="buy-back-time"><span class="n">07</span>Buy back your time<span class="tick" data-tick="buy-back-time"></span></a>
+  <a data-g="business" href="#ai-at-work" data-page="ai-at-work"><span class="n">08</span>Using AI at work<span class="tick" data-tick="ai-at-work"></span></a>
+  <button type="button" class="group gbtn" data-grp="marketing" aria-expanded="false"><span class="dot t-marketing"></span>Marketing<span class="gcount" data-world="marketing">0/5</span><span class="chev" aria-hidden="true">›</span></button>
+  <a data-g="marketing" href="#mkt-basics" data-page="mkt-basics"><span class="n">09</span>Marketing basics<span class="tick" data-tick="mkt-basics"></span></a>
+  <a data-g="marketing" href="#mkt-channels" data-page="mkt-channels"><span class="n">10</span>Getting customers<span class="tick" data-tick="mkt-channels"></span></a>
+  <a data-g="marketing" href="#mkt-measure" data-page="mkt-measure"><span class="n">11</span>Measuring marketing<span class="tick" data-tick="mkt-measure"></span></a>
+  <a data-g="marketing" href="#mkt-words" data-page="mkt-words"><span class="n">12</span>Words that sell<span class="tick" data-tick="mkt-words"></span></a>
+  <a data-g="marketing" href="#mkt-social" data-page="mkt-social"><span class="n">13</span>Social media and short video<span class="tick" data-tick="mkt-social"></span></a>
+  <button type="button" class="group gbtn" data-grp="negotiation" aria-expanded="false"><span class="dot t-negotiation"></span>Negotiation<span class="gcount" data-world="negotiation">0/3</span><span class="chev" aria-hidden="true">›</span></button>
+  <a data-g="negotiation" href="#negotiation" data-page="negotiation"><span class="n">14</span>Negotiation<span class="tick" data-tick="negotiation"></span></a>
+  <a data-g="negotiation" href="#scripts" data-page="scripts"><span class="n">15</span>Negotiation scripts<span class="tick" data-tick="scripts"></span></a>
+  <a data-g="negotiation" href="#persuasion" data-page="persuasion"><span class="n">16</span>Getting people to say yes<span class="tick" data-tick="persuasion"></span></a>
+  <button type="button" class="group gbtn" data-grp="investors" aria-expanded="false"><span class="dot t-investors"></span>Investors<span class="gcount" data-world="investors">0/5</span><span class="chev" aria-hidden="true">›</span></button>
+  <a data-g="investors" href="#pitching" data-page="pitching"><span class="n">17</span>Pitching investors, simply<span class="tick" data-tick="pitching"></span></a>
+  <a data-g="investors" href="#pressure" data-page="pressure"><span class="n">18</span>Staying calm under pressure<span class="tick" data-tick="pressure"></span></a>
+  <a data-g="investors" href="#voice" data-page="voice"><span class="n">19</span>Your voice in the room<span class="tick" data-tick="voice"></span></a>
+  <a data-g="investors" href="#investor-interest" data-page="investor-interest"><span class="n">20</span>Getting an investor interested<span class="tick" data-tick="investor-interest"></span></a>
+  <a data-g="investors" href="#best-of-investors" data-page="best-of-investors"><span class="n">21</span>Getting the best out of investors<span class="tick" data-tick="best-of-investors"></span></a>
+  <button type="button" class="group gbtn" data-grp="more" aria-expanded="false">More: tools, books, glossary<span class="chev" aria-hidden="true">›</span></button>
+  <a data-g="more" href="../tools/index.html"><span class="n">↗</span>All business tools</a>
+  <a data-g="more" href="../books/index.html"><span class="n">↗</span>Book notes</a>
+  <a data-g="more" href="#calculators" data-page="calculators"><span class="n">=</span>Money calculators</a>
+  <a data-g="more" href="#prompts" data-page="prompts"><span class="n">&gt;_</span>AI prompts</a>
+  <a data-g="more" href="#glossary" data-page="glossary"><span class="n">Aa</span>Glossary</a>
+</nav>
+
+<main id="main">
+
+<!-- ============ START ============ -->
+<section class="page" id="start">
+  <div class="dash">
+    <div class="dash-main">
+      <span class="eyebrow">Your courses</span>
+      <h1>Business, made <em>simple.</em></h1>
+      <p class="lede">21 short lessons. Start anywhere.</p>
+      <div class="topic-bars">
+        <div class="tb t-finance"><span class="tb-name">Finance</span><span class="tb-track"><i data-bar="finance"></i></span><span class="tb-n" data-world="finance">0/3</span></div>
+        <div class="tb t-business"><span class="tb-name">Business</span><span class="tb-track"><i data-bar="business"></i></span><span class="tb-n" data-world="business">0/5</span></div>
+        <div class="tb t-marketing"><span class="tb-name">Marketing</span><span class="tb-track"><i data-bar="marketing"></i></span><span class="tb-n" data-world="marketing">0/5</span></div>
+        <div class="tb t-negotiation"><span class="tb-name">Negotiation</span><span class="tb-track"><i data-bar="negotiation"></i></span><span class="tb-n" data-world="negotiation">0/3</span></div>
+        <div class="tb t-investors"><span class="tb-name">Investors</span><span class="tb-track"><i data-bar="investors"></i></span><span class="tb-n" data-world="investors">0/5</span></div>
+      </div>
+      <a class="btn go" id="continueBtn" href="#money">Start lesson 1 →</a>
+    </div>
+    <div class="dash-ring" aria-hidden="true">
+      <svg viewBox="0 0 120 120" width="160" height="160"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8a3d"/><stop offset=".55" stop-color="#ff4f9a"/><stop offset="1" stop-color="#9b8cff"/></linearGradient></defs><circle cx="60" cy="60" r="50" class="ring-bg"/><circle cx="60" cy="60" r="50" class="ring-fg" id="ringFg"/></svg>
+      <div class="ring-txt"><b id="ringNum">0</b><span>of 21 done</span></div>
+    </div>
+  </div>
+
+  <h2 class="path-h">The course map</h2>
+  <div class="worlds">
+    <section class="world t-finance" aria-label="Finance">
+      <header class="world-h"><span class="world-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></span><div><h3>Finance</h3><p>Money, investing and funding</p></div><span class="world-count" data-world="finance">0/3</span></header>
+      <div class="path">
+        <a class="node" href="#money" data-node="money"><span class="node-c"><span class="node-n">1</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Your money</span><span class="node-s" data-node-s="money">10 min</span></a>
+        <a class="node" href="#investing" data-node="investing"><span class="node-c"><span class="node-n">2</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Investing</span><span class="node-s" data-node-s="investing">12 min</span></a>
+        <a class="node" href="#funding" data-node="funding"><span class="node-c"><span class="node-n">3</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Funding &amp; valuation</span><span class="node-s" data-node-s="funding">12 min</span></a>
+      </div>
+      <a class="world-tool" href="../tools/budget/index.html">Practise: Budget &amp; savings planner →</a>
+    </section>
+    <section class="world t-business" aria-label="Business">
+      <header class="world-h"><span class="world-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg></span><div><h3>Business</h3><p>How businesses make money</p></div><span class="world-count" data-world="business">0/5</span></header>
+      <div class="path">
+        <a class="node" href="#business" data-node="business"><span class="node-c"><span class="node-n">4</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">How a business makes money</span><span class="node-s" data-node-s="business">12 min</span></a>
+        <a class="node" href="#statements" data-node="statements"><span class="node-c"><span class="node-n">5</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Financial statements</span><span class="node-s" data-node-s="statements">10 min</span></a>
+        <a class="node" href="#why-business" data-node="why-business"><span class="node-c"><span class="node-n">6</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Why businesses exist</span><span class="node-s" data-node-s="why-business">10 min</span></a>
+        <a class="node" href="#buy-back-time" data-node="buy-back-time"><span class="node-c"><span class="node-n">7</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Buy back your time</span><span class="node-s" data-node-s="buy-back-time">10 min</span></a>
+        <a class="node" href="#ai-at-work" data-node="ai-at-work"><span class="node-c"><span class="node-n">8</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Using AI at work</span><span class="node-s" data-node-s="ai-at-work">10 min</span></a>
+      </div>
+      <a class="world-tool" href="../tools/business-plan/index.html">Practise: Business plan &amp; pricing →</a>
+    </section>
+    <section class="world t-marketing" aria-label="Marketing">
+      <header class="world-h"><span class="world-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10v4h4l7 5V5l-7 5H3z"/><path d="M18 9a4 4 0 0 1 0 6"/></svg></span><div><h3>Marketing</h3><p>Find customers, know what they cost</p></div><span class="world-count" data-world="marketing">0/5</span></header>
+      <div class="path">
+        <a class="node" href="#mkt-basics" data-node="mkt-basics"><span class="node-c"><span class="node-n">9</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Marketing basics</span><span class="node-s" data-node-s="mkt-basics">10 min</span></a>
+        <a class="node" href="#mkt-channels" data-node="mkt-channels"><span class="node-c"><span class="node-n">10</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Getting customers</span><span class="node-s" data-node-s="mkt-channels">12 min</span></a>
+        <a class="node" href="#mkt-measure" data-node="mkt-measure"><span class="node-c"><span class="node-n">11</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Measuring marketing</span><span class="node-s" data-node-s="mkt-measure">10 min</span></a>
+        <a class="node" href="#mkt-words" data-node="mkt-words"><span class="node-c"><span class="node-n">12</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Words that sell</span><span class="node-s" data-node-s="mkt-words">10 min</span></a>
+        <a class="node" href="#mkt-social" data-node="mkt-social"><span class="node-c"><span class="node-n">13</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Social media and video</span><span class="node-s" data-node-s="mkt-social">10 min</span></a>
+      </div>
+      <a class="world-tool" href="../tools/marketing/index.html">Practise: Marketing calculators →</a>
+    </section>
+    <section class="world t-negotiation" aria-label="Negotiation">
+      <header class="world-h"><span class="world-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h11v8H8l-3 3v-3H3z"/><path d="M14 9h7v8h-2v3l-3-3h-5v-2"/></svg></span><div><h3>Negotiation</h3><p>Better deals and getting to yes</p></div><span class="world-count" data-world="negotiation">0/3</span></header>
+      <div class="path">
+        <a class="node" href="#negotiation" data-node="negotiation"><span class="node-c"><span class="node-n">14</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Negotiation</span><span class="node-s" data-node-s="negotiation">14 min</span></a>
+        <a class="node" href="#scripts" data-node="scripts"><span class="node-c"><span class="node-n">15</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Negotiation scripts</span><span class="node-s" data-node-s="scripts">8 min</span></a>
+        <a class="node" href="#persuasion" data-node="persuasion"><span class="node-c"><span class="node-n">16</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Getting people to say yes</span><span class="node-s" data-node-s="persuasion">8 min</span></a>
+      </div>
+      <a class="world-tool" href="../tools/negotiation/index.html">Practise: Negotiation prep →</a>
+    </section>
+    <section class="world t-investors" aria-label="Investors">
+      <header class="world-h"><span class="world-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span><div><h3>Investors</h3><p>Pitch, and stay calm under pressure</p></div><span class="world-count" data-world="investors">0/5</span></header>
+      <div class="path">
+        <a class="node" href="#pitching" data-node="pitching"><span class="node-c"><span class="node-n">17</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Pitching investors, simply</span><span class="node-s" data-node-s="pitching">10 min</span></a>
+        <a class="node" href="#pressure" data-node="pressure"><span class="node-c"><span class="node-n">18</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Staying calm under pressure</span><span class="node-s" data-node-s="pressure">10 min</span></a>
+        <a class="node" href="#voice" data-node="voice"><span class="node-c"><span class="node-n">19</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Your voice in the room</span><span class="node-s" data-node-s="voice">10 min</span></a>
+        <a class="node" href="#investor-interest" data-node="investor-interest"><span class="node-c"><span class="node-n">20</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Getting an investor interested</span><span class="node-s" data-node-s="investor-interest">10 min</span></a>
+        <a class="node" href="#best-of-investors" data-node="best-of-investors"><span class="node-c"><span class="node-n">21</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Getting the best out of investors</span><span class="node-s" data-node-s="best-of-investors">10 min</span></a>
+      </div>
+      <a class="world-tool" href="../tools/investors/index.html">Practise: Investor pressure drill →</a>
+    </section>
+  </div>
+
+
+  <div class="callout honest" style="margin-top:36px"><b>Straight talk</b><p>This covers the foundations: the ideas that do most of the work in everyday money and business decisions. It's education, not personal financial advice, and tax and account rules differ by country. Your progress is saved in this browser only.</p></div>
+</section>
+
+<!-- ============ 1. MONEY ============ -->
+<section class="page" id="money">
+  <header class="lesson-head">
+    <span class="lesson-num">01</span>
+    <span class="eyebrow">Finance · Lesson 01 of 21</span>
+    <h1>Your money</h1>
+    <p class="lede">Personal finance is mostly behaviour, not maths. But the maths explains why the behaviour matters.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Spend less than you earn, automatically: save on payday, before you can spend it.</li><li>Keep 3–6 months of essential costs as an emergency fund.</li><li>Pay off expensive debt first. Compound interest works for you in savings and against you in debt.</li></ul></div>
+
+  <h2>Know where it goes</h2>
+  <p>You can't fix what you don't measure. Track every expense for one month before writing any budget — most people underestimate their spending by a wide margin, especially on food and subscriptions.</p>
+  <p>A common starting split is <strong>50/30/20</strong>: 50% needs, 30% wants, 20% saving and debt payoff. Treat it as a rough check, not a rule. In expensive cities, needs alone can be 60–70% of take-home pay; that's a signal to work on income or housing cost, not a personal failure.</p>
+  <div class="callout"><b>The one habit that matters most</b><p>Pay yourself first. Set savings to move automatically on payday, so you're budgeting what's left instead of saving what's left.</p></div>
+
+  <h2>Emergency fund</h2>
+  <p>Keep <strong>3–6 months of essential expenses</strong> in an easy-to-reach, insured savings account. Aim for the higher end if your income is irregular or you support others. This money isn't an investment; its job is to stop a car repair from becoming credit-card debt.</p>
+
+  <h2>Debt: good, bad and expensive</h2>
+  <p>Debt is a tool. The question is always: <em>does what I'm buying earn or save more than the interest costs?</em></p>
+  <ul>
+    <li><strong>Expensive debt</strong> (credit cards, payday loans, often 20–30%+ APR): pay it off before investing. Paying off a 24% card is a guaranteed 24% return — no investment reliably beats that.</li>
+    <li><strong>Moderate debt</strong> (car loans, personal loans): keep terms short and avoid borrowing for things that lose value fast.</li>
+    <li><strong>Low-rate debt</strong> (some mortgages and student loans): often fine to pay on schedule while you invest.</li>
+  </ul>
+  <h3>Two payoff methods</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Method</th><th>How</th><th>Honest verdict</th></tr>
+    <tr><td><strong>Avalanche</strong></td><td>Pay minimums on everything; extra money goes to the <em>highest interest rate</em>.</td><td>Mathematically cheapest. Always.</td></tr>
+    <tr><td><strong>Snowball</strong></td><td>Extra money goes to the <em>smallest balance</em> first.</td><td>Costs more interest, but quick wins keep some people going. The best plan is the one you'll stick to.</td></tr>
+  </table></div>
+
+  <h2>Compound interest</h2>
+  <p>Compounding means you earn returns on your earlier returns. Growth starts slow, then accelerates.</p>
+  <div class="formula">Future value = Starting amount × (1 + rate)^years
+
+Example: $10,000 at 7% for 30 years
+= 10,000 × 1.07^30 ≈ $76,123</div>
+  <p><strong>Rule of 72:</strong> divide 72 by the yearly rate to estimate how many years it takes money to double. At 8%, about 9 years. At 24% credit-card interest, a balance you ignore doubles in about 3 years.</p>
+
+  <h2>Inflation</h2>
+  <p>Inflation is prices rising over time, so each dollar buys less. At 3% inflation, $100 today buys only about $74 of today's goods in 10 years. Cash sitting in a 0% account is quietly losing value. That's the reason to invest long-term money, not keep it all in cash.</p>
+
+  <h2>Credit scores (US)</h2>
+  <p>Lenders use your score to price loans. The rough order of importance:</p>
+  <ol>
+    <li><strong>Payment history</strong> — never miss a payment. Turn on autopay for at least the minimum.</li>
+    <li><strong>Utilisation</strong> — how much of your limit you use. Under 30% is the common guideline; under 10% is better.</li>
+    <li><strong>Length of history</strong> — keep old no-fee cards open.</li>
+    <li><strong>Credit mix</strong> and <strong>new applications</strong> — minor factors.</li>
+  </ol>
+  <p class="muted">Other countries use different scoring systems, though paying on time and using little of your limit help almost everywhere.</p>
+
+  <div class="quiz" data-quiz="money"></div>
+  <div class="pager"><a href="#start">← All courses</a><a href="#investing">2. Investing →</a></div>
+</section>
+
+<!-- ============ 2. INVESTING ============ -->
+<section class="page" id="investing">
+  <header class="lesson-head">
+    <span class="lesson-num">02</span>
+    <span class="eyebrow">Finance · Lesson 02 of 21</span>
+    <h1>Investing</h1>
+    <p class="lede">Investing is buying things you expect to be worth more later, or that pay you while you own them. The hard part isn't picking winners. It's not sabotaging yourself.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Higher returns come with bigger swings. "Guaranteed high returns" is a red flag.</li><li>Cheap index funds beat most professionals once fees are counted.</li><li>Fees compound too: 1% a year can cost a fortune over decades.</li></ul></div>
+
+  <h2>Risk and return are linked</h2>
+  <p>Higher expected return comes with bigger swings in value. There's no free lunch. Anyone offering high returns with "no risk" is mistaken or lying.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Asset</th><th>What it is</th><th>Typical role</th></tr>
+    <tr><td>Cash / savings</td><td>Bank deposits, money-market funds</td><td>Safety and short-term needs. Loses to inflation over long periods.</td></tr>
+    <tr><td>Bonds</td><td>Loans to governments or companies that pay interest</td><td>Steadier than stocks, lower long-run return.</td></tr>
+    <tr><td>Stocks</td><td>Part-ownership of companies</td><td>Long-term growth. Can fall 30–50% in a bad year.</td></tr>
+    <tr><td>Real estate</td><td>Property, or funds that own property</td><td>Income plus growth. Illiquid and concentrated if you own one house.</td></tr>
+  </table></div>
+  <p><strong>Time horizon rule of thumb:</strong> money you need within about 5 years shouldn't be heavily in stocks. A crash right before you need it can force you to sell at the bottom.</p>
+
+  <h2>Diversification and index funds</h2>
+  <p>Diversification means not betting everything on one company, sector or country. An <strong>index fund</strong> buys every company in a market index, such as the S&amp;P 500, for a very low fee.</p>
+  <div class="callout honest"><b>The uncomfortable fact</b><p>Over 15+ years, the large majority of professional fund managers fail to beat a simple low-cost index fund after fees. If professionals with research teams mostly can't do it, a beginner day-trading on a phone app almost certainly won't.</p></div>
+
+  <h2>Fees matter more than you think</h2>
+  <p>A 1% yearly fee sounds tiny. It's charged every year on your whole balance, forever.</p>
+  <div class="formula">Made-up example: $100,000 for 30 years
+  at 7% (≈0.05% index fund)  → about $761,000
+  at 6% (same, minus 1% fee) → about $574,000
+  The 1% fee cost ≈ $187,000</div>
+
+  <h2>Retirement accounts (US examples)</h2>
+  <ul>
+    <li><strong>401(k) employer match</strong>: some employers add money when you save for retirement. The rules vary by employer and plan: how much they match, up to what limit, and how long you must stay before the money is fully yours (called vesting). If your plan has a match, contributing at least enough to get all of it is usually the first step, because a 50% or 100% match is an instant 50–100% return on that money. Check your own plan's rules.</li>
+    <li><strong>Traditional vs Roth</strong>: Traditional gives a tax break now and you pay tax later; Roth is taxed now and grows tax-free. Roth tends to suit people who expect a higher tax rate later.</li>
+    <li>Other countries have their own versions (UK ISA/SIPP, Canada TFSA/RRSP, Australia super). The logic is similar: use tax-advantaged accounts first.</li>
+  </ul>
+
+  <h2>A sensible order of operations</h2>
+  <ol>
+    <li>Small starter emergency fund.</li>
+    <li>Get any employer match your plan offers.</li>
+    <li>Pay off high-interest debt.</li>
+    <li>Full emergency fund (3–6 months).</li>
+    <li>Max tax-advantaged accounts with low-cost diversified funds.</li>
+    <li>Then taxable investing, extra mortgage payments, and other goals.</li>
+  </ol>
+
+  <h2>Red flags</h2>
+  <ul>
+    <li>"Guaranteed" high returns.</li>
+    <li>Pressure to decide today.</li>
+    <li>Returns that are suspiciously smooth.</li>
+    <li>You can't explain how the money is made.</li>
+    <li>Income depends on recruiting others.</li>
+    <li>Influencers paid to promote coins or courses.</li>
+  </ul>
+
+  <div class="quiz" data-quiz="investing"></div>
+  <div class="pager"><a href="#money">← 1. Your money</a><a href="#funding">3. Funding &amp; valuation →</a></div>
+</section>
+
+<!-- ============ 3. BUSINESS ============ -->
+<section class="page" id="business">
+  <header class="lesson-head">
+    <span class="lesson-num">04</span>
+    <span class="eyebrow">Business · Lesson 04 of 21</span>
+    <h1>How a business makes money</h1>
+    <p class="lede">Every business, from a lemonade stand to Apple, comes down to: sell something for more than it costs, and don't run out of cash on the way.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Margin = profit ÷ price. Markup = profit ÷ cost. They are not the same.</li><li>Break-even = fixed costs ÷ what each sale contributes.</li><li>Profit is not cash. Watch the bank balance.</li></ul></div>
+
+  <h2>The profit ladder</h2>
+  <div class="formula">Revenue                     (what customers paid)
+− Cost of goods sold (COGS) (direct cost of what you sold)
+= Gross profit
+− Operating expenses        (rent, salaries, marketing, software)
+= Operating profit
+− Interest and taxes
+= Net profit</div>
+
+  <h2>Margin vs markup (people mix these up constantly)</h2>
+  <p>Say a product costs you $60 and you sell it for $100.</p>
+  <div class="formula">Markup = profit ÷ cost  = 40 ÷ 60  = 66.7%
+Margin = profit ÷ price = 40 ÷ 100 = 40%</div>
+  <p>Same deal, very different numbers. Always ask which one someone means. Margin can never exceed 100%; markup can.</p>
+
+  <h2>Fixed costs, variable costs and break-even</h2>
+  <ul>
+    <li><strong>Fixed costs</strong> stay the same however much you sell (rent, base salaries, software).</li>
+    <li><strong>Variable costs</strong> rise with each unit (materials, shipping, payment fees).</li>
+    <li><strong>Contribution margin</strong> = price − variable cost per unit. It's what each sale contributes towards fixed costs.</li>
+  </ul>
+  <div class="formula">Break-even units = Fixed costs ÷ (Price − Variable cost per unit)
+
+Example: $5,000/month fixed, $25 price, $15 variable
+= 5,000 ÷ 10 = 500 units a month just to break even</div>
+
+  <h2>Unit economics</h2>
+  <p>Does each customer make you money? Two numbers answer that:</p>
+  <ul>
+    <li><strong>CAC</strong> (customer acquisition cost): total sales and marketing spend ÷ new customers.</li>
+    <li><strong>LTV</strong> (lifetime value): average revenue per month × gross margin × months a customer stays.</li>
+  </ul>
+  <p>A common guideline is <strong>LTV at least 3× CAC</strong>, and earning back CAC within about 12 months. If LTV is below CAC, growing faster just loses money faster.</p>
+
+  <h2>Cash flow is not profit</h2>
+  <p>Profit is an accounting idea; cash is what pays the bills. You can be profitable on paper and still go bust if:</p>
+  <ul>
+    <li>Customers pay in 60 days but suppliers want payment in 30.</li>
+    <li>Stock (inventory) sits on shelves tying up cash.</li>
+    <li>Fast growth forces you to buy materials before customers pay.</li>
+  </ul>
+  <div class="callout warn"><b>The classic killer</b><p>Lack of cash, not lack of profit, is behind a large share of small-business failures. Watch your bank balance weekly and forecast it 13 weeks ahead.</p></div>
+
+  <h2>Pricing</h2>
+  <ul>
+    <li><strong>Cost-plus</strong>: cost + a markup. Simple, but ignores what customers would pay.</li>
+    <li><strong>Value-based</strong>: price based on the value to the customer. Harder, usually more profitable.</li>
+    <li><strong>Why price is powerful</strong>: on a 20% margin, a 5% price increase (if volume holds) raises profit by 25%. Most small businesses underprice.</li>
+  </ul>
+
+  <div class="quiz" data-quiz="business"></div>
+  <div class="pager"><a href="#funding">← 3. Funding &amp; valuation</a><a href="#statements">5. Financial statements →</a></div>
+</section>
+
+<!-- ============ 4. STATEMENTS ============ -->
+<section class="page" id="statements">
+  <header class="lesson-head">
+    <span class="lesson-num">05</span>
+    <span class="eyebrow">Business · Lesson 05 of 21</span>
+    <h1>Financial statements</h1>
+    <p class="lede">Three reports tell you almost everything about a company's health. Learn to read them and you can judge any business, including your own.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Income statement: did we make money?</li><li>Balance sheet: what we own and owe. Assets = liabilities + equity.</li><li>Cash flow statement: where the cash actually went.</li></ul></div>
+
+  <h2>Income statement — "Did we make money this period?"</h2>
+  <p>Revenue, minus costs, equals profit, over a period such as a quarter or year. It's the profit ladder from Lesson 3.</p>
+
+  <h2>Balance sheet — "What do we own and owe right now?"</h2>
+  <div class="formula">Assets = Liabilities + Equity</div>
+  <ul>
+    <li><strong>Assets</strong>: cash, money owed by customers (receivables), inventory, equipment.</li>
+    <li><strong>Liabilities</strong>: money owed to others, such as loans, supplier bills (payables) and taxes due.</li>
+    <li><strong>Equity</strong>: what's left for the owners.</li>
+  </ul>
+  <p>It always balances, because everything the company owns was paid for either with borrowed money or with owners' money.</p>
+
+  <h2>Cash flow statement — "Where did the cash actually go?"</h2>
+  <ul>
+    <li><strong>Operating</strong>: cash from running the business. This is the most important one.</li>
+    <li><strong>Investing</strong>: buying or selling equipment, property or other businesses.</li>
+    <li><strong>Financing</strong>: borrowing, repaying loans, raising equity, paying dividends.</li>
+  </ul>
+  <p>A healthy mature business usually generates positive operating cash flow. Positive profit with negative operating cash flow year after year is a warning sign.</p>
+
+  <h2>Ratios worth knowing</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Ratio</th><th>Formula</th><th>Tells you</th></tr>
+    <tr><td>Gross margin</td><td>Gross profit ÷ Revenue</td><td>How much each sale leaves after direct costs</td></tr>
+    <tr><td>Net margin</td><td>Net profit ÷ Revenue</td><td>What's left after everything</td></tr>
+    <tr><td>Current ratio</td><td>Current assets ÷ Current liabilities</td><td>Can it pay bills due in the next year? Below 1 is a caution sign.</td></tr>
+    <tr><td>Debt-to-equity</td><td>Total liabilities ÷ Equity</td><td>How much the business relies on borrowing</td></tr>
+    <tr><td>Return on equity (ROE)</td><td>Net profit ÷ Equity</td><td>How well it uses owners' money</td></tr>
+  </table></div>
+  <div class="callout honest"><b>Context beats rules</b><p>"Good" ratios vary a lot by industry. A supermarket with a 2–3% net margin can be excellent; a software company at 3% might be struggling. Compare a business against its own history and against similar companies, not against a universal number.</p></div>
+
+  <div class="quiz" data-quiz="statements"></div>
+  <div class="pager"><a href="#business">← 4. How a business makes money</a><a href="#why-business">6. Why businesses exist →</a></div>
+</section>
+
+<!-- ============ 5. FUNDING ============ -->
+<section class="page" id="funding">
+  <header class="lesson-head">
+    <span class="lesson-num">03</span>
+    <span class="eyebrow">Finance · Lesson 03 of 21</span>
+    <h1>Funding &amp; valuation</h1>
+    <p class="lede">Where the money to start or grow a business comes from, what it costs you, and how people decide what a business is worth.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>You can fund a business from savings, a loan, or by selling shares. Each costs you something different.</li><li>An investor's share = their money ÷ the value after they invest.</li><li>Money tomorrow is worth less than money today.</li></ul></div>
+
+  <h2>Three ways to fund a business</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Source</th><th>You give up</th><th>Good when</th></tr>
+    <tr><td><strong>Bootstrapping</strong> (own savings, revenue)</td><td>Speed</td><td>You can grow from customer money. You keep full control.</td></tr>
+    <tr><td><strong>Debt</strong> (loans, credit lines)</td><td>Fixed repayments plus interest; often a personal guarantee</td><td>Cash flow is predictable enough to cover repayments.</td></tr>
+    <tr><td><strong>Equity</strong> (angels, venture capital)</td><td>Ownership and some control</td><td>The business can grow very large, very fast, and needs money to do it.</td></tr>
+  </table></div>
+  <div class="callout honest"><b>Reality check</b><p>Most businesses never raise venture capital and shouldn't try. VCs need a few investments to return their whole fund, so they push for huge, risky growth. That's often bad for a business that could be a very good, profitable, smaller company.</p></div>
+
+  <h2>Dilution</h2>
+  <div class="formula">Pre-money valuation  = value before new money comes in
+Post-money valuation = pre-money + investment
+Investor's share     = investment ÷ post-money
+
+Example: raise $250,000 at $1,000,000 pre-money
+Post-money = $1,250,000 → investor owns 250k ÷ 1.25M = 20%</div>
+  <p>A smaller slice of a bigger pie can be worth more, but only if the money actually makes the pie bigger.</p>
+
+  <h2>Time value of money</h2>
+  <p>A dollar today is worth more than a dollar next year, because today's dollar can be invested and because the future is uncertain. To compare money at different times, <strong>discount</strong> future amounts back to today:</p>
+  <div class="formula">Present value = Future amount ÷ (1 + rate)^years
+
+Made-up example: $1,000 received in 3 years at a 10% rate
+= 1,000 ÷ 1.1^3 ≈ $751.31 today</div>
+
+  <h2>How businesses are valued</h2>
+  <ul>
+    <li><strong>Multiples</strong>: value = a profit or revenue figure × a multiple seen in similar businesses. Small private businesses often sell for roughly 2–5× their yearly owner earnings; it varies widely.</li>
+    <li><strong>Discounted cash flow (DCF)</strong>: forecast future cash flows and discount each one to today. It's correct in theory but very sensitive to assumptions. Small changes to the growth or discount rate swing the answer enormously.</li>
+    <li><strong>Assets</strong>: what the things it owns would sell for. Mainly used as a floor, or for asset-heavy businesses.</li>
+  </ul>
+  <p class="muted">Honest caveat: valuation is part maths, part negotiation. A business is worth what a buyer will actually pay, and that links straight to the next lesson.</p>
+
+  <div class="quiz" data-quiz="funding"></div>
+  <div class="pager"><a href="#investing">← 2. Investing</a><a href="#business">4. How a business makes money →</a></div>
+</section>
+
+<!-- ============ BUSINESS 3 ============ -->
+<section class="page" id="why-business">
+  <header class="lesson-head">
+    <span class="lesson-num">06</span>
+    <span class="eyebrow">Business · Lesson 06 of 21</span>
+    <h1>Why businesses exist, and what's changing now</h1>
+    <p class="lede">A business exists to solve a problem people will pay to have solved. Profit is the signal that you solved it well. The tools for doing that are changing fast.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Businesses exist because people pay to have problems solved.</li><li>Profit is the reward for solving a problem better or cheaper than the alternatives.</li><li>Today, one person with cheap online tools can start what once needed a team.</li></ul></div>
+
+  <h2>The main reason a business exists</h2>
+  <div class="formula">A problem people have
++ a solution they'll pay for
++ a way to deliver it for less than they pay
+= a business</div>
+  <p>If any part is missing, it's a hobby or a charity, not a business. No real problem: nobody buys. Nobody will pay: no income. Costs more to deliver than they pay: every sale loses money.</p>
+
+  <h2>Who a business serves</h2>
+  <ul>
+    <li><b>Customers</b> get a problem solved.</li>
+    <li><b>Owners and investors</b> get a return for the risk and money they put in.</li>
+    <li><b>Workers and suppliers</b> get paid.</li>
+    <li><b>The community</b> gets jobs, products and taxes.</li>
+  </ul>
+  <p>The businesses that last keep all four reasonably happy. Squeezing one group hard usually comes back to bite.</p>
+
+  <h2>What's changing now</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Change</th><th>What it means for you</th></tr>
+    <tr><td>AI tools</td><td>Writing, design, research and coding help are cheap or free, so one person can do the work of a small team. Your competitors have the same tools, so your edge is knowing your customer.</td></tr>
+    <tr><td>Audience first</td><td>Many new businesses start by building an audience online, then selling to it. Trust comes before the sale.</td></tr>
+    <tr><td>Solo and small businesses</td><td>Online stores, payment links and website builders mean you can start with very little money.</td></tr>
+    <tr><td>Subscriptions</td><td>Steady monthly income is attractive, but people now cancel subscriptions they don't use. You must keep earning it.</td></tr>
+    <tr><td>Reviews and trust</td><td>Buyers check reviews before they buy. Honest, real proof matters more than ever.</td></tr>
+  </table></div>
+
+  <div class="callout honest"><b>Straight talk</b><p>Trends change quickly, and some of these will look different in a year. The rule underneath doesn't change: solve a real problem, for people who'll pay, for less than they pay. New tools make that faster, not optional.</p></div>
+
+  <div class="callout"><b>Try it</b><p>Write your idea in the formula above: the problem, the solution, who pays, and what it costs you to deliver. If you can't fill one line in, that's the part to work on first.</p></div>
+
+  <div class="quiz" data-quiz="why-business"></div>
+  <div class="pager"><a href="#statements">← 5. Financial statements</a><a href="#buy-back-time">7. Buy back your time →</a></div>
+</section>
+
+<!-- ============ BUSINESS 4 ============ -->
+<section class="page" id="buy-back-time">
+  <header class="lesson-head">
+    <span class="lesson-num">07</span>
+    <span class="eyebrow">Business · Lesson 07 of 21</span>
+    <h1>Buy back your time</h1>
+    <p class="lede">Ideas from entrepreneur Dan Martell's book <i>Buy Back Your Time</i> (2023), explained simply. The big idea: your time is your most limited resource, so stop doing work you could pay someone else to do for less than your time is worth.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Work out your "buyback rate": what an hour of your time is really worth.</li><li>Hand off tasks that cost less than that rate and drain your energy.</li><li>Teach once by recording yourself, so you don't have to explain twice.</li></ul></div>
+
+  <h2>1. Your buyback rate</h2>
+  <div class="formula">Your hourly value = yearly income ÷ 2,000 working hours
+Buyback rate     = your hourly value ÷ 4
+
+Example: $60,000 a year ÷ 2,000 = $30 an hour
+         $30 ÷ 4 = $7.50 an hour</div>
+  <p>Any task you could pay someone less than your buyback rate to do is a task to hand off when you can afford it. Dividing by 4 keeps it safe: you only buy back time when it's clearly cheap compared with what your time earns.</p>
+
+  <h2>2. Sort your tasks: the DRIP idea</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Type of task</th><th>Makes money?</th><th>Gives you energy?</th><th>What to do</th></tr>
+    <tr><td><b>Delegate</b></td><td>Little</td><td>No, drains you</td><td>Hand it off first (admin, scheduling, inbox)</td></tr>
+    <tr><td><b>Replace</b></td><td>Yes</td><td>No, drains you</td><td>Train or hire someone to take it over</td></tr>
+    <tr><td><b>Invest</b></td><td>Not yet</td><td>Yes</td><td>Keep time for it: learning, health, relationships</td></tr>
+    <tr><td><b>Produce</b></td><td>Yes</td><td>Yes</td><td>This is your best work. Spend more time here.</td></tr>
+  </table></div>
+
+  <h2>3. Teach once: record yourself</h2>
+  <p>Martell calls it the camcorder method. Next time you do a task you want to hand off, record your screen or film yourself doing it and talk through each step. That video becomes the training, so you never explain it twice.</p>
+
+  <h2>4. Bring solutions, not just problems: the 1-3-1 rule</h2>
+  <div class="formula">1 problem, stated clearly
+3 possible solutions
+1 recommendation: the one you'd pick, and why</div>
+  <p>Use it when a team member brings you a problem, and use it yourself when you go to a mentor or investor. It turns "What should I do?" into a decision.</p>
+
+  <div class="callout honest"><b>Straight talk</b><p>When you're just starting with little money, you may not be able to pay anyone yet. Start with free time-savers: templates, recorded how-tos, AI tools, and saying no to low-value work. These are our simple explanations of Martell's ideas; read his book for the full version. Sharp isn't connected to or endorsed by him.</p></div>
+
+  <div class="callout"><b>Try it</b><p>Write down everything you did yesterday. Mark each task D, R, I or P. Pick one D task and find a way to hand it off, automate it or drop it this week.</p></div>
+
+  <div class="quiz" data-quiz="buy-back-time"></div>
+  <div class="pager"><a href="#why-business">← 6. Why businesses exist</a><a href="#ai-at-work">8. Using AI at work →</a></div>
+</section>
+
+<!-- ============ BUSINESS 5 ============ -->
+<section class="page" id="ai-at-work">
+  <header class="lesson-head">
+    <span class="lesson-num">08</span>
+    <span class="eyebrow">Business · Lesson 08 of 21</span>
+    <h1>Using AI at work without the headaches</h1>
+    <p class="lede">AI can save a small business hours every week. It can also quietly cost money, leak private info and make confident mistakes in front of customers. Six habits keep the good and stop the bad.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Count checking time: AI is only worth it if writing plus checking beats doing it yourself.</li><li>Never let AI tell customers prices, rules or promises without a person checking.</li><li>Keep your best prompts saved, test them monthly, and never paste private info into free tools.</li></ul></div>
+
+  <h2>1. Count the checking, not just the writing</h2>
+  <p>AI writes in seconds, but someone has to check it. If checking takes 20 minutes, that's the real cost. Track a task for a week: time without AI vs time with AI <b>including</b> checking. The <a href="../tools/ai/index.html#aisave">AI savings calculator</a> does the maths.</p>
+
+  <h2>2. AI makes confident mistakes</h2>
+  <p>AI can invent a price, a refund rule or a fact, and say it like it's certain. Rules that keep you safe:</p>
+  <ul>
+    <li>Anything with a <b>number, a promise or a policy</b> gets checked by a person before a customer sees it.</li>
+    <li>Give the AI your real price list and rules to copy from, and tell it to say "I'll check with the team" when it isn't sure.</li>
+    <li>Start AI on inside jobs (drafts, summaries, ideas) before customer-facing ones.</li>
+  </ul>
+
+  <h2>3. "It worked yesterday": test your prompts</h2>
+  <p>AI companies update their tools, and a prompt that worked last month can start giving different answers. Keep your best prompts in one shared place, like the <a href="../tools/ai/index.html#prompts">prompt library</a>, not in one person's chat history, and re-test each one every month.</p>
+
+  <h2>4. Don't paste private info</h2>
+  <p>Customer emails, phone numbers, card numbers, contracts and passwords don't belong in free AI tools. Check what the tool's settings say about saving and training on your data, use a business plan where possible, and run text through the <a href="../tools/ai/index.html#paste">before-you-paste check</a> first.</p>
+
+  <h2>5. If you build AI for clients: demo vs daily</h2>
+  <div class="table-wrap"><table>
+    <tr><th>What clients saw</th><th>What to tell them up front</th></tr>
+    <tr><td>A perfect demo on social media</td><td>"A demo works once. We'll test it on 50 of your real examples before you rely on it."</td></tr>
+    <tr><td>"It can do anything"</td><td>"This version does three things well. Anything else is a new quote."</td></tr>
+    <tr><td>"It never makes mistakes"</td><td>"It will sometimes be wrong. Here's how a person checks the important parts."</td></tr>
+  </table></div>
+
+  <h2>6. Fewer tools, connected</h2>
+  <p>A new AI tool launches every week. Pick one or two, learn them well, and cancel the rest; the <a href="../tools/ai/index.html#aicost">AI cost check</a> shows what unused ones waste. Then cut the copy-paste work: many apps can pass AI results straight into your spreadsheet, email or customer list with built-in integrations or automation tools that connect apps.</p>
+
+  <div class="callout honest"><b>Straight talk</b><p>AI changes fast, so tools and prices here will change too. The habits don't: check what matters, protect private info, measure the real time saved, and keep a person responsible for what customers see.</p></div>
+
+  <div class="callout"><b>Try it</b><p>Pick one task you use AI for. Time it for a week with checking included, save the prompt in the prompt library, and write one rule for what must be checked by a person.</p></div>
+
+  <div class="quiz" data-quiz="ai-at-work"></div>
+  <div class="pager"><a href="#buy-back-time">← 7. Buy back your time</a><a href="#mkt-basics">9. Marketing basics →</a></div>
+</section>
+
+
+
+<!-- ============ MARKETING 1 ============ -->
+<section class="page" id="mkt-basics">
+  <header class="lesson-head">
+    <span class="lesson-num">09</span>
+    <span class="eyebrow">Marketing · Lesson 09 of 21</span>
+    <h1>Marketing basics</h1>
+    <p class="lede">Marketing is getting the right people to know you exist, understand why you're worth it, and buy. "The right people" does most of the work.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Pick one specific customer, not everyone.</li><li>Say why you in one sentence.</li><li>Lead with the benefit; use the feature as proof.</li></ul></div>
+
+  <h2>Pick one customer, not everyone</h2>
+  <p>"My product is for everyone" means your message lands with no one. Describe one specific customer so clearly you could find ten of them this week:</p>
+  <ul>
+    <li><strong>Who</strong> they are: "first-time landlords with one or two rental units", not "property owners".</li>
+    <li><strong>What problem</strong> they have that they'd pay to fix.</li>
+    <li><strong>Where</strong> they already spend time: groups, sites, events, newsletters.</li>
+    <li><strong>What they use now</strong> instead of you. That's your real competition, even if it's a spreadsheet or "doing nothing".</li>
+  </ul>
+  <p>A narrow start isn't a ceiling. Win one group, then expand to the next.</p>
+
+  <h2>Positioning: say why you, in one sentence</h2>
+  <div class="formula">For [customer] who [problem],
+[product] is the [category] that [main benefit].
+Unlike [alternative], we [key difference].</div>
+  <p>Example: "For first-time landlords who dread tax season, RentLedger is the bookkeeping app that sorts every receipt automatically. Unlike a spreadsheet, it's ready for your accountant in one click."</p>
+  <p>That sentence is your positioning. Test it on a stranger. If they can't repeat what you do and who it's for after 5 seconds, simplify.</p>
+
+  <h2>Benefits beat features</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Feature (what it is)</th><th>Benefit (what it does for them)</th></tr>
+    <tr><td>Automatic receipt scanning</td><td>No more shoebox of receipts in April</td></tr>
+    <tr><td>Meals delivered on Sunday</td><td>Five evenings a week back with your kids</td></tr>
+    <tr><td>24/7 support</td><td>Your site never stays down overnight</td></tr>
+  </table></div>
+  <p>Lead with the benefit; use the feature as proof.</p>
+
+  <h2>The offer is part of the marketing</h2>
+  <p>What exactly do they get, for how much, and what happens if it doesn't work? A clear price, a simple bundle and a fair guarantee often lift sales more than a better ad.</p>
+
+  <div class="callout honest"><b>Straight talk</b><p>The most common first-time mistake is buying ads before knowing who the customer is. Ads amplify a message. If the message is vague, they amplify nothing, at your expense.</p></div>
+
+  <div class="quiz" data-quiz="mkt-basics"></div>
+  <div class="pager"><a href="#ai-at-work">← 8. Using AI at work</a><a href="#mkt-channels">10. Getting customers →</a></div>
+</section>
+
+<!-- ============ MARKETING 2 ============ -->
+<section class="page" id="mkt-channels">
+  <header class="lesson-head">
+    <span class="lesson-num">10</span>
+    <span class="eyebrow">Marketing · Lesson 10 of 21</span>
+    <h1>Getting customers</h1>
+    <p class="lede">A channel is how customers find you. You don't need all of them. You need one or two that work, done well.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Your first customers come from people you can reach directly.</li><li>Pick one or two channels and do them well.</li><li>Own your audience with email. Ads come last.</li></ul></div>
+
+  <h2>The main channels</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Channel</th><th>Cost</th><th>Speed</th><th>Best for</th></tr>
+    <tr><td>Direct outreach (messages, calls, your network)</td><td>Time</td><td>Fast</td><td>Your first 10 customers</td></tr>
+    <tr><td>Communities (groups, forums, local events)</td><td>Time</td><td>Fast</td><td>Niche audiences; help first, pitch second</td></tr>
+    <tr><td>Referrals and word of mouth</td><td>Low</td><td>Medium</td><td>Once people love the product</td></tr>
+    <tr><td>Short video and social posts</td><td>Time</td><td>Medium</td><td>Showing, not telling; builds trust</td></tr>
+    <tr><td>Content and search (articles, tools)</td><td>Time</td><td>Slow (months)</td><td>Long-term free traffic that compounds</td></tr>
+    <tr><td>Email list</td><td>Low</td><td>Medium</td><td>Turning interest into sales; you own it</td></tr>
+    <tr><td>Paid ads</td><td>Money</td><td>Fast</td><td>Scaling something that already sells</td></tr>
+    <tr><td>Partnerships</td><td>Shared</td><td>Medium</td><td>Borrowing someone else's audience</td></tr>
+  </table></div>
+
+  <h2>The funnel</h2>
+  <p>Every sale moves through the same stages. Most businesses lose people at one stage in particular. Find yours and fix that first.</p>
+  <div class="formula">Aware    → they hear about you
+Interested → they visit, follow or sign up
+Decide   → they compare, ask questions, read reviews
+Buy      → they pay
+Return   → they buy again and tell friends</div>
+
+  <h2>Rules that save money</h2>
+  <ul>
+    <li><strong>Your first customers come from people you can reach directly.</strong> Don't wait for strangers to find you.</li>
+    <li><strong>Focus on one or two channels.</strong> Five half-done channels usually lose to one done properly.</li>
+    <li><strong>Own your audience.</strong> Social followers can disappear if a platform changes its rules. An email list is yours.</li>
+    <li><strong>Ads come last.</strong> Spend on ads once you know your message and your numbers. Then they pour fuel on something that already works.</li>
+  </ul>
+
+  <div class="callout"><b>Try it</b><p>List 20 people who match your customer and could hear from you this week. Message 10 of them. Ask about the problem, not your product. Their words become your marketing copy.</p></div>
+
+  <div class="quiz" data-quiz="mkt-channels"></div>
+  <div class="pager"><a href="#mkt-basics">← 9. Marketing basics</a><a href="#mkt-measure">11. Measuring marketing →</a></div>
+</section>
+
+<!-- ============ MARKETING 3 ============ -->
+<section class="page" id="mkt-measure">
+  <header class="lesson-head">
+    <span class="lesson-num">11</span>
+    <span class="eyebrow">Marketing · Lesson 11 of 21</span>
+    <h1>Measuring marketing</h1>
+    <p class="lede">If you can't measure it, you can't tell good marketing from expensive guessing. Five numbers cover most of what matters.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Five numbers matter: conversion rate, CAC, ROAS, LTV and payback.</li><li>Likes and views feel good; sales pay the bills.</li><li>Change one thing at a time so you know what worked.</li></ul></div>
+
+  <h2>The five numbers</h2>
+  <div class="formula">Conversion rate = people who did it ÷ people who could have
+CAC (cost per customer) = marketing spend ÷ new customers
+ROAS (return on ad spend) = revenue from ads ÷ ad spend
+LTV (lifetime value) = revenue per month × gross margin × months they stay
+Payback = CAC ÷ (revenue per month × gross margin)</div>
+  <p>Worked example: you spend $600 and win 12 customers. CAC = $50. Each pays $25 a month at a 60% margin and stays 10 months: LTV = 25 × 0.6 × 10 = $150. LTV:CAC = 3:1, the common healthy guideline. Payback = 50 ÷ 15 = 3.3 months.</p>
+
+  <h2>Vanity numbers vs real numbers</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Feels good</th><th>Actually matters</th></tr>
+    <tr><td>Followers, likes, views</td><td>Sign-ups and sales from those views</td></tr>
+    <tr><td>Website visits</td><td>Conversion rate of those visits</td></tr>
+    <tr><td>Email list size</td><td>Revenue per subscriber</td></tr>
+    <tr><td>Ad clicks</td><td>Profit after the ad bill</td></tr>
+  </table></div>
+
+  <h2>Test one thing at a time</h2>
+  <ul>
+    <li>Change one element (headline, price, image) and keep everything else the same.</li>
+    <li>Wait for enough results. A handful of visitors can swing by luck; small tests mislead.</li>
+    <li>Track where people come from with tagged links (UTM tags) and a simple analytics tool, so you know which channel earned the sale.</li>
+  </ul>
+
+  <div class="callout honest"><b>Straight talk</b><p>Benchmarks you read online ("a good conversion rate is 3%") vary wildly by industry and traffic source. Your own numbers, measured consistently, beat any average.</p></div>
+
+  <p>Run your own numbers in the <a href="../tools/marketing/index.html">marketing calculators</a>.</p>
+
+  <div class="quiz" data-quiz="mkt-measure"></div>
+  <div class="pager"><a href="#mkt-channels">← 10. Getting customers</a><a href="#mkt-words">12. Words that sell →</a></div>
+</section>
+
+<!-- ============ MARKETING 4 ============ -->
+<section class="page" id="mkt-words">
+  <header class="lesson-head">
+    <span class="lesson-num">12</span>
+    <span class="eyebrow">Marketing · Lesson 12 of 21</span>
+    <h1>Words that sell</h1>
+    <p class="lede">The words on your page, post or message do the selling when you're not there. Clear beats clever, and the customer's own words beat yours.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Say what they get, in words they already use.</li><li>Every message needs four parts: the problem, your promise, proof, and one clear ask.</li><li>Cut every word that doesn't help someone say yes.</li></ul></div>
+
+  <h2>The four parts of any message that sells</h2>
+  <div class="formula">Problem:  name the pain in their words     "Tax season stresses you out?"
+Promise:  what changes for them            "Get every receipt sorted in one click."
+Proof:    why they should believe you      "Used by 40 local landlords."
+Ask:      one clear next step              "Start your free trial."</div>
+  <p>It works for a website, a social post, a cold email or a flyer. If one part is missing, people stall. No problem: they don't care. No proof: they don't believe. No ask: they don't act.</p>
+
+  <h2>Headlines: specific beats clever</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Weak</th><th>Strong</th><th>Why</th></tr>
+    <tr><td>"Welcome to Fresh Bites"</td><td>"Healthy dinners at your door by 6pm"</td><td>Says what they get</td></tr>
+    <tr><td>"Innovative tutoring solutions"</td><td>"Raise your maths grade in 6 weeks"</td><td>A result and a time</td></tr>
+    <tr><td>"Best bakery in town!"</td><td>"Gluten-free birthday cakes, ordered by Thursday"</td><td>Specific, believable</td></tr>
+  </table></div>
+  <p>A good headline passes the five-second test: a stranger knows what you do and who it's for.</p>
+
+  <h2>Use their words, not yours</h2>
+  <p>The best copy is stolen from your customers. When you talk to them (see <a href="#mkt-channels">Getting customers</a>), write down their exact phrases. If they say "I'm drowning in receipts", that line will sell better than anything you'd write yourself.</p>
+
+  <h2>The ask: one action, verb first</h2>
+  <ul>
+    <li><b>One ask per message.</b> "Follow, share, buy and sign up" means they do nothing.</li>
+    <li><b>Start with a verb</b> and say what happens: "Get my free plan" beats "Submit".</li>
+    <li><b>Lower the risk:</b> "Free for 3 days, no card needed" makes saying yes easier.</li>
+  </ul>
+
+  <div class="callout honest"><b>Straight talk</b><p>Never invent reviews, numbers or fake deadlines. It destroys trust when people find out, and in the US fake reviews and testimonials can break consumer-protection law. Real proof, even small ("my first 5 customers came back"), is enough.</p></div>
+
+  <div class="callout"><b>Try it</b><p>Write your offer in the four parts: problem, promise, proof, ask. Read it to someone for five seconds, then ask them what you sell. If they can't say it back, cut words until they can.</p></div>
+
+  <div class="quiz" data-quiz="mkt-words"></div>
+  <div class="pager"><a href="#mkt-measure">← 11. Measuring marketing</a><a href="#mkt-social">13. Social media and short video →</a></div>
+</section>
+
+<!-- ============ MARKETING 5 ============ -->
+<section class="page" id="mkt-social">
+  <header class="lesson-head">
+    <span class="lesson-num">13</span>
+    <span class="eyebrow">Marketing · Lesson 13 of 21</span>
+    <h1>Social media and short video</h1>
+    <p class="lede">Social media is free reach, if you treat it like teaching, not shouting. One platform, one useful idea per post, and a way to bring people to your email list.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Pick one platform where your customers already spend time.</li><li>Hook people in the first two seconds, then teach or show one useful thing.</li><li>Followers can vanish if a platform changes. Move them to your email list.</li></ul></div>
+
+  <h2>Pick one platform first</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Platform</th><th>Good for</th></tr>
+    <tr><td>TikTok, Instagram Reels, YouTube Shorts</td><td>Being discovered by strangers with short videos</td></tr>
+    <tr><td>YouTube (longer videos)</td><td>Answering questions people search for; videos keep getting found for years</td></tr>
+    <tr><td>LinkedIn</td><td>Selling to businesses and professionals</td></tr>
+    <tr><td>Facebook groups, local communities</td><td>Local businesses and tight-knit niches</td></tr>
+  </table></div>
+  <p>Where do your customers already scroll? Start there. One platform done well beats four done badly.</p>
+
+  <h2>The shape of a good post</h2>
+  <div class="formula">Hook:   first 2 seconds, why should they stop?   "3 money mistakes I made at 19"
+Value:  one useful idea, shown not told          show the mistake and the fix
+Proof:  a result, a screen, a before and after    your real numbers
+Ask:    one next step                            "Free budget tool, link in bio"</div>
+
+  <h2>Never run out of ideas</h2>
+  <ul>
+    <li><b>Answer a question</b> a customer actually asked you.</li>
+    <li><b>Before and after:</b> the problem, then the result.</li>
+    <li><b>Behind the scenes:</b> how you make it, what went wrong.</li>
+    <li><b>Myth vs fact</b> in your area.</li>
+    <li><b>A mistake you made</b> and what you learned. People trust honesty.</li>
+  </ul>
+
+  <h2>What to measure</h2>
+  <p>Likes are a vanity number (see <a href="#mkt-measure">Measuring marketing</a>). Watch what moves people towards buying: saves, shares, comments, clicks to your site and email sign-ups. A common rule of thumb is to post on a steady schedule, such as three times a week, for a few months before judging whether a platform works.</p>
+
+  <div class="callout honest"><b>Straight talk</b><p>Going viral is mostly luck, and a viral post from the wrong audience sells nothing. A small group of the right people, who see you every week, is what builds a business. Never buy followers: it ruins your reach and fools no one.</p></div>
+
+  <div class="callout"><b>Try it</b><p>Write five hooks for your business, each under ten words. Film the best one as a 30-second video this week. Count the saves, shares and link clicks, not the likes.</p></div>
+
+  <div class="quiz" data-quiz="mkt-social"></div>
+  <div class="pager"><a href="#mkt-words">← 12. Words that sell</a><a href="#negotiation">14. Negotiation →</a></div>
+</section>
+
+<!-- ============ 6. NEGOTIATION ============ -->
+<section class="page" id="negotiation">
+  <header class="lesson-head">
+    <span class="lesson-num">14</span>
+    <span class="eyebrow">Negotiation · Lesson 14 of 21</span>
+    <h1>Negotiation</h1>
+    <p class="lede">Negotiation isn't a talent you're born with. It's mostly preparation, plus a handful of habits you can practise.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Your power is your alternative if the deal fails.</li><li>Decide your walk-away point before you start.</li><li>Trade concessions. Never give them away for free.</li></ul></div>
+
+  <h2>Step 1: prepare four numbers and one plan</h2>
+  <ul>
+    <li><strong>BATNA</strong> (Best Alternative To a Negotiated Agreement): what you'll actually do if this deal fails. Another job offer? Another supplier? Staying put? <em>Your BATNA is your power.</em> Improve it before you negotiate.</li>
+    <li><strong>Walk-away point</strong> (reservation price): the worst deal you'll accept. Set it from your BATNA, and set it before you're in the room.</li>
+    <li><strong>Target</strong>: an ambitious but defensible outcome. People who aim higher tend to get more.</li>
+    <li><strong>Their side</strong>: estimate their BATNA and walk-away point too.</li>
+  </ul>
+  <p>The <strong>ZOPA</strong> (Zone Of Possible Agreement) is the overlap between your walk-away point and theirs. If a seller won't go below $8,000 and a buyer won't go above $10,000, the ZOPA is $8,000–$10,000. If there's no overlap, no deal is possible on price alone, so you'll need to change the deal itself.</p>
+  <figure class="zopa" style="margin-inline:0">
+    <svg viewBox="0 0 640 150" role="img" aria-label="Number line from $6,000 to $12,000. The seller accepts $8,000 or more, the buyer pays $10,000 or less, so the deal zone is $8,000 to $10,000.">
+      <rect class="seller" x="200" y="26" width="400" height="26" rx="4"/>
+      <text class="lbl" x="206" y="18">Seller accepts ≥ $8,000 →</text>
+      <rect class="buyer" x="40" y="62" width="360" height="26" rx="4"/>
+      <text class="lbl" x="394" y="108" text-anchor="end">← Buyer pays ≤ $10,000</text>
+      <rect class="zone" x="200" y="34" width="200" height="46" rx="4"/>
+      <text class="zone-t" x="300" y="62" text-anchor="middle">ZOPA · $2,000</text>
+      <line class="axis" x1="40" y1="122" x2="600" y2="122"/>
+      <g class="tick-l" text-anchor="middle">
+        <line class="axis" x1="40" y1="118" x2="40" y2="126"/><text x="40" y="142">$6k</text>
+        <line class="axis" x1="120" y1="118" x2="120" y2="126"/><text x="120" y="142">$7k</text>
+        <line class="mark" x1="200" y1="114" x2="200" y2="130"/><text x="200" y="142">$8k</text>
+        <line class="axis" x1="280" y1="118" x2="280" y2="126"/><text x="280" y="142">$9k</text>
+        <line class="mark" x1="400" y1="114" x2="400" y2="130"/><text x="400" y="142">$10k</text>
+        <line class="axis" x1="480" y1="118" x2="480" y2="126"/><text x="480" y="142">$11k</text>
+        <line class="axis" x1="600" y1="118" x2="600" y2="126"/><text x="600" y="142">$12k</text>
+      </g>
+    </svg>
+    <figcaption>Any price inside the green zone works for both sides. Where in the zone the deal lands depends on anchoring, information and who can walk away.</figcaption>
+  </figure>
+
+  <h2>Step 2: interests, not positions</h2>
+  <p>A <strong>position</strong> is what someone says they want ("I need $90k"). An <strong>interest</strong> is <em>why</em> ("I need to cover my rent and feel valued"). Two sisters fight over one orange and split it in half. One wanted the juice, the other the peel for baking; they could have had 100% each. Ask <em>why</em> to find trades that cost you little and are worth a lot to them.</p>
+
+  <h2>Step 3: anchor deliberately</h2>
+  <p>The first number on the table pulls the final result towards it. That's <strong>anchoring</strong>.</p>
+  <ul>
+    <li>If you know the market well, consider making the first offer, ambitious but with a reason attached.</li>
+    <li>If you <em>don't</em> know the market, let them go first, or anchor with research ("Similar roles pay $85–95k").</li>
+    <li>If they anchor extreme, don't counter off their number. Name it ("That's far from what we're seeing") and re-anchor with your own reasoning.</li>
+  </ul>
+
+  <h2>Step 4: listen more than you talk</h2>
+  <ul>
+    <li><strong>Ask open questions</strong>: "What would make this work for you?" "How did you arrive at that number?"</li>
+    <li><strong>Calibrated "how" questions</strong> push the problem back to them: "How am I supposed to do that on this budget?"</li>
+    <li><strong>Label emotions</strong>: "It sounds like timing is the real pressure here."</li>
+    <li><strong>Use silence.</strong> After you make an offer or hear one, stop talking. People fill silence with concessions and information.</li>
+  </ul>
+
+  <h2>Step 5: trade, don't give</h2>
+  <ul>
+    <li>Never make a concession for free. Use "If you can do X, I can do Y."</li>
+    <li>Make each concession smaller than the last. It signals you're near your limit.</li>
+    <li>Negotiate several things at once (price, timing, scope, payment terms, extras). Single-issue haggling is win/lose; multi-issue deals let both sides win.</li>
+    <li>Don't split the difference early. It rewards whoever anchored more extremely.</li>
+  </ul>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Negotiating against yourself</strong>: lowering your ask before they've responded.</li>
+    <li><strong>Revealing your walk-away point.</strong></li>
+    <li><strong>Accepting the first offer</strong>: it signals you left money on the table, and often leaves <em>both</em> sides less happy.</li>
+    <li><strong>Treating it as a fight</strong>: you may work with this person for years. Be hard on the problem, soft on the person.</li>
+    <li><strong>Not preparing a BATNA</strong>: walking in with no alternative is the single biggest weakness.</li>
+  </ul>
+  <div class="callout honest"><b>Ethics and self-interest agree here</b><p>Don't lie about facts ("I have another offer" when you don't). It's often illegal in contracts, it's easy to call out, and it ruins trust. You're allowed to <em>decline to share</em> information ("I'd rather not get into my current salary").</p></div>
+
+  <div class="quiz" data-quiz="negotiation"></div>
+  <div class="pager"><a href="#mkt-social">← 13. Social media and short video</a><a href="#scripts">15. Negotiation scripts →</a></div>
+</section>
+
+<!-- ============ 7. SCRIPTS ============ -->
+<section class="page" id="scripts">
+  <header class="lesson-head">
+    <span class="lesson-num">15</span>
+    <span class="eyebrow">Negotiation · Lesson 15 of 21</span>
+    <h1>Negotiation scripts</h1>
+    <p class="lede">Word-for-word starting points. Adapt the wording so it sounds like you — scripts read robotically are worse than none.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Make your ask, then stop talking.</li><li>Bring results and market data, not personal needs.</li><li>Cut scope, not price.</li></ul></div>
+
+  <h2>Salary — new job offer</h2>
+  <div class="card">
+    <p><strong>When they ask your expectations early:</strong><br>"I'd like to learn more about the role before naming a number. What's the budgeted range?"</p>
+    <p><strong>When the offer arrives:</strong><br>"Thank you. I'm excited about this role and the team. Based on [market data / my experience with X], I was expecting something closer to [target]. Is there flexibility on base?"</p>
+    <p><em>Then stop talking.</em></p>
+    <p><strong>If base is fixed:</strong><br>"I understand. Could we look at a signing bonus, extra leave, a title change, or a salary review at six months?"</p>
+  </div>
+
+  <h2>Raise at your current job</h2>
+  <div class="card">
+    <p>"I'd like to talk about my compensation. Over the last year I [concrete result with a number: grew X by 20%, saved $Y, took on Z]. Market data for this role shows [range]. I'm asking for an adjustment to [number]. What would it take to get there?"</p>
+    <p class="muted">Bring results, not needs. "My rent went up" is your problem; "I saved the company $40k" is theirs.</p>
+  </div>
+
+  <h2>Buying something (car, equipment, services)</h2>
+  <div class="card">
+    <p>"I'm ready to buy this week, and I'm comparing it with [alternative]. What's the best out-the-door price you can do?"</p>
+    <p>Then: "That's above what I can do. If you can get to [number], we can sign today."</p>
+    <p class="muted">Negotiate the total price, not the monthly payment. Monthly payments hide a longer loan and extras.</p>
+  </div>
+
+  <h2>Selling / pricing your services</h2>
+  <div class="card">
+    <p><strong>When a client says it's too expensive:</strong><br>"I understand. Which part of the project matters most to you? We could reduce the scope to fit your budget rather than reduce the quality."</p>
+    <p class="muted">Cut scope, not price. Discounting trains clients to push back every time.</p>
+  </div>
+
+  <h2>Rent or a bill</h2>
+  <div class="card">
+    <p>"I've been a reliable tenant/customer for [time] and I'd like to stay. Similar places nearby are listed at [number]. If I sign a [longer] lease, could we keep the rent at [number]?"</p>
+  </div>
+
+  <h2>Preparation sheet (fill this before any negotiation)</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Question</th><th>Your answer</th></tr>
+    <tr><td>What do I actually want, and why (my interests)?</td><td></td></tr>
+    <tr><td>What's my BATNA if this fails?</td><td></td></tr>
+    <tr><td>Walk-away point</td><td></td></tr>
+    <tr><td>Target (ambitious + reason)</td><td></td></tr>
+    <tr><td>What do they want, and why?</td><td></td></tr>
+    <tr><td>Their likely BATNA</td><td></td></tr>
+    <tr><td>Things cheap for me but valuable to them</td><td></td></tr>
+    <tr><td>Questions I'll ask</td><td></td></tr>
+  </table></div>
+
+  <div class="quiz" data-quiz="scripts"></div>
+  <div class="pager"><a href="#negotiation">← 14. Negotiation</a><a href="#persuasion">16. Getting people to say yes →</a></div>
+</section>
+
+<!-- ============ PERSUASION ============ -->
+<section class="page" id="persuasion">
+  <header class="lesson-head">
+    <span class="lesson-num">16</span>
+    <span class="eyebrow">Negotiation · Lesson 16 of 21</span>
+    <h1>Getting people to say yes</h1>
+    <p class="lede">People agree with you when they feel understood, see what's in it for them, and find it easy to say yes. None of that needs tricks.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Listen first, then show what's in it for them.</li><li>Make the ask small and clear.</li><li>Treat objections as questions: acknowledge, ask, answer, check.</li></ul></div>
+
+  <h2>1. Listen before you pitch</h2>
+  <p>Ask what they want and what worries them, then repeat it back in your own words: "So the real concern is the timeline, not the price?" People say yes far more readily to someone who has shown they understand the problem.</p>
+
+  <h2>2. Make it about them</h2>
+  <p>Your reasons are not their reasons. Translate every point into what <em>they</em> get.</p>
+  <div class="table-wrap"><table>
+    <tr><th>About you</th><th>About them</th></tr>
+    <tr><td>"I need this deal to hit my target."</td><td>"This gets your launch done two weeks early."</td></tr>
+    <tr><td>"Our product has 40 features."</td><td>"You'll stop doing the invoicing by hand."</td></tr>
+  </table></div>
+
+  <h2>3. Make the ask small and clear</h2>
+  <p>A vague ask gets a vague answer. Say exactly what you want, and make the first step easy: "Can we try it for one month?" is easier to agree to than "Will you sign a year-long contract?"</p>
+
+  <h2>4. Back it up honestly</h2>
+  <ul>
+    <li><strong>Proof:</strong> a number, a result, a short example. "Three local gyms use it" beats "it's great".</li>
+    <li><strong>Give first:</strong> share something useful before you ask. People like to return a favour.</li>
+    <li><strong>Be consistent:</strong> link your ask to something they've already said they want.</li>
+  </ul>
+
+  <h2>5. Treat objections as questions</h2>
+  <p>An objection usually means "I'm not sure yet", not "no". Answer the worry behind it:</p>
+  <div class="formula">Acknowledge:  "That's fair, price matters."
+Ask:          "Compared with what you're using now?"
+Answer:       one clear reason, with proof.
+Check:        "Does that cover it?"</div>
+
+  <div class="callout honest"><b>Straight talk</b><p>Fake scarcity ("only 2 left!"), invented deadlines and pressure tactics can win one yes and lose the relationship. If the deal is good for them, honest persuasion is enough. If it isn't, it shouldn't happen.</p></div>
+
+  <div class="quiz" data-quiz="persuasion"></div>
+  <div class="pager"><a href="#scripts">← 15. Negotiation scripts</a><a href="#pitching">17. Pitching investors, simply →</a></div>
+</section>
+
+<!-- ============ PITCHING INVESTORS ============ -->
+<section class="page" id="pitching">
+  <header class="lesson-head">
+    <span class="lesson-num">17</span>
+    <span class="eyebrow">Investors · Lesson 17 of 21</span>
+    <h1>Pitching investors, simply</h1>
+    <p class="lede">An investor wants to know three things: is the problem real, can you win, and can they make money? Answer those clearly and you've done the hard part.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Problem, solution, proof, market, why you, the ask: in 60 seconds.</li><li>Know your numbers: revenue, growth, margin, CAC and LTV, burn and runway.</li><li>Runway = cash ÷ monthly burn.</li></ul></div>
+
+  <h2>The pitch in six lines</h2>
+  <div class="formula">1. Problem:   who has it, and how much it hurts
+2. Solution:  what you do about it, in one sentence
+3. Proof:     customers, sales, growth (traction)
+4. Market:    how many people have this problem
+5. Why you:   why your team wins
+6. The ask:   how much you're raising and what it pays for</div>
+  <p>Practise saying the whole thing in 60 seconds. If you can't, it isn't clear yet.</p>
+
+  <h2>The numbers they'll ask about</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Number</th><th>Plain English</th></tr>
+    <tr><td>Revenue and growth</td><td>How much you sell, and how fast that's rising each month</td></tr>
+    <tr><td>Gross margin</td><td>How much of each sale you keep after direct costs</td></tr>
+    <tr><td>CAC and LTV</td><td>What a customer costs to win vs what they're worth</td></tr>
+    <tr><td>Burn rate</td><td>How much cash you spend each month beyond what comes in</td></tr>
+    <tr><td>Runway</td><td>Months until the cash runs out: cash ÷ burn rate</td></tr>
+    <tr><td>Use of funds</td><td>Exactly what the money will pay for, and what it will achieve</td></tr>
+  </table></div>
+  <div class="formula">Runway = cash in the bank ÷ monthly burn
+Example: $90,000 ÷ $15,000 a month = 6 months</div>
+
+  <h2>What makes investors nervous</h2>
+  <ul>
+    <li>Not knowing your own numbers.</li>
+    <li>"We have no competition." Everyone has competition, even if it's doing nothing.</li>
+    <li>Huge market claims with no customers yet.</li>
+    <li>Not being able to say what the money is for.</li>
+  </ul>
+
+  <div class="callout"><b>Remember</b><p>Investors are buying a share of your company, so this is a negotiation too. Your BATNA (another investor, or growing without them) is your power. The Funding &amp; valuation lesson explains dilution.</p></div>
+
+  <div class="quiz" data-quiz="pitching"></div>
+  <div class="pager"><a href="#persuasion">← 16. Getting people to say yes</a><a href="#pressure">18. Staying calm under pressure →</a></div>
+</section>
+
+<!-- ============ PRESSURE ============ -->
+<section class="page" id="pressure">
+  <header class="lesson-head">
+    <span class="lesson-num">18</span>
+    <span class="eyebrow">Investors · Lesson 18 of 21</span>
+    <h1>Staying calm under pressure</h1>
+    <p class="lede">Tough questions aren't attacks. They're investors checking whether you know your business. Calm comes from preparation and a few simple habits.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Prepare the 20 hardest questions before the meeting.</li><li>Pause, give the answer in one sentence, then explain.</li><li>"I don't know, here's how I'll find out" beats a confident guess.</li></ul></div>
+
+  <h2>Before: prepare the hard questions</h2>
+  <p>Write down the 20 questions you'd least like to be asked, and an answer for each. Most tough questions are predictable: your numbers (especially your runway and burn rate), your competition, your biggest risk, why you, and why now. Practise them out loud with a timer, using the <a href="../tools/investors/index.html">Investor pressure drill</a>.</p>
+
+  <h2>During: five habits</h2>
+  <ol>
+    <li><strong>Pause.</strong> Two seconds of silence before answering looks thoughtful, not lost.</li>
+    <li><strong>Answer first, then explain.</strong> Lead with the answer in one sentence, then give one or two reasons. Rambling is what pressure looks like.</li>
+    <li><strong>Clarify if you need to.</strong> "Do you mean this year's numbers or the forecast?" buys time and avoids answering the wrong question.</li>
+    <li><strong>Say "I don't know" well.</strong> "I don't know that number exactly. It's around X, and I'll send the exact figure tomorrow." Then actually send it. Guessing confidently and being wrong is far worse.</li>
+    <li><strong>Steer back to your strengths.</strong> Answer the question honestly, then connect it to something you're confident about: "That's a real risk, and here's how we're testing it."</li>
+  </ol>
+
+  <h2>In your body</h2>
+  <div class="formula">Box breathing (before you walk in, or during a pause):
+breathe in 4 seconds → hold 4 → breathe out 4 → hold 4
+Repeat 3 times.</div>
+  <p>Slow your speaking pace a little more than feels natural. Nerves speed you up; slower sounds sure.</p>
+
+  <h2>Hostile or unfair questions</h2>
+  <p>Stay polite and specific. Acknowledge the concern, answer with facts, and don't argue tone. "Fair challenge. Here's what our data shows…" You're also judging whether you want this investor. How they treat you now is how they'll treat you when things go wrong.</p>
+
+  <div class="callout honest"><b>Straight talk</b><p>No technique replaces knowing your numbers. Most pressure in investor meetings comes from not being sure of your own business. Learn the numbers cold, and most of the nerves go with it.</p></div>
+
+  <div class="quiz" data-quiz="pressure"></div>
+  <div class="pager"><a href="#pitching">← 17. Pitching investors, simply</a><a href="#voice">19. Your voice in the room →</a></div>
+</section>
+
+<!-- ============ INVESTORS 3 ============ -->
+<section class="page" id="voice">
+  <header class="lesson-head">
+    <span class="lesson-num">19</span>
+    <span class="eyebrow">Investors · Lesson 19 of 21</span>
+    <h1>Your voice in the room</h1>
+    <p class="lede">Investors judge how you say it as well as what you say. A calm, clear voice makes the same numbers sound more believable. It's a skill, and you can practise it.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Speak slower than feels natural, and pause on purpose.</li><li>End sentences with your voice going down, not up, so they sound sure.</li><li>Record yourself, watch it back, fix one thing at a time.</li></ul></div>
+
+  <h2>Five voice habits</h2>
+  <ol>
+    <li><b>Slow down.</b> Nerves speed you up. Slower sounds confident and gives you time to think.</li>
+    <li><b>Pause instead of "um".</b> A one-second silence sounds thoughtful. Fillers like "um", "like" and "basically" sound unsure.</li>
+    <li><b>Land your sentences.</b> Let your voice drop at the end of a statement. Rising at the end makes facts sound like questions.</li>
+    <li><b>Breathe from your belly.</b> Short chest breaths make your voice thin and shaky. Breathe in slowly before you start.</li>
+    <li><b>Stress the number.</b> "We grew <b>40%</b> last quarter." Leaning on the key word tells them what matters.</li>
+  </ol>
+
+  <h2>Your body speaks too</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Do</th><th>Avoid</th></tr>
+    <tr><td>Sit or stand tall, feet flat</td><td>Slouching or rocking</td></tr>
+    <tr><td>Look at the person who asked, then the others</td><td>Staring at your slides or notes</td></tr>
+    <tr><td>Calm hands that show size or steps</td><td>Fidgeting with a pen or phone</td></tr>
+    <tr><td>A real smile when you meet them</td><td>A frozen, nervous face</td></tr>
+  </table></div>
+  <p>On a video call: put the camera at eye level, look at the lens when you make your key point, and sit facing a window or lamp so they can see your face.</p>
+
+  <h2>How to practise (15 minutes a day)</h2>
+  <div class="formula">1. Record your 60-second pitch on your phone.
+2. Watch it once with the sound off: check your body.
+3. Watch it with the sound on: count your "um"s.
+4. Fix ONE thing, record again.
+5. Then pitch it to a friend and ask: "What do you remember?"</div>
+
+  <div class="callout honest"><b>Straight talk</b><p>Nobody expects a perfect speaker. Investors expect you to know your business and tell the truth. A slightly nervous founder who knows their numbers beats a smooth talker who doesn't.</p></div>
+
+  <div class="callout"><b>Try it</b><p>Record your one-sentence pitch three times today: once fast, once slow, once slow with a pause before your best number. Listen back. The third one almost always sounds the most convincing.</p></div>
+
+  <div class="quiz" data-quiz="voice"></div>
+  <div class="pager"><a href="#pressure">← 18. Staying calm under pressure</a><a href="#investor-interest">20. Getting an investor interested →</a></div>
+</section>
+
+<!-- ============ INVESTORS 4 ============ -->
+<section class="page" id="investor-interest">
+  <header class="lesson-head">
+    <span class="lesson-num">20</span>
+    <span class="eyebrow">Investors · Lesson 20 of 21</span>
+    <h1>Getting an investor interested</h1>
+    <p class="lede">Investors see far more pitches than they can fund. You have seconds to make them want the meeting, and the meeting to make them want the next one.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>Lead with your strongest proof: real customers, sales or growth.</li><li>A warm introduction from someone they trust beats a cold email.</li><li>Pick investors who back businesses like yours, and follow up with progress.</li></ul></div>
+
+  <h2>What makes an investor lean in</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Signal</th><th>Example</th></tr>
+    <tr><td>Traction (proof people want it)</td><td>"140 paying customers in 4 months, most found us by word of mouth."</td></tr>
+    <tr><td>A big, painful problem</td><td>"Small landlords lose a weekend every tax season."</td></tr>
+    <tr><td>Why you</td><td>"I ran rentals for 5 years and built this to fix my own problem."</td></tr>
+    <tr><td>Why now</td><td>"New rules this year force every landlord to keep digital records."</td></tr>
+  </table></div>
+
+  <h2>Your one-line hook</h2>
+  <div class="formula">We help [who] [get what result],
+and we've already [your best proof].</div>
+  <p>Example: "We help first-time landlords finish their taxes in an hour, and 140 already pay us every month." Use it as your email's first line and your first sentence in the room.</p>
+
+  <h2>Getting the meeting</h2>
+  <ol>
+    <li><b>Make a target list.</b> Look for investors who have backed businesses at your stage and in your area. Don't pitch someone who never invests in your kind of business.</li>
+    <li><b>Find a warm introduction.</b> Ask a founder, mentor or teacher who knows them. A short note they can forward helps.</li>
+    <li><b>Keep the first email short:</b> your hook, three proof points, and one ask: a 20-minute call.</li>
+    <li><b>Follow up with progress,</b> not "just checking in". "Since we wrote, we added 30 customers" is a reason to reply.</li>
+  </ol>
+
+  <h2>In the meeting: make them want more</h2>
+  <ul>
+    <li>Open with the hook, then let them ask questions. Questions mean interest.</li>
+    <li>Ask them: "What would you need to see to invest?" Their answer is your to-do list.</li>
+    <li>End with a clear next step and date, and send a short thank-you note the same day.</li>
+  </ul>
+
+  <div class="callout honest"><b>Straight talk</b><p>Never fake interest from other investors or invent deadlines to create pressure. Investors talk to each other, and one lie can close every door. Real progress is the only pressure that works.</p></div>
+
+  <div class="callout"><b>Try it</b><p>Write your one-line hook, then list five people who could introduce you to an investor or a mentor. Contact one this week.</p></div>
+
+  <div class="quiz" data-quiz="investor-interest"></div>
+  <div class="pager"><a href="#voice">← 19. Your voice in the room</a><a href="#best-of-investors">21. Getting the best out of investors →</a></div>
+</section>
+
+<!-- ============ INVESTORS 5 ============ -->
+<section class="page" id="best-of-investors">
+  <header class="lesson-head">
+    <span class="lesson-num">21</span>
+    <span class="eyebrow">Investors · Lesson 21 of 21</span>
+    <h1>Getting the best out of investors</h1>
+    <p class="lede">Taking investment is like hiring a boss you can't easily fire. Choose carefully, agree fair terms, then put their help to work.</p>
+  </header>
+
+  <div class="tldr"><b>The 30-second version</b><ul><li>You're choosing them too: check their reputation with founders they've backed.</li><li>Ask for specific help: introductions, hiring, advice.</li><li>Send short monthly updates, good news and bad.</li></ul></div>
+
+  <h2>Before you say yes: check them out</h2>
+  <ul>
+    <li><b>Talk to two founders they've backed,</b> including one whose business struggled. How did the investor act when things went wrong?</li>
+    <li><b>Ask what help they give</b> besides money, and for an example.</li>
+    <li><b>Read the terms with a lawyer.</b> Money with bad terms can cost you more than no money (see <a href="#funding">Funding &amp; valuation</a>).</li>
+  </ul>
+
+  <h2>Questions to ask an investor</h2>
+  <div class="formula">"How do you help after you invest? Give me a real example."
+"What happens if we miss our plan?"
+"How involved do you like to be?"
+"Who else could you introduce us to?"</div>
+
+  <h2>After they invest: use them well</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Ask for</th><th>Example</th></tr>
+    <tr><td>Introductions</td><td>"Could you introduce us to two people who buy for small landlords?"</td></tr>
+    <tr><td>Hiring help</td><td>"Do you know a part-time bookkeeper we could hire?"</td></tr>
+    <tr><td>Advice on one decision</td><td>"Should we raise prices now or after launch? Here are our numbers."</td></tr>
+  </table></div>
+  <p>Specific asks get specific help. "Let me know if you can help" gets nothing.</p>
+
+  <h2>The monthly update</h2>
+  <div class="formula">Wins:      1 to 3, with numbers
+Numbers:   sales, customers, cash, months of runway
+Problems:  one honest one
+Asks:      one specific thing they can help with</div>
+  <p>Send it every month, even in bad months. Investors who hear bad news early help. Investors who are surprised stop trusting you.</p>
+
+  <div class="callout honest"><b>Straight talk</b><p>An investor's advice is input, not orders, unless your agreement says otherwise. Listen, thank them, then decide. It's your business, and you'll live with the result.</p></div>
+
+  <div class="callout"><b>Try it</b><p>Write next month's update in the four lines above, even if you don't have investors yet. It's the fastest way to see what's working, and it becomes your first investor email.</p></div>
+
+  <div class="quiz" data-quiz="best-of-investors"></div>
+  <div class="pager"><a href="#investor-interest">← 20. Getting an investor interested</a><a href="#calculators">Calculators →</a></div>
+</section>
+
+<!-- ============ CALCULATORS ============ -->
+<section class="page" id="calculators">
+  <header class="lesson-head">
+    <span class="lesson-num">=</span>
+    <span class="eyebrow">Tool</span>
+    <h1>Calculators</h1>
+    <p class="lede">Use these to check your own numbers and the practice problems. The formulas are shown so nothing is a black box.</p>
+  </header>
+
+  <div class="card calc" id="c-compound">
+    <h3>Compound growth with monthly saving</h3>
+    <div class="row">
+      <label>Starting amount ($)<input type="number" data-k="p" value="1000" min="0"></label>
+      <label>Monthly addition ($)<input type="number" data-k="m" value="200" min="0"></label>
+      <label>Yearly return (%)<input type="number" data-k="r" value="7" step="0.1"></label>
+      <label>Years<input type="number" data-k="y" value="30" min="0" max="80"></label>
+    </div>
+    <div class="out" data-out></div>
+    <p class="muted">Assumes returns compound monthly and additions are made at the end of each month. Real returns vary year to year.</p>
+  </div>
+
+  <div class="card calc" id="c-loan">
+    <h3>Loan payment</h3>
+    <div class="row">
+      <label>Amount borrowed ($)<input type="number" data-k="p" value="20000" min="0"></label>
+      <label>Yearly interest rate (%)<input type="number" data-k="r" value="6" step="0.1"></label>
+      <label>Length (months)<input type="number" data-k="n" value="60" min="1"></label>
+    </div>
+    <div class="out" data-out></div>
+    <div class="formula">Payment = P × r(1+r)^n ÷ ((1+r)^n − 1),  r = yearly rate ÷ 12</div>
+  </div>
+
+  <div class="card calc" id="c-breakeven">
+    <h3>Break-even</h3>
+    <div class="row">
+      <label>Fixed costs per month ($)<input type="number" data-k="f" value="5000" min="0"></label>
+      <label>Price per unit ($)<input type="number" data-k="p" value="25" min="0"></label>
+      <label>Variable cost per unit ($)<input type="number" data-k="v" value="15" min="0"></label>
+    </div>
+    <div class="out" data-out></div>
+  </div>
+
+  <div class="card calc" id="c-margin">
+    <h3>Margin and markup</h3>
+    <div class="row">
+      <label>Your cost ($)<input type="number" data-k="c" value="60" min="0"></label>
+      <label>Selling price ($)<input type="number" data-k="p" value="100" min="0"></label>
+    </div>
+    <div class="out" data-out></div>
+  </div>
+
+  <div class="card calc" id="c-debt">
+    <h3>How long to pay off a card?</h3>
+    <div class="row">
+      <label>Balance ($)<input type="number" data-k="b" value="3000" min="0"></label>
+      <label>APR (%)<input type="number" data-k="r" value="24" step="0.1"></label>
+      <label>Monthly payment ($)<input type="number" data-k="m" value="100" min="0"></label>
+    </div>
+    <div class="out" data-out></div>
+  </div>
+</section>
+
+<!-- ============ PROMPTS ============ -->
+<section class="page" id="prompts">
+  <header class="lesson-head">
+    <span class="lesson-num">&gt;_</span>
+    <span class="eyebrow">Tool</span>
+    <h1>AI prompts</h1>
+    <p class="lede">Copy these into Claude or any other AI assistant. The <strong>system prompt</strong> sets how the AI behaves for a whole conversation. The <strong>master prompts</strong> are reusable starting messages for specific jobs.</p>
+  </header>
+  <div class="callout warn"><b>Check the AI's work too</b><p>AI assistants can be confidently wrong, especially with arithmetic, current tax rules, interest rates and laws. Re-run any important number in the calculators here, and verify anything legal or tax-related with an official source or a professional.</p></div>
+
+  <h2>Where to put a system prompt</h2>
+  <ul>
+    <li><strong>Claude.ai</strong>: create a Project and paste it into the project instructions, or use Settings → Profile → personal preferences for every chat.</li>
+    <li><strong>API</strong>: send it as the <code>system</code> parameter.</li>
+    <li><strong>No settings available?</strong> Paste it as your first message and add: "Follow these instructions for the rest of this conversation."</li>
+  </ul>
+
+  <div id="promptList"></div>
+</section>
+
+<!-- ============ GLOSSARY ============ -->
+<section class="page" id="glossary">
+  <header class="lesson-head">
+    <span class="lesson-num">Aa</span>
+    <span class="eyebrow">Reference</span>
+    <h1>Glossary</h1>
+    <p class="lede">Plain-English definitions.</p>
+  </header>
+  <dl class="gloss">
+    <div><dt>Anchoring</dt><dd>The first number put on the table, which pulls the final deal towards it.</dd></div>
+    <div><dt>APR</dt><dd>Annual percentage rate — the yearly cost of borrowing, including some fees.</dd></div>
+    <div><dt>Asset</dt><dd>Something you own that has value: cash, equipment, property, money owed to you.</dd></div>
+    <div><dt>BATNA</dt><dd>Best Alternative To a Negotiated Agreement — what you'll do if no deal happens.</dd></div>
+    <div><dt>Bond</dt><dd>A loan you make to a government or company in exchange for interest.</dd></div>
+    <div><dt>Break-even</dt><dd>The sales level where revenue exactly covers all costs: zero profit, zero loss.</dd></div>
+    <div><dt>Burn rate</dt><dd>How much more cash a business spends each month than it brings in.</dd></div>
+    <div><dt>Buyback rate</dt><dd>What an hour of your time is worth ÷ 4. Tasks you can pay someone less than this to do are worth handing off (an idea from Dan Martell).</dd></div>
+    <div><dt>CAC</dt><dd>Customer acquisition cost — sales and marketing spend ÷ new customers won.</dd></div>
+    <div><dt>Call to action</dt><dd>The one next step you ask people to take, like "Start your free trial".</dd></div>
+    <div><dt>Cash flow</dt><dd>Money actually moving in and out of the bank, as opposed to accounting profit.</dd></div>
+    <div><dt>Channel</dt><dd>A way customers find you: social media, search, ads, word of mouth, partnerships.</dd></div>
+    <div><dt>Churn</dt><dd>The share of customers who stop buying or cancel in a period.</dd></div>
+    <div><dt>COGS</dt><dd>Cost of goods sold — direct costs of making or buying what you sold.</dd></div>
+    <div><dt>Compound interest</dt><dd>Earning interest on previous interest, so growth accelerates over time.</dd></div>
+    <div><dt>Concession</dt><dd>Something you give up in a negotiation, ideally in exchange for something back.</dd></div>
+    <div><dt>Contribution margin</dt><dd>Price minus variable cost per unit — what each sale adds towards fixed costs.</dd></div>
+    <div><dt>Conversion rate</dt><dd>The share of people who take an action, such as buying, out of everyone who could have.</dd></div>
+    <div><dt>Copywriting</dt><dd>Writing words that persuade people to act: headlines, posts, emails, pages.</dd></div>
+    <div><dt>Dilution</dt><dd>Your ownership percentage shrinking when new shares are issued to investors.</dd></div>
+    <div><dt>Diversification</dt><dd>Spreading money across many investments so one failure doesn't sink you.</dd></div>
+    <div><dt>Equity</dt><dd>Ownership. On a balance sheet: assets minus liabilities.</dd></div>
+    <div><dt>Expense ratio</dt><dd>The yearly fee a fund charges, as a percentage of your money in it.</dd></div>
+    <div><dt>Filler words</dt><dd>Sounds like "um", "uh" and "like" that fill silence and make you sound unsure.</dd></div>
+    <div><dt>Funnel</dt><dd>The stages people move through on the way to buying: aware, interested, decide, buy.</dd></div>
+    <div><dt>Gross margin</dt><dd>(Revenue − cost of goods) ÷ revenue: how much of each sale you keep after direct costs.</dd></div>
+    <div><dt>Hook</dt><dd>The first line or first two seconds of a post, made to stop people scrolling.</dd></div>
+    <div><dt>Index fund</dt><dd>A fund that buys everything in a market index instead of picking stocks. Usually very cheap.</dd></div>
+    <div><dt>Inflation</dt><dd>The general rise in prices over time, which reduces what money can buy.</dd></div>
+    <div><dt>Liability</dt><dd>Something you owe: loans, unpaid bills, taxes due.</dd></div>
+    <div><dt>Liquidity</dt><dd>How quickly something can be turned into cash without losing value.</dd></div>
+    <div><dt>LTV</dt><dd>Lifetime value — gross profit you expect from a customer over the whole relationship.</dd></div>
+    <div><dt>Markup</dt><dd>Profit ÷ cost. Not the same as margin.</dd></div>
+    <div><dt>Net profit</dt><dd>What's left after every cost, interest payment and tax.</dd></div>
+    <div><dt>Objection</dt><dd>A reason someone gives for not saying yes yet, often a question in disguise.</dd></div>
+    <div><dt>Pitch</dt><dd>A short, clear explanation of your business and what you're asking for.</dd></div>
+    <div><dt>Positioning</dt><dd>One clear sentence on who you're for, what you do for them, and why you instead of the alternative.</dd></div>
+    <div><dt>Present value</dt><dd>What a future amount of money is worth today, after discounting.</dd></div>
+    <div><dt>Receivables</dt><dd>Money customers owe you for things already delivered.</dd></div>
+    <div><dt>Reservation price</dt><dd>Your walk-away point in a negotiation.</dd></div>
+    <div><dt>ROAS</dt><dd>Return on ad spend: revenue from ads divided by what the ads cost.</dd></div>
+    <div><dt>Runway</dt><dd>How many months until the cash runs out: cash in the bank ÷ monthly burn rate.</dd></div>
+    <div><dt>Traction</dt><dd>Proof that people want your product: customers, sales, growth.</dd></div>
+    <div><dt>Use of funds</dt><dd>What an investor's money will pay for, and what it will achieve.</dd></div>
+    <div><dt>Valuation</dt><dd>An estimate of what a business is worth.</dd></div>
+    <div><dt>Warm introduction</dt><dd>Being introduced to someone by a person they already know and trust.</dd></div>
+    <div><dt>ZOPA</dt><dd>Zone Of Possible Agreement — the overlap between both sides' walk-away points.</dd></div>
+  </dl>
+</section>
+
+<footer class="mini-foot" style="border-top:1px solid var(--rule);margin-top:40px;padding:22px 0 30px;text-align:center;font-size:.9rem"><a style="color:var(--muted);margin:0 8px" href="../about/index.html">About</a><a style="color:var(--muted);margin:0 8px" href="../privacy/index.html">Privacy</a><a style="color:var(--muted);margin:0 8px" href="../terms/index.html">Terms</a><a style="color:var(--muted);margin:0 8px" href="../refunds/index.html">Refunds</a></footer>
+</main>
+</div>
+
+<script src="app.js"></script>
+<script src="../config.js"></script><script src="../assets/quotes.js"></script><script src="today.js"></script>
+<script src="../assets/shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
+<link rel="canonical" href="https://sharpbasics.com/course/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://*.supabase.co wss://*.supabase.co; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>The Launch course · Sharp Basics</title>
+<meta property="og:title" content="The Launch course · Sharp Basics">
+<meta property="og:description" content="The Sharp Launch course: six short modules that take you from a business idea to your first sales.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpbasics.com/course/">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="The Sharp Launch course: six short modules that take you from a business idea to your first sales.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/sharp.css">
+<style>
+.preview{background:var(--highlight);color:var(--highlight-ink);font:700 .88rem var(--f-body);text-align:center;padding:8px 16px}
+.course-head{padding-block:44px 22px}
+.course-head h1{font-size:clamp(2.2rem,5vw,3.3rem);margin:10px 0 12px}
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:40px;align-items:start;padding-bottom:90px}
+.mods{position:sticky;top:84px;display:grid;gap:8px}
+.mod{display:grid;grid-template-columns:38px minmax(0,1fr);gap:12px;align-items:center;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.mod:hover{border-color:var(--ink)}
+.mod[aria-current="page"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.mod .n{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--accent-soft);color:var(--accent-text);font:800 1rem var(--f-display)}
+.mod b{display:block;font:700 .97rem/1.25 var(--f-display)}
+.mod small{color:var(--muted);font-size:.8rem}
+.mod.locked{opacity:.6}
+.mods-h{font:700 .74rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:10px 0 0}
+.mods-h:first-child{margin-top:0}
+article.module .files{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+article.module .file{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px}
+article.module .file b{font:700 1.05rem var(--f-display)}
+article.module .file p{margin:0;color:var(--muted);font-size:.95rem;flex:1}
+article.module .file .btn{align-self:flex-start}
+@media (max-width:600px){ article.module .files{grid-template-columns:1fr} }
+article.module ol.toc{columns:2;column-gap:32px}
+article.module ol.toc li{break-inside:avoid}
+@media (max-width:600px){ article.module ol.toc{columns:1} }
+article.module .say{background:var(--surface);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:12px 16px;margin:10px 0;font-weight:600}
+article.module .when,article.module .prep{margin:.4em 0;color:var(--muted)}
+article.module .when b,article.module .prep b,article.module .avoid b{color:var(--ink)}
+article.module .avoid{background:rgba(255,90,90,.08);border-radius:12px;padding:10px 14px;margin:12px 0 0}
+article.module td small{color:var(--muted)}
+.mod.locked .n{background:var(--surface-2);color:var(--muted)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:34px 36px;box-shadow:var(--shadow);display:grid;gap:14px}
+.panel h2{font-size:clamp(1.6rem,3.5vw,2.1rem)}
+.panel p{color:var(--muted)}
+.panel .row{display:flex;flex-wrap:wrap;gap:10px}
+article.module{max-width:700px}
+article.module h1{font-size:clamp(2rem,4.5vw,2.8rem);margin:8px 0 14px}
+article.module h2{font-size:1.5rem;margin:38px 0 10px}
+article.module p,article.module li{line-height:1.7}
+article.module p{margin:.7em 0}
+article.module ul,article.module ol{padding-left:1.25em}
+article.module li{margin:.35em 0}
+article.module .lede{font-size:1.15rem;color:var(--muted)}
+article.module .tldr{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 20px;margin:4px 0 22px;box-shadow:var(--shadow)}
+article.module .tldr b{display:block;font:700 .74rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;color:var(--accent-text);margin-bottom:6px}
+article.module .tldr ul{margin:0}
+article.module .tldr li{font-weight:600}
+article.module .sum{font:600 .95rem/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px;white-space:pre-wrap;overflow-x:auto;margin:14px 0}
+article.module .table-wrap{overflow-x:auto;margin:14px 0}
+article.module table{border-collapse:collapse;width:100%;font-size:.95rem;font-variant-numeric:tabular-nums}
+article.module th,article.module td{padding:.6em .7em;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+article.module th{font:700 .74rem var(--f-body);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:2px solid var(--ink)}
+article.module .task{background:var(--accent-soft);border-radius:16px;padding:18px 20px;margin:26px 0}
+article.module .task > b{display:block;font:700 .76rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;color:var(--accent-text)}
+article.module .task p{margin:.4em 0;color:var(--ink);font-weight:600}
+article.module details.cy{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+article.module details.cy summary{cursor:pointer;font-weight:700}
+article.module details.cy p{margin:.6em 0 0}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:40px;padding-top:18px;border-top:1px solid var(--line);font-weight:700}
+.pager a{text-decoration:none}
+@media (max-width:900px){ .layout{grid-template-columns:1fr} .mods{position:static} .panel{padding:26px 20px} }
+</style>
+</head>
+<body>
+<div class="preview" id="previewBar" hidden>Private preview: this is what a paying customer sees. In the live app, the course loads only for people who bought it or are on the trial.</div>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="Sharp home"><img src="../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a>
+    <nav class="main-nav" aria-label="Main"><a href="../learn/index.html">Courses</a><a href="../tools/index.html">Tools</a><a href="../pricing/index.html">Pricing</a><a href="../trial/index.html">Free trial</a></nav>
+    <div class="spacer"></div>
+    <button class="signin" id="signOutBtn" type="button" hidden>Sign out</button>
+  </div>
+</header>
+<main>
+  <div class="wrap course-head">
+    <span class="eyebrow">Learner, Builder &amp; Founder plans</span>
+    <h1>The Launch course</h1>
+    <p class="lede">Six short modules that take you from a business idea to your first sales, plus a workbook, money spreadsheets and word-for-word negotiation scripts. Founder adds the full script library, an investor pitch kit and a 30-day launch plan.</p>
+  </div>
+  <div class="wrap layout">
+    <nav class="mods" id="mods" aria-label="Modules"></nav>
+    <div id="stage">
+      <section class="panel" id="st-off" hidden>
+        <span class="eyebrow">Opening soon</span>
+        <h2>The course opens with accounts.</h2>
+        <p>Join the waitlist and you'll hear the day it opens, at the founding price. Module 1 is free in the 3-day trial.</p>
+        <div class="row"><a class="btn" href="../index.html#join">Join the waitlist</a><a class="btn ghost" href="../pricing/index.html">See plans</a></div>
+      </section>
+      <section class="panel" id="st-out" hidden>
+        <span class="eyebrow">Sign in</span>
+        <h2>Sign in to open your course.</h2>
+        <p>Use the email you bought with. We'll send you a sign-in link; no password needed.</p>
+        <form id="emailForm" novalidate style="display:grid;gap:10px;max-width:420px">
+          <label for="authEmail" style="font-weight:700;font-size:.9rem">Email</label>
+          <input type="email" id="authEmail" required placeholder="you@email.com" autocomplete="email">
+          <button class="btn" type="submit">Email me a sign-in link</button>
+        </form>
+        <p class="msg" id="authMsg" role="status" aria-live="polite"></p>
+      </section>
+      <section class="panel" id="st-none" hidden>
+        <span class="eyebrow">Not on your plan yet</span>
+        <h2>Your account doesn't include the course.</h2>
+        <p>Learner ($19.99), Builder ($29.99) and Founder ($74.99) all include all six modules. One-time payment.</p>
+        <div class="row"><a class="btn" href="../pricing/index.html">See plans</a><a class="btn ghost" href="../trial/index.html">Start the free trial</a></div>
+      </section>
+      <section class="panel" id="st-builder" hidden>
+        <span class="eyebrow">Builder plan</span>
+        <h2>This comes with Builder.</h2>
+        <p>Your Learner plan includes all six course modules. Builder adds the workbook, the money spreadsheets and 4 essential negotiation scripts. One-time payment of $29.99.</p>
+        <div class="row"><a class="btn" href="../pricing/index.html">See Builder</a><a class="btn ghost" href="#m1">Back to the course</a></div>
+      </section>
+      <section class="panel" id="st-founder" hidden>
+        <span class="eyebrow">Founder plan</span>
+        <h2>This kit comes with Founder.</h2>
+        <p>Founder adds 10 more negotiation scripts, the investor pitch kit and the 30-day launch plan to everything you already have. One-time payment of $74.99.</p>
+        <div class="row"><a class="btn" href="../pricing/index.html">See Founder</a><a class="btn ghost" href="#m1">Back to the course</a></div>
+      </section>
+      <section class="panel" id="st-err" hidden>
+        <h2>Couldn't load the course.</h2>
+        <p>Check your connection and refresh. If it keeps happening, contact us.</p>
+      </section>
+      <article class="module" id="moduleView" hidden></article>
+    </div>
+  </div>
+</main>
+<footer class="mini-foot"><a href="../about/index.html">About</a><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a><a href="../refunds/index.html">Refunds</a></footer>
+<script src="../config.js"></script>
+<script src="course.js"></script>
+<script src="../assets/shell.js"></script>
+</body>
+</html>
