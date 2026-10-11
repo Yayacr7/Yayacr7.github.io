@@ -225,7 +225,7 @@ section.block + section.block{border-top:1px solid var(--line)}
 @media (max-width:860px){ .about{grid-template-columns:1fr;gap:22px} }
 
 /* spending check (status colors always paired with an icon and a word) */
-:root{--st-good:#0ca30c;--st-warn:#fab219;--st-bad:#d03b3b}
+:root{--st-good:#5fd99a;--st-warn:#f5b324;--st-bad:#ef4f5a}
 .sc{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:28px;align-items:start}
 .sc form{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
 .sc .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -239,9 +239,9 @@ section.block + section.block{border-top:1px solid var(--line)}
 .sc-legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.84rem;color:var(--muted);font-weight:700}
 .sc-legend span{display:inline-flex;align-items:center;gap:6px}
 .sc-ic{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;font:800 .72rem/1 var(--f-body);font-style:normal;color:#0d1020;flex:none}
-.sc-ic.good{background:var(--st-good)}.sc-ic.warn{background:var(--st-warn)}.sc-ic.bad{background:var(--st-bad);color:#fff}
+.sc-ic.good{background:var(--st-good)}.sc-ic.warn{background:var(--st-warn)}.sc-ic.bad{background:var(--st-bad);color:#0d1020}
 .sc-chart{list-style:none;margin:0;padding:0;display:grid;gap:2px}
-.sc-chart{--sc-cols:112px minmax(0,1fr) 120px 110px}
+.sc-chart,.sc-axis{--sc-cols:112px minmax(0,1fr) 120px 110px}
 .sc-chart li{display:grid;grid-template-columns:var(--sc-cols);align-items:center;gap:10px;padding:5px 8px;border-radius:10px;font-size:.9rem}
 .sc-chart li:hover,.sc-chart li:focus{background:var(--surface-2);outline:none}
 .sc-name{font-weight:700}
@@ -266,14 +266,16 @@ section.block + section.block{border-top:1px solid var(--line)}
 
 
 /* limit chart: one line per row = the limit; bar coloured by status */
-.sc-track{position:relative;height:20px;border-radius:6px;background:rgba(255,255,255,.07)}
-.sc-track::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:#f4f5fb;border-radius:1px}
-.sc-track i{position:absolute;left:0;top:4px;bottom:4px;border-radius:4px}
+.sc-track{position:relative;height:20px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,transparent 1px 25%)}
+.sc-track::before{content:"";position:absolute;left:0;right:0;top:5px;height:10px;border-radius:4px;background:rgba(255,255,255,.05)}
+.sc-track::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:rgba(255,255,255,.7);border-radius:1px}
+.sc-track i{position:absolute;left:0;top:5px;height:10px;border-radius:0 4px 4px 0}
+.sc-axis{display:grid;grid-template-columns:var(--sc-cols);gap:10px;padding:0 8px;font:600 .7rem var(--f-body);color:var(--muted)}.sc-axis>span:nth-child(2){position:relative;height:12px}.sc-axis>span:nth-child(2) b{position:absolute;transform:translateX(-50%);font-weight:600;white-space:nowrap}.sc-axis>span:nth-child(2) b:first-child{transform:none}.sc-axis>span:nth-child(2) b:last-child{transform:translateX(-100%)}.sc-axis>span:nth-child(2) b.lim{color:var(--ink);font-weight:800}.sc-axis>span:nth-child(3){text-align:right}
 .sc-chart .good .sc-track i{background:var(--st-good)}.sc-chart .warn .sc-track i{background:var(--st-warn)}.sc-chart .bad .sc-track i{background:var(--st-bad)}
-.sc-track.over i{border-radius:4px 0 0 4px;background-image:linear-gradient(90deg,transparent 88%,rgba(255,255,255,.35) 88% 90%,transparent 90% 94%,rgba(255,255,255,.35) 94% 96%,transparent 96%)}
+.sc-track.over i{border-radius:0}.sc-track.over::before{background:transparent}.sc-cap{position:absolute;right:-6px;top:0;font:800 .95rem/20px var(--f-body);color:var(--st-bad)}
 .sc-val small{color:var(--muted);font-weight:600}
-.sc-mk{display:inline-block;width:2px;height:14px;background:#f4f5fb;margin:0 4px}
-.sc-bar{display:inline-block;width:18px;height:8px;border-radius:3px;background:var(--st-good);margin-right:2px}
+.sc-mk{display:inline-block;width:2px;height:14px;background:rgba(255,255,255,.7);margin:0 4px}
+.sc-bar{display:inline-block;width:18px;height:8px;border-radius:0 3px 3px 0;background:var(--st-good);margin-right:2px}
 .sc-legend span{align-items:center}
 /* "Go further" box on free tools: points to the matching paid plan */
 .upsell{margin-top:40px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 24px;align-items:center;padding:22px 24px;border-radius:16px;border:1px solid rgba(255,106,43,.45);background:linear-gradient(135deg,var(--accent-soft),var(--surface) 70%)}

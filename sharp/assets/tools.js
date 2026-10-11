@@ -73,13 +73,24 @@ wire('f-funnel', function(){
   var need = (sr > 0 && br > 0 && price > 0) ? Math.ceil(goal / (price * sr * br)) : Infinity;
   var v = goal > 0 && isFinite(need) ? 'To reach ' + money(goal) + ' a month at these rates you need about <b>' + need.toLocaleString() + ' visitors a month</b>. Raising either conversion rate cuts that number faster than more traffic.' : '';
   $('fn-out').innerHTML = result('Revenue per month', money(rev), [
-    ['Sign-ups', Math.round(leads).toLocaleString()], ['Customers', (buyers < 10 ? buyers.toFixed(1) : Math.round(buyers).toLocaleString())], ['Revenue per visitor', money(perVisitor, 2)]
+    ['Sign-ups', Math.round(leads).toLocaleString()], ['Customers', buyers < 10 && buyers % 1 ? 'about ' + Math.max(0, Math.round(buyers)) + ' (' + buyers.toFixed(1) + ')' : Math.round(buyers).toLocaleString()], ['Revenue per visitor', money(perVisitor, 2)]
   ], v);
-  var w = vis > 0 ? 100 : 0;
-  $('fn-bars').innerHTML = [['Visitors', vis, vis], ['Sign-ups', leads, vis], ['Customers', buyers, vis]].map(function(r){
-    var width = r[2] > 0 ? Math.max(1.5, r[1] / r[2] * w) : 0;
-    return '<div class="fn-row"><span>' + r[0] + '</span><div class="fn-track"><i style="width:' + width.toFixed(1) + '%"></i></div><b class="num">' + (r[1] < 10 ? r[1].toFixed(1) : Math.round(r[1]).toLocaleString()) + '</b></div>';
-  }).join('');
+  // Funnel chart. Only numbers and fixed words go into this HTML (nothing a visitor typed as text).
+  function cnt(v){ return v < 10 && v % 1 ? (v < 1 ? v.toFixed(2) : v.toFixed(1)) : Math.round(v).toLocaleString(); }
+  function step(name, v, note){ var w = vis > 0 ? Math.max(2.5, v / vis * 100) : 0;
+    return '<div class="fx-step"><div class="fx-lab"><b>' + name + '</b><span>' + cnt(v) + ' / month</span></div><div class="fx-plot"><i class="fx-bar" style="width:' + w.toFixed(2) + '%"></i></div><span class="fx-pct">' + (vis > 0 ? (v === 0 ? 0 : v / vis * 100 < 1 ? (v / vis * 100).toFixed(2) : Math.round(v / vis * 100)) + '%' : '—') + '<small>' + note + '</small></span></div>'; }
+  var leak = sr > 0 && br > 0 ? (sr <= br ? 1 : 2) : 0;
+  function conv(rate, lost, verb, i){ return '<div class="fx-conv' + (leak === i ? ' leak' : '') + '"><span class="fx-ar" aria-hidden="true">↓</span><b>' + (rate * 100).toFixed(1) + '%</b> ' + verb + ' <span class="fx-lost">· ' + cnt(lost) + ' don\'t</span>' + (leak === i ? '<span class="fx-tag">Lowest rate</span>' : '') + '</div>'; }
+  var html = '<div class="fx" role="img" aria-label="Funnel: ' + Math.round(vis) + ' visitors, ' + Math.round(leads) + ' sign-ups, ' + buyers.toFixed(1) + ' customers a month">' +
+    step('Visitors', vis, 'of visitors') + conv(sr, vis - leads, 'sign up', 1) + step('Sign-ups', leads, 'of visitors') + conv(br, leads - buyers, 'buy', 2) + step('Customers', buyers, 'of visitors') + '</div>';
+  if(goal > 0 && isFinite(need) && vis > 0){
+    var top = Math.max(vis, need), times = need / vis;
+    html += '<div class="fx-goal"><p class="fx-gh">Traffic for your ' + money(goal) + ' goal</p>' +
+      '<div class="fx-g"><span>You have</span><div class="fx-plot"><i class="fx-bar have" style="width:' + Math.max(2, vis / top * 100).toFixed(2) + '%"></i></div><b>' + Math.round(vis).toLocaleString() + '</b></div>' +
+      '<div class="fx-g"><span>You need</span><div class="fx-plot"><i class="fx-bar need" style="width:' + Math.max(2, need / top * 100).toFixed(2) + '%"></i></div><b>' + need.toLocaleString() + '</b></div>' +
+      '<p class="fx-gn">' + (times <= 1 ? '<span class="fx-ok">✓ Enough traffic</span> At these rates your current visitors reach the goal.' : '<b>' + (times < 10 ? times.toFixed(1) : Math.round(times)) + '× more visitors</b> at these rates, or double one conversion rate to halve that number.') + '</p></div>';
+  }
+  $('fn-bars').innerHTML = html;
 });
 
 wire('f-email', function(){
@@ -152,6 +163,7 @@ wire('f-spend', function(){
   // Simple limit chart: each row's line in the middle is that category's limit (a goal for saving).
   // Before the line = fine, past the line = too much. Plain dollars, no percent scale.
   html += '<div class="sc-legend" aria-hidden="true"><span><i class="sc-bar"></i>What you spend</span><span><i class="sc-mk"></i>Your limit</span><span><i class="sc-ic good">✓</i>Fine</span><span><i class="sc-ic warn">!</i>A bit over</span><span><i class="sc-ic bad">✕</i>Too much</span></div>';
+  html += '<div class="sc-axis" aria-hidden="true"><span></span><span><b style="left:0">$0</b><b class="lim" style="left:50%">Limit</b><b style="left:100%">2× limit</b></span><span>Spent / limit</span><span></span></div>';
   html += '<ul class="sc-chart" aria-label="What you spend in each category compared with your limit">';
   rows.forEach(function(r){
     var S = STATUS[r.st], word = r.saving ? (r.st === 'good' ? 'Goal met' : 'Save more') : { good: 'Fine', warn: 'A bit over', bad: 'Too much' }[r.st];
@@ -159,7 +171,7 @@ wire('f-spend', function(){
     var label = r.saving ? 'goal' : 'limit';
     html += '<li class="' + S.cls + '" tabindex="0" title="' + r.name + ': you spend ' + money(r.v) + '. Your ' + label + ' is ' + money(r.target) + '. ' + word + '.">' +
       '<span class="sc-name">' + r.name + '</span>' +
-      '<span class="sc-track' + (r.v > 2 * lim ? ' over' : '') + '"><i style="width:' + (r.v > 0 ? Math.max(1.5, w).toFixed(2) : 0) + '%"></i></span>' +
+      '<span class="sc-track' + (r.v > 2 * lim ? ' over' : '') + '"><i style="width:' + (r.v > 0 ? Math.max(1.5, w).toFixed(2) : 0) + '%"></i>' + (r.v > 2 * lim ? '<b class="sc-cap" aria-hidden="true">›</b>' : '') + '</span>' +
       '<span class="sc-val">' + money(r.v) + ' <small>/ ' + money(r.target) + '</small></span>' +
       '<span class="sc-st"><i class="sc-ic ' + S.cls + '" aria-hidden="true">' + S.icon + '</i><span class="sc-w">' + word + '</span></span></li>';
   });

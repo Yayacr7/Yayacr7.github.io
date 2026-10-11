@@ -171,7 +171,7 @@
 .hc-head .hero-sub{max-width:52ch;font-size:1.05rem}
 .hc-head .cta{margin:0}
 .sc.sc-first{grid-template-columns:minmax(0,1.45fr) minmax(0,.85fr)}
-body.fs .sc-chart{--sc-cols:112px minmax(0,1fr) 116px 100px}
+body.fs .sc-chart,body.fs .sc-axis{--sc-cols:112px minmax(0,1fr) 116px 100px}
 body.fs .sc-chart li{column-gap:10px}
 body.fs .sc-st{white-space:nowrap;font-size:.8rem}
 body.fs .sc-chart{gap:0}
@@ -220,7 +220,7 @@ body.fs .sc-todo li{padding:8px 10px;font-size:.9rem}
   body.fs .sc-first > *{flex:1}
   .sc-first[data-view="chart"] > form,.sc-first[data-view="nums"] > .sc-out,.sc-first[data-view="todo"] > form{display:none}
   .sc-first[data-view="chart"] .sc-h,.sc-first[data-view="chart"] .sc-todo,.sc-first[data-view="chart"] .sc-ok{display:none}
-  .sc-first[data-view="todo"] .sc-sum,.sc-first[data-view="todo"] .sc-legend,.sc-first[data-view="todo"] .sc-chart,.sc-first[data-view="todo"] .sc-axt,.sc-first[data-view="todo"] .sc-alert{display:none}
+  .sc-first[data-view="todo"] .sc-sum,.sc-first[data-view="todo"] .sc-legend,.sc-first[data-view="todo"] .sc-axis,.sc-first[data-view="todo"] .sc-chart,.sc-first[data-view="todo"] .sc-axt,.sc-first[data-view="todo"] .sc-alert{display:none}
   body.fs .sc-legend{font-size:.78rem}
   body.fs .sc-sum b{font-size:1.05rem}
   .fs-bar{padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));gap:6px}
@@ -254,7 +254,7 @@ body.fs .sc form .fine{font-size:.76rem;margin-top:8px!important}
   body.fs .sc .fields input{padding:5px 10px}
 }
 @media (max-height:700px) and (max-width:900px){
-  body.fs .sc-legend{display:none}
+  body.fs .sc-legend,body.fs .sc-axis{display:none}
   body.fs .sc-chart li{padding:1px 2px;font-size:.8rem}
   body.fs .sc-sum b{font-size:.98rem}
   body.fs .sc .fields label{font-size:.74rem}
@@ -270,10 +270,12 @@ body.fs .sc form .fine{font-size:.76rem;margin-top:8px!important}
 }
 
 body.fs .sc-out{align-content:start}
-@media (min-width:561px) and (max-width:900px){ body.fs .sc-chart{--sc-cols:130px minmax(0,1fr) 130px 120px} body.fs .sc-chart li{font-size:.92rem;padding:5px 8px} }
+@media (min-width:561px) and (max-width:900px){ body.fs .sc-chart,body.fs .sc-axis{--sc-cols:130px minmax(0,1fr) 130px 120px} body.fs .sc-chart li{font-size:.92rem;padding:5px 8px} }
 @media (max-width:560px){
-  body.fs .sc-chart{--sc-cols:104px minmax(0,1fr) 98px 20px}
+  body.fs .sc-chart,body.fs .sc-axis{--sc-cols:104px minmax(0,1fr) 98px 20px}
   body.fs .sc-chart li{column-gap:8px}
+  body.fs .sc-axis{column-gap:8px;padding:0 2px}
+  body.fs .sc-axis b:not(.lim){display:none}
   body.fs .sc-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.8rem}
   body.fs .sc-legend{gap:4px 10px}
   body.fs .sc-chart li{grid-template-columns:var(--sc-cols);grid-template-areas:none;row-gap:0;padding:3px 2px;border-bottom:0;font-size:.84rem;border-radius:6px}

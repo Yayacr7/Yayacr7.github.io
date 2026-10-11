@@ -29,7 +29,7 @@
 .tool-grid .result{margin-top:0;position:sticky;top:90px}
 .tool h2{margin-bottom:4px}
 @media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
-.fn-row{display:grid;grid-template-columns:90px minmax(0,1fr) 64px;align-items:center;gap:10px;font-size:.9rem;padding:4px 0}.fn-row span{color:var(--muted);font-weight:700}.fn-track{height:12px;background:var(--surface-2);border-radius:6px;overflow:hidden}.fn-track i{display:block;height:100%;background:var(--marketing);border-radius:6px}.fn-row b{text-align:right}
+.fx{display:grid;gap:0;margin-top:4px}.fx-step,.fx-g{display:grid;grid-template-columns:minmax(0,120px) minmax(0,1fr) 72px;gap:12px;align-items:center}.fx-lab b{display:block;font-size:.92rem}.fx-lab span{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}.fx-plot{position:relative;height:22px;display:flex;justify-content:center;background:linear-gradient(90deg,transparent calc(50% - .5px),rgba(255,255,255,.08) calc(50% - .5px) calc(50% + .5px),transparent calc(50% + .5px))}.fx-bar{display:block;height:100%;border-radius:4px;background:var(--marketing)}.fx-pct{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}.fx-pct small{display:block;font:600 .7rem var(--f-body);color:var(--muted)}.fx-conv{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;margin:4px 0 4px 132px;padding:5px 10px;border-left:2px solid rgba(255,255,255,.14);font-size:.84rem;color:var(--muted)}.fx-conv b{color:var(--ink);font-variant-numeric:tabular-nums}.fx-ar{color:var(--muted)}.fx-lost{font-variant-numeric:tabular-nums}.fx-conv.leak{border-left-color:#f5b324}.fx-tag{font:800 .7rem var(--f-body);text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:999px;background:rgba(245,179,36,.16);color:#f5c45a}.fx-goal{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);display:grid;gap:8px}.fx-gh{margin:0;font-weight:800}.fx-g{grid-template-columns:minmax(0,80px) minmax(0,1fr) 72px}.fx-g span{font-size:.84rem;color:var(--muted);font-weight:700}.fx-g .fx-plot{justify-content:flex-start;background:rgba(255,255,255,.05);border-radius:4px}.fx-g b{text-align:right;font-variant-numeric:tabular-nums}.fx-bar.need{background:rgba(255,255,255,.1);outline:1.5px solid rgba(255,255,255,.55);outline-offset:-1.5px}.fx-gn{margin:0;font-size:.88rem;color:var(--muted)}.fx-gn b{color:var(--ink)}.fx-ok{color:#5fd99a;font-weight:800}@media (max-width:560px){.fx-step{grid-template-columns:minmax(0,1fr) 64px}.fx-step .fx-plot{grid-column:1/-1;grid-row:2}.fx-conv{margin-left:0}}
 </style>
 </head>
 <body>
@@ -105,7 +105,7 @@
         </form>
         <div>
           <div class="result" id="fn-out" aria-live="polite"></div>
-          <div class="card" style="margin-top:14px" id="fn-bars" aria-hidden="true"></div>
+          <div class="card" style="margin-top:14px" id="fn-bars"></div>
         </div>
       </div>
     </section>
