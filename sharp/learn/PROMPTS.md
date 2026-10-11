@@ -1,11 +1,11 @@
 # AI Prompts — Napkin Proof Lessons
 
-Copy-paste prompts for learning business, finance and negotiation with Claude or any AI assistant. The same prompts are on the site at `learn/#prompts`, each with a copy button.
+Copy-paste prompts for learning business, finance and negotiation with Claude or any AI assistant. The same prompts are in the app at `learn/#prompts`, each with a copy button.
 
 - **System prompt**: sets how the AI behaves for the whole conversation. Put it in a Claude Project's instructions, your personal preferences, or the API `system` parameter. With no settings available, paste it as your first message.
 - **Master prompts**: reusable opening messages for specific jobs. Replace the `[BRACKETED]` parts.
 
-> AI assistants can be confidently wrong about arithmetic, tax rules, rates and laws. Re-check important numbers with the calculators on the site, and verify anything legal or tax-related with an official source.
+> AI assistants can be confidently wrong about arithmetic, tax rules, rates and laws. Re-check important numbers with the calculators in the app, and verify anything legal or tax-related with an official source.
 
 ## System prompt — Straight-Talk Mentor
 
