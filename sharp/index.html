@@ -24,6 +24,7 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/sharp.css">
+<link rel="stylesheet" href="assets/cine.css">
 <style>
 .hero{padding-block:40px 64px;background:radial-gradient(600px 380px at 85% 30%,var(--investors-soft),transparent 70%),radial-gradient(520px 340px at 10% 85%,var(--finance-soft),transparent 70%),radial-gradient(420px 300px at 60% 0%,var(--business-soft),transparent 70%)}
 .topic-top{display:flex;align-items:center;gap:10px}
@@ -171,37 +172,37 @@
 .hc-head .hero-sub{max-width:52ch;font-size:1.05rem}
 .hc-head .cta{margin:0}
 .sc.sc-first{grid-template-columns:minmax(0,1.45fr) minmax(0,.85fr)}
-body.fs .sc-chart,body.fs .sc-axis{--sc-cols:112px minmax(0,1fr) 116px 100px}
-body.fs .sc-chart li{column-gap:10px}
-body.fs .sc-st{white-space:nowrap;font-size:.8rem}
-body.fs .sc-chart{gap:0}
-body.fs .sc-val{white-space:nowrap}
+.fs .sc-chart,.fs .sc-axis{--sc-cols:112px minmax(0,1fr) 116px 100px}
+.fs .sc-chart li{column-gap:10px}
+.fs .sc-st{white-space:nowrap;font-size:.8rem}
+.fs .sc-chart{gap:0}
+.fs .sc-val{white-space:nowrap}
 .hero .sc-out,.hero .sc form{color:var(--ink)}
 @media (max-width:900px){ .sc.sc-first{grid-template-columns:1fr} .hc-head{align-items:flex-start} }
 
 /* ===== home fits one screen: no page scrolling ===== */
-body.fs{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
-body.fs > header{flex:none}
-body.fs main{flex:1;min-height:0;display:flex}
-body.fs .hero{flex:1;min-height:0;display:flex;padding-block:14px 0}
-body.fs .hero .wrap.hc{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;align-items:stretch;gap:0}
-body.fs .hc-head{display:flex;justify-content:space-between}
-body.fs .hc-head > div:first-child{flex:1 1 auto;min-width:0}
-body.fs .hc-head .cta{flex:none}
-body.fs .wl-inline{margin:0;max-width:none}
-body.fs .hc-head{flex:none;margin-bottom:12px;align-items:center}
-body.fs .hc-head h1{font-size:clamp(1.7rem,3.4vw,2.5rem);margin:0 0 4px}
-body.fs .hc-head .hero-sub{font-size:.98rem;margin:0}
-body.fs .sc.sc-first{flex:1;min-height:0;align-items:stretch;gap:16px}
-body.fs .sc-out,body.fs .sc form{min-height:0;overflow:auto;padding:16px 18px}
-body.fs .sc-out{gap:10px}
-body.fs .sc-out{display:flex;flex-direction:column}
-body.fs .sc-out>*{flex:none}
-body.fs .sc-out>.sc-tree{flex:1 1 180px;height:auto;min-height:130px}
-body.fs .sc-chart li{padding:4px 8px}
-body.fs .sc .fields{gap:8px 12px}
-body.fs .sc .fields input{padding:8px 12px}
-body.fs .sc-todo li{padding:8px 10px;font-size:.9rem}
+.fs{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+.fs > header{flex:none}
+.fs main{flex:1;min-height:0;display:flex}
+.fs .hero{flex:1;min-height:0;display:flex;padding-block:14px 0}
+.fs .hero .wrap.hc{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;align-items:stretch;gap:0}
+.fs .hc-head{display:flex;justify-content:space-between}
+.fs .hc-head > div:first-child{flex:1 1 auto;min-width:0}
+.fs .hc-head .cta{flex:none}
+.fs .wl-inline{margin:0;max-width:none}
+.fs .hc-head{flex:none;margin-bottom:12px;align-items:center}
+.fs .hc-head h1{font-size:clamp(1.7rem,3.4vw,2.5rem);margin:0 0 4px}
+.fs .hc-head .hero-sub{font-size:.98rem;margin:0}
+.fs .sc.sc-first{flex:1;min-height:0;align-items:stretch;gap:16px}
+.fs .sc-out,.fs .sc form{min-height:0;overflow:auto;padding:16px 18px}
+.fs .sc-out{gap:10px}
+.fs .sc-out{display:flex;flex-direction:column}
+.fs .sc-out>*{flex:none}
+.fs .sc-out>.sc-tree{flex:1 1 180px;height:auto;min-height:130px}
+.fs .sc-chart li{padding:4px 8px}
+.fs .sc .fields{gap:8px 12px}
+.fs .sc .fields input{padding:8px 12px}
+.fs .sc-todo li{padding:8px 10px;font-size:.9rem}
 .sc-tabs{display:none}
 .fs-bar{flex:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 20px;padding:10px 0 12px}
 .wl-inline .wl-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -213,19 +214,19 @@ body.fs .sc-todo li{padding:8px 10px;font-size:.9rem}
 .fs-links a{color:rgba(255,255,255,.7);text-decoration:none}
 .fs-links a:hover{color:#fff}
 @media (max-width:900px){
-  body.fs .hc-head{margin-bottom:8px;gap:8px}
-  body.fs .hc-head .hero-sub{display:none}
-  body.fs .hc-head .cta .btn{padding:8px 14px;font-size:.9rem}
+  .fs .hc-head{margin-bottom:8px;gap:8px}
+  .fs .hc-head .hero-sub{display:none}
+  .fs .hc-head .cta .btn{padding:8px 14px;font-size:.9rem}
   .sc-tabs{display:flex;gap:6px;margin-bottom:8px;flex:none}
   .sc-tabs button{flex:1;padding:9px 6px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#fff;font:700 .88rem var(--f-body)}
   .sc-tabs button[aria-selected="true"]{background:#fff;color:#0d1020}
-  body.fs .sc.sc-first{display:flex;flex-direction:column}
-  body.fs .sc-first > *{flex:1}
+  .fs .sc.sc-first{display:flex;flex-direction:column}
+  .fs .sc-first > *{flex:1}
   .sc-first[data-view="chart"] > form,.sc-first[data-view="nums"] > .sc-out,.sc-first[data-view="todo"] > form{display:none}
   .sc-first[data-view="chart"] .sc-h,.sc-first[data-view="chart"] .sc-todo,.sc-first[data-view="chart"] .sc-ok{display:none}
   .sc-first[data-view="todo"] .sc-sum,.sc-first[data-view="todo"] .sc-bar-row,.sc-first[data-view="todo"] .sc-tree,.sc-first[data-view="todo"] .sc-listview,.sc-first[data-view="todo"] .sc-detail,.sc-first[data-view="todo"] .sc-legend,.sc-first[data-view="todo"] .sc-axis,.sc-first[data-view="todo"] .sc-chart,.sc-first[data-view="todo"] .sc-axt,.sc-first[data-view="todo"] .sc-alert{display:none}
-  body.fs .sc-legend{font-size:.78rem}
-  body.fs .sc-sum b{font-size:1.05rem}
+  .fs .sc-legend{font-size:.78rem}
+  .fs .sc-sum b{font-size:1.05rem}
   .fs-bar{padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));gap:6px}
   .wl-inline .wl-lead{display:none}
   .wl-inline .wl-row{flex-wrap:nowrap;width:100%}
@@ -238,55 +239,55 @@ body.fs .sc-todo li{padding:8px 10px;font-size:.9rem}
 .sc-mini li{padding:7px 10px;border-radius:8px;background:var(--surface-2);border-left:4px solid var(--st-warn);font-size:.88rem}
 .sc-mini li.bad{border-left-color:var(--st-bad)}
 @media (min-width:901px){
-  body.fs .sc-out .sc-h,body.fs .sc-out .sc-todo{display:none}
-  body.fs .sc-out .sc-mini{display:grid}
+  .fs .sc-out .sc-h,.fs .sc-out .sc-todo{display:none}
+  .fs .sc-out .sc-mini{display:grid}
 }
-body.fs .sc-sum b{font-size:1.15rem}
-body.fs .sc-sum span{font-size:.74rem}
-body.fs .sc-legend{font-size:.78rem;gap:6px 14px}
-body.fs .sc-chart li{padding:2px 8px;font-size:.86rem}
-body.fs .sc .fields label{font-size:.8rem;gap:4px}
-body.fs .sc .fields input{padding:7px 10px;font-size:.95rem}
-body.fs .sc form .fine{font-size:.76rem;margin-top:8px!important}
-@media (max-width:900px){ body.fs .sc .fields{gap:6px 10px} }
+.fs .sc-sum b{font-size:1.15rem}
+.fs .sc-sum span{font-size:.74rem}
+.fs .sc-legend{font-size:.78rem;gap:6px 14px}
+.fs .sc-chart li{padding:2px 8px;font-size:.86rem}
+.fs .sc .fields label{font-size:.8rem;gap:4px}
+.fs .sc .fields input{padding:7px 10px;font-size:.95rem}
+.fs .sc form .fine{font-size:.76rem;margin-top:8px!important}
+@media (max-width:900px){ .fs .sc .fields{gap:6px 10px} }
 @media (max-height:760px){
-  body.fs .hc-head .hero-sub{display:none}
-  body.fs .hc-head h1{font-size:clamp(1.5rem,3vw,2rem)}
-  body.fs .sc-chart li{padding:2px 8px}
-  body.fs .sc form .fine{display:none}
-  body.fs .sc .fields input{padding:5px 10px}
+  .fs .hc-head .hero-sub{display:none}
+  .fs .hc-head h1{font-size:clamp(1.5rem,3vw,2rem)}
+  .fs .sc-chart li{padding:2px 8px}
+  .fs .sc form .fine{display:none}
+  .fs .sc .fields input{padding:5px 10px}
 }
 @media (max-height:700px) and (max-width:900px){
-  body.fs .sc-legend,body.fs .sc-axis{display:none}
-  body.fs .sc-chart li{padding:1px 2px;font-size:.8rem}
-  body.fs .sc-sum b{font-size:.98rem}
-  body.fs .sc .fields label{font-size:.74rem}
+  .fs .sc-legend,.fs .sc-axis{display:none}
+  .fs .sc-chart li{padding:1px 2px;font-size:.8rem}
+  .fs .sc-sum b{font-size:.98rem}
+  .fs .sc .fields label{font-size:.74rem}
   .fs-links{display:none}
-  body.fs .hc-head .cta .ghost-light{display:none}
-  body.fs .hc-head h1{font-size:1.45rem;margin:0}
-  body.fs .hero{padding-top:8px}
+  .fs .hc-head .cta .ghost-light{display:none}
+  .fs .hc-head h1{font-size:1.45rem;margin:0}
+  .fs .hero{padding-top:8px}
   .sc-tabs button{padding:7px 4px}
-  body.fs .sc-out,body.fs .sc form{padding:12px 14px}
-  body.fs .sc-todo li{padding:6px 8px;font-size:.84rem}
-  body.fs .sc .fields input{padding:4px 8px}
-  body.fs .sc .fields{gap:3px 10px}
+  .fs .sc-out,.fs .sc form{padding:12px 14px}
+  .fs .sc-todo li{padding:6px 8px;font-size:.84rem}
+  .fs .sc .fields input{padding:4px 8px}
+  .fs .sc .fields{gap:3px 10px}
 }
 
-body.fs .sc-out{align-content:start}
-@media (min-width:561px) and (max-width:900px){ body.fs .sc-chart,body.fs .sc-axis{--sc-cols:130px minmax(0,1fr) 130px 120px} body.fs .sc-chart li{font-size:.92rem;padding:5px 8px} }
+.fs .sc-out{align-content:start}
+@media (min-width:561px) and (max-width:900px){ .fs .sc-chart,.fs .sc-axis{--sc-cols:130px minmax(0,1fr) 130px 120px} .fs .sc-chart li{font-size:.92rem;padding:5px 8px} }
 @media (max-width:560px){
-  body.fs .sc-chart,body.fs .sc-axis{--sc-cols:104px minmax(0,1fr) 98px 20px}
-  body.fs .sc-chart li{column-gap:8px}
-  body.fs .sc-axis{column-gap:8px;padding:0 2px}
-  body.fs .sc-axis b:not(.lim){display:none}
-  body.fs .sc-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.8rem}
-  body.fs .sc-legend{gap:4px 10px}
-  body.fs .sc-chart li{grid-template-columns:var(--sc-cols);grid-template-areas:none;row-gap:0;padding:3px 2px;border-bottom:0;font-size:.84rem;border-radius:6px}
-  body.fs .sc-track{height:20px}
-  body.fs .sc-chart .sc-name,body.fs .sc-chart .sc-val,body.fs .sc-chart .sc-track,body.fs .sc-chart .sc-st{grid-area:auto}
-  body.fs .sc-chart .sc-w{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .fs .sc-chart,.fs .sc-axis{--sc-cols:104px minmax(0,1fr) 98px 20px}
+  .fs .sc-chart li{column-gap:8px}
+  .fs .sc-axis{column-gap:8px;padding:0 2px}
+  .fs .sc-axis b:not(.lim){display:none}
+  .fs .sc-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.8rem}
+  .fs .sc-legend{gap:4px 10px}
+  .fs .sc-chart li{grid-template-columns:var(--sc-cols);grid-template-areas:none;row-gap:0;padding:3px 2px;border-bottom:0;font-size:.84rem;border-radius:6px}
+  .fs .sc-track{height:20px}
+  .fs .sc-chart .sc-name,.fs .sc-chart .sc-val,.fs .sc-chart .sc-track,.fs .sc-chart .sc-st{grid-area:auto}
+  .fs .sc-chart .sc-w{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 }
-@media (max-width:560px) and (max-height:700px){ body.fs .sc-chart li{padding:0 2px;font-size:.8rem} body.fs .sc-track{height:16px} body.fs .sc-track i{top:3px;bottom:3px} body.fs .sc-axt{display:none} }
+@media (max-width:560px) and (max-height:700px){ .fs .sc-chart li{padding:0 2px;font-size:.8rem} .fs .sc-track{height:16px} .fs .sc-track i{top:3px;bottom:3px} .fs .sc-axt{display:none} }
 @media (min-width:561px) and (max-width:900px) and (min-height:900px){
   .sc-first[data-view="chart"] .sc-h,.sc-first[data-view="chart"] .sc-todo,.sc-first[data-view="chart"] .sc-ok{display:revert}
   .sc-first[data-view="chart"] .sc-todo{display:grid}
@@ -294,7 +295,85 @@ body.fs .sc-out{align-content:start}
 }
 </style>
 </head>
-<body class="fs">
+<body>
+
+<a class="cine-skip" href="#app">Skip to the app</a>
+<section class="cine" id="intro" aria-label="Welcome to Sharp">
+  <div class="cine-bar">
+    <a class="cine-logo" href="#app" aria-label="Sharp: go to the app"><img src="icon.svg" width="26" height="26" alt=""> SHARP</a>
+    <a class="cine-pill ghost" href="#app">Open the app <span aria-hidden="true">↓</span></a>
+  </div>
+  <p class="cine-hud tr" aria-hidden="true"><span>LESSONS 22</span><span>TOOLS 9</span><span>START $0</span></p>
+  <div class="cine-hud bl" aria-hidden="true"><span>FOCUS <b id="cine-focus">000</b>%</span><i><em id="cine-focus-bar"></em></i></div>
+
+  <div class="scene s-warp" data-scene>
+    <div class="stage">
+      <canvas class="warp" id="cine-warp" aria-hidden="true"></canvas>
+      <div class="s-copy center">
+        <p class="cine-eyebrow">MONEY · BUSINESS · AI</p>
+        <h2 class="cine-big" data-letters>Get sharp.</h2>
+        <p class="cine-sub">The money and business skills school never taught you. Built for young entrepreneurs.</p>
+        <a class="cine-pill" href="learn/index.html">Start free <span aria-hidden="true">→</span></a>
+      </div>
+      <p class="cine-cue" aria-hidden="true">SCROLL</p>
+    </div>
+  </div>
+
+  <div class="scene s-chart" data-scene>
+    <div class="stage">
+      <svg class="big-chart" viewBox="0 0 1000 560" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+        <g class="grid"></g><g class="candles"></g>
+        <path class="trend" d=""/>
+        <g class="tag"><rect x="0" y="-18" width="104" height="36" rx="8"/><text x="52" y="7" text-anchor="middle">$0</text></g>
+      </svg>
+      <div class="s-copy left">
+        <p class="cine-eyebrow">01 · SPENDING CHECK</p>
+        <h2 class="cine-big sm" data-letters>See every dollar.</h2>
+        <p class="cine-sub">Type what you spend. Watch it turn into a trading-style chart: green is fine, red is too much.</p>
+      </div>
+      <p class="cine-hud live" aria-hidden="true">PAY <b>$3,200</b> · LEFT <b id="cine-left">$0</b></p>
+    </div>
+  </div>
+
+  <div class="scene s-coins" data-scene>
+    <div class="stage">
+      <div class="coins" aria-hidden="true"></div>
+      <div class="s-copy right">
+        <p class="cine-eyebrow">02 · SAVE &amp; INVEST</p>
+        <h2 class="cine-big sm" data-letters>Small money. Big future.</h2>
+        <p class="cine-sub"><b class="count" id="cine-count">$5</b> <span id="cine-count-l">a day</span></p>
+        <p class="cine-fine">Example: $5 a day, growing 7% a year, for 10 years. Not advice, just the maths.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scene s-line" data-scene>
+    <div class="stage">
+      <svg class="draw" viewBox="0 0 1000 560" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+        <path class="draw-path" d="M40 500 C 180 500, 220 420, 300 400 S 420 330, 500 300 S 640 240, 700 190 S 860 90, 960 60"/>
+        <g class="marks"></g>
+        <g class="pencil"><path d="M0 0 L-16 -6 L-60 -6 L-60 6 L-16 6 Z" class="pb"/><path d="M0 0 L-16 -6 L-16 6 Z" class="pt"/></g>
+      </svg>
+      <div class="s-copy right low">
+        <p class="cine-eyebrow">03 · BUILD IT</p>
+        <h2 class="cine-big sm" data-letters>Idea to first sale.</h2>
+        <p class="cine-sub">Score your idea, set a price that makes a profit, and get a 4-week plan.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scene s-end" data-scene>
+    <div class="stage">
+      <div class="s-copy center">
+        <h2 class="cine-big" data-letters>Your turn.</h2>
+        <p class="cine-sub">22 free lessons. 9 tools. An AI helper that points you the right way.</p>
+        <a class="cine-pill" href="#app">Open the app <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="fs" id="app">
 
 <header class="site-head">
   <div class="wrap">
@@ -364,6 +443,7 @@ body.fs .sc-out{align-content:start}
 </section>
 
 </main>
+</div>
 
 <dialog class="auth" id="authDialog" aria-labelledby="authTitle">
   <div class="auth-in">
@@ -398,6 +478,7 @@ body.fs .sc-out{align-content:start}
 <script src="config.js"></script>
 <script src="app.js"></script>
 <script src="assets/tools.js"></script>
+<script src="assets/cine.js"></script>
 <script src="assets/shell.js"></script>
 </body>
 </html>
