@@ -99,3 +99,6 @@ html.cine-js .stage{position:sticky;top:0}
   .cine-cue::after{animation:none}
   .coins .c{transition:none!important}
 }
+.cine-ctas{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.cine-pill.voice{border:0;cursor:pointer;background:#3ddba5;color:#05221a;box-shadow:0 0 0 1px #ffffff22 inset,0 12px 40px -10px #3ddba5b3}
+.cine-pill.voice[hidden]{display:none}

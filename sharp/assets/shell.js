@@ -1,7 +1,8 @@
 /* Runs on every page.
    1) Shows the AI helpers (anything marked data-ai) only when the server says they're switched on.
    2) Adds the Ask Sharp agent button (assets/agent.js) to the page once the AI is on.
-   3) Registers the service worker (sw.js), so Sharp can be added to the home screen and works offline. */
+   3) Adds the Danny Dan voice button (assets/voice.js; it stays hidden until a Vapi public key is set in config.js).
+   4) Registers the service worker (sw.js), so Sharp can be added to the home screen and works offline. */
 (function(){
 "use strict";
 var root = document.documentElement;
@@ -20,6 +21,7 @@ if(window.fetch) fetch(base + 'api/status', { credentials: 'same-origin' })
   .then(function(r){ return r.ok ? r.json() : { ai: false }; })
   .catch(function(){ return { ai: false }; })
   .then(function(s){ var on = !!(s && s.ai); root.classList.toggle('ai-on', on); try{ sessionStorage.setItem('sharp-ai', on ? '1' : '0'); }catch(e){} if(on) ready(agent); });
+ready(function(){ var v = document.createElement('script'); v.src = base + 'assets/voice.js'; v.defer = true; document.body.appendChild(v); });
 if('serviceWorker' in navigator && window.isSecureContext){
   window.addEventListener('load', function(){ navigator.serviceWorker.register(base + 'sw.js').catch(function(){}); });
 }

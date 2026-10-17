@@ -1,0 +1,38 @@
+/* Danny Dan voice receptionist (assets/voice.js). */
+.vo-launch{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:max(16px,env(safe-area-inset-bottom));z-index:902;
+  display:flex;align-items:center;gap:10px;min-height:52px;padding:0 20px 0 16px;border:0;border-radius:999px;cursor:pointer;
+  background:#3ddba5;color:#05221a;font:800 16px/1 "Karla","Helvetica Neue",Arial,system-ui,sans-serif;
+  box-shadow:0 12px 34px -10px rgba(61,219,165,.65),0 0 0 1px rgba(255,255,255,.18) inset}
+.vo-launch:hover{filter:brightness(1.06)}
+.vo-launch:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.vo-dot{position:relative;width:12px;height:12px;border-radius:50%;background:#05221a}
+.vo-dot::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid #05221a;opacity:.5;animation:vo-ping 1.8s infinite}
+.vo-launch.live .vo-dot{background:#ff3d57}
+@keyframes vo-ping{0%{transform:scale(.6);opacity:.6}100%{transform:scale(1.5);opacity:0}}
+
+.vo-panel{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:calc(max(16px,env(safe-area-inset-bottom)) + 64px);z-index:903;
+  width:min(340px,calc(100vw - 32px));padding:16px;border-radius:20px;background:#151a30;color:#f2f3f9;border:1px solid #283050;
+  box-shadow:0 24px 60px -20px rgba(0,0,0,.9);font:15px/1.45 "Karla","Helvetica Neue",Arial,system-ui,sans-serif}
+.vo-panel[hidden]{display:none!important}
+.vo-top{display:flex;align-items:center;gap:12px}
+.vo-top>div:not(.vo-face){flex:1;min-width:0}
+.vo-face{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#3ddba5,#1d8f6a);
+  color:#05221a;font:800 16px "Bricolage Grotesque",system-ui,sans-serif;flex:none}
+.vo-panel.talking .vo-face{box-shadow:0 0 0 4px rgba(61,219,165,.35),0 0 24px rgba(61,219,165,.6)}
+.vo-title{margin:0;font:800 17px/1.2 "Bricolage Grotesque",system-ui,sans-serif}
+.vo-status{margin:2px 0 0;color:#a4aac4;font-size:14px}
+.vo-clock{margin:0;font:700 13px ui-monospace,Menlo,monospace;color:#a4aac4}
+.vo-bars{display:flex;align-items:center;gap:3px;height:40px;margin:14px 0}
+.vo-bars i{flex:1;height:100%;border-radius:3px;background:#3ddba5;transform:scaleY(.08);transform-origin:center;transition:transform .08s linear}
+.vo-panel.connecting .vo-bars i{background:#283050}
+.vo-row{display:flex;gap:8px}
+.vo-btn{flex:1;min-height:46px;border-radius:14px;border:1px solid #283050;background:#1e2442;color:#f2f3f9;font:800 15px "Karla",system-ui,sans-serif;cursor:pointer}
+.vo-btn:disabled{opacity:.5;cursor:default}
+.vo-btn.end{background:#ff5c6c;border-color:#ff5c6c;color:#2a0508}
+.vo-btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.vo-note{margin:10px 0 0;font-size:12px;color:#a4aac4}
+html.cine-js:not(.cine-done) .vo-launch{bottom:calc(max(16px,env(safe-area-inset-bottom)) + 58px)}
+@media (prefers-reduced-motion:reduce){.vo-dot::after{animation:none}.vo-bars i{transition:none}}
+@media print{.vo-launch,.vo-panel{display:none!important}}
+.vo-launch.vo-hide{opacity:0;visibility:hidden;pointer-events:none}
+.vo-launch{transition:opacity .2s,visibility .2s}
