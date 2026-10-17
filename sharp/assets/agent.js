@@ -1,4 +1,4 @@
-/* Ask Sharp agent: a chat button on every page (loaded by shell.js only when the AI is switched on).
+/* Danny Dan chat (the Ask Sharp agent): a chat button on every page (loaded by shell.js only when the AI is switched on).
    It sends the chat to /api/agent, which searches Sharp's lessons and replies with an answer,
    next steps and buttons to the right pages. Everything shown is set with textContent only. */
 (function(){
@@ -34,24 +34,25 @@ var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = bas
 
 var launch = el('button', 'ag-launch', null, document.body);
 launch.type = 'button'; launch.setAttribute('aria-haspopup', 'dialog'); launch.setAttribute('aria-controls', 'ag-panel');
-el('span', 'ag-spark', '✦', launch).setAttribute('aria-hidden', 'true');
-el('span', 'ag-launch-t', 'Ask Sharp', launch);
+el('span', 'ag-face', 'DD', launch).setAttribute('aria-hidden', 'true');
+el('span', 'ag-launch-t', 'Danny Dan', launch);
 
 var panel = el('section', 'ag-panel', null, document.body);
 panel.id = 'ag-panel'; panel.hidden = true;
 panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'false'); panel.setAttribute('aria-labelledby', 'ag-title');
 var head = el('div', 'ag-head', null, panel);
 var ht = el('div', null, null, head);
-el('p', 'ag-title', 'Ask Sharp', ht).id = 'ag-title';
-el('p', 'ag-sub', 'Your AI agent. It reads Sharp\'s lessons and takes you to the right tool.', ht);
+el('p', 'ag-title', 'Danny Dan', ht).id = 'ag-title';
+el('p', 'ag-sub', 'Sharp\'s helper. He reads the lessons and takes you to the right tool.', ht);
+var callBtn = el('button', 'ag-icon ag-call', 'Call', head); callBtn.type = 'button'; callBtn.setAttribute('aria-label', 'Call Danny Dan instead'); callBtn.hidden = true;
 var newBtn = el('button', 'ag-icon', 'New', head); newBtn.type = 'button'; newBtn.setAttribute('aria-label', 'Start a new chat');
-var closeBtn = el('button', 'ag-icon', '✕', head); closeBtn.type = 'button'; closeBtn.setAttribute('aria-label', 'Close Ask Sharp');
+var closeBtn = el('button', 'ag-icon', '✕', head); closeBtn.type = 'button'; closeBtn.setAttribute('aria-label', 'Close Danny Dan');
 
 var log = el('div', 'ag-log', null, panel);
 log.setAttribute('role', 'log'); log.setAttribute('aria-live', 'polite'); log.tabIndex = 0;
 
 var form = el('form', 'ag-form', null, panel);
-var label = el('label', 'ag-sr', 'Message Ask Sharp', form); label.htmlFor = 'ag-q';
+var label = el('label', 'ag-sr', 'Message Danny Dan', form); label.htmlFor = 'ag-q';
 var q = el('textarea', 'ag-q', null, form); q.id = 'ag-q'; q.rows = 1; q.maxLength = 500;
 q.placeholder = 'Ask anything…'; q.setAttribute('enterkeyhint', 'send');
 var send = el('button', 'ag-send', 'Send', form); send.type = 'submit';
@@ -89,7 +90,7 @@ function draw(){
   log.textContent = '';
   if(!chat.length){
     var w = el('div', 'ag-msg bot', null, log);
-    el('p', null, 'Hi! Tell me what you want to do, like start a business, price a product or save for something. I\'ll find the right lesson and tool and give you a plan.', w);
+    el('p', null, 'Hi, I\'m Danny Dan! Tell me what you want to do, like start a business, price a product or save for something. I\'ll find the right lesson and tool and give you a plan.', w);
     var row = el('div', 'ag-ideas', null, log);
     IDEAS.forEach(function(t){
       var b = el('button', 'ag-idea', t, row); b.type = 'button';
@@ -100,13 +101,14 @@ function draw(){
     if(m.role === 'user') el('div', 'ag-msg me', m.text, log);
     else drawBot(m, log);
   });
-  if(busy){ var t = el('div', 'ag-msg bot ag-typing', null, log); t.setAttribute('aria-label', 'Ask Sharp is working'); el('span', null, null, t); el('span', null, null, t); el('span', null, null, t); }
+  if(busy){ var t = el('div', 'ag-msg bot ag-typing', null, log); t.setAttribute('aria-label', 'Danny Dan is working'); el('span', null, null, t); el('span', null, null, t); el('span', null, null, t); }
   // Show the start of the newest reply, not its end.
   var last = log.lastElementChild;
   log.scrollTop = last && last.classList.contains('bot') && chat.length ? Math.max(0, last.offsetTop - log.offsetTop - 8) : log.scrollHeight;
 }
 
 function open(){
+  callBtn.hidden = !window.SharpVoice;
   panel.hidden = false; launch.setAttribute('aria-expanded', 'true'); document.documentElement.classList.add('ag-open');
   draw(); setTimeout(function(){ q.focus(); }, 30);
 }
@@ -134,6 +136,8 @@ addEventListener('scroll', later, { passive: true }); addEventListener('resize',
 
 launch.addEventListener('click', function(){ panel.hidden ? open() : close(); });
 closeBtn.addEventListener('click', close);
+callBtn.addEventListener('click', function(){ close(); if(window.SharpVoice) window.SharpVoice.start(); });
+window.SharpAgent = { open: open };
 newBtn.addEventListener('click', function(){ if(busy) return; chat = []; save(); say(''); draw(); q.focus(); });
 document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !panel.hidden) close(); });
 

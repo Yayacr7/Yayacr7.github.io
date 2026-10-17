@@ -34,12 +34,23 @@ function build(){
   var clock = el('p', 'vo-clock', '0:00', top); clock.setAttribute('aria-hidden', 'true');
   var bars = el('div', 'vo-bars', null, box); bars.setAttribute('aria-hidden', 'true');
   for(var i = 0; i < 24; i++) el('i', null, null, bars);
-  var row = el('div', 'vo-row', null, box);
+  // Before a call: choose to call Danny Dan or type to him (typing is the AI chat, assets/agent.js, when the AI is on).
+  var pick = el('div', 'vo-row vo-pick', null, box);
+  var call = el('button', 'vo-btn go', 'Call Danny Dan', pick); call.type = 'button';
+  var type = el('button', 'vo-btn', 'Type instead', pick); type.type = 'button';
+  var shut = el('button', 'vo-btn', 'Close', pick); shut.type = 'button';
+  var row = el('div', 'vo-row vo-live', null, box);
   var mute = el('button', 'vo-btn', 'Mute', row); mute.type = 'button'; mute.setAttribute('aria-pressed', 'false');
   var end = el('button', 'vo-btn end', 'End call', row); end.type = 'button';
   el('p', 'vo-note', 'Your voice goes to Danny Dan (Vapi) only during the call. Don\'t share private details.', box);
 
-  btn.addEventListener('click', function(){ if(state === 'idle') start(); else box.hidden = false; });
+  btn.addEventListener('click', function(){
+    if(!box.hidden && state === 'idle'){ box.hidden = true; return; }
+    type.hidden = !window.SharpAgent; box.hidden = false; (state === 'idle' ? call : end).focus();
+  });
+  call.addEventListener('click', start);
+  type.addEventListener('click', function(){ box.hidden = true; if(window.SharpAgent) window.SharpAgent.open(); });
+  shut.addEventListener('click', stop);
   end.addEventListener('click', stop);
   mute.addEventListener('click', function(){
     if(!vapi) return; var m = !vapi.isMuted(); vapi.setMuted(m);
@@ -56,12 +67,16 @@ function build(){
     inPage.forEach(function(b){ io.observe(b); });
   }
   ui = { btn: btn, box: box, status: status, clock: clock, bars: [].slice.call(bars.children), mute: mute, end: end };
+  set('idle', 'Hi! I\'m Sharp\'s helper. Call me, or type to me.');
+  document.documentElement.classList.add('vo-on');      // the chat button hides: Danny Dan is the one helper
+  window.SharpVoice = { start: function(){ box.hidden = false; if(state === 'idle') start(); } };
 }
+// Count calls and minutes for the owner's daily report (totals only, nothing about the caller).
+function count(e, s){ try{ fetch(base + 'api/voice-stat', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ e: e, s: s }), keepalive: true }).catch(function(){}); }catch(x){} }
 
 function set(s, text){
   state = s; ui.status.textContent = text;
   ui.box.className = 'vo-panel ' + s; ui.btn.classList.toggle('live', s !== 'idle'); if(s !== 'idle') ui.btn.classList.remove('vo-hide');
-  ui.end.textContent = s === 'idle' ? 'Close' : 'End call';
   ui.mute.disabled = s !== 'live' && s !== 'talking';
 }
 function tick(){ var t = Math.floor((Date.now() - started) / 1000); ui.clock.textContent = Math.floor(t / 60) + ':' + ('0' + t % 60).slice(-2); }
@@ -75,7 +90,7 @@ function start(){
     return (window.SharpVapi ? Promise.resolve() : load(base + 'assets/vendor/vapi.js')).then(function(){
       if(!vapi){
         vapi = new window.SharpVapi(c.vapiPublicKey, undefined, { avoidEval: true, alwaysIncludeMicInPermissionPrompt: true });
-        vapi.on('call-start', function(){ started = Date.now(); clearInterval(timer); timer = setInterval(tick, 500); set('live', 'Listening. Say hi to Danny Dan.'); });
+        vapi.on('call-start', function(){ started = Date.now(); count('start'); clearInterval(timer); timer = setInterval(tick, 500); set('live', 'Listening. Say hi to Danny Dan.'); });
         vapi.on('speech-start', function(){ if(state !== 'idle') set('talking', 'Danny Dan is talking…'); });
         vapi.on('speech-end', function(){ if(state !== 'idle') set('live', 'Listening…'); });
         vapi.on('volume-level', level);
@@ -93,7 +108,7 @@ function message(e){
   if(!navigator.onLine) return 'You\'re offline. Connect to the internet, then try again.';
   return 'Couldn\'t reach Danny Dan just now. Please try again in a minute.';
 }
-function ended(text){ clearInterval(timer); level(0); set('idle', text); }
+function ended(text){ if(started && state !== 'idle'){ count('end', (Date.now() - started) / 1000); started = 0; } clearInterval(timer); level(0); set('idle', text); }
 function stop(){
   if(state === 'idle'){ ui.box.hidden = true; ui.btn.focus(); return; }
   try{ if(vapi) vapi.stop(); }catch(e){}

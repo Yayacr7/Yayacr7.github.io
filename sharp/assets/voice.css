@@ -36,3 +36,8 @@ html.cine-js:not(.cine-done) .vo-launch{bottom:calc(max(16px,env(safe-area-inset
 @media print{.vo-launch,.vo-panel{display:none!important}}
 .vo-launch.vo-hide{opacity:0;visibility:hidden;pointer-events:none}
 .vo-launch{transition:opacity .2s,visibility .2s}
+.vo-panel.idle .vo-live,.vo-panel:not(.idle) .vo-pick{display:none}
+.vo-pick{flex-wrap:wrap}.vo-pick .go{flex-basis:100%;background:#3ddba5;border-color:#3ddba5;color:#05221a}
+.vo-btn[hidden]{display:none}
+html.vo-on .ag-launch{display:none}
+.vo-panel.idle .vo-clock,.vo-panel.idle .vo-bars{display:none}.vo-panel.idle .vo-pick{margin-top:14px}

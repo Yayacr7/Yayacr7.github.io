@@ -7,7 +7,8 @@
 .ag-launch{transition:transform .2s ease}
 @media (prefers-reduced-motion:reduce){.ag-launch{transition:none}}
 .ag-launch:focus-visible{outline:3px solid #fff;outline-offset:3px}
-.ag-spark{font-size:18px}
+.ag-face{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#160a06;color:#ff8f5e;font:800 12px/1 "Bricolage Grotesque",system-ui,sans-serif}
+.ag-call[hidden]{display:none}
 html.ag-open .ag-launch{display:none}
 
 .ag-panel{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:901;
@@ -19,7 +20,6 @@ html.ag-open .ag-launch{display:none}
   background:linear-gradient(180deg,#1e2442,#151a30)}
 .ag-head>div{flex:1;min-width:0}
 .ag-title{margin:0;font:800 18px/1.2 var(--f-display,"Bricolage Grotesque","Avenir Next",system-ui,sans-serif);letter-spacing:-.01em}
-.ag-title::before{content:"✦ ";color:#ff8f5e}
 .ag-sub{margin:2px 0 0;color:var(--muted,#a4aac4);font-size:13px;line-height:1.35}
 .ag-icon{min-width:44px;min-height:36px;padding:0 10px;border:1px solid var(--line,#283050);border-radius:10px;background:transparent;
   color:var(--ink,#f2f3f9);font-family:inherit;font:700 13px/1 var(--f-body,"Karla","Helvetica Neue",Arial,system-ui,sans-serif);cursor:pointer}
