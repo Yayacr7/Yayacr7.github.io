@@ -130,7 +130,8 @@ wire('f-efund', function(){
 });
 
 /* ================= SPENDING CHECK ================= */
-var SC_VIEW = 'flow', SC_LAST = null, SC_SIZE = '', SC_WORD = { good: 'Fine', warn: 'A bit over', bad: 'Too much' }, SC_SHORT = { 'Rent or mortgage': 'Rent', 'Subscriptions': 'Subs', 'Fun & hobbies': 'Fun', 'Groceries': 'Food', 'Transport': 'Travel', 'Eating out': 'Eat out', 'Shopping': 'Shop', 'Left over': 'Left' };  // blocks picture state (see drawTree below)
+var WK = 12 / 52;   // monthly to weekly
+var SC_VIEW = 'danny', SC_LAST = null, SC_SIZE = '', SC_WORD = { good: 'Fine', warn: 'A bit over', bad: 'Too much' }, SC_SHORT = { 'Rent or mortgage': 'Rent', 'Subscriptions': 'Subs', 'Fun & hobbies': 'Fun', 'Groceries': 'Food', 'Transport': 'Travel', 'Eating out': 'Eat out', 'Shopping': 'Shop', 'Left over': 'Left' };  // blocks picture state (see drawTree below)
 var scWatched = null, scRO = window.ResizeObserver ? new ResizeObserver(function(){ drawTree(false); }) : null;
 // Each category is judged as a share of take-home pay. Guides, not laws: [green up to %, yellow up to %].
 var SPEND = [
@@ -169,8 +170,8 @@ wire('f-spend', function(){
   // Simple limit chart: each row's line in the middle is that category's limit (a goal for saving).
   // Before the line = fine, past the line = too much. Plain dollars, no percent scale.
   // Toolbar: what the colours mean, and a switch between the blocks picture and the bar list.
-  html += '<div class="sc-bar-row"><div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Fine</span><span><i class="sc-ic warn">!</i>A bit over</span><span><i class="sc-ic bad">✕</i>Too much</span><span class="sc-size">' + (SC_VIEW === 'blocks' ? 'Bigger block = more money' : 'Line = limit') + '</span></div>' +
-    '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="flow" aria-pressed="' + (SC_VIEW === 'flow') + '">Candles</button><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
+  html += '<div class="sc-bar-row"><div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Fine</span><span><i class="sc-ic warn">!</i>A bit over</span><span><i class="sc-ic bad">✕</i>Too much</span><span class="sc-size">' + scKey() + '</span></div>' +
+    '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="danny" aria-pressed="' + (SC_VIEW === 'danny') + '">Danny\'s plan</button><button type="button" data-scview="flow" aria-pressed="' + (SC_VIEW === 'flow') + '">Candles</button><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
   html += '<div class="sc-tree" role="group" aria-label="Where your take-home pay goes"' + (SC_VIEW === 'list' ? ' hidden' : '') + '></div>';
   html += '<div class="sc-listview"' + (SC_VIEW !== 'list' ? ' hidden' : '') + '>';
   html += '<div class="sc-axis" aria-hidden="true"><span></span><span><b style="left:0">$0</b><b class="lim" style="left:50%">Limit</b><b style="left:100%">2× limit</b></span><span>Spent / limit</span><span></span></div>';
@@ -191,19 +192,22 @@ wire('f-spend', function(){
   var bad = rows.filter(function(r){ return r.st === 'bad'; }), warn = rows.filter(function(r){ return r.st === 'warn'; });
   var todo = [];
   bad.concat(warn).forEach(function(r){
-    if(r.saving) todo.push('<li class="' + r.st + '"><b>Saving:</b> aim for about ' + money(r.target) + ' a month (15% of your pay). Set it to move automatically on payday.</li>');
-    else todo.push('<li class="' + r.st + '"><b>' + r.name + ':</b> ' + (r.st === 'bad' ? 'cut back to about ' + money(r.target) + ' a month. ' : 'a little high. ') + r.tip + '</li>');
+    if(r.saving) todo.push('<li class="' + r.st + '"><b>Saving:</b> aim for about ' + money(r.target / 52 * 12) + ' a week (' + money(r.target) + ' a month, 15% of your pay). Set it to move automatically on payday.</li>');
+    else todo.push('<li class="' + r.st + '"><b>' + r.name + ':</b> ' + (r.st === 'bad' ? 'cut back to about ' + money(r.target / 52 * 12) + ' a week (' + money(r.target) + ' a month). ' : 'a little high. ') + r.tip + '</li>');
   });
-  html += todo.length ? '<h3 class="sc-h">What to do</h3><ul class="sc-todo">' + todo.join('') + '</ul>' : '<p class="sc-ok"><span class="sc-ic good" aria-hidden="true">✓</span> Everything is inside the usual guides. Keep doing what you\'re doing.</p>';
+  // Danny Dan gives the opinion. It's worked out right here in the browser from fixed guides; the numbers never leave the device.
+  html += '<div class="dd-take"><span class="dd-face" aria-hidden="true">DD</span><div><h3 class="sc-h">Danny Dan\'s take</h3><p>' + (left < 0 ? 'You\'re spending more than you earn. Let\'s fix the red ones first, one a week.' : todo.length ? 'Here\'s what I\'d change, biggest win first.' : 'Nice. You\'re inside every guide.') + '</p></div><button type="button" class="dd-talk" data-danny hidden>Talk to Danny</button></div>';
+  html += todo.length ? '<ul class="sc-todo">' + todo.join('') + '</ul>' : '<p class="sc-ok"><span class="sc-ic good" aria-hidden="true">✓</span> Keep doing what you\'re doing. Got extra? Put it in savings.</p>';
   // Short version for wide screens, where the chart and the boxes share one screen.
   if(todo.length){
-    var mini = bad.map(function(r){ return '<li class="bad"><b>Cut back:</b> ' + (r.saving ? 'save about ' + money(r.target) + ' a month' : r.name + ' to about ' + money(r.target) + ' a month') + '.</li>'; });
+    var mini = bad.map(function(r){ return '<li class="bad"><b>Danny says cut:</b> ' + (r.saving ? 'save about ' + money(r.target / 52 * 12) + ' a week' : r.name + ' to about ' + money(r.target / 52 * 12) + ' a week') + '.</li>'; });
     if(warn.length) mini.push('<li class="warn"><b>Think about:</b> ' + warn.map(function(r){ return r.name; }).join(', ') + '.</li>');
     html += '<ul class="sc-mini">' + mini.join('') + '</ul>';
   }
   out.innerHTML = html;
   SC_LAST = { rows: rows, inc: inc, left: left, total: total };
   drawTree(true);
+  if(window.SharpDanny) window.SharpDanny.wire(out);   // the "Talk to Danny" button (assets/voice.js)
 });
 
 /* ---------- Spending check: the "blocks" picture (a treemap) ----------
@@ -233,6 +237,7 @@ function scInfo(r, inc){
     : r.st === 'good' ? 'Inside the guide. Keep it there.' : r.tip;
   return { title: r.name, line: base + '. ' + tip };
 }
+function scKey(){ return SC_VIEW === 'danny' ? 'Per week · green = spending down' : SC_VIEW === 'blocks' ? 'Bigger block = more money' : 'Line = limit'; }
 function scShow(r, inc){
   var p = document.querySelector('#s-out .sc-detail'); if(!p) return;
   var info = scInfo(r, inc); p.textContent = '';
@@ -246,7 +251,9 @@ function drawTree(animate){
   SC_SIZE = SC_VIEW + W + 'x' + H;
   if(scRO && box !== scWatched){ if(scWatched) scRO.unobserve(scWatched); scRO.observe(box); scWatched = box; }
   box.classList.toggle('flow', SC_VIEW === 'flow');
-  var key = document.querySelector('#s-out .sc-size'); if(key) key.textContent = SC_VIEW === 'flow' ? 'Line = limit' : 'Bigger block = more money';
+  var key = document.querySelector('#s-out .sc-size'); if(key) key.textContent = scKey();
+  box.classList.toggle('danny', SC_VIEW === 'danny');
+  if(SC_VIEW === 'danny'){ drawDanny(box, W, H, animate); return; }
   if(SC_VIEW === 'flow'){ drawFlow(box, W, H, animate); return; }
   var d = SC_LAST, items = d.rows.filter(function(r){ return r.v > 0; }).map(function(r){ return r; });
   if(d.left > 0) items.push({ name: 'Left over', v: d.left, left: true });
@@ -389,6 +396,84 @@ function drawFlow(box, W, H, animate){
   });
   var worst = d.rows.filter(function(r){ return r.st === 'bad' && !r.saving; }).sort(function(a, b){ return (b.v - b.target) - (a.v - a.target); })[0] || d.rows.filter(function(r){ return r.st !== 'good'; })[0] || d.rows[0];
   scShow(worst, inc);
+}
+/* ---------- Spending check: "Danny's plan" (weekly candles) ----------
+   Danny Dan's weekly plan: each week he changes one thing, biggest overspend first, until every category sits on its limit.
+   Week candles step down from what you spend a week now; a green candle means spending went down that week.
+   The dashed line is Danny's goal. It's a plan worked out from fixed guides (a goal, not a forecast), on this device only. */
+
+function dpPlan(d){
+  var spend = d.rows.filter(function(r){ return !r.saving; }), now = spend.reduce(function(a, r){ return a + r.v; }, 0) * WK;
+  var fix = spend.filter(function(r){ return r.st !== 'good' && r.v > r.target; }).sort(function(a, b){ return (b.v - b.target) - (a.v - a.target); });
+  var weeks = [{ n: 0, v: now }], lvl = now;
+  fix.forEach(function(r, i){ var cut = (r.v - r.target) * WK; lvl -= cut; weeks.push({ n: i + 1, v: lvl, open: lvl + cut, r: r, cut: cut }); });
+  while(weeks.length < 5){ weeks.push({ n: weeks.length, v: lvl, open: lvl, hold: true }); }
+  return { now: now, goal: lvl, weeks: weeks, saved: now - lvl };
+}
+function dpLine(w, plan, d){
+  if(w.n === 0) return { t: 'Now', l: 'You spend about ' + money(plan.now) + ' a week (' + money(plan.now / WK) + ' a month). ' + (plan.saved > 0.5 ? 'My plan gets that to ' + money(plan.goal) + ' a week, one change at a time.' : 'That\'s inside every guide. Keep it there.') };
+  if(w.hold) return { t: 'Week ' + w.n, l: plan.saved > 0.5 ? 'Keep it at ' + money(w.v) + ' a week. Move the ' + money(plan.saved) + ' a week you freed into savings: that\'s ' + money(plan.saved * 52) + ' a year.' : 'Keep going. Any extra money? Put it in savings on payday.' };
+  return { t: 'Week ' + w.n + ' · ' + w.r.name, l: 'Cut ' + money(w.cut) + ' a week: from ' + money(w.r.v * WK) + ' to ' + money(w.r.target * WK) + '. ' + w.r.tip + ' You\'d spend ' + money(w.v) + ' a week.' };
+}
+function dpShow(w, plan, d){
+  var p = document.querySelector('#s-out .sc-detail'); if(!p) return;
+  var info = dpLine(w, plan, d); p.textContent = '';
+  var b = document.createElement('b'); b.textContent = 'Danny Dan · ' + info.t + ': '; p.appendChild(b); p.appendChild(document.createTextNode(info.l));
+  Array.prototype.forEach.call(document.querySelectorAll('#s-out .dp-c'), function(g){ g.classList.toggle('on', +g.getAttribute('data-n') === w.n); });
+}
+function drawDanny(box, W, H, animate){
+  var d = SC_LAST, plan = dpPlan(d), ws = plan.weeks;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var AX = W < 420 ? 50 : 60, TOP = 34, BOT = 40, PW = W - AX - 8, PH = H - TOP - BOT; box.textContent = '';
+  if(PH < 50) return;
+  var hi = plan.now, lo = plan.goal, pad = Math.max((hi - lo) * .18, hi * .04, 5);
+  var step = scStep(hi - lo + 2 * pad), yMin = Math.max(0, Math.floor((lo - pad) / step) * step), yMax = Math.ceil((hi + pad) / step) * step;
+  var Y = function(v){ return TOP + (yMax - v) / (yMax - yMin) * PH; }, cw = PW / ws.length, bw = Math.max(8, Math.min(38, cw * .5));
+  var X = function(i){ return 8 + cw * (i + .5); };
+  var svg = scEl('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, 'aria-hidden': 'true', class: 'fl-svg' }, box);
+  var grid = scEl('g', { class: 'fl-grid' }, svg);
+  for(var v = yMin; v <= yMax + 1e-6; v += step){
+    scEl('line', { x1: 0, x2: W - AX, y1: Y(v), y2: Y(v) }, grid);
+    if(Math.abs(Y(v) - Y(plan.goal)) < 15) continue;   // leave room for the goal tag
+    var t = scEl('text', { x: W - AX + 8, y: Y(v) + 4, class: 'fl-ax' }, svg); t.textContent = scK(v);
+  }
+  ws.forEach(function(w, i){ scEl('line', { x1: X(i), x2: X(i), y1: TOP - 6, y2: TOP + PH }, grid); });
+  scEl('line', { x1: W - AX, x2: W - AX, y1: 0, y2: H, class: 'fl-edge' }, svg);
+  // Ticker header: how much a week Danny's plan frees up.
+  var hd = scEl('text', { x: 10, y: 21, class: 'fl-hd' }, svg), hv = scEl('tspan', { class: 'pos' }, hd);
+  hv.textContent = plan.saved > 0.5 ? '−' + money(plan.saved) + '/wk (−' + pct(plan.saved / Math.max(1, plan.now) * 100, 0) + ')' : 'On track';
+  var hl = scEl('tspan', { class: 'fl-hl', dx: 8 }, hd); hl.textContent = plan.saved > 0.5 ? (W < 420 ? 'Danny\'s plan' : 'Danny\'s plan · ' + money(plan.saved * 52) + ' a year back') : 'Danny\'s plan';
+  // Danny's goal line + tag.
+  scEl('line', { x1: 0, x2: W - AX, y1: Y(plan.goal), y2: Y(plan.goal), class: 'fl-now pos' }, svg);
+  var tag = scEl('g', { class: 'fl-tag pos', transform: 'translate(' + (W - AX + 2) + ',' + Y(plan.goal) + ')' }, svg);
+  scEl('rect', { x: 0, y: -10, width: AX - 4, height: 20, rx: 3 }, tag); var tt = scEl('text', { x: (AX - 4) / 2, y: 4 }, tag); tt.textContent = scK(plan.goal);
+  // Week candles.
+  var nowSt = d.left < 0 ? 'bad' : plan.saved > 0.5 ? 'warn' : 'good';
+  ws.forEach(function(w, i){
+    var x = X(i), st = w.n === 0 ? nowSt : w.hold ? 'hold' : 'good', g = scEl('g', { class: 'dp-c fl-c st-' + st, 'data-n': w.n }, svg);
+    var top = w.n === 0 ? w.v : w.open, y1 = Y(Math.max(top, w.v)), y2 = Y(Math.min(top, w.v));
+    if(w.n === 0){ y1 = Y(w.v) - 2; y2 = Y(w.v) + 2; scEl('line', { x1: x, x2: x, y1: Y(w.v) - 10, y2: Y(w.v) + 10, class: 'wick' }, g); }
+    var body = scEl('rect', { x: x - bw / 2, y: y1, width: bw, height: Math.max(2, y2 - y1), rx: 2, class: 'body' }, g);
+    if(animate && !reduce){ body.style.animationDelay = (i * 90) + 'ms'; g.classList.add('grow', 'down'); }
+    var lb = scEl('text', { x: x, y: TOP + PH + 16, class: 'fl-x' }, svg); lb.textContent = w.n === 0 ? 'Now' : (cw < 46 ? 'W' : 'Wk ') + w.n;
+    // Icon under each candle, so the colour is never the only signal (✓ = spending down or on track).
+    var ist = st === 'hold' ? 'good' : st, ic = scEl('g', { class: 'fl-ic ' + ist, transform: 'translate(' + x + ',' + (H - 12) + ')' }, svg);
+    scEl('circle', { r: 7.5 }, ic); var it = scEl('text', { y: 3.5 }, ic); it.textContent = STATUS[ist].icon;
+  });
+  // Trend line through each week's close, ending at Danny's goal.
+  var pts = ws.map(function(w, i){ return X(i).toFixed(1) + ',' + Y(w.v).toFixed(1); }).join(' ');
+  var path = scEl('polyline', { points: pts, class: 'fl-trend', pathLength: 1 }, svg);
+  if(animate && !reduce) path.classList.add('draw');
+  // Buttons over each week for touch, keyboard and screen readers.
+  ws.forEach(function(w, i){
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'fl-hit';
+    b.style.left = (X(i) - cw / 2) + 'px'; b.style.width = cw + 'px'; b.style.top = TOP + 'px'; b.style.height = PH + 'px';
+    var info = dpLine(w, plan, d); b.setAttribute('aria-label', 'Danny Dan, ' + info.t + ': ' + info.l);
+    var pick = function(){ dpShow(w, plan, d); };
+    b.addEventListener('click', pick); b.addEventListener('focus', pick); b.addEventListener('pointerenter', function(e){ if(e.pointerType === 'mouse') pick(); });
+    box.appendChild(b);
+  });
+  dpShow(ws[plan.saved > 0.5 ? 1 : 0], plan, d);
 }
 // Redraw only when the blocks area itself changes size (not when the detail text below changes).
 if(!scRO) window.addEventListener('resize', function(){ drawTree(false); });

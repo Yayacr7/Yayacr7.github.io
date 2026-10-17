@@ -59,7 +59,7 @@ var send = el('button', 'ag-send', 'Send', form); send.type = 'submit';
 var status = el('p', 'ag-status', '', panel); status.setAttribute('role', 'status');
 el('p', 'ag-note', 'AI can be wrong. Don\'t type private details. Numbers in the tools stay on your device.', panel);
 
-var IDEAS = ['I want to start a small business. Where do I start?', 'How do I price what I sell?', 'Help me save $500', 'How do I get my first customers?'];
+var IDEAS = ['Help me save $500', 'I want to start a small business. Where do I start?', 'How do I plan my week?', 'How do I price what I sell?'];
 
 function say(t, kind){ status.textContent = t; status.className = 'ag-status' + (kind ? ' ' + kind : ''); }
 
@@ -70,7 +70,7 @@ function paragraphs(text, parent){
 function drawBot(m, parent){
   var b = el('div', 'ag-msg bot', null, parent);
   paragraphs(m.text, b);
-  if(m.covered === false) el('p', 'ag-chip no', 'Not in Sharp\'s lessons yet', b);
+  if(m.covered === false) el('p', 'ag-chip no', 'General answer, not from Sharp\'s lessons', b);
   if(m.steps && m.steps.length){
     el('p', 'ag-steps-t', 'Your next steps', b);
     var ol = el('ol', 'ag-steps', null, b);
@@ -90,7 +90,7 @@ function draw(){
   log.textContent = '';
   if(!chat.length){
     var w = el('div', 'ag-msg bot', null, log);
-    el('p', null, 'Hi, I\'m Danny Dan! Tell me what you want to do, like start a business, price a product or save for something. I\'ll find the right lesson and tool and give you a plan.', w);
+    el('p', null, 'Hi, I\'m Danny Dan! Ask me anything, from saving money and starting a business to planning your week. I\'ll give you a plan and take you to the right tool.', w);
     var row = el('div', 'ag-ideas', null, log);
     IDEAS.forEach(function(t){
       var b = el('button', 'ag-idea', t, row); b.type = 'button';

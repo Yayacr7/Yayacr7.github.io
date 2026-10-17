@@ -21,8 +21,15 @@ function el(tag, cls, text, parent){ var e = document.createElement(tag); if(cls
 function build(){
   var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = base + 'assets/voice.css'; document.head.appendChild(css);
   var btn = el('button', 'vo-launch', null, document.body); btn.type = 'button';
-  el('span', 'vo-dot', null, btn).setAttribute('aria-hidden', 'true');
-  el('span', null, 'Speak with Danny Dan', btn);
+  var lf = el('span', 'vo-lface', 'DD', btn); lf.setAttribute('aria-hidden', 'true'); el('span', 'vo-dot', null, lf);
+  el('span', null, 'Ask Danny Dan', btn);
+  // Danny Dan also sits in every page's top bar, so he's the first thing people see.
+  var bar = document.querySelector('.site-head .wrap'), hb = null;
+  if(bar){
+    hb = el('button', 'vo-head', null, null); hb.type = 'button'; hb.setAttribute('aria-label', 'Ask Danny Dan: call or type');
+    el('span', 'vo-hface', 'DD', hb).setAttribute('aria-hidden', 'true'); el('span', 'vo-ht', 'Danny Dan', hb);
+    var sp = bar.querySelector('.spacer'); bar.insertBefore(hb, sp ? sp.nextSibling : null);
+  }
 
   var box = el('section', 'vo-panel', null, document.body); box.hidden = true;
   box.setAttribute('role', 'dialog'); box.setAttribute('aria-labelledby', 'vo-title');
@@ -37,19 +44,28 @@ function build(){
   // Before a call: choose to call Danny Dan or type to him (typing is the AI chat, assets/agent.js, when the AI is on).
   var pick = el('div', 'vo-row vo-pick', null, box);
   var call = el('button', 'vo-btn go', 'Call Danny Dan', pick); call.type = 'button';
-  var type = el('button', 'vo-btn', 'Type instead', pick); type.type = 'button';
+  var type = el('button', 'vo-btn', 'Type to him', pick); type.type = 'button';
   var shut = el('button', 'vo-btn', 'Close', pick); shut.type = 'button';
   var row = el('div', 'vo-row vo-live', null, box);
   var mute = el('button', 'vo-btn', 'Mute', row); mute.type = 'button'; mute.setAttribute('aria-pressed', 'false');
   var end = el('button', 'vo-btn end', 'End call', row); end.type = 'button';
   el('p', 'vo-note', 'Your voice goes to Danny Dan (Vapi) only during the call. Don\'t share private details.', box);
 
-  btn.addEventListener('click', function(){
+  function show(){
     if(!box.hidden && state === 'idle'){ box.hidden = true; return; }
-    type.hidden = !window.SharpAgent; box.hidden = false; (state === 'idle' ? call : end).focus();
-  });
+    box.hidden = false; (state === 'idle' ? call : end).focus();
+  }
+  btn.addEventListener('click', show);
+  if(hb) hb.addEventListener('click', show);
+  // Any button marked data-danny opens this panel; data-danny-off hides while Danny Dan is here (to make room for him).
+  function wire(root){ [].forEach.call(root.querySelectorAll('[data-danny]'), function(b){ if(b.__dd) return; b.__dd = true; b.hidden = false; b.addEventListener('click', function(e){ e.preventDefault(); show(); }); }); }
+  wire(document); [].forEach.call(document.querySelectorAll('[data-danny-off]'), function(b){ b.hidden = true; });
+  window.SharpDanny = { wire: wire, open: show };
   call.addEventListener('click', start);
-  type.addEventListener('click', function(){ box.hidden = true; if(window.SharpAgent) window.SharpAgent.open(); });
+  type.addEventListener('click', function(){
+    if(window.SharpAgent){ box.hidden = true; window.SharpAgent.open(); return; }
+    ui.status.textContent = 'Typing to Danny Dan switches on soon. You can call him right now.'; call.focus();   // the AI chat isn't on yet
+  });
   shut.addEventListener('click', stop);
   end.addEventListener('click', stop);
   mute.addEventListener('click', function(){
@@ -61,6 +77,7 @@ function build(){
   var inPage = [].slice.call(document.querySelectorAll('[data-voice]'));
   inPage.forEach(function(b){ b.hidden = false; b.addEventListener('click', function(e){ e.preventDefault(); if(state === 'idle') start(); }); });
   // While a page's own Danny button is on screen, hide the floating one so there's only one.
+  inPage = inPage.concat([].slice.call(document.querySelectorAll('.hc-head [data-danny], .cine [data-danny]')));
   if(inPage.length && 'IntersectionObserver' in window){
     var seen = new Set();
     var io = new IntersectionObserver(function(es){ es.forEach(function(x){ x.isIntersecting ? seen.add(x.target) : seen.delete(x.target); }); btn.classList.toggle('vo-hide', seen.size > 0 && state === 'idle'); });
