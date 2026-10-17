@@ -2,6 +2,20 @@
 
 Things I'm making with Claude Code.
 
+## Sharp — business school for aspiring entrepreneurs
+
+[`sharp/`](sharp/index.html) is a "business, made simple" learning site: free courses in five topics (Finance, Business, Marketing, Negotiation, Investors; 21 lessons, each with a 30-second version, tap-to-define jargon and a self-checking quiz), a library of 25 tools including AI-at-work tools, a spending check, a personal money plan and an investor pressure drill, a 3-day free trial, and Free $0 / Builder $29.99 / Founder $74.99 plans with a 30-day money-back guarantee, an About section, and draft privacy, terms and refund pages (to be checked by a legal professional before launch).
+
+- `sharp/index.html` — home page (topics, live napkin-test tool, pricing, waitlist, sign-in)
+- `sharp/learn/` — the courses
+- `sharp/tools/` — marketing calculators, budget & savings planner, business plan & pricing, negotiation prep, investor pressure drill
+- `sharp/course/` — the Launch course player. Module text is not in this repo: it loads from Supabase (`premium_content`), which only returns modules the signed-in person has paid for or has on trial
+- `sharp/trial/` — the 3-day Founder trial area
+- `sharp/config.js` — **the only settings file**: waitlist provider, Supabase keys, Stripe Payment Links, trial length
+- `supabase/schema.sql` — server-side lock for paid content, plus the private `sharp-files` storage bucket for the paid spreadsheets (upload the .xlsx files there; they are not in this repo); [`SECURITY.md`](SECURITY.md) — security checklist
+
+Old `napkinproof/` and `learn/` addresses redirect to Sharp.
+
 ## Yahya.games.com — Skyforge Champions
 
 Two hundred and eighty-seven characters fight on a sunlit stone platform floating above the clouds. Pick a champion, fight for credits and experience, then level them up
