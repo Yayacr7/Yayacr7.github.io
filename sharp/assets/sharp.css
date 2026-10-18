@@ -366,3 +366,5 @@ html.ai-on [data-ai-off]{display:none!important}
 @media (max-width:900px){.fs .dd-take{padding:8px 10px;gap:10px}.fs .dd-take p{display:none}.fs .dd-take .dd-face{width:32px;height:32px;font-size:12px}.fs .dd-talk{min-height:36px}}
 .dd-face.sm{margin:-4px 0}
 @media (max-height:700px) and (max-width:900px){.sc-first[data-view="todo"] .sc-todo{display:none}.sc-first[data-view="todo"] .sc-mini{display:grid}}
+.dd-track{display:inline-block;margin-top:2px;font-size:.84rem;font-weight:700;color:#5fe0b0}
+@media (max-height:800px){.fs .dd-take p{display:none}}

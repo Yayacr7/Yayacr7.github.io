@@ -149,20 +149,29 @@ var STATUS = {
   warn: { cls: 'warn', icon: '!', word: 'Think about it' },
   bad:  { cls: 'bad',  icon: '✕', word: 'Cut back' }
 };
-wire('f-spend', function(){
-  var inc = pos('s-income'), out = $('s-out');
-  if(inc <= 0){ out.innerHTML = '<p class="sc-empty">Enter your monthly take-home pay to see your chart.</p>'; return; }
-  var rows = [], total = 0;
+// Judge each category against the guides. get(id) returns the monthly amount for a field id like 's-food'.
+function scRows(get){
+  var inc = get('s-income'), rows = [], total = 0;
   SPEND.forEach(function(c){
-    var v = pos(c[0]); total += v;
+    var v = get(c[0]); total += v;
     var share = v / inc * 100, st = share <= c[2] ? 'good' : share <= c[3] ? 'warn' : 'bad';
     rows.push({ name: c[1], v: v, share: share, st: st, tip: c[4], target: inc * c[2] / 100, g: c[2], y: c[3] });
   });
-  var save = pos('s-save'), saveShare = save / inc * 100;
+  var save = get('s-save'), saveShare = save / inc * 100;
   var saveSt = saveShare >= 15 ? 'good' : saveShare >= 5 ? 'warn' : 'bad';
   rows.push({ name: 'Saving', v: save, share: saveShare, st: saveSt, saving: true, target: inc * .15 });
   total += save;
-  var left = inc - total;
+  return { rows: rows, inc: inc, total: total, left: inc - total };
+}
+// For Danny's weekly check-in (tools/checkin/): the same plan, from saved monthly numbers ({income, food, ...}).
+window.SharpDannyPlan = function(h){
+  var d = scRows(function(id){ return Math.max(0, +h[id.slice(2)] || 0); });
+  return d.inc > 0 ? { d: d, plan: dpPlan(d) } : null;
+};
+wire('f-spend', function(){
+  var inc = pos('s-income'), out = $('s-out');
+  if(inc <= 0){ out.innerHTML = '<p class="sc-empty">Enter your monthly take-home pay to see your chart.</p>'; return; }
+  var sr = scRows(pos), rows = sr.rows, total = sr.total, left = sr.left;
 
   // All text below is numbers and fixed wording only (no visitor-typed text), so it is safe as HTML.
   var html = '<div class="sc-sum"><div><span>Take-home pay</span><b>' + money(inc) + '</b></div><div><span>Spent + saved</span><b>' + money(total) + '</b></div><div><span>Left over</span><b class="' + (left < 0 ? 'neg' : '') + '">' + money(left) + '</b></div></div>';
@@ -196,7 +205,8 @@ wire('f-spend', function(){
     else todo.push('<li class="' + r.st + '"><b>' + r.name + ':</b> ' + (r.st === 'bad' ? 'cut back to about ' + money(r.target / 52 * 12) + ' a week (' + money(r.target) + ' a month). ' : 'a little high. ') + r.tip + '</li>');
   });
   // Danny Dan gives the opinion. It's worked out right here in the browser from fixed guides; the numbers never leave the device.
-  html += '<div class="dd-take"><span class="dd-face" aria-hidden="true">DD</span><div><h3 class="sc-h">Danny Dan\'s take</h3><p>' + (left < 0 ? 'You\'re spending more than you earn. Let\'s fix the red ones first, one a week.' : todo.length ? 'Here\'s what I\'d change, biggest win first.' : 'Nice. You\'re inside every guide.') + '</p></div><button type="button" class="dd-talk" data-danny hidden>Talk to Danny</button></div>';
+  html += '<div class="dd-take"><span class="dd-face" aria-hidden="true">DD</span><div><h3 class="sc-h">Danny Dan\'s take</h3><p>' + (left < 0 ? 'You\'re spending more than you earn. Let\'s fix the red ones first, one a week.' : todo.length ? 'Here\'s what I\'d change, biggest win first.' : 'Nice. You\'re inside every guide.') + '</p><a class="dd-track" href="tools/checkin/index.html" data-handoff>Track it weekly with Danny →</a></div><button type="button" class="dd-talk" data-danny hidden>Talk to Danny</button></div>';
+
   html += todo.length ? '<ul class="sc-todo">' + todo.join('') + '</ul>' : '<p class="sc-ok"><span class="sc-ic good" aria-hidden="true">✓</span> Keep doing what you\'re doing. Got extra? Put it in savings.</p>';
   // Short version for wide screens, where the chart and the boxes share one screen.
   if(todo.length){
@@ -481,10 +491,11 @@ if(!scRO) window.addEventListener('resize', function(){ drawTree(false); });
 
 // "See the full breakdown": hand this browser's numbers to the budget dashboard (stays on this device).
 (function(){
-  var a = $('s-full'); if(!a) return;
-  a.addEventListener('click', function(){
+  if(!$('f-spend')) return;
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('#s-full, [data-handoff]'); if(!a) return;
     var h = {}; ['income','housing','bills','food','transport','eat','shop','subs','fun','save'].forEach(function(k){ h[k] = pos('s-' + k); });
-    try{ localStorage.setItem('sharp-budget-handoff', JSON.stringify(h)); }catch(e){}
+    try{ localStorage.setItem('sharp-budget-handoff', JSON.stringify(h)); }catch(x){}
   });
 })();
 
