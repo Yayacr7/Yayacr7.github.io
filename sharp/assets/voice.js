@@ -121,6 +121,8 @@ function start(){
 function message(e){
   var t = String((e && (e.message || (e.error && e.error.message) || e.errorMsg)) || e || '');
   if(t === 'nokey') return 'Danny Dan isn\'t switched on yet.';
+  try{ t += ' ' + JSON.stringify(e); }catch(x){}
+  if(/origin|forbidden|\b403\b/i.test(t)) return 'Danny Dan\'s phone line is still being set up. Please try again later.';   // Vapi key not yet allowed on this site
   if(/permission|NotAllowed|denied/i.test(t)) return 'Danny Dan needs your microphone. Allow it in your browser settings, then try again.';
   if(!navigator.onLine) return 'You\'re offline. Connect to the internet, then try again.';
   return 'Couldn\'t reach Danny Dan just now. Please try again in a minute.';
