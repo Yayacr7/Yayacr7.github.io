@@ -174,6 +174,16 @@
 .sc.sc-first{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}
 .hero .sc-out,.hero .sc form{color:var(--ink)}
 @media (max-width:900px){ .sc.sc-first{grid-template-columns:1fr} .hc-head{align-items:flex-start} }
+/* Danny Dan levels up */
+.dd-ladder{margin:28px 0 0;padding:20px;border-radius:var(--radius);background:#0d2a22;border:1px solid #1d5a4a}
+.dd-ladder-top{display:flex;gap:12px;align-items:center}.dd-ladder h2{margin:0;font-size:1.3rem;color:#fff}.dd-ladder-top p{margin:2px 0 0;color:#bfeedd}
+.dd-ladder ol{list-style:none;margin:16px 0 4px;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.dd-ladder li{display:grid;gap:4px;padding:12px;border-radius:12px;background:#0a1f1a}
+.dd-ladder li b{color:#fff;font:800 1.05rem var(--f-display)}.dd-ladder li span{font-size:.8rem;font-weight:700;color:#5fe0b0;text-transform:uppercase;letter-spacing:.08em}
+.dd-ladder li i{display:block;height:6px;border-radius:3px;background:#173d33;position:relative;overflow:hidden}
+.dd-ladder li i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:#3ddba5;border-radius:3px}
+.dd-ladder li small{color:#bfeedd;font-size:.86rem}.dd-ladder .fine{color:#9fd8c2}
+@media (max-width:760px){.dd-ladder ol{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -212,6 +222,7 @@
         <div class="depth" aria-label="Teaching level 1 of 4"><i class="on"></i><i></i><i></i><i></i><span>Basics</span></div>
         <p class="for">The core ideas and tools.</p>
         <ul>
+          <li><span><b>Danny Dan</b>: call him, his take on your spending, 8 typed questions a day</span></li>
           <li>All 22 lessons with quizzes</li>
           <li>Every calculator and planner, including the investor drill</li>
           <li>Free account</li>
@@ -226,6 +237,7 @@
         <p class="for">The full course, nothing extra.</p>
         <ul>
           <li><span>Everything in Free</span></li>
+          <li><span><b>Danny Tutor</b>: guides you through every module with a task to try, and 15 typed questions a day</span></li>
           <li><span><b>The 6-module Launch course</b>: from idea to your first sales</span></li>
         </ul>
         <button class="btn" type="button" data-plan="learner">Get Learner</button>
@@ -239,7 +251,7 @@
         <p class="for">The course, the tools, and Danny Dan as your weekly money coach.</p>
         <ul>
           <li><span>Everything in Learner</span></li>
-          <li><span><b>Danny Dan weekly coach</b>: he saves your spending plan, checks in with you every week and shows your spending going down. <a href="../tools/checkin/index.html">See the demo</a></span></li>
+          <li><span><b>Danny Coach</b>: weekly check-in (he saves your plan and tracks your spending going down), smarter answers, 25 typed questions a day. <a href="../tools/checkin/index.html">See the demo</a></span></li>
           <li><span><b>4 essential negotiation scripts</b>: price pushback, discounts, deposits, late payments</span></li>
           <li><span>Workbook for your own numbers</span></li>
           <li><span>Money spreadsheets: pricing, cash flow, startup costs</span></li>
@@ -256,6 +268,7 @@
         <p class="for">Everything Sharp teaches, plus the exact words and plan to use it.</p>
         <ul>
           <li><span>Everything in Builder</span></li>
+          <li><span><b>Danny Pro</b>: your 30-day launch coach, his deepest and most detailed answers, 40 typed questions a day</span></li>
           <li><span><b>All 14 negotiation scripts</b>: adds suppliers, rent, raises, co-founders, partners, investors</span></li>
           <li><span><b>Investor pitch kit</b>: 10-slide deck outline, 4 emails, 30 more tough questions, deal terms in plain English</span></li>
           <li><span><b>30-day launch plan</b>: one task a day, from idea to first paying customer</span></li>
@@ -267,6 +280,16 @@
         <a class="note" href="../trial/index.html" style="margin-top:-8px">Or try it free for 3 days →</a>
       </article>
     </div>
+    <section class="dd-ladder" aria-labelledby="dd-ladder-h">
+      <div class="dd-ladder-top"><span class="dd-face" aria-hidden="true">DD</span><div><h2 id="dd-ladder-h">Danny Dan levels up with every plan</h2><p>Same Danny, smarter with each step.</p></div></div>
+      <ol>
+        <li><b>Danny Dan</b><span>Free</span><i style="--w:25%"></i><small>Calls, his take on your spending, his weekly plan</small></li>
+        <li><b>Danny Tutor</b><span>Learner</span><i style="--w:50%"></i><small>+ guides you through the 6-module course</small></li>
+        <li><b>Danny Coach</b><span>Builder</span><i style="--w:75%"></i><small>+ weekly check-ins and smarter answers</small></li>
+        <li><b>Danny Pro</b><span>Founder</span><i style="--w:100%"></i><small>+ 30-day launch coach and his deepest answers</small></li>
+      </ol>
+      <p class="fine" data-ai-off>Typed questions switch on soon. Calling Danny works now.</p>
+    </section>
     <p class="fine" style="margin-top:16px">One-time payments, no subscription. Prices in US dollars. 30-day money-back guarantee: <a href="../refunds/index.html">refund policy</a>.</p>
   </div>
 </section>
@@ -276,7 +299,7 @@
     <span class="eyebrow">Questions</span>
     <h2 style="margin:10px 0 24px">FAQ</h2>
     <div class="faq">
-      <details><summary>Is Sharp free?</summary><p>The basics are: all lessons, quizzes and the calculators and planners. Learner ($19.99) adds the 6-module Launch course. Builder ($29.99) adds Danny Dan's weekly check-in, 4 essential negotiation scripts, a workbook and spreadsheets on top. Founder ($74.99) adds all 14 word-for-word negotiation scripts, an investor pitch kit and a 30-day launch plan, plus early access to new tools. All are one-time payments.</p></details>
+      <details><summary>Is Sharp free?</summary><p>The basics are: all lessons, quizzes and the calculators and planners. Learner ($19.99) adds the 6-module Launch course and Danny Tutor. Builder ($29.99) adds Danny Coach with his weekly check-in, 4 essential negotiation scripts, a workbook and spreadsheets on top. Founder ($74.99) adds Danny Pro, all 14 word-for-word negotiation scripts, an investor pitch kit and a 30-day launch plan, plus early access to new tools. All are one-time payments.</p></details>
       <details><summary>Do I need to sign in?</summary><p>No. Every lesson and tool works without an account. Signing in keeps your purchases in one place, and it's how you'll open the course.</p></details>
       <details><summary>Can I get a refund?</summary><p>Yes. Ask within 30 days of buying and you get all your money back, no reason needed. See the <a href="../refunds/index.html">refund policy</a>.</p></details>
       <details><summary>Is this financial advice?</summary><p>No. It's education and calculators. For legal, tax or big irreversible decisions, pay a professional who knows your situation.</p></details>

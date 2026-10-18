@@ -368,3 +368,14 @@ html.ai-on [data-ai-off]{display:none!important}
 @media (max-height:700px) and (max-width:900px){.sc-first[data-view="todo"] .sc-todo{display:none}.sc-first[data-view="todo"] .sc-mini{display:grid}}
 .dd-track{display:inline-block;margin-top:2px;font-size:.84rem;font-weight:700;color:#5fe0b0}
 @media (max-height:800px){.fs .dd-take p{display:none}}
+/* Danny Dan inside the course (course/course.js) */
+.dd-card{margin:28px 0;padding:18px 20px;border-radius:16px;background:#0d2a22;border:1px solid #1d5a4a;color:#e9fff6}
+.dd-card-top{display:flex;gap:12px;align-items:center;margin-bottom:8px}.dd-card h2{margin:2px 0 0;font-size:1.2rem;color:#fff}
+.dd-card p{color:#bfeedd;margin:6px 0}.dd-card .fine{color:#9fd8c2}.dd-card .row{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.dd-lvl{display:inline-block;padding:2px 8px;border-radius:999px;background:#3ddba5;color:#05221a;font:800 .7rem var(--f-body);letter-spacing:.08em;text-transform:uppercase}
+.dd-days{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;margin:12px 0}
+.dd-days button{min-height:40px;border-radius:10px;border:1px solid #1d5a4a;background:#0a1f1a;color:#bfeedd;font:800 .9rem var(--f-body);cursor:pointer}
+.dd-days button.on{background:#3ddba5;border-color:#3ddba5;color:#05221a}.dd-days button.on::after{content:" ✓"}
+.dd-days button.now{border:2px solid #3ddba5;color:#fff}
+.dd-days button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media (max-width:520px){.dd-days{grid-template-columns:repeat(6,minmax(0,1fr))}}

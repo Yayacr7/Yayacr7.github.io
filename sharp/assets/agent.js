@@ -25,6 +25,8 @@ function privateDetail(t){
   return null;
 }
 
+// The signed-in visitor's Supabase token (if any), so the server can tell which Danny their plan gets.
+function token(){ try{ for(var i = 0; i < localStorage.length; i++){ var k = localStorage.key(i); if(/^sb-.+-auth-token$/.test(k)){ var v = JSON.parse(localStorage.getItem(k)); if(v && typeof v.access_token === 'string') return v.access_token; } } }catch(e){} return ''; }
 function el(tag, cls, text, parent){ var e = document.createElement(tag); if(cls) e.className = cls; if(text != null) e.textContent = text; if(parent) parent.appendChild(e); return e; }
 
 // The page path the server knows ("/tools/budget/"), so the agent knows where the visitor is.
@@ -42,7 +44,10 @@ panel.id = 'ag-panel'; panel.hidden = true;
 panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'false'); panel.setAttribute('aria-labelledby', 'ag-title');
 var head = el('div', 'ag-head', null, panel);
 var ht = el('div', null, null, head);
-el('p', 'ag-title', 'Danny Dan', ht).id = 'ag-title';
+var titleEl = el('p', 'ag-title', 'Danny Dan', ht); titleEl.id = 'ag-title';
+var lvlEl = el('span', 'ag-lvl', null, titleEl);
+function showLevel(n){ if(typeof n !== 'string' || !/^Danny (Dan|Tutor|Coach|Pro)$/.test(n)) return; lvlEl.textContent = n === 'Danny Dan' ? '' : n.split(' ')[1]; try{ sessionStorage.setItem('sharp-agent-level', n); }catch(e){} }
+try{ showLevel(sessionStorage.getItem('sharp-agent-level')); }catch(e){}
 el('p', 'ag-sub', 'Sharp\'s helper. He reads the lessons and takes you to the right tool.', ht);
 var callBtn = el('button', 'ag-icon ag-call', 'Call', head); callBtn.type = 'button'; callBtn.setAttribute('aria-label', 'Call Danny Dan instead'); callBtn.hidden = true;
 var newBtn = el('button', 'ag-icon', 'New', head); newBtn.type = 'button'; newBtn.setAttribute('aria-label', 'Start a new chat');
@@ -159,15 +164,17 @@ function submit(){
   var ctrl = 'AbortController' in window ? new AbortController() : null;
   var timer = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 70000);
   var body = { page: page, messages: chat.map(function(m){ return { role: m.role, text: m.text }; }) };
-  fetch(base + 'api/agent', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
+  var hd = { 'content-type': 'application/json' }, tk = token(); if(tk) hd.authorization = 'Bearer ' + tk;
+  fetch(base + 'api/agent', { method: 'POST', headers: hd, body: JSON.stringify(body), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
     .then(function(r){ return r.json().catch(function(){ return { ok: false, message: 'Something went wrong. Please try again.' }; }); })
     .then(function(d){
       if(!d || !d.ok || typeof d.reply !== 'string'){
         chat.pop(); q.value = text; grow();                    // give the message back so it can be sent again
         say((d && d.message) || 'Something went wrong. Please try again.', 'err'); return;
       }
+      showLevel(d.level);
       chat.push({ role: 'assistant', text: d.reply, covered: !!d.covered,
-        steps: Array.isArray(d.steps) ? d.steps.slice(0, 5) : [], links: Array.isArray(d.links) ? d.links.slice(0, 3) : [] });
+        steps: Array.isArray(d.steps) ? d.steps.slice(0, 7) : [], links: Array.isArray(d.links) ? d.links.slice(0, 3) : [] });
       chat = chat.slice(-MAX); save(); say('');
     })
     .catch(function(e){
