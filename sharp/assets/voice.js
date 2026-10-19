@@ -64,7 +64,7 @@ function build(){
   call.addEventListener('click', start);
   type.addEventListener('click', function(){
     if(window.SharpAgent){ box.hidden = true; window.SharpAgent.open(); return; }
-    ui.status.textContent = 'Typing to Danny Dan switches on soon. You can call him right now.'; call.focus();   // the AI chat isn't on yet
+    ui.status.textContent = 'Typing to Danny Dan isn\'t switched on yet. It\'s coming soon.'; call.focus();   // the AI chat isn't on yet
   });
   shut.addEventListener('click', stop);
   end.addEventListener('click', stop);
