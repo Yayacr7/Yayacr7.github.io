@@ -7,21 +7,22 @@
 var KEY = 'sharp-first100';
 // price, cost and hours are per job. lo/hi = a fair price range for a teen starting out (US, 2026).
 var SKILLS = {
-  lawn:   { name: 'Lawn and yard care', job: 'mow and edge a front and back yard', price: 25, cost: 2, hrs: 1.5, lo: 20, hi: 40, who: 'neighbours with big yards, older neighbours and busy families', tip: 'Offer every-week mowing. One regular customer is worth ten one-offs.' },
-  pets:   { name: 'Dog walking and pet sitting', job: 'a 30-minute dog walk', price: 15, cost: 0, hrs: .75, lo: 10, hi: 20, who: 'dog owners who work all day, and families going away', tip: 'Ask to meet the dog first, free. Owners book people their dog already likes.' },
-  car:    { name: 'Car washing', job: 'wash and dry a car, and clean the inside', price: 20, cost: 3, hrs: 1, lo: 15, hi: 35, who: 'neighbours, family friends and people who drive for work', tip: 'Before-and-after photos sell this. Take them every time (with permission).' },
-  tutor:  { name: 'Tutoring younger kids', job: 'a 1-hour homework or reading session', price: 15, cost: 0, hrs: 1, lo: 12, hi: 25, who: 'parents of younger kids at your school or in your area', tip: 'Tell parents one thing their child got better at after each session.' },
-  bake:   { name: 'Baked goods', job: 'a box of a dozen cookies', price: 12, cost: 4, hrs: 1.5, lo: 10, hi: 18, who: 'family friends, neighbours and people planning parties', tip: 'Take orders first, then bake. You never waste ingredients that way.' },
-  tech:   { name: 'Phone and tech help', job: 'set up a phone, tablet or TV and show how it works', price: 20, cost: 0, hrs: 1, lo: 15, hi: 30, who: 'grandparents, older neighbours and busy parents', tip: 'Leave a short written how-to behind. People call back the helper who did that.' },
-  resell: { name: 'Reselling (buy low, sell higher)', job: 'one item bought cheap, cleaned up and sold', price: 25, cost: 10, hrs: 1, lo: 15, hi: 40, who: 'buyers on local selling apps and at school (with a parent\'s okay)', tip: 'Only buy things you have already seen sell for at least double.' },
-  sitter: { name: 'Babysitting', job: 'a 3-hour evening of babysitting', price: 45, cost: 0, hrs: 3, lo: 36, hi: 60, who: 'families you or your parents already know', tip: 'A first-aid course makes parents say yes faster, and lets you charge more.' },
-  social: { name: 'Social posts for local shops', job: 'a pack of 8 photos and posts for a shop\'s page', price: 40, cost: 0, hrs: 3, lo: 30, hi: 75, who: 'small local shops, cafés and salons with quiet social pages', tip: 'Make one free sample post for the shop first. Showing beats telling.' }
+  lawn:   { name: 'Lawn and yard care', biz: 'lawn care', job: 'mowing and edging a front and back yard', act: 'mow and edge your front and back yard', price: 25, cost: 2, hrs: 1.5, lo: 20, hi: 40, who: 'neighbours with big yards, older neighbours and busy families', tip: 'Offer every-week mowing. One regular customer is worth ten one-offs.', ask: ["Who looks after your yard right now?", "What's the hardest part of keeping it tidy?", "What happens when it gets overgrown? Is that something you want sorted soon?", "You said weekends are busy. I can mow every Saturday morning, so you never have to think about it."] },
+  pets:   { name: 'Dog walking and pet sitting', biz: 'dog walking', job: 'a 30-minute dog walk', act: 'take your dog on a 30-minute walk', price: 15, cost: 0, hrs: .75, lo: 10, hi: 20, who: 'dog owners who work all day, and families going away', tip: 'Ask to meet the dog first, free. Owners book people their dog already likes.', ask: ["What does your dog do while you're at work?", "What's tricky about that?", "How does that affect your dog, or you? Do you want to change it soon?", "You mentioned he's alone all day. I can walk him at lunchtime every weekday."] },
+  car:    { name: 'Car washing', biz: 'car washing', job: 'washing a car inside and out', act: 'wash your car and clean the inside', price: 20, cost: 3, hrs: 1, lo: 15, hi: 35, who: 'neighbours, family friends and people who drive for work', tip: 'Before-and-after photos sell this. Take them every time (with permission).', ask: ["How do you usually get your car cleaned?", "What don't you like about that?", "How often does it bug you? Is it worth fixing?", "You said the car wash eats your Saturday. I can wash it in your driveway while you do other things."] },
+  tutor:  { name: 'Tutoring younger kids', biz: 'tutoring', job: 'a 1-hour homework or reading session', act: 'do a 1-hour homework or reading session', price: 15, cost: 0, hrs: 1, lo: 12, hi: 25, who: 'parents of younger kids at your school or in your area', tip: 'Tell parents one thing their child got better at after each session.', ask: ["How is homework going for them right now?", "Which subject is hardest?", "How is that affecting their grades or mood? Do you want help with it this term?", "You said reading is the struggle. I can do two reading sessions a week with them."] },
+  bake:   { name: 'Baked goods', biz: 'baking', job: 'a box of a dozen cookies', act: 'bake you a box of a dozen cookies', price: 12, cost: 4, hrs: 1.5, lo: 10, hi: 18, who: 'family friends, neighbours and people planning parties', tip: 'Take orders first, then bake. You never waste ingredients that way.', ask: ["What do you usually get for parties or events?", "What don't you love about that?", "Is there an event coming up you need it for?", "You've got a birthday in two weeks. I can make a dozen cookies for it, decorated how you like."] },
+  tech:   { name: 'Phone and tech help', biz: 'tech help', job: 'setting up a phone, tablet or TV', act: 'set up your phone, tablet or TV and show you how it works', price: 20, cost: 0, hrs: 1, lo: 15, hi: 30, who: 'grandparents, older neighbours and busy parents', tip: 'Leave a short written how-to behind. People call back the helper who did that.', ask: ["How are you getting on with your phone, tablet or TV?", "What's confusing about it?", "What do you miss out on because of that? Want it fixed this week?", "You said video calls with family are hard. I can set that up and show you step by step."] },
+  resell: { name: 'Reselling (buy low, sell higher)', biz: 'reselling', job: 'one item bought cheap, cleaned up and sold', act: 'sell you a checked, cleaned-up item for less than new', price: 25, cost: 10, hrs: 1, lo: 15, hi: 40, who: 'buyers on local selling apps and at school (with a parent\'s okay)', tip: 'Only buy things you have already seen sell for at least double.', ask: ["What are you looking for?", "What have you found so far, and what was wrong with it?", "When do you need it by?", "You need a bike for school. This one's checked, cleaned and ready to ride."] },
+  sitter: { name: 'Babysitting', biz: 'babysitting', job: 'a 3-hour evening of babysitting', act: 'babysit for a 3-hour evening', price: 45, cost: 0, hrs: 3, lo: 36, hi: 60, who: 'families you or your parents already know', tip: 'A first-aid course makes parents say yes faster, and lets you charge more.', ask: ["Who watches the kids when you go out?", "What makes that hard?", "How often does that stop you going out? Would a regular sitter help?", "You said you rarely get a night out. I'm free most Friday evenings."] },
+  social: { name: 'Social posts for local shops', biz: 'social media', job: 'a pack of 8 photos and posts for a shop\'s page', act: 'make a pack of 8 photos and posts for your page', price: 40, cost: 0, hrs: 3, lo: 30, hi: 75, who: 'small local shops, cafés and salons with quiet social pages', tip: 'Make one free sample post for the shop first. Showing beats telling.', ask: ["How do new customers find you, and what do they see when they visit your page?", "What's hard about posting?", "What does a quiet page cost you? Is fixing it a priority right now?", "You said nobody has time to post. I can make 8 posts a month, so your page looks busy and people know what you sell."] }
 };
 var STEPS = [
   ['Week 1 · Get ready', [
     'Ask a parent or guardian first. Agree where you can work and who you work for.',
     'Write your offer in one line: what you do and the price (use Danny\'s line below).',
-    'Send your message to 10 people you or your family already know.'
+    'Send your message to 10 people you or your family already know.',
+    'Practise a 10-minute sales talk with a friend playing the customer (see "Make the sale").'
   ]],
   ['Week 2 · First jobs', [
     'Do your first job. Turn up early and finish what you promised.',
@@ -60,7 +61,7 @@ function take(p){
   var k = p.k, out = [];
   if(p.left <= 0) return { head: 'You did it. ' + money(earned()) + ' earned.', body: 'That\'s real money from your own business. Put some in savings, then set a bigger goal below.', st: 'good' };
   if(p.profit <= 0) return { head: 'Your price doesn\'t cover your costs.', body: 'Each job costs ' + money(s.cost) + ' and you charge ' + money(s.price) + ', so you lose money every time. Charge more than it costs you.', st: 'bad' };
-  if(p.perWeek < 1) return { head: 'Not enough time for one job a week.', body: 'One ' + k.job + ' takes about ' + k.hrs + ' hours and you have ' + s.hours + '. Find ' + Math.ceil(k.hrs - s.hours + .01) + ' more hour' + (Math.ceil(k.hrs - s.hours + .01) > 1 ? 's' : '') + ' a week, or pick a quicker job.', st: 'bad' };
+  if(p.perWeek < 1) return { head: 'Not enough time for one job a week.', body: 'Each job (' + k.job + ') takes about ' + hrs(k.hrs) + ' and you have ' + hrs(s.hours) + '. Find ' + Math.ceil(k.hrs - s.hours - 1e-9) + ' more hour' + (Math.ceil(k.hrs - s.hours - 1e-9) > 1 ? 's' : '') + ' a week, or pick a quicker job.', st: 'bad' };
   out.push('You make ' + money(p.profit) + ' a job (' + money(s.price) + ' price minus ' + money(s.cost) + ' costs), about ' + money(p.hourly) + ' an hour.');
   out.push('You need ' + p.jobs + ' more job' + (p.jobs === 1 ? '' : 's') + '. With ' + s.hours + ' hours a week you can do ' + p.perWeek + ' a week, so about ' + p.weeks + ' week' + (p.weeks === 1 ? '' : 's') + '.');
   if(s.price < k.lo) out.push('Your price is below what most people charge (' + money(k.lo) + ' to ' + money(k.hi) + '). Cheap can look unsure. Try ' + money(k.lo) + '.');
@@ -74,10 +75,10 @@ function take(p){
   return { head: head, body: out.join(' '), st: st };
 }
 function line(){
-  var k = SKILLS[s.skill], who = s.name ? 'it\'s ' + s.name : 'it\'s me';
-  return 'Hi! ' + (s.area ? who.charAt(0).toUpperCase() + who.slice(1) + ' from ' + s.area + '. ' : who.charAt(0).toUpperCase() + who.slice(1) + '. ') +
-    'I\'m starting a small ' + k.name.toLowerCase() + ' business. For ' + money(s.price) + ' I\'ll ' + k.job + '. Could I help you this week?';
+  var k = SKILLS[s.skill], me = s.name ? 'It\'s ' + s.name + (s.area ? ' from ' + s.area : '') + '. ' : s.area ? 'I live on ' + s.area + '. ' : '';
+  return 'Hi! ' + me + 'I\'m starting a small ' + k.biz + ' business. For ' + money(s.price) + ' I\'ll ' + k.act + '. Could I help you this week?';
 }
+function hrs(h){ return h < 1 ? Math.round(h * 60) + ' minutes' : h + (h === 1 ? ' hour' : ' hours'); }
 
 /* ---------- Chart: trading style. Each candle = money you logged, stacking up to the goal line. ---------- */
 function svgEl(tag, at, parent){ var e = document.createElementNS('http://www.w3.org/2000/svg', tag); for(var a in at) e.setAttribute(a, at[a]); if(parent) parent.appendChild(e); return e; }
@@ -117,16 +118,33 @@ function draw(){
   svgEl('tspan', { class: 'fl-hl', dx: 8 }, hd).textContent = total >= s.goal ? 'goal reached' : money(s.goal - total) + ' to go';
 }
 
+/* ---------- Make the sale: 6 steps, examples change with the business you picked ---------- */
+function sale(){
+  var k = SKILLS[s.skill], q = k.ask, box = $('f1-sale'); box.textContent = '';
+  var steps = [
+    ['Find someone who might need it.', 'Great selling still fails with people who have no need, no money or no reason to act. Start with ' + k.who + '.', null],
+    ['Understand their situation before you pitch.', 'Ask how they handle it now, then what\'s hard about it.', q[0] + ' Then: ' + q[1]],
+    ['Check the problem matters enough to fix.', 'A problem can exist without being a priority. If it isn\'t one, don\'t force it.', q[2]],
+    ['Connect your offer to what they told you.', 'Use their words. Give the one benefit that matters to them, not a list of everything you can do.', q[3]],
+    ['Say the price and ask directly. Then stop talking.', 'You don\'t need to keep explaining after you ask for money.', 'It\'s ' + money(s.price) + ' to ' + k.act + '. Would you like to go ahead?'],
+    ['Explore "I need to think about it" without arguing.', 'Answer honestly. Sometimes you can fix their worry. Sometimes the answer is no, and that\'s fine.', 'Of course. What would you need to feel good about deciding?']
+  ];
+  steps.forEach(function(st, i){
+    var li = el('li', null, null, box); el('b', null, (i + 1) + '. ' + st[0], li); el('span', null, st[1], li);
+    if(st[2]) el('q', null, st[2], li);
+  });
+}
+
 /* ---------- Page ---------- */
 function render(){
   var p = plan(), t = take(p);
   $('f1-head').textContent = t.head; $('f1-body').textContent = t.body;
   var ic = $('f1-st'); ic.className = 'sc-ic ' + t.st; ic.textContent = t.st === 'good' ? '✓' : t.st === 'warn' ? '!' : '✕';
   $('f1-stw').textContent = t.st === 'good' ? 'On track' : t.st === 'warn' ? 'Slow' : 'Fix this first';
-  $('f1-range').textContent = 'Most people charge ' + money(p.k.lo) + ' to ' + money(p.k.hi) + ' for ' + p.k.job + '. About ' + p.k.hrs + ' hours a job.';
+  $('f1-range').textContent = 'Most people charge ' + money(p.k.lo) + ' to ' + money(p.k.hi) + ' for ' + p.k.job + '. About ' + hrs(p.k.hrs) + ' a job.';
   $('f1-s1').textContent = money(earned()); $('f1-s2').textContent = isFinite(p.jobs) ? p.jobs : '–'; $('f1-s3').textContent = isFinite(p.weeks) ? p.weeks : '–';
   $('f1-who').textContent = 'Who to ask: ' + p.k.who + '.'; $('f1-tip').textContent = 'Danny\'s tip: ' + p.k.tip;
-  $('f1-line').textContent = line();
+  $('f1-line').textContent = line(); sale();
   var list = $('f1-steps'); list.textContent = ''; var id = 0, done = 0;
   STEPS.forEach(function(w){
     var sec = el('li', 'f1-wk', null, list); el('h3', null, w[0], sec); var ul = el('ul', null, null, sec);
