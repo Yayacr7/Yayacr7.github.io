@@ -26,7 +26,7 @@ window.NP_CONFIG = {
 
   /* Danny Dan voice receptionist (Vapi). Vapi dashboard > API Keys: paste the PUBLIC key only.
      NEVER paste the private key. Blank = the "Speak with Danny Dan" button stays hidden. */
-  VOICE: { vapiPublicKey: "17fe310b-cb7c-4b6b-b9f8-fa45d3d036c2", assistantId: "f67e6090-46d5-4179-93b4-973291ccf128" },
+  VOICE: { vapiPublicKey: "17fe310b-cb7c-4b6b-b9f8-fa45d3d036c2", assistantId: "39d91e93-6eb5-4bf3-a9a7-82faff683395" },
 
   /* Free trial: days of Founder access, counted from when the account was created. */
   TRIAL_DAYS: 3

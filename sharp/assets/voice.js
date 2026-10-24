@@ -8,7 +8,7 @@
 if(window.__sharpVoice) return; window.__sharpVoice = true;
 var me = document.currentScript && document.currentScript.src;
 var base = me ? me.replace(/assets\/voice\.js(\?.*)?$/, '') : '/';
-var ASSISTANT = 'f67e6090-46d5-4179-93b4-973291ccf128';     // Danny Dan
+var ASSISTANT = '39d91e93-6eb5-4bf3-a9a7-82faff683395';     // Danny Dan
 var vapi = null, state = 'idle', ui = null, timer = 0, started = 0;
 
 function load(src){ return new Promise(function(ok, bad){ var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = bad; document.head.appendChild(s); }); }
