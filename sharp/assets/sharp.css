@@ -379,3 +379,9 @@ html.ai-on [data-ai-off]{display:none!important}
 .ch-days button.now{border:2px solid #3ddba5;color:#fff}
 .ch-days button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @media (max-width:520px){.ch-days{grid-template-columns:repeat(6,minmax(0,1fr))}}
+
+/* Cherry's tip: Cherry speaks at the top of every main page. */
+.ch-tip{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px 14px;margin-top:18px;max-width:900px;padding:14px 16px;border-radius:16px;background:#0d2a22;border:1px solid #1d5a4a;box-shadow:0 0 40px -18px rgba(61,219,165,.6)}
+.ch-tip .ch-face{box-shadow:0 0 22px -4px rgba(61,219,165,.8)}.ch-tip p{margin:0;color:#d6f7ea;line-height:1.55}.ch-tip p b{color:#5fe0b0}.ch-tip a{color:#9ff0d0}
+.ch-tip .btn.ch-btn{min-height:40px;padding:8px 14px;white-space:nowrap}
+@media (max-width:700px){.ch-tip{grid-template-columns:auto minmax(0,1fr)}.ch-tip .btn.ch-btn{grid-column:1/-1;justify-self:start}}

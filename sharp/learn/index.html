@@ -24,6 +24,13 @@
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
 <meta name="description" content="Plain-English lessons on personal finance, business finance and negotiation — with calculators, practice problems that check your work, and ready-to-use AI prompts.">
 <link rel="stylesheet" href="../assets/fonts.css">
+<style>/* Cherry's tip (same look as assets/sharp.css, which this page does not load) */
+.ch-tip{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px 14px;margin:16px 0 4px;max-width:900px;padding:14px 16px;border-radius:16px;background:#0d2a22;border:1px solid #1d5a4a;box-shadow:0 0 40px -18px rgba(61,219,165,.6)}
+.ch-tip .ch-face{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#3ddba5,#1d8f6a);color:#05221a;font:800 14px/1 var(--f-display,inherit);box-shadow:0 0 22px -4px rgba(61,219,165,.8)}
+.ch-tip p{margin:0;color:#d6f7ea;line-height:1.55}.ch-tip p b{color:#5fe0b0}.ch-tip a{color:#9ff0d0}
+.ch-tip .ch-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border:0;border-radius:999px;background:#3ddba5;color:#05221a;font:700 .95rem inherit;cursor:pointer;white-space:nowrap;box-shadow:0 0 26px -6px rgba(61,219,165,.8)}
+.ch-tip .ch-btn[hidden]{display:none}.ch-tip .ch-btn .ch-face{width:20px;height:20px;font-size:8px;box-shadow:none}.ch-tip .ch-btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media (max-width:700px){.ch-tip{grid-template-columns:auto minmax(0,1fr)}.ch-tip .ch-btn{grid-column:1/-1;justify-self:start}}</style>
 <style>
 /* Layout concept: Sharp courses. Structured learning layout, white cards on cool grey,
    four colour-coded topics, one hot orange accent for action. */
@@ -534,6 +541,7 @@ section.page > .pager a:hover{background:var(--paper-2)}
       <span class="eyebrow">Your courses</span>
       <h1>Business, made <em>simple.</em></h1>
       <p class="lede">22 short lessons. Start anywhere.</p>
+      <div class="ch-tip" role="note" aria-label="Cherry's tip"><span class="ch-face" aria-hidden="true">C</span><p><b>Cherry's tip:</b> New here? Start with <a href="#money">Your money</a>. Do one lesson a day and try its task the same day. That's how it sticks.</p><button class="btn ch-btn" type="button" data-cherry hidden><span class="ch-face sm" aria-hidden="true">C</span>Talk to Cherry</button></div>
       <div class="topic-bars">
         <div class="tb t-finance"><span class="tb-name">Finance</span><span class="tb-track"><i data-bar="finance"></i></span><span class="tb-n" data-world="finance">0/3</span></div>
         <div class="tb t-business"><span class="tb-name">Business</span><span class="tb-track"><i data-bar="business"></i></span><span class="tb-n" data-world="business">0/5</span></div>
