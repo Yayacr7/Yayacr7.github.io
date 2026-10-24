@@ -1,6 +1,6 @@
-/* Danny's weekly check-in (Builder, Founder and the free trial).
-   Danny Dan saves the visitor's weekly plan (from the home Spending check) and, once a week, they tell him
-   what they spent. The chart shows their real weeks against his plan. Everything stays in this browser
+/* Cherry's weekly check-in (Builder, Founder and the free trial).
+   Cherry saves the visitor's weekly plan (from the home Spending check) and, once a week, they tell Cherry
+   what they spent. The chart shows their real weeks against the plan. Everything stays in this browser
    (localStorage); only the plan check (which plan you have) talks to Supabase. Visitor text: textContent only. */
 (function(){
 "use strict";
@@ -28,7 +28,7 @@ function planAt(n){ var w = state.weeks; return n < w.length ? w[n].v : state.go
 function weekInfo(n){ var w = state.weeks; return n < w.length ? w[n] : { n: n, v: state.goal, focus: '' }; }
 function statusOf(log, prev){ return log.v <= planAt(log.n) + 1 ? 'good' : log.v < prev ? 'warn' : 'bad'; }
 
-/* ---------- Danny's words (fixed rules, no AI, nothing leaves the device) ---------- */
+/* ---------- Cherry's words (fixed rules, no AI, nothing leaves the device) ---------- */
 function dannySays(){
   var L = state.logs, next = L.length + 1, w = weekInfo(next);
   var focus = w.focus ? 'This week\'s one change: ' + w.focus + ', down to about ' + money(w.to) + ' a week. ' + w.tip : 'No new cut this week. Hold steady at about ' + money(planAt(next)) + ' a week and move what you freed into savings.';
@@ -39,7 +39,7 @@ function dannySays(){
   return { head: head, body: body };
 }
 
-/* ---------- Chart: trading style. Candles = your real weeks, dashed line = Danny's plan. ---------- */
+/* ---------- Chart: trading style. Candles = your real weeks, dashed line = Cherry's plan. ---------- */
 function svgEl(tag, at, parent){ var e = document.createElementNS('http://www.w3.org/2000/svg', tag); for(var k in at) e.setAttribute(k, at[k]); if(parent) parent.appendChild(e); return e; }
 function step(span){ var raw = span / 5, p = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10)), f = raw / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p; }
 function k(v){ return '$' + Math.round(v); }
@@ -60,7 +60,7 @@ function draw(){
   }
   for(var i = 0; i < n; i++) svgEl('line', { x1: X(i), x2: X(i), y1: TOP - 6, y2: TOP + PH }, grid);
   svgEl('line', { x1: W - AX, x2: W - AX, y1: 0, y2: H, class: 'fl-edge' }, svg);
-  // Danny's plan: dashed line week by week, then his goal line + tag.
+  // Cherry's plan: dashed line week by week, then the goal line + tag.
   var pts = []; for(i = 0; i < n; i++) pts.push(X(i).toFixed(1) + ',' + Y(planAt(i)).toFixed(1));
   svgEl('polyline', { points: pts.join(' '), class: 'ci-plan' }, svg);
   svgEl('line', { x1: 0, x2: W - AX, y1: Y(state.goal), y2: Y(state.goal), class: 'fl-now pos' }, svg);
@@ -92,7 +92,7 @@ function draw(){
   // Ticker header.
   var hd = svgEl('text', { x: 10, y: 19, class: 'fl-hd' }, svg), diff = state.now - last;
   svgEl('tspan', { class: diff >= 0 ? 'pos' : 'neg' }, hd).textContent = (diff >= 0 ? '−' : '+') + money(Math.abs(diff)) + '/wk';
-  svgEl('tspan', { class: 'fl-hl', dx: 8 }, hd).textContent = L.length ? 'since you started' : 'Danny\'s goal: ' + money(state.goal) + '/wk';
+  svgEl('tspan', { class: 'fl-hl', dx: 8 }, hd).textContent = L.length ? 'since you started' : 'Cherry\'s goal: ' + money(state.goal) + '/wk';
 }
 
 /* ---------- Page ---------- */
@@ -102,7 +102,7 @@ function render(){
   var L = state.logs, next = L.length + 1;
   $('ci-week').textContent = 'Week ' + next;
   $('ci-label').textContent = 'What did you spend in week ' + next + '? Everything except saving ($)';
-  $('ci-plan').textContent = 'Danny\'s plan for week ' + next + ': about ' + money(planAt(next)) + '.';
+  $('ci-plan').textContent = 'Cherry\'s plan for week ' + next + ': about ' + money(planAt(next)) + '.';
   var last = L.length ? L[L.length - 1] : null, total = 0;
   L.forEach(function(l){ total += Math.max(0, state.now - l.v); });
   $('ci-s1').textContent = L.length; $('ci-s2').textContent = money(total); $('ci-s3').textContent = last ? money(last.v) : money(state.now);

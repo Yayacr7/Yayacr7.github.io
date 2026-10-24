@@ -163,7 +163,7 @@ function scRows(get){
   total += save;
   return { rows: rows, inc: inc, total: total, left: inc - total };
 }
-// For Danny's weekly check-in (tools/checkin/): the same plan, from saved monthly numbers ({income, food, ...}).
+// For Cherry's weekly check-in (tools/checkin/): the same plan, from saved monthly numbers ({income, food, ...}).
 window.SharpDannyPlan = function(h){
   var d = scRows(function(id){ return Math.max(0, +h[id.slice(2)] || 0); });
   return d.inc > 0 ? { d: d, plan: dpPlan(d) } : null;
@@ -180,7 +180,7 @@ wire('f-spend', function(){
   // Before the line = fine, past the line = too much. Plain dollars, no percent scale.
   // Toolbar: what the colours mean, and a switch between the blocks picture and the bar list.
   html += '<div class="sc-bar-row"><div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Fine</span><span><i class="sc-ic warn">!</i>A bit over</span><span><i class="sc-ic bad">✕</i>Too much</span><span class="sc-size">' + scKey() + '</span></div>' +
-    '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="danny" aria-pressed="' + (SC_VIEW === 'danny') + '">Danny\'s plan</button><button type="button" data-scview="flow" aria-pressed="' + (SC_VIEW === 'flow') + '">Candles</button><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
+    '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="danny" aria-pressed="' + (SC_VIEW === 'danny') + '">Cherry\'s plan</button><button type="button" data-scview="flow" aria-pressed="' + (SC_VIEW === 'flow') + '">Candles</button><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
   html += '<div class="sc-tree" role="group" aria-label="Where your take-home pay goes"' + (SC_VIEW === 'list' ? ' hidden' : '') + '></div>';
   html += '<div class="sc-listview"' + (SC_VIEW !== 'list' ? ' hidden' : '') + '>';
   html += '<div class="sc-axis" aria-hidden="true"><span></span><span><b style="left:0">$0</b><b class="lim" style="left:50%">Limit</b><b style="left:100%">2× limit</b></span><span>Spent / limit</span><span></span></div>';
@@ -204,20 +204,20 @@ wire('f-spend', function(){
     if(r.saving) todo.push('<li class="' + r.st + '"><b>Saving:</b> aim for about ' + money(r.target / 52 * 12) + ' a week (' + money(r.target) + ' a month, 15% of your pay). Set it to move automatically on payday.</li>');
     else todo.push('<li class="' + r.st + '"><b>' + r.name + ':</b> ' + (r.st === 'bad' ? 'cut back to about ' + money(r.target / 52 * 12) + ' a week (' + money(r.target) + ' a month). ' : 'a little high. ') + r.tip + '</li>');
   });
-  // Danny Dan gives the opinion. It's worked out right here in the browser from fixed guides; the numbers never leave the device.
-  html += '<div class="dd-take"><span class="dd-face" aria-hidden="true">DD</span><div><h3 class="sc-h">Danny Dan\'s take</h3><p>' + (left < 0 ? 'You\'re spending more than you earn. Let\'s fix the red ones first, one a week.' : todo.length ? 'Here\'s what I\'d change, biggest win first.' : 'Nice. You\'re inside every guide.') + '</p><a class="dd-track" href="tools/checkin/index.html" data-handoff>Track it weekly with Danny →</a></div><button type="button" class="dd-talk" data-danny hidden>Talk to Danny</button></div>';
+  // Cherry gives the opinion. It's worked out right here in the browser from fixed guides; the numbers never leave the device.
+  html += '<div class="dd-take"><span class="dd-face" aria-hidden="true">C</span><div><h3 class="sc-h">Cherry\'s take</h3><p>' + (left < 0 ? 'You\'re spending more than you earn. Let\'s fix the red ones first, one a week.' : todo.length ? 'Here\'s what I\'d change, biggest win first.' : 'Nice. You\'re inside every guide.') + '</p><a class="dd-track" href="tools/checkin/index.html" data-handoff>Track it weekly with Cherry →</a></div><button type="button" class="dd-talk" data-danny hidden>Talk to Cherry</button></div>';
 
   html += todo.length ? '<ul class="sc-todo">' + todo.join('') + '</ul>' : '<p class="sc-ok"><span class="sc-ic good" aria-hidden="true">✓</span> Keep doing what you\'re doing. Got extra? Put it in savings.</p>';
   // Short version for wide screens, where the chart and the boxes share one screen.
   if(todo.length){
-    var mini = bad.map(function(r){ return '<li class="bad"><b>Danny says cut:</b> ' + (r.saving ? 'save about ' + money(r.target / 52 * 12) + ' a week' : r.name + ' to about ' + money(r.target / 52 * 12) + ' a week') + '.</li>'; });
+    var mini = bad.map(function(r){ return '<li class="bad"><b>Cherry says cut:</b> ' + (r.saving ? 'save about ' + money(r.target / 52 * 12) + ' a week' : r.name + ' to about ' + money(r.target / 52 * 12) + ' a week') + '.</li>'; });
     if(warn.length) mini.push('<li class="warn"><b>Think about:</b> ' + warn.map(function(r){ return r.name; }).join(', ') + '.</li>');
     html += '<ul class="sc-mini">' + mini.join('') + '</ul>';
   }
   out.innerHTML = html;
   SC_LAST = { rows: rows, inc: inc, left: left, total: total };
   drawTree(true);
-  if(window.SharpDanny) window.SharpDanny.wire(out);   // the "Talk to Danny" button (assets/voice.js)
+  if(window.SharpDanny) window.SharpDanny.wire(out);   // the "Talk to Cherry" button (assets/voice.js)
 });
 
 /* ---------- Spending check: the "blocks" picture (a treemap) ----------
@@ -407,10 +407,10 @@ function drawFlow(box, W, H, animate){
   var worst = d.rows.filter(function(r){ return r.st === 'bad' && !r.saving; }).sort(function(a, b){ return (b.v - b.target) - (a.v - a.target); })[0] || d.rows.filter(function(r){ return r.st !== 'good'; })[0] || d.rows[0];
   scShow(worst, inc);
 }
-/* ---------- Spending check: "Danny's plan" (weekly candles) ----------
-   Danny Dan's weekly plan: each week he changes one thing, biggest overspend first, until every category sits on its limit.
+/* ---------- Spending check: "Cherry's plan" (weekly candles) ----------
+   Cherry's weekly plan: each week Cherry changes one thing, biggest overspend first, until every category sits on its limit.
    Week candles step down from what you spend a week now; a green candle means spending went down that week.
-   The dashed line is Danny's goal. It's a plan worked out from fixed guides (a goal, not a forecast), on this device only. */
+   The dashed line is Cherry's goal. It's a plan worked out from fixed guides (a goal, not a forecast), on this device only. */
 
 function dpPlan(d){
   var spend = d.rows.filter(function(r){ return !r.saving; }), now = spend.reduce(function(a, r){ return a + r.v; }, 0) * WK;
@@ -428,7 +428,7 @@ function dpLine(w, plan, d){
 function dpShow(w, plan, d){
   var p = document.querySelector('#s-out .sc-detail'); if(!p) return;
   var info = dpLine(w, plan, d); p.textContent = '';
-  var b = document.createElement('b'); b.textContent = 'Danny Dan · ' + info.t + ': '; p.appendChild(b); p.appendChild(document.createTextNode(info.l));
+  var b = document.createElement('b'); b.textContent = 'Cherry · ' + info.t + ': '; p.appendChild(b); p.appendChild(document.createTextNode(info.l));
   Array.prototype.forEach.call(document.querySelectorAll('#s-out .dp-c'), function(g){ g.classList.toggle('on', +g.getAttribute('data-n') === w.n); });
 }
 function drawDanny(box, W, H, animate){
@@ -449,11 +449,11 @@ function drawDanny(box, W, H, animate){
   }
   ws.forEach(function(w, i){ scEl('line', { x1: X(i), x2: X(i), y1: TOP - 6, y2: TOP + PH }, grid); });
   scEl('line', { x1: W - AX, x2: W - AX, y1: 0, y2: H, class: 'fl-edge' }, svg);
-  // Ticker header: how much a week Danny's plan frees up.
+  // Ticker header: how much a week Cherry's plan frees up.
   var hd = scEl('text', { x: 10, y: 21, class: 'fl-hd' }, svg), hv = scEl('tspan', { class: 'pos' }, hd);
   hv.textContent = plan.saved > 0.5 ? '−' + money(plan.saved) + '/wk (−' + pct(plan.saved / Math.max(1, plan.now) * 100, 0) + ')' : 'On track';
-  var hl = scEl('tspan', { class: 'fl-hl', dx: 8 }, hd); hl.textContent = plan.saved > 0.5 ? (W < 420 ? 'Danny\'s plan' : 'Danny\'s plan · ' + money(plan.saved * 52) + ' a year back') : 'Danny\'s plan';
-  // Danny's goal line + tag.
+  var hl = scEl('tspan', { class: 'fl-hl', dx: 8 }, hd); hl.textContent = plan.saved > 0.5 ? (W < 420 ? 'Cherry\'s plan' : 'Cherry\'s plan · ' + money(plan.saved * 52) + ' a year back') : 'Cherry\'s plan';
+  // Cherry's goal line + tag.
   scEl('line', { x1: 0, x2: W - AX, y1: Y(plan.goal), y2: Y(plan.goal), class: 'fl-now pos' }, svg);
   var tag = scEl('g', { class: 'fl-tag pos', transform: 'translate(' + (W - AX + 2) + ',' + Y(plan.goal) + ')' }, svg);
   scEl('rect', { x: 0, y: -10, width: AX - 4, height: 20, rx: 3 }, tag); var tt = scEl('text', { x: (AX - 4) / 2, y: 4 }, tag); tt.textContent = scK(plan.goal);
@@ -470,7 +470,7 @@ function drawDanny(box, W, H, animate){
     var ist = st === 'hold' ? 'good' : st, ic = scEl('g', { class: 'fl-ic ' + ist, transform: 'translate(' + x + ',' + (H - 12) + ')' }, svg);
     scEl('circle', { r: 7.5 }, ic); var it = scEl('text', { y: 3.5 }, ic); it.textContent = STATUS[ist].icon;
   });
-  // Trend line through each week's close, ending at Danny's goal.
+  // Trend line through each week's close, ending at Cherry's goal.
   var pts = ws.map(function(w, i){ return X(i).toFixed(1) + ',' + Y(w.v).toFixed(1); }).join(' ');
   var path = scEl('polyline', { points: pts, class: 'fl-trend', pathLength: 1 }, svg);
   if(animate && !reduce) path.classList.add('draw');
@@ -478,7 +478,7 @@ function drawDanny(box, W, H, animate){
   ws.forEach(function(w, i){
     var b = document.createElement('button'); b.type = 'button'; b.className = 'fl-hit';
     b.style.left = (X(i) - cw / 2) + 'px'; b.style.width = cw + 'px'; b.style.top = TOP + 'px'; b.style.height = PH + 'px';
-    var info = dpLine(w, plan, d); b.setAttribute('aria-label', 'Danny Dan, ' + info.t + ': ' + info.l);
+    var info = dpLine(w, plan, d); b.setAttribute('aria-label', 'Cherry, ' + info.t + ': ' + info.l);
     var pick = function(){ dpShow(w, plan, d); };
     b.addEventListener('click', pick); b.addEventListener('focus', pick); b.addEventListener('pointerenter', function(e){ if(e.pointerType === 'mouse') pick(); });
     box.appendChild(b);

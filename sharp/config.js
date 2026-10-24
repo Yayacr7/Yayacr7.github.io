@@ -24,8 +24,8 @@ window.NP_CONFIG = {
      Use a business address, not a personal one. Blank = "listed here before launch". */
   CONTACT_EMAIL: "contact.yayabuilds@gmail.com",
 
-  /* Danny Dan voice receptionist (Vapi). Vapi dashboard > API Keys: paste the PUBLIC key only.
-     NEVER paste the private key. Blank = the "Speak with Danny Dan" button stays hidden. */
+  /* Cherry voice receptionist (Vapi). Vapi dashboard > API Keys: paste the PUBLIC key only.
+     NEVER paste the private key. Blank = the "Speak with Cherry" button stays hidden. */
   VOICE: { vapiPublicKey: "49361516-4f11-447c-bb58-8f4157741d77", assistantId: "39d91e93-6eb5-4bf3-a9a7-82faff683395" },
 
   /* Free trial: days of Founder access, counted from when the account was created. */

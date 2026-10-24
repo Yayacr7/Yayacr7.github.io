@@ -1,7 +1,7 @@
 /* Runs on every page.
    1) Shows the AI helpers (anything marked data-ai) only when the server says they're switched on.
    2) Adds the Ask Sharp agent button (assets/agent.js) to the page once the AI is on.
-   3) Adds the Danny Dan voice button (assets/voice.js; it stays hidden until a Vapi public key is set in config.js).
+   3) Adds the Cherry voice button (assets/voice.js; it stays hidden until a Vapi public key is set in config.js).
    4) Registers the service worker (sw.js), so Sharp can be added to the home screen and works offline. */
 (function(){
 "use strict";

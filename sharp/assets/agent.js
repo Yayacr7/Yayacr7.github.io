@@ -1,4 +1,4 @@
-/* Danny Dan chat (the Ask Sharp agent): a chat button on every page (loaded by shell.js only when the AI is switched on).
+/* Cherry chat (the Ask Sharp agent): a chat button on every page (loaded by shell.js only when the AI is switched on).
    It sends the chat to /api/agent, which searches Sharp's lessons and replies with an answer,
    next steps and buttons to the right pages. Everything shown is set with textContent only. */
 (function(){
@@ -25,7 +25,7 @@ function privateDetail(t){
   return null;
 }
 
-// The signed-in visitor's Supabase token (if any), so the server can tell which Danny their plan gets.
+// The signed-in visitor's Supabase token (if any), so the server can tell which Cherry their plan gets.
 function token(){ try{ for(var i = 0; i < localStorage.length; i++){ var k = localStorage.key(i); if(/^sb-.+-auth-token$/.test(k)){ var v = JSON.parse(localStorage.getItem(k)); if(v && typeof v.access_token === 'string') return v.access_token; } } }catch(e){} return ''; }
 function el(tag, cls, text, parent){ var e = document.createElement(tag); if(cls) e.className = cls; if(text != null) e.textContent = text; if(parent) parent.appendChild(e); return e; }
 
@@ -36,28 +36,28 @@ var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = bas
 
 var launch = el('button', 'ag-launch', null, document.body);
 launch.type = 'button'; launch.setAttribute('aria-haspopup', 'dialog'); launch.setAttribute('aria-controls', 'ag-panel');
-el('span', 'ag-face', 'DD', launch).setAttribute('aria-hidden', 'true');
-el('span', 'ag-launch-t', 'Danny Dan', launch);
+el('span', 'ag-face', 'C', launch).setAttribute('aria-hidden', 'true');
+el('span', 'ag-launch-t', 'Cherry', launch);
 
 var panel = el('section', 'ag-panel', null, document.body);
 panel.id = 'ag-panel'; panel.hidden = true;
 panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'false'); panel.setAttribute('aria-labelledby', 'ag-title');
 var head = el('div', 'ag-head', null, panel);
 var ht = el('div', null, null, head);
-var titleEl = el('p', 'ag-title', 'Danny Dan', ht); titleEl.id = 'ag-title';
+var titleEl = el('p', 'ag-title', 'Cherry', ht); titleEl.id = 'ag-title';
 var lvlEl = el('span', 'ag-lvl', null, titleEl);
-function showLevel(n){ if(typeof n !== 'string' || !/^Danny (Dan|Tutor|Coach|Pro)$/.test(n)) return; lvlEl.textContent = n === 'Danny Dan' ? '' : n.split(' ')[1]; try{ sessionStorage.setItem('sharp-agent-level', n); }catch(e){} }
+function showLevel(n){ if(typeof n !== 'string' || !/^Cherry (Dan|Tutor|Coach|Pro)$/.test(n)) return; lvlEl.textContent = n === 'Cherry' ? '' : n.split(' ')[1]; try{ sessionStorage.setItem('sharp-agent-level', n); }catch(e){} }
 try{ showLevel(sessionStorage.getItem('sharp-agent-level')); }catch(e){}
-el('p', 'ag-sub', 'Sharp\'s helper. He reads the lessons and takes you to the right tool.', ht);
-var callBtn = el('button', 'ag-icon ag-call', 'Call', head); callBtn.type = 'button'; callBtn.setAttribute('aria-label', 'Call Danny Dan instead'); callBtn.hidden = true;
+el('p', 'ag-sub', 'Sharp\'s helper. Cherry reads the lessons and takes you to the right tool.', ht);
+var callBtn = el('button', 'ag-icon ag-call', 'Call', head); callBtn.type = 'button'; callBtn.setAttribute('aria-label', 'Call Cherry instead'); callBtn.hidden = true;
 var newBtn = el('button', 'ag-icon', 'New', head); newBtn.type = 'button'; newBtn.setAttribute('aria-label', 'Start a new chat');
-var closeBtn = el('button', 'ag-icon', '✕', head); closeBtn.type = 'button'; closeBtn.setAttribute('aria-label', 'Close Danny Dan');
+var closeBtn = el('button', 'ag-icon', '✕', head); closeBtn.type = 'button'; closeBtn.setAttribute('aria-label', 'Close Cherry');
 
 var log = el('div', 'ag-log', null, panel);
 log.setAttribute('role', 'log'); log.setAttribute('aria-live', 'polite'); log.tabIndex = 0;
 
 var form = el('form', 'ag-form', null, panel);
-var label = el('label', 'ag-sr', 'Message Danny Dan', form); label.htmlFor = 'ag-q';
+var label = el('label', 'ag-sr', 'Message Cherry', form); label.htmlFor = 'ag-q';
 var q = el('textarea', 'ag-q', null, form); q.id = 'ag-q'; q.rows = 1; q.maxLength = 500;
 q.placeholder = 'Ask anything…'; q.setAttribute('enterkeyhint', 'send');
 var send = el('button', 'ag-send', 'Send', form); send.type = 'submit';
@@ -95,7 +95,7 @@ function draw(){
   log.textContent = '';
   if(!chat.length){
     var w = el('div', 'ag-msg bot', null, log);
-    el('p', null, 'Hi, I\'m Danny Dan! Ask me anything, from saving money and starting a business to planning your week. I\'ll give you a plan and take you to the right tool.', w);
+    el('p', null, 'Hi, I\'m Cherry! Ask me anything, from saving money and starting a business to planning your week. I\'ll give you a plan and take you to the right tool.', w);
     var row = el('div', 'ag-ideas', null, log);
     IDEAS.forEach(function(t){
       var b = el('button', 'ag-idea', t, row); b.type = 'button';
@@ -106,7 +106,7 @@ function draw(){
     if(m.role === 'user') el('div', 'ag-msg me', m.text, log);
     else drawBot(m, log);
   });
-  if(busy){ var t = el('div', 'ag-msg bot ag-typing', null, log); t.setAttribute('aria-label', 'Danny Dan is working'); el('span', null, null, t); el('span', null, null, t); el('span', null, null, t); }
+  if(busy){ var t = el('div', 'ag-msg bot ag-typing', null, log); t.setAttribute('aria-label', 'Cherry is working'); el('span', null, null, t); el('span', null, null, t); el('span', null, null, t); }
   // Show the start of the newest reply, not its end.
   var last = log.lastElementChild;
   log.scrollTop = last && last.classList.contains('bot') && chat.length ? Math.max(0, last.offsetTop - log.offsetTop - 8) : log.scrollHeight;

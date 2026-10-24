@@ -1,4 +1,4 @@
-/* First $100 Plan (free). Pick a starter business, your free hours and a goal. Danny Dan works out the price
+/* First $100 Plan (free). Pick a starter business, your free hours and a goal. Cherry works out the price
    maths, how many jobs and weeks it takes, gives a 30-day checklist and the exact message to send, then tracks
    the money you really earn on a trading-style chart. Fixed rules, no AI. Everything stays in this browser
    (localStorage). Visitor text: textContent only. */
@@ -20,7 +20,7 @@ var SKILLS = {
 var STEPS = [
   ['Week 1 · Get ready', [
     'Ask a parent or guardian first. Agree where you can work and who you work for.',
-    'Write your offer in one line: what you do and the price (use Danny\'s line below).',
+    'Write your offer in one line: what you do and the price (use Cherry\'s line below).',
     'Send your message to 10 people you or your family already know.',
     'Practise a 10-minute sales talk with a friend playing the customer (see "Make the sale").'
   ]],
@@ -143,7 +143,7 @@ function render(){
   $('f1-stw').textContent = t.st === 'good' ? 'On track' : t.st === 'warn' ? 'Slow' : 'Fix this first';
   $('f1-range').textContent = 'Most people charge ' + money(p.k.lo) + ' to ' + money(p.k.hi) + ' for ' + p.k.job + '. About ' + hrs(p.k.hrs) + ' a job.';
   $('f1-s1').textContent = money(earned()); $('f1-s2').textContent = isFinite(p.jobs) ? p.jobs : '–'; $('f1-s3').textContent = isFinite(p.weeks) ? p.weeks : '–';
-  $('f1-who').textContent = 'Who to ask: ' + p.k.who + '.'; $('f1-tip').textContent = 'Danny\'s tip: ' + p.k.tip;
+  $('f1-who').textContent = 'Who to ask: ' + p.k.who + '.'; $('f1-tip').textContent = 'Cherry\'s tip: ' + p.k.tip;
   $('f1-line').textContent = line(); sale();
   var list = $('f1-steps'); list.textContent = ''; var id = 0, done = 0;
   STEPS.forEach(function(w){

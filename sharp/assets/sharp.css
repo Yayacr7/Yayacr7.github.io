@@ -352,7 +352,7 @@ html.ai-on [data-ai-off]{display:none!important}
 .fl-hit{position:absolute;border:0;background:transparent;padding:0;margin:0;cursor:crosshair}
 .fl-hit:focus-visible{outline:2px solid #fff;outline-offset:-2px;border-radius:6px}
 
-/* Danny Dan in the spending check (assets/tools.js) */
+/* Cherry in the spending check (assets/tools.js) */
 .fl-c.st-hold .body{fill:transparent;stroke:var(--st-good);stroke-width:1.5}
 .dd-take{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:#0d2a22;border:1px solid #1d5a4a}
 .dd-take>div{flex:1;min-width:0}.dd-take .sc-h{display:block!important;margin:0;font-size:1rem;color:#e9fff6}
@@ -368,7 +368,7 @@ html.ai-on [data-ai-off]{display:none!important}
 @media (max-height:700px) and (max-width:900px){.sc-first[data-view="todo"] .sc-todo{display:none}.sc-first[data-view="todo"] .sc-mini{display:grid}}
 .dd-track{display:inline-block;margin-top:2px;font-size:.84rem;font-weight:700;color:#5fe0b0}
 @media (max-height:800px){.fs .dd-take p{display:none}}
-/* Danny Dan inside the course (course/course.js) */
+/* Cherry inside the course (course/course.js) */
 .dd-card{margin:28px 0;padding:18px 20px;border-radius:16px;background:#0d2a22;border:1px solid #1d5a4a;color:#e9fff6}
 .dd-card-top{display:flex;gap:12px;align-items:center;margin-bottom:8px}.dd-card h2{margin:2px 0 0;font-size:1.2rem;color:#fff}
 .dd-card p{color:#bfeedd;margin:6px 0}.dd-card .fine{color:#9fd8c2}.dd-card .row{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
