@@ -102,3 +102,9 @@ html.cine-js .stage{position:sticky;top:0}
 .cine-ctas{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
 .cine-pill.voice{border:0;cursor:pointer;background:#3ddba5;color:#05221a;box-shadow:0 0 0 1px #ffffff22 inset,0 12px 40px -10px #3ddba5b3}
 .cine-pill.voice[hidden]{display:none}
+
+/* The intro ends on Cherry: one glowing face, the app's helper. */
+.cine-cherry{display:grid;place-items:center;width:112px;height:112px;margin:0 auto 22px;border-radius:50%;background:linear-gradient(135deg,#3ddba5,#1d8f6a);color:#05221a;font:800 44px/1 var(--f-display);box-shadow:0 0 0 6px rgba(61,219,165,.16),0 0 90px 0 rgba(61,219,165,.55);animation:cineCherry 3s ease-in-out infinite}
+@keyframes cineCherry{0%,100%{box-shadow:0 0 0 6px rgba(61,219,165,.16),0 0 70px 0 rgba(61,219,165,.45)}50%{box-shadow:0 0 0 10px rgba(61,219,165,.22),0 0 120px 10px rgba(61,219,165,.7)}}
+@media (prefers-reduced-motion:reduce){.cine-cherry{animation:none}}
+@media (max-width:640px){.cine-cherry{width:84px;height:84px;font-size:32px}}

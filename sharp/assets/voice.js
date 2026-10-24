@@ -114,7 +114,8 @@ function start(){
         vapi.on('call-end', function(){ ended('Call ended. Tap "Speak with Cherry" to call again.'); });
         vapi.on('error', function(e){ console.warn('voice error', e); ended(message(e)); });
       }
-      return vapi.start(c.assistantId || ASSISTANT);
+      // Cherry is a woman: the app picks her voice (a built-in Vapi voice) so it matches, whatever the dashboard says.
+      return vapi.start(c.assistantId || ASSISTANT, c.voiceId ? { voice: { provider: 'vapi', voiceId: c.voiceId } } : undefined);
     });
   }).catch(function(e){ ended(message(e)); });
 }

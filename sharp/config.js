@@ -26,7 +26,7 @@ window.NP_CONFIG = {
 
   /* Cherry voice receptionist (Vapi). Vapi dashboard > API Keys: paste the PUBLIC key only.
      NEVER paste the private key. Blank = the "Speak with Cherry" button stays hidden. */
-  VOICE: { vapiPublicKey: "49361516-4f11-447c-bb58-8f4157741d77", assistantId: "39d91e93-6eb5-4bf3-a9a7-82faff683395" },
+  VOICE: { vapiPublicKey: "49361516-4f11-447c-bb58-8f4157741d77", assistantId: "39d91e93-6eb5-4bf3-a9a7-82faff683395", voiceId: "Paige" },
 
   /* Free trial: days of Founder access, counted from when the account was created. */
   TRIAL_DAYS: 3

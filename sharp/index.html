@@ -171,6 +171,13 @@
 .hc-head h1{font-size:clamp(2.2rem,5vw,3.4rem);margin:0 0 8px}
 .hc-head .hero-sub{max-width:52ch;font-size:1.05rem}
 .hc-head .cta{margin:0}
+.hc-cherry{display:flex;align-items:center;gap:16px;min-width:0}.hc-cherry>div{min-width:0}
+.ch-face.xl{position:relative;width:64px;height:64px;font-size:24px;box-shadow:0 0 0 4px rgba(61,219,165,.18),0 0 40px -4px rgba(61,219,165,.75)}
+.ch-face.xl::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(61,219,165,.55);animation:chring 2.6s ease-out infinite}
+@keyframes chring{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.35);opacity:0}}
+@media (prefers-reduced-motion:reduce){.ch-face.xl::after{animation:none;opacity:.5}}
+@media (max-width:640px),(max-height:760px){.ch-face.xl{width:44px;height:44px;font-size:17px}.hc-cherry{gap:12px}}
+@media (max-width:640px){.fs .hc-cherry .hero-sub{display:none}.fs .hc-cherry h1{margin:0}.fs .hc-cherry{gap:10px}.fs .ch-face.xl{width:28px;height:28px;font-size:12px;box-shadow:0 0 18px -2px rgba(61,219,165,.75)}.fs .ch-face.xl::after{inset:-4px}}
 .sc.sc-first{grid-template-columns:minmax(0,1.45fr) minmax(0,.85fr)}
 .fs .sc-chart,.fs .sc-axis{--sc-cols:112px minmax(0,1fr) 116px 100px}
 .fs .sc-chart li{column-gap:10px}
@@ -366,9 +373,10 @@
   <div class="scene s-end" data-scene>
     <div class="stage">
       <div class="s-copy center">
-        <h2 class="cine-big" data-letters>Your turn.</h2>
-        <p class="cine-sub">22 free lessons. 9 tools. An AI helper that points you the right way.</p>
-        <a class="cine-pill" href="#app">Open the app <span aria-hidden="true">↓</span></a>
+        <div class="cine-cherry" aria-hidden="true"><span>C</span></div>
+        <h2 class="cine-big" data-letters>Meet Cherry.</h2>
+        <p class="cine-sub">Your money and business coach. Call her or type to her, any time. Every lesson and tool runs through Cherry.</p>
+        <a class="cine-pill" href="#app" data-cherry>Talk to Cherry <span aria-hidden="true">↓</span></a>
       </div>
     </div>
   </div>
@@ -397,11 +405,12 @@
 <section class="hero" id="check">
   <div class="wrap hc">
     <div class="hc-head">
-      <div>
-        <h1>Business, made <span class="grad">simple.</span></h1>
-        <p class="hero-sub">Type what you spend in a month. <b>Cherry</b> checks it and builds you a plan, week by week.</p>
+      <div class="hc-cherry">
+        <span class="ch-face xl" aria-hidden="true">C</span>
+        <div><h1>Hi, I'm <span class="grad">Cherry.</span></h1>
+        <p class="hero-sub">Your money and business coach. Type what you spend in a month and I'll build your plan, week by week.</p></div>
       </div>
-      <div class="cta"><a class="btn" href="learn/index.html">Start learning free</a><a class="btn ghost-light" href="tools/index.html" data-cherry-off>All tools</a><button class="btn ch-btn" type="button" data-cherry hidden><span class="ch-face sm" aria-hidden="true">C</span>Ask Cherry</button></div>
+      <div class="cta"><button class="btn ch-btn" type="button" data-cherry hidden><span class="ch-face sm" aria-hidden="true">C</span>Talk to Cherry</button><a class="btn ghost-light" href="learn/index.html">Start learning free</a><a class="btn ghost-light" href="tools/index.html" data-cherry-off>All tools</a></div>
     </div>
     <div class="sc-tabs" role="tablist" aria-label="Spending check">
       <button type="button" role="tab" data-sctab="chart" aria-selected="true">Chart</button>
