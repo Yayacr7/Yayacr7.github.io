@@ -28,7 +28,7 @@ var SAY = {
   1: 'Hi, I\'m Cherry. 60 seconds, 3 steps. First: where does your money go?',
   2: 'Now let\'s earn some. Pick something you could do this week.',
   3: 'Last one, and it\'s the hard part: closing the deal.',
-  end: 'That\'s your plan. Want me to set it up for real?'
+  end: 'That\'s your plan. Now come into Sharp. I\'ll be right there with you.'
 };
 var st = { inc: 300, cat: 'food', sp: 120, skill: 'lawn', hours: 4, picked: -1 };
 var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -123,7 +123,7 @@ function rEnd(){
   $('dm-e4').textContent = st.picked >= 0 && ANSWERS[st.picked].ok ? 'You picked the best reply first time. Nice.' : 'Remember: find the real worry. Don\'t argue or drop your price.';
 }
 var order = [0, 1, 2].sort(function(){ return Math.random() - .5; });
-var cur = '1';
+var cur = '1', started = false;
 function go(to){
   ['1', '2', '3', 'end'].forEach(function(k){ $('dm-' + k).hidden = k !== to; });
   cur = to;
@@ -133,7 +133,8 @@ function go(to){
   $('dm-say').textContent = SAY[to];
   if(to === '1') r1(); if(to === '2'){ r2(); $('dm-say').textContent = SAY[2]; } if(to === '3') r3(); if(to === 'end') rEnd();
   if(to === '1') $('dm-say').textContent = SAY[1];
-  var h = document.querySelector('#dm-' + to + ' h2'); if(h){ h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+  var h = document.querySelector('#dm-' + to + ' h2'); if(h && started){ h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+  started = true;
   var head = document.querySelector('.site-head'), top = $('dm').getBoundingClientRect().top + scrollY - (head ? head.offsetHeight : 80) - 12; if(scrollY > top) scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
 }
 
@@ -162,6 +163,10 @@ $('dm-plan').addEventListener('click', function(){
     }
   }catch(e){}
 });
+// Seen the demo: the home page won't send them here again. Going into the app skips the intro too.
+try{ localStorage.setItem('sharp-demo', '1'); }catch(e){}
+function intoApp(){ try{ localStorage.setItem('sharp-intro', '1'); }catch(e){} }
+$('dm-sharp').addEventListener('click', intoApp); $('dm-skip').addEventListener('click', intoApp);
 addEventListener('resize', function(){ if(cur === '1') chart(); });
 go('1');
 })();
