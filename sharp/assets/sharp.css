@@ -354,28 +354,28 @@ html.ai-on [data-ai-off]{display:none!important}
 
 /* Cherry in the spending check (assets/tools.js) */
 .fl-c.st-hold .body{fill:transparent;stroke:var(--st-good);stroke-width:1.5}
-.dd-take{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:#0d2a22;border:1px solid #1d5a4a}
-.dd-take>div{flex:1;min-width:0}.dd-take .sc-h{display:block!important;margin:0;font-size:1rem;color:#e9fff6}
-.dd-take p{margin:2px 0 0;font-size:.88rem;color:#bfeedd}
-.dd-face{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#3ddba5,#1d8f6a);color:#05221a;font:800 14px/1 var(--f-display)}
-.dd-face.sm{width:20px;height:20px;font-size:8px}
-.dd-talk{flex:none;min-height:40px;padding:0 14px;border:0;border-radius:999px;background:#3ddba5;color:#05221a;font:800 .9rem var(--f-body);cursor:pointer}
-.dd-talk[hidden],.dd-btn[hidden]{display:none}
-.dd-talk:focus-visible,.dd-btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
-.btn.dd-btn,.cta .btn.dd-btn{display:inline-flex;align-items:center;gap:8px;border:0;background:#3ddba5;color:#05221a;cursor:pointer;box-shadow:0 0 26px -6px rgba(61,219,165,.8)}
-@media (max-width:900px){.fs .dd-take{padding:8px 10px;gap:10px}.fs .dd-take p{display:none}.fs .dd-take .dd-face{width:32px;height:32px;font-size:12px}.fs .dd-talk{min-height:36px}}
-.dd-face.sm{margin:-4px 0}
+.ch-take{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:#0d2a22;border:1px solid #1d5a4a}
+.ch-take>div{flex:1;min-width:0}.ch-take .sc-h{display:block!important;margin:0;font-size:1rem;color:#e9fff6}
+.ch-take p{margin:2px 0 0;font-size:.88rem;color:#bfeedd}
+.ch-face{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#3ddba5,#1d8f6a);color:#05221a;font:800 14px/1 var(--f-display)}
+.ch-face.sm{width:20px;height:20px;font-size:8px}
+.ch-talk{flex:none;min-height:40px;padding:0 14px;border:0;border-radius:999px;background:#3ddba5;color:#05221a;font:800 .9rem var(--f-body);cursor:pointer}
+.ch-talk[hidden],.ch-btn[hidden]{display:none}
+.ch-talk:focus-visible,.ch-btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.btn.ch-btn,.cta .btn.ch-btn{display:inline-flex;align-items:center;gap:8px;border:0;background:#3ddba5;color:#05221a;cursor:pointer;box-shadow:0 0 26px -6px rgba(61,219,165,.8)}
+@media (max-width:900px){.fs .ch-take{padding:8px 10px;gap:10px}.fs .ch-take p{display:none}.fs .ch-take .ch-face{width:32px;height:32px;font-size:12px}.fs .ch-talk{min-height:36px}}
+.ch-face.sm{margin:-4px 0}
 @media (max-height:700px) and (max-width:900px){.sc-first[data-view="todo"] .sc-todo{display:none}.sc-first[data-view="todo"] .sc-mini{display:grid}}
-.dd-track{display:inline-block;margin-top:2px;font-size:.84rem;font-weight:700;color:#5fe0b0}
-@media (max-height:800px){.fs .dd-take p{display:none}}
+.ch-track{display:inline-block;margin-top:2px;font-size:.84rem;font-weight:700;color:#5fe0b0}
+@media (max-height:800px){.fs .ch-take p{display:none}}
 /* Cherry inside the course (course/course.js) */
-.dd-card{margin:28px 0;padding:18px 20px;border-radius:16px;background:#0d2a22;border:1px solid #1d5a4a;color:#e9fff6}
-.dd-card-top{display:flex;gap:12px;align-items:center;margin-bottom:8px}.dd-card h2{margin:2px 0 0;font-size:1.2rem;color:#fff}
-.dd-card p{color:#bfeedd;margin:6px 0}.dd-card .fine{color:#9fd8c2}.dd-card .row{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
-.dd-lvl{display:inline-block;padding:2px 8px;border-radius:999px;background:#3ddba5;color:#05221a;font:800 .7rem var(--f-body);letter-spacing:.08em;text-transform:uppercase}
-.dd-days{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;margin:12px 0}
-.dd-days button{min-height:40px;border-radius:10px;border:1px solid #1d5a4a;background:#0a1f1a;color:#bfeedd;font:800 .9rem var(--f-body);cursor:pointer}
-.dd-days button.on{background:#3ddba5;border-color:#3ddba5;color:#05221a}.dd-days button.on::after{content:" ✓"}
-.dd-days button.now{border:2px solid #3ddba5;color:#fff}
-.dd-days button:focus-visible{outline:3px solid #fff;outline-offset:2px}
-@media (max-width:520px){.dd-days{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.ch-card{margin:28px 0;padding:18px 20px;border-radius:16px;background:#0d2a22;border:1px solid #1d5a4a;color:#e9fff6}
+.ch-card-top{display:flex;gap:12px;align-items:center;margin-bottom:8px}.ch-card h2{margin:2px 0 0;font-size:1.2rem;color:#fff}
+.ch-card p{color:#bfeedd;margin:6px 0}.ch-card .fine{color:#9fd8c2}.ch-card .row{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.ch-lvl{display:inline-block;padding:2px 8px;border-radius:999px;background:#3ddba5;color:#05221a;font:800 .7rem var(--f-body);letter-spacing:.08em;text-transform:uppercase}
+.ch-days{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;margin:12px 0}
+.ch-days button{min-height:40px;border-radius:10px;border:1px solid #1d5a4a;background:#0a1f1a;color:#bfeedd;font:800 .9rem var(--f-body);cursor:pointer}
+.ch-days button.on{background:#3ddba5;border-color:#3ddba5;color:#05221a}.ch-days button.on::after{content:" ✓"}
+.ch-days button.now{border:2px solid #3ddba5;color:#fff}
+.ch-days button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media (max-width:520px){.ch-days{grid-template-columns:repeat(6,minmax(0,1fr))}}

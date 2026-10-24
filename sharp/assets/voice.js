@@ -57,10 +57,10 @@ function build(){
   }
   btn.addEventListener('click', show);
   if(hb) hb.addEventListener('click', show);
-  // Any button marked data-danny opens this panel; data-danny-off hides while Cherry is here (to make room).
-  function wire(root){ [].forEach.call(root.querySelectorAll('[data-danny]'), function(b){ if(b.__dd) return; b.__dd = true; b.hidden = false; b.addEventListener('click', function(e){ e.preventDefault(); show(); }); }); }
-  wire(document); [].forEach.call(document.querySelectorAll('[data-danny-off]'), function(b){ b.hidden = true; });
-  window.SharpDanny = { wire: wire, open: show };
+  // Any button marked data-cherry opens this panel; data-cherry-off hides while Cherry is here (to make room).
+  function wire(root){ [].forEach.call(root.querySelectorAll('[data-cherry]'), function(b){ if(b.__ch) return; b.__ch = true; b.hidden = false; b.addEventListener('click', function(e){ e.preventDefault(); show(); }); }); }
+  wire(document); [].forEach.call(document.querySelectorAll('[data-cherry-off]'), function(b){ b.hidden = true; });
+  window.SharpCherry = { wire: wire, open: show };
   call.addEventListener('click', start);
   type.addEventListener('click', function(){
     if(window.SharpAgent){ box.hidden = true; window.SharpAgent.open(); return; }
@@ -77,7 +77,7 @@ function build(){
   var inPage = [].slice.call(document.querySelectorAll('[data-voice]'));
   inPage.forEach(function(b){ b.hidden = false; b.addEventListener('click', function(e){ e.preventDefault(); if(state === 'idle') start(); }); });
   // While a page's own Cherry button is on screen, hide the floating one so there's only one.
-  inPage = inPage.concat([].slice.call(document.querySelectorAll('.hc-head [data-danny], .cine [data-danny]')));
+  inPage = inPage.concat([].slice.call(document.querySelectorAll('.hc-head [data-cherry], .cine [data-cherry]')));
   if(inPage.length && 'IntersectionObserver' in window){
     var seen = new Set();
     var io = new IntersectionObserver(function(es){ es.forEach(function(x){ x.isIntersecting ? seen.add(x.target) : seen.delete(x.target); }); btn.classList.toggle('vo-hide', seen.size > 0 && state === 'idle'); });

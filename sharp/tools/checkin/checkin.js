@@ -18,7 +18,7 @@ function save(){ if(demo) return; try{ localStorage.setItem(KEY, JSON.stringify(
 
 // A plan is built from monthly numbers with the home Spending check's own rules (assets/tools.js).
 function makeState(nums){
-  var p = window.SharpDannyPlan && window.SharpDannyPlan(nums); if(!p) return null;
+  var p = window.SharpCherryPlan && window.SharpCherryPlan(nums); if(!p) return null;
   return { nums: nums, start: new Date().toISOString().slice(0, 10), now: p.plan.now, goal: p.plan.goal,
     weeks: p.plan.weeks.map(function(w){ return { n: w.n, v: w.v, focus: w.r ? w.r.name : '', tip: w.r ? w.r.tip : '', to: w.r ? w.r.target * 12 / 52 : 0, cut: w.cut || 0 }; }),
     logs: [] };
@@ -29,7 +29,7 @@ function weekInfo(n){ var w = state.weeks; return n < w.length ? w[n] : { n: n, 
 function statusOf(log, prev){ return log.v <= planAt(log.n) + 1 ? 'good' : log.v < prev ? 'warn' : 'bad'; }
 
 /* ---------- Cherry's words (fixed rules, no AI, nothing leaves the device) ---------- */
-function dannySays(){
+function cherrySays(){
   var L = state.logs, next = L.length + 1, w = weekInfo(next);
   var focus = w.focus ? 'This week\'s one change: ' + w.focus + ', down to about ' + money(w.to) + ' a week. ' + w.tip : 'No new cut this week. Hold steady at about ' + money(planAt(next)) + ' a week and move what you freed into savings.';
   if(!L.length) return { head: 'Let\'s start, week 1.', body: 'You spend about ' + money(state.now) + ' a week now. My goal for you: ' + money(state.goal) + '. ' + focus };
@@ -97,7 +97,7 @@ function draw(){
 
 /* ---------- Page ---------- */
 function render(){
-  var said = dannySays();
+  var said = cherrySays();
   $('ci-head').textContent = said.head; $('ci-body').textContent = said.body;
   var L = state.logs, next = L.length + 1;
   $('ci-week').textContent = 'Week ' + next;

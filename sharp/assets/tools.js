@@ -131,7 +131,7 @@ wire('f-efund', function(){
 
 /* ================= SPENDING CHECK ================= */
 var WK = 12 / 52;   // monthly to weekly
-var SC_VIEW = 'danny', SC_LAST = null, SC_SIZE = '', SC_WORD = { good: 'Fine', warn: 'A bit over', bad: 'Too much' }, SC_SHORT = { 'Rent or mortgage': 'Rent', 'Subscriptions': 'Subs', 'Fun & hobbies': 'Fun', 'Groceries': 'Food', 'Transport': 'Travel', 'Eating out': 'Eat out', 'Shopping': 'Shop', 'Left over': 'Left' };  // blocks picture state (see drawTree below)
+var SC_VIEW = 'cherry', SC_LAST = null, SC_SIZE = '', SC_WORD = { good: 'Fine', warn: 'A bit over', bad: 'Too much' }, SC_SHORT = { 'Rent or mortgage': 'Rent', 'Subscriptions': 'Subs', 'Fun & hobbies': 'Fun', 'Groceries': 'Food', 'Transport': 'Travel', 'Eating out': 'Eat out', 'Shopping': 'Shop', 'Left over': 'Left' };  // blocks picture state (see drawTree below)
 var scWatched = null, scRO = window.ResizeObserver ? new ResizeObserver(function(){ drawTree(false); }) : null;
 // Each category is judged as a share of take-home pay. Guides, not laws: [green up to %, yellow up to %].
 var SPEND = [
@@ -164,7 +164,7 @@ function scRows(get){
   return { rows: rows, inc: inc, total: total, left: inc - total };
 }
 // For Cherry's weekly check-in (tools/checkin/): the same plan, from saved monthly numbers ({income, food, ...}).
-window.SharpDannyPlan = function(h){
+window.SharpCherryPlan = function(h){
   var d = scRows(function(id){ return Math.max(0, +h[id.slice(2)] || 0); });
   return d.inc > 0 ? { d: d, plan: dpPlan(d) } : null;
 };
@@ -180,7 +180,7 @@ wire('f-spend', function(){
   // Before the line = fine, past the line = too much. Plain dollars, no percent scale.
   // Toolbar: what the colours mean, and a switch between the blocks picture and the bar list.
   html += '<div class="sc-bar-row"><div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Fine</span><span><i class="sc-ic warn">!</i>A bit over</span><span><i class="sc-ic bad">✕</i>Too much</span><span class="sc-size">' + scKey() + '</span></div>' +
-    '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="danny" aria-pressed="' + (SC_VIEW === 'danny') + '">Cherry\'s plan</button><button type="button" data-scview="flow" aria-pressed="' + (SC_VIEW === 'flow') + '">Candles</button><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
+    '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="cherry" aria-pressed="' + (SC_VIEW === 'cherry') + '">Cherry\'s plan</button><button type="button" data-scview="flow" aria-pressed="' + (SC_VIEW === 'flow') + '">Candles</button><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
   html += '<div class="sc-tree" role="group" aria-label="Where your take-home pay goes"' + (SC_VIEW === 'list' ? ' hidden' : '') + '></div>';
   html += '<div class="sc-listview"' + (SC_VIEW !== 'list' ? ' hidden' : '') + '>';
   html += '<div class="sc-axis" aria-hidden="true"><span></span><span><b style="left:0">$0</b><b class="lim" style="left:50%">Limit</b><b style="left:100%">2× limit</b></span><span>Spent / limit</span><span></span></div>';
@@ -205,7 +205,7 @@ wire('f-spend', function(){
     else todo.push('<li class="' + r.st + '"><b>' + r.name + ':</b> ' + (r.st === 'bad' ? 'cut back to about ' + money(r.target / 52 * 12) + ' a week (' + money(r.target) + ' a month). ' : 'a little high. ') + r.tip + '</li>');
   });
   // Cherry gives the opinion. It's worked out right here in the browser from fixed guides; the numbers never leave the device.
-  html += '<div class="dd-take"><span class="dd-face" aria-hidden="true">C</span><div><h3 class="sc-h">Cherry\'s take</h3><p>' + (left < 0 ? 'You\'re spending more than you earn. Let\'s fix the red ones first, one a week.' : todo.length ? 'Here\'s what I\'d change, biggest win first.' : 'Nice. You\'re inside every guide.') + '</p><a class="dd-track" href="tools/checkin/index.html" data-handoff>Track it weekly with Cherry →</a></div><button type="button" class="dd-talk" data-danny hidden>Talk to Cherry</button></div>';
+  html += '<div class="ch-take"><span class="ch-face" aria-hidden="true">C</span><div><h3 class="sc-h">Cherry\'s take</h3><p>' + (left < 0 ? 'You\'re spending more than you earn. Let\'s fix the red ones first, one a week.' : todo.length ? 'Here\'s what I\'d change, biggest win first.' : 'Nice. You\'re inside every guide.') + '</p><a class="ch-track" href="tools/checkin/index.html" data-handoff>Track it weekly with Cherry →</a></div><button type="button" class="ch-talk" data-cherry hidden>Talk to Cherry</button></div>';
 
   html += todo.length ? '<ul class="sc-todo">' + todo.join('') + '</ul>' : '<p class="sc-ok"><span class="sc-ic good" aria-hidden="true">✓</span> Keep doing what you\'re doing. Got extra? Put it in savings.</p>';
   // Short version for wide screens, where the chart and the boxes share one screen.
@@ -217,7 +217,7 @@ wire('f-spend', function(){
   out.innerHTML = html;
   SC_LAST = { rows: rows, inc: inc, left: left, total: total };
   drawTree(true);
-  if(window.SharpDanny) window.SharpDanny.wire(out);   // the "Talk to Cherry" button (assets/voice.js)
+  if(window.SharpCherry) window.SharpCherry.wire(out);   // the "Talk to Cherry" button (assets/voice.js)
 });
 
 /* ---------- Spending check: the "blocks" picture (a treemap) ----------
@@ -247,7 +247,7 @@ function scInfo(r, inc){
     : r.st === 'good' ? 'Inside the guide. Keep it there.' : r.tip;
   return { title: r.name, line: base + '. ' + tip };
 }
-function scKey(){ return SC_VIEW === 'danny' ? 'Per week · green = spending down' : SC_VIEW === 'blocks' ? 'Bigger block = more money' : 'Line = limit'; }
+function scKey(){ return SC_VIEW === 'cherry' ? 'Per week · green = spending down' : SC_VIEW === 'blocks' ? 'Bigger block = more money' : 'Line = limit'; }
 function scShow(r, inc){
   var p = document.querySelector('#s-out .sc-detail'); if(!p) return;
   var info = scInfo(r, inc); p.textContent = '';
@@ -262,8 +262,8 @@ function drawTree(animate){
   if(scRO && box !== scWatched){ if(scWatched) scRO.unobserve(scWatched); scRO.observe(box); scWatched = box; }
   box.classList.toggle('flow', SC_VIEW === 'flow');
   var key = document.querySelector('#s-out .sc-size'); if(key) key.textContent = scKey();
-  box.classList.toggle('danny', SC_VIEW === 'danny');
-  if(SC_VIEW === 'danny'){ drawDanny(box, W, H, animate); return; }
+  box.classList.toggle('cherry', SC_VIEW === 'cherry');
+  if(SC_VIEW === 'cherry'){ drawCherry(box, W, H, animate); return; }
   if(SC_VIEW === 'flow'){ drawFlow(box, W, H, animate); return; }
   var d = SC_LAST, items = d.rows.filter(function(r){ return r.v > 0; }).map(function(r){ return r; });
   if(d.left > 0) items.push({ name: 'Left over', v: d.left, left: true });
@@ -431,7 +431,7 @@ function dpShow(w, plan, d){
   var b = document.createElement('b'); b.textContent = 'Cherry · ' + info.t + ': '; p.appendChild(b); p.appendChild(document.createTextNode(info.l));
   Array.prototype.forEach.call(document.querySelectorAll('#s-out .dp-c'), function(g){ g.classList.toggle('on', +g.getAttribute('data-n') === w.n); });
 }
-function drawDanny(box, W, H, animate){
+function drawCherry(box, W, H, animate){
   var d = SC_LAST, plan = dpPlan(d), ws = plan.weeks;
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var AX = W < 420 ? 50 : 60, TOP = 34, BOT = 40, PW = W - AX - 8, PH = H - TOP - BOT; box.textContent = '';
