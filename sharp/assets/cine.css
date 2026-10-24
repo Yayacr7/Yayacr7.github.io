@@ -108,3 +108,5 @@ html.cine-js .stage{position:sticky;top:0}
 @keyframes cineCherry{0%,100%{box-shadow:0 0 0 6px rgba(61,219,165,.16),0 0 70px 0 rgba(61,219,165,.45)}50%{box-shadow:0 0 0 10px rgba(61,219,165,.22),0 0 120px 10px rgba(61,219,165,.7)}}
 @media (prefers-reduced-motion:reduce){.cine-cherry{animation:none}}
 @media (max-width:640px){.cine-cherry{width:84px;height:84px;font-size:32px}}
+
+.cine-cherry{background:url(cherry.svg) center/cover no-repeat,#1d8f6a;color:transparent}.cine-cherry span{display:none}

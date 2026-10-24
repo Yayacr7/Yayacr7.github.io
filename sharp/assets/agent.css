@@ -1,4 +1,4 @@
-/* Ask Sharp agent (assets/agent.js). Uses Sharp's colours, with fallbacks for pages that don't load sharp.css. */
+/* Ask Cherry agent (assets/agent.js). Uses Sharp's colours, with fallbacks for pages that don't load sharp.css. */
 .ag-launch{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:900;
   display:flex;align-items:center;gap:8px;min-height:48px;padding:0 18px 0 14px;border:0;border-radius:999px;cursor:pointer;
   background:linear-gradient(135deg,#ff7a3d,#ff5c9a);color:#160a06;font:800 15px/1 "Karla","Helvetica Neue",Arial,system-ui,sans-serif;
@@ -67,3 +67,5 @@ html.ag-open .ag-launch{display:none}
 }
 @media print{.ag-launch,.ag-panel{display:none!important}}
 .ag-lvl:not(:empty){margin-left:8px;padding:2px 8px;border-radius:999px;background:#3ddba5;color:#05221a;font:800 11px/1.4 var(--f-body,"Karla",system-ui,sans-serif);letter-spacing:.06em;text-transform:uppercase;vertical-align:middle}
+
+.ag-face{background:url(cherry.svg) center/cover no-repeat,#1d8f6a;color:transparent}

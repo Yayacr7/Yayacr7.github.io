@@ -385,3 +385,6 @@ html.ai-on [data-ai-off]{display:none!important}
 .ch-tip .ch-face{box-shadow:0 0 22px -4px rgba(61,219,165,.8)}.ch-tip p{margin:0;color:#d6f7ea;line-height:1.55}.ch-tip p b{color:#5fe0b0}.ch-tip a{color:#9ff0d0}
 .ch-tip .btn.ch-btn{min-height:40px;padding:8px 14px;white-space:nowrap}
 @media (max-width:700px){.ch-tip{grid-template-columns:auto minmax(0,1fr)}.ch-tip .btn.ch-btn{grid-column:1/-1;justify-self:start}}
+
+/* Cherry's face: a drawn portrait (assets/cherry.svg) instead of a letter. */
+.ch-face{background:url(cherry.svg) center/cover no-repeat,#1d8f6a;color:transparent!important;overflow:hidden}

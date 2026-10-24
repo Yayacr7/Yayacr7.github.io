@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cherry">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4ce8b4"/><stop offset="1" stop-color="#178563"/></linearGradient>
+<linearGradient id="hair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1740"/><stop offset="1" stop-color="#140b24"/></linearGradient>
+<clipPath id="c"><circle cx="32" cy="32" r="32"/></clipPath>
+</defs>
+<g clip-path="url(#c)">
+<rect width="64" height="64" fill="url(#bg)"/>
+<g transform="translate(32 33) scale(1.12) translate(-32 -32)">
+<path d="M13 37c0-15 8.5-25 19-25s19 10 19 25v17H13z" fill="url(#hair)"/>
+<path d="M27 44h10v9H27z" fill="#b97a50"/>
+<path d="M8 66c2-11 11.5-16 24-16s22 5 24 16z" fill="#101326"/>
+<path d="M24 51l8 6 8-6" fill="none" stroke="#3ddba5" stroke-width="2" stroke-linejoin="round"/>
+<ellipse cx="32" cy="33.5" rx="11.5" ry="13" fill="#d4945f"/>
+<path d="M20.2 31c.6-9.6 6.4-15 12.6-15 7.4 0 12.2 5.6 11.8 14.2-6.2-.8-11.8-4.4-14.2-9-2 4.8-5.6 8-10.2 9.8z" fill="url(#hair)"/>
+<ellipse cx="27.4" cy="34.6" rx="1.7" ry="2.1" fill="#140b24"/>
+<ellipse cx="36.6" cy="34.6" rx="1.7" ry="2.1" fill="#140b24"/>
+<circle cx="28" cy="33.9" r=".55" fill="#fff"/><circle cx="37.2" cy="33.9" r=".55" fill="#fff"/>
+<circle cx="24.6" cy="39" r="2.1" fill="#ef7f6e" opacity=".5"/><circle cx="39.4" cy="39" r="2.1" fill="#ef7f6e" opacity=".5"/>
+<path d="M28.4 40.6q3.6 3.4 7.2 0" fill="none" stroke="#140b24" stroke-width="1.7" stroke-linecap="round"/>
+<path d="M44.5 21.5q1.2-5.5 5.5-7.5M48.6 23q2.2-4.6 1.4-9" fill="none" stroke="#2f8f44" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M49.4 14.2q3 .2 3.8-2.6q-3-.6-3.8 2.6z" fill="#3ddba5"/>
+<circle cx="44" cy="22.6" r="3.3" fill="#e8314d"/><circle cx="48.6" cy="24.2" r="3.3" fill="#d42742"/>
+<circle cx="43" cy="21.5" r=".9" fill="#ff9aa8"/><circle cx="47.6" cy="23.1" r=".9" fill="#ff9aa8"/>
+</g>
+</g>
+</svg>

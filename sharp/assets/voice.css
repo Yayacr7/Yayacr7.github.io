@@ -47,3 +47,6 @@ html.vo-on .ag-launch{display:none}
 .vo-head:hover{background:#12382e}.vo-head:focus-visible{outline:3px solid #fff;outline-offset:2px}
 .vo-hface{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#3ddba5;color:#05221a;font:800 12px/1 "Bricolage Grotesque",system-ui,sans-serif}
 @media (max-width:520px){.vo-head .vo-ht{display:none}.vo-head{padding:0 4px;margin-right:6px}}
+
+/* Cherry's face: drawn portrait instead of a letter. */
+.vo-lface,.vo-hface,.vo-face{background:url(cherry.svg) center/cover no-repeat,#1d8f6a;color:transparent}.vo-face span{display:none}

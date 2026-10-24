@@ -1,4 +1,4 @@
-/* Cherry chat (the Ask Sharp agent): a chat button on every page (loaded by shell.js only when the AI is switched on).
+/* Cherry chat (the Ask Cherry agent): a chat button on every page (loaded by shell.js only when the AI is switched on).
    It sends the chat to /api/agent, which searches Sharp's lessons and replies with an answer,
    next steps and buttons to the right pages. Everything shown is set with textContent only. */
 (function(){
