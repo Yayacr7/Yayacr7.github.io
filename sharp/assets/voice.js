@@ -64,7 +64,10 @@ function build(){
   call.addEventListener('click', start);
   type.addEventListener('click', function(){
     if(window.SharpAgent){ box.hidden = true; window.SharpAgent.open(); return; }
-    ui.status.textContent = 'Typing to Cherry isn\'t switched on yet. It\'s coming soon.'; call.focus();   // the AI chat isn't on yet
+    box.hidden = true;   // the AI is off: Cherry answers from Sharp's own lessons on this device
+    if(window.SharpCherryOffline){ window.SharpCherryOffline.open(); return; }
+    var sc = document.createElement('script'); sc.src = base + 'assets/cherry-offline.js';
+    sc.onload = function(){ window.SharpCherryOffline.open(); }; document.head.appendChild(sc);
   });
   shut.addEventListener('click', stop);
   end.addEventListener('click', stop);
