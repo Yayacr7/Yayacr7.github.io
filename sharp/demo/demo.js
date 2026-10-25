@@ -164,7 +164,7 @@ $('dm-plan').addEventListener('click', function(){
   }catch(e){}
 });
 // Seen the demo: the home page won't send them here again. Going into the app skips the intro too.
-try{ localStorage.setItem('sharp-demo', '1'); }catch(e){}
+try{ localStorage.setItem('sharp-demo', '1'); sessionStorage.setItem('sharp-demo-visit', '1'); }catch(e){}
 function intoApp(){ try{ localStorage.setItem('sharp-intro', '1'); }catch(e){} }
 $('dm-sharp').addEventListener('click', intoApp); $('dm-skip').addEventListener('click', intoApp);
 addEventListener('resize', function(){ if(cur === '1') chart(); });
