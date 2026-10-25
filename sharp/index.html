@@ -172,6 +172,10 @@
 .hc-head .hero-sub{max-width:52ch;font-size:1.05rem}
 .hc-head .cta{margin:0}
 .hc-cherry{display:flex;align-items:center;gap:16px;min-width:0}.hc-cherry>div{min-width:0}
+.hc-me{margin:0 0 6px;font-size:.88rem;font-weight:700;color:#9ff0d0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hc-me[hidden]{display:none}
+.hc-me:not([hidden])+.hero-sub{display:none}
+@media (max-width:640px){.fs .hc-me{display:none}}
 .ch-face.xl{position:relative;width:64px;height:64px;font-size:24px;box-shadow:0 0 0 4px rgba(61,219,165,.18),0 0 40px -4px rgba(61,219,165,.75)}
 .ch-face.xl::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(61,219,165,.55);animation:chring 2.6s ease-out infinite}
 @keyframes chring{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.35);opacity:0}}
@@ -331,6 +335,7 @@
       <div class="hc-cherry">
         <span class="ch-face xl" aria-hidden="true">C</span>
         <div><h1>Hi, I'm <span class="grad">Cherry.</span></h1>
+        <p class="hc-me" hidden></p>
         <p class="hero-sub">Your money and business coach. Type what you spend in a month and I'll build your plan, week by week.</p></div>
       </div>
       <div class="cta"><button class="btn ch-btn" type="button" data-cherry hidden><span class="ch-face sm" aria-hidden="true">C</span>Talk to Cherry</button><a class="btn ghost-light" href="learn/index.html">Start learning free</a><a class="btn ghost-light" href="tools/index.html" data-cherry-off>All tools</a></div>

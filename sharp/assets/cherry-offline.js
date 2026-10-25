@@ -26,7 +26,7 @@ var TALK = [
   [/^(thanks|thank you|thx|ty|cool|ok|okay|nice|great|awesome)\b[\s!.]*$/i, ['Any time. What\'s your next move?'], ['How do I get my first customer?']],
   [/^(bye|goodbye|see you|cya)\b/i, ['See you! Small steps every week beat one big plan.'], []],
   [/\b(scared|nervous|afraid|fail|failing|not good enough|can'?t do (it|this)|bored|unmotivated|lazy)\b|\b(quit|give up|giving up)( on (it|this|my business|everything))?[\s?.!]*$/i,
-   ['Don\'t quit. Everyone starting out feels that, and the ones who win just keep going. Make the first step tiny: one message to one person today. A "no" costs you nothing and teaches you what people want.', 'Want a plan you can finish this week?'], ['Make me a first $100 plan']]
+   ['That feeling is normal. Don\'t let it stop you: everyone starting out feels it, and the ones who win just keep going. Make the first step tiny: one message to one person today. A "no" costs you nothing and teaches you what people want.', 'Want a plan you can finish this week?'], ['Make me a first $100 plan']]
 ];
 // Second replies, so she doesn't repeat herself word for word.
 TALK[0][3] = ['Hey again. What do you want to work on: earning, saving or selling?'];
@@ -34,6 +34,9 @@ TALK[1][3] = ['Still Cherry. Ask me a money or business question and I\'ll give 
 TALK[2][3] = ['Try me with a real problem: "I want $200 by summer", "how much should I charge for lawn mowing", or "should I invest".'];
 TALK[3][3] = ['Good. Go do one thing from that today, then come back and tell me how it went.'];
 TALK[4][3] = ['Bye. Do one small thing for your goal before tomorrow.'];
+TALK.push([/^(?:i'?m|i am)\s+(1[0-9]|[0-9])(\s*(years?|yrs?)(\s*old)?)?\s*[.!]?$/i,
+  ['Great age to start. Pick a service people near you already pay for, like dog walking, lawn care or tutoring, and book one job this week.'], ['How do I make money as a teen?']]);
+TALK[6][3] = ['Still a great age. Your biggest edge is time: start small now and you\'ll be years ahead.'];
 TALK[5][3] = ['Feeling stuck is normal. Shrink the goal: one $15 job this week. Finish that, and the next one feels easy.', 'What business are you working on? I\'ll give you a first step.'];
 
 /* ---------- 2. Money maths ---------- */
@@ -353,11 +356,108 @@ function topicOf(q){
   return null;
 }
 
+/* ---------- Cherry remembers you (owner asked 2026-10-25) ----------
+   First name, business and goal, saved only on this device (localStorage 'sharp-cherry-me'), plus progress from the
+   First $100 Plan ('sharp-first100'). Never sent anywhere. "What do you know about me?" shows it; "forget me" clears it. */
+var ME_KEY = 'sharp-cherry-me';
+var F100 = { lawn: 'lawn care', pets: 'dog walking', car: 'car washing', tutor: 'tutoring', bake: 'baking', tech: 'tech help', resell: 'reselling', sitter: 'babysitting', social: 'social posts for local shops' };
+function store(k, v){
+  try{
+    if(v === undefined) return JSON.parse(localStorage.getItem(k) || 'null');
+    if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v));
+  }catch(e){ return null; }
+}
+function mine(){
+  var m = store(ME_KEY) || {}, f = store('sharp-first100');
+  var out = { name: m.name || '', biz: m.biz || '', goal: +m.goal || 0, earned: 0, f100: false };
+  if(f && typeof f === 'object'){
+    out.f100 = true;
+    if(!out.name && f.name) out.name = String(f.name).split(/\s+/)[0].replace(/[^A-Za-z'-]/g, '').slice(0, 20);
+    if(!out.biz && F100[f.skill]) out.biz = F100[f.skill];
+    if(!out.goal && f.goal) out.goal = +f.goal || 0;
+    (f.logs || []).forEach(function(l){ out.earned += +l.v || 0; });
+  }
+  return out;
+}
+function remember(patch){ var m = store(ME_KEY) || {}; for(var k in patch) m[k] = patch[k]; store(ME_KEY, m); }
+function bizByName(n){ for(var i = 0; i < BIZ.length; i++) if(BIZ[i][1] === n) return BIZ[i]; return null; }
+function progress(m){
+  if(!m.goal) return '';
+  var left = Math.max(0, m.goal - m.earned), b = m.biz && bizByName(m.biz);
+  if(!left) return 'You hit your ' + usd(m.goal) + ' goal. Time to set a bigger one.';
+  return 'You\'re at ' + usd(m.earned) + ' of your ' + usd(m.goal) + ' goal' + (b ? ': about ' + Math.ceil(left / Math.max(1, b[3] - b[4])) + ' more ' + m.biz + ' jobs to go.' : '.');
+}
+function summary(m){
+  var parts = [];
+  if(m.name) parts.push('You\'re ' + m.name + '.');
+  if(m.biz) parts.push('Your business: ' + m.biz + '.');
+  if(m.goal) parts.push(progress(m));
+  return parts.join(' ');
+}
+// Learns from what they type: "my name is Sam", "I do dog walking", "my goal is $300". First name only, never more.
+var NOTNAME = /^(a|an|the|so|not|just|really|very|trying|going|starting|thinking|good|fine|ok|okay|new|here|back|bored|scared|tired|broke|stuck|sure|sorry|ready|in|on|at|from|years?)$/i;
+function learn(t){
+  var got = [], m;
+  m = t.match(/\b(?:my name is|my name's|call me|i'?m called)\s+([a-z]{2,20})\b/i) || t.match(/^(?:[Hh]i|[Hh]ey|[Hh]ello)?[,!\s]*(?:[Ii]'?m|[Ii] am|[Ii]t'?s)\s+([A-Z][a-z]{1,19})\s*[.!]?\s*$/);
+  if(m && !NOTNAME.test(m[1])){ var nm = m[1].charAt(0).toUpperCase() + m[1].slice(1).toLowerCase(), old = (store(ME_KEY) || {}).name; remember({ name: nm }); got.push(old === nm ? 'same' : 'name'); }
+  if(/\b(i (do|run|have|started|am starting|want to start|wanna start)|i'?m (starting|doing)|my business is|my (side )?hustle is)\b/i.test(t)){
+    var b = bizOf(t); if(b){ remember({ biz: b[1] }); got.push('biz'); }
+  }
+  m = t.match(/\b(?:my goal is|i want to (?:make|save|earn|get|have)|i'?m saving|saving up|i need)\b[^$\d]{0,30}\$?\s?(\d[\d,]{0,6})\b/i);
+  if(m && !/^\s*(dollars?\s*)?(a|an|per|each|every)\s*(day|week|month|hour|job)/i.test(t.slice(m.index + m[0].length))){
+    var g = +m[1].replace(/,/g, ''); if(g >= 5 && g <= 1000000){ remember({ goal: g }); got.push('goal'); }
+  }
+  return got;
+}
+function memoryReply(t){
+  var m;
+  if(/\b(forget (me|everything|it all|my (name|info|stuff))|delete my (info|data)|clear my (info|data))\b/i.test(t)){
+    store(ME_KEY, null); m = mine();
+    return { say: ['Done. I\'ve forgotten what you told me on this device.' + (m.f100 ? ' Your First $100 Plan is still saved on its own page; clear it there if you want.' : '')], next: SUGGEST.slice(0, 2) };
+  }
+  if(/\b(what do you (know|remember) about me|who am i|do you remember me|what('s| is) my (name|goal|business))\b/i.test(t)){
+    m = mine();
+    if(!m.name && !m.biz && !m.goal) return { say: ['Nothing yet. Tell me like this: "I\'m Sam, I do dog walking, my goal is $300." I\'ll keep it on this device only.'], next: [] };
+    return { say: [summary(m), 'It\'s saved only on this device. Say "forget me" any time.'], next: ['What should I do next?'] };
+  }
+  if(/^(what should i do next|what('s| is) next|next step|what now)\??$/i.test(t)){
+    m = mine();
+    if(!m.biz && !m.goal) return { say: ['First, tell me your business and your goal, like "I do lawn care and my goal is $200." Then I\'ll give you your next step.'], next: [] };
+    var b = m.biz && bizByName(m.biz);
+    return { say: [progress(m) || ('You\'re doing ' + m.biz + '. Set a goal, like "my goal is $200".'),
+      b ? (m.earned ? 'Next: ask your last happy customer for one referral, and book two more jobs this week.' : 'Next: text 5 people you know today. Say what you do, ' + usd(b[3]) + ', and "Want me to do Saturday?"') : 'Next: pick one starter business and book your first job this week.'],
+      links: [L.first], next: [] };
+  }
+  return null;
+}
+function greeting(){
+  var m = mine(), hi = m.name ? 'Hey ' + m.name + '.' : 'Hey, welcome back.';
+  if(m.goal) return hi + ' ' + progress(m) + ' What do you want to work on?';
+  if(m.biz) return hi + ' Still working on ' + m.biz + '? Ask me anything, or tell me your goal.';
+  return 'Hi, I\'m Cherry. Ask me about money or starting a business, or give me numbers and I\'ll do the maths. Tell me your first name and business and I\'ll remember them on this device.';
+}
+
 /* ---------- Reply ---------- */
 function more(){ return /^(more|tell me more|go on|and\??|how\??|why\??|example\??|explain|what do you mean\??|keep going|continue|like what\??)[\s?!.]*$/i; }
 function reply(q){
-  var t = q.trim(), r, b, tp;
-  for(var i = 0; i < TALK.length; i++) if(TALK[i][0].test(t)){ var k = 'talk' + i; if(!USED[k] || !TALK[i][3]){ USED[k] = 1; return { say: TALK[i][1], next: TALK[i][2] }; } return { say: TALK[i][3], next: TALK[i][2] }; }
+  var t = q.trim(), r = memoryReply(t);
+  if(r) return r;
+  var got = learn(t);
+  r = answerOf(t);
+  if(got.length){
+    var m = mine(), ack = got.indexOf('same') >= 0 ? 'I know, ' + m.name + '. I remember you.' : got.indexOf('name') >= 0 ? 'Nice to meet you, ' + m.name + '. I\'ll remember that on this device.' : 'Got it. I\'ll remember that on this device.';
+    var intro = /^(?:hi|hey|hello)?[,!\s]*(?:i'?m|i am|it'?s|my name is|my name's|call me)\s+[a-z]+\s*[.!]?\s*$/i.test(t);
+    if(r.idk || r.small || intro){
+      var bb = m.biz && bizByName(m.biz), more2 = bb && bizReply('plan', bb);
+      r = { say: [ack].concat(progress(m) ? [progress(m)] : []).concat(more2 ? more2.say : [got.indexOf('same') >= 0 ? 'Tell me your business and goal, and I\'ll make you a plan.' : 'What business are you working on, and what\'s your goal?']), links: more2 ? more2.links : [], next: ['What should I do next?'] };
+    } else r.say = [ack].concat(r.say);
+  }
+  return r;
+}
+function answerOf(q){
+  var t = q.trim(), r, b, tp, m = mine();
+  if(m.name && /^(hi|hey|hello|yo|sup|hiya)\b[\s!.]*$/i.test(t) && !USED.hiName){ USED.hiName = 1; return { say: ['Hey ' + m.name + '. ' + (progress(m) || 'What are we working on today?')], next: ['What should I do next?'], small: true }; }
+  for(var i = 0; i < TALK.length; i++) if(TALK[i][0].test(t)){ var k = 'talk' + i; if(!USED[k] || !TALK[i][3]){ USED[k] = 1; return { say: TALK[i][1], next: TALK[i][2], small: true }; } return { say: TALK[i][3], next: TALK[i][2], small: true }; }
   if(more().test(t)){
     if(!last) return { say: ['More about what? Ask me about saving, pricing, your first customer or investing.'], next: SUGGEST.slice(0, 2) };
     var deeper = /^why/i.test(t) ? 'why' : /^how/i.test(t) ? 'how' : /example|like what/i.test(t) ? 'any' : 'any';
@@ -372,7 +472,7 @@ function reply(q){
   r = maths(t);
   tp = !r && topicOf(t);
   if(tp && !/^(comp|objection|partner|tax|scam|drop|web|name|time|neg|investors|sharp)$/.test(tp.id)) tp = null;
-  b = !r && !tp && bizOf(t);
+  b = !r && !tp && (bizOf(t) || (m.biz && /\b(charge|price|pricing|rates?|customers?|clients?|my business|more jobs|more money|grow)\b/i.test(t) && bizByName(m.biz)));
   if(b) r = bizReply(t, b);
   if(!r && !tp) tp = topicOf(t);
   if(!r && tp){
@@ -383,8 +483,8 @@ function reply(q){
   }
   if(!r){
     r = freshLesson(t);
-    if(!r && USED.idk) return { say: ['That one\'s outside what I know. Ask me about money, selling or starting a business and I\'ll give you a straight answer.'], next: SUGGEST.slice(0, 3) };
-    if(!r){ USED.idk = 1; return { say: ['I don\'t know that one yet, and I\'d rather say so than guess. I\'m best at money and business: saving, pricing, getting customers, investing.', 'You can also call me and ask out loud.'], next: SUGGEST.slice(0, 3) }; }
+    if(!r && USED.idk) return { idk: true, say: ['That one\'s outside what I know. Ask me about money, selling or starting a business and I\'ll give you a straight answer.'], next: SUGGEST.slice(0, 3) };
+    if(!r){ USED.idk = 1; return { idk: true, say: ['I don\'t know that one yet, and I\'d rather say so than guess. I\'m best at money and business: saving, pricing, getting customers, investing.', 'You can also call me and ask out loud.'], next: SUGGEST.slice(0, 3) }; }
     r.next = ['Tell me more'];
   }
   last = { q: t, links: r.links, topic: tp || null, biz: b || null };
@@ -415,10 +515,10 @@ function build(){
   panel = el('section', 'co-panel', null, document.body); panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-labelledby', 'co-title'); panel.hidden = true;
   var top = el('div', 'co-top', null, panel);
   el('span', 'ch-face co-face', null, top).setAttribute('aria-hidden', 'true');
-  var tt = el('div', null, null, top); el('p', 'co-title', 'Cherry', tt).id = 'co-title'; el('p', 'co-sub', 'Quick answers and money maths from Sharp. Your questions stay on this device.', tt);
+  var tt = el('div', null, null, top); el('p', 'co-title', 'Cherry', tt).id = 'co-title'; el('p', 'co-sub', 'Quick answers and money maths. What I remember stays on this device.', tt);
   var x = el('button', 'co-x', '✕', top); x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.addEventListener('click', close);
   list = el('div', 'co-list', null, panel); list.setAttribute('aria-live', 'polite');
-  say('Hi, I\'m Cherry. Ask me about money or starting a business, or give me numbers and I\'ll do the maths.', 'ch');
+  say(greeting(), 'ch');
   chipsBox = el('div', 'co-chips', null, panel); chips(SUGGEST);
   var f = el('form', 'co-form', null, panel);
   input = el('input', null, null, f); input.type = 'text'; input.maxLength = 200; input.placeholder = 'Ask Cherry…'; input.setAttribute('aria-label', 'Ask Cherry a question');

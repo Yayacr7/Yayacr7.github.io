@@ -2,7 +2,8 @@
    1) Shows the AI helpers (anything marked data-ai) only when the server says they're switched on.
    2) Adds the Ask Cherry agent button (assets/agent.js) to the page once the AI is on.
    3) Adds the Cherry voice button (assets/voice.js; it stays hidden until a Vapi public key is set in config.js).
-   4) Registers the service worker (sw.js), so Sharp can be added to the home screen and works offline. */
+   4) Home: when Cherry remembers you (saved on this device only), a small line under "Hi, I'm Cherry." says your name and progress.
+   5) Registers the service worker (sw.js), so Sharp can be added to the home screen and works offline. */
 (function(){
 "use strict";
 var root = document.documentElement;
@@ -25,4 +26,18 @@ ready(function(){ var v = document.createElement('script'); v.src = base + 'asse
 if('serviceWorker' in navigator && window.isSecureContext){
   window.addEventListener('load', function(){ navigator.serviceWorker.register(base + 'sw.js').catch(function(){}); });
 }
+// Cherry remembers you: name, business and goal from Cherry's chat ('sharp-cherry-me') and the First $100 Plan ('sharp-first100').
+ready(function(){
+  var line = document.querySelector('.hc-me'); if(!line) return;
+  var m = null, f = null; try{ m = JSON.parse(localStorage.getItem('sharp-cherry-me') || 'null'); f = JSON.parse(localStorage.getItem('sharp-first100') || 'null'); }catch(e){}
+  m = m || {}; f = f && typeof f === 'object' ? f : null;
+  var name = m.name || (f && f.name ? String(f.name).split(/\s+/)[0].replace(/[^A-Za-z'-]/g, '').slice(0, 20) : '');
+  var goal = +m.goal || (f && +f.goal) || 0, got = 0;
+  if(f && f.logs) f.logs.forEach(function(l){ got += +l.v || 0; });
+  if(!name && !goal) return;
+  var usd = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
+  line.textContent = 'Welcome back' + (name ? ', ' + name : '') + '.' +
+    (goal ? (got >= goal ? ' You hit your ' + usd(goal) + ' goal!' : ' ' + usd(got) + ' of your ' + usd(goal) + ' goal.') : '');
+  line.hidden = false;
+});
 })();
