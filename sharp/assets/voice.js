@@ -118,7 +118,16 @@ function start(){
         vapi.on('error', function(e){ console.warn('voice error', e); ended(message(e)); });
       }
       // Cherry is a woman: the app picks her voice (a built-in Vapi voice) so it matches, whatever the dashboard says.
-      return vapi.start(c.assistantId || ASSISTANT, c.voiceId ? { voice: { provider: 'vapi', voiceId: c.voiceId } } : undefined);
+      // Her brain too: assets/cherry-voice.json (built from dev/cherry-prompt.txt) is sent with every call.
+      return fetch(base + 'assets/cherry-voice.json').then(function(r){ return r.json(); }).catch(function(){ return null; }).then(function(b){
+        var o = {};
+        if(c.voiceId) o.voice = { provider: 'vapi', voiceId: c.voiceId };
+        if(b && b.prompt){
+          o.firstMessage = b.firstMessage;
+          o.model = { provider: 'openai', model: c.model || 'gpt-4.1', temperature: .5, maxTokens: 250, messages: [{ role: 'system', content: b.prompt }] };
+        }
+        return vapi.start(c.assistantId || ASSISTANT, o.voice || o.model ? o : undefined);
+      });
     });
   }).catch(function(e){ ended(message(e)); });
 }

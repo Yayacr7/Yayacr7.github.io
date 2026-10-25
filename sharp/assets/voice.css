@@ -81,3 +81,9 @@ html.vo-on .ag-launch{display:none}
 .co-x:focus-visible,.co-chip:focus-visible,.co-hit:focus-visible,.co-form button:focus-visible,.co-form input:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @media print{.co-panel{display:none!important}}
 .co-chips[hidden]{display:none}
+.co-msg p+p{margin-top:6px}
+.co-dots{display:flex;gap:4px;padding:14px 14px}
+.co-dots i{width:7px;height:7px;border-radius:50%;background:#a4aac4;animation:co-b 1s infinite}
+.co-dots i:nth-child(2){animation-delay:.15s}.co-dots i:nth-child(3){animation-delay:.3s}
+@keyframes co-b{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.co-dots i{animation:none}}
