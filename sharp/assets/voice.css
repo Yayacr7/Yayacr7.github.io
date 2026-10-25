@@ -32,7 +32,6 @@
 .vo-btn.end{background:#ff5c6c;border-color:#ff5c6c;color:#2a0508}
 .vo-btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
 .vo-note{margin:10px 0 0;font-size:12px;color:#a4aac4}
-html.cine-js:not(.cine-done) .vo-launch{bottom:calc(max(16px,env(safe-area-inset-bottom)) + 58px)}
 @media (prefers-reduced-motion:reduce){.vo-launch::after{animation:none}.vo-bars i{transition:none}}
 @media print{.vo-launch,.vo-panel{display:none!important}}
 .vo-launch.vo-hide{opacity:0;visibility:hidden;pointer-events:none}

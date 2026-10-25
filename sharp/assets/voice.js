@@ -80,7 +80,7 @@ function build(){
   var inPage = [].slice.call(document.querySelectorAll('[data-voice]'));
   inPage.forEach(function(b){ b.hidden = false; b.addEventListener('click', function(e){ e.preventDefault(); if(state === 'idle') start(); }); });
   // While a page's own Cherry button is on screen, hide the floating one so there's only one.
-  inPage = inPage.concat([].slice.call(document.querySelectorAll('.hc-head [data-cherry], .cine [data-cherry]')));
+  inPage = inPage.concat([].slice.call(document.querySelectorAll('.hc-head [data-cherry]')));
   if(inPage.length && 'IntersectionObserver' in window){
     var seen = new Set();
     var io = new IntersectionObserver(function(es){ es.forEach(function(x){ x.isIntersecting ? seen.add(x.target) : seen.delete(x.target); }); btn.classList.toggle('vo-hide', seen.size > 0 && state === 'idle'); });

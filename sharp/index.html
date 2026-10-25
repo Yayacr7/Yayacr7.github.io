@@ -25,7 +25,6 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/sharp.css">
-<link rel="stylesheet" href="assets/cine.css">
 <style>
 .hero{padding-block:40px 64px;background:radial-gradient(600px 380px at 85% 30%,var(--investors-soft),transparent 70%),radial-gradient(520px 340px at 10% 85%,var(--finance-soft),transparent 70%),radial-gradient(420px 300px at 60% 0%,var(--business-soft),transparent 70%)}
 .topic-top{display:flex;align-items:center;gap:10px}
@@ -306,84 +305,6 @@
 </head>
 <body>
 
-<a class="cine-skip" href="#app">Skip to the app</a>
-<section class="cine" id="intro" aria-label="Welcome to Sharp">
-  <div class="cine-bar">
-    <a class="cine-logo" href="#app" aria-label="Sharp: go to the app"><img src="icon.svg" width="26" height="26" alt=""> SHARP</a>
-    <a class="cine-pill ghost" href="#app">Open the app <span aria-hidden="true">↓</span></a>
-  </div>
-  <p class="cine-hud tr" aria-hidden="true"><span>LESSONS 22</span><span>TOOLS 9</span><span>START $0</span></p>
-  <div class="cine-hud bl" aria-hidden="true"><span>FOCUS <b id="cine-focus">000</b>%</span><i><em id="cine-focus-bar"></em></i></div>
-
-  <div class="scene s-warp" data-scene>
-    <div class="stage">
-      <canvas class="warp" id="cine-warp" aria-hidden="true"></canvas>
-      <div class="s-copy center">
-        <p class="cine-eyebrow">MONEY · BUSINESS · AI</p>
-        <h2 class="cine-big" data-letters>Get sharp.</h2>
-        <p class="cine-sub">The money and business skills school never taught you. Built for young entrepreneurs.</p>
-        <span class="cine-ctas"><a class="cine-pill" href="learn/index.html">Start free <span aria-hidden="true">→</span></a><button class="cine-pill voice" type="button" data-voice hidden><span class="vo-dot" aria-hidden="true"></span> Speak with Cherry</button></span>
-      </div>
-      <p class="cine-cue" aria-hidden="true">SCROLL</p>
-    </div>
-  </div>
-
-  <div class="scene s-chart" data-scene>
-    <div class="stage">
-      <svg class="big-chart" viewBox="0 0 1000 560" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
-        <g class="grid"></g><g class="candles"></g>
-        <path class="trend" d=""/>
-        <g class="tag"><rect x="0" y="-18" width="104" height="36" rx="8"/><text x="52" y="7" text-anchor="middle">$0</text></g>
-      </svg>
-      <div class="s-copy left">
-        <p class="cine-eyebrow">01 · SPENDING CHECK</p>
-        <h2 class="cine-big sm" data-letters>See every dollar.</h2>
-        <p class="cine-sub">Type what you spend. Watch it turn into a trading-style chart: green is fine, red is too much.</p>
-      </div>
-      <p class="cine-hud live" aria-hidden="true">PAY <b>$3,200</b> · LEFT <b id="cine-left">$0</b></p>
-    </div>
-  </div>
-
-  <div class="scene s-coins" data-scene>
-    <div class="stage">
-      <div class="coins" aria-hidden="true"></div>
-      <div class="s-copy right">
-        <p class="cine-eyebrow">02 · SAVE &amp; INVEST</p>
-        <h2 class="cine-big sm" data-letters>Small money. Big future.</h2>
-        <p class="cine-sub"><b class="count" id="cine-count">$5</b> <span id="cine-count-l">a day</span></p>
-        <p class="cine-fine">Example: $5 a day, growing 7% a year, for 10 years. Not advice, just the maths.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="scene s-line" data-scene>
-    <div class="stage">
-      <svg class="draw" viewBox="0 0 1000 560" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
-        <path class="draw-path" d="M40 500 C 180 500, 220 420, 300 400 S 420 330, 500 300 S 640 240, 700 190 S 860 90, 960 60"/>
-        <g class="marks"></g>
-        <g class="pencil"><path d="M0 0 L-16 -6 L-60 -6 L-60 6 L-16 6 Z" class="pb"/><path d="M0 0 L-16 -6 L-16 6 Z" class="pt"/></g>
-      </svg>
-      <div class="s-copy right low">
-        <p class="cine-eyebrow">03 · BUILD IT</p>
-        <h2 class="cine-big sm" data-letters>Idea to first sale.</h2>
-        <p class="cine-sub">Score your idea, set a price that makes a profit, and get a 4-week plan.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="scene s-end" data-scene>
-    <div class="stage">
-      <div class="s-copy center">
-        <div class="cine-cherry" aria-hidden="true"><span>C</span></div>
-        <h2 class="cine-big" data-letters>Meet Cherry.</h2>
-        <p class="cine-sub">Your money and business coach. Call her or type to her, any time. Every lesson and tool runs through Cherry.</p>
-        <a class="cine-pill" href="#app" data-cherry>Talk to Cherry <span aria-hidden="true">↓</span></a>
-        <p class="cine-sub" style="margin-top:14px"><a href="demo/index.html" style="color:#9ff0d0">Watch the 60-second demo again →</a></p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <div class="fs" id="app">
 
 <header class="site-head">
@@ -490,7 +411,6 @@
 <script src="config.js"></script>
 <script src="app.js"></script>
 <script src="assets/tools.js"></script>
-<script src="assets/cine.js"></script>
 <script src="assets/shell.js"></script>
 </body>
 </html>
