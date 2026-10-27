@@ -30,7 +30,7 @@ window.NP_CONFIG = {
 
   /* Cherry's brain server (cherry-worker/ in the repo), for when the AI can't run on this site's own server.
      The address Cloudflare gives the "cherry" Worker. Blank = off. */
-  CHERRY_API: "",
+  CHERRY_API: "https://cherry.contact-yayabuilds.workers.dev/",
 
   /* Free trial: days of Founder access, counted from when the account was created. */
   TRIAL_DAYS: 3
