@@ -124,7 +124,7 @@ function start(){
         if(c.voiceId) o.voice = { provider: 'vapi', voiceId: c.voiceId };
         if(b && b.prompt){
           o.firstMessage = b.firstMessage;
-          o.model = { provider: 'openai', model: c.model || 'gpt-4.1', temperature: .5, maxTokens: 250, messages: [{ role: 'system', content: b.prompt }] };
+          o.model = { provider: 'openai', model: c.model || 'gpt-4.1', temperature: .5, maxTokens: 250, messages: [{ role: 'system', content: b.prompt + '\n\nToday\'s date is ' + new Date().toISOString().slice(0, 10) + '. Your knowledge stops at your training date, so you don\'t know about events after it (recent sports results, news, new releases). If asked about something that may have happened after that, say plainly that you don\'t have it yet, give what you do know, and suggest checking a news site. Never guess results.' }] };
         }
         return vapi.start(c.assistantId || ASSISTANT, o.voice || o.model ? o : undefined);
       });
