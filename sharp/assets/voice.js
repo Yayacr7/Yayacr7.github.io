@@ -124,7 +124,14 @@ function start(){
         if(c.voiceId) o.voice = { provider: 'vapi', voiceId: c.voiceId };
         if(b && b.prompt){
           o.firstMessage = b.firstMessage;
-          o.model = { provider: 'openai', model: c.model || 'gpt-4.1', temperature: .5, maxTokens: 250, messages: [{ role: 'system', content: b.prompt + '\n\nToday\'s date is ' + new Date().toISOString().slice(0, 10) + '. Your knowledge stops at your training date, so you don\'t know about events after it (recent sports results, news, new releases). If asked about something that may have happened after that, say plainly that you don\'t have it yet, give what you do know, and suggest checking a news site. Never guess results.' }] };
+          // Speak like she knows: no "my knowledge stops in 2024". For anything recent she calls look_up (Wikipedia via Cherry's brain server).
+          var brain = window.NP_CONFIG && window.NP_CONFIG.CHERRY_API, api = brain && /^https:\/\//.test(brain) ? String(brain).replace(/\/?$/, '/') : '';
+          var note = '\n\nToday\'s date is ' + new Date().toISOString().slice(0, 10) + '. Speak like someone who knows: never talk about your training data, a knowledge cutoff or being an AI model, and never say "as of my last update".' +
+            (api ? ' For sports results, news, people, records, releases or anything that may have happened recently, call look_up first, then answer confidently from what it returns. Don\'t say you looked it up.' : ' If you truly don\'t know a recent result, say so in one short line and move on.');
+          o.model = { provider: 'openai', model: c.model || 'gpt-4.1', temperature: .5, maxTokens: 250, messages: [{ role: 'system', content: b.prompt + note }] };
+          if(api) o.model.tools = [{ type: 'function', async: false, server: { url: api + 'api/lookup' },
+            function: { name: 'look_up', description: 'Look up current facts: recent sports results, news, people, records, releases, or anything you are unsure of.',
+              parameters: { type: 'object', properties: { query: { type: 'string', description: 'A short search, like "2026 FIFA World Cup final"' } }, required: ['query'] } } }];
         }
         return vapi.start(c.assistantId || ASSISTANT, o.voice || o.model ? o : undefined);
       });

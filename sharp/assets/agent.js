@@ -72,7 +72,23 @@ function paragraphs(text, parent){
   text.split(/\n+/).forEach(function(line){ line = line.trim(); if(line) el('p', null, line, parent); });
 }
 
-function drawBot(m, parent){
+// The newest reply types itself out quickly, word by word, like a live AI (skipped for reduced motion).
+var animate = -1, still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function typeOut(b){
+  var ps = [].slice.call(b.querySelectorAll('p, li')), extra = [].slice.call(b.querySelectorAll('.ag-steps-t, .ag-steps, .ag-links'));
+  var parts = ps.map(function(p){ var w = p.textContent.split(/(\s+)/); p.textContent = ''; return { p: p, w: w }; });
+  extra.forEach(function(x){ x.style.visibility = 'hidden'; });
+  var i = 0, k = 0;
+  (function tick(){
+    for(var n = 0; n < 3 && i < parts.length; n++){
+      var part = parts[i]; part.p.textContent += part.w[k++] || '';
+      if(k >= part.w.length){ i++; k = 0; }
+    }
+    if(i < parts.length) setTimeout(tick, 16);
+    else extra.forEach(function(x){ x.style.visibility = ''; });
+  })();
+}
+function drawBot(m, parent, typing){
   var b = el('div', 'ag-msg bot', null, parent);
   paragraphs(m.text, b);
   if(m.steps && m.steps.length){
@@ -88,6 +104,7 @@ function drawBot(m, parent){
       a.href = base.replace(/\/$/, '') + l.url;
     });
   }
+  if(typing && !still) typeOut(b);
 }
 
 function draw(){
@@ -101,10 +118,11 @@ function draw(){
       b.addEventListener('click', function(){ q.value = t; submit(); });
     });
   }
-  chat.forEach(function(m){
+  chat.forEach(function(m, i){
     if(m.role === 'user') el('div', 'ag-msg me', m.text, log);
-    else drawBot(m, log);
+    else drawBot(m, log, i === animate);
   });
+  animate = -1;
   if(busy){ var t = el('div', 'ag-msg bot ag-typing', null, log); t.setAttribute('aria-label', 'Cherry is working'); el('span', null, null, t); el('span', null, null, t); el('span', null, null, t); }
   // Show the start of the newest reply, not its end.
   var last = log.lastElementChild;
@@ -159,7 +177,7 @@ function submit(){
   if(!navigator.onLine){ say("You're offline. Connect to the internet, then try again.", 'err'); return; }
   chat.push({ role: 'user', text: text }); chat = chat.slice(-MAX); save();
   q.value = ''; grow();
-  busy = true; send.disabled = true; say('Searching Sharp\'s lessons… this can take up to 30 seconds.'); draw();
+  busy = true; send.disabled = true; say('Cherry is thinking…'); draw();
   var ctrl = 'AbortController' in window ? new AbortController() : null;
   var timer = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 70000);
   var body = { page: page, messages: chat.map(function(m){ return { role: m.role, text: m.text }; }) };
@@ -174,7 +192,7 @@ function submit(){
       showLevel(d.level);
       chat.push({ role: 'assistant', text: d.reply, covered: !!d.covered,
         steps: Array.isArray(d.steps) ? d.steps.slice(0, 7) : [], links: Array.isArray(d.links) ? d.links.slice(0, 3) : [] });
-      chat = chat.slice(-MAX); save(); say('');
+      chat = chat.slice(-MAX); animate = chat.length - 1; save(); say('');
     })
     .catch(function(e){
       chat.pop(); q.value = text; grow();
