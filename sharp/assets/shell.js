@@ -17,11 +17,32 @@ function agent(){
   var s = document.createElement('script'); s.src = base + 'assets/agent.js'; s.defer = true; document.body.appendChild(s);
 }
 function ready(fn){ if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
+// Where the AI lives: this site's own /api/, or Cherry's brain server (CHERRY_API in config.js) when the site's is off.
+// AI pages call window.SharpAPI + 'api/...'.
+var brain = null; try{ brain = sessionStorage.getItem('sharp-api'); }catch(e){}
+window.SharpAPI = brain || base;
 if(known === '1'){ root.classList.add('ai-on'); ready(agent); }
-if(window.fetch) fetch(base + 'api/status', { credentials: 'same-origin' })
-  .then(function(r){ return r.ok ? r.json() : { ai: false }; })
-  .catch(function(){ return { ai: false }; })
-  .then(function(s){ var on = !!(s && s.ai); root.classList.toggle('ai-on', on); try{ sessionStorage.setItem('sharp-ai', on ? '1' : '0'); }catch(e){} if(on) ready(agent); });
+function status(api){
+  return fetch(api + 'api/status', { credentials: 'same-origin' })
+    .then(function(r){ return r.ok ? r.json() : { ai: false }; })
+    .then(function(s){ return !!(s && s.ai); }, function(){ return false; });
+}
+function config(){
+  if(window.NP_CONFIG) return Promise.resolve(window.NP_CONFIG);
+  return new Promise(function(ok){ var s = document.createElement('script'); s.src = base + 'config.js'; s.onload = function(){ ok(window.NP_CONFIG || {}); }; s.onerror = function(){ ok({}); }; document.head.appendChild(s); });
+}
+if(window.fetch) status(base).then(function(on){
+  if(on) return base;
+  return config().then(function(c){
+    var api = c && c.CHERRY_API ? String(c.CHERRY_API).replace(/\/?$/, '/') : '';
+    return api && /^https:\/\//.test(api) ? status(api).then(function(ok){ return ok ? api : null; }) : null;
+  });
+}).then(function(api){
+  var on = !!api; if(api) window.SharpAPI = api;
+  root.classList.toggle('ai-on', on);
+  try{ sessionStorage.setItem('sharp-ai', on ? '1' : '0'); if(api && api !== base) sessionStorage.setItem('sharp-api', api); else sessionStorage.removeItem('sharp-api'); }catch(e){}
+  if(on) ready(agent);
+});
 ready(function(){ var v = document.createElement('script'); v.src = base + 'assets/voice.js'; v.defer = true; document.body.appendChild(v); });
 if('serviceWorker' in navigator && window.isSecureContext){
   window.addEventListener('load', function(){ navigator.serviceWorker.register(base + 'sw.js').catch(function(){}); });

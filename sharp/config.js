@@ -28,6 +28,10 @@ window.NP_CONFIG = {
      NEVER paste the private key. Blank = the "Speak with Cherry" button stays hidden. */
   VOICE: { vapiPublicKey: "49361516-4f11-447c-bb58-8f4157741d77", assistantId: "39d91e93-6eb5-4bf3-a9a7-82faff683395", voiceId: "Paige" },
 
+  /* Cherry's brain server (cherry-worker/ in the repo), for when the AI can't run on this site's own server.
+     The address Cloudflare gives the "cherry" Worker. Blank = off. */
+  CHERRY_API: "",
+
   /* Free trial: days of Founder access, counted from when the account was created. */
   TRIAL_DAYS: 3
 };

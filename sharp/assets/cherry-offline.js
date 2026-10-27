@@ -483,8 +483,8 @@ function answerOf(q){
   }
   if(!r){
     r = freshLesson(t);
-    if(!r && USED.idk) return { idk: true, say: ['That one\'s outside what I know. Ask me about money, selling or starting a business and I\'ll give you a straight answer.'], next: SUGGEST.slice(0, 3) };
-    if(!r){ USED.idk = 1; return { idk: true, say: ['I don\'t know that one yet, and I\'d rather say so than guess. I\'m best at money and business: saving, pricing, getting customers, investing.', 'You can also call me and ask out loud.'], next: SUGGEST.slice(0, 3) }; }
+    if(!r && USED.idk) return { idk: true, say: ['For questions like that, call me: on a call I can talk about anything. Typing, I\'m your money and business coach.'], next: SUGGEST.slice(0, 3) };
+    if(!r){ USED.idk = 1; return { idk: true, say: ['I can\'t answer that one by typing yet. Call me instead: tap Call, and on a call I can talk about anything, from homework to sports.', 'By typing, I\'m best at money and business: saving, pricing, getting customers, investing.'], next: SUGGEST.slice(0, 3) }; }
     r.next = ['Tell me more'];
   }
   last = { q: t, links: r.links, topic: tp || null, biz: b || null };
@@ -502,7 +502,7 @@ function answer(q){
   var dots = el('div', 'co-msg ch co-dots', null, list); dots.setAttribute('aria-label', 'Cherry is typing'); el('i', null, null, dots); el('i', null, null, dots); el('i', null, null, dots);
   list.scrollTop = list.scrollHeight;
   var wait = DOCS ? Promise.resolve() : loading;
-  Promise.all([wait, new Promise(function(ok){ setTimeout(ok, 450); })]).then(function(){
+  Promise.all([wait, new Promise(function(ok){ setTimeout(ok, 120); })]).then(function(){
     dots.remove();
     var r = reply(q), m = el('div', 'co-msg ch', null, list);
     r.say.forEach(function(s){ el('p', null, s, m); });

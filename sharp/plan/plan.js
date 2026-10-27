@@ -74,7 +74,7 @@ function build(){
   busy = true; btn.disabled = true; btn.textContent = 'Building…'; form.setAttribute('aria-busy', 'true');
   say('Reading your idea and writing your plan. This can take up to 30 seconds.');
   var ctrl = 'AbortController' in window ? new AbortController() : null, timer = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 70000);
-  fetch('/api/plan', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(a), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
+  fetch((window.SharpAPI || '/') + 'api/plan', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(a), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
     .then(function(r){ return r.json().catch(function(){ return { ok: false, message: r.status === 404 || r.status === 405 ? "The AI plan builder isn't switched on yet. The Idea check tool and the lessons still work." : 'Something went wrong. Please try again.' }; }); })
     .then(function(d){
       if(!d || !d.ok || !d.plan){ say((d && d.message) || 'Something went wrong. Please try again.', 'err'); if(d && d.field) mark(d.field); return; }

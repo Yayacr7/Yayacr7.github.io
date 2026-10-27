@@ -86,7 +86,7 @@ function ask(){
   say('Reading Sharp\'s lessons and writing an answer. This can take up to 20 seconds.');
   var ctrl = 'AbortController' in window ? new AbortController() : null;
   var timer = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 60000);
-  fetch('/api/ask', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(asked), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
+  fetch((window.SharpAPI || '/') + 'api/ask', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(asked), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
     .then(function(r){
       return r.json().catch(function(){ return { ok: false, message: r.status === 404 || r.status === 405 ? "Ask Cherry isn't switched on yet. The lessons and tools all still work." : 'Something went wrong. Please try again.' }; });
     })

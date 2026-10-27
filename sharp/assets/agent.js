@@ -165,7 +165,7 @@ function submit(){
   var timer = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 70000);
   var body = { page: page, messages: chat.map(function(m){ return { role: m.role, text: m.text }; }) };
   var hd = { 'content-type': 'application/json' }, tk = token(); if(tk) hd.authorization = 'Bearer ' + tk;
-  fetch(base + 'api/agent', { method: 'POST', headers: hd, body: JSON.stringify(body), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
+  fetch((window.SharpAPI || base) + 'api/agent', { method: 'POST', headers: hd, body: JSON.stringify(body), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
     .then(function(r){ return r.json().catch(function(){ return { ok: false, message: 'Something went wrong. Please try again.' }; }); })
     .then(function(d){
       if(!d || !d.ok || typeof d.reply !== 'string'){
