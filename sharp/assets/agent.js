@@ -75,7 +75,6 @@ function paragraphs(text, parent){
 function drawBot(m, parent){
   var b = el('div', 'ag-msg bot', null, parent);
   paragraphs(m.text, b);
-  if(m.covered === false) el('p', 'ag-chip no', 'General answer, not from Sharp\'s lessons', b);
   if(m.steps && m.steps.length){
     el('p', 'ag-steps-t', 'Your next steps', b);
     var ol = el('ol', 'ag-steps', null, b);
