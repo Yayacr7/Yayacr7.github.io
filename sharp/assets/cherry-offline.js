@@ -143,7 +143,8 @@ var L = { money: ['/learn/#money', 'Lesson 1: Your money'], invest: ['/learn/#in
   chan: ['/learn/#mkt-channels', 'Lesson 11: Getting customers'], social: ['/learn/#mkt-social', 'Lesson 14: Social media'], neg: ['/learn/#negotiation', 'Lesson 15: Negotiation'],
   first: ['/tools/first100/', 'First $100 Plan'], budget: ['/tools/budget/', 'Budget & savings planner'], mplan: ['/tools/money-plan/', 'Money plan'],
   bplan: ['/tools/business-plan/', 'Business plan & pricing'], idea: ['/tools/idea-check/', 'Idea check'], negt: ['/tools/negotiation/', 'Negotiation prep'],
-  inv: ['/tools/investors/', 'Investor pressure drill'], pricing: ['/pricing/', 'Pricing'], mkt2: ['/tools/marketing/', 'Marketing calculators'] };
+  inv: ['/tools/investors/', 'Investor pressure drill'], pricing: ['/pricing/', 'Pricing'], mkt2: ['/tools/marketing/', 'Marketing calculators'],
+  road: ['/tools/million/', 'Road to $1 million'], ladder: ['/tools/ladder/', 'Money ladder'], wealth: ['/tools/tracker/', 'Wealth tracker'] };
 var TOPICS = [
   T('drop', /\bdropship\w*\b/i, [L.first], ['How do I make money as a teen?'], {
     any: [["Not as your first business. Most beginners lose money on ads before they make a sale, and you don't control the product or delivery.", "Start with a service near you instead: you get paid on day one with almost no costs."],
@@ -158,12 +159,13 @@ var TOPICS = [
     what: [["Crypto is digital money with no bank or government behind it. Its price moves on what people will pay, which is why it swings so wildly.", "My view: it's the riskiest kind of investing. Learn it, but don't bet on it."]],
     why: [["Because nothing holds the price up except demand. When people get scared, it can fall 50% fast, and there's no company profit underneath it like a stock has."]],
     any: [["My take: skip it for now. Build an emergency fund and learn index funds first. That's where most long-term wealth comes from.", "Anyone promising crypto profits is selling something."]] }),
-  T('rich', /\b(get rich|rich|millionaire|wealthy|financial freedom)\b/i, [L.first, L.money], ['If I save $20 a week for 16 years?', 'How do I make money as a teen?'], {
+  T('rich', /\b(get rich|rich|millionaire|wealthy|financial freedom|a million|1 million)\b/i, [L.road, L.ladder, L.wealth], ['If I save $20 a week for 16 years?', 'How do I make money as a teen?'], {
     how: [["Earn, keep, grow. Earn money with a small business, keep more than you spend, and invest the gap for a long time.", "Time is your superpower: $20 a week from 14 to 30 grows to tens of thousands if it's invested."],
           ["Skills first. The people who get rich learn to sell, save and invest early. Start with your first $100 this month."]],
     should: [["Wanting to be rich is fine. Aim it at something: what would you do with $10,000? A clear goal is easier to save for."]],
     any: [["Forget get-rich-quick: it doesn't exist, and anyone selling it is lying. Earn money, spend less than you earn, invest the gap for years."],
-          ["The boring truth wins: one small business, a savings habit, and patience. Start the business part this week."]] }),
+          ["The boring truth wins: one small business, a savings habit, and patience. Start the business part this week."],
+          ["Open the Road to $1 million. Put in your age and what you can invest a week, and see when it could reach $1 million.", "Then climb the Money ladder to earn more, and log every month in the Wealth tracker so you keep more."]] }),
   T('bplan', /\b(business plan|plan my business|plan for my business|plan a business)\b/i, [L.bplan, L.idea], ['How should I price my work?'], {
     what: [["A business plan is one page that answers: who buys, what problem you fix, your price, your cost per sale, and how you'll find the first 10 customers."]],
     should: [["Yes, but one page, not twenty. Spend an hour on it, then go talk to customers. Talking teaches you more than planning."]],
@@ -236,7 +238,7 @@ var TOPICS = [
     why: [["Because growth stacks: each year you earn on everything so far, not just what you put in. That's why starting at 15 beats starting at 25."]],
     any: [["Start now: time matters more than how much you put in. $10,000 at 7% for 30 years becomes about $76,000."],
           ["Rule of 72: divide 72 by the rate to see how many years it takes to double. At 8%, about 9 years. It works against you on debt too."]] }),
-  T('invest', /\b(invest|investing|stocks?|shares|index fund|etf|stock market)\b/i, [L.invest], ['What is compound interest?'], {
+  T('invest', /\b(invest|investing|stocks?|shares|index fund|etf|stock market)\b/i, [L.invest, L.road], ['What is compound interest?'], {
     what: [["A stock is a tiny piece of one company. An index fund holds small pieces of hundreds of companies, so one bad company can't sink you."]],
     how: [["Build an emergency fund first. Then, with a parent, open an account and put a little into a low-cost index fund every month. Don't touch it for years."]],
     should: [["Yes, invest, but only after you have an emergency fund, and only money you won't need for 5+ years."]],

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
+<link rel="canonical" href="https://sharpbasics.com/tools/tracker/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://c.daily.co; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cherry.contact-yayabuilds.workers.dev https://cloudflareinsights.com https://api.vapi.ai https://*.daily.co wss://*.daily.co; form-action 'none'; worker-src 'self' blob:; media-src 'self' blob:; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Wealth tracker · Sharp Basics</title>
+<meta name="description" content="Once a month, log what you earned, saved and invested. Cherry shows how much you kept and your worth growing, month by month.">
+<meta property="og:title" content="Wealth tracker · Sharp Basics">
+<meta property="og:description" content="Once a month, log what you earned, saved and invested. Cherry shows how much you kept and your worth growing, month by month.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpbasics.com/tools/tracker/">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/sharp.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.f1-top{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:16px;background:#0d2a22;border:1px solid #1d5a4a;margin-bottom:16px}.f1-top .ch-face{width:52px;height:52px;font-size:18px;flex:none}.f1-top h2{margin:0;font-size:1.3rem;color:#e9fff6}.f1-top p{margin:6px 0 0;color:#bfeedd;line-height:1.55}.f1-tag{display:inline-flex;gap:6px;align-items:center;margin-bottom:4px;font:700 .72rem var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:#5fe0b0}.f1-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:16px}@media (max-width:860px){.f1-grid{grid-template-columns:1fr}}.f1-grid .card{min-width:0}.f1-f{display:grid;grid-template-columns:1fr 1fr;gap:12px}.f1-f label{display:grid;gap:6px;font-weight:700}.f1-f .wide{grid-column:1/-1}.f1-f input,.f1-f select{width:100%;min-width:0}.f1-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 6px}.f1-stats div{background:var(--surface-2);border-radius:12px;padding:10px 12px}.f1-stats span{display:block;font-size:.76rem;color:var(--muted)}.f1-stats b{font:800 1.3rem var(--f-display)}#f1-chart{position:relative;height:280px;margin-top:6px}.f1-goal{stroke:#5fe0b0;stroke-width:1.5;stroke-dasharray:6 4}.f1-say{margin:10px 0 0;padding:14px 16px;border-radius:12px;background:var(--surface-2);border-left:4px solid var(--accent);font-size:1.02rem;line-height:1.55;user-select:all;-webkit-user-select:all}#f1-steps{list-style:none;margin:0;padding:0;display:grid;gap:14px}.f1-wk h3{margin:0 0 6px;font-size:1rem}.f1-wk ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}.f1-wk label{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:var(--surface-2);cursor:pointer;line-height:1.45}.f1-wk input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--accent)}.f1-wk input:checked+span{color:var(--muted);text-decoration:line-through}#f1-log .row{display:flex;gap:8px;flex-wrap:wrap}#f1-log input{flex:1 1 120px;min-width:0}.f1-msg{min-height:1.2em;margin:6px 0 0;color:#ff8d7d;font-size:.9rem}#f1-logs{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}#f1-logs li{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border-radius:10px;background:var(--surface-2);border-left:4px solid var(--st-good)}#f1-logs span{color:var(--muted);font-size:.9rem}.f1-sale{list-style:none;margin:0;padding:0;display:grid;gap:10px}.f1-sale li{display:grid;gap:4px;padding:12px 14px;border-radius:12px;background:var(--surface-2)}.f1-sale span{color:var(--muted);line-height:1.5}.f1-sale q{display:block;margin-top:4px;padding-left:12px;border-left:3px solid var(--accent);color:var(--ink);font-style:italic;line-height:1.5}.f1-fit{margin:14px 0 0;line-height:1.55}.f1-prac{margin-top:14px;padding:14px 16px;border-radius:12px;background:#0d2a22;border:1px solid #1d5a4a}.f1-prac h3{margin:0 0 6px;font-size:1rem;color:#e9fff6}.f1-prac p,.f1-prac li{color:#bfeedd;line-height:1.5}.f1-prac ol{margin:6px 0 8px;padding-left:1.3em}.f1-two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}@media (max-width:860px){.f1-two{grid-template-columns:1fr}}.f1-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.rc-goal{stroke:#5fe0b0;stroke-width:1.5;stroke-dasharray:6 4}.rc-stats{grid-template-columns:repeat(4,minmax(0,1fr))}.rc-stats b{font-size:1.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}@media (max-width:560px){.rc-stats{grid-template-columns:1fr 1fr}}#mm-chart,#wt-chart{position:relative;height:300px;margin-top:6px}@media (max-width:560px){#mm-chart,#wt-chart{height:240px}}.rc-miles{list-style:none;margin:10px 0 6px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.rc-miles li{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--surface-2);border-left:4px solid var(--st-good)}.rc-miles li.bad{border-left-color:var(--st-bad)}.rc-miles .sc-ic{grid-row:span 2}.rc-miles b{font:800 1.1rem var(--f-display)}.rc-miles span{color:var(--muted);font-size:.86rem}@media (max-width:560px){.rc-miles{grid-template-columns:1fr}}.rc-moves{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:10px}.rc-moves li{display:grid;gap:4px;padding:12px 14px;border-radius:12px;background:var(--surface-2);border-left:4px solid var(--accent)}.rc-moves span{color:var(--muted);line-height:1.5}.rc-logs{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}.rc-logs li{display:grid;gap:2px;padding:8px 12px;border-radius:10px;background:var(--surface-2);border-left:4px solid var(--line)}.rc-logs li.good{border-left-color:var(--st-good)}.rc-logs li.warn{border-left-color:var(--st-warn)}.rc-logs li.bad{border-left-color:var(--st-bad)}.rc-logs span{color:var(--muted);font-size:.9rem}.f1-f small{font-weight:600;color:var(--muted)}.ld-rungs{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:14px}.ld-rung{position:relative;padding:18px 20px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}@media (min-width:861px){.ld-rung:nth-child(2){margin-left:5%}.ld-rung:nth-child(3){margin-left:10%}.ld-rung:nth-child(4){margin-left:15%}}.ld-rung.here{border-color:#3ddba5;box-shadow:0 0 44px -18px rgba(61,219,165,.8)}.ld-rung.done{opacity:.86}.ld-rtop{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.ld-rtop h3{margin:0;font:800 1.35rem var(--f-display)}.ld-badge{padding:3px 10px;border-radius:999px;font:800 .72rem var(--f-body);letter-spacing:.08em;text-transform:uppercase;background:var(--surface-2);color:var(--muted)}.ld-rung.here .ld-badge{background:rgba(61,219,165,.16);color:#9ff0d0;border:1px solid rgba(61,219,165,.5)}.ld-badge.good{background:rgba(61,219,165,.16);color:#9ff0d0}.ld-goal{margin:6px 0 10px;color:var(--muted)}.ld-bar{height:10px;border-radius:10px;background:var(--surface-2);overflow:hidden}.ld-bar i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,#1c9a71,#3ddba5);box-shadow:0 0 14px rgba(61,219,165,.6)}.ld-of{display:block;margin-top:4px;font-size:.84rem;color:var(--muted);font-variant-numeric:tabular-nums}.ld-steps{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px}.ld-steps label{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:var(--surface-2);cursor:pointer;line-height:1.45}.ld-steps input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--accent)}.ld-steps input:checked+span{color:var(--muted);text-decoration:line-through}.ld-link{margin-top:12px}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../../index.html" aria-label="Sharp home"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../../learn/index.html">Courses</a>
+      <a href="../../tools/index.html" aria-current="page">Tools</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="signin" href="../../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../../index.html">Sharp</a> / <a href="../../tools/index.html">Tools</a> / Wealth tracker</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Money tools</span>
+    <h1>Wealth tracker</h1>
+    <p class="lede">One minute a month: what you earned, saved and invested. Cherry shows how much you kept and your worth growing, month by month.</p>
+    <div class="ch-tip" role="note" aria-label="Cherry's tip"><span class="ch-face" aria-hidden="true">C</span><p><b>Cherry's tip:</b> Keep 20% of every dollar you earn. Move it on payday, before you spend anything, and log it here once a month.</p><button class="btn ch-btn" type="button" data-cherry hidden><span class="ch-face sm" aria-hidden="true">C</span>Talk to Cherry</button></div>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <div class="f1-top"><span class="ch-face" aria-hidden="true">C</span><div><span class="f1-tag"><i class="sc-ic good" id="wt-st" aria-hidden="true">✓</i><span id="wt-stw">Growing</span> · Cherry's take</span><h2 id="wt-head" tabindex="-1">Your wealth, month by month.</h2><p id="wt-body"></p></div></div>
+    <div class="f1-grid">
+      <div class="card">
+        <h2 style="margin:0 0 12px;font-size:1.15rem">Log a month</h2>
+        <form class="f1-f" id="wt-form" novalidate>
+          <label for="wt-m" class="wide">Month<select id="wt-m"></select></label>
+          <label for="wt-e">Earned ($)<input type="number" id="wt-e" min="0" step="any" inputmode="decimal"></label>
+          <label for="wt-s">Put in savings ($)<input type="number" id="wt-s" min="0" step="any" inputmode="decimal"></label>
+          <label for="wt-i">Invested ($)<input type="number" id="wt-i" min="0" step="any" inputmode="decimal"></label>
+          <label for="wt-w"><span>Worth now ($) <small>optional</small></span><input type="number" id="wt-w" step="any" inputmode="decimal"></label>
+          <p class="fine wide" style="margin:0">Earned: all money in (jobs, pay, gifts). Worth now: your savings plus investments today, minus anything you owe. Leave it empty and Cherry adds what you kept to last month's worth.</p>
+          <button class="btn wide" type="submit">Save this month</button>
+          <p class="f1-msg wide" id="wt-msg" role="status"></p>
+        </form>
+      </div>
+      <div class="card">
+        <div class="f1-stats rc-stats"><div><span>Worth now</span><b id="wt-s1">$0</b></div><div><span>Kept last month</span><b id="wt-s2">–</b></div><div><span>Kept a month</span><b id="wt-s3">$0</b></div><div><span>Months logged</span><b id="wt-s4">0</b></div></div>
+        <div id="wt-chart" role="group" aria-label="Chart of what you're worth, month by month. The same numbers are in the list below."></div>
+        <p class="fine" id="wt-empty">No months yet. Log this month to start your chart.</p>
+        <ul class="rc-logs" id="wt-logs"></ul>
+        <div class="f1-act"><button class="btn ghost" type="button" id="wt-undo">Remove latest month</button><a class="btn" id="wt-road" href="../million/index.html">See where this goes →</a></div>
+      </div>
+    </div>
+    <p class="fine" style="margin-top:14px">Your months stay on this device; nothing is sent anywhere. Kept = put in savings + invested. A guide, not financial advice.</p>
+    <div class="f1-act"><button class="btn ghost" type="button" id="wt-reset">Start over</button><a class="btn ghost" href="../ladder/index.html">Money ladder</a><a class="btn ghost" href="../budget/index.html">Budget planner</a></div>
+
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../../index.html" style="display:inline-flex;margin-bottom:10px"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Sharp</p></div>
+    <div><h4>Courses</h4><a href="../../learn/index.html#money">Finance</a><a href="../../learn/index.html#business">Business</a><a href="../../learn/index.html#mkt-basics">Marketing</a><a href="../../learn/index.html#negotiation">Negotiation</a><a href="../../learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="../../tools/million/index.html">Road to $1 million</a><a href="../../tools/ladder/index.html">Money ladder</a><a href="../../tools/tracker/index.html">Wealth tracker</a><a href="../../tools/marketing/index.html">Marketing calculators</a><a href="../../index.html#check">Spending check</a><a href="../../tools/idea-check/index.html">Idea check</a><a href="../../tools/ai/index.html">AI at work</a><a href="../../tools/money-plan/index.html">Money plan</a><a href="../../tools/budget/index.html">Budget planner</a><a href="../../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../../tools/negotiation/index.html">Negotiation prep</a><a href="../../tools/investors/index.html">Investor pressure drill</a></div>
+    <div><h4>Sharp</h4><a href="../../demo/index.html">60-second demo</a><a href="../../ask/index.html" data-ai>Ask Cherry (AI)</a><a href="../../plan/index.html" data-ai>Idea to Plan (AI)</a><a href="../../pricing/index.html">Pricing</a><a href="../../trial/index.html">Free trial</a><a href="../../books/index.html">Book notes</a><a href="../../learn/index.html#prompts">AI prompts</a><a href="../../learn/index.html#glossary">Glossary</a><a href="../../about/index.html">About</a><a href="../../about/index.html#install">Install the app</a><a href="../../privacy/index.html">Privacy</a><a href="../../terms/index.html">Terms</a><a href="../../refunds/index.html">Refunds</a></div>
+  </div>
+</footer>
+<script src="../../assets/tools.js"></script><script src="../../assets/rich.js"></script><script src="../../tools/tracker/tracker.js"></script><script src="../../assets/shell.js"></script>
+</body>
+</html>
