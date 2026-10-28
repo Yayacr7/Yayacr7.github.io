@@ -388,3 +388,6 @@ html.ai-on [data-ai-off]{display:none!important}
 
 /* Cherry's face: a drawn portrait (assets/cherry.svg) instead of a letter. */
 .ch-face{background:url(cherry.svg) center/cover no-repeat,#1d8f6a;color:transparent!important;overflow:hidden}
+/* Cherry on top: her face gives a little hop (hello on the home page, and on hover over a Cherry button). */
+@keyframes chhop{0%,100%{transform:none}35%{transform:translateY(-9px) rotate(-9deg) scale(1.08)}70%{transform:translateY(0) rotate(4deg)}}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){.ch-btn:hover .ch-face,a:hover>.ch-face,button:hover>.ch-face{animation:chhop .6s cubic-bezier(.3,1.5,.5,1)}}

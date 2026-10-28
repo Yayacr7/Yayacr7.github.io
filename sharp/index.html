@@ -186,6 +186,8 @@
 .ch-face.xl::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(61,219,165,.55);animation:chring 2.6s ease-out infinite}
 @keyframes chring{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.35);opacity:0}}
 @media (prefers-reduced-motion:reduce){.ch-face.xl::after{animation:none;opacity:.5}}
+.hc-cherry .ch-face.xl{cursor:pointer;animation:chhop .75s .6s cubic-bezier(.3,1.5,.5,1) both}.hc-cherry .ch-face.xl.hop{animation:chhop .6s cubic-bezier(.3,1.5,.5,1)}
+@media (prefers-reduced-motion:reduce){.hc-cherry .ch-face.xl,.hc-cherry .ch-face.xl.hop{animation:none}}
 @media (max-width:640px),(max-height:760px){.ch-face.xl{width:44px;height:44px;font-size:17px}.hc-cherry{gap:12px}}
 @media (max-width:640px){.fs .hc-cherry .hero-sub{display:none}.fs .hc-cherry h1{margin:0}.fs .hc-cherry{gap:10px}.fs .ch-face.xl{width:28px;height:28px;font-size:12px;box-shadow:0 0 18px -2px rgba(61,219,165,.75)}.fs .ch-face.xl::after{inset:-4px}}
 .sc.sc-first{grid-template-columns:minmax(0,1.45fr) minmax(0,.85fr)}

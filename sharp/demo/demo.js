@@ -111,7 +111,7 @@ function r3(){
     var a = ANSWERS[ix], b = el('button', 'dm-a', null, box); b.type = 'button';
     el('span', 'dm-a-l', String.fromCharCode(65 + n), b); el('span', null, a.t, b);
     if(st.picked >= 0){ b.disabled = true; if(a.ok) b.classList.add('right'); if(ix === st.picked && !a.ok) b.classList.add('wrong'); }
-    b.addEventListener('click', function(){ st.picked = ix; $('dm-why').textContent = a.why; $('dm-why').className = 'dm-why ' + (a.ok ? 'good' : 'bad'); $('dm-to-end').disabled = false; r3(); $('dm-to-end').focus(); });
+    b.addEventListener('click', function(){ if(a.ok && window.SharpPop) SharpPop(b, { n: 12, say: 'Best reply. Cherry on top!' }); st.picked = ix; $('dm-why').textContent = a.why; $('dm-why').className = 'dm-why ' + (a.ok ? 'good' : 'bad'); $('dm-to-end').disabled = false; r3(); $('dm-to-end').focus(); });
   });
 }
 function rEnd(){
@@ -131,7 +131,7 @@ function go(to){
   [].forEach.call(document.querySelectorAll('.dm-steps i'), function(b, i){ b.className = i < n ? 'on' : ''; });
   $('dm-n').textContent = to === 'end' ? 'Done · your plan' : 'Step ' + to + ' of 3';
   $('dm-say').textContent = SAY[to];
-  if(to === '1') r1(); if(to === '2'){ r2(); $('dm-say').textContent = SAY[2]; } if(to === '3') r3(); if(to === 'end') rEnd();
+  if(to === '1') r1(); if(to === '2'){ r2(); $('dm-say').textContent = SAY[2]; } if(to === '3') r3(); if(to === 'end'){ rEnd(); if(window.SharpPop) setTimeout(function(){ SharpPop($('dm-e1'), { n: 16, big: true }); }, 450); }
   if(to === '1') $('dm-say').textContent = SAY[1];
   var h = document.querySelector('#dm-' + to + ' h2'); if(h && started){ h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
   started = true;

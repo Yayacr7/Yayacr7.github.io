@@ -132,6 +132,7 @@ $('ci-form').addEventListener('submit', function(e){
   $('ci-msg').textContent = '';
   state.logs.push({ n: state.logs.length + 1, v: v, at: new Date().toISOString().slice(0, 10) }); save();
   $('ci-spent').value = ''; render(); $('ci-head').focus();
+  if(v <= planAt(state.logs.length) + 1 && window.SharpPop) SharpPop($('ci-head'), { n: 12, say: 'Under plan. Cherry on top!' });
 });
 $('ci-undo').addEventListener('click', function(){ if(state.logs.length){ state.logs.pop(); save(); render(); } });
 $('ci-reset').addEventListener('click', function(){ if(confirm('Start over? Your weeks will be cleared from this device.')){ try{ localStorage.removeItem(KEY); }catch(e){} setMode(false); } });

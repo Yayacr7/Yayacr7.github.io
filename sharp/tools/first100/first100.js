@@ -152,7 +152,7 @@ function render(){
       var key = id++, li = el('li', null, null, ul), lb = el('label', null, null, li), cb = el('input', null, null, lb);
       cb.type = 'checkbox'; cb.checked = s.done.indexOf(key) >= 0; if(cb.checked) done++;
       el('span', null, txt, lb);
-      cb.addEventListener('change', function(){ var at = s.done.indexOf(key); if(cb.checked && at < 0) s.done.push(key); if(!cb.checked && at >= 0) s.done.splice(at, 1); save(); render(); });
+      cb.addEventListener('change', function(){ if(cb.checked && window.SharpPop) SharpPop(cb, { n: 5 }); var at = s.done.indexOf(key); if(cb.checked && at < 0) s.done.push(key); if(!cb.checked && at >= 0) s.done.splice(at, 1); save(); render(); });
     });
   });
   $('f1-prog').textContent = done + ' of ' + id + ' steps done';
@@ -190,6 +190,7 @@ $('f1-log').addEventListener('submit', function(e){
   $('f1-msg').textContent = '';
   s.logs.push({ v: v, note: $('f1-note').value.slice(0, 40), at: new Date().toISOString().slice(0, 10) }); save();
   $('f1-amt').value = ''; $('f1-note').value = ''; render(); $('f1-head').focus();
+  if(window.SharpPop){ var now = earned(); SharpPop($('f1-s1'), now >= s.goal && now - v < s.goal ? { n: 18, big: true, say: 'Goal hit! Cherry on top.' } : { n: 9 }); }
 });
 $('f1-undo').addEventListener('click', function(){ s.logs.pop(); save(); render(); });
 $('f1-next').addEventListener('click', function(){ s.goal = Math.round(Math.max(s.goal, earned()) * 2.5 / 50) * 50; s.done = []; fill(); save(); render(); $('f1-head').focus(); });

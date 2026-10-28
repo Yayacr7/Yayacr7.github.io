@@ -388,6 +388,7 @@ function buildQuiz(container){
     stampEl.className = 'stamp ' + (passed ? 'pass' : 'review');
     stampEl.textContent = passed ? 'Passed' : 'Review'; stampEl.appendChild(tx('small', null, right + ' / ' + qs.length + ' correct'));
     stampEl.hidden = false; void stampEl.offsetWidth; stampEl.classList.add('hit');
+    if(passed && window.SharpPop) SharpPop(stampEl, { n: right === qs.length ? 16 : 12, big: true, say: right === qs.length ? 'Perfect score!' : 'Passed. Cherry on top!' });
     review.textContent = '';
     var missed = []; results.forEach(function(r, i){ if(!r) missed.push(i); });
     if(missed.length){
