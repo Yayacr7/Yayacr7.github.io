@@ -394,7 +394,8 @@ function drawFlow(box, W, H, animate){
     ch.style.display = ''; chh.setAttribute('y1', py); chh.setAttribute('y2', py); cht.setAttribute('transform', 'translate(0,' + py + ')');
     chx.textContent = scK(Math.round(yMax - (py - TOP) / PH * (yMax - yMin))); pick(i);
   };
-  box.onpointerleave = function(){ ch.style.display = 'none'; };
+  box.onpointerdown = box.onpointermove;   // a tap on a touch screen shows it too
+  box.onpointerleave = function(e){ if(e.pointerType === 'mouse') ch.style.display = 'none'; };
   // Invisible buttons over each candle so keyboards and screen readers can use the chart too.
   cols.forEach(function(c, i){
     var b = document.createElement('button'); b.type = 'button'; b.className = 'fl-hit'; b.setAttribute('data-name', c.name);

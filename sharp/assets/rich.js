@@ -86,7 +86,8 @@ R.chart = function(box, o){
     var i = Math.max(0, Math.min(C.length - 1, Math.floor((e.clientX - rc.left - 8) / cw)));
     aim(i, py, yMax - (py - TOP) / PH * (yMax - yMin));
   };
-  box.onpointerleave = function(){ ch.style.display = 'none'; if(o.onPick) o.onPick(-1); };
+  box.onpointerdown = box.onpointermove;   // a tap on a touch screen shows it too, and it stays until the next tap
+  box.onpointerleave = function(e){ if(e.pointerType !== 'mouse') return; ch.style.display = 'none'; if(o.onPick) o.onPick(-1); };
   C.forEach(function(c, i){
     var b = document.createElement('button'); b.type = 'button'; b.className = 'fl-hit';
     b.style.left = (X(i) - cw / 2) + 'px'; b.style.width = cw + 'px'; b.style.top = TOP + 'px'; b.style.height = PH + 'px';
