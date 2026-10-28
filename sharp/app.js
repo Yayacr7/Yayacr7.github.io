@@ -62,7 +62,7 @@ Array.prototype.forEach.call(document.querySelectorAll('form[data-waitlist]'), f
       msg.textContent = err && err.message === 'not-configured'
         ? 'The waitlist opens very soon. Please check back in a day or two.'
         : 'Couldn\'t join right now. Check your connection and try again.';
-    }).then(function(){ btn.disabled = false; btn.textContent = 'Join the waitlist'; });
+    }).then(function(){ btn.disabled = false; btn.textContent = 'Get updates'; });
   });
 });
 

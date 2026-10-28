@@ -174,7 +174,13 @@
 .hc-cherry{display:flex;align-items:center;gap:16px;min-width:0}.hc-cherry>div{min-width:0}
 .hc-me{margin:0 0 6px;font-size:.88rem;font-weight:700;color:#9ff0d0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hc-me[hidden]{display:none}
-.hc-me:not([hidden])+.hero-sub{display:none}
+.hc-me:not([hidden])+.hc-what{display:none}
+/* The 10-second answer under "Hi, I'm Cherry.": what it does for you and that it's free. Shown on every size. */
+.hc-what{margin:0;font-size:1.02rem;line-height:1.4;color:rgba(255,255,255,.86);max-width:60ch}
+.hc-free{display:inline-block;margin-right:6px;padding:2px 9px;border-radius:999px;background:rgba(61,219,165,.16);border:1px solid rgba(61,219,165,.5);color:#9ff0d0;font-weight:800;font-size:.8em;letter-spacing:.02em;white-space:nowrap;vertical-align:1px}
+.hc-short{display:none}
+@media (max-width:640px){.hc-long{display:none}.hc-short{display:inline}.fs .hc-what,.fs .hc-me:not([hidden])+.hc-what{display:block;font-size:.86rem;margin-top:2px}
+  .fs .hc:has(.sc-first[data-view="nums"]) .hc-what{display:none}}
 @media (max-width:640px){.fs .hc-me{display:none}}
 .ch-face.xl{position:relative;width:64px;height:64px;font-size:24px;box-shadow:0 0 0 4px rgba(61,219,165,.18),0 0 40px -4px rgba(61,219,165,.75)}
 .ch-face.xl::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(61,219,165,.55);animation:chring 2.6s ease-out infinite}
@@ -336,7 +342,7 @@
         <span class="ch-face xl" aria-hidden="true">C</span>
         <div><h1>Hi, I'm <span class="grad">Cherry.</span></h1>
         <p class="hc-me" hidden></p>
-        <p class="hero-sub">Your money and business coach. Type what you spend in a month and I'll build your plan, week by week.</p></div>
+        <p class="hc-what"><span class="hc-free">Free · no sign-up</span> <span class="hc-long">I help you earn more money and keep more of it.</span><span class="hc-short">Earn more. Keep more.</span></p></div>
       </div>
       <div class="cta"><button class="btn ch-btn" type="button" data-cherry hidden><span class="ch-face sm" aria-hidden="true">C</span>Talk to Cherry</button><a class="btn ghost-light" href="learn/index.html">Start learning free</a><a class="btn ghost-light" href="tools/index.html" data-cherry-off>All tools</a></div>
     </div>
@@ -369,7 +375,7 @@
           <label class="hp" aria-hidden="true">Leave this empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
           <span class="wl-lead">Get new tools first</span>
           <input type="email" name="email" id="wl-email-1" required placeholder="you@email.com" autocomplete="email" aria-label="Email address">
-          <button class="btn" type="submit">Join the waitlist</button>
+          <button class="btn ghost-light" type="submit">Get updates</button>
         </div>
         <input type="hidden" name="tier" value="">
         <p class="tier-tag" id="tierTag" hidden></p>
