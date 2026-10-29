@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Cherry">
+<defs>
+<radialGradient id="bg" cx=".32" cy=".26" r=".9"><stop offset="0" stop-color="#4be3b0"/><stop offset=".6" stop-color="#1c9a71"/><stop offset="1" stop-color="#0b5440"/></radialGradient>
+<radialGradient id="ch" cx=".34" cy=".3" r=".8"><stop offset="0" stop-color="#ff5d78"/><stop offset=".55" stop-color="#e0213f"/><stop offset="1" stop-color="#a10f2b"/></radialGradient>
+</defs>
+<circle cx="64" cy="64" r="64" fill="url(#bg)"/>
+<circle cx="64" cy="64" r="60" fill="none" stroke="#b8ffe6" stroke-opacity=".3" stroke-width="2"/>
+<g transform="translate(64 62) scale(.9) translate(-66 -60)">
+<!-- stems: the left one rises like Sharp's chart line, both meet at the top -->
+<path d="M40 78C44 60 58 42 82 28" fill="none" stroke="#0a3a2c" stroke-width="7" stroke-linecap="round"/>
+<path d="M86 82C82 62 80 46 82 28" fill="none" stroke="#0a3a2c" stroke-width="7" stroke-linecap="round"/>
+<path d="M40 78C44 60 58 42 82 28" fill="none" stroke="#f2fff9" stroke-width="4" stroke-linecap="round"/>
+<path d="M86 82C82 62 80 46 82 28" fill="none" stroke="#f2fff9" stroke-width="4" stroke-linecap="round"/>
+<!-- leaf -->
+<path d="M82 28C88 16 100 13 108 16C104 27 93 32 82 28Z" fill="#f2fff9"/>
+<path d="M84 27C91 23 98 20 104 18" fill="none" stroke="#1c9a71" stroke-width="2" stroke-linecap="round"/>
+<!-- cherries -->
+<circle cx="40" cy="86" r="19" fill="#7a0b22" opacity=".35" transform="translate(2 3)"/>
+<circle cx="86" cy="90" r="19" fill="#7a0b22" opacity=".35" transform="translate(2 3)"/>
+<circle cx="40" cy="86" r="19" fill="url(#ch)"/>
+<circle cx="86" cy="90" r="19" fill="url(#ch)"/>
+<path d="M30 80a11 11 0 0 1 8-7.5" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" opacity=".85"/>
+<path d="M76 84a11 11 0 0 1 8-7.5" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" opacity=".85"/>
+</g>
+</svg>

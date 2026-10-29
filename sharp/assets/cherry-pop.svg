@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<!-- Cherry on top: the little cherry pair that pops out when you win something. No background circle. -->
+<defs>
+<radialGradient id="c" cx=".34" cy=".3" r=".8"><stop offset="0" stop-color="#ff6d86"/><stop offset=".55" stop-color="#e0213f"/><stop offset="1" stop-color="#a10f2b"/></radialGradient>
+</defs>
+<path d="M19 41C21 31 28 21 41 13M44 43C42 33 40 23 41 13" fill="none" stroke="#3ddba5" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M41 13C44 7 50 5 55 7C53 13 47 16 41 13Z" fill="#3ddba5"/>
+<circle cx="19" cy="45" r="11" fill="url(#c)"/>
+<circle cx="44" cy="47" r="11" fill="url(#c)"/>
+<ellipse cx="15.5" cy="41" rx="3.2" ry="2.2" fill="#fff" opacity=".75" transform="rotate(-30 15.5 41)"/>
+<ellipse cx="40.5" cy="43" rx="3.2" ry="2.2" fill="#fff" opacity=".75" transform="rotate(-30 40.5 43)"/>
+</svg>

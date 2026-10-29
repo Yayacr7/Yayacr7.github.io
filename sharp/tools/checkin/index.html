@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
+<link rel="canonical" href="https://sharpbasics.com/tools/checkin/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://c.daily.co https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cherry.contact-yayabuilds.workers.dev https://cloudflareinsights.com https://api.vapi.ai https://*.daily.co wss://*.daily.co https://*.supabase.co wss://*.supabase.co; form-action 'none'; worker-src 'self' blob:; media-src 'self' blob:; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Cherry's weekly check-in · Sharp Basics</title>
+<meta name="description" content="Cherry saves your spending plan and checks in with you every week. Included with Builder and Founder.">
+<meta property="og:title" content="Cherry's weekly check-in · Sharp Basics">
+<meta property="og:description" content="Cherry saves your spending plan and checks in with you every week. Included with Builder and Founder.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpbasics.com/tools/checkin/">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/sharp.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.ci-lock{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:0 0 16px;padding:12px 16px;border-radius:14px;background:#2a1c06;border:1px solid #6b4a12}.ci-lock p{margin:0;flex:1 1 260px}.ci-lock b{color:#ffd77a}.ci-top{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:16px;background:#0d2a22;border:1px solid #1d5a4a;margin-bottom:16px}.ci-top .ch-face{width:52px;height:52px;font-size:18px}.ci-top h2{margin:0;font-size:1.25rem;color:#e9fff6}.ci-top p{margin:4px 0 0;color:#bfeedd}.ci-top .ci-wk{display:inline-block;margin-bottom:4px;font:700 .72rem var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:#5fe0b0}.ci-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px}@media (max-width:860px){.ci-grid{grid-template-columns:1fr}}#ci-chart{position:relative;height:320px;margin-top:10px}.ci-plan{fill:none;stroke:#fff;stroke-opacity:.55;stroke-width:2;stroke-dasharray:5 5}.ci-next{fill:#5fe0b0!important;font-weight:700}.ci-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 6px}.ci-stats div{background:var(--surface-2);border-radius:12px;padding:10px 12px}.ci-stats span{display:block;font-size:.76rem;color:var(--muted)}.ci-stats b{font:800 1.3rem var(--f-display)}.ci-key{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0 0;font-size:.82rem;color:var(--muted)}.ci-key span{display:inline-flex;align-items:center;gap:6px}.ci-key i.dash{display:inline-block;width:22px;border-top:2px dashed #ffffffaa}#ci-form label{display:grid;gap:6px;font-weight:700}#ci-form .row{display:flex;gap:8px;margin-top:6px}#ci-form input{flex:1;min-width:0}.ci-msg{min-height:1.2em;margin:6px 0 0;color:#ff8d7d;font-size:.9rem}#ci-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}#ci-list li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;background:var(--surface-2);border-left:4px solid var(--st-good)}#ci-list li.st-warn{border-left-color:var(--st-warn)}#ci-list li.st-bad{border-left-color:var(--st-bad)}#ci-list span{color:var(--muted);font-size:.9rem}.ci-st{display:inline-flex;gap:6px;align-items:center;color:var(--ink)!important;font-weight:700}#ci-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../../index.html" aria-label="Sharp home"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../../learn/index.html">Courses</a>
+      <a href="../../tools/index.html" aria-current="page">Tools</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="signin" href="../../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../../index.html">Sharp</a> / <a href="../../tools/index.html">Tools</a> / Cherry's weekly check-in</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Finance tools</span>
+    <h1>Cherry's weekly check-in</h1>
+    <p class="lede">Tell Cherry what you spent each week. Cherry shows you against the plan and gives you one change for next week.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <div class="ci-lock" id="ci-lock"><p><b>Builder feature.</b> <span id="ci-why">This is a demo with example numbers.</span> Get it with Builder ($29.99 one-time) or Founder, or try it free for 3 days.</p><a class="btn" href="../../pricing/index.html#pricing">See Builder →</a></div>
+    <div class="card" id="ci-setup" hidden>
+      <h2>First, make your plan</h2>
+      <p>Cherry builds your weekly plan from the Spending check on the home screen. Type your monthly numbers there, then tap <b>Track it weekly with Cherry</b>.</p>
+      <p><a class="btn" href="../../index.html#check">Open the Spending check</a></p>
+    </div>
+    <div id="ci-main">
+      <div class="ci-top"><span class="ch-face" aria-hidden="true">C</span><div><span class="ci-wk" id="ci-week">Week 1</span><h2 id="ci-head" tabindex="-1">Let's start.</h2><p id="ci-body"></p></div></div>
+      <div class="ci-grid">
+        <div class="card">
+          <h2 style="margin:0;font-size:1.15rem">Your weeks vs Cherry's plan</h2>
+          <div id="ci-chart" role="img" aria-label="Chart of what you spent each week compared with Cherry's plan. The same numbers are in the list."></div>
+          <div class="ci-key"><span><i class="sc-ic good" aria-hidden="true">✓</i>On plan</span><span><i class="sc-ic warn" aria-hidden="true">!</i>Close: down, not all the way</span><span><i class="sc-ic bad" aria-hidden="true">✕</i>Went up</span><span><i class="dash" aria-hidden="true"></i>Cherry's plan</span></div>
+        </div>
+        <div class="card">
+          <div class="ci-stats"><div><span>Weeks done</span><b id="ci-s1">0</b></div><div><span>Saved so far</span><b id="ci-s2">$0</b></div><div><span>Last week</span><b id="ci-s3">$0</b></div></div>
+          <form id="ci-form" novalidate><label for="ci-spent"><span id="ci-label">What did you spend this week? ($)</span>
+            <span class="row"><input type="number" id="ci-spent" min="0" step="any" inputmode="decimal" placeholder="e.g. 540"><button class="btn" type="submit">Check in</button></span></label>
+            <p class="fine" id="ci-plan" style="margin:6px 0 0"></p><p class="ci-msg" id="ci-msg" role="status"></p></form>
+          <h3 style="margin:14px 0 8px">Your check-ins</h3>
+          <p class="fine" id="ci-empty">No check-ins yet. Come back at the end of the week.</p>
+          <ul id="ci-list"></ul>
+          <div id="ci-tools"><button class="btn ghost" type="button" id="ci-undo">Undo last week</button><a class="btn ghost" href="../../index.html#check">Change my numbers</a><button class="btn ghost" type="button" id="ci-reset">Start over</button></div>
+        </div>
+      </div>
+      <p class="fine" style="margin-top:14px">Your numbers and check-ins stay on this device. Cherry's plan uses the same guides as the Spending check: a goal, not a forecast, and not financial advice.</p>
+    </div>
+
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../../index.html" style="display:inline-flex;margin-bottom:10px"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Sharp</p></div>
+    <div><h4>Courses</h4><a href="../../learn/index.html#money">Finance</a><a href="../../learn/index.html#business">Business</a><a href="../../learn/index.html#mkt-basics">Marketing</a><a href="../../learn/index.html#negotiation">Negotiation</a><a href="../../learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="../../tools/million/index.html">Road to $1 million</a><a href="../../tools/ladder/index.html">Money ladder</a><a href="../../tools/tracker/index.html">Wealth tracker</a><a href="../../tools/marketing/index.html">Marketing calculators</a><a href="../../index.html#check">Spending check</a><a href="../../tools/idea-check/index.html">Idea check</a><a href="../../tools/ai/index.html">AI at work</a><a href="../../tools/money-plan/index.html">Money plan</a><a href="../../tools/budget/index.html">Budget planner</a><a href="../../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../../tools/negotiation/index.html">Negotiation prep</a><a href="../../tools/investors/index.html">Investor pressure drill</a></div>
+    <div><h4>Sharp</h4><a href="../../demo/index.html">60-second demo</a><a href="../../ask/index.html" data-ai>Ask Cherry (AI)</a><a href="../../plan/index.html" data-ai>Idea to Plan (AI)</a><a href="../../pricing/index.html">Pricing</a><a href="../../trial/index.html">Free trial</a><a href="../../books/index.html">Book notes</a><a href="../../learn/index.html#prompts">AI prompts</a><a href="../../learn/index.html#glossary">Glossary</a><a href="../../about/index.html">About</a><a href="../../about/index.html#install">Install the app</a><a href="../../privacy/index.html">Privacy</a><a href="../../terms/index.html">Terms</a><a href="../../refunds/index.html">Refunds</a></div>
+  </div>
+</footer>
+<script src="../../config.js"></script>
+<script src="../../assets/who.js"></script><script src="../../assets/tools.js"></script><script src="../../tools/checkin/checkin.js"></script><script src="../../assets/shell.js"></script>
+</body>
+</html>

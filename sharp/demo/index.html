@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
+<link rel="canonical" href="https://sharpbasics.com/demo/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://c.daily.co; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cherry.contact-yayabuilds.workers.dev https://cloudflareinsights.com https://api.vapi.ai https://*.daily.co wss://*.daily.co; form-action 'none'; worker-src 'self' blob:; media-src 'self' blob:; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>60 seconds with Cherry · Sharp Basics</title>
+<meta name="description" content="Sharp is a free app where Cherry, your AI coach, helps you earn more money and keep more of it. Try it in 60 seconds, no sign-up.">
+<meta property="og:title" content="60 seconds with Cherry · Sharp Basics">
+<meta property="og:description" content="Sharp is a free app where Cherry, your AI coach, helps you earn more money and keep more of it. Try it in 60 seconds, no sign-up.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpbasics.com/demo/">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/sharp.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.dm{max-width:880px;margin:0 auto}.dm-who{background:var(--surface);border:1px solid #1d5a4a;border-radius:22px;padding:22px;margin:0 0 16px;box-shadow:0 0 50px -24px rgba(61,219,165,.7)}.dm-who p{color:var(--muted);margin:0 0 14px}.dm-who-b{display:flex;gap:12px;flex-wrap:wrap}.dm-who-b .btn{flex:1 1 220px;justify-content:center}.dm-whoami{order:4;margin-left:12px;background:none;border:0;padding:6px 0;color:var(--muted);font:700 .85rem var(--f-body);text-decoration:underline;cursor:pointer}.dm-whoami:hover{color:#fff}.dm-10{list-style:none;margin:0 0 18px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.dm-10 li{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px;line-height:1.4}.dm-10 b{display:block;font:800 .74rem var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:#5fe0b0;margin-bottom:3px}.dm-10 a{color:#fff;font-weight:700}@media (max-width:640px){.dm-10{grid-template-columns:1fr;gap:6px}.dm-10 li{display:grid;grid-template-columns:92px 1fr;gap:8px;align-items:baseline;padding:9px 12px;font-size:.95rem}.dm-10 b{margin:0;letter-spacing:.05em}}.page-head{max-width:920px;padding-top:34px}.page-head .crumbs{display:none}.page-head .eyebrow{margin-top:0!important}.dm-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}.dm-steps{display:flex;gap:6px}.dm-steps i{width:42px;height:6px;border-radius:6px;background:var(--surface-2);transition:background .3s}.dm-steps i.on{background:#3ddba5;box-shadow:0 0 12px rgba(61,219,165,.7)}.dm-n{font:700 .8rem var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.dm-live{margin-left:auto;font:700 .82rem var(--f-body);font-variant-numeric:tabular-nums;color:#5fe0b0}.dm-cherry{display:flex;gap:14px;align-items:center;padding:14px 16px;border-radius:18px;background:#0d2a22;border:1px solid #1d5a4a;box-shadow:0 0 50px -20px rgba(61,219,165,.7);margin-bottom:16px}.dm-cherry .ch-face{width:56px;height:56px;box-shadow:0 0 26px -4px rgba(61,219,165,.85)}.dm-cherry p{margin:0;color:#e3fbf1;font-size:1.06rem;line-height:1.5}.dm-step{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;animation:dmIn .45s ease both}@keyframes dmIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}.dm-h:focus{outline:none}.dm-h{font:800 clamp(1.6rem,4vw,2.3rem)/1.1 var(--f-display);letter-spacing:-.02em;margin:0 0 16px}.dm-range{display:grid;gap:8px;margin:0 0 16px;font-weight:700}.dm-range span{display:flex;justify-content:space-between;gap:10px}.dm-range output{color:#5fe0b0;font-variant-numeric:tabular-nums}.dm-range input{width:100%;accent-color:#3ddba5;height:28px}.dm-chips{border:0;margin:0 0 16px;padding:0;display:flex;flex-wrap:wrap;gap:8px}.dm-chips legend{font-weight:700;margin-bottom:8px;padding:0}.dm-chip{position:relative;cursor:pointer}.dm-chip input{position:absolute;opacity:0;inset:0;cursor:pointer}.dm-chip span{display:inline-block;padding:9px 14px;border-radius:999px;border:1.5px solid var(--line);font:700 .92rem var(--f-body);min-height:40px;line-height:20px}.dm-chip input:checked+span{border-color:#3ddba5;background:rgba(61,219,165,.14);color:#e9fff6}.dm-chip input:focus-visible+span{outline:3px solid #fff;outline-offset:2px}.dm-res{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:end;margin:6px 0 12px}.dm-big{font:800 clamp(2.6rem,8vw,4.2rem)/1 var(--f-display);letter-spacing:-.03em;color:#fff;font-variant-numeric:tabular-nums;text-shadow:0 0 30px rgba(61,219,165,.45)}.dm-res small{color:var(--muted);font-size:.95rem;padding-bottom:8px}.dm-res p{grid-column:1/-1;margin:0;color:var(--muted)}.dm-st{display:inline-flex;gap:6px;align-items:center;font-weight:800;font-size:.9rem;margin-right:8px}.dm-st i{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;font-style:normal;font-size:.75rem;color:#0d1020;background:var(--st-good)}.dm-st.warn i{background:var(--st-warn)}.dm-st.bad i{background:var(--st-bad);color:#fff}#dm-chart{position:relative;height:170px;margin:8px 0 16px}.dm-c{animation:dmIn .4s ease both}.dm-dots{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:4px 0 16px;min-height:22px}.dm-dots i{width:18px;height:18px;border-radius:50%;background:#3ddba5;box-shadow:0 0 10px rgba(61,219,165,.6);animation:dmIn .35s ease both}.dm-dots span{color:var(--muted);font-weight:700}.dm-scene{font-size:1.08rem;line-height:1.55;margin:0 0 4px}.dm-scene q{display:block;margin:8px 0 14px;font:800 1.5rem/1.25 var(--f-display);color:#fff}.dm-ans{display:grid;gap:10px;margin:0 0 12px}.dm-a{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface-2);color:var(--ink);font:600 1rem/1.45 var(--f-body);cursor:pointer}.dm-a:hover:not(:disabled){border-color:#3ddba5}.dm-a:focus-visible{outline:3px solid #fff;outline-offset:2px}.dm-a-l{display:grid;place-items:center;flex:none;width:26px;height:26px;border-radius:50%;background:var(--surface);font-weight:800}.dm-a.right{border-color:var(--st-good);background:rgba(61,219,165,.12)}.dm-a.right::after{content:"✓ Best reply";margin-left:auto;flex:none;padding-left:10px;color:#7ff0c6;font-weight:800;font-size:.85rem;white-space:nowrap}.dm-a.wrong{border-color:var(--st-bad);background:rgba(255,99,99,.1)}.dm-a:disabled{cursor:default}.dm-why{min-height:1.4em;margin:0 0 14px;line-height:1.5}.dm-why.good{color:#7ff0c6}.dm-why.bad{color:#ffb4a8}.dm-next{margin-top:4px}.dm-next:disabled{opacity:.45;cursor:not-allowed}.dm-end-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0 0 16px}@media (max-width:640px){.dm-end-grid{grid-template-columns:1fr}}.dm-card{background:var(--surface-2);border-radius:16px;padding:16px}.dm-card span{display:block;font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-weight:700}.dm-card b{display:block;font:800 2rem/1.1 var(--f-display);margin-top:6px;color:#fff}.dm-card small{color:var(--muted)}.dm-card.wide{grid-column:1/-1}.dm-card.wide b{font:700 1.08rem/1.5 var(--f-body);color:#e3fbf1}.dm-skip{order:3;margin-left:12px;color:var(--muted);font-size:.85rem;font-weight:700}.dm-skip:hover{color:#fff}.dm-go{display:flex;gap:14px;align-items:center;margin:0 0 16px;padding:16px 18px;border-radius:16px;background:linear-gradient(135deg,rgba(255,120,80,.16),rgba(61,219,165,.12));border:1px solid var(--line)}.dm-go img{flex:none}.dm-go b{display:block;font:800 1.15rem/1.3 var(--f-display)}.dm-go span{color:var(--muted)}.dm-act{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.dm-pill{font-size:1.05rem;padding:14px 22px;box-shadow:0 0 34px -6px rgba(255,120,80,.75)}@media (prefers-reduced-motion:reduce){.dm-step,.dm-c,.dm-dots i{animation:none}}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="Sharp home"><img src="../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../learn/index.html">Courses</a>
+      <a href="../tools/index.html">Tools</a>
+      <a href="../pricing/index.html">Pricing</a>
+      <a href="../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="signin" href="../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../index.html">Sharp</a> / 60-second demo</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Sharp · 60-second demo</span>
+    <h1>Earn more. Keep more.</h1>
+    
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <div class="dm" id="dm">
+      <ul class="dm-10" aria-label="Sharp in 10 seconds">
+        <li><b>What it does</b>Cherry, your AI coach, helps you earn more money and keep more of it.</li>
+        <li><b>Cost</b>Free. Every lesson and tool. No sign-up, no card.</li>
+        <li><b>Start</b>Pick teen or adult, then 3 quick steps. 60 seconds.</li>
+      </ul>
+      <section class="dm-who" id="dm-who" aria-labelledby="dm-who-h" hidden>
+        <h2 class="dm-h" id="dm-who-h">First: are you a teen or an adult?</h2>
+        <p>Cherry fits her numbers and examples to you. You can change it any time.</p>
+        <div class="dm-who-b"><button class="btn dm-pill" type="button" data-who="teen">I'm a teen (13–17)</button><button class="btn dm-pill" type="button" data-who="adult">I'm an adult (18+)</button></div>
+      </section>
+      <div class="dm-top"><a class="dm-skip" id="dm-skip" href="../index.html#app">Skip to the app →</a><button class="dm-whoami" type="button" id="dm-whoami" hidden></button><div class="dm-steps" aria-hidden="true"><i></i><i></i><i></i></div><span class="dm-n" id="dm-n">Step 1 of 3</span><span class="dm-live" id="dm-live" aria-live="off"></span></div>
+      <div class="dm-cherry"><span class="ch-face" aria-hidden="true">C</span><p id="dm-say" aria-live="polite"></p></div>
+      <section class="dm-step" id="dm-1" aria-labelledby="dm-h1">
+        <h2 class="dm-h" id="dm-h1">1. Your money</h2>
+        <label class="dm-range" for="dm-inc"><span>Money you get each month <output id="dm-inc-o" for="dm-inc">$300</output></span><input type="range" id="dm-inc" min="20" max="1500" step="10" value="300"></label>
+        <fieldset class="dm-chips" id="dm-cats"><legend>What eats most of it?</legend></fieldset>
+        <label class="dm-range" for="dm-sp"><span>You spend on that each month <output id="dm-sp-o" for="dm-sp">$120</output></span><input type="range" id="dm-sp" min="0" max="300" step="5" value="120"></label>
+        <div class="dm-res"><b class="dm-big" id="dm-r1">$0</b><small>you could keep this year</small><p><span class="dm-st" id="dm-st"><i id="dm-st-i" aria-hidden="true">✓</i><span id="dm-st-w">Fine</span></span><span id="dm-share"></span></p></div>
+        <div id="dm-chart" role="img" aria-label="Chart: the money you keep, adding up month by month for a year."></div>
+        <button class="btn dm-next" type="button" data-go="2" id="dm-go2">Next: your first $100 →</button>
+      </section>
+      <section class="dm-step" id="dm-2" aria-labelledby="dm-h2" hidden>
+        <h2 class="dm-h" id="dm-h2">2. Your first $100</h2>
+        <fieldset class="dm-chips" id="dm-skills"><legend>What could you do?</legend></fieldset>
+        <label class="dm-range" for="dm-hrs"><span>Free hours a week <output id="dm-hrs-o" for="dm-hrs">4 hours</output></span><input type="range" id="dm-hrs" min="1" max="15" step="1" value="4"></label>
+        <div class="dm-res"><b class="dm-big" id="dm-r2">0</b><small id="dm-r2u">weeks to $100</small><p id="dm-r2l"></p></div>
+        <div class="dm-dots" id="dm-dots" aria-hidden="true"></div>
+        <button class="btn dm-next" type="button" data-go="3">Next: make the sale →</button>
+      </section>
+      <section class="dm-step" id="dm-3" aria-labelledby="dm-h3" hidden>
+        <h2 class="dm-h" id="dm-h3">3. Make the sale</h2>
+        <p class="dm-scene"><span id="dm-scene-a"></span> <q>Hmm, I need to think about it.</q></p>
+        <p style="font-weight:700;margin:0 0 10px">What's your best reply?</p>
+        <div class="dm-ans" id="dm-ans"></div>
+        <p class="dm-why" id="dm-why" role="status"></p>
+        <button class="btn dm-next" type="button" data-go="end" id="dm-to-end" disabled>See my plan →</button>
+      </section>
+      <section class="dm-step" id="dm-end" aria-labelledby="dm-h4" hidden>
+        <h2 class="dm-h" id="dm-h4">Your Sharp plan</h2>
+        <div class="dm-end-grid">
+          <div class="dm-card"><span>Kept this year</span><b id="dm-e1">$0</b><small>by cutting your top spend by a third</small></div>
+          <div class="dm-card"><span id="dm-e2l">Your first $100</span><b id="dm-e2"></b><small id="dm-e2s"></small></div>
+          <div class="dm-card wide"><span>Your opening line</span><b id="dm-e3"></b><small id="dm-e4"></small></div>
+        </div>
+        <div class="dm-go"><img src="../icon.svg" width="44" height="44" alt=""><div><b>That was 60 seconds. Sharp does this every day.</b><span>22 lessons, more than a dozen tools and Cherry, free.</span></div></div>
+        <div class="dm-act"><a class="btn dm-pill" id="dm-sharp" href="../index.html#app">Go to Sharp →</a><a class="btn ghost" id="dm-plan" href="../tools/first100/index.html">Get my full $100 plan</a><button class="btn ghost" type="button" id="dm-again">Try again</button></div>
+        <p class="fine" style="margin-top:14px">These are guides, not promises (<a href="../about/index.html#honest">how Sharp stays honest</a>). Your numbers stay on this device. Your full plan is free.</p>
+      </section>
+    </div>
+
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../index.html" style="display:inline-flex;margin-bottom:10px"><img src="../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Sharp</p></div>
+    <div><h4>Courses</h4><a href="../learn/index.html#money">Finance</a><a href="../learn/index.html#business">Business</a><a href="../learn/index.html#mkt-basics">Marketing</a><a href="../learn/index.html#negotiation">Negotiation</a><a href="../learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="../tools/million/index.html">Road to $1 million</a><a href="../tools/ladder/index.html">Money ladder</a><a href="../tools/tracker/index.html">Wealth tracker</a><a href="../tools/marketing/index.html">Marketing calculators</a><a href="../index.html#check">Spending check</a><a href="../tools/idea-check/index.html">Idea check</a><a href="../tools/ai/index.html">AI at work</a><a href="../tools/money-plan/index.html">Money plan</a><a href="../tools/budget/index.html">Budget planner</a><a href="../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../tools/negotiation/index.html">Negotiation prep</a><a href="../tools/investors/index.html">Investor pressure drill</a></div>
+    <div><h4>Sharp</h4><a href="../demo/index.html">60-second demo</a><a href="../ask/index.html" data-ai>Ask Cherry (AI)</a><a href="../plan/index.html" data-ai>Idea to Plan (AI)</a><a href="../pricing/index.html">Pricing</a><a href="../trial/index.html">Free trial</a><a href="../books/index.html">Book notes</a><a href="../learn/index.html#prompts">AI prompts</a><a href="../learn/index.html#glossary">Glossary</a><a href="../about/index.html">About</a><a href="../about/index.html#install">Install the app</a><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a><a href="../refunds/index.html">Refunds</a></div>
+  </div>
+</footer>
+<script src="../assets/who.js"></script><script src="../assets/tools.js"></script><script src="../assets/biz.js"></script><script src="../demo/demo.js"></script><script src="../assets/shell.js"></script>
+</body>
+</html>
