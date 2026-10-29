@@ -168,7 +168,7 @@ var TOPICS = [
     any: [["My take: skip it for now. Build an emergency fund and learn index funds first. That's where most long-term wealth comes from.", "Anyone promising crypto profits is selling something."]] }),
   T('rich', /\b(get rich|rich|millionaire|wealthy|financial freedom|a million|1 million)\b/i, [L.road, L.ladder, L.wealth], ['If I save $20 a week for 16 years?', 'How do I make money as a teen?'], {
     how: [["Earn, keep, grow. Earn money with a small business, keep more than you spend, and invest the gap for a long time.", "Time is your superpower: $20 a week from 14 to 30 grows to tens of thousands if it's invested."],
-          ["Skills first. The people who get rich learn to sell, save and invest early. Start with your first $100 this month."]],
+          ["Skills first. People who build wealth usually learn to sell, save and invest early. Start with your first $100 this month."]],
     should: [["Wanting to be rich is fine. Aim it at something: what would you do with $10,000? A clear goal is easier to save for."]],
     any: [["Forget get-rich-quick: it doesn't exist, and anyone selling it is lying. Earn money, spend less than you earn, invest the gap for years."],
           ["The boring truth wins: one small business, a savings habit, and patience. Start the business part this week."],

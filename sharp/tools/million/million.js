@@ -42,7 +42,7 @@ function take(r){
   var end = endAge(), yrs = end - s.age, moves = [];
   var hit = r.hit[1e6], st = hit != null ? 'good' : r.hit[1e5] != null ? 'warn' : 'bad';
   var head = s.week <= 0 && s.start <= 0 ? 'Start with something. Even $5 a week.'
-    : hit != null ? 'Yes. About $1 million by age ' + ageText(hit) + '.'
+    : hit != null ? 'If it grows ' + s.g + '% a year: about $1 million by age ' + ageText(hit) + '.'
     : 'Not by ' + end + ' at this pace: about ' + money(r.end) + '.';
   var body = s.week <= 0 && s.start <= 0 ? 'Nothing grows from zero. Pick an amount you can keep up every week, then raise it every time you earn more.'
     : 'You\'d put in ' + money(r.put) + '. Growth adds ' + money(r.grew) + '. That\'s compounding: your growth starts growing too, so the last years add the most.';

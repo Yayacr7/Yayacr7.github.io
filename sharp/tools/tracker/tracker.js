@@ -27,7 +27,7 @@ function take(M){
   var after = nx ? (to ? ' Next milestone: ' + money(nx) + ', about ' + R.plural(to, 'month') + ' at your pace.' : ' Next milestone: ' + money(nx) + '.') : ' You\'re past $1 million. Keep going.';
   if(r == null) return { st: kept(last) > 0 ? 'good' : 'warn', head: 'You\'re worth ' + money(w) + '.', body: 'No earnings logged for ' + label(last.m) + '.' + after };
   var pct = Math.round(r * 100), gap = Math.max(0, Math.ceil(last.e * .2 - kept(last)));
-  if(r >= .2) return { st: 'good', head: 'You kept ' + pct + '% in ' + label(last.m) + '. That\'s how people get rich.', body: 'Keeping 20% or more of what you earn, month after month, is the habit that builds wealth.' + after };
+  if(r >= .2) return { st: 'good', head: 'You kept ' + pct + '% in ' + label(last.m) + '. That\'s the habit that builds wealth.', body: 'Keep 20% or more of what you earn, month after month. Over years, that is what builds real savings.' + after };
   if(r >= .1) return { st: 'warn', head: 'You kept ' + pct + '%. Aim for 20%.', body: 'That\'s ' + money(gap) + ' more a month. Move it to savings on the day you get paid, before you spend anything.' + after };
   return { st: 'bad', head: (pct > 0 ? 'You kept only ' + pct + '%.' : 'You kept nothing this month.') + ' Fix this first.', body: 'Earning more won\'t make you rich if it all gets spent. Start with 10% of every payment, then work up to 20%: that\'s ' + money(gap) + ' a month.' + after };
 }

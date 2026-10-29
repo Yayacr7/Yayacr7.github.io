@@ -83,7 +83,7 @@ function chart(){
 }
 
 /* ---------- render ---------- */
-function live(){ $('dm-live').textContent = money(keep().year) + ' a year kept · ' + money(GOAL) + ' in ' + weeksText(earn().weeks); }
+function live(){ $('dm-live').textContent = money(keep().year) + ' a year kept · ' + money(GOAL) + (isFinite(earn().weeks) ? ' in about ' + weeksText(earn().weeks) : ': more hours needed'); }
 function r1(){
   $('dm-inc-o').textContent = money(st.inc);
   var sp = $('dm-sp'); sp.max = st.inc; if(st.sp > st.inc){ st.sp = st.inc; sp.value = st.inc; }
