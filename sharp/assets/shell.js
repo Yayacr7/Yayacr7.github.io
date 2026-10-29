@@ -9,6 +9,11 @@
 (function(){
 "use strict";
 var root = document.documentElement;
+// A random code for this browser, so daily limits count each device on its own (classmates on one school Wi-Fi each get
+// their own). It says nothing about you; the server only ever sees it mixed into a scrambled daily code.
+(function(){ var d = ''; try{ d = localStorage.getItem('sharp-device') || '';
+  if(!/^[A-Za-z0-9-]{16,64}$/.test(d)){ d = (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + '-' + Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)).slice(0, 40); localStorage.setItem('sharp-device', d); }
+}catch(e){} window.SharpDevice = /^[A-Za-z0-9-]{16,64}$/.test(d) ? d : ''; })();
 var me = document.currentScript && document.currentScript.src;
 var base = me ? me.replace(/assets\/shell\.js(\?.*)?$/, '') : '/';
 // Remember the answer for this visit so the AI parts don't flicker on every page.

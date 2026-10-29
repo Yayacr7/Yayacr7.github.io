@@ -144,7 +144,7 @@ var L = { money: ['/learn/#money', 'Lesson 1: Your money'], invest: ['/learn/#in
   first: ['/tools/first100/', 'First $100 Plan'], budget: ['/tools/budget/', 'Budget & savings planner'], mplan: ['/tools/money-plan/', 'Money plan'],
   bplan: ['/tools/business-plan/', 'Business plan & pricing'], idea: ['/tools/idea-check/', 'Idea check'], negt: ['/tools/negotiation/', 'Negotiation prep'],
   inv: ['/tools/investors/', 'Investor pressure drill'], pricing: ['/pricing/', 'Pricing'], mkt2: ['/tools/marketing/', 'Marketing calculators'],
-  road: ['/tools/million/', 'Road to $1 million'], ladder: ['/tools/ladder/', 'Money ladder'], wealth: ['/tools/tracker/', 'Wealth tracker'] };
+  road: ['/tools/million/', 'Road to $1 million'], practice: ['/tools/practice/', 'Sales practice with Cherry'], ladder: ['/tools/ladder/', 'Money ladder'], wealth: ['/tools/tracker/', 'Wealth tracker'] };
 var TOPICS = [
   T('drop', /\bdropship\w*\b/i, [L.first], ['How do I make money as a teen?'], {
     any: [["Not as your first business. Most beginners lose money on ads before they make a sale, and you don't control the product or delivery.", "Start with a service near you instead: you get paid on day one with almost no costs."],
@@ -187,7 +187,7 @@ var TOPICS = [
     any: [["Agree on three things first, in writing: who does what, how you split money, and what happens if one of you quits."]] }),
   T('tax', /\b(tax|taxes|license|licence|legal|permit|insurance|irs|register (my|a) business)\b/i, [L.biz], [], {
     any: [["Ask a parent or a trusted adult about this one: the rules depend on where you live. For small teen jobs it's usually simple, but check.", "Keep a list of every dollar you earn and spend from day one. That makes any tax question easy."]] }),
-  T('objection', /think about it|not sure|too expensive|hesitat|objection|they said no|said no|ghost(ed)?|won'?t reply/i, [L.first, ['/learn/#persuasion', 'Persuasion lesson']], ['How should I price my work?'], {
+  T('objection', /think about it|not sure|too expensive|hesitat|objection|they said no|said no|ghost(ed)?|won'?t reply/i, [L.practice, L.first, ['/learn/#persuasion', 'Persuasion lesson']], ['How should I price my work?'], {
     any: [["Don't argue. Ask: \"Totally fair. What part are you thinking about?\" Their answer tells you if it's price, timing or trust.", "Fix that one thing. If it's still no, thank them. You're looking for a fit, not to convince everyone."],
           ["A no is information. Ask one question: \"What would make this a yes?\" Then stop talking and listen.", "If they say price, offer a smaller version, not a discount."],
           ["Follow up once, two days later, with something useful, like a time slot. Then let it go and ask the next person."]] }),
@@ -199,7 +199,7 @@ var TOPICS = [
     why: [["Because price is the fastest way to more profit. On a 20% margin, raising price 5% lifts profit 25% if you keep the same customers."]],
     any: [["You're probably charging too little. Charge for the result, not just your time."],
           ["Give two options: a basic price and a bigger one. Most people pick the bigger one more than you'd expect."]] }),
-  T('customers', /\b(first|get|find|more|new)\b.*\b(customers?|clients?|buyers?)\b|\bhow do i sell\b|\bsell (my|more)\b|\bget (my )?first (job|sale)\b/i, [L.first, L.chan], ['What do I say if they say "I need to think about it"?'], {
+  T('customers', /\b(first|get|find|more|new)\b.*\b(customers?|clients?|buyers?)\b|\bhow do i sell\b|\bsell (my|more)\b|\bget (my )?first (job|sale)\b/i, [L.first, L.practice, L.chan], ['What do I say if they say "I need to think about it"?'], {
     how: [["Start with people you know: family, neighbours, family friends. Text five today: what you do, the price, and \"Want me to do Saturday?\""],
           ["Ask your first three happy customers for one name each. Referrals are the cheapest customers you'll ever get."],
           ["Put a simple flyer where your customers already are: the neighbourhood board, the local shop, the school newsletter (with a parent's okay)."]],
