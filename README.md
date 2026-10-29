@@ -1510,3 +1510,19 @@ fight now runs at a steady 61 fps with all sixty-six characters loaded.
 The arena canvas also picks its own pixel ratio: on a large, high-resolution
 screen it caps at 1.5x rather than 2x, since nine times the pixels buys
 nothing visible. That alone took a 2x display from 32 fps to 44.
+
+## Yaya AI Ad Lab — learn AI advertising and run an AI ad business
+
+Open `ai-ads/index.html` in any browser (on GitHub Pages: `/ai-ads/`). One page, no sign-up, everything works offline.
+
+| Section | What it does |
+| --- | --- |
+| Learn | 10 short lessons, each with a click-through demo: before/after ad, platform picker, ad anatomy, copy formulas, AI tool finder, ad results calculator, targeting radius, A/B test simulator, ad rule checker, final quiz |
+| Ad Builder | Pick 1 of 13 business types, a tone and colors. Get headlines, 3 ad texts (PAS, AIDA, BAB), a Google ad, an image prompt, a 15-second video script, targeting and a budget, with Facebook, Google, TikTok and Story previews. Save ads to My Ads |
+| AI Audit | Score a business out of 100, list its top fixes, estimate the money it is missing, and copy a report and a video script to send the owner |
+| Pricing | Five packages (Free audit, Starter $497, Growth $997/mo, Scale $1,997/mo, Pay-per-Lead), add-ons, and a quote builder that shows your profit |
+| Get Clients | Where to find clients, an outreach calculator, a 14-day sprint checklist, scripts written for each lead, objection cards and a lead tracker |
+| Business Plan | Niche table, 12-month growth chart, onboarding and monthly delivery checklists |
+| Prompts | 16 copy-ready AI prompts filled in with your current business |
+
+Progress, saved ads, quotes and leads are kept in your own browser only.

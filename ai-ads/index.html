@@ -1,0 +1,1549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Learn AI advertising and build AI ads, audits and quotes for local businesses.">
+<title>Yaya AI Ad Lab</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a print-shop "ad studio" — sticky tab bar, one view at a time, colored ink blocks for each tool */
+:root{
+  --bg:#FFFAFC; --bg2:#FFF1F6; --card:#FFFFFF; --ink:#1D1530; --muted:#625A78; --line:#EEE3EC;
+  --pink:#F2266F; --orange:#FF6A21; --yellow:#FFB703; --teal:#00A896; --blue:#2F5BFF; --violet:#7C3AED; --green:#1F9D55; --red:#E5383B;
+  --pink-s:#FFE2EE; --orange-s:#FFE8DA; --yellow-s:#FFF2CC; --teal-s:#D6F5F1; --blue-s:#E2E9FF; --violet-s:#EEE5FF; --green-s:#DDF5E6; --red-s:#FFE1E1;
+  --link:#1A0DAB; --shadow:0 1px 0 rgba(29,21,48,.06),0 8px 24px -12px rgba(29,21,48,.18);
+  --f-display:"Bricolage Grotesque","Figtree",system-ui,sans-serif;
+  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#130E20; --bg2:#1A1329; --card:#1E1730; --ink:#F6F0FF; --muted:#B9AFD0; --line:#30274A;
+  --pink:#FF4D8D; --orange:#FF8445; --yellow:#FFC63D; --teal:#2CD3BE; --blue:#6E8CFF; --violet:#A27BFF; --green:#3DCB7A; --red:#FF6466;
+  --pink-s:#3B1430; --orange-s:#3A1F14; --yellow-s:#372B0E; --teal-s:#0E3330; --blue-s:#18224A; --violet-s:#271A48; --green-s:#123321; --red-s:#3C1518;
+  --link:#9DB4FF; --shadow:0 1px 0 rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.7); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#130E20; --bg2:#1A1329; --card:#1E1730; --ink:#F6F0FF; --muted:#B9AFD0; --line:#30274A;
+  --pink:#FF4D8D; --orange:#FF8445; --yellow:#FFC63D; --teal:#2CD3BE; --blue:#6E8CFF; --violet:#A27BFF; --green:#3DCB7A; --red:#FF6466;
+  --pink-s:#3B1430; --orange-s:#3A1F14; --yellow-s:#372B0E; --teal-s:#0E3330; --blue-s:#18224A; --violet-s:#271A48; --green-s:#123321; --red-s:#3C1518;
+  --link:#9DB4FF; --shadow:0 1px 0 rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.7); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--card)}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(2.2rem,6vw,4.2rem);font-weight:800;letter-spacing:-.03em}
+h2{font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800}
+h3{font-size:1.25rem;font-weight:700}
+h4{font-size:1.02rem;font-weight:700}
+p{margin:0}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--pink)}
+.lead{font-size:1.12rem;color:var(--muted);max-width:62ch}
+.stack{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))}
+.grid>*{min-width:0}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--card);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;padding-block:10px}
+.logo{display:flex;align-items:center;gap:9px;font-family:var(--f-display);font-weight:800;font-size:1.15rem;text-decoration:none;white-space:nowrap}
+.logo i{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-style:normal;color:#fff;font-size:.9rem;
+  background:conic-gradient(from 200deg,var(--pink),var(--orange),var(--yellow),var(--teal),var(--blue),var(--violet),var(--pink))}
+.nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;font-weight:700;font-size:.92rem;padding:8px 12px;border-radius:999px;color:var(--muted)}
+.nav a:hover{color:var(--ink);background:var(--bg2)}
+.nav a.on{color:#fff;background:var(--ink)}
+:root[data-theme="dark"] .nav a.on{color:var(--bg)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .nav a.on{color:var(--bg)}}
+@media (max-width:640px){.top .wrap{flex-wrap:wrap;row-gap:6px}.nav{order:3;flex-basis:100%}.themebtn{margin-left:auto}}
+.themebtn{border:1px solid var(--line);background:var(--bg2);border-radius:999px;width:38px;height:38px;cursor:pointer;flex:none;display:grid;place-items:center;color:var(--ink)}
+
+.view{padding-block:34px 70px}
+.view>section,.view>.wrap>section{margin-top:44px}
+.sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+
+/* buttons, chips */
+.btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;border:0;cursor:pointer;text-decoration:none;font-weight:800;
+  padding:12px 20px;border-radius:999px;background:var(--pink);color:#fff;font-size:1rem;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--ink)}
+.btn.sm{padding:7px 14px;font-size:.88rem}
+.btn.blue{background:var(--blue)} .btn.teal{background:var(--teal)} .btn.orange{background:var(--orange)} .btn.violet{background:var(--violet)} .btn.dark{background:var(--ink);color:var(--bg)}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 13px;cursor:pointer;font-weight:700;font-size:.9rem;white-space:nowrap}
+.chip.on{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.tag{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px}
+.t-pink{background:var(--pink-s);color:var(--pink)} .t-blue{background:var(--blue-s);color:var(--blue)} .t-teal{background:var(--teal-s);color:var(--teal)}
+.t-orange{background:var(--orange-s);color:var(--orange)} .t-yellow{background:var(--yellow-s);color:var(--ink)} .t-violet{background:var(--violet-s);color:var(--violet)}
+.t-green{background:var(--green-s);color:var(--green)} .t-red{background:var(--red-s);color:var(--red)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.ink{border-radius:var(--r);padding:22px}
+.ink-pink{background:var(--pink-s)} .ink-blue{background:var(--blue-s)} .ink-teal{background:var(--teal-s)} .ink-yellow{background:var(--yellow-s)}
+.ink-orange{background:var(--orange-s)} .ink-violet{background:var(--violet-s)} .ink-green{background:var(--green-s)}
+.note{border-left:4px solid var(--yellow);background:var(--yellow-s);padding:12px 16px;border-radius:0 10px 10px 0;font-size:.95rem}
+.note.red{border-color:var(--red);background:var(--red-s)} .note.teal{border-color:var(--teal);background:var(--teal-s)}
+
+/* forms */
+label.f{display:flex;flex-direction:column;gap:5px;font-weight:700;font-size:.88rem}
+label.f span.h{font-weight:500;color:var(--muted);font-size:.8rem}
+input[type=text],input[type=number],select,textarea{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);font-size:.96rem}
+textarea{min-height:90px;resize:vertical}
+input[type=range]{width:100%;accent-color:var(--pink)}
+input[type=checkbox]{accent-color:var(--pink);width:18px;height:18px}
+.out{white-space:pre-wrap;background:var(--bg2);border:1px dashed var(--line);border-radius:10px;padding:14px;font-size:.93rem;overflow-wrap:anywhere}
+.copyrow{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* HOME */
+.hero{display:grid;grid-template-columns:1.25fr .9fr;gap:36px;align-items:center}
+@media (max-width:880px){.hero{grid-template-columns:minmax(0,1fr)}}
+.hero h1 .hl{background:linear-gradient(transparent 62%,var(--yellow) 62%);padding:0 .08em}
+.hero h1 .c1{color:var(--pink)} .hero h1 .c2{color:var(--teal)} .hero h1 .c3{color:var(--blue)}
+.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.stat b{display:block;font-family:var(--f-display);font-size:1.6rem;font-weight:800}
+.stat span{font-size:.8rem;color:var(--muted)}
+.steps{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));counter-reset:s}
+.step{position:relative;border-radius:var(--r);padding:20px 18px 18px;color:var(--ink)}
+.step .n{font-family:var(--f-display);font-weight:800;font-size:2.6rem;line-height:1;opacity:.9}
+.toolcard{display:flex;flex-direction:column;gap:10px;text-decoration:none;border-radius:var(--r);padding:20px;border:2px solid var(--ink);background:var(--card);transition:transform .15s}
+.toolcard:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+.toolcard .ico{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:1.4rem}
+
+/* phone + ad mockups */
+.phone{width:min(100%,330px);margin:0 auto;border-radius:34px;padding:10px;background:#141018;box-shadow:0 30px 60px -25px rgba(30,10,50,.55)}
+.phone .screen{border-radius:26px;overflow:hidden;background:var(--card)}
+.fb{background:var(--card);color:var(--ink);font-size:.86rem}
+.fb .hd{display:flex;gap:9px;align-items:center;padding:11px 12px}
+.fb .av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:.85rem;flex:none}
+.fb .who b{display:block;font-size:.88rem}
+.fb .who span{font-size:.74rem;color:var(--muted)}
+.fb .tx{padding:0 12px 10px;white-space:pre-wrap;overflow-wrap:anywhere}
+.fb .lk{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;background:var(--bg2)}
+.fb .lk small{display:block;color:var(--muted);font-size:.7rem;text-transform:uppercase}
+.fb .lk b{font-size:.9rem}
+.fb .cta{flex:none;background:var(--line);color:var(--ink);border-radius:7px;padding:7px 11px;font-weight:800;font-size:.8rem}
+.fb .acts{display:flex;justify-content:space-around;padding:9px;color:var(--muted);font-weight:700;font-size:.8rem;border-top:1px solid var(--line)}
+.creative{position:relative;aspect-ratio:4/5;max-width:100%;overflow:hidden;color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:18px;
+  background:linear-gradient(150deg,var(--c1),var(--c2))}
+.creative::before{content:"";position:absolute;width:75%;aspect-ratio:1;border-radius:50%;right:-22%;bottom:-14%;background:rgba(255,255,255,.16)}
+.creative::after{content:"";position:absolute;width:38%;aspect-ratio:1;border-radius:50%;left:-10%;top:38%;background:rgba(255,255,255,.1)}
+.creative .ce{position:absolute;right:9%;bottom:12%;font-size:5.4rem;line-height:1;filter:drop-shadow(0 10px 18px rgba(0,0,0,.25));z-index:1}
+.creative .ch{position:relative;z-index:2;font-family:var(--f-display);font-weight:800;font-size:1.65rem;line-height:1.02;text-wrap:balance;text-shadow:0 2px 12px rgba(0,0,0,.18);max-width:92%}
+.creative .cs{position:relative;z-index:2;align-self:flex-start;background:#FFE14D;color:#1D1530;font-weight:800;font-size:.8rem;padding:7px 11px;border-radius:8px;transform:rotate(-3deg);max-width:62%}
+.creative .cb{position:relative;z-index:2;font-weight:800;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;opacity:.95}
+.creative.tall{aspect-ratio:9/16}
+.creative.tall .ch{font-size:1.9rem}
+.gad{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;font-family:Arial,Helvetica,sans-serif}
+.gad .sp{font-size:.8rem;font-weight:700}
+.gad .url{font-size:.8rem;color:var(--muted);margin:2px 0 4px;overflow-wrap:anywhere}
+.gad .ttl{color:var(--link);font-size:1.18rem;line-height:1.3;overflow-wrap:anywhere}
+.gad .ds{font-size:.88rem;margin-top:4px;color:var(--muted);overflow-wrap:anywhere}
+.gad .sl{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:.86rem;color:var(--link)}
+.tt{position:relative}
+.tt .ov{position:absolute;inset:auto 0 0 0;padding:14px 60px 18px 14px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.65));font-size:.82rem;z-index:3}
+.tt .ov b{display:block;margin-bottom:3px}
+.tt .side{position:absolute;right:10px;bottom:80px;display:flex;flex-direction:column;gap:14px;z-index:3;color:#fff;font-size:.7rem;text-align:center;font-weight:800}
+.tt .side i{display:block;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.22);font-style:normal;line-height:36px;font-size:1rem}
+.tt .ctab{display:block;margin-top:8px;background:var(--pink);text-align:center;padding:8px;border-radius:6px;font-weight:800}
+
+/* builder */
+.builder{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:22px;align-items:start}
+@media (max-width:940px){.builder{grid-template-columns:minmax(0,1fr)}}
+.nichegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px}
+.niche{border:2px solid var(--line);border-radius:12px;background:var(--card);padding:10px 6px;cursor:pointer;text-align:center;font-weight:700;font-size:.78rem;line-height:1.2}
+.niche b{display:block;font-size:1.5rem;margin-bottom:4px}
+.niche.on{border-color:var(--pink);background:var(--pink-s)}
+.swatches{display:flex;gap:8px;flex-wrap:wrap}
+.sw{width:38px;height:38px;border-radius:50%;border:3px solid var(--card);box-shadow:0 0 0 2px var(--line);cursor:pointer}
+.sw.on{box-shadow:0 0 0 3px var(--ink)}
+.variants{display:flex;gap:8px}
+.variants button{flex:1}
+.stickyprev{position:sticky;top:calc(env(safe-area-inset-top,0px) + 74px)}
+@media (max-width:940px){.stickyprev{position:static}}
+.packbox{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:14px}
+.packbox h4{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.cc{font-family:var(--f-mono);font-size:.72rem;padding:2px 7px;border-radius:6px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.gallery .g{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--card);cursor:pointer;position:relative}
+.gallery .g .creative{padding:12px}
+.gallery .g .creative .ch{font-size:1rem}
+.gallery .g .creative .ce{font-size:2.6rem}
+.gallery .g .creative .cs{font-size:.62rem}
+.gallery .g .x{position:absolute;top:6px;right:6px;z-index:5;border:0;border-radius:50%;width:24px;height:24px;cursor:pointer;background:rgba(0,0,0,.45);color:#fff}
+
+/* learn */
+.learn{display:grid;grid-template-columns:270px minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:860px){.learn{grid-template-columns:minmax(0,1fr)}}
+.lessonlist{display:flex;flex-direction:column;gap:6px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 74px)}
+@media (max-width:860px){.lessonlist{position:static;flex-direction:row;overflow-x:auto;padding-bottom:6px}}
+.lessonlist button{display:flex;gap:10px;align-items:center;text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:10px 12px;cursor:pointer;font-weight:700;font-size:.9rem;flex:none}
+.lessonlist button .k{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;flex:none;font-family:var(--f-mono);font-size:.8rem;color:#fff}
+.lessonlist button.on{border-color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.lessonlist button.done .k::after{content:"✓"}
+.lessonlist button.done .k span{display:none}
+.progress{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--orange),var(--yellow));transition:width .4s}
+.lesson{display:flex;flex-direction:column;gap:16px}
+.lesson .body{display:flex;flex-direction:column;gap:12px;max-width:72ch}
+.lesson .body ul,.lesson .body ol{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:6px}
+.demo{border:2px dashed var(--pink);border-radius:var(--r);padding:18px;background:var(--card)}
+.demo>.dh{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.demo>.dh::before{content:"TRY IT";font-family:var(--f-mono);font-size:.7rem;font-weight:700;letter-spacing:.1em;background:var(--pink);color:#fff;padding:3px 8px;border-radius:6px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.kpi{border-radius:12px;padding:12px;background:var(--bg2)}
+.kpi small{display:block;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kpi b{font-family:var(--f-mono);font-size:1.3rem;font-variant-numeric:tabular-nums}
+.slider{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;font-weight:700;font-size:.88rem}
+.slider input{grid-column:1/-1}
+.slider output{font-family:var(--f-mono);color:var(--pink)}
+.hot{position:absolute;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--bg);border:3px solid var(--yellow);font-weight:800;font-size:.8rem;cursor:pointer;z-index:6;display:grid;place-items:center;padding:0}
+.hot.on{background:var(--pink);color:#fff}
+.quiz .q{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:12px;background:var(--bg2)}
+.quiz .opts{display:flex;flex-direction:column;gap:6px}
+.quiz .opts button{text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:600}
+.quiz .opts button.right{border-color:var(--green);background:var(--green-s)}
+.quiz .opts button.wrong{border-color:var(--red);background:var(--red-s)}
+.abbar{display:grid;grid-template-columns:90px minmax(0,1fr) 70px;gap:10px;align-items:center;font-size:.88rem;font-weight:700}
+.abbar .tr{height:22px;border-radius:6px;background:var(--line);overflow:hidden}
+.abbar .tr i{display:block;height:100%;transition:width .5s}
+.radius{position:relative;aspect-ratio:1;max-width:260px;width:100%;margin:0 auto;border-radius:16px;overflow:hidden;
+  background:repeating-linear-gradient(0deg,transparent 0 23px,var(--line) 23px 24px),repeating-linear-gradient(90deg,transparent 0 23px,var(--line) 23px 24px),var(--bg2)}
+.radius .ring{position:absolute;left:50%;top:50%;border-radius:50%;transform:translate(-50%,-50%);background:color-mix(in srgb,var(--pink) 22%,transparent);border:2px solid var(--pink);transition:width .2s,height .2s}
+.radius .pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);font-size:1.6rem}
+.flag{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;font-size:.92rem}
+
+/* audit */
+.audit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);gap:22px;align-items:start}
+@media (max-width:940px){.audit{grid-template-columns:minmax(0,1fr)}}
+.acat{border-radius:var(--r);border:1px solid var(--line);background:var(--card);overflow:hidden}
+.acat>h4{padding:12px 16px;color:#fff}
+.acat .qs{padding:6px 16px 14px;display:flex;flex-direction:column}
+.aq{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;font-weight:600}
+.aq:last-child{border-bottom:0}
+.aq.col{flex-direction:column;align-items:stretch}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;flex:none}
+.seg button{border:0;background:transparent;padding:6px 12px;cursor:pointer;font-weight:700;font-size:.82rem}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.gauge{display:flex;flex-direction:column;align-items:center;gap:4px}
+.gauge svg{width:min(100%,260px);height:auto}
+.grade{font-family:var(--f-display);font-weight:800;font-size:1rem;padding:4px 12px;border-radius:999px}
+.cbar{display:grid;grid-template-columns:130px minmax(0,1fr) 46px;gap:10px;align-items:center;font-size:.86rem;font-weight:700}
+.cbar .tr{height:12px;border-radius:99px;background:var(--line);overflow:hidden}
+.cbar .tr i{display:block;height:100%;border-radius:99px;transition:width .5s}
+.fix{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.fix:last-child{border-bottom:0}
+
+/* pricing */
+.pkgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:14px}
+.pkg{display:flex;flex-direction:column;gap:10px;border-radius:var(--r);padding:20px;background:var(--card);border:2px solid var(--line);position:relative}
+.pkg.best{border-color:var(--pink);box-shadow:6px 6px 0 var(--pink)}
+.pkg .price{font-family:var(--f-display);font-weight:800;font-size:2.1rem;line-height:1}
+.pkg .price small{font-size:.9rem;font-weight:600;color:var(--muted)}
+.pkg ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:5px;font-size:.9rem}
+.pkg .ribbon{position:absolute;top:-12px;right:14px;background:var(--pink);color:#fff;font-weight:800;font-size:.72rem;padding:4px 10px;border-radius:999px;letter-spacing:.05em}
+.quote{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.85fr);gap:22px;align-items:start}
+@media (max-width:900px){.quote{grid-template-columns:minmax(0,1fr)}}
+.qline{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:.95rem}
+.qline b{font-family:var(--f-mono)}
+.qtotal{font-family:var(--f-display);font-weight:800;font-size:2rem}
+.addon{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);cursor:pointer;font-size:.9rem}
+.addon:has(input:checked){border-color:var(--teal);background:var(--teal-s)}
+
+/* clients */
+.day{display:grid;grid-template-columns:auto 64px minmax(0,1fr);gap:12px;align-items:start;padding:12px 14px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+.day.done{opacity:.6}
+.day.done .dt{text-decoration:line-through}
+.day .dn{font-family:var(--f-mono);font-weight:700;font-size:.8rem;padding:4px 0;border-radius:8px;text-align:center;color:#fff}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+.flips{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px}
+.flip{perspective:1000px;min-height:210px;cursor:pointer;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;min-height:210px;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .fa,.flip .fb2{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:8px;overflow:auto}
+.flip .fa{background:var(--ink);color:var(--bg)}
+.flip .fa h4{font-size:1.25rem}
+.flip .fb2{transform:rotateY(180deg);background:var(--teal-s);color:var(--ink);font-size:.9rem;border:2px solid var(--teal)}
+.kanban{display:grid;grid-template-columns:repeat(5,minmax(190px,1fr));gap:10px;overflow-x:auto;padding-bottom:8px}
+.kcol{background:var(--bg2);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;min-height:160px}
+.kcol h4{font-size:.85rem;display:flex;justify-content:space-between}
+.lead-c{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 10px;font-size:.84rem;display:flex;flex-direction:column;gap:5px}
+.lead-c .acts{display:flex;gap:4px}
+.lead-c .acts button{border:1px solid var(--line);background:var(--bg);border-radius:6px;cursor:pointer;font-size:.78rem;padding:2px 7px}
+
+/* chart */
+.chart svg{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:11px}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(16px);opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:800;z-index:99;transition:transform .25s,opacity .25s}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+footer{border-top:1px solid var(--line);padding-block:26px;color:var(--muted);font-size:.86rem}
+@keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:none;opacity:1}}
+.pop{animation:pop .35s ease}
+.glow{outline:4px dashed #FFE14D;outline-offset:4px;border-radius:6px}
+</style>
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#home"><i>Ai</i>Yaya Ad Lab</a>
+    <nav class="nav" id="nav">
+      <a href="#home" data-v="home">Home</a>
+      <a href="#learn" data-v="learn">Learn</a>
+      <a href="#builder" data-v="builder">Ad Builder</a>
+      <a href="#audit" data-v="audit">AI Audit</a>
+      <a href="#pricing" data-v="pricing">Pricing</a>
+      <a href="#clients" data-v="clients">Get Clients</a>
+      <a href="#business" data-v="business">Business Plan</a>
+      <a href="#prompts" data-v="prompts">Prompts</a>
+    </nav>
+    <button class="themebtn" id="themeBtn" aria-label="Switch light or dark"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
+  </div>
+</header>
+
+<main>
+<!-- ============ HOME ============ -->
+<div class="view" id="v-home">
+  <div class="wrap">
+    <div class="hero">
+      <div class="stack" style="gap:16px">
+        <span class="eyebrow">Free course · 4 working tools · No sign-up</span>
+        <h1>Make <span class="c1">ads</span> with AI. Sell them to <span class="c2">local businesses</span>. Get <span class="hl">paid monthly</span>.</h1>
+        <p class="lead">Learn AI advertising in plain English, then use the tools on this site to build ads, audit businesses, price your work and find your first clients. Every part has a demo you can click.</p>
+        <div class="row">
+          <a class="btn" href="#builder">Build an ad now</a>
+          <a class="btn alt" href="#learn">Start lesson 1</a>
+        </div>
+        <div class="statrow">
+          <div class="stat"><b class="mono">$997</b><span>a typical monthly fee for one local client</span></div>
+          <div class="stat"><b class="mono">15 min</b><span>to make a full ad pack with AI</span></div>
+          <div class="stat"><b class="mono">2–6 wk</b><span>to a first client if you message daily</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="phone"><div class="screen" id="heroPhone"></div></div>
+        <p class="muted" style="text-align:center;font-size:.82rem;margin-top:10px">Live demo: the Ad Builder making ads for a new business every few seconds.</p>
+      </div>
+    </div>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">The money map</span><h2>Four steps from zero to your first paying client</h2></div>
+      <div class="steps">
+        <div class="step ink-pink"><div class="n" style="color:var(--pink)">1</div><h3>Learn the basics</h3><p>Do the 10 short lessons. About 2 hours. You'll know the words clients use and the numbers that matter.</p><a class="btn sm" href="#learn" style="margin-top:10px">Learn</a></div>
+        <div class="step ink-orange"><div class="n" style="color:var(--orange)">2</div><h3>Pick a niche, build 3 demo ads</h3><p>Choose one type of business (dentists, roofers, gyms…). Make 3 sample ads for them in the Ad Builder.</p><a class="btn sm orange" href="#builder" style="margin-top:10px">Build</a></div>
+        <div class="step ink-teal"><div class="n" style="color:var(--teal)">3</div><h3>Send free audits every day</h3><p>Audit 10 businesses a day and send each owner their score plus a free ad idea. This is the fastest door-opener.</p><a class="btn sm teal" href="#audit" style="margin-top:10px">Audit</a></div>
+        <div class="step ink-blue"><div class="n" style="color:var(--blue)">4</div><h3>Close, deliver, repeat</h3><p>Offer a founding-client price, launch their ads, screenshot the results, and use them to win client #2.</p><a class="btn sm blue" href="#clients" style="margin-top:10px">Get clients</a></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">What's inside</span><h2>The tools</h2></div>
+      <div class="grid g4">
+        <a class="toolcard" href="#builder"><span class="ico" style="background:var(--pink-s)">🎨</span><h3>AI Ad Builder</h3><p class="muted">Pick a business, click Generate. Get headlines, ad text, an image prompt, a video script, targeting and a budget, with live Facebook, Google and TikTok previews.</p></a>
+        <a class="toolcard" href="#audit"><span class="ico" style="background:var(--teal-s)">🩺</span><h3>AI Audit</h3><p class="muted">Score any business out of 100, list its top fixes, estimate the money it's missing, and copy a report to send the owner.</p></a>
+        <a class="toolcard" href="#pricing"><span class="ico" style="background:var(--yellow-s)">💰</span><h3>Pricing + Quotes</h3><p class="muted">Five ready packages with prices that work, add-ons, and a quote builder that shows your profit.</p></a>
+        <a class="toolcard" href="#clients"><span class="ico" style="background:var(--blue-s)">🚀</span><h3>Client Finder</h3><p class="muted">A 14-day sprint, message scripts made for each lead, objection answers and a simple lead tracker.</p></a>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">Realistic income</span><h2>What a small AI ad business earns</h2>
+        <p class="lead">At the Growth package price of $997 a month. You pay for tools (about $60–$150 a month). The client pays for the ads themselves, straight to Facebook or Google.</p></div>
+      <div class="tbl"><table>
+        <thead><tr><th>Clients</th><th>Monthly income</th><th>Yearly</th><th>Hours a week (with AI)</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="num">$997</td><td class="num">$11,964</td><td class="num">3–5</td></tr>
+          <tr><td>3</td><td class="num">$2,991</td><td class="num">$35,892</td><td class="num">10–14</td></tr>
+          <tr><td>5</td><td class="num">$4,985</td><td class="num">$59,820</td><td class="num">16–22</td></tr>
+          <tr><td>10</td><td class="num">$9,970</td><td class="num">$119,640</td><td class="num">30–40 (hire help)</td></tr>
+        </tbody></table></div>
+      <p class="note" style="margin-top:14px">Nobody can promise you income, and you should be wary of anyone who does. These numbers show what's possible at fair prices. Your speed depends on how many owners you contact each day.</p>
+    </section>
+  </div>
+</div>
+
+<!-- ============ LEARN ============ -->
+<div class="view" id="v-learn" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">AI Advertising Academy</span><h1 style="font-size:clamp(2rem,5vw,3.2rem)">Learn AI advertising, one short lesson at a time</h1>
+      <div class="row" style="gap:12px;max-width:520px"><div class="progress" style="flex:1"><i id="lprog" style="width:0"></i></div><span class="mono" id="lprogt">0/10</span></div>
+    </div>
+    <div class="learn">
+      <div class="lessonlist" id="lessonList"></div>
+      <div class="lesson" id="lesson"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ BUILDER ============ -->
+<div class="view" id="v-builder" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">The app</span><h1 style="font-size:clamp(2rem,5vw,3.2rem)">AI Ad Builder</h1>
+      <p class="lead">Pick the client's type of business, fill in two or three boxes, and click Generate. You get a full ad pack you can copy into Facebook, Google or TikTok.</p></div>
+    <div class="builder">
+      <div class="stack" style="gap:16px">
+        <div class="card stack">
+          <h4>1. What kind of business?</h4>
+          <div class="nichegrid" id="nicheGrid"></div>
+        </div>
+        <div class="card grid g2" style="gap:12px">
+          <h4 style="grid-column:1/-1">2. About the business</h4>
+          <label class="f">Business name<input type="text" id="bName" value="Tony's Pizza"></label>
+          <label class="f">City<input type="text" id="bCity" value="Austin"></label>
+          <label class="f" style="grid-column:1/-1">The offer <span class="h">The deal that makes people act now. A good offer beats a pretty picture.</span><input type="text" id="bOffer"></label>
+          <label class="f" style="grid-column:1/-1">Who should see it?<input type="text" id="bAud"></label>
+        </div>
+        <div class="card stack">
+          <h4>3. Style</h4>
+          <div class="row" id="toneRow"></div>
+          <div class="swatches" id="swatches"></div>
+        </div>
+        <div class="row">
+          <button class="btn" id="genBtn">Generate ad pack</button>
+          <button class="btn alt" id="surpriseBtn">Surprise me</button>
+          <button class="btn teal" id="saveBtn">Save to My Ads</button>
+        </div>
+      </div>
+      <div class="stack stickyprev" style="gap:14px">
+        <div class="row" style="justify-content:space-between">
+          <div class="tabs" id="platTabs"></div>
+        </div>
+        <div class="variants" id="variantBtns"></div>
+        <div id="preview"></div>
+      </div>
+    </div>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">Your ad pack</span><h2>Everything the ad needs, ready to copy</h2></div>
+      <div class="row" style="margin-bottom:14px"><button class="btn dark sm" id="copyAll">Copy the whole ad pack</button></div>
+      <div class="grid g2" id="pack"></div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">My Ads</span><h2>Saved ads</h2><p class="muted">Saved in this browser only. Click one to load it again. Use these as your portfolio when you message owners.</p></div>
+      <div class="gallery" id="gallery"></div>
+    </section>
+  </div>
+</div>
+
+<!-- ============ AUDIT ============ -->
+<div class="view" id="v-audit" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Door-opener tool</span><h1 style="font-size:clamp(2rem,5vw,3.2rem)">AI Ad Audit</h1>
+      <p class="lead">Look up a business on Google Maps, its website and Facebook (5 minutes), answer these questions, and get a score, the top fixes and a report you can send the owner for free.</p></div>
+    <div class="row" style="margin-bottom:16px">
+      <span class="muted" style="font-weight:700">Load an example:</span>
+      <button class="chip" data-demo="weak">Tony's Pizza (weak)</button>
+      <button class="chip" data-demo="mid">Bright Smile Dental (okay)</button>
+      <button class="chip" data-demo="strong">Peak Roofing (strong)</button>
+    </div>
+    <div class="audit">
+      <div class="stack" style="gap:14px">
+        <div class="card grid g2" style="gap:12px">
+          <label class="f">Business name<input type="text" id="aName" value="Tony's Pizza"></label>
+          <label class="f">Type<select id="aNiche"></select></label>
+          <label class="f">Owner's first name<input type="text" id="aOwner" value="Tony"></label>
+          <label class="f">Average customer is worth ($)<input type="number" id="aValue" value="35" min="1"></label>
+        </div>
+        <div id="auditQs" class="stack" style="gap:14px"></div>
+      </div>
+      <div class="stack stickyprev" style="gap:14px">
+        <div class="card stack" style="align-items:stretch">
+          <div class="gauge" id="gauge"></div>
+          <div id="cbars" class="stack" style="gap:8px"></div>
+        </div>
+        <div class="card"><h4 style="margin-bottom:6px">Top fixes (biggest win first)</h4><div id="fixes"></div></div>
+        <div class="ink ink-yellow stack" id="missed"></div>
+      </div>
+    </div>
+    <section>
+      <div class="sec-head"><span class="eyebrow">Send it</span><h2>Audit report and video script</h2><p class="muted">Paste the report into an email or DM. Read the script while recording a 2-minute screen video (Loom is free) of their Google listing and website.</p></div>
+      <div class="grid g2">
+        <div><div class="copyrow"><h4>Report for the owner</h4><button class="btn sm" data-copy="auditReport">Copy</button></div><div class="out" id="auditReport"></div></div>
+        <div><div class="copyrow"><h4>2-minute video script</h4><button class="btn sm blue" data-copy="auditLoom">Copy</button></div><div class="out" id="auditLoom"></div></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ============ PRICING ============ -->
+<div class="view" id="v-pricing" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">What to charge</span><h1 style="font-size:clamp(2rem,5vw,3.2rem)">Prices that win clients and pay you well</h1>
+      <p class="lead">Cheaper than a big agency ($2,000–$5,000 a month), more than a cheap freelancer ($300). AI makes you fast, so you can charge a fair middle price and still earn a lot per hour.</p></div>
+    <div class="pkgs" id="pkgs"></div>
+    <div class="grid g3" style="margin-top:18px">
+      <div class="ink ink-pink stack"><h4>Founding-client deal (your first 3)</h4><p>30% off the monthly fee for 3 months in exchange for a written review and permission to share results. This gets you case studies fast.</p></div>
+      <div class="ink ink-teal stack"><h4>Charge more for big-ticket niches</h4><p>Roofers, dentists, lawyers, HVAC and med spas earn $700–$12,000 per customer. Charge them about 1.5× (Growth becomes $1,497).</p></div>
+      <div class="ink ink-blue stack"><h4>Ad spend is separate</h4><p>The client puts their own card in Facebook or Google. Ask for at least $15–$30 a day. Never mix their ad money with your fee.</p></div>
+    </div>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">Extras to add on</span><h2>Add-ons</h2></div>
+      <div class="tbl"><table id="addonTable"><thead><tr><th>Add-on</th><th>Price</th><th>Why clients buy it</th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">Quote builder</span><h2>Build a quote and see your profit</h2></div>
+      <div class="quote">
+        <div class="stack" style="gap:14px">
+          <div class="card stack"><h4>Package</h4><div class="row" id="qPkg"></div></div>
+          <div class="card stack"><h4>Client type</h4>
+            <div class="row"><button class="chip on" data-tier="1">Standard (restaurants, salons, gyms, shops)</button><button class="chip" data-tier="1.5">Big-ticket (roofers, dentists, lawyers, HVAC)</button></div></div>
+          <div class="card stack"><h4>Add-ons</h4><div class="grid g2" id="qAddons" style="gap:8px"></div></div>
+          <div class="card grid g2" style="gap:14px">
+            <label class="slider">Contract length <output id="qMonthsO">6 months</output><input type="range" id="qMonths" min="1" max="12" value="6"></label>
+            <label class="slider">Client's ad budget a month <output id="qSpendO">$900</output><input type="range" id="qSpend" min="300" max="5000" step="100" value="900"></label>
+            <label class="row" style="font-weight:700;grid-column:1/-1"><input type="checkbox" id="qFound"> Founding-client discount (30% off the first 3 months)</label>
+          </div>
+        </div>
+        <div class="card stack stickyprev">
+          <h4>Quote</h4>
+          <div id="qLines"></div>
+          <div><span class="muted" style="font-weight:700">First invoice</span><div class="qtotal mono" id="qFirst">$0</div></div>
+          <div class="grid g2" style="gap:10px">
+            <div class="kpi"><small>Contract value</small><b id="qValue">$0</b></div>
+            <div class="kpi" style="background:var(--green-s)"><small>Your profit</small><b id="qProfit" style="color:var(--green)">$0</b></div>
+          </div>
+          <p class="muted" style="font-size:.8rem">Profit subtracts about $80 a month of tools and any outside costs. The client pays the ad budget straight to the platform.</p>
+          <div class="copyrow"><h4>Quote message</h4><button class="btn sm" data-copy="qText">Copy</button></div>
+          <div class="out" id="qText"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ============ CLIENTS ============ -->
+<div class="view" id="v-clients" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">The fastest way</span><h1 style="font-size:clamp(2rem,5vw,3.2rem)">Get your first AI ad client</h1>
+      <p class="lead">The fastest method that works: give value first. Send a business owner a free audit and a free ad made for them. Owners ignore pitches. They reply to things made for their business.</p></div>
+
+    <div class="grid g3">
+      <div class="ink ink-pink stack"><span class="tag t-pink">Best</span><h3>Google Maps + free audit</h3><p>Search "dentist near Austin". Pick businesses with fewer than 50 reviews, no website button, or a rating under 4.3. Audit them, send the report.</p></div>
+      <div class="ink ink-orange stack"><span class="tag t-orange">Has budget</span><h3>Meta Ad Library</h3><p>Search a city + niche at facebook.com/ads/library. Businesses already paying for ads have money. If their ads are weak, show a better one.</p></div>
+      <div class="ink ink-teal stack"><span class="tag t-teal">Warm</span><h3>People you know</h3><p>Text 20 friends: "I'm making AI ads for local businesses. Who do you know who owns one?" Warm intros close 3–5× better.</p></div>
+      <div class="ink ink-blue stack"><span class="tag t-blue">Face to face</span><h3>Walk in</h3><p>Visit 5 shops at quiet hours (2–4pm) with your phone showing their custom ad. Hard to say no to in person.</p></div>
+      <div class="ink ink-violet stack"><span class="tag t-violet">Partners</span><h3>Web designers & agencies</h3><p>Offer to make AI ads for their clients. They resell your work, and you get steady volume without sales.</p></div>
+      <div class="ink ink-yellow stack"><span class="tag t-yellow">Groups</span><h3>Local business groups</h3><p>Join Facebook groups for owners in your city. Post a helpful tip and one free audit offer each week.</p></div>
+    </div>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">Your daily numbers</span><h2>Outreach calculator</h2><p class="muted">Sales is a numbers game. Move the sliders to see how many messages a first client takes.</p></div>
+      <div class="card grid g2" style="gap:22px">
+        <div class="stack" style="gap:14px">
+          <label class="slider">Messages you send a day <output id="fMsgO"></output><input type="range" id="fMsg" min="5" max="80" value="25"></label>
+          <label class="slider">Reply rate <output id="fRepO"></output><input type="range" id="fRep" min="1" max="20" value="6"></label>
+          <label class="slider">Replies that book a call <output id="fCallO"></output><input type="range" id="fCall" min="10" max="70" value="35"></label>
+          <label class="slider">Calls that become clients <output id="fCloseO"></output><input type="range" id="fClose" min="5" max="50" value="22"></label>
+        </div>
+        <div class="stack"><div class="kpis" id="fKpis"></div><div class="note teal" id="fNote"></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">14-day sprint</span><h2>Do this, day by day</h2><p class="muted">Tick each day as you finish it. Your ticks stay in this browser.</p></div>
+      <div class="stack" id="sprint" style="gap:8px"></div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">Script generator</span><h2>Messages written for each lead</h2></div>
+      <div class="card grid g4" style="gap:12px;margin-bottom:14px">
+        <label class="f">Your name<input type="text" id="sMe" value="Yaya"></label>
+        <label class="f">Owner's name<input type="text" id="sThem" value="Dr. Patel"></label>
+        <label class="f">Their business<input type="text" id="sBiz" value="Bright Smile Dental"></label>
+        <label class="f">City<input type="text" id="sCity" value="Austin"></label>
+        <label class="f">Type<select id="sNiche"></select></label>
+        <label class="f" style="grid-column:span 2">What you noticed<select id="sObs">
+          <option value="you have 38 Google reviews while the top dentist nearby has 400+">Few reviews</option>
+          <option value="you aren't running any ads right now, but two competitors nearby are">No ads running</option>
+          <option value="your Facebook ads don't have a clear offer or a button to book">Weak ads</option>
+          <option value="your website doesn't have a booking button on phones">No booking button</option>
+          <option value="your last Facebook post was over 3 months ago">Quiet social media</option>
+        </select></label>
+      </div>
+      <div class="tabs" id="sTabs" style="margin-bottom:10px"></div>
+      <div class="copyrow"><h4 id="sTitle"></h4><button class="btn sm" data-copy="sOut">Copy</button></div>
+      <div class="out" id="sOut" style="min-height:180px"></div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">Objections</span><h2>When they say… (tap a card)</h2></div>
+      <div class="flips" id="flips"></div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">Lead tracker</span><h2>Your mini CRM</h2><p class="muted">Add leads and move them along. Saved in this browser. The first cards are examples; delete them anytime.</p></div>
+      <div class="card row" style="margin-bottom:12px">
+        <input type="text" id="lBiz" placeholder="Business name" style="flex:2;min-width:160px">
+        <input type="text" id="lNote" placeholder="Note (e.g. 38 reviews, no ads)" style="flex:3;min-width:180px">
+        <button class="btn sm" id="lAdd">Add lead</button>
+      </div>
+      <div class="kanban" id="kanban"></div>
+    </section>
+  </div>
+</div>
+
+<!-- ============ BUSINESS ============ -->
+<div class="view" id="v-business" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Your AI ad business</span><h1 style="font-size:clamp(2rem,5vw,3.2rem)">The business plan</h1>
+      <p class="lead">A one-person AI advertising agency. You sell results (more calls, bookings and sales) to local businesses. AI does the heavy lifting on copy, images and video.</p></div>
+
+    <div class="grid g3">
+      <div class="card stack"><span class="tag t-pink">Offer</span><h3>One sentence</h3><p class="out" style="background:var(--pink-s)">"I help [niche] in [city] get 20+ new customers a month with AI-made ads, or you don't pay next month."</p><p class="muted" style="font-size:.88rem">Only add a guarantee once you've had results with 2–3 clients.</p></div>
+      <div class="card stack"><span class="tag t-teal">Startup cost</span><h3>Under $100</h3><p>Free: Meta Ads Manager, Google Ads, Canva free, CapCut, Loom, Google Sheets, Calendly. Paid later: an AI chat plan (~$20/mo), Canva Pro (~$15/mo), a domain (~$12/yr).</p></div>
+      <div class="card stack"><span class="tag t-blue">Your job</span><h3>Strategist, not button-pusher</h3><p>You choose the offer, the audience and what to test. AI writes and designs. The platform's AI finds the buyers. You read the numbers and improve.</p></div>
+    </div>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">Choose a niche</span><h2>Which businesses to target</h2><p class="muted">Pick one niche to start. You'll learn faster and your examples will match every lead.</p></div>
+      <div class="tbl"><table id="nicheTable"><thead><tr><th>Niche</th><th>Customer worth</th><th>Easy to sell?</th><th>Monthly fee</th><th>Note</th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">Growth calculator</span><h2>Your next 12 months</h2></div>
+      <div class="card grid g2" style="gap:22px">
+        <div class="stack" style="gap:14px">
+          <label class="slider">New clients each month <output id="gNewO"></output><input type="range" id="gNew" min="0.5" max="4" step="0.5" value="1"></label>
+          <label class="slider">Average monthly fee <output id="gFeeO"></output><input type="range" id="gFee" min="400" max="3000" step="50" value="997"></label>
+          <label class="slider">Clients who leave each month <output id="gChurnO"></output><input type="range" id="gChurn" min="0" max="25" value="8"></label>
+          <div class="kpis" id="gKpis"></div>
+        </div>
+        <div class="chart" id="gChart"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head"><span class="eyebrow">Delivery</span><h2>What happens after they say yes</h2></div>
+      <div class="grid g2">
+        <div class="card stack"><h4>Onboarding checklist (day 0–2)</h4><ol class="stack" style="padding-left:1.2em;margin:0;gap:6px">
+          <li>Send a simple contract and invoice (Stripe, PayPal or Square invoices all work).</li>
+          <li>Ask to be added as a <b>partner</b> in their Meta Business account, and as a user in their Google Ads. The client owns the accounts.</li>
+          <li>Collect logo, 10+ real photos, prices, best offer, and their phone or booking link.</li>
+          <li>Install the Meta Pixel and Google tag on their website (or use a lead form).</li>
+          <li>Agree on one goal number: calls, bookings or sales per month.</li>
+        </ol></div>
+        <div class="card stack"><h4>Every month</h4><ol class="stack" style="padding-left:1.2em;margin:0;gap:6px">
+          <li><b>Week 1:</b> Make 12 new creatives with the Ad Builder. Launch the 3×3 test.</li>
+          <li><b>Week 2:</b> Turn off losers (high cost per lead). Move budget to winners.</li>
+          <li><b>Week 3:</b> New hooks on the winning image. Check lead quality with the owner.</li>
+          <li><b>Week 4:</b> Send a one-page report: spend, leads, cost per lead, sales. Book a 15-min call.</li>
+        </ol></div>
+        <div class="card stack"><h4>Stay legal and trusted</h4><ul class="stack" style="padding-left:1.2em;margin:0;gap:6px">
+          <li>Use a written agreement: what you do, the fee, the notice period (30 days), who pays ad spend.</li>
+          <li>Follow each platform's ad rules. Housing, jobs, credit and politics have special rules.</li>
+          <li>Never write fake reviews or testimonials. In the US the FTC can fine businesses for them.</li>
+          <li>Register a business name and keep records for taxes. Ask a local accountant if unsure.</li>
+        </ul></div>
+        <div class="card stack"><h4>How to grow past 5 clients</h4><ul class="stack" style="padding-left:1.2em;margin:0;gap:6px">
+          <li>Write down every task as a checklist, then hire a part-time assistant for creatives and reports.</li>
+          <li>Raise prices for new clients every 3 wins.</li>
+          <li>White-label: make ads for other agencies at a wholesale price.</li>
+          <li>Ask every happy client for 2 referrals and give them a free month per signed referral.</li>
+        </ul></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ============ PROMPTS ============ -->
+<div class="view" id="v-prompts" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Copy & paste</span><h1 style="font-size:clamp(2rem,5vw,3.2rem)">AI prompt library</h1>
+      <p class="lead">Paste these into any AI chat assistant or image tool. The words in brackets are filled in from the business you last chose in the Ad Builder.</p></div>
+    <div class="row" id="pFilters" style="margin-bottom:16px"></div>
+    <div class="grid g2" id="pList"></div>
+  </div>
+</div>
+</main>
+
+<footer><div class="wrap row" style="justify-content:space-between">
+  <span>Yaya AI Ad Lab · built with Claude Code</span>
+  <span>Prices and costs are guides, not promises. Ad costs change by city, niche and season.</span>
+</div></footer>
+<div class="toast" id="toast" role="status"></div>
+<script>
+// ---------- helpers ----------
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('yal_' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('yal_' + k, JSON.stringify(v)); } catch (e) {} }
+};
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const money = n => '$' + Math.round(n).toLocaleString('en-US');
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+let toastT;
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 1800); }
+function copyText(text) {
+  const fallback = () => {
+    const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); toast('Copied'); } catch (e) { toast('Select the text and copy it'); }
+    ta.remove();
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(() => toast('Copied'), fallback);
+  else fallback();
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-copy]'); if (!b) return;
+  const el = document.getElementById(b.dataset.copy); if (el) copyText(el.innerText);
+});
+
+// ---------- niches ----------
+const NICHES = {
+  restaurant: { label: 'Restaurant', emoji: '🍕', kind: 'restaurant', thing: 'dinner', audience: 'Adults 21–55 within 5 miles who order food online', offer: 'Free dessert with any dinner order this week',
+    pains: ['cooking after a long day', 'waiting an hour for cold delivery', 'the same boring takeout'], benefits: ['hot, made-to-order food', 'pickup ready in 15 minutes', 'family deals that feed everyone'],
+    proof: '4.8★ from 600+ local reviews', cta: 'Order Now', goal: 'Online orders', visual: 'overhead photo of a bubbling cheese pizza on a wooden table, warm evening light, steam rising',
+    funny: 'Your oven called. It wants the night off.', avgSale: 35, cpl: [3, 10], tier: 'std', ease: 'Easy', palette: 0 },
+  dentist: { label: 'Dentist', emoji: '🦷', kind: 'dentist', thing: 'patients', audience: 'Adults 25–65 within 10 miles, parents and homeowners', offer: '$79 new-patient exam, cleaning and X-rays',
+    pains: ['putting off your checkup for years', 'surprise dental bills', 'hiding your smile in photos'], benefits: ['gentle, pain-free cleanings', 'same-week appointments', 'clear prices before we start'],
+    proof: 'Trusted by 2,000+ local families', cta: 'Book Now', goal: 'Bookings', visual: 'bright modern dental office, smiling patient in the chair, friendly dentist, mint and white tones, natural light',
+    funny: 'Your teeth have been texting us. They miss you.', avgSale: 900, cpl: [25, 70], tier: 'high', ease: 'Medium', palette: 1 },
+  gym: { label: 'Gym', emoji: '💪', kind: 'gym', thing: 'members', audience: 'Adults 20–45 within 7 miles interested in fitness and weight loss', offer: '7-day free pass + a free coaching session',
+    pains: ['starting over every January', 'crowded gyms where nobody helps you', 'paying for a membership you never use'], benefits: ['coaches who learn your name', 'classes that fit a lunch break', 'a plan built for your body'],
+    proof: '500+ members hit their goal last year', cta: 'Claim Free Pass', goal: 'Sign-ups', visual: 'energetic group fitness class, diverse people smiling mid-workout, bright modern gym, bold colors',
+    funny: 'Your couch will be fine without you. We checked.', avgSale: 600, cpl: [10, 35], tier: 'std', ease: 'Easy', palette: 3 },
+  roofer: { label: 'Roofer', emoji: '🏠', kind: 'roofer', thing: 'jobs', audience: 'Homeowners 35–70 within 25 miles, homes 15+ years old', offer: 'Free roof inspection with photos in 24 hours',
+    pains: ['a leak you keep ignoring', 'storm damage you can’t see from the ground', 'contractors who never call back'], benefits: ['a written quote in 24 hours', 'licensed and insured crews', 'help with your insurance claim'],
+    proof: '1,200+ roofs replaced, 4.9★ on Google', cta: 'Get Free Inspection', goal: 'Calls', visual: 'drone photo of a crew installing dark shingles on a suburban roof, clear blue sky, golden hour',
+    funny: 'Your roof is older than your phone. By about 20 years.', avgSale: 12000, cpl: [40, 150], tier: 'high', ease: 'Medium', palette: 2 },
+  salon: { label: 'Salon', emoji: '💇', kind: 'salon', thing: 'clients', audience: 'Women 22–55 within 8 miles interested in hair, beauty and self-care', offer: '20% off your first cut or color',
+    pains: ['a bad haircut you’re still growing out', 'stylists who don’t listen', 'booking weeks ahead'], benefits: ['stylists who listen first', 'online booking in 30 seconds', 'color that lasts for weeks'],
+    proof: '4.9★ from 300+ happy clients', cta: 'Book Now', goal: 'Bookings', visual: 'close-up of glossy, freshly colored balayage hair in a salon chair, soft pink light, editorial beauty photo',
+    funny: 'Bad hair day? We can make it a bad hair hour, tops.', avgSale: 120, cpl: [8, 25], tier: 'std', ease: 'Easy', palette: 3 },
+  realestate: { label: 'Real Estate', emoji: '🔑', kind: 'real estate agent', thing: 'sellers', audience: 'People in your city interested in buying or selling a home (Housing category: Meta does not allow age or zip-code targeting)', offer: 'Free home value report in 60 seconds',
+    pains: ['not knowing what your home is worth', 'selling for less than you should', 'a stressful, slow sale'], benefits: ['a price backed by real local sales', 'photos and video that sell faster', 'a plan you can read in 5 minutes'],
+    proof: 'Sold 85 local homes last year', cta: 'Get My Home Value', goal: 'Leads', visual: 'modern family home at dusk with warm lights on, neat lawn, wide-angle real estate photo',
+    funny: 'Your house might be worth more than the internet thinks.', avgSale: 9000, cpl: [20, 80], tier: 'high', ease: 'Hard', special: 'Housing', palette: 5 },
+  auto: { label: 'Auto Repair', emoji: '🚗', kind: 'auto shop', thing: 'drivers', audience: 'Drivers 25–65 within 10 miles', offer: '$29.99 oil change + a free brake check',
+    pains: ['the check-engine light you keep ignoring', 'getting upsold on things you don’t need', 'waiting all day for a simple fix'], benefits: ['honest quotes with photos', 'most repairs done the same day', 'a 12-month parts and labor warranty'],
+    proof: 'Family owned, 4.8★ from 900+ drivers', cta: 'Book Service', goal: 'Calls', visual: 'clean bright auto repair garage, smiling mechanic beside a car on a lift, cinematic light',
+    funny: 'That noise your car makes? It’s not “probably fine.”', avgSale: 350, cpl: [12, 35], tier: 'std', ease: 'Easy', palette: 2 },
+  ecommerce: { label: 'Online Store', emoji: '🛍️', kind: 'online shop', thing: 'orders', audience: 'Shoppers 18–45 interested in your product type, plus a lookalike of past buyers', offer: '15% off your first order + free shipping',
+    pains: ['products that look better online than in person', 'slow shipping', 'returns that are a hassle'], benefits: ['free shipping on every order', '30-day easy returns', 'made to last, not to toss'],
+    proof: 'Loved by 10,000+ customers', cta: 'Shop Now', goal: 'Online sales', visual: 'flat-lay product photo on a bright pastel background, soft shadows, matching props, studio light',
+    funny: 'Add to cart. Your future self says thanks.', avgSale: 60, cpl: [8, 30], tier: 'std', ease: 'Medium', palette: 4 },
+  lawyer: { label: 'Law Firm', emoji: '⚖️', kind: 'injury lawyer', thing: 'cases', audience: 'Adults 25–65 within 30 miles', offer: 'Free 15-minute case review. No fee unless we win.',
+    pains: ['an insurance company that keeps saying no', 'medical bills piling up after an accident', 'not knowing your rights'], benefits: ['a lawyer who calls back the same day', 'no upfront fees', 'clear answers in plain English'],
+    proof: '$40M+ recovered for local clients', cta: 'Get Free Review', goal: 'Calls', visual: 'confident attorney in a bright modern office shaking hands with a client, warm, trustworthy',
+    funny: 'The insurance company has lawyers. Shouldn’t you?', avgSale: 5000, cpl: [60, 250], tier: 'high', ease: 'Hard', palette: 5 },
+  coffee: { label: 'Coffee Shop', emoji: '☕', kind: 'coffee shop', thing: 'regulars', audience: 'Adults 18–45 within 3 miles, students and remote workers', offer: 'BOGO lattes before 10am',
+    pains: ['burnt chain-store coffee', 'long drive-thru lines', 'nowhere cozy to work'], benefits: ['beans roasted this week', 'your order ready in 3 minutes', 'free Wi-Fi and comfy seats'],
+    proof: 'Voted best coffee in town', cta: 'Get Directions', goal: 'Store visits', visual: 'latte art heart in a ceramic cup on a sunny cafe table, steam, cozy morning light',
+    funny: 'Monday called. We answered with espresso.', avgSale: 40, cpl: [2, 8], tier: 'std', ease: 'Easy', palette: 0 },
+  hvac: { label: 'HVAC & Plumbing', emoji: '🔧', kind: 'HVAC company', thing: 'service calls', audience: 'Homeowners 30–70 within 20 miles', offer: '$49 AC tune-up (normally $129)',
+    pains: ['an AC that dies on the hottest day', 'surprise repair bills', 'waiting days for a tech'], benefits: ['same-day service', 'upfront flat prices', 'techs who wear shoe covers'],
+    proof: '4.9★ and 24/7 emergency service', cta: 'Call Now', goal: 'Calls', visual: 'friendly HVAC technician in uniform servicing an outdoor AC unit beside a home, sunny day',
+    funny: 'Sweating in your own living room is not a personality.', avgSale: 1500, cpl: [25, 90], tier: 'high', ease: 'Medium', palette: 1 },
+  medspa: { label: 'Med Spa', emoji: '✨', kind: 'med spa', thing: 'clients', audience: 'Adults 28–60 within 15 miles interested in skincare and wellness', offer: '$100 off your first treatment',
+    pains: ['tired-looking skin', 'results that look overdone', 'clinics that feel like a factory'], benefits: ['natural-looking results', 'licensed nurse injectors', 'a free plan before any treatment'],
+    proof: '5,000+ treatments, 4.9★', cta: 'Book Consultation', goal: 'Bookings', visual: 'calm spa treatment room, glowing skin close-up, soft neutral tones, luxury editorial photo',
+    funny: 'Your skin wants a vacation. We are the vacation.', avgSale: 700, cpl: [20, 60], tier: 'high', ease: 'Medium', palette: 3 },
+  cleaning: { label: 'Home Cleaning', emoji: '🧽', kind: 'cleaning company', thing: 'homes', audience: 'Busy homeowners and parents 28–60 within 12 miles', offer: '$50 off your first deep clean',
+    pains: ['spending your weekend scrubbing', 'cleaners who cancel last minute', 'coming home to a mess'], benefits: ['background-checked cleaners', 'the same team every visit', 'a 100% happiness guarantee'],
+    proof: '2,500+ homes cleaned', cta: 'Get a Quote', goal: 'Bookings', visual: 'sparkling clean bright living room, sunlight, fresh flowers, tidy and airy',
+    funny: 'Dust bunnies are not pets.', avgSale: 900, cpl: [15, 45], tier: 'std', ease: 'Easy', palette: 4 }
+};
+const NICHE_NAMES = { restaurant: "Tony's Pizza", dentist: 'Bright Smile Dental', gym: 'IronHouse Fitness', roofer: 'Peak Roofing', salon: 'Glow Hair Studio', realestate: 'Maria Lopez Homes',
+  auto: 'Precision Auto Care', ecommerce: 'Sunny Socks Co.', lawyer: 'Carter Injury Law', coffee: 'Bean There Café', hvac: 'CoolFlow Heating & Air', medspa: 'Luma Med Spa', cleaning: 'Sparkle Home Cleaning' };
+const CITIES = ['Austin', 'Phoenix', 'Atlanta', 'Denver', 'Tampa', 'Charlotte', 'Columbus', 'San Diego', 'Nashville', 'Houston'];
+const PALETTES = [
+  { name: 'Sunset', c1: '#FF6A21', c2: '#F2266F' }, { name: 'Ocean', c1: '#2F5BFF', c2: '#00A896' }, { name: 'Lemon', c1: '#FFB703', c2: '#FF6A21' },
+  { name: 'Grape', c1: '#7C3AED', c2: '#F2266F' }, { name: 'Mint', c1: '#00A896', c2: '#5BBF2A' }, { name: 'Midnight', c1: '#1D1530', c2: '#2F5BFF' }
+];
+const TONES = { friendly: 'Friendly', bold: 'Bold', urgent: 'Urgent', luxury: 'Luxury', funny: 'Funny' };
+
+// ---------- the ad generator ----------
+function shortOffer(o) {
+  if (o.length <= 34) return o;
+  const s = o.split(/[.,+(]| with | in /)[0].trim();
+  return s.length <= 34 ? s : s.slice(0, 34).replace(/\s+\S*$/, '');
+}
+function headlines(n, f) {
+  const k = n.kind, c = f.city, o = shortOffer(f.offer), b0 = cap(n.benefits[0]);
+  const T = {
+    friendly: [`Hey ${c}! ${o}`, `${c}'s friendliest ${k}`, `Meet your new favorite ${k}`],
+    bold: [`Stop ${n.pains[0]}.`, `${b0}. Period.`, `The ${k} ${c} talks about`],
+    urgent: [`This week only: ${o}`, `Last chance: ${o}`, `Only 20 spots left in ${c}`],
+    luxury: [`${f.name}. Simply better.`, `For people who notice the details`, `${b0}, done beautifully`],
+    funny: [n.funny, `Plot twist: the best ${k} is in ${c}`, `${o}. No catch. We asked our lawyer.`]
+  };
+  return T[f.tone];
+}
+function primaryTexts(n, f) {
+  const e = (f.tone === 'friendly' || f.tone === 'funny'), x = (a, b = '') => e ? a : b;
+  const urgent = f.tone === 'urgent' ? '\n⏰ Ends Sunday. Spots are limited.' : '';
+  const pas = `${cap(n.pains[0])}? ${x('😩 ')}You're not alone. Most people in ${f.city} deal with ${n.pains[1]} too.\n\n${f.name} fixes that: ${n.benefits[0]} and ${n.benefits[1]}.\n${x('⭐ ')}${n.proof}.\n\n${x('👉 ')}${f.offer}. Tap "${n.cta}" to grab it.${urgent}`;
+  const aida = `${x('📣 ')}${headlines(n, f)[0]}\n\nAt ${f.name} you get ${n.benefits[0]}, ${n.benefits[1]} and ${n.benefits[2]}.\n${n.proof}, and we'd love to make you next.\n\n${x('🎁 ')}${f.offer}.\n${x('👇 ')}Tap "${n.cta}" now.${urgent}`;
+  const bab = `Before: ${n.pains[2]}.\nAfter: ${n.benefits[0]}${x(' ✨')}.\n\nThe bridge? ${f.name}, right here in ${f.city}. ${n.proof}.\n\n${f.offer}. Tap "${n.cta}" to start.${urgent}`;
+  return [{ f: 'PAS: Problem, Agitate, Solve', t: pas }, { f: 'AIDA: Attention, Interest, Desire, Action', t: aida }, { f: 'BAB: Before, After, Bridge', t: bab }];
+}
+function googleAd(n, f) {
+  const cut = s => s.length > 30 ? s.slice(0, 30).replace(/\s+\S*$/, '') : s;
+  const hs = [cut(f.name), cut(`${n.cta} Today`), cut(`Top-Rated ${cap(n.kind)} ${f.city}`), cut(shortOffer(f.offer))];
+  const d1 = `${cap(n.benefits[0])}, ${n.benefits[1]}. ${n.proof}.`.slice(0, 90);
+  const d2 = `${f.offer}. ${n.cta} online in under a minute.`.slice(0, 90);
+  const slug = f.name.toLowerCase().replace(/[^a-z0-9]+/g, '');
+  return { hs, d1, d2, url: `www.${slug || 'yourbusiness'}.com` };
+}
+function videoScript(n, f, h) {
+  return `0–3s  HOOK (text on screen): "${h}"\n      Show: close-up, fast movement. ${cap(n.visual.split(',')[0])}.\n3–8s  PROBLEM → FIX: "Tired of ${n.pains[0]}? ${f.name} gives you ${n.benefits[0]}."\n      Show: the team, happy customer, the result.\n8–12s PROOF: "${n.proof}."\n      Show: real reviews on screen, star rating.\n12–15s OFFER + ACTION: "${f.offer}. Tap ${n.cta}."\n      Show: logo, offer sticker, arrow pointing to the button.\n\nTip: film on a phone in vertical 9:16 or make it with an AI video tool. Add captions; most people watch with sound off.`;
+}
+function buildPack(f) {
+  const n = NICHES[f.niche], hs = headlines(n, f), texts = primaryTexts(n, f), g = googleAd(n, f);
+  const daily = n.tier === 'high' ? 35 : 20, spend = daily * 7;
+  const leadsLo = Math.max(1, Math.round(spend / n.cpl[1])), leadsHi = Math.max(leadsLo + 1, Math.round(spend / n.cpl[0]));
+  const pal = PALETTES[f.palette];
+  return {
+    f, n, hs, texts, g,
+    imagePrompt: `${n.visual}, ${pal.name.toLowerCase()} color accents (${pal.c1} and ${pal.c2}), empty space at the top for a headline, vertical 4:5 ad format, photorealistic, high detail, no text, no logos`,
+    video: videoScript(n, f, hs[0]),
+    targeting: `Location: ${f.city} + ${n.tier === 'high' ? '15–25' : '5–10'} mile radius\nAudience: ${f.aud}\nPlacements: Advantage+ (automatic) on Facebook, Instagram, Reels\nGoal in Ads Manager: ${n.goal === 'Online sales' || n.goal === 'Online orders' ? 'Sales' : 'Leads'} (${n.goal})${n.special ? `\n⚠ Special Ad Category: ${n.special}. Turn it on in Ads Manager or the ad will be rejected.` : ''}`,
+    budget: `Test: $${daily}/day for 7 days = $${spend} (paid by the client)\nExpect about ${leadsLo}–${leadsHi} leads if the offer is good (typical cost per lead for a ${n.kind}: $${n.cpl[0]}–$${n.cpl[1]}).\nAfter 7 days: keep the ads under $${n.cpl[1]} per lead, pause the rest, add new hooks.`,
+    hashtags: ['#' + f.city.replace(/\s/g, ''), '#' + n.kind.replace(/\s/g, ''), '#' + f.city.replace(/\s/g, '') + n.kind.replace(/\s/g, '').replace(/^./, c => c.toUpperCase()), '#shoplocal', '#smallbusiness'].join(' ')
+  };
+}
+
+// ---------- shared creative markup ----------
+function creativeHTML(p, v = 0, tall = false) {
+  const pal = PALETTES[p.f.palette];
+  return `<div class="creative${tall ? ' tall' : ''}" style="--c1:${pal.c1};--c2:${pal.c2}">
+    <div class="ch">${esc(p.hs[v])}</div><div class="ce" aria-hidden="true">${p.n.emoji}</div>
+    <div class="cs">${esc(shortOffer(p.f.offer))}</div><div class="cb">${esc(p.f.name)}</div></div>`;
+}
+function initials(s) { return s.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase(); }
+function fbHTML(p, v = 0) {
+  const pal = PALETTES[p.f.palette];
+  return `<div class="fb"><div class="hd"><div class="av" style="background:linear-gradient(135deg,${pal.c1},${pal.c2})">${esc(initials(p.f.name))}</div>
+    <div class="who"><b>${esc(p.f.name)}</b><span>Sponsored · 🌐</span></div></div>
+    <div class="tx">${esc(p.texts[v].t)}</div>${creativeHTML(p, v)}
+    <div class="lk"><div style="min-width:0"><small>${esc(p.g.url)}</small><b>${esc(p.hs[v])}</b></div><span class="cta">${esc(p.n.cta)}</span></div>
+    <div class="acts"><span>👍 Like</span><span>💬 Comment</span><span>↗ Share</span></div></div>`;
+}
+
+// ---------- learn: lessons ----------
+const LCOL = ['var(--pink)', 'var(--orange)', 'var(--yellow)', 'var(--teal)', 'var(--blue)', 'var(--violet)', 'var(--pink)', 'var(--orange)', 'var(--teal)', 'var(--blue)'];
+const LESSONS = [
+  { t: 'What AI advertising is', demo: 'beforeafter', html: `
+    <p>An ad is a short message that makes the right person take one action: call, book, buy or visit. <b>AI advertising</b> means using AI tools to do the slow parts:</p>
+    <ul><li><b>Writing</b>: AI chat tools draft 20 headlines and ad texts in a minute.</li>
+    <li><b>Designing</b>: AI image and video tools make pictures and short videos without a photo shoot.</li>
+    <li><b>Finding buyers</b>: Facebook, Google and TikTok use their own AI to show the ad to the people most likely to act.</li></ul>
+    <p>Your job is the part AI can't do well alone: understand the business, pick a strong offer, choose what to test, and read the results. That's why business owners pay you.</p>
+    <div class="note teal">One-line pitch to remember: "I use AI to make and test lots of ads fast, so you find the winners for less money."</div>` },
+  { t: 'Where ads run', demo: 'platform', html: `
+    <p>Each platform is good at something different. Start every client on <b>one</b> platform, then add a second once it works.</p>
+    <div class="tbl"><table><thead><tr><th>Platform</th><th>Best for</th><th>Rough cost (US)</th></tr></thead><tbody>
+    <tr><td><b>Facebook + Instagram</b> (Meta)</td><td>Restaurants, gyms, salons, dentists, med spas, shops. People see it while scrolling.</td><td class="num">$0.50–$3 a click</td></tr>
+    <tr><td><b>Google Search</b></td><td>Urgent needs: roofer, plumber, lawyer, locksmith. People are already searching.</td><td class="num">$2–$15 a click (lawyers $50+)</td></tr>
+    <tr><td><b>TikTok / Reels / Shorts</b></td><td>Young buyers, fun products, food, beauty, online stores.</td><td class="num">$0.30–$2 a click</td></tr>
+    <tr><td><b>YouTube</b></td><td>Explaining bigger purchases with video.</td><td class="num">$0.02–$0.10 a view</td></tr>
+    <tr><td><b>Google Business Profile</b></td><td>Free! Maps listing, reviews and photos. Fix this first for every local client.</td><td class="num">$0</td></tr>
+    </tbody></table></div>
+    <p class="muted" style="font-size:.88rem">Costs swing a lot by city, niche and season. Use them as a starting guess.</p>` },
+  { t: 'The 5 parts of an ad', demo: 'anatomy', html: `
+    <p>Every ad that works has the same five parts. If an ad isn't working, one of these is weak.</p>
+    <ol><li><b>Hook</b>: the first line or first 3 seconds. It stops the scroll.</li>
+    <li><b>Visual</b>: bright, real, clearly about the business. Faces and food do well.</li>
+    <li><b>Offer</b>: a reason to act now ("$79 first visit", "free inspection").</li>
+    <li><b>Proof</b>: stars, reviews, numbers ("600+ reviews").</li>
+    <li><b>Call to action (CTA)</b>: one clear button: Book Now, Call Now, Order Now.</li></ol>` },
+  { t: 'Copy formulas', demo: 'formula', html: `
+    <p>Copy means the words in the ad. You don't have to be a great writer. Use a formula and let AI fill it in.</p>
+    <ul><li><b>PAS</b> (Problem, Agitate, Solve): name the pain, make it feel real, show the fix.</li>
+    <li><b>AIDA</b> (Attention, Interest, Desire, Action): hook, benefits, proof and offer, then the button.</li>
+    <li><b>BAB</b> (Before, After, Bridge): life now, life after, and the business is the bridge.</li>
+    <li><b>The 4 U's</b> for headlines: Useful, Urgent, Unique, Ultra-specific. "$49 AC tune-up this week" beats "Great AC service".</li></ul>` },
+  { t: 'Your AI tool kit', demo: 'tools', html: `
+    <p>You can start with free plans. Upgrade only when a client pays you.</p>
+    <div class="tbl"><table><thead><tr><th>Job</th><th>Tools</th><th>What you do with it</th></tr></thead><tbody>
+    <tr><td>Write copy</td><td>Claude, ChatGPT, Gemini</td><td>Headlines, ad texts, scripts, emails, audit reports</td></tr>
+    <tr><td>Make images</td><td>Canva (Magic Media), Adobe Firefly, Midjourney, Ideogram</td><td>Ad pictures, backgrounds, product scenes</td></tr>
+    <tr><td>Make video</td><td>CapCut, Canva, Runway, HeyGen</td><td>15-second ads, captions, AI voice-overs</td></tr>
+    <tr><td>Run the ads</td><td>Meta Ads Manager (Advantage+), Google Ads (Performance Max)</td><td>The platform's AI picks who sees each ad</td></tr>
+    <tr><td>Sell + organize</td><td>Loom, Google Sheets, Calendly, Stripe</td><td>Audit videos, lead lists, booking calls, invoices</td></tr>
+    </tbody></table></div>
+    <div class="note">Use real photos of the business when you can. AI images are great for backgrounds and products, but never make fake customers, fake results or fake reviews.</div>` },
+  { t: 'The numbers that matter', demo: 'metrics', html: `
+    <p>Owners care about one thing: did the ads bring customers for less than they're worth? These words help you answer.</p>
+    <ul><li><b>Impressions</b>: how many times the ad was shown.</li>
+    <li><b>CPM</b>: cost for 1,000 impressions.</li>
+    <li><b>CTR</b> (click-through rate): clicks ÷ impressions. 1% is okay; 2%+ is good.</li>
+    <li><b>CPC</b>: cost per click.</li>
+    <li><b>CPL</b>: cost per lead (call, form or booking). Your most important number.</li>
+    <li><b>ROAS</b>: return on ad spend. Revenue ÷ spend. ROAS 4 means $4 back for every $1.</li></ul>` },
+  { t: 'Targeting the right people', demo: 'radius', html: `
+    <p>Today the platform's AI is very good at finding buyers, so keep targeting simple:</p>
+    <ul><li><b>Location</b> matters most for local businesses. A coffee shop: 3 miles. A roofer: 25 miles.</li>
+    <li><b>Broad</b> (age + location only) often wins now. Let the AI learn from who clicks.</li>
+    <li><b>Retargeting</b>: show ads again to people who visited the website or watched a video. Cheap and strong.</li>
+    <li><b>Lookalikes</b>: people similar to past customers (upload the customer list, with permission).</li></ul>
+    <p>Audiences that are too small get expensive. For most local ads aim for at least 50,000 people.</p>` },
+  { t: 'Testing like a pro', demo: 'abtest', html: `
+    <p>You never know which ad will win, so you test. This is where AI gives you a superpower: you can make many versions fast.</p>
+    <ul><li><b>The 3×3 test</b>: 3 hooks × 3 visuals with 1 offer = 9 ads. Run them together.</li>
+    <li>Wait until each ad has about <b>1,000 impressions</b> before you judge it.</li>
+    <li><b>Kill rule</b>: if an ad spent 2× your target cost per lead and got nothing, pause it.</li>
+    <li>Take the winner and make 3 new hooks for it. Repeat every week.</li></ul>` },
+  { t: 'Rules you must follow', demo: 'policy', html: `
+    <p>Breaking rules gets ads rejected or the account banned. Follow these and you'll stay safe:</p>
+    <ul><li><b>Don't call out personal traits</b>: "Are you overweight?" or "In debt?" breaks Meta's rules. Say "Feel stronger this summer" instead.</li>
+    <li><b>No fake promises</b>: "Guaranteed to lose 30 lbs" or "cure" will be rejected.</li>
+    <li><b>Special Ad Categories</b>: housing, jobs, credit and politics must be marked and have limited targeting.</li>
+    <li><b>No fake reviews or testimonials</b>, and no AI people pretending to be real customers.</li>
+    <li><b>The client owns the ad account.</b> You get partner access. This builds trust.</li>
+    <li>Get the owner's written OK on every ad before it goes live.</li></ul>` },
+  { t: 'Final quiz', demo: 'quiz', html: `<p>Eight questions. Get 6 or more right and you're ready to sell.</p>` }
+];
+
+// ---------- audit ----------
+const AUDIT = [
+  { cat: 'Google & Reviews', color: 'var(--blue)', qs: [
+    { id: 'gbp', q: 'Google Business Profile claimed and filled out?', type: 'yn', pts: 6, fix: 'Claim and finish the Google Business Profile: hours, 20+ photos, services and a booking link. It is free and often the #1 source of calls.' },
+    { id: 'reviews', q: 'Number of Google reviews', type: 'range', min: 0, max: 400, step: 5, pts: 7, score: v => Math.min(1, v / 150), fix: 'Send a review-request text after every visit. Goal: 10 new reviews a month. Ads work much better with 100+ reviews.' },
+    { id: 'rating', q: 'Star rating', type: 'range', min: 1, max: 5, step: 0.1, pts: 4, score: v => Math.max(0, Math.min(1, (v - 3.5) / 1.3)), fix: 'Reply kindly to bad reviews and ask happy customers to post. Under 4.3 stars costs clicks.' },
+    { id: 'replies', q: 'Owner replies to reviews?', type: 'yn', pts: 3, fix: 'Reply to every review within 48 hours. It shows buyers someone cares.' }] },
+  { cat: 'Website', color: 'var(--violet)', qs: [
+    { id: 'site', q: 'Has a website or landing page?', type: 'yn', pts: 5, fix: 'Build a one-page landing page with the offer, reviews and a big call or booking button.' },
+    { id: 'mobile', q: 'Looks good on a phone?', type: 'yn', pts: 5, fix: 'Fix the phone layout. Over 70% of local ad clicks come from phones.' },
+    { id: 'button', q: 'Call or Book button visible without scrolling?', type: 'yn', pts: 5, fix: 'Put a "Call now" or "Book now" button at the top of every page.' },
+    { id: 'speed', q: 'Loads in under 3 seconds?', type: 'yn', pts: 5, fix: 'Shrink images and remove heavy plugins. Every extra second loses visitors.' }] },
+  { cat: 'Ads', color: 'var(--pink)', qs: [
+    { id: 'ads', q: 'Running ads now?', type: 'seg', opts: [['None', 0], ['Boosted posts', .35], ['Real campaigns', 1]], pts: 8, fix: 'Start a real campaign in Ads Manager (not a "Boost" button) with a clear offer and a lead goal.' },
+    { id: 'pixel', q: 'Meta Pixel or Google tag installed?', type: 'yn', pts: 6, fix: 'Install the Meta Pixel and Google tag so the platforms can learn who buys, and so you can retarget visitors.' },
+    { id: 'offer', q: 'Has a clear offer (deal, free visit, discount)?', type: 'yn', pts: 6, fix: 'Create one irresistible first-visit offer. Ads with an offer often get 2–3× more leads.' }] },
+  { cat: 'Social & Content', color: 'var(--orange)', qs: [
+    { id: 'posts', q: 'Posts on social media per week', type: 'seg', opts: [['0', 0], ['1–2', .55], ['3+', 1]], pts: 10, fix: 'Post 3 times a week. AI can write a month of posts in 20 minutes.' },
+    { id: 'video', q: 'Uses short videos (Reels/TikTok)?', type: 'yn', pts: 5, fix: 'Post 2 short vertical videos a week. Video is the cheapest way to reach new people.' },
+    { id: 'photos', q: 'Uses real photos (not just stock)?', type: 'yn', pts: 5, fix: 'Take 20 real photos of the team, place and work. Real beats stock in ads.' }] },
+  { cat: 'Follow-up', color: 'var(--teal)', qs: [
+    { id: 'speedlead', q: 'Answers new leads within 5 minutes?', type: 'yn', pts: 8, fix: 'Set up an instant text reply to every new lead. Leads go cold within an hour.' },
+    { id: 'list', q: 'Collects emails or phone numbers?', type: 'yn', pts: 6, fix: 'Collect customer emails and phones. Past customers are the cheapest sales.' },
+    { id: 'retarget', q: 'Retargets website visitors?', type: 'yn', pts: 6, fix: 'Show ads to people who visited but did not buy. It is often the cheapest result you can get.' }] }
+];
+const AUDIT_DEMOS = {
+  weak: { name: "Tony's Pizza", niche: 'restaurant', owner: 'Tony', value: 35, a: { gbp: 1, reviews: 38, rating: 4.1, replies: 0, site: 1, mobile: 0, button: 0, speed: 0, ads: 0.35, pixel: 0, offer: 0, posts: 0.55, video: 0, photos: 1, speedlead: 0, list: 0, retarget: 0 } },
+  mid: { name: 'Bright Smile Dental', niche: 'dentist', owner: 'Dr. Patel', value: 900, a: { gbp: 1, reviews: 120, rating: 4.6, replies: 1, site: 1, mobile: 1, button: 0, speed: 1, ads: 0.35, pixel: 1, offer: 0, posts: 0.55, video: 0, photos: 1, speedlead: 0, list: 1, retarget: 0 } },
+  strong: { name: 'Peak Roofing', niche: 'roofer', owner: 'Mike', value: 12000, a: { gbp: 1, reviews: 260, rating: 4.9, replies: 1, site: 1, mobile: 1, button: 1, speed: 1, ads: 1, pixel: 1, offer: 1, posts: 0.55, video: 1, photos: 1, speedlead: 0, list: 1, retarget: 0 } }
+};
+
+// ---------- pricing ----------
+const PKGS = [
+  { id: 'audit', name: 'Free AI Ad Audit', setup: 0, monthly: 0, tag: 'Lead magnet', color: 'var(--teal)', note: 'Free, always', items: ['Score out of 100', 'Top 5 fixes', '1 free custom ad mock-up', '2-minute video walkthrough'], why: 'It opens doors. Give it to everyone.' },
+  { id: 'starter', name: 'Starter Launch', setup: 497, monthly: 0, tag: 'One-time', color: 'var(--orange)', note: 'one time', items: ['1 Facebook + Instagram campaign', '6 AI ad creatives with copy', '1 short AI video ad', 'Pixel and tracking setup', '14 days of tuning'], why: 'An easy first yes for owners who want to try you.' },
+  { id: 'growth', name: 'Growth', setup: 297, monthly: 997, tag: 'Most popular', color: 'var(--pink)', best: true, note: '/month', items: ['Ads on 1 platform, managed weekly', '12 fresh AI creatives a month', '2 AI video ads a month', 'Lead alerts to the owner’s phone', 'Monthly report + 15-min call'], why: 'Your main offer. Most clients should land here.' },
+  { id: 'scale', name: 'Scale', setup: 497, monthly: 1997, tag: 'Big results', color: 'var(--violet)', note: '/month', items: ['Ads on 2–3 platforms (Meta, Google, TikTok)', '30 creatives + 4 videos a month', 'Landing page built and tested', 'Retargeting + text follow-up', 'Weekly report, priority help'], why: 'For businesses with $3k+ a month to spend on ads.' },
+  { id: 'perf', name: 'Pay-per-Lead', setup: 0, monthly: 500, perLead: true, tag: 'After results', color: 'var(--blue)', note: '/month + per lead', items: ['$500 a month base', 'Plus $25–$100 per qualified lead', 'Best for roofers, HVAC, lawyers', 'Offer only after you have proof'], why: 'Low risk for the owner, big upside for you once your ads work.' }
+];
+const ADDONS = [
+  { id: 'video', name: 'AI video ad pack (3 videos)', price: 297, per: 'once', why: 'Video ads are cheap to run and owners love seeing them.' },
+  { id: 'landing', name: 'Landing page', price: 750, per: 'once', why: 'A page made for the ad usually turns more clicks into leads.' },
+  { id: 'gbp', name: 'Google Business Profile tune-up', price: 297, per: 'once', why: 'More calls from Google Maps, free traffic forever.' },
+  { id: 'reviews', name: 'Review booster (auto texts)', price: 149, per: 'month', why: 'More 5-star reviews make every ad work better.' },
+  { id: 'followup', name: 'Email + text follow-up setup', price: 497, per: 'once', why: 'Instant replies to every lead; fewer leads go cold.' },
+  { id: 'social', name: 'Social posts (12 a month)', price: 397, per: 'month', why: 'Keeps the page alive so ads look trustworthy.' },
+  { id: 'chatbot', name: 'AI chat assistant for their website', price: 297, per: 'once', monthly: 97, why: 'Answers questions and books visits 24/7.' },
+  { id: 'platform', name: 'Extra ad platform', price: 400, per: 'month', why: 'Add Google or TikTok once Meta is working.' }
+];
+
+// ---------- clients ----------
+const SPRINT = [
+  ['Pick 1 niche and 1 city', 'Use the niche table on the Business Plan page. Make a Google Sheet and list 100 businesses from Google Maps: name, phone, website, reviews, rating.'],
+  ['Build 3 demo ads', 'Use the Ad Builder for your niche. Save them to My Ads. These are your portfolio.'],
+  ['Set up your tools', 'A business email, a free Calendly link, Loom, and a simple page or PDF showing your 3 demo ads and your packages.'],
+  ['Audit 10, message 20', 'Run 10 free audits with the AI Audit tool. Send 20 personal DMs or emails with the scripts below.'],
+  ['Message 20 more + walk in', 'Follow up yesterday’s leads. Visit or call 5 businesses with your phone showing their custom ad.'],
+  ['Record 5 video audits', '2 minutes each on Loom, using the audit video script. Send them to your best 5 leads.'],
+  ['Review and improve', 'Which message got replies? Rewrite your first line. Post your demo ads on your own social pages.'],
+  ['30 messages + join groups', 'Join 3 local business-owner groups. Post one helpful tip and offer 5 free audits.'],
+  ['Book calls', 'Reply fast to every yes. Use the call script. Mention the founding-client price.'],
+  ['30 messages + ask friends', 'Text 20 people you know: "Who do you know who owns a business?"'],
+  ['Send proposals fast', 'Use the Quote Builder within 2 hours of each call. Fast quotes close more.'],
+  ['Follow up every proposal', 'Call or text each open proposal. Offer to start with the Starter Launch if they hesitate.'],
+  ['Close', 'Send the invoice and agreement. Get partner access to their ad account and their photos.'],
+  ['Launch!', 'Go live with the 3×3 test. Screenshot everything for your first case study.']
+];
+const SCRIPT_TABS = { dm: 'Cold DM', email: 'Cold email', call: 'Phone call', walk: 'Walk-in', loom: 'Video audit', follow: 'Follow-ups', close: 'Closing call' };
+function scripts(v) {
+  const n = NICHES[v.niche];
+  return {
+    dm: `Hi ${v.them}! I'm ${v.me}, I'm local here in ${v.city} and I make AI-powered ads for ${n.kind}s.\n\nI was looking at ${v.biz} and noticed ${v.obs}. I put together a free 1-page audit and a sample ad made just for you.\n\nWant me to send it over? No cost and no pitch, it's yours either way.`,
+    email: `Subject options:\n• Made an ad for ${v.biz}\n• ${v.biz}: free audit (score inside)\n• Quick idea for ${v.them}\n\nHi ${v.them},\n\nI'm ${v.me}. I help ${n.kind}s in ${v.city} get more ${n.thing} with AI-made ads.\n\nI noticed ${v.obs}. That usually means customers are choosing someone else.\n\nSo I made you two things for free:\n1. An audit of your online presence (your score is inside)\n2. A sample ad with the offer "${n.offer}"\n\nCan I send them? If you like them, we can talk. If not, keep them.\n\n${v.me}`,
+    call: `"Hi, is this ${v.them}? Great. This is ${v.me}. I'll be quick, is now a bad time?\n\n(If OK:) I make AI ads for ${n.kind}s around ${v.city}. I noticed ${v.obs}, and I already made a sample ad for ${v.biz}.\n\nCould I text it to you? If you like it, we can do a 15-minute call this week to see if ads could bring you more ${n.thing}."\n\nIf they say "send info": "Sure. What's the best number to text it to? And is Tuesday or Thursday better for a quick look together?"`,
+    walk: `Go at a quiet time (2–4pm). Bring your phone with their custom ad open.\n\n"Hi! Is the owner in? I'm ${v.me}, I'm local. I made this ad for ${v.biz}, take a look. (Show the phone.)\n\nI noticed ${v.obs}. I help businesses here fix that with AI ads. Could I leave you my number and send the free audit I made?"\n\nLeave a printed card with your name, number and a QR code to your demo ads.`,
+    loom: `(Screen: their Google listing)\n"Hi ${v.them}, ${v.me} here. I made this 2-minute video just for ${v.biz}.\n\nFirst, your Google listing. I noticed ${v.obs}.\n\n(Screen: their website on a phone view)\nHere's what a customer sees on a phone. (Point out one thing to fix.)\n\n(Screen: your sample ad)\nAnd here's an ad I made for you with the offer "${n.offer}." Ads like this usually bring a ${n.kind} leads for about $${n.cpl[0]}–$${n.cpl[1]} each.\n\nIf you want, I can set this up for you. Just reply to this message. Either way, the audit is yours. Thanks!"`,
+    follow: `Day 2:\n"Hi ${v.them}, just bumping this up. Want me to send the free audit and ad for ${v.biz}?"\n\nDay 5:\n"I finished your sample ad. Here's a screenshot (attach it). Takes 30 seconds to look."\n\nDay 10:\n"One more idea: most ${n.kind}s I talk to get the best results from "${n.offer}". Happy to set up a 7-day test."\n\nDay 20 (last one):\n"I'll stop reaching out so I'm not a pest! If you ever want more ${n.thing} from ads, my number is here. Wishing ${v.biz} a great month."`,
+    close: `1. Ask (5 min): "How do most new customers find you now? How many more a month would make a big difference? What is one customer worth?"\n\n2. Show (5 min): their audit score + the custom ad. "Here's what I'd fix first."\n\n3. Plan (3 min): "We'd run this offer to people within X miles, test 9 ads, and keep only the winners."\n\n4. Price (2 min): "The Growth plan is $997 a month. As one of my first 3 clients you'd get 30% off for 3 months, so $698. Ad budget is separate and goes straight to Facebook; I suggest $20 a day."\n\n5. Close: "Want to start this week? I can have ads live by Friday." Then stop talking and wait.`
+  };
+}
+const OBJECTIONS = [
+  ['"It’s too expensive."', 'Ask: "What is one new customer worth to you?" If it’s $900 and the ads bring 5 a month, that’s $4,500 for a $997 fee. Or offer the Starter Launch to begin small.'],
+  ['"I tried ads. They didn’t work."', '"That’s really common. Usually it’s a boosted post with no offer, or nobody answered leads fast. Can I show you what I’d do differently?" Point to the audit.'],
+  ['"I get business from word of mouth."', '"That’s great, it means people love you. Ads are just word of mouth to people who haven’t met you yet. Your reviews become the ad."'],
+  ['"Let me think about it."', '"Of course. What part are you unsure about, the price or whether it will work?" Then answer that one thing. Offer a 30-day start with no long contract.'],
+  ['"Is AI legit? Will it look fake?"', '"AI helps me write and test faster. I use your real photos and real reviews, and you approve every ad before it runs."'],
+  ['"Just send me some info."', '"Sure! So I send the right thing: what matters more to you, more calls or more bookings? And is Thursday good for 10 minutes to walk through it?"']
+];
+
+// ---------- prompts ----------
+const PROMPTS = [
+  ['Research', 'Find the customer’s pains', 'You are a marketing strategist. List the top 10 problems, fears and desires of customers looking for a [niche] in [city]. Then give 5 ad angles based on them.'],
+  ['Research', 'Spy on competitors', 'Here are 3 competitor ads from the Meta Ad Library: [paste]. What offers, hooks and visuals are they using? Suggest 3 ways [business] can stand out.'],
+  ['Copy', '20 scroll-stopping hooks', 'Write 20 short hooks (under 10 words) for a Facebook ad for [business], a [niche] in [city]. Offer: [offer]. Mix questions, bold claims, numbers and humor. No personal-trait callouts.'],
+  ['Copy', 'Ad text in 3 formulas', 'Write 3 Facebook ad texts for [business] in [city] using PAS, AIDA and Before-After-Bridge. Offer: [offer]. Under 90 words each, 2 emojis max, end with one clear call to action.'],
+  ['Copy', 'Google Search ad', 'Write a Google responsive search ad for [business], a [niche] in [city]: 15 headlines (max 30 characters each) and 4 descriptions (max 90 characters). Include the offer: [offer].'],
+  ['Images', 'Ad image prompt', 'Create a photorealistic vertical 4:5 ad image for a [niche]: [describe scene], bright colors, natural light, empty space at the top for a headline, no text, no logos.'],
+  ['Images', 'Product on a new background', 'Place this product photo on a bright, clean background that fits a [niche] brand. Soft shadow, studio light, keep the product exactly the same.'],
+  ['Video', '15-second video script', 'Write a 15-second vertical video ad script for [business] in [city]. Hook in the first 2 seconds, show the problem, the fix, one proof point, then the offer: [offer]. Include on-screen text and shot ideas.'],
+  ['Video', 'UGC-style script', 'Write a casual, honest 30-second script that the owner of [business] can film on their phone, talking to camera about why they started the business and the offer [offer].'],
+  ['Audit', 'Audit report', 'I audited [business], a [niche] in [city]. Findings: [paste]. Write a friendly 150-word report for the owner with their 3 biggest fixes, in plain English, ending with an offer to help.'],
+  ['Sales', 'Personal cold message', 'Write a 60-word cold DM to the owner of [business] in [city]. Mention this observation: [observation]. Offer a free audit and sample ad. Friendly, no hype, no pressure.'],
+  ['Sales', 'Handle an objection', 'A [niche] owner said: "[objection]". Give me 3 calm, honest replies that ask a question back and move toward a short call.'],
+  ['Sales', 'Proposal', 'Write a one-page proposal for [business]: the goal, what I will do in month 1, the price ($997/month, ad spend separate), and the next step. Simple words, short sentences.'],
+  ['Reporting', 'Monthly report', 'Turn these ad results into a short report for a [niche] owner: [paste spend, leads, cost per lead, sales]. Say what worked, what we changed, and the plan for next month. Under 200 words.'],
+  ['Reporting', 'Find the winner', 'Here are my ad results: [paste table]. Which ads should I pause, which should get more budget, and what 3 new hooks should I test next? Explain simply.'],
+  ['Content', 'A month of posts', 'Write 12 social media posts for [business], a [niche] in [city]: 4 tips, 4 behind-the-scenes, 2 reviews to highlight, 2 offers ([offer]). Add a photo idea for each.']
+];
+
+// ================= AD BUILDER =================
+const B = Object.assign({ niche: 'restaurant', name: "Tony's Pizza", city: 'Austin', offer: NICHES.restaurant.offer, aud: NICHES.restaurant.audience, tone: 'friendly', palette: 0 }, store.get('builder', {}));
+if (!NICHES[B.niche]) B.niche = 'restaurant';
+if (!TONES[B.tone]) B.tone = 'friendly';
+if (!PALETTES[B.palette]) B.palette = 0;
+let plat = 'fb', variant = 0, pack;
+const PLATS = { fb: 'Facebook / Instagram', google: 'Google Search', tiktok: 'TikTok / Reels', story: 'Story' };
+
+function builderInit() {
+  $('#nicheGrid').innerHTML = Object.entries(NICHES).map(([k, n]) => `<button class="niche" data-n="${k}"><b>${n.emoji}</b>${n.label}</button>`).join('');
+  $('#toneRow').innerHTML = Object.entries(TONES).map(([k, t]) => `<button class="chip" data-tone="${k}">${t}</button>`).join('');
+  $('#swatches').innerHTML = PALETTES.map((p, i) => `<button class="sw" data-pal="${i}" title="${p.name}" aria-label="${p.name} colors" style="background:linear-gradient(135deg,${p.c1},${p.c2})"></button>`).join('');
+  $('#platTabs').innerHTML = Object.entries(PLATS).map(([k, t]) => `<button class="chip" data-plat="${k}">${t}</button>`).join('');
+  $('#variantBtns').innerHTML = ['A', 'B', 'C'].map((l, i) => `<button class="chip" data-var="${i}">Version ${l}</button>`).join('');
+  $('#nicheGrid').addEventListener('click', e => { const b = e.target.closest('[data-n]'); if (b) setNiche(b.dataset.n); });
+  $('#toneRow').addEventListener('click', e => { const b = e.target.closest('[data-tone]'); if (b) { B.tone = b.dataset.tone; renderBuilder(); } });
+  $('#swatches').addEventListener('click', e => { const b = e.target.closest('[data-pal]'); if (b) { B.palette = +b.dataset.pal; renderBuilder(); } });
+  $('#platTabs').addEventListener('click', e => { const b = e.target.closest('[data-plat]'); if (b) { plat = b.dataset.plat; renderBuilder(); } });
+  $('#variantBtns').addEventListener('click', e => { const b = e.target.closest('[data-var]'); if (b) { variant = +b.dataset.var; renderBuilder(); } });
+  [['bName', 'name'], ['bCity', 'city'], ['bOffer', 'offer'], ['bAud', 'aud']].forEach(([id, key]) => {
+    $('#' + id).addEventListener('input', e => { B[key] = e.target.value || ''; renderBuilder(false); });
+  });
+  $('#genBtn').addEventListener('click', () => { variant = (variant + 1) % 3; renderBuilder(); $('#preview').classList.remove('pop'); void $('#preview').offsetWidth; $('#preview').classList.add('pop'); toast('New ad pack ready'); });
+  $('#surpriseBtn').addEventListener('click', () => {
+    setNiche(pick(Object.keys(NICHES)), true);
+    B.city = pick(CITIES); B.tone = pick(Object.keys(TONES)); B.palette = Math.floor(Math.random() * PALETTES.length); variant = Math.floor(Math.random() * 3);
+    renderBuilder(); toast('Surprise!');
+  });
+  $('#saveBtn').addEventListener('click', () => {
+    const g = store.get('gallery', []); g.unshift({ f: { ...B }, v: variant }); store.set('gallery', g.slice(0, 24)); renderGallery(); toast('Saved to My Ads');
+  });
+  $('#copyAll').addEventListener('click', () => copyText(packText(pack)));
+  $('#gallery').addEventListener('click', e => {
+    const g = store.get('gallery', []);
+    const x = e.target.closest('[data-del]');
+    if (x) { g.splice(+x.dataset.del, 1); store.set('gallery', g); renderGallery(); return; }
+    const c = e.target.closest('[data-load]');
+    if (c) { const it = g[+c.dataset.load]; Object.assign(B, it.f); variant = it.v || 0; renderBuilder(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  });
+  renderBuilder(); renderGallery();
+}
+function setNiche(k, force) {
+  const sample = Object.values(NICHE_NAMES).includes(B.name) || !B.name;
+  B.niche = k; const n = NICHES[k];
+  if (sample || force) B.name = NICHE_NAMES[k];
+  B.offer = n.offer; B.aud = n.audience; B.palette = n.palette;
+  renderBuilder();
+}
+function fields() {
+  return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || NICHES[B.niche].offer, aud: B.aud.trim() || NICHES[B.niche].audience, tone: B.tone, palette: B.palette };
+}
+function renderBuilder(syncInputs = true) {
+  store.set('builder', B);
+  pack = buildPack(fields());
+  if (syncInputs) { $('#bName').value = B.name; $('#bCity').value = B.city; $('#bOffer').value = B.offer; $('#bAud').value = B.aud; }
+  $$('#nicheGrid .niche').forEach(b => b.classList.toggle('on', b.dataset.n === B.niche));
+  $$('#toneRow .chip').forEach(b => b.classList.toggle('on', b.dataset.tone === B.tone));
+  $$('#swatches .sw').forEach(b => b.classList.toggle('on', +b.dataset.pal === B.palette));
+  $$('#platTabs .chip').forEach(b => b.classList.toggle('on', b.dataset.plat === plat));
+  $$('#variantBtns .chip').forEach(b => b.classList.toggle('on', +b.dataset.var === variant));
+  $('#preview').innerHTML = previewHTML(pack, plat, variant);
+  renderPack(pack);
+  renderPrompts();
+}
+function previewHTML(p, pl, v) {
+  if (pl === 'fb') return `<div class="phone"><div class="screen">${fbHTML(p, v)}</div></div>`;
+  if (pl === 'google') {
+    const g = p.g, o = [v, (v + 1) % 4, (v + 2) % 4];
+    return `<div class="card stack" style="gap:10px"><div class="out" style="background:var(--bg);font-family:Arial,sans-serif;border-style:solid">🔍 ${esc(p.n.kind)} near ${esc(p.f.city)}</div>
+      <div class="gad"><div class="sp">Sponsored</div><div class="url">${esc(g.url)}</div>
+      <div class="ttl">${o.map(i => esc(g.hs[i])).join(' | ')}</div><div class="ds">${esc(g.d1)} ${esc(g.d2)}</div>
+      <div class="sl"><span>${esc(p.n.cta)}</span><span>Reviews</span><span>Prices</span><span>Contact</span></div></div>
+      <p class="muted" style="font-size:.82rem">Google shows people who are already searching. Headlines can be 30 characters, descriptions 90.</p></div>`;
+  }
+  const tall = creativeHTML(p, v, true);
+  if (pl === 'tiktok') return `<div class="phone"><div class="screen tt">${tall}
+      <div class="side"><span><i>♥</i>8.2k</span><span><i>💬</i>214</span><span><i>↗</i>Share</span></div>
+      <div class="ov"><b>@${esc(p.f.name.toLowerCase().replace(/[^a-z0-9]+/g, ''))} · Sponsored</b>${esc(p.hs[(v + 1) % 3])} ${esc(p.hashtags.split(' ').slice(0, 3).join(' '))}<span class="ctab">${esc(p.n.cta)}</span></div></div></div>`;
+  return `<div class="phone"><div class="screen tt">${tall}<div class="ov" style="padding-right:14px;text-align:center"><b>${esc(p.f.name)} · Sponsored</b><span class="ctab">⌃ ${esc(p.n.cta)}</span></div></div></div>`;
+}
+function ccTag(s, max) { const ok = s.length <= max; return `<span class="cc ${ok ? 't-green' : 't-red'}">${s.length}/${max}</span>`; }
+function renderPack(p) {
+  const box = (id, title, body, color, raw) => `<div class="packbox"><h4><span><span class="tag ${color}">${title.split('|')[0]}</span> ${title.split('|')[1] || ''}</span><button class="btn sm dark" data-copy="${id}">Copy</button></h4><div class="out" id="${id}">${raw ? body : esc(body)}</div></div>`;
+  $('#pack').innerHTML = [
+    box('pkH', 'Headlines|3 versions to test', p.hs.map((h, i) => `${'ABC'[i]}: ${esc(h)}  ${ccTag(h, 40)}`).join('\n'), 't-pink', true),
+    box('pkT', `Ad text|Version ${'ABC'[variant]}, ${p.texts[variant].f}`, p.texts[variant].t, 't-orange'),
+    box('pkG', 'Google ad|search headlines + descriptions', p.g.hs.map(h => `${esc(h)}  ${ccTag(h, 30)}`).join('\n') + '\n\n' + [p.g.d1, p.g.d2].map(d => `${esc(d)}  ${ccTag(d, 90)}`).join('\n'), 't-blue', true),
+    box('pkI', 'Image prompt|paste into any AI image tool', p.imagePrompt, 't-violet'),
+    box('pkV', 'Video script|15 seconds, vertical', p.video, 't-teal'),
+    box('pkA', 'Targeting|set this in Ads Manager', p.targeting, 't-yellow'),
+    box('pkB', 'Budget + results|what to tell the owner', p.budget, 't-green'),
+    box('pkS', 'Hashtags + CTA|', `Button: ${p.n.cta}\n${p.hashtags}`, 't-red')
+  ].join('');
+}
+function packText(p) {
+  return `AD PACK: ${p.f.name} (${p.n.label}, ${p.f.city})\n\nHEADLINES\n${p.hs.map((h, i) => 'ABC'[i] + ': ' + h).join('\n')}\n\nAD TEXTS\n${p.texts.map((t, i) => `Version ${'ABC'[i]} (${t.f}):\n${t.t}`).join('\n\n')}\n\nGOOGLE AD\n${p.g.hs.join(' | ')}\n${p.g.d1}\n${p.g.d2}\n\nIMAGE PROMPT\n${p.imagePrompt}\n\nVIDEO SCRIPT\n${p.video}\n\nTARGETING\n${p.targeting}\n\nBUDGET\n${p.budget}\n\nCTA: ${p.n.cta}\n${p.hashtags}`;
+}
+function renderGallery() {
+  const g = store.get('gallery', []);
+  $('#gallery').innerHTML = g.length ? g.map((it, i) => {
+    const f = Object.assign({}, it.f, { name: it.f.name || 'Your Business', city: it.f.city || 'your city', offer: it.f.offer || NICHES[it.f.niche].offer });
+    if (!NICHES[f.niche]) return '';
+    return `<div class="g" data-load="${i}" role="button" tabindex="0">${creativeHTML(buildPack(f), it.v || 0)}<button class="x" data-del="${i}" aria-label="Delete">×</button></div>`;
+  }).join('') : `<div class="ink ink-violet" style="grid-column:1/-1">No saved ads yet. Make one above and click <b>Save to My Ads</b>.</div>`;
+}
+
+// hero phone demo
+let heroI = 0;
+function heroTick() {
+  const keys = Object.keys(NICHES), k = keys[heroI % keys.length];
+  const p = buildPack({ niche: k, name: NICHE_NAMES[k], city: CITIES[heroI % CITIES.length], offer: NICHES[k].offer, aud: NICHES[k].audience, tone: Object.keys(TONES)[heroI % 5], palette: NICHES[k].palette });
+  const el = $('#heroPhone'); el.innerHTML = fbHTML(p, heroI % 3); el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+  heroI++;
+}
+
+// ================= LEARN =================
+let lcur = store.get('lcur', 0); if (!(lcur >= 0 && lcur < LESSONS.length)) lcur = 0;
+let ldone = store.get('ldone', []);
+function learnInit() {
+  $('#lessonList').addEventListener('click', e => { const b = e.target.closest('[data-l]'); if (b) { lcur = +b.dataset.l; renderLearn(); } });
+  renderLearn();
+}
+function renderLearn() {
+  store.set('lcur', lcur);
+  $('#lessonList').innerHTML = LESSONS.map((l, i) => `<button data-l="${i}" class="${i === lcur ? 'on' : ''} ${ldone.includes(i) ? 'done' : ''}"><span class="k" style="background:${LCOL[i]}"><span>${i + 1}</span></span>${l.t}</button>`).join('');
+  $('#lprog').style.width = (ldone.length / LESSONS.length * 100) + '%';
+  $('#lprogt').textContent = `${ldone.length}/${LESSONS.length}`;
+  const L = LESSONS[lcur];
+  $('#lesson').innerHTML = `<span class="eyebrow" style="color:${LCOL[lcur]}">Lesson ${lcur + 1} of ${LESSONS.length}</span><h2>${L.t}</h2>
+    <div class="body">${L.html}</div><div class="demo" id="demo"></div>
+    <div class="row"><button class="btn" id="lNext">${ldone.includes(lcur) ? 'Next lesson' : 'Mark done + next'}</button>${lcur > 0 ? '<button class="btn alt" id="lPrev">Back</button>' : ''}</div>`;
+  $('#lNext').onclick = () => {
+    if (!ldone.includes(lcur)) { ldone.push(lcur); store.set('ldone', ldone); }
+    if (lcur < LESSONS.length - 1) lcur++; else toast('Course complete! Go build an ad.');
+    renderLearn(); $('#lesson').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  if ($('#lPrev')) $('#lPrev').onclick = () => { lcur--; renderLearn(); };
+  DEMOS[L.demo]($('#demo'));
+}
+const samplePack = (k = 'restaurant', tone = 'friendly') => buildPack({ niche: k, name: NICHE_NAMES[k], city: 'Austin', offer: NICHES[k].offer, aud: NICHES[k].audience, tone, palette: NICHES[k].palette });
+const DEMOS = {
+  beforeafter(el) {
+    el.innerHTML = `<div class="dh"><b>Flip between a normal ad and an AI-made ad</b></div>
+      <div class="row" style="margin-bottom:12px"><button class="chip on" data-ba="0">Before (no AI)</button><button class="chip" data-ba="1">After (AI, 15 minutes)</button></div>
+      <div class="grid g2"><div id="baAd"></div><div id="baWhy" class="stack"></div></div>`;
+    const show = s => {
+      $$('[data-ba]', el).forEach(b => b.classList.toggle('on', +b.dataset.ba === s));
+      $('#baAd', el).innerHTML = s ? `<div class="phone"><div class="screen">${fbHTML(samplePack(), 0)}</div></div>` :
+        `<div class="phone"><div class="screen"><div class="fb"><div class="hd"><div class="av" style="background:#888">TP</div><div class="who"><b>Tony's Pizza</b><span>Sponsored</span></div></div><div class="tx">We sell pizza. Open 11 to 10. Call us.</div><div class="creative" style="--c1:#9a9a9a;--c2:#7a7a7a"><div class="ch" style="font-size:1.1rem">Tony's Pizza</div><div class="cb">Pizza</div></div><div class="lk"><b>tonyspizza.com</b><span class="cta">Learn More</span></div></div></div></div>`;
+      $('#baWhy', el).innerHTML = s ? `<span class="tag t-green">What AI added</span><ul class="stack" style="padding-left:1.1em;margin:0;gap:6px"><li>A hook that speaks to the reader</li><li>A real offer: free dessert this week</li><li>Proof: 4.8★ from 600+ reviews</li><li>Bright colors that stop the scroll</li><li>A clear button: Order Now</li><li>Plus 2 more versions to test</li></ul>` :
+        `<span class="tag t-red">Why this fails</span><ul class="stack" style="padding-left:1.1em;margin:0;gap:6px"><li>No hook. Nobody stops scrolling.</li><li>No offer, so no reason to act today</li><li>No proof that it's good</li><li>Grey picture, no food shown</li><li>"Learn More" is a weak button</li></ul>`;
+    };
+    el.addEventListener('click', e => { const b = e.target.closest('[data-ba]'); if (b) show(+b.dataset.ba); });
+    show(0);
+  },
+  platform(el) {
+    const C = [['🚿 Emergency plumber', 'Google Search', 'People with a burst pipe search Google right away. Be the first result with "Call Now".'],
+      ['🥐 New bakery', 'Instagram + Facebook', 'Food is visual. Show fresh pastries to people within 3 miles in the morning.'],
+      ['👕 Teen clothing brand', 'TikTok', 'Young buyers live on TikTok. Use fun try-on videos.'],
+      ['🦷 Dentist', 'Facebook + Google', 'Facebook for the new-patient offer, Google for "dentist near me" searches.'],
+      ['🧘 Yoga studio', 'Instagram Reels', 'Short calm videos of classes plus a free first class offer.'],
+      ['🏠 Roofer after a storm', 'Google + Facebook', 'Google for people searching "roof repair", Facebook for free inspection offers in the storm area.']];
+    el.innerHTML = `<div class="dh"><b>Pick a business. Where should its ads go?</b></div><div class="row" style="margin-bottom:12px">${C.map((c, i) => `<button class="chip" data-pc="${i}">${c[0]}</button>`).join('')}</div><div id="pcOut" class="ink ink-blue">Tap a business above.</div>`;
+    el.addEventListener('click', e => { const b = e.target.closest('[data-pc]'); if (!b) return; const c = C[+b.dataset.pc];
+      $$('[data-pc]', el).forEach(x => x.classList.toggle('on', x === b));
+      $('#pcOut', el).innerHTML = `<h3 style="margin-bottom:6px">${c[1]}</h3><p>${c[2]}</p>`; });
+  },
+  anatomy(el) {
+    const P = [['hook', 'Hook', 'The headline. It has under 2 seconds to stop the thumb. Speak to one person and one want.'],
+      ['visual', 'Visual', 'Bright colors and one clear subject. Real food, faces or results do best.'],
+      ['offer', 'Offer', 'The reason to act now. A strong offer can double your leads without changing anything else.'],
+      ['proof', 'Proof', 'Stars, review counts, numbers. People trust other people.'],
+      ['cta', 'Call to action', 'One button that says exactly what happens next.']];
+    el.innerHTML = `<div class="dh"><b>Tap each part to see it on the ad</b></div><div class="grid g2"><div style="max-width:320px;width:100%;margin:0 auto">
+      <div class="creative" style="--c1:#FF6A21;--c2:#F2266F;border-radius:14px">
+        <div class="ch" data-part="hook">Your oven called. It wants the night off.</div><div class="ce" data-part="visual" aria-hidden="true">🍕</div>
+        <div class="cs" data-part="offer">Free dessert this week</div>
+        <div data-part="proof" style="position:relative;z-index:2;font-weight:800">★★★★★ 600+ reviews</div>
+        <div data-part="cta" style="position:relative;z-index:2;align-self:stretch;text-align:center;background:#fff;color:#1D1530;border-radius:10px;padding:10px;font-weight:800">Order Now →</div></div></div>
+      <div class="stack"><div class="row">${P.map((p, i) => `<button class="chip" data-ap="${i}">${i + 1}. ${p[1]}</button>`).join('')}</div><div id="apOut" class="ink ink-yellow">Tap a part.</div></div></div>`;
+    el.addEventListener('click', e => { const b = e.target.closest('[data-ap]'); if (!b) return; const p = P[+b.dataset.ap];
+      $$('[data-ap]', el).forEach(x => x.classList.toggle('on', x === b));
+      $$('[data-part]', el).forEach(x => x.classList.toggle('glow', x.dataset.part === p[0]));
+      $('#apOut', el).innerHTML = `<h3 style="margin-bottom:6px">${p[1]}</h3><p>${p[2]}</p>`; });
+  },
+  formula(el) {
+    el.innerHTML = `<div class="dh"><b>Pick a formula and a business. Watch the ad write itself.</b></div>
+      <div class="row" style="margin-bottom:10px"><button class="chip on" data-fm="0">PAS</button><button class="chip" data-fm="1">AIDA</button><button class="chip" data-fm="2">BAB</button>
+      <select id="fmN" style="width:auto">${Object.entries(NICHES).map(([k, n]) => `<option value="${k}">${n.label}</option>`).join('')}</select></div>
+      <div class="out" id="fmOut"></div>`;
+    let fm = 0;
+    const go = () => { const p = samplePack($('#fmN', el).value); $('#fmOut', el).textContent = p.texts[fm].f + '\n\n' + p.texts[fm].t; };
+    el.addEventListener('click', e => { const b = e.target.closest('[data-fm]'); if (!b) return; fm = +b.dataset.fm; $$('[data-fm]', el).forEach(x => x.classList.toggle('on', x === b)); go(); });
+    $('#fmN', el).addEventListener('change', go); go();
+  },
+  tools(el) {
+    const T = [['I need ad words', 'An AI chat tool (Claude, ChatGPT or Gemini)', 'Prompts page → "20 scroll-stopping hooks"'],
+      ['I need a picture', 'Canva Magic Media, Adobe Firefly or Midjourney', 'Copy the image prompt from the Ad Builder'],
+      ['I need a video', 'CapCut or Canva (free), Runway or HeyGen for AI video', 'Use the 15-second script from the Ad Builder'],
+      ['I need to find buyers', 'Meta Advantage+ or Google Performance Max', 'Use the targeting box in the Ad Builder'],
+      ['I need clients', 'Google Maps + Loom + this site’s Audit tool', 'Follow the 14-day sprint on Get Clients']];
+    el.innerHTML = `<div class="dh"><b>What do you need right now?</b></div><div class="row" style="margin-bottom:12px">${T.map((t, i) => `<button class="chip" data-tl="${i}">${t[0]}</button>`).join('')}</div><div id="tlOut" class="ink ink-teal">Tap a need.</div>`;
+    el.addEventListener('click', e => { const b = e.target.closest('[data-tl]'); if (!b) return; const t = T[+b.dataset.tl];
+      $$('[data-tl]', el).forEach(x => x.classList.toggle('on', x === b));
+      $('#tlOut', el).innerHTML = `<h3 style="margin-bottom:6px">${t[1]}</h3><p><b>Next step:</b> ${t[2]}</p>`; });
+  },
+  metrics(el) {
+    const S = [['mB', 'Budget per day', 5, 100, 1, 20, v => '$' + v], ['mD', 'Days', 1, 30, 1, 7, v => v], ['mCpm', 'CPM (cost per 1,000 views)', 4, 40, 1, 12, v => '$' + v],
+      ['mCtr', 'CTR (click rate)', 0.3, 5, 0.1, 1.2, v => v + '%'], ['mConv', 'Clicks that become leads', 1, 30, 1, 10, v => v + '%'],
+      ['mBuy', 'Leads that buy', 5, 100, 5, 35, v => v + '%'], ['mVal', 'One customer is worth', 10, 2000, 10, 150, v => '$' + v]];
+    el.innerHTML = `<div class="dh"><b>Ad results calculator: move the sliders</b></div><div class="grid g2"><div class="stack">${S.map(s => `<label class="slider">${s[1]} <output id="${s[0]}O"></output><input type="range" id="${s[0]}" min="${s[2]}" max="${s[3]}" step="${s[4]}" value="${s[5]}"></label>`).join('')}</div>
+      <div class="stack"><div class="kpis" id="mK"></div><div id="mV"></div></div></div>`;
+    const go = () => {
+      const v = {}; S.forEach(s => { v[s[0]] = +$('#' + s[0], el).value; $('#' + s[0] + 'O', el).textContent = s[6](v[s[0]]); });
+      const spend = v.mB * v.mD, imp = spend / v.mCpm * 1000, clicks = imp * v.mCtr / 100, leads = clicks * v.mConv / 100, buyers = leads * v.mBuy / 100, rev = buyers * v.mVal, roas = rev / spend;
+      const k = [['Spend', money(spend)], ['Views', Math.round(imp).toLocaleString()], ['Clicks', Math.round(clicks).toLocaleString()], ['CPC', '$' + (spend / Math.max(clicks, 1)).toFixed(2)],
+        ['Leads', Math.round(leads)], ['CPL', leads >= 1 ? money(spend / leads) : '—'], ['Customers', buyers.toFixed(1)], ['Revenue', money(rev)]];
+      $('#mK', el).innerHTML = k.map(x => `<div class="kpi"><small>${x[0]}</small><b>${x[1]}</b></div>`).join('');
+      const good = roas >= 3, ok = roas >= 1;
+      $('#mV', el).innerHTML = `<div class="ink ${good ? 'ink-green' : ok ? 'ink-yellow' : 'ink-pink'}"><h3>ROAS ${roas.toFixed(1)}×</h3><p>${good ? 'Great. The owner makes ' + money(rev - spend) + ' more than they spend. Show them this!' : ok ? 'Making money, but thin. Try a better offer or a stronger hook to raise CTR.' : 'Losing money. Fix the offer, the hook, or the landing page before spending more.'}</p></div>`;
+    };
+    el.addEventListener('input', go); go();
+  },
+  radius(el) {
+    el.innerHTML = `<div class="dh"><b>Set a location radius and see how many people you reach</b></div><div class="grid g2"><div class="radius"><div class="ring" id="rRing"></div><div class="pin">📍</div></div>
+      <div class="stack"><label class="slider">Radius <output id="rMO"></output><input type="range" id="rM" min="1" max="30" value="8"></label>
+      <div class="row"><button class="chip on" data-den="3000">City</button><button class="chip" data-den="900">Suburb</button><button class="chip" data-den="80">Countryside</button></div>
+      <div class="kpi"><small>Adults in range (estimate)</small><b id="rPeople"></b></div><div id="rV"></div></div></div>`;
+    let den = 3000;
+    const go = () => {
+      const r = +$('#rM', el).value, ppl = Math.round(Math.PI * r * r * den * 0.75);
+      $('#rMO', el).textContent = r + ' miles'; $('#rPeople', el).textContent = ppl.toLocaleString();
+      const s = Math.max(8, r / 30 * 100) + '%'; $('#rRing', el).style.width = s; $('#rRing', el).style.height = s;
+      $('#rV', el).innerHTML = ppl < 50000 ? '<div class="note red">Too small. Ads will get pricey. Make the radius bigger.</div>' : ppl > 2000000 ? '<div class="note">Very big. Fine for online stores, too wide for most local shops.</div>' : '<div class="note teal">Good size for a local business.</div>';
+    };
+    el.addEventListener('input', go);
+    el.addEventListener('click', e => { const b = e.target.closest('[data-den]'); if (!b) return; den = +b.dataset.den; $$('[data-den]', el).forEach(x => x.classList.toggle('on', x === b)); go(); });
+    go();
+  },
+  abtest(el) {
+    let truth, data, day;
+    const names = ['Hook A: question', 'Hook B: offer first', 'Hook C: funny'], cols = ['var(--pink)', 'var(--blue)', 'var(--teal)'];
+    const reset = () => { truth = [0.8, 1.6, 2.6].sort(() => Math.random() - .5); data = [[0, 0], [0, 0], [0, 0]]; day = 0; draw(); };
+    const draw = () => {
+      const ctr = data.map(d => d[0] ? d[1] / d[0] * 100 : 0), mx = Math.max(3, ...ctr);
+      $('#abBars', el).innerHTML = names.map((n, i) => `<div class="abbar"><span>${n.split(':')[0]}</span><div class="tr"><i style="width:${ctr[i] / mx * 100}%;background:${cols[i]}"></i></div><span class="mono">${ctr[i].toFixed(2)}%</span></div>`).join('');
+      $('#abDay', el).textContent = `Day ${day} · ${(data[0][0] * 3).toLocaleString()} views · $${day * 30} spent`;
+      $('#abPick', el).hidden = day < 3;
+    };
+    el.innerHTML = `<div class="dh"><b>A/B test simulator: which hook wins?</b></div><p class="muted" style="margin-bottom:10px">Each day, each ad gets 1,000 views. Run at least 3 days before you pick.</p>
+      <div class="stack" id="abBars"></div><p class="mono muted" id="abDay" style="margin-top:8px"></p>
+      <div class="row" style="margin-top:10px"><button class="btn sm" id="abRun">Run 1 day ($30)</button><button class="btn sm alt" id="abReset">Start over</button></div>
+      <div id="abPick" class="stack" style="margin-top:12px"><b>Pick the winner:</b><div class="row">${names.map((n, i) => `<button class="chip" data-ab="${i}">${n}</button>`).join('')}</div><div id="abRes"></div></div>`;
+    $('#abRun', el).onclick = () => { day++; truth.forEach((t, i) => { const c = Math.max(0, Math.round(1000 * t / 100 + (Math.random() - .5) * 12)); data[i][0] += 1000; data[i][1] += c; }); $('#abRes', el).innerHTML = ''; draw(); };
+    $('#abReset', el).onclick = () => { $('#abRes', el).innerHTML = ''; reset(); };
+    el.addEventListener('click', e => { const b = e.target.closest('[data-ab]'); if (!b) return; const i = +b.dataset.ab, best = truth.indexOf(Math.max(...truth));
+      $('#abRes', el).innerHTML = i === best ? `<div class="note teal">Correct! ${names[i]} really has a ${truth[i]}% CTR. Now give it more budget and write 3 new hooks like it.</div>` : `<div class="note red">Not quite. The real winner was ${names[best]} (${truth[best]}% CTR). Short tests can fool you; run longer.</div>`; });
+    reset();
+  },
+  policy(el) {
+    const R = [[/\bare you (overweight|fat|in debt|depressed|single|broke|diabetic|bald|sick|lonely|anxious)\b/i, 'Calls out a personal trait. Meta rejects "Are you overweight/in debt/depressed?" Talk about the result instead.'],
+      [/\bguarantee(d|s)?\b/i, 'Promises a guaranteed result. Avoid it in ads unless it is a real written policy (like a refund).'],
+      [/\bcure(s|d)?\b/i, 'Health claim ("cure"). Health ads must not promise medical outcomes.'],
+      [/\blose \d+\s?(lbs|pounds|kg)\b/i, 'Specific weight-loss promise. These get rejected.'],
+      [/before (and|&) after/i, 'Before-and-after body or health photos are not allowed on Meta.'],
+      [/(#1|number one|best in (town|the city|the state))/i, 'A "#1" or "best" claim needs proof (an award or a source). Add it or soften it.'],
+      [/!{2,}/, 'Too many exclamation marks. Looks spammy and can lower delivery.'],
+      [/\b[A-Z]{6,}\b/, 'Long ALL-CAPS words look spammy.'],
+      [/\b(like|share|tag) (this|a friend|someone)\b/i, 'Engagement bait ("like/share/tag"). Platforms push these ads down.'],
+      [/\b(you|your) (credit|loan|mortgage|job|apartment|rent)\b/i, 'This might be a Special Ad Category (credit, jobs, housing). Mark it in Ads Manager.']];
+    el.innerHTML = `<div class="dh"><b>Ad rule checker: paste ad text and check it</b></div>
+      <textarea id="poT">Are you overweight?? Our GUARANTEED program helps you lose 30 lbs in 30 days!! We are the #1 gym in town. Tag a friend!</textarea>
+      <div class="row" style="margin:10px 0"><button class="btn sm" id="poGo">Check my ad</button><button class="btn sm alt" id="poFix">Show a fixed version</button></div><div id="poOut" class="stack" style="gap:8px"></div>`;
+    const go = () => { const t = $('#poT', el).value, hits = R.filter(r => r[0].test(t));
+      $('#poOut', el).innerHTML = hits.length ? `<b>${hits.length} problem${hits.length > 1 ? 's' : ''} found</b>` + hits.map(h => `<div class="flag" style="background:var(--red-s)"><span>⚠</span><span>${h[1]}</span></div>`).join('') : '<div class="flag" style="background:var(--green-s)"><span>✓</span><span>No common rule problems found. Still read the platform\'s ad policies before launching.</span></div>'; };
+    $('#poGo', el).onclick = go;
+    $('#poFix', el).onclick = () => { $('#poT', el).value = 'Feel stronger and more confident this summer. Coaches who learn your name, classes that fit a lunch break. 500+ members hit their goal last year. Claim your free 7-day pass.'; go(); };
+    go();
+  },
+  quiz(el) {
+    const Q = [['What does CTR mean?', ['Cost to run', 'Click-through rate', 'Customer total revenue'], 1],
+      ['You spend $100 and get 4 leads. What is the cost per lead?', ['$4', '$25', '$400'], 1],
+      ['A ROAS of 4 means…', ['$4 back for every $1 spent', '4 sales a day', '4% click rate'], 0],
+      ['Best first test for a new client?', ['1 ad for a month', '3 hooks × 3 visuals, 1 offer', '20 offers at once'], 1],
+      ['Who should own the ad account?', ['You', 'The client', 'Nobody'], 1],
+      ['Which line breaks Meta’s ad rules?', ['“Feel stronger this summer”', '“Free 7-day pass”', '“Are you overweight?”'], 2],
+      ['Fastest way to land a first client?', ['Wait for referrals', 'Send personal free audits every day', 'Buy a big ad for yourself'], 1],
+      ['Should the client’s ad spend be part of your fee?', ['Yes, always', 'No, they pay the platform directly', 'Only on Google'], 1]];
+    const ans = {};
+    el.innerHTML = `<div class="dh"><b>Final quiz</b></div><div class="quiz stack">${Q.map((q, i) => `<div class="q"><b>${i + 1}. ${q[0]}</b><div class="opts">${q[1].map((o, j) => `<button data-q="${i}" data-o="${j}">${o}</button>`).join('')}</div></div>`).join('')}</div><div id="qzOut" style="margin-top:12px"></div>`;
+    el.addEventListener('click', e => { const b = e.target.closest('[data-q]'); if (!b) return; const i = +b.dataset.q, j = +b.dataset.o; if (i in ans) return; ans[i] = j;
+      $$(`[data-q="${i}"]`, el).forEach(x => { const o = +x.dataset.o; if (o === Q[i][2]) x.classList.add('right'); else if (o === j) x.classList.add('wrong'); });
+      const done = Object.keys(ans).length, score = Object.entries(ans).filter(([k, v]) => Q[k][2] === v).length;
+      $('#qzOut', el).innerHTML = done === Q.length ? `<div class="ink ${score >= 6 ? 'ink-green' : 'ink-yellow'}"><h3>${score}/8 ${score >= 6 ? '🎉 You’re ready to sell!' : 'Almost. Review the lessons and try again.'}</h3><p>${score >= 6 ? 'Next: build 3 demo ads, then follow the 14-day sprint.' : 'Tip: lessons 6 and 9 cover most of these.'}</p><div class="row" style="margin-top:10px"><a class="btn sm" href="#builder">Open the Ad Builder</a><a class="btn sm alt" href="#clients">Get clients</a></div></div>` : `<p class="muted mono">${done}/8 answered</p>`; });
+  }
+};
+
+// ================= AUDIT =================
+const A = Object.assign(JSON.parse(JSON.stringify(AUDIT_DEMOS.weak)), store.get('audit', {}));
+function auditInit() {
+  $('#aNiche').innerHTML = Object.entries(NICHES).map(([k, n]) => `<option value="${k}">${n.label}</option>`).join('');
+  $('#auditQs').innerHTML = AUDIT.map(c => `<div class="acat"><h4 style="background:${c.color}">${c.cat} <span style="opacity:.85;font-weight:600">· 20 pts</span></h4><div class="qs">${c.qs.map(q => {
+    if (q.type === 'yn') return `<div class="aq"><span>${q.q}</span><span class="seg" data-q="${q.id}"><button data-v="1">Yes</button><button data-v="0">No</button></span></div>`;
+    if (q.type === 'seg') return `<div class="aq"><span>${q.q}</span><span class="seg" data-q="${q.id}">${q.opts.map(o => `<button data-v="${o[1]}">${o[0]}</button>`).join('')}</span></div>`;
+    return `<div class="aq col"><label class="slider">${q.q} <output id="o-${q.id}"></output><input type="range" id="r-${q.id}" min="${q.min}" max="${q.max}" step="${q.step}"></label></div>`;
+  }).join('')}</div></div>`).join('');
+  $('#auditQs').addEventListener('click', e => { const b = e.target.closest('.seg button'); if (!b) return; A.a[b.parentElement.dataset.q] = +b.dataset.v; renderAudit(); });
+  $('#auditQs').addEventListener('input', e => { if (e.target.id && e.target.id.startsWith('r-')) { A.a[e.target.id.slice(2)] = +e.target.value; renderAudit(false); } });
+  [['aName', 'name'], ['aOwner', 'owner']].forEach(([id, k]) => $('#' + id).addEventListener('input', e => { A[k] = e.target.value; renderAudit(false); }));
+  $('#aValue').addEventListener('input', e => { A.value = Math.max(1, +e.target.value || 1); renderAudit(false); });
+  $('#aNiche').addEventListener('change', e => { A.niche = e.target.value; A.value = NICHES[A.niche].avgSale; $('#aValue').value = A.value; renderAudit(false); });
+  $$('[data-demo]').forEach(b => b.addEventListener('click', () => { Object.assign(A, JSON.parse(JSON.stringify(AUDIT_DEMOS[b.dataset.demo]))); renderAudit(); toast('Example loaded'); }));
+  renderAudit();
+}
+function auditScore() {
+  let total = 0; const cats = [], lost = [];
+  AUDIT.forEach(c => { let s = 0; c.qs.forEach(q => { const raw = A.a[q.id] ?? 0, v = q.score ? q.score(raw) : raw, got = q.pts * v; s += got; lost.push({ q, lost: q.pts - got, cat: c }); }); cats.push({ c, s }); total += s; });
+  lost.sort((a, b) => b.lost - a.lost);
+  return { total: Math.round(total), cats, lost };
+}
+function renderAudit(sync = true) {
+  store.set('audit', A);
+  if (!NICHES[A.niche]) A.niche = 'restaurant';
+  if (sync) { $('#aName').value = A.name; $('#aOwner').value = A.owner; $('#aValue').value = A.value; $('#aNiche').value = A.niche; }
+  AUDIT.forEach(c => c.qs.forEach(q => {
+    const v = A.a[q.id] ?? 0;
+    if (q.type === 'range') { const r = $('#r-' + q.id); if (sync) r.value = v; $('#o-' + q.id).textContent = q.id === 'rating' ? (+v).toFixed(1) + '★' : v; }
+    else $$(`.seg[data-q="${q.id}"] button`).forEach(b => b.classList.toggle('on', +b.dataset.v === +v));
+  }));
+  const { total, cats, lost } = auditScore(), n = NICHES[A.niche];
+  const grade = total >= 85 ? 'A' : total >= 70 ? 'B' : total >= 55 ? 'C' : total >= 40 ? 'D' : 'F';
+  const col = total >= 70 ? 'var(--green)' : total >= 45 ? 'var(--orange)' : 'var(--red)';
+  const L = Math.PI * 90;
+  $('#gauge').innerHTML = `<svg viewBox="0 0 220 130" role="img" aria-label="Score ${total} out of 100"><path d="M20,115 A90,90 0 0 1 200,115" fill="none" style="stroke:var(--line)" stroke-width="18" stroke-linecap="round"/>
+    <path d="M20,115 A90,90 0 0 1 200,115" fill="none" style="stroke:${col};transition:stroke-dashoffset .6s" stroke-width="18" stroke-linecap="round" stroke-dasharray="${L}" stroke-dashoffset="${L * (1 - total / 100)}"/>
+    <text x="110" y="100" text-anchor="middle" style="fill:var(--ink);font-family:var(--f-display);font-weight:800;font-size:44px">${total}</text><text x="110" y="122" text-anchor="middle" style="fill:var(--muted);font-family:var(--f-mono);font-size:11px">OUT OF 100</text></svg>
+    <span class="grade" style="background:${col};color:#fff">Grade ${grade}</span><b>${esc(A.name || 'This business')}</b>`;
+  $('#cbars').innerHTML = cats.map(x => `<div class="cbar"><span>${x.c.cat}</span><div class="tr"><i style="width:${x.s / 20 * 100}%;background:${x.c.color}"></i></div><span class="mono">${Math.round(x.s)}/20</span></div>`).join('');
+  const top = lost.filter(l => l.lost > 0.5).slice(0, 5);
+  $('#fixes').innerHTML = top.length ? top.map((l, i) => `<div class="fix"><span class="tag t-${['red', 'orange', 'yellow', 'blue', 'teal'][i]}">+${Math.round(l.lost)} pts</span><span>${l.q.fix}</span></div>`).join('') : '<p class="muted">Almost perfect. Offer them a Scale package to grow further.</p>';
+  const base = A.value >= 1000 ? 4 : A.value >= 300 ? 10 : 40, extra = Math.max(1, Math.round((100 - total) / 100 * base)), rev = extra * A.value;
+  const rec = total < 45 ? PKGS[3] : total < 75 ? PKGS[2] : PKGS[1];
+  $('#missed').innerHTML = `<span class="eyebrow" style="color:var(--ink)">Money left on the table (rough estimate)</span><div class="qtotal mono">${money(rev)}<small style="font-size:1rem"> /month</small></div>
+    <p>About <b>${extra}</b> more customer${extra > 1 ? 's' : ''} a month at ${money(A.value)} each, or <b>${money(rev * 12)}</b> a year.</p>
+    <p>Recommended package: <b>${rec.name}</b>${rec.monthly ? ` (${money(rec.monthly)}/month)` : ` (${money(rec.setup)} one time)`}. <a href="#pricing">See pricing</a></p>`;
+  const owner = A.owner || 'there';
+  $('#auditReport').textContent = `Hi ${owner},\n\nI ran a free AI ad audit on ${A.name}. Your score is ${total}/100 (grade ${grade}).\n\nWhat's working:\n${cats.filter(x => x.s >= 14).map(x => '✓ ' + x.c.cat).join('\n') || '✓ You have a real business people like. That is the hardest part.'}\n\nYour top 3 quick wins:\n${top.slice(0, 3).map((l, i) => `${i + 1}. ${l.q.fix}`).join('\n') || '1. Keep doing what you are doing and add a second ad platform.'}\n\nWhy it matters: fixing these could bring about ${extra} more customer${extra > 1 ? 's' : ''} a month. At ${money(A.value)} each that's around ${money(rev)} a month.\n\nI also made a sample ad for you with the offer "${n.offer}". Want me to send it? Happy to walk you through all of this in 15 minutes.\n\nBest,\n[Your name]`;
+  $('#auditLoom').textContent = `(0:00, screen on their Google listing)\n"Hi ${owner}, I made this short video just for ${A.name}. You scored ${total} out of 100 on my AI ad audit. Here's what I found."\n\n(0:20, point at reviews and photos)\n"${top[0] ? top[0].q.fix : 'Your Google listing looks strong.'}"\n\n(0:50, open their website on phone view)\n"${top[1] ? top[1].q.fix : 'Your website works well on phones.'}"\n\n(1:20, show your sample ad)\n"So I made you this ad with the offer '${n.offer}'. Ads like this usually get a ${n.kind} leads for about $${n.cpl[0]}–$${n.cpl[1]} each."\n\n(1:45, your face)\n"If you want help setting it up, just reply. Either way, keep the audit. Thanks, ${owner}!"`;
+}
+
+// ================= PRICING =================
+const Q = Object.assign({ pkg: 'growth', tier: 1, addons: [], months: 6, spend: 900, found: false }, store.get('quote', {}));
+const adj = v => Q.tier === 1 || !v ? v : Math.round(v * 1.5 / 100) * 100 - 3;
+function pricingInit() {
+  $('#pkgs').innerHTML = PKGS.map(p => `<div class="pkg${p.best ? ' best' : ''}">${p.best ? '<span class="ribbon">MOST POPULAR</span>' : ''}<span class="tag" style="align-self:flex-start;background:${p.color};color:#fff">${p.tag}</span><h3>${p.name}</h3>
+    <div class="price mono">${p.monthly ? money(p.monthly) : p.setup ? money(p.setup) : '$0'} <small>${p.note}</small></div>${p.setup && p.monthly ? `<span class="muted" style="font-size:.84rem">+ ${money(p.setup)} setup</span>` : ''}
+    <ul>${p.items.map(i => `<li>${i}</li>`).join('')}</ul><p class="muted" style="font-size:.85rem;margin-top:auto">${p.why}</p></div>`).join('');
+  $('#addonTable tbody').innerHTML = ADDONS.map(a => `<tr><td><b>${a.name}</b></td><td class="num">${money(a.price)}${a.per === 'month' ? '/mo' : ''}${a.monthly ? ` + ${money(a.monthly)}/mo` : ''}</td><td>${a.why}</td></tr>`).join('');
+  $('#qPkg').innerHTML = PKGS.filter(p => p.id !== 'audit').map(p => `<button class="chip" data-pk="${p.id}">${p.name}</button>`).join('');
+  $('#qAddons').innerHTML = ADDONS.map(a => `<label class="addon"><input type="checkbox" data-ad="${a.id}"><span><b>${a.name}</b><br><span class="muted mono">${money(a.price)}${a.per === 'month' ? '/mo' : ''}${a.monthly ? ` + ${money(a.monthly)}/mo` : ''}</span></span></label>`).join('');
+  $('#qPkg').addEventListener('click', e => { const b = e.target.closest('[data-pk]'); if (b) { Q.pkg = b.dataset.pk; renderQuote(); } });
+  $$('[data-tier]').forEach(b => b.addEventListener('click', () => { Q.tier = +b.dataset.tier; renderQuote(); }));
+  $('#qAddons').addEventListener('change', e => { const id = e.target.dataset.ad; if (!id) return; Q.addons = e.target.checked ? [...new Set([...Q.addons, id])] : Q.addons.filter(x => x !== id); renderQuote(); });
+  $('#qMonths').addEventListener('input', e => { Q.months = +e.target.value; renderQuote(); });
+  $('#qSpend').addEventListener('input', e => { Q.spend = +e.target.value; renderQuote(); });
+  $('#qFound').addEventListener('change', e => { Q.found = e.target.checked; renderQuote(); });
+  renderQuote();
+}
+function renderQuote() {
+  store.set('quote', Q);
+  const p = PKGS.find(x => x.id === Q.pkg) || PKGS[2];
+  $$('#qPkg .chip').forEach(b => b.classList.toggle('on', b.dataset.pk === p.id));
+  $$('[data-tier]').forEach(b => b.classList.toggle('on', +b.dataset.tier === Q.tier));
+  $$('#qAddons input').forEach(i => i.checked = Q.addons.includes(i.dataset.ad));
+  $('#qMonths').value = Q.months; $('#qSpend').value = Q.spend; $('#qFound').checked = Q.found;
+  const recurring = p.monthly > 0, months = recurring ? Q.months : 1;
+  $('#qMonthsO').textContent = recurring ? `${Q.months} month${Q.months > 1 ? 's' : ''}` : 'one time';
+  $('#qSpendO').textContent = money(Q.spend);
+  const lines = []; let setup = adj(p.setup), monthly = adj(p.monthly), extraCost = 0;
+  if (p.setup) lines.push([`${p.name} setup`, adj(p.setup), 'once']);
+  if (p.monthly) lines.push([`${p.name} monthly fee`, adj(p.monthly), 'mo']);
+  if (p.perLead) { const per = Q.tier === 1 ? 35 : 75, leads = Math.round(Q.spend / (Q.tier === 1 ? 25 : 70)); lines.push([`About ${leads} leads × ${money(per)} (estimate)`, leads * per, 'mo']); monthly += leads * per; }
+  ADDONS.filter(a => Q.addons.includes(a.id)).forEach(a => {
+    if (a.per === 'month') { monthly += a.price; lines.push([a.name, a.price, 'mo']); } else { setup += a.price; lines.push([a.name, a.price, 'once']); }
+    if (a.monthly) { monthly += a.monthly; lines.push([a.name + ' (hosting)', a.monthly, 'mo']); extraCost += 30; }
+  });
+  const discMonths = Q.found && recurring ? Math.min(3, months) : 0;
+  const disc = Q.found && recurring ? Math.round(adj(p.monthly) * 0.3) : 0;
+  if (disc) lines.push([`Founding discount (first ${discMonths} mo)`, -disc, 'mo']);
+  const first = setup + (recurring ? monthly - disc : 0);
+  const value = setup + (recurring ? monthly * months - disc * discMonths : 0);
+  const profit = value - (80 + extraCost) * months;
+  $('#qLines').innerHTML = lines.map(l => `<div class="qline"><span>${l[0]}</span><b>${l[1] < 0 ? '−' + money(-l[1]) : money(l[1])}${l[2] === 'mo' ? '/mo' : ''}</b></div>`).join('') +
+    `<div class="qline"><span class="muted">Ad budget (client pays Facebook/Google directly)</span><b class="muted">${money(Q.spend)}/mo</b></div>`;
+  $('#qFirst').textContent = money(first); $('#qValue').textContent = money(value); $('#qProfit').textContent = money(profit);
+  $('#qText').textContent = `Hi [Name],\n\nThanks for the call! Here's the plan for [Business]:\n\nPackage: ${p.name}\n${p.items.map(i => '• ' + i).join('\n')}${Q.addons.length ? '\n\nExtras:\n' + ADDONS.filter(a => Q.addons.includes(a.id)).map(a => '• ' + a.name).join('\n') : ''}\n\nInvestment:\n${setup ? `• Setup: ${money(setup)} (one time)\n` : ''}${recurring ? `• Monthly: ${money(monthly)}${disc ? ` (${money(monthly - disc)} for the first ${discMonths} months, founding-client price)` : ''}\n• Term: ${months} month${months > 1 ? 's' : ''}, then month to month\n` : ''}• Ad budget: ${money(Q.spend)}/month, paid by you directly to the ad platform\n\nFirst invoice: ${money(first)}\n\nIf this looks good, reply "yes" and I'll send the invoice. Your ads can be live within 5 days.\n\n[Your name]`;
+}
+
+// ================= CLIENTS =================
+function clientsInit() {
+  const S = [['fMsg', v => v], ['fRep', v => v + '%'], ['fCall', v => v + '%'], ['fClose', v => v + '%']];
+  const fGo = () => {
+    S.forEach(([id, f]) => $('#' + id + 'O').textContent = f($('#' + id).value));
+    const m = +$('#fMsg').value * 21.5, rep = m * $('#fRep').value / 100, calls = rep * $('#fCall').value / 100, cl = calls * $('#fClose').value / 100;
+    const days = cl > 0 ? Math.ceil(21.5 / cl) : Infinity;
+    $('#fKpis').innerHTML = [['Messages / month', Math.round(m)], ['Replies', Math.round(rep)], ['Calls', calls.toFixed(1)], ['New clients', cl.toFixed(1)], ['New monthly income', money(cl * 997)]].map(k => `<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('');
+    $('#fNote').innerHTML = days === Infinity ? 'Raise the numbers to see a result.' : `At this pace your first client comes in about <b>${days} working days</b>. ${cl < 1 ? 'Send more messages or improve your reply rate with free audits and custom ads.' : 'Keep it up and you add about ' + money(cl * 997) + ' of monthly income every month.'}`;
+  };
+  S.forEach(([id]) => $('#' + id).addEventListener('input', fGo)); fGo();
+
+  let sp = store.get('sprint', []);
+  const drawSprint = () => {
+    $('#sprint').innerHTML = SPRINT.map((d, i) => `<label class="day${sp.includes(i) ? ' done' : ''}"><input type="checkbox" data-sp="${i}" ${sp.includes(i) ? 'checked' : ''}><span class="dn" style="background:${LCOL[i % 10]}">DAY ${i + 1}</span><span><b class="dt">${d[0]}</b><br><span class="muted">${d[1]}</span></span></label>`).join('');
+  };
+  $('#sprint').addEventListener('change', e => { const i = +e.target.dataset.sp; sp = e.target.checked ? [...sp, i] : sp.filter(x => x !== i); store.set('sprint', sp); drawSprint(); });
+  drawSprint();
+
+  $('#sNiche').innerHTML = Object.entries(NICHES).map(([k, n]) => `<option value="${k}" ${k === 'dentist' ? 'selected' : ''}>${n.label}</option>`).join('');
+  let st = 'dm';
+  $('#sTabs').innerHTML = Object.entries(SCRIPT_TABS).map(([k, t]) => `<button class="chip" data-st="${k}">${t}</button>`).join('');
+  const sGo = () => {
+    const v = { me: $('#sMe').value || 'Me', them: $('#sThem').value || 'there', biz: $('#sBiz').value || 'your business', city: $('#sCity').value || 'town', niche: $('#sNiche').value, obs: $('#sObs').value };
+    $$('#sTabs .chip').forEach(b => b.classList.toggle('on', b.dataset.st === st));
+    $('#sTitle').textContent = SCRIPT_TABS[st]; $('#sOut').textContent = scripts(v)[st];
+  };
+  $('#sTabs').addEventListener('click', e => { const b = e.target.closest('[data-st]'); if (b) { st = b.dataset.st; sGo(); } });
+  ['sMe', 'sThem', 'sBiz', 'sCity', 'sNiche', 'sObs'].forEach(id => $('#' + id).addEventListener('input', sGo));
+  $('#sNiche').addEventListener('change', sGo); $('#sObs').addEventListener('change', sGo); sGo();
+
+  $('#flips').innerHTML = OBJECTIONS.map(o => `<button class="flip"><div class="in"><div class="fa"><span class="eyebrow" style="color:var(--yellow)">They say</span><h4>${o[0]}</h4><span style="margin-top:auto;font-size:.82rem;opacity:.8">Tap to see what to say →</span></div><div class="fb2"><span class="eyebrow" style="color:var(--teal)">You say</span><p>${o[1]}</p></div></div></button>`).join('');
+  $('#flips').addEventListener('click', e => { const f = e.target.closest('.flip'); if (f) f.classList.toggle('on'); });
+
+  const STAGES = ['New', 'Contacted', 'Call booked', 'Proposal sent', 'Won 🎉'];
+  let leads = store.get('leads', null) || [
+    { id: 1, biz: "Example: Tony's Pizza", note: '38 reviews, boosted posts only', st: 0 },
+    { id: 2, biz: 'Example: Glow Hair Studio', note: 'Sent audit video Tue', st: 1 },
+    { id: 3, biz: 'Example: Bright Smile Dental', note: 'Call Thu 2pm', st: 2 },
+    { id: 4, biz: 'Example: Peak Roofing', note: 'Growth $1,497 quote sent', st: 3 }];
+  const save = () => { store.set('leads', leads); drawK(); };
+  const drawK = () => {
+    $('#kanban').innerHTML = STAGES.map((s, i) => { const ls = leads.filter(l => l.st === i);
+      return `<div class="kcol"><h4><span>${s}</span><span class="mono muted">${ls.length}</span></h4>${ls.map(l => `<div class="lead-c"><b>${esc(l.biz)}</b>${l.note ? `<span class="muted">${esc(l.note)}</span>` : ''}<div class="acts">${i > 0 ? `<button data-mv="${l.id}" data-d="-1" aria-label="Move back">←</button>` : ''}${i < 4 ? `<button data-mv="${l.id}" data-d="1" aria-label="Move forward">→</button>` : ''}<button data-rm="${l.id}" aria-label="Delete">×</button></div></div>`).join('')}</div>`; }).join('');
+  };
+  $('#kanban').addEventListener('click', e => {
+    const m = e.target.closest('[data-mv]'), r = e.target.closest('[data-rm]');
+    if (m) { const l = leads.find(x => x.id === +m.dataset.mv); l.st = Math.min(4, Math.max(0, l.st + +m.dataset.d)); if (l.st === 4) toast('New client! 🎉'); save(); }
+    if (r) { leads = leads.filter(x => x.id !== +r.dataset.rm); save(); }
+  });
+  $('#lAdd').addEventListener('click', () => { const biz = $('#lBiz').value.trim(); if (!biz) { toast('Type a business name first'); return; }
+    leads.push({ id: Date.now(), biz, note: $('#lNote').value.trim(), st: 0 }); $('#lBiz').value = ''; $('#lNote').value = ''; save(); });
+  drawK();
+}
+
+// ================= BUSINESS =================
+function businessInit() {
+  $('#nicheTable tbody').innerHTML = Object.values(NICHES).map(n => `<tr><td><b>${n.emoji} ${n.label}</b></td><td class="num">${money(n.avgSale)}</td>
+    <td><span class="tag ${n.ease === 'Easy' ? 't-green' : n.ease === 'Medium' ? 't-yellow' : 't-red'}">${n.ease}</span></td><td class="num">${n.tier === 'high' ? '$1,497' : '$997'}/mo</td>
+    <td class="muted">Leads cost ~$${n.cpl[0]}–$${n.cpl[1]}${n.special ? `. ${n.special} rules apply.` : ''}</td></tr>`).join('');
+  const go = () => {
+    const nw = +$('#gNew').value, fee = +$('#gFee').value, ch = +$('#gChurn').value / 100;
+    $('#gNewO').textContent = nw; $('#gFeeO').textContent = money(fee); $('#gChurnO').textContent = Math.round(ch * 100) + '%';
+    let c = 0, total = 0; const mrr = [];
+    for (let m = 0; m < 12; m++) { c = c * (1 - ch) + nw; mrr.push(c * fee); total += c * fee; }
+    $('#gKpis').innerHTML = [['Clients in month 12', c.toFixed(1)], ['Monthly income, month 12', money(mrr[11])], ['Earned in year 1', money(total)]].map(k => `<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('');
+    const W = 520, H = 270, pl = 54, pb = 28, pt = 26, mx = Math.max(1000, mrr[11]), step = Math.pow(10, Math.floor(Math.log10(mx / 4))), tick = Math.ceil(mx / 4 / step) * step, top = tick * 4;
+    const y = v => H - pb - (v / top) * (H - pb - pt), bw = (W - pl - 10) / 12;
+    let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Monthly income over 12 months">`;
+    for (let i = 0; i <= 4; i++) { const v = tick * i; s += `<line x1="${pl}" x2="${W - 6}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)"/><text x="${pl - 8}" y="${y(v) + 4}" text-anchor="end">${v >= 1000 ? '$' + (v / 1000) + 'k' : '$' + v}</text>`; }
+    mrr.forEach((v, i) => { const x = pl + i * bw + bw * .15, w = bw * .7; s += `<rect x="${x}" y="${y(v)}" width="${w}" height="${H - pb - y(v)}" rx="4" style="fill:${i === 11 ? 'var(--pink)' : 'var(--orange)'};opacity:${i === 11 ? 1 : .55 + i * .03}"/><text x="${x + w / 2}" y="${H - 9}" text-anchor="middle">M${i + 1}</text>`; });
+    s += `<text x="${pl + 11 * bw + bw / 2}" y="${y(mrr[11]) - 8}" text-anchor="middle" style="fill:var(--ink);font-weight:700">${money(mrr[11])}</text></svg>`;
+    $('#gChart').innerHTML = s;
+  };
+  ['gNew', 'gFee', 'gChurn'].forEach(id => $('#' + id).addEventListener('input', go)); go();
+}
+
+// ================= PROMPTS =================
+let pf = 'All';
+function promptsInit() {
+  const cats = ['All', ...new Set(PROMPTS.map(p => p[0]))];
+  $('#pFilters').innerHTML = cats.map(c => `<button class="chip" data-pf="${c}">${c}</button>`).join('');
+  $('#pFilters').addEventListener('click', e => { const b = e.target.closest('[data-pf]'); if (b) { pf = b.dataset.pf; renderPrompts(); } });
+  renderPrompts();
+}
+function renderPrompts() {
+  if (!$('#pList') || !$('#pFilters').children.length) return;
+  const f = fields(), n = NICHES[f.niche];
+  const fill = t => esc(t).replace(/\[niche\]/g, `<b>${esc(n.kind)}</b>`).replace(/\[city\]/g, `<b>${esc(f.city)}</b>`).replace(/\[business\]/g, `<b>${esc(f.name)}</b>`).replace(/\[offer\]/g, `<b>${esc(f.offer)}</b>`);
+  $$('#pFilters .chip').forEach(b => b.classList.toggle('on', b.dataset.pf === pf));
+  const colors = { Research: 't-blue', Copy: 't-pink', Images: 't-violet', Video: 't-teal', Audit: 't-orange', Sales: 't-green', Reporting: 't-yellow', Content: 't-red' };
+  $('#pList').innerHTML = PROMPTS.map((p, i) => [p, i]).filter(([p]) => pf === 'All' || p[0] === pf).map(([p, i]) => `<div class="packbox"><h4><span><span class="tag ${colors[p[0]]}">${p[0]}</span> ${p[1]}</span><button class="btn sm dark" data-copy="pp${i}">Copy</button></h4><div class="out" id="pp${i}">${fill(p[2])}</div></div>`).join('');
+}
+
+// ================= ROUTER + THEME =================
+const VIEWS = ['home', 'learn', 'builder', 'audit', 'pricing', 'clients', 'business', 'prompts'];
+function show(v) {
+  if (!VIEWS.includes(v)) v = 'home';
+  $$('.view').forEach(s => s.hidden = s.id !== 'v-' + v);
+  $$('#nav a').forEach(a => { a.classList.toggle('on', a.dataset.v === v); if (a.dataset.v === v) a.scrollIntoView({ block: 'nearest', inline: 'center' }); });
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+(function theme() {
+  const t = store.get('theme', null); if (t) document.documentElement.dataset.theme = t;
+  $('#themeBtn').addEventListener('click', () => {
+    const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const nx = cur === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = nx; store.set('theme', nx);
+  });
+})();
+
+builderInit(); learnInit(); auditInit(); pricingInit(); clientsInit(); businessInit(); promptsInit();
+heroTick(); setInterval(heroTick, 3800);
+show(location.hash.slice(1));
+</script>
+</body>
+</html>
