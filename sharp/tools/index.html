@@ -12,9 +12,9 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://c.daily.co; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cherry.contact-yayabuilds.workers.dev https://cloudflareinsights.com https://api.vapi.ai https://*.daily.co wss://*.daily.co; form-action 'none'; worker-src 'self' blob:; media-src 'self' blob:; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>All tools · Sharp Basics</title>
-<meta name="description" content="Free business tools for aspiring entrepreneurs: marketing calculators, budget planner, business plan builder, pricing, negotiation prep and an investor pressure drill.">
+<meta name="description" content="Free tools that help you earn money, keep it and grow it: a first $100 plan, a spending check, a wealth tracker, a road to $1 million and more.">
 <meta property="og:title" content="All tools · Sharp Basics">
-<meta property="og:description" content="Free business tools for aspiring entrepreneurs: marketing calculators, budget planner, business plan builder, pricing, negotiation prep and an investor pressure drill.">
+<meta property="og:description" content="Free tools that help you earn money, keep it and grow it: a first $100 plan, a spending check, a wealth tracker, a road to $1 million and more.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sharpbasics.com/tools/">
 <meta property="og:image" content="https://sharpbasics.com/og.png">
@@ -29,7 +29,7 @@
 .tool-grid .result{margin-top:0;position:sticky;top:90px}
 .tool h2{margin-bottom:4px}
 @media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
-.tool-index{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}.tool-card{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink)}.tool-card:hover{border-color:var(--ink)}.tool-card p{color:var(--muted);font-size:.96rem}.tool-card .count{margin-top:auto;font-weight:700;color:var(--accent-text);font-size:.9rem;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.tool-card .try{color:var(--ink)}.tool-card:hover .try{color:var(--accent-text)}.tool-find{display:grid;gap:10px;margin:0 0 22px;max-width:760px}.tool-find-l{font-weight:800}.tool-cats{display:flex;flex-wrap:wrap;gap:8px}.tool-cat{background:transparent;color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;font:700 .9rem var(--f-body);cursor:pointer;min-height:40px}.tool-cat[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}#tool-none a{color:var(--accent-text)}
+.tool-index{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}.tool-card{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink)}.tool-card:hover{border-color:var(--ink)}.tool-card h3{margin:0}.tool-card p{color:var(--muted);font-size:.98rem;margin:0}.tool-card .count{margin-top:auto;padding-top:6px;font-weight:700;color:var(--accent-text);font-size:.9rem;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.tool-card .try{color:var(--ink);margin-left:auto}.tool-card:hover .try{color:var(--accent-text)}.tool-find{display:grid;gap:10px;margin:0 0 10px;max-width:760px}.tool-find-l{font-weight:800}#tool-none a{color:var(--accent-text)}.tool-group{margin:30px 0 0}.tool-group[hidden]{display:none}.tg-head{display:flex;gap:14px;align-items:center;margin:0 0 14px}.tg-head h2{margin:0;font-size:clamp(1.4rem,3.2vw,1.9rem)}.tg-head p{margin:2px 0 0;color:var(--muted)}.tg-n{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;font:800 1.2rem var(--f-display);color:#0d1020;background:#3ddba5;box-shadow:0 0 26px -4px rgba(61,219,165,.75)}#biz .tg-n{background:var(--surface-2);color:var(--ink);box-shadow:none;border:1.5px solid var(--line)}
 </style>
 </head>
 <body>
@@ -50,39 +50,55 @@
   <div class="wrap page-head">
     <p class="crumbs"><a href="../index.html">Sharp</a> / Tools</p>
     <span class="eyebrow" style="display:block;margin-top:18px">Tools</span>
-    <h1>Free business tools</h1>
-    <p class="lede">Free tools for money, marketing, pricing, deals and investor pitches. No sign-up needed, and the maths is always shown.</p>
-    <div class="ch-tip" role="note" aria-label="Cherry's tip"><span class="ch-face" aria-hidden="true">C</span><p><b>Cherry's tip:</b> Not sure where to start? Want to earn your first money? Try the <a href="first100/index.html">First $100 Plan</a>. Spending too much? Use the <a href="../index.html#check">Spending check</a>.</p><button class="btn ch-btn" type="button" data-cherry hidden><span class="ch-face sm" aria-hidden="true">C</span>Talk to Cherry</button></div>
+    <h1>Earn it. Keep it. Grow it.</h1>
+    <p class="lede">Free tools that help you earn money, keep it and grow it, in that order. No sign-up, and the maths is always shown.</p>
+    <div class="ch-tip" role="note" aria-label="Cherry's tip"><span class="ch-face" aria-hidden="true">C</span><p><b>Cherry's tip:</b> Go in order: earn your first money, keep part of it, then grow it. New here? Try the <a href="../demo/index.html">60-second demo</a> first.</p><button class="btn ch-btn" type="button" data-cherry hidden><span class="ch-face sm" aria-hidden="true">C</span>Talk to Cherry</button></div>
   </div>
   <div class="wrap" style="padding-bottom:80px">
     <div class="tool-find" role="search">
       <label for="tool-q" class="tool-find-l">Find a tool</label>
-      <input type="search" id="tool-q" placeholder="Try &quot;budget&quot;, &quot;price&quot; or &quot;pitch&quot;" autocomplete="off">
-      <div class="tool-cats" role="group" aria-label="Filter by topic"><button type="button" class="tool-cat" data-cat="all" aria-pressed="true">All</button><button type="button" class="tool-cat" data-cat="finance" aria-pressed="false">Money</button><button type="button" class="tool-cat" data-cat="business" aria-pressed="false">Business</button><button type="button" class="tool-cat" data-cat="marketing" aria-pressed="false">Marketing</button><button type="button" class="tool-cat" data-cat="negotiation" aria-pressed="false">Negotiation</button><button type="button" class="tool-cat" data-cat="investors" aria-pressed="false">Investors</button><button type="button" class="tool-cat" data-cat="ai" aria-pressed="false">AI</button></div>
+      <input type="search" id="tool-q" placeholder="Try &quot;price&quot;, &quot;save&quot; or &quot;invest&quot;" autocomplete="off">
       <p class="fine" id="tool-n" aria-live="polite"></p>
     </div>
-    <div class="tool-index">
-      <a class="card tool-card" href="../plan/index.html" data-cat="ai" data-ai><span class="chip t-business">AI helper</span><h3>Idea to Plan</h3><p>Describe your idea. Get an honest score, the key numbers and a 4-week plan you can edit.</p><span class="count">Beta<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="../ask/index.html" data-cat="ai" data-ai><span class="chip t-business">AI helper</span><h3>Ask Cherry</h3><p>Ask a question about any lesson. Answers come only from Sharp's own lessons, with links to check them.</p><span class="count">Beta<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="ai/index.html" data-cat="ai"><span class="chip t-business">AI</span><h3>AI at work</h3><p>AI savings, AI cost per customer, a private before-you-paste check and a prompt library.</p><span class="count">4 tools<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="money-plan/index.html" data-cat="finance"><span class="chip t-finance">Finance</span><h3>Money plan</h3><p>What to spend on first, by when, and what to stop spending on.</p><span class="count">1 planner<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="../demo/index.html" data-cat="business"><span class="chip t-business">Demo</span><h3>60 seconds with Cherry</h3><p>New here? Three quick steps: what you could keep this year, your first $100, and how to close a sale.</p><span class="count">60 sec<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="first100/index.html" data-cat="business"><span class="chip t-business">Business</span><h3>First $100 Plan</h3><p>Pick a skill and your free hours. Cherry works out your price, how many jobs it takes, and a 30-day plan to earn your first $100.</p><span class="count">Free · new<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="ladder/index.html" data-cat="business"><span class="chip t-business">Business</span><h3>Money ladder</h3><p>From your first $100 to $1,000 and $10,000, then investing the profit. Cherry gives the moves and the maths for each rung.</p><span class="count">Free · new<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="tracker/index.html" data-cat="finance"><span class="chip t-finance">Finance</span><h3>Wealth tracker</h3><p>Once a month, log what you earned, saved and invested. Cherry shows how much you kept and your worth growing.</p><span class="count">Free · new<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="million/index.html" data-cat="finance"><span class="chip t-finance">Finance</span><h3>Road to $1 million</h3><p>Your age and what you can put in each week. Cherry shows when investing it could reach $1 million, and how to get there sooner.</p><span class="count">Free · new<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="checkin/index.html" data-cat="finance"><span class="chip t-finance">Finance</span><h3>Cherry's weekly check-in</h3><p>Cherry saves your plan and checks in with you every week, so you watch your spending go down.</p><span class="count">Builder<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="marketing/index.html" data-cat="marketing"><span class="chip t-marketing">Marketing</span><h3>Marketing calculators</h3><p>Ad return, cost per customer and payback, sales funnel, email list value.</p><span class="count">4 calculators<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="budget/index.html" data-cat="finance"><span class="chip t-finance">Finance</span><h3>Budget &amp; savings planner</h3><p>Budget dashboard: spent vs budget by category, income split, savings progress and trends.</p><span class="count">3 planners<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="business-plan/index.html" data-cat="business"><span class="chip t-business">Business</span><h3>Business plan &amp; pricing</h3><p>One-page business plan, pricing calculator, simple profit and loss.</p><span class="count">3 tools<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="negotiation/index.html" data-cat="negotiation"><span class="chip t-negotiation">Negotiation</span><h3>Negotiation prep</h3><p>Your opening offer, concession plan and word-for-word scripts.</p><span class="count">1 planner<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="investors/index.html" data-cat="investors"><span class="chip t-investors">Investors</span><h3>Investor pressure drill</h3><p>Tough investor questions against a timer, with strong answer shapes.</p><span class="count">20 questions<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="idea-check/index.html" data-cat="business"><span class="chip t-business">Business</span><h3>Idea check</h3><p>How many customers you need for an idea to pay you a real income.</p><span class="count">1 calculator<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="../index.html#check" data-cat="finance"><span class="chip t-finance">Finance</span><h3>Spending check</h3><p>A colour-coded chart of your spending: what to keep, rethink or cut.</p><span class="count">1 chart<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="../learn/index.html#calculators" data-cat="finance"><span class="chip t-finance">Finance</span><h3>Money calculators</h3><p>Compound growth, loan payment, break-even, margin vs markup, card payoff.</p><span class="count">5 calculators<span class="try">Try this tool →</span></span></a>
-      <a class="card tool-card" href="../trial/index.html" data-cat="business"><span class="chip t-business">Founder trial</span><h3>Startup cost calculator</h3><p>Cash you need to start and how long your savings last. Free with the 3-day trial.</p><span class="count">1 calculator<span class="try">Try this tool →</span></span></a>
-    </div>
-    <p class="fine" id="tool-none" hidden>No tools match that. Try a shorter word<span data-ai>, or <a href="../ask/index.html">ask Sharp</a></span>.</p>
+    <section class="tool-group" id="earn" aria-labelledby="tg-earn">
+      <div class="tg-head"><span class="tg-n" aria-hidden="true">1</span><div><h2 id="tg-earn">Earn money</h2><p>Start something small and get paid.</p></div></div>
+      <div class="tool-index">
+        <a class="card tool-card" href="first100/index.html"><h3>First $100 Plan</h3><p>Pick something you can do. Cherry works out your price, how many jobs you need and what to say.</p><span class="count">Start here<span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="ladder/index.html"><h3>Money ladder</h3><p>Go from $100 to $1,000 to $10,000. Cherry gives you the moves for each step.</p><span class="count"><span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="idea-check/index.html"><h3>Idea check</h3><p>See if a business idea could really pay you, before you start.</p><span class="count"><span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="business-plan/index.html"><h3>Business plan &amp; pricing</h3><p>Set a price that makes a profit, and write your plan on one page.</p><span class="count"><span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="../plan/index.html" data-ai><h3>Idea to Plan</h3><p>Describe your idea. Cherry scores it and gives you a 4-week plan.</p><span class="count">AI<span class="try">Open →</span></span></a>
+      </div>
+    </section>
+    <section class="tool-group" id="keep" aria-labelledby="tg-keep">
+      <div class="tg-head"><span class="tg-n" aria-hidden="true">2</span><div><h2 id="tg-keep">Keep money</h2><p>Spend less than you earn, and see where it goes.</p></div></div>
+      <div class="tool-index">
+        <a class="card tool-card" href="../index.html#check"><h3>Spending check</h3><p>See where your money goes in one chart: what to keep, rethink or cut.</p><span class="count"><span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="budget/index.html"><h3>Budget &amp; savings planner</h3><p>Plan your month: what to spend and what to save.</p><span class="count"><span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="tracker/index.html"><h3>Wealth tracker</h3><p>Once a month, log what you earned and kept. Watch it grow.</p><span class="count"><span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="money-plan/index.html"><h3>Money plan</h3><p>What to pay for first, what to save for, and what to stop buying.</p><span class="count"><span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="checkin/index.html"><h3>Cherry's weekly check-in</h3><p>Cherry checks in every week to help you spend less.</p><span class="count">Builder<span class="try">Open →</span></span></a>
+      </div>
+    </section>
+    <section class="tool-group" id="grow" aria-labelledby="tg-grow">
+      <div class="tg-head"><span class="tg-n" aria-hidden="true">3</span><div><h2 id="tg-grow">Grow money</h2><p>Invest what you keep, for a long time.</p></div></div>
+      <div class="tool-index">
+        <a class="card tool-card" href="million/index.html"><h3>Road to $1 million</h3><p>See when the money you put away each week could reach $1 million.</p><span class="count"><span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="../learn/index.html#calculators"><h3>Money calculators</h3><p>How savings grow, what a loan really costs, and how to pay off a card.</p><span class="count"><span class="try">Open →</span></span></a>
+      </div>
+    </section>
+    <section class="tool-group" id="biz" aria-labelledby="tg-biz">
+      <div class="tg-head"><span class="tg-n" aria-hidden="true">+</span><div><h2 id="tg-biz">Grow your business</h2><p>Get customers, make deals and pitch your idea.</p></div></div>
+      <div class="tool-index">
+        <a class="card tool-card" href="marketing/index.html"><h3>Marketing calculators</h3><p>Is an ad worth it? What does each new customer cost you?</p><span class="count"><span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="negotiation/index.html"><h3>Negotiation prep</h3><p>Plan what to ask for, what to accept and what to say.</p><span class="count"><span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="investors/index.html"><h3>Investor pressure drill</h3><p>Practise the tough questions investors ask, against a timer.</p><span class="count"><span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="ai/index.html"><h3>AI at work</h3><p>Use AI to save time, and check its work before you trust it.</p><span class="count"><span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="../ask/index.html" data-ai><h3>Ask Cherry</h3><p>Ask anything about the lessons. Cherry answers in plain words.</p><span class="count">AI<span class="try">Open →</span></span></a>
+        <a class="card tool-card" href="../trial/index.html"><h3>Startup cost calculator</h3><p>How much cash you need to start, and how long it lasts.</p><span class="count">Free trial<span class="try">Open →</span></span></a>
+      </div>
+    </section>
+    <p class="fine" id="tool-none" hidden>No tools match that. Try a shorter word<span data-ai>, or <a href="../ask/index.html">ask Cherry</a></span>.</p>
   </div>
 </main>
 <footer class="site-foot">

@@ -905,7 +905,7 @@ if(dirSel) dirSel.addEventListener('change', function(){
   var btns = Array.prototype.slice.call(document.querySelectorAll('.tool-cat'));
   var none = document.getElementById('tool-none'), count = document.getElementById('tool-n'), cat = 'all';
   // Everyday words people search for, mapped to the words used on the cards.
-  var ALSO = { price:'pricing', prices:'pricing', pitch:'investor', pitches:'investor', save:'savings', saving:'savings', spend:'spending', spending:'budget',
+  var ALSO = { price:'pricing', prices:'pricing', pitch:'investor', pitches:'investor', save:'savings', saving:'savings', spend:'spending', spending:'budget', invest:'million', investing:'million', rich:'million', earn:'earn', business:'business',
     ads:'ad', advert:'ad', customer:'customers', deal:'negotiation', deals:'negotiation', loan:'loan', debt:'card payoff', profit:'profit', startup:'startup', chatgpt:'ai', interest:'compound' };
   function words(s){ return s.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean); }
   function apply(){
@@ -916,6 +916,8 @@ if(dirSel) dirSel.addEventListener('change', function(){
       var ok = okText && (cat === 'all' || c.getAttribute('data-cat') === cat);
       c.hidden = !ok; if(ok) shown++;
     });
+    // Hide a group (Earn / Keep / Grow / Grow your business) when none of its tools match.
+    Array.prototype.forEach.call(document.querySelectorAll('.tool-group'), function(g){ g.hidden = !g.querySelector('.tool-card:not([hidden])'); });
     none.hidden = shown > 0;
     count.textContent = (ws.length || cat !== 'all') ? 'Showing ' + shown + ' of ' + cards.length : '';
   }
