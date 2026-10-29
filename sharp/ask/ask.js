@@ -86,7 +86,7 @@ function ask(){
   say('Reading Sharp\'s lessons and writing an answer. This can take up to 20 seconds.');
   var ctrl = 'AbortController' in window ? new AbortController() : null;
   var timer = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 60000);
-  var hd = { 'content-type': 'application/json' }; if(window.SharpDevice) hd['x-sharp-device'] = window.SharpDevice;
+  var hd = { 'content-type': 'application/json' }; if(window.SharpDevice) hd['x-sharp-device'] = window.SharpDevice; if(window.SharpWho && window.SharpWho.get()) hd['x-sharp-who'] = window.SharpWho.get();
   try{ for(var i = 0; i < localStorage.length; i++){ var k = localStorage.key(i); if(/^sb-.+-auth-token$/.test(k)){ var v = JSON.parse(localStorage.getItem(k)); if(v && typeof v.access_token === 'string') hd.authorization = 'Bearer ' + v.access_token; } } }catch(e){}   // a signed-in plan gets its own allowance
   fetch((window.SharpAPI || '/') + 'api/ask', { method: 'POST', headers: hd, body: JSON.stringify(asked), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
     .then(function(r){

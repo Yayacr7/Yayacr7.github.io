@@ -4,13 +4,12 @@
 (function(){
 "use strict";
 var R = window.SharpRich, $ = R.$, el = R.el, money = R.money, KEY = 'sharp-ladder';
-// Job length and usual top price per starter business. Keep in sync with SKILLS in tools/first100/first100.js.
-var SKILLS = { lawn: ['Lawn and yard care', 1.5, 40], pets: ['Dog walking and pet sitting', .75, 20], car: ['Car washing', 1, 35], tutor: ['Tutoring younger kids', 1, 25],
-  bake: ['Baked goods', 1.5, 18], tech: ['Phone and tech help', 1, 30], resell: ['Reselling', 1, 40], sitter: ['Babysitting', 3, 60], social: ['Social posts for local shops', 3, 75] };
+// Starter businesses (name, job length, usual price) from assets/biz.js, for a teen or an adult (assets/who.js).
+var WHO = window.SharpWho ? window.SharpWho.get() : '', ADULT = WHO === 'adult';
 var RUNGS = [
   { t: 100, name: 'Your first $100', goal: 'Prove someone will pay you.', weeks: 4, link: ['../first100/index.html', 'Open the First $100 Plan'], steps: [
     'Pick one service and one fair price.',
-    'Send your offer to 10 people you or your family know.',
+    ADULT ? 'Send your offer to 10 people you know.' : 'Send your offer to 10 people you or your family know.',
     'Do your first job well, and log the money the same day.'] },
   { t: 1000, name: '$1,000', goal: 'Turn one-off jobs into regular customers.', weeks: 26, steps: [
     'Offer every customer the same slot every week or month.',
@@ -21,12 +20,12 @@ var RUNGS = [
   { t: 10000, name: '$10,000', goal: 'Run it like a real business.', weeks: 78, steps: [
     'Add a second service your customers already ask you for.',
     'Sell a package paid up front, like 4 weekly visits for one price.',
-    'Bring in a helper you pay per job, only with a parent\'s okay.',
+    ADULT ? 'Bring in a helper you pay per job, and check the rules for paying someone.' : 'Bring in a helper you pay per job, only with a parent\'s okay.',
     'Log your profit every month in the Wealth tracker.',
-    'Put money aside for tax, and check the rules with a trusted adult.'] },
+    ADULT ? 'Put money aside for tax (many people save 25 to 30% of profit), and check your local rules.' : 'Put money aside for tax, and check the rules with a trusted adult.'] },
   { t: 0, name: 'Invest the profit', goal: 'Make your money earn money. Start any time, not just at $10,000.', link: ['../million/index.html', 'Open Road to $1 million'], steps: [
     'Build an emergency fund first: about 3 months of what you spend.',
-    'Invest a set amount every month in a broad index fund. Under 18, a parent or guardian opens the account.',
+    ADULT ? 'Invest a set amount every month in a broad index fund, in a low-cost account.' : 'Invest a set amount every month in a broad index fund. Under 18, a parent or guardian opens the account.',
     'Never invest money you\'ll need this year, and walk away from anything that promises sure returns.',
     'See how far it can go on your Road to $1 million.'] }
 ];
@@ -34,9 +33,9 @@ var s = R.load(KEY) || { done: [], seen: 0 };
 if(!Array.isArray(s.done)) s.done = [];
 
 function biz(){
-  var f = R.firstPlan(), k = f && SKILLS[f.skill] ? f.skill : 'lawn', sk = SKILLS[k];
-  var price = f && +f.price > 0 ? +f.price : 25, cost = f && +f.cost >= 0 ? +f.cost : 2, hours = f && +f.hours > 0 ? +f.hours : 4;
-  return { started: !!f, name: sk[0], hrs: sk[1], hi: sk[2], price: price, cost: cost, hours: hours, profit: price - cost, perWeek: Math.floor(hours / sk[1] + 1e-9) };
+  var f = R.firstPlan(), k = f && window.SharpBiz.get(f.skill, WHO) ? f.skill : 'lawn', sk = window.SharpBiz.get(k, WHO);
+  var price = f && +f.price > 0 ? +f.price : sk.price, cost = f && +f.cost >= 0 ? +f.cost : sk.cost, hours = f && +f.hours > 0 ? +f.hours : 4;
+  return { started: !!f, name: sk.name, hrs: sk.hrs, hi: sk.hi, price: price, cost: cost, hours: hours, profit: price - cost, perWeek: Math.floor(hours / sk.hrs + 1e-9) };
 }
 // Business money only: what you log in the First $100 Plan (the Wealth tracker also counts pay and gifts).
 function earned(){ return R.firstEarned(); }
@@ -51,7 +50,7 @@ function take(b, E, at){
   var r = RUNGS[at], left = r.t - E, p = pace(b, left, b.profit), out = [];
   if(b.perWeek < 1) return { st: 'bad', head: 'Not enough time for one job a week.', body: 'A ' + b.name.toLowerCase() + ' job takes about ' + b.hrs + ' hours and you have ' + b.hours + '. Find more hours in the First $100 Plan, or pick a quicker job.' };
   if(b.profit <= 0) return { st: 'bad', head: 'Your price doesn\'t cover your costs.', body: 'Each job costs ' + money(b.cost) + ' and you charge ' + money(b.price) + '. Fix your price in the First $100 Plan first.' };
-  if(!b.started) out.push('Start at the bottom: the First $100 Plan. Until then, this uses lawn care at $25 a job and 4 hours a week as an example.');
+  if(!b.started) out.push('Start at the bottom: the First $100 Plan. Until then, this uses lawn care at ' + money(b.price) + ' a job and 4 hours a week as an example.');
   out.push('At ' + money(b.price) + ' a job (' + money(b.profit) + ' after costs) and ' + b.hours + ' hours a week, that\'s ' + R.plural(p.jobs, 'job') + ', ' + weeksText(p.weeks) + '.');
   var st = p.weeks <= r.weeks ? 'good' : p.weeks <= r.weeks * 2 ? 'warn' : 'bad';
   if(st !== 'good'){

@@ -181,7 +181,7 @@ function submit(){
   var ctrl = 'AbortController' in window ? new AbortController() : null;
   var timer = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 70000);
   var body = { page: page, messages: chat.map(function(m){ return { role: m.role, text: m.text }; }) };
-  var hd = { 'content-type': 'application/json' }, tk = token(); if(tk) hd.authorization = 'Bearer ' + tk; if(window.SharpDevice) hd['x-sharp-device'] = window.SharpDevice;
+  var hd = { 'content-type': 'application/json' }, tk = token(); if(tk) hd.authorization = 'Bearer ' + tk; if(window.SharpDevice) hd['x-sharp-device'] = window.SharpDevice; var wh = ''; try{ wh = localStorage.getItem('sharp-who') || ''; }catch(e){} if(wh === 'teen' || wh === 'adult') hd['x-sharp-who'] = wh;
   fetch((window.SharpAPI || base) + 'api/agent', { method: 'POST', headers: hd, body: JSON.stringify(body), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
     .then(function(r){ return r.json().catch(function(){ return { ok: false, message: 'Something went wrong. Please try again.' }; }); })
     .then(function(d){

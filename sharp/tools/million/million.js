@@ -4,7 +4,8 @@
 (function(){
 "use strict";
 var R = window.SharpRich, $ = R.$, el = R.el, money = R.money, KEY = 'sharp-million', INFL = .03;
-var s = R.load(KEY) || { age: 15, start: 0, week: 50, g: 7 };
+// Starting numbers: a 15-year-old putting in $50 a week, or a 30-year-old putting in $100 (assets/who.js).
+var s = R.load(KEY) || (window.SharpWho && window.SharpWho.isAdult() ? { age: 30, start: 0, week: 100, g: 7 } : { age: 15, start: 0, week: 50, g: 7 });
 var MILES = [1e4, 1e5, 1e6];
 
 // Month by month: add the weekly amount (as a monthly sum), grow at g a year. Stops at endAge.

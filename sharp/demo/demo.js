@@ -4,21 +4,26 @@
    Business prices match tools/first100/first100.js. Visitor text: textContent only (and there is no free text here). */
 (function(){
 "use strict";
-var CATS = {
+// Teen or adult (assets/who.js): picked first, so the numbers and examples fit. Nothing picked yet = ask.
+var WHO = window.SharpWho ? window.SharpWho.get() : '', ADULT = WHO === 'adult', GOAL = ADULT ? 500 : 100;
+var CATS = ADULT ? {
+  eat:    { name: 'Eating out',          tip: 'Cook at home two more nights a week.' },
+  shop:   { name: 'Shopping',            tip: 'Wait 7 days before buying anything over $50.' },
+  subs:   { name: 'Subscriptions',       tip: 'Cancel the one you used least last month.' },
+  rides:  { name: 'Rides and delivery',  tip: 'Batch errands into one trip and skip delivery fees.' },
+  fun:    { name: 'Going out and fun',   tip: 'Plan one free weekend activity a month.' }
+} : {
   food:   { name: 'Food and snacks out', tip: 'Bring snacks from home 3 days a week.' },
   games:  { name: 'Games and apps',      tip: 'Set a monthly game budget and only buy on sale.' },
   clothes:{ name: 'Clothes and shoes',   tip: 'Wait 7 days before buying anything over $30.' },
   rides:  { name: 'Rides and delivery',  tip: 'Walk or bike any trip under 15 minutes.' },
   subs:   { name: 'Subscriptions',       tip: 'Cancel the one you used least last month.' }
 };
-var SKILLS = {
-  lawn:   { name: 'Lawn care',     act: 'mow and edge their yard', price: 25, cost: 2, hrs: 1.5 },
-  pets:   { name: 'Dog walking',   act: 'walk their dog',          price: 15, cost: 0, hrs: .75 },
-  tutor:  { name: 'Tutoring',      act: 'tutor their kid',         price: 15, cost: 0, hrs: 1 },
-  bake:   { name: 'Baking',        act: 'bake them a dozen cookies', price: 12, cost: 4, hrs: 1.5 },
-  tech:   { name: 'Tech help',     act: 'set up their phone or TV', price: 20, cost: 0, hrs: 1 },
-  social: { name: 'Social posts',  act: 'make 8 posts for their shop', price: 40, cost: 0, hrs: 3 }
-};
+// Prices come from assets/biz.js (the same list as the First $100 Plan), for a teen or an adult.
+var SHORT = { lawn: ['Lawn care', 'mow and edge their yard'], pets: ['Dog walking', 'walk their dog'], tutor: ['Tutoring', 'tutor their kid'],
+  bake: ['Baking', 'bake them a dozen cookies'], tech: ['Tech help', 'set up their phone or TV'], social: ['Social posts', 'make 8 posts for their shop'] };
+var SKILLS = {};
+Object.keys(SHORT).forEach(function(k){ var b = window.SharpBiz.get(k, WHO); SKILLS[k] = { name: SHORT[k][0], act: SHORT[k][1], price: b.price, cost: b.cost, hrs: b.hrs }; });
 var ANSWERS = [
   { t: 'No problem. I\'ll knock $5 off if you book today.', ok: false, why: 'Not quite. You cut your price before you knew what worried them. Often the worry isn\'t the price at all, so you just lost $5 for nothing.' },
   { t: 'Of course. What would you need to feel good about deciding?', ok: true, why: 'Yes. You don\'t argue and you don\'t beg. You find the real worry, then answer it honestly. Sometimes it\'s a yes, sometimes a no, and both are fine.' },
@@ -30,7 +35,7 @@ var SAY = {
   3: 'Last one, and it\'s the hard part: closing the deal.',
   end: 'That\'s your plan. Now come into Sharp. I\'ll be right there with you.'
 };
-var st = { inc: 300, cat: 'food', sp: 120, skill: 'lawn', hours: 4, picked: -1 };
+var st = ADULT ? { inc: 3200, cat: 'eat', sp: 380, skill: 'lawn', hours: 4, picked: -1 } : { inc: 300, cat: 'food', sp: 120, skill: 'lawn', hours: 4, picked: -1 };
 var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 function $(id){ return document.getElementById(id); }
 function el(tag, cls, text, parent){ var e = document.createElement(tag); if(cls) e.className = cls; if(text != null) e.textContent = text; if(parent) parent.appendChild(e); return e; }
@@ -42,7 +47,7 @@ function share(){ return st.inc > 0 ? st.sp / st.inc : 0; }
 function status(){ var s = share(); return s > .5 ? ['bad', '✕', 'Too much'] : s > .3 ? ['warn', '!', 'A bit over'] : ['good', '✓', 'Fine']; }
 function earn(){
   var k = SKILLS[st.skill], profit = k.price - k.cost, perWeek = Math.floor(st.hours / k.hrs + 1e-9);
-  var jobs = Math.ceil(100 / profit), weeks = perWeek > 0 ? Math.ceil(jobs / perWeek) : Infinity;
+  var jobs = Math.ceil(GOAL / profit), weeks = perWeek > 0 ? Math.ceil(jobs / perWeek) : Infinity;
   return { k: k, profit: profit, perWeek: perWeek, jobs: jobs, weeks: weeks, hourly: profit / k.hrs };
 }
 function weeksText(w){ return isFinite(w) ? w + (w === 1 ? ' week' : ' weeks') : 'more hours needed'; }
@@ -78,7 +83,7 @@ function chart(){
 }
 
 /* ---------- render ---------- */
-function live(){ $('dm-live').textContent = money(keep().year) + ' a year kept · $100 in ' + weeksText(earn().weeks); }
+function live(){ $('dm-live').textContent = money(keep().year) + ' a year kept · ' + money(GOAL) + ' in ' + weeksText(earn().weeks); }
 function r1(){
   $('dm-inc-o').textContent = money(st.inc);
   var sp = $('dm-sp'); sp.max = st.inc; if(st.sp > st.inc){ st.sp = st.inc; sp.value = st.inc; }
@@ -94,7 +99,7 @@ function r2(){
   $('dm-hrs-o').textContent = st.hours + (st.hours === 1 ? ' hour' : ' hours');
   var e = earn();
   count($('dm-r2'), e.weeks, function(v){ return isFinite(v) ? String(Math.max(1, Math.round(v))) : '–'; });
-  $('dm-r2u').textContent = isFinite(e.weeks) ? (e.weeks === 1 ? 'week to $100' : 'weeks to $100') : 'Not enough time yet';
+  $('dm-r2u').textContent = isFinite(e.weeks) ? (e.weeks === 1 ? 'week to ' : 'weeks to ') + money(GOAL) : 'Not enough time yet';
   $('dm-r2l').textContent = e.perWeek < 1 ? 'One job takes about ' + e.k.hrs + ' hours. Give it a bit more time each week.'
     : 'You keep ' + money(e.profit) + ' a job (' + money(e.k.price) + ' minus ' + money(e.k.cost) + ' costs), about ' + money(e.hourly) + ' an hour. ' + e.jobs + ' jobs, ' + e.perWeek + ' a week.';
   var dots = $('dm-dots'); dots.textContent = '';
@@ -159,7 +164,7 @@ $('dm-plan').addEventListener('click', function(){
     var have = JSON.parse(localStorage.getItem('sharp-first100') || 'null');
     if(!have || !have.logs || !have.logs.length){
       var k = SKILLS[st.skill];
-      localStorage.setItem('sharp-first100', JSON.stringify({ skill: st.skill, price: k.price, cost: k.cost, hours: st.hours, goal: 100, name: '', area: '', done: [], logs: [] }));
+      localStorage.setItem('sharp-first100', JSON.stringify({ skill: st.skill, price: k.price, cost: k.cost, hours: st.hours, goal: GOAL, name: '', area: '', done: [], logs: [] }));
     }
   }catch(e){}
 });
@@ -168,5 +173,21 @@ try{ localStorage.setItem('sharp-demo', '1'); sessionStorage.setItem('sharp-demo
 function intoApp(){ try{ localStorage.setItem('sharp-intro', '1'); }catch(e){} }
 $('dm-sharp').addEventListener('click', intoApp); $('dm-skip').addEventListener('click', intoApp);
 addEventListener('resize', function(){ if(cur === '1') chart(); });
+// Teen or adult: the words and sliders that change, then ask first if nothing is picked yet.
+if(ADULT){
+  var inc = $('dm-inc'); inc.min = 500; inc.max = 10000; inc.step = 50; inc.value = st.inc; $('dm-sp').step = 10;
+  $('dm-h2').textContent = '2. Your first ' + money(GOAL) + ' on the side';
+}
+$('dm-go2').textContent = 'Next: your first ' + money(GOAL) + ' →'; $('dm-e2l').textContent = 'Your first ' + money(GOAL); $('dm-plan').textContent = 'Get my full ' + money(GOAL) + ' plan';
+function ask(on){
+  $('dm-who').hidden = !on; $('dm-1').hidden = on; $('dm-whoami').hidden = on || !WHO; $('dm-live').hidden = on;   // no numbers until we know who it's for
+  if(on){ $('dm-say').textContent = 'Hi, I\'m Cherry. First, tell me who you are, so my numbers fit you.'; }
+}
+$('dm-whoami').textContent = (ADULT ? 'For adults' : 'For teens') + ' · Change';
+$('dm-whoami').addEventListener('click', function(){ ['1', '2', '3', 'end'].forEach(function(k){ $('dm-' + k).hidden = true; }); ask(true); $('dm-who-h').setAttribute('tabindex', '-1'); $('dm-who-h').focus(); });
+[].forEach.call(document.querySelectorAll('#dm-who button[data-who]'), function(b){ b.addEventListener('click', function(){
+  window.SharpWho.set(b.getAttribute('data-who')); location.reload();   // everything above is set up for the new choice
+}); });
 go('1');
+ask(!WHO);
 })();

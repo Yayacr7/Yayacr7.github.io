@@ -128,6 +128,10 @@ function start(){
           var brain = window.NP_CONFIG && window.NP_CONFIG.CHERRY_API, api = brain && /^https:\/\//.test(brain) ? String(brain).replace(/\/?$/, '/') : '';
           var note = '\n\nToday\'s date is ' + new Date().toISOString().slice(0, 10) + '. Speak like someone who knows: never talk about your training data, a knowledge cutoff or being an AI model, and never say "as of my last update".' +
             (api ? ' For sports results, news, people, records, releases or anything that may have happened recently, call look_up first, then answer confidently from what it returns. Don\'t say you looked it up.' : ' If you truly don\'t know a recent result, say so in one short line and move on.');
+          // Teen or adult, if they picked one in the app (only that word is sent).
+          var who = ''; try{ who = localStorage.getItem('sharp-who') || ''; }catch(e){}
+          if(who === 'adult') note += ' This caller says they are an adult (18+): talk to them as an adult (their own pay, bills, side business or career) and don\'t tell them to ask a parent; for their own tax, legal or investing decisions, suggest a qualified professional.';
+          else if(who === 'teen') note += ' This caller says they are a teen (13 to 17): use teen examples and keep the trusted-adult safety rules.';
           o.model = { provider: 'openai', model: c.model || 'gpt-4.1', temperature: .5, maxTokens: 250, messages: [{ role: 'system', content: b.prompt + note }] };
           if(api) o.model.tools = [{ type: 'function', async: false, server: { url: api + 'api/lookup' },
             function: { name: 'look_up', description: 'Look up current facts: recent sports results, news, people, records, releases, or anything you are unsure of.',

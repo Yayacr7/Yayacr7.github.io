@@ -74,7 +74,7 @@ function build(){
   busy = true; btn.disabled = true; btn.textContent = 'Building…'; form.setAttribute('aria-busy', 'true');
   say('Reading your idea and writing your plan. This can take up to 30 seconds.');
   var ctrl = 'AbortController' in window ? new AbortController() : null, timer = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 70000);
-  var hd = { 'content-type': 'application/json' }; if(window.SharpDevice) hd['x-sharp-device'] = window.SharpDevice;
+  var hd = { 'content-type': 'application/json' }; if(window.SharpDevice) hd['x-sharp-device'] = window.SharpDevice; if(window.SharpWho && window.SharpWho.get()) hd['x-sharp-who'] = window.SharpWho.get();
   fetch((window.SharpAPI || '/') + 'api/plan', { method: 'POST', headers: hd, body: JSON.stringify(a), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
     .then(function(r){ return r.json().catch(function(){ return { ok: false, message: r.status === 404 || r.status === 405 ? "The AI plan builder isn't switched on yet. The Idea check tool and the lessons still work." : 'Something went wrong. Please try again.' }; }); })
     .then(function(d){

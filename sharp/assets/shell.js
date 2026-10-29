@@ -87,6 +87,18 @@ window.SharpPop = function(from, o){
   if(t){ var half = t.offsetWidth / 2 + 12; t.style.left = Math.max(half, Math.min(innerWidth - half, x)) + 'px'; }   // keep the words on screen
   setTimeout(function(){ if(box.parentNode) box.parentNode.removeChild(box); }, o.say ? 1900 : 1300);
 };
+// Teen or adult (assets/who.js): a small switch at the bottom of every page with a footer. Changing it reloads the page.
+ready(function(){
+  var foot = document.querySelector('.site-foot .wrap'); if(!foot || !window.SharpWho) return;
+  var cur = window.SharpWho.get() || 'teen', row = document.createElement('div'); row.className = 'who-switch'; row.setAttribute('role', 'group'); row.setAttribute('aria-label', 'Show examples for');
+  var lb = document.createElement('span'); lb.textContent = 'Examples for:'; row.appendChild(lb);
+  [['teen', 'Teens'], ['adult', 'Adults']].forEach(function(o){
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = o[1]; b.setAttribute('aria-pressed', cur === o[0] ? 'true' : 'false');
+    b.addEventListener('click', function(){ if(window.SharpWho.get() === o[0]) return; window.SharpWho.set(o[0]); location.reload(); });
+    row.appendChild(b);
+  });
+  foot.appendChild(row);
+});
 // Home: tap Cherry's big face and she hops, pops a few cherries and opens.
 ready(function(){
   var f = document.querySelector('.hc-cherry .ch-face'); if(!f) return;

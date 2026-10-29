@@ -11,6 +11,13 @@ var DOCS = null, panel, list, input, chipsBox, last = null;
 var STOP = ('a an and are as at be but by can do does for from get got have how i if in is it its me my of on or so that the this to ' +
   'up was what when where which who why will with would you your yours we our should could much many more most any some about into ' +
   'than then them they there their just also very really want need make way best good help tell know start').split(' ').reduce(function(o, w){ o[w] = 1; return o; }, {});
+// Teen or adult (picked in the demo or a page footer; saved as 'sharp-who' on this device): adults get adult wording and prices.
+var ADULT = (function(){ try{ return localStorage.getItem('sharp-who') === 'adult'; }catch(e){ return false; } })();
+var FIT = [[/How do I make money as a teen\?/g, 'How do I make money on the side?'], [/Tell a parent before you send anyone money\./g, 'Talk to someone you trust before you send anyone money.'],
+  [/Ask a parent or a trusted adult about this one/g, 'Check with an accountant or a trusted professional about this one'], [/For small teen jobs/g, 'For a small side business'],
+  [/ \(with a parent's okay\)/g, ''], [/Then, with a parent, open an account/g, 'Then open a low-cost account'],
+  [/Under 18 you need a parent to open the account\./g, 'Open it with a low-cost broker.'], [/ A parent can help you open one\./g, '']];
+function fit(t){ if(!ADULT) return t; FIT.forEach(function(f){ t = t.replace(f[0], f[1]); }); return t; }
 var SUGGEST = ['How do I make money as a teen?', 'If I save $20 a week, how much in a year?', 'How should I price my work?', 'How do I get my first customer?'];
 function el(tag, cls, text, parent){ var e = document.createElement(tag); if(cls) e.className = cls; if(text != null) e.textContent = text; if(parent) parent.appendChild(e); return e; }
 function stem(w){ return w.length > 3 ? w.replace(/(ings|ing|ed|es|s|e)$/, '') : w; }
@@ -315,7 +322,16 @@ var BIZ = [
   [/\b(babysit\w*|nanny|childcare)\b/i, 'babysitting', 'a 3-hour evening', 45, 0, 36, 60, 'families you or your parents already know', 'A first-aid course makes parents say yes faster, and lets you charge more.', "Who watches the kids when you go out?"],
   [/\bsocial media (manag\w*|for)|posts? for (shops|businesses)|content for\b/i, 'social posts for local shops', 'a pack of 8 posts', 40, 0, 30, 75, 'small local shops, cafés and salons with quiet pages', 'Make one free sample post for the shop first. Showing beats telling.', "How do new customers find you right now?"]
 ];
-function bizOf(q){ for(var i = 0; i < BIZ.length; i++) if(BIZ[i][0].test(q)) return BIZ[i]; return null; }
+// Adult prices: [price, cost, lo, hi, who to ask]. Same as the adult prices in assets/biz.js; keep them in sync.
+var BIZ_ADULT = { 'lawn care': [40, 2, 30, 60, 'neighbours, busy families and older homeowners nearby'], 'dog walking': [20, 0, 15, 30, 'dog owners who work long days, and local pet owner groups'],
+  'car washing': [40, 3, 30, 70, 'neighbours, coworkers and people who drive for work'], 'tutoring': [35, 0, 25, 60, 'parents in your area, local community groups and people you know'],
+  'baking': [20, 4, 15, 35, 'friends, coworkers and people planning parties or events'], 'tech help': [40, 0, 30, 75, 'older neighbours, small shops and busy parents'],
+  'reselling': [40, 15, 20, 80, 'buyers on local selling apps and marketplaces'], 'babysitting': [60, 0, 50, 90, 'families you know, and parents your friends can vouch for you to'],
+  'social posts for local shops': [150, 0, 100, 300, 'small local shops, cafés and salons with quiet social pages'] };
+function bizOf(q){
+  for(var i = 0; i < BIZ.length; i++) if(BIZ[i][0].test(q)){ var b = BIZ[i].slice(), a = ADULT && BIZ_ADULT[b[1]]; if(a){ b[3] = a[0]; b[4] = a[1]; b[5] = a[2]; b[6] = a[3]; b[7] = a[4]; } return b; }
+  return null;
+}
 function bizReply(q, b){
   var name = b[1], job = b[2], price = b[3], cost = b[4], lo = b[5], hi = b[6], who = b[7], tip = b[8], ask = b[9];
   var per = price - cost, n = Math.ceil(100 / per), cap = name.charAt(0).toUpperCase() + name.slice(1);
@@ -496,7 +512,7 @@ function answerOf(q){
 function say(text, who){ var m = el('div', 'co-msg ' + who, null, list); el('p', null, text, m); list.scrollTop = list.scrollHeight; return m; }
 function chips(next){
   chipsBox.textContent = '';
-  (next || []).forEach(function(s){ var b = el('button', 'co-chip', s, chipsBox); b.type = 'button'; b.addEventListener('click', function(){ answer(s); }); });
+  (next || []).forEach(function(s){ s = fit(s); var b = el('button', 'co-chip', s, chipsBox); b.type = 'button'; b.addEventListener('click', function(){ answer(s); }); });
   chipsBox.hidden = !(next && next.length);
 }
 function answer(q){
@@ -507,7 +523,7 @@ function answer(q){
   Promise.all([wait, new Promise(function(ok){ setTimeout(ok, 120); })]).then(function(){
     dots.remove();
     var r = reply(q), m = el('div', 'co-msg ch', null, list);
-    r.say.forEach(function(s){ el('p', null, s, m); });
+    r.say.forEach(function(s){ el('p', null, fit(s), m); });
     (r.links || []).forEach(function(l){ var c = el('a', 'co-hit', null, m); c.href = base + l[0].replace(/^\//, ''); el('b', null, l[1], c); });
     chips(r.next); list.scrollTop = list.scrollHeight;
   });

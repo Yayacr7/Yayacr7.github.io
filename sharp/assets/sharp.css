@@ -367,6 +367,9 @@ html.ai-on [data-ai-off]{display:none!important}
 .ch-face.sm{margin:-4px 0}
 @media (max-height:700px) and (max-width:900px){.sc-first[data-view="todo"] .sc-todo{display:none}.sc-first[data-view="todo"] .sc-mini{display:grid}}
 .ch-track{display:inline-block;margin-top:2px;font-size:.84rem;font-weight:700;color:#5fe0b0}
+/* Teen or adult (assets/who.js sets html[data-who]): lines only for one of them. Nothing picked = the teen version. */
+.who-switch{grid-column:1/-1;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:.88rem;color:var(--muted)}.who-switch button{min-height:36px;padding:6px 14px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink);font:700 .85rem var(--f-body);cursor:pointer}.who-switch button[aria-pressed=true]{border-color:#3ddba5;background:rgba(61,219,165,.14);color:#e9fff6}
+html[data-who="adult"] .who-teen{display:none!important}html:not([data-who="adult"]) .who-adult{display:none!important}
 /* Every device equal: on touch screens (iPad, iPhone, touch Chromebooks) text boxes are at least 16px, so Safari doesn't zoom in
    when you tap one, and small links get a taller tap area. */
 @media (pointer:coarse){input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea{font-size:16px!important}.ch-track,.dm-skip,.fs-links a,.plan .note a,a.note{display:inline-block;padding-block:4px}summary{padding-block:6px}}

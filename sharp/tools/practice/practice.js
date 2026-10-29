@@ -4,7 +4,7 @@
 (function(){
 "use strict";
 var KEY = 'sharp-practice';
-var NAMES = { lawn: 'Lawn and yard care', pets: 'Dog walking and pet sitting', car: 'Car washing', tutor: 'Tutoring younger kids', bake: 'Baked goods',
+var NAMES = { lawn: 'Lawn and yard care', pets: 'Dog walking and pet sitting', car: 'Car washing', tutor: window.SharpWho && window.SharpWho.isAdult() ? 'Tutoring' : 'Tutoring younger kids', bake: 'Baked goods',
   tech: 'Phone and tech help', resell: 'Reselling', sitter: 'Babysitting', social: 'Social posts for local shops' };   // same as first100.js
 var STEPS = ['Find someone who needs it', 'Understand their situation first', 'Check the problem matters', 'Connect your offer to their words', 'Say the price, ask, then stop', 'Explore hesitation without arguing'];
 function $(id){ return document.getElementById(id); }
@@ -30,7 +30,7 @@ function bubble(role, text){
   b.scrollIntoView({ block: 'nearest' });
 }
 function post(body){
-  var hd = { 'content-type': 'application/json' }, tk = token(); if(tk) hd.authorization = 'Bearer ' + tk; if(window.SharpDevice) hd['x-sharp-device'] = window.SharpDevice;
+  var hd = { 'content-type': 'application/json' }, tk = token(); if(tk) hd.authorization = 'Bearer ' + tk; if(window.SharpDevice) hd['x-sharp-device'] = window.SharpDevice; if(window.SharpWho && window.SharpWho.get()) hd['x-sharp-who'] = window.SharpWho.get();
   var ctrl = 'AbortController' in window ? new AbortController() : null, timer = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 60000);
   return fetch((window.SharpAPI || base) + 'api/practice', { method: 'POST', headers: hd, body: JSON.stringify(body), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
     .then(function(r){ return r.json().catch(function(){ return { ok: false, message: 'Something went wrong. Please try again.' }; }); })

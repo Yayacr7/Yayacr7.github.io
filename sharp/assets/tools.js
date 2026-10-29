@@ -168,13 +168,15 @@ window.SharpCherryPlan = function(h){
   var d = scRows(function(id){ return Math.max(0, +h[id.slice(2)] || 0); });
   return d.inc > 0 ? { d: d, plan: dpPlan(d) } : null;
 };
+// Teens (assets/who.js) see "Money in" (jobs and allowance) instead of "Take-home pay".
+var PAY_NAME = (function(){ try{ return localStorage.getItem('sharp-who') === 'teen' ? 'Money in' : 'Take-home pay'; }catch(e){ return 'Take-home pay'; } })();
 wire('f-spend', function(){
   var inc = pos('s-income'), out = $('s-out');
   if(inc <= 0){ out.innerHTML = '<p class="sc-empty">Enter your monthly take-home pay to see your chart.</p>'; return; }
   var sr = scRows(pos), rows = sr.rows, total = sr.total, left = sr.left;
 
   // All text below is numbers and fixed wording only (no visitor-typed text), so it is safe as HTML.
-  var html = '<div class="sc-sum"><div><span>Take-home pay</span><b>' + money(inc) + '</b></div><div><span>Spent + saved</span><b>' + money(total) + '</b></div><div><span>Left over</span><b class="' + (left < 0 ? 'neg' : '') + '">' + money(left) + '</b></div></div>';
+  var html = '<div class="sc-sum"><div><span>' + PAY_NAME + '</span><b>' + money(inc) + '</b></div><div><span>Spent + saved</span><b>' + money(total) + '</b></div><div><span>Left over</span><b class="' + (left < 0 ? 'neg' : '') + '">' + money(left) + '</b></div></div>';
   if(left < 0) html += '<p class="sc-alert"><span class="sc-ic bad" aria-hidden="true">✕</span><span><b>You spend ' + money(-left) + ' a month more than you earn.</b> Fix the red rows first.</span></p>';
   // Simple limit chart: each row's line in the middle is that category's limit (a goal for saving).
   // Before the line = fine, past the line = too much. Plain dollars, no percent scale.
@@ -238,7 +240,7 @@ function squarify(items, W, H){
   return rects;
 }
 function scInfo(r, inc){
-  if(r.pay) return { title: 'Take-home pay', line: money(r.v) + ' comes in each month. Every candle after it is money going out.' };
+  if(r.pay) return { title: PAY_NAME, line: money(r.v) + ' comes in each month. Every candle after it is money going out.' };
   if(r.more) return { title: r.name, line: money(r.v) + ' in ' + r.more.length + ' smaller ones: ' + r.more.map(function(m){ return (SC_SHORT[m.name] || m.name) + ' ' + money(m.v); }).join(', ') + '. Tap it, or tap List, to check each one.' };
   if(r.left) return { title: 'Left over', line: money(r.v) + ' · ' + pct(r.v / inc * 100, 0) + ' of your pay not spent or saved yet. Give it a job: savings or debt.' };
   var word = r.saving ? (r.st === 'good' ? 'Goal met' : 'Save more') : SC_WORD[r.st];
@@ -328,7 +330,7 @@ function drawFlow(box, W, H, animate){
   var d = SC_LAST, inc = d.inc;
   var spend = d.rows.filter(function(r){ return r.v > 0 && !r.saving; }).sort(function(a, b){ return b.v - a.v; });
   var saving = d.rows.filter(function(r){ return r.saving && r.v > 0; });
-  var cols = [{ name: 'Take-home pay', short: 'Pay', pay: true, v: inc, open: 0, close: inc }], lvl = inc;
+  var cols = [{ name: PAY_NAME, short: 'Pay', pay: true, v: inc, open: 0, close: inc }], lvl = inc;
   spend.concat(saving).forEach(function(r){ cols.push({ r: r, name: r.name, short: SC_SHORT[r.name] || r.name, v: r.v, open: lvl, close: lvl - r.v }); lvl -= r.v; });
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var AX = W < 420 ? 44 : 54, TOP = 34, narrow = (W - AX) / (cols.length + 1) < 46, BOT = narrow ? 24 : 40;
@@ -387,7 +389,7 @@ function drawFlow(box, W, H, animate){
   var ch = scEl('g', { class: 'fl-ch' }, svg); ch.style.display = 'none';
   var chv = scEl('line', { y1: TOP - 6, y2: TOP + PH }, ch), chh = scEl('line', { x1: 0, x2: W - AX }, ch), cht = scEl('g', {}, ch);
   scEl('rect', { x: W - AX + 2, y: -10, width: AX - 4, height: 20, rx: 3 }, cht); var chx = scEl('text', { x: W - AX + 2 + (AX - 4) / 2, y: 4 }, cht);
-  var pick = function(i){ var c = cols[i]; scShow(c.pay ? { left: false, name: 'Take-home pay', pay: true, v: inc } : c.r, inc); chv.setAttribute('x1', X(i)); chv.setAttribute('x2', X(i)); };
+  var pick = function(i){ var c = cols[i]; scShow(c.pay ? { left: false, name: PAY_NAME, pay: true, v: inc } : c.r, inc); chv.setAttribute('x1', X(i)); chv.setAttribute('x2', X(i)); };
   box.onpointermove = function(e){
     var rc = box.getBoundingClientRect(), px = e.clientX - rc.left, py = Math.max(TOP, Math.min(TOP + PH, e.clientY - rc.top));
     var i = Math.max(0, Math.min(cols.length - 1, Math.floor((px - 8) / cw)));
@@ -400,7 +402,7 @@ function drawFlow(box, W, H, animate){
   cols.forEach(function(c, i){
     var b = document.createElement('button'); b.type = 'button'; b.className = 'fl-hit'; b.setAttribute('data-name', c.name);
     b.style.left = (X(i) - cw / 2) + 'px'; b.style.width = cw + 'px'; b.style.top = TOP + 'px'; b.style.height = PH + 'px';
-    var info = c.pay ? { title: 'Take-home pay', line: money(inc) + ' comes in.' } : scInfo(c.r, inc); b.setAttribute('aria-label', info.title + ': ' + info.line);
+    var info = c.pay ? { title: PAY_NAME, line: money(inc) + ' comes in.' } : scInfo(c.r, inc); b.setAttribute('aria-label', info.title + ': ' + info.line);
     b.addEventListener('focus', function(){ ch.style.display = ''; chh.setAttribute('y1', Y(c.close)); chh.setAttribute('y2', Y(c.close)); cht.setAttribute('transform', 'translate(0,' + Y(c.close) + ')'); chx.textContent = scK(c.close); pick(i); });
     b.addEventListener('click', function(){ pick(i); });
     box.appendChild(b);
@@ -576,7 +578,7 @@ wire('f-mplan', function(){
 
   var A = free + (cut >= 5 ? round5(cut) : 0);
   var html = result('Money to put to work each month', money(Math.max(0, A)), [
-    ['Take-home pay', money(inc)], ['Must-pays', money(must) + ' · ' + pct(p(must), 0)], ['Nice-to-haves', money(wants) + ' · ' + pct(p(wants), 0)], ['Debt minimums', money(min)]
+    [PAY_NAME, money(inc)], ['Must-pays', money(must) + ' · ' + pct(p(must), 0)], ['Nice-to-haves', money(wants) + ' · ' + pct(p(wants), 0)], ['Debt minimums', money(min)]
   ], A > 0 ? (cut >= 5 ? 'That includes the ' + money(round5(cut)) + ' freed up by the cuts below.' : '') : '<b>No money left to plan with.</b> Make the cuts below first.');
 
   // What to spend on, and when
