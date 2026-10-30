@@ -1515,6 +1515,8 @@ nothing visible. That alone took a 2x display from 32 fps to 44.
 
 Open `ai-ads/index.html` in any browser (on GitHub Pages: `/ai-ads/`). The app has two main parts, AI advertising and brand scaling, plus tools to run them as a freelance business. Each section fits on one screen.
 
+Start on the home page: it shows 3 steps (Learn, Practice, Earn). Every page has a "How this page works" button, and "Words explained" lists 24 terms in plain English.
+
 | Section | What it does |
 | --- | --- |
 | Course | 10 steps with a working demo in each: customer profile builder, offer strength meter (scored out of 10), AI copy writer, image prompt builder, 15-second video storyboard, platform and radius picker, Ads Manager practice run, A/B test simulator, ad results calculator, ad rule checker, then a final quiz |
@@ -1522,12 +1524,12 @@ Open `ai-ads/index.html` in any browser (on GitHub Pages: `/ai-ads/`). The app h
 | Grow | 8 steps on freelancing, personal brand and scaling, each with a demo: freelance profile builder, proposal writer and checker, gig package builder, positioning and bio builder, 30-day content plan, gig vs monthly client calculator, capacity check, scaling calculator |
 | Make Money | For AI ads and brand scaling. Today: actions built from your progress (including follow-ups due), a work log with daily goals and a streak, and an 8-step money path. Scoreboard: 14 days of outreach and your real reply, call and close rates with coaching. Income: payments split by ads and brand, counting only money you log. Offers: $99 Quick Ad Pack, $299 Brand Kit and the money ladder |
 | Brand Course | 8 steps for scaling a business's brand, each with a demo: brand health check, consistency checker, positioning builder, personality to brand kit, content calendar, review growth planner, content + ads budget split, monthly brand report |
-| Brand Studio | Enter a client's business and get a brand check, positioning, voice guide, brand kit (colors and fonts), 30-day content plan, channel plan, 90-day scaling plan and a pitch to the owner |
-| Ad Studio | Pick 1 of 13 business types, set the offer, your real proof and the style, click Generate. Ads are built from proven templates, not a live AI. Get headlines, 3 ad texts (PAS, AIDA, BAB), a Google ad, an image prompt, a video script, targeting and a budget, with Facebook, Google, TikTok and Story previews. Save ads to My Ads. |
-| AI Audit | A step-by-step check of a business, a score out of 100, top fixes, a report to send the owner and a video script |
+| Brand Maker | Enter a client's business and get a brand check, positioning, voice guide, brand kit (colors and fonts), 30-day content plan, channel plan, 90-day scaling plan and a pitch to the owner |
+| Ad Maker | Pick 1 of 13 business types, set the offer, your real proof and the style, click Generate. Ads are built from proven templates, not a live AI. Get headlines, 3 ad texts (PAS, AIDA, BAB), a Google ad, an image prompt, a video script, targeting and a budget, with Facebook, Google, TikTok and Story previews. Save ads to My Ads. |
+| Business Checkup | A step-by-step check of a business, a score out of 100, top fixes, a report to send the owner and a video script |
 | Pricing | Brand packages: Brand Kit $299 once, Brand Growth $349/mo, Brand + Ads $699/mo. Ad packages: Each tier includes everything below it: Free Audit $0, Starter $199/mo, Growth $399/mo, Pro $699/mo, Premium $1,199/mo. Plus add-ons and a quote builder that shows your profit |
 | Get Clients | Where to find clients, a 14-day plan, message scripts for each lead, objection cards, a lead tracker and an outreach calculator |
 | Business | The plan, which niche to pick, a 12-month growth chart and delivery checklists |
-| Prompts | 16 copy-ready AI prompts filled in with the business from the Ad Studio |
+| Prompts | 16 copy-ready AI prompts filled in with the business from the Ad Maker |
 
 Progress, saved ads, quotes and leads are kept in your own browser only.

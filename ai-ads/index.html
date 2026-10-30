@@ -366,6 +366,21 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .mstep.ladder{color:var(--text)} .mstep.ladder i{border-color:var(--gold);color:var(--gold)}
 .mstep.ok i{background:var(--green);border-color:var(--green);color:#0A0D13}
 .mstep.now{background:var(--accent-s);color:var(--text)} .mstep.now i{border-color:var(--accent);color:var(--accent)}
+.helplink{background:none;color:var(--muted);font-size:.74rem;cursor:pointer;margin-left:10px;padding:2px 8px;border:1px solid var(--line2);border-radius:999px;vertical-align:1px}
+.helplink:hover{color:var(--text);border-color:var(--accent)}
+.linkbtn{border:0;background:none;color:var(--accent);cursor:pointer;padding:0;font-size:inherit;text-decoration:underline}
+.helpwrap{position:fixed;inset:0;z-index:90;background:rgba(5,7,11,.72);display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.helpbox{width:min(520px,100%);max-height:100%;overflow:auto;background:var(--panel);border:1px solid var(--line2);border-radius:16px;padding:20px 22px 24px;display:flex;flex-direction:column;gap:6px;box-shadow:0 40px 80px -30px rgba(0,0,0,.9)}
+.gloss{display:flex;flex-direction:column;gap:9px;font-size:.9rem}
+.gloss div{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+@media (max-width:520px){.gloss div{grid-template-columns:minmax(0,1fr);gap:2px}}
+.gloss b{font-weight:600}
+.hsteps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.hsteps{grid-template-columns:minmax(0,1fr)}}
+.hstep{border:1px solid var(--line);background:var(--panel);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:8px}
+.hstep:first-child{border-color:var(--accent)}
+.hnum{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-size:.8rem;background:var(--accent-s);color:var(--accent)}
+.hstep.ok .hnum{background:var(--green);color:#0A0D13}
 .navlabel{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:12px 10px 4px}
 .nav a{padding:7px 10px}
 .pillars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -392,24 +407,24 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <aside class="side">
   <a class="logo" href="#home"><i>AI</i><span>Yaya Ad Lab</span></a>
   <nav class="nav" id="nav">
-    <a href="#home" data-v="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
-    <span class="navlabel">AI advertising</span>
-    <a href="#course" data-v="course"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>Ad Course</a>
-    <a href="#studio" data-v="studio"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"/><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Ad Studio</a>
-    <a href="#audit" data-v="audit"><svg viewBox="0 0 24 24"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/></svg>AI Audit</a>
-    <span class="navlabel">Brand scaling</span>
+    <a href="#home" data-v="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home (start here)</a>
+    <span class="navlabel">1 · Learn</span>
+    <a href="#course" data-v="course"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>Ads Course</a>
     <a href="#bcourse" data-v="bcourse"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><circle cx="12" cy="10" r="3"/></svg>Brand Course</a>
-    <a href="#brand" data-v="brand"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>Brand Studio</a>
-    <span class="navlabel">Freelance business</span>
+    <a href="#first" data-v="first"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>Clients Course</a>
+    <a href="#grow" data-v="grow"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Freelance Course</a>
+    <span class="navlabel">2 · Make</span>
+    <a href="#studio" data-v="studio"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"/><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Ad Maker</a>
+    <a href="#brand" data-v="brand"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>Brand Maker</a>
+    <a href="#audit" data-v="audit"><svg viewBox="0 0 24 24"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/></svg>Business Checkup</a>
+    <a href="#prompts" data-v="prompts"><svg viewBox="0 0 24 24"><path d="M4 6l6 6-6 6"/><path d="M12 18h8"/></svg>AI Prompts</a>
+    <span class="navlabel">3 · Earn</span>
     <a href="#earn" data-v="earn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c0-1.4-1.3-2.5-3-2.5s-3 1-3 2.3c0 3.2 6 1.7 6 5 0 1.4-1.3 2.7-3 2.7s-3-1.1-3-2.5M12 5.5v13"/></svg>Make Money</a>
-    <a href="#first" data-v="first"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>First Clients</a>
-    <a href="#grow" data-v="grow"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Grow</a>
-    <a href="#clients" data-v="clients"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14a6 6 0 0 1 3.5 6"/></svg>Get Clients</a>
+    <a href="#clients" data-v="clients"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14a6 6 0 0 1 3.5 6"/></svg>Find Clients</a>
     <a href="#pricing" data-v="pricing"><svg viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg>Pricing</a>
-    <a href="#business" data-v="business"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>Business</a>
-    <a href="#prompts" data-v="prompts"><svg viewBox="0 0 24 24"><path d="M4 6l6 6-6 6"/><path d="M12 18h8"/></svg>Prompts</a>
+    <a href="#business" data-v="business"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>Business Plan</a>
   </nav>
-  <div class="mini"><span class="muted">Ad Course progress</span><div class="progress" style="width:100%"><i id="sideProg" style="width:0"></i></div><span class="mono" id="sideProgT">0 of 10 steps</span></div>
+  <div class="mini"><button class="btn sm ghost" data-glossary style="width:100%">Words explained</button></div>
 </aside>
 
 <main class="stage" id="stage">
@@ -418,20 +433,15 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <section class="view" id="v-home">
   <div class="home">
     <div class="stack" style="gap:18px">
-      <span class="eyebrow">AI advertising + freelance brand scaling</span>
-      <h1>Two skills every business pays for: <span class="serif">AI advertising</span> and <span class="serif">brand scaling.</span></h1>
-      <p class="sub">Learn both step by step, then do them for real businesses as a freelancer. The tools build the ads, the brand plan and the pitch for you.</p>
-      <div class="pillars">
-        <div class="pillar"><span class="tag acc">Pillar 1</span><h3>AI Advertising</h3><p class="muted">Ads that bring a business new customers this month.</p>
-          <div class="row"><a class="btn sm" href="#course">Learn</a><a class="btn sm ghost" href="#studio">Ad Studio</a><a class="btn sm ghost" href="#audit">Audit</a></div></div>
-        <div class="pillar"><span class="tag gold">Pillar 2</span><h3>Brand Scaling</h3><p class="muted">A brand people remember, trust and come back to.</p>
-          <div class="row"><a class="btn sm" href="#bcourse">Learn</a><a class="btn sm ghost" href="#brand">Brand Studio</a></div></div>
-      </div>
-      <div class="row" style="font-size:.86rem"><span class="muted">Your freelance business:</span><a href="#earn">Make money</a><span class="dim">·</span><a href="#first">First clients</a><span class="dim">·</span><a href="#grow">Freelance, brand and scale</a><span class="dim">·</span><a href="#pricing">Pricing</a></div>
+      <span class="eyebrow">Start here</span>
+      <h1>Learn to make <span class="serif">ads</span> and <span class="serif">brands</span> for local businesses. Then get paid to do it.</h1>
+      <p class="sub">This app is a course plus tools that do the hard parts. Follow the 3 steps in order.</p>
+      <div class="hsteps" id="homeSteps"></div>
+      <p class="muted" style="font-size:.86rem">Two skills: <b style="color:var(--text);font-weight:500">AI ads</b> bring a business customers now. <b style="color:var(--text);font-weight:500">Brand scaling</b> makes people trust and remember it. New words? <button class="linkbtn" data-glossary>See words explained</button></p>
     </div>
-    <div class="gen">
-      <div class="pipe" id="pipe"></div>
-      <div class="adcard" id="homeAd"></div>
+    <div class="stack" style="gap:8px">
+      <span class="dim" style="font-size:.78rem;text-align:center">Live example: the Ad Maker and Brand Maker at work</span>
+      <div class="gen"><div class="pipe" id="pipe"></div><div class="adcard" id="homeAd"></div></div>
     </div>
   </div>
 </section>
@@ -525,7 +535,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <!-- BRAND STUDIO -->
 <section class="view" id="v-brand" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">Pillar 2 · The app</span><h1>Brand Studio</h1><p class="sub">Enter a client's business. Get a brand check, positioning, voice, brand kit, content plan and a 90-day scaling plan. Built from templates, so edit it with the owner.</p></div>
+    <div><span class="eyebrow">Pillar 2 · The app</span><h1>Brand Maker</h1><p class="sub">Enter a client's business. Get a brand check, positioning, voice, brand kit, content plan and a 90-day scaling plan. Built from templates, so edit it with the owner.</p></div>
     <button class="btn ghost sm" id="bsCopy">Copy this tab</button>
   </div>
   <div class="studio bs">
@@ -552,7 +562,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <!-- STUDIO -->
 <section class="view" id="v-studio" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">The app</span><h1>Ad Studio</h1><p class="sub">Builds ads from proven formulas (templates, not a live AI). For more ideas, paste a Prompt into Claude or ChatGPT.</p></div>
+    <div><span class="eyebrow">The app</span><h1>Ad Maker</h1><p class="sub">Builds ads from proven formulas (templates, not a live AI). For more ideas, paste a Prompt into Claude or ChatGPT.</p></div>
     <div class="row"><button class="btn ghost sm" id="surpriseBtn">Random</button><button class="btn ghost sm" id="saveBtn">Save</button><button class="btn ghost sm" id="copyAll">Copy text</button></div>
   </div>
   <div class="studio">
@@ -590,7 +600,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <!-- AUDIT -->
 <section class="view" id="v-audit" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">Door opener</span><h1>AI Audit</h1><p class="sub">Check a business in 5 minutes, then send the owner a free report.</p></div>
+    <div><span class="eyebrow">Door opener</span><h1>Business Checkup</h1><p class="sub">Check a business in 5 minutes, then send the owner a free report.</p></div>
     <div class="row"><span class="muted" style="font-size:.84rem">Examples:</span><button class="chip" data-demo="weak">Pizza shop</button><button class="chip" data-demo="mid">Dentist</button><button class="chip" data-demo="strong">Roofer</button></div>
   </div>
   <div class="auditg">
@@ -696,7 +706,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
     <div class="panel stack"><span class="tag acc">Your offer</span><h3>One clear sentence</h3><p class="out">"I help [type of business] in [city] get more customers with AI-made ads, managed every week, from $199 a month."</p></div>
     <div class="panel stack"><span class="tag green">Startup cost</span><h3>$0 to $50</h3><p class="muted">Free: Meta Ads Manager, Google Ads, Canva, CapCut, Loom, Google Sheets, Calendly. Later: one paid AI plan (about $20 a month) and a domain (about $12 a year).</p></div>
     <div class="panel stack"><span class="tag gold">Your role</span><h3>Strategist, not button-pusher</h3><p class="muted">You choose the offer, the audience and what to test. AI writes and designs. The ad platform's AI finds buyers. You read the numbers and improve every week.</p></div>
-    <div class="panel stack"><span class="tag">Week 1</span><h3>Learn + build proof</h3><p class="muted">Finish the course. Make 3 demo ads for one niche in the Ad Studio. Run your own $5-a-day test ad to learn Ads Manager.</p></div>
+    <div class="panel stack"><span class="tag">Week 1</span><h3>Learn + build proof</h3><p class="muted">Finish the course. Make 3 demo ads for one niche in the Ad Maker. Run your own $5-a-day test ad to learn Ads Manager.</p></div>
     <div class="panel stack"><span class="tag">Weeks 2–4</span><h3>First clients</h3><p class="muted">Follow the 14-day plan. Offer Starter or Growth with the founding discount. Deliver more than promised.</p></div>
     <div class="panel stack"><span class="tag">Month 2+</span><h3>Grow</h3><p class="muted">Turn results into case studies. Move happy clients up a tier when they want more. Ask each for one referral.</p></div>
   </div>
@@ -718,7 +728,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
       <li>Install the Meta Pixel and Google tag, or use an instant form.</li>
       <li>Agree on one goal number: calls, bookings or sales a month.</li></ul></div>
     <div class="panel stack"><h4>Every month</h4><ul class="check">
-      <li>Week 1: new creatives from the Ad Studio, launch a 3×3 test.</li>
+      <li>Week 1: new creatives from the Ad Maker, launch a 3×3 test.</li>
       <li>Week 2: pause ads costing 2× the target per lead, move budget to winners.</li>
       <li>Week 3: new hooks on the winner, ask the owner how lead quality looks.</li>
       <li>Week 4: send a short report (spend, leads, cost per lead, customers) and the plan for next month.</li></ul></div>
@@ -728,7 +738,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <!-- PROMPTS -->
 <section class="view" id="v-prompts" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">Copy and paste</span><h1>AI prompt library</h1><p class="sub">Highlighted words come from the business in your Ad Studio.</p></div>
+    <div><span class="eyebrow">Copy and paste</span><h1>AI prompt library</h1><p class="sub">Highlighted words come from the business in your Ad Maker.</p></div>
     <div class="tabs" id="pFilters"></div>
   </div>
   <div class="pgrid" id="pList"></div>
@@ -737,6 +747,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 </main>
 </div>
 <div class="toast" id="toast" role="status"></div>
+<div class="helpwrap" id="help" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-labelledby="helpT"><button class="btn sm ghost" id="helpClose" style="align-self:flex-end">Got it</button><div id="helpBody" class="stack" style="gap:12px"></div></div></div>
 <script>
 // ---------- helpers ----------
 const $ = (s, r = document) => r.querySelector(s);
@@ -1056,7 +1067,7 @@ const FIND = [
 ];
 const SPRINT = [
   ['Pick 1 niche and 1 city', 'Make a Google Sheet of 100 businesses from Google Maps: name, phone, website, reviews, rating.'],
-  ['Build 3 demo ads', 'Use the Ad Studio for your niche and save them. This is your portfolio.'],
+  ['Build 3 demo ads', 'Use the Ad Maker for your niche and save them. This is your portfolio.'],
   ['Set up your tools', 'Business email, a free Calendly link, Loom, and a one-page portfolio with your demo ads and packages.'],
   ['Audit 10, message 20', 'Run 10 free audits. Send 20 personal messages using the scripts.'],
   ['20 more + walk in', 'Follow up yesterday’s leads. Visit or call 5 businesses with their custom ad.'],
@@ -1126,7 +1137,7 @@ const FC_LESSONS = [
     tip: 'Easy niches to start: salons, gyms, auto repair, home cleaning. Harder: lawyers and real estate (stricter ad rules).' },
   { t: 'Build honest proof', s: 'Proof', demo: 'portfolio',
     why: 'Owners want to see what you can do. With no clients yet, your proof is sample work and your own test ad.',
-    how: ['Make 3 sample ads for your niche in the Ad Studio and save them.', 'Run one small ad for yourself ($5 a day for 5 days) so you know Ads Manager for real.',
+    how: ['Make 3 sample ads for your niche in the Ad Maker and save them.', 'Run one small ad for yourself ($5 a day for 5 days) so you know Ads Manager for real.',
       'Show them as "sample ads I made for [niche]", never as past client results.', 'Put them on a one-page portfolio or a short PDF.'],
     tip: 'Never say "my clients" or show results you didn’t get. Owners talk to each other, and trust is your whole business.' },
   { t: 'Make a lead list', s: 'Leads', demo: 'qualify',
@@ -1137,7 +1148,7 @@ const FC_LESSONS = [
   { t: 'Audit before you ask', s: 'Audit', demo: 'quickaudit',
     why: 'A free audit proves you looked at their business. It turns a cold message into a helpful one.',
     how: ['Spend 5 minutes on their Google listing, website (on your phone) and Facebook.', 'Find one clear, fixable problem. That is your opening line.',
-      'Run the full AI Audit for your best leads and keep the report ready to send.', 'Make one sample ad for them in the Ad Studio.'],
+      'Run the full Business Checkup for your best leads and keep the report ready to send.', 'Make one sample ad for them in the Ad Maker.'],
     tip: 'One specific observation ("your booking button is hidden on phones") beats ten general compliments.' },
   { t: 'Write the first message', s: 'Message', demo: 'grader',
     why: 'Your first message has one job: get a reply. Not a sale, just a reply.',
@@ -1228,7 +1239,7 @@ const FC_DEMOS = {
         <div class="gallery" style="grid-template-columns:repeat(3,minmax(0,1fr))">${packs.map(([p, v]) => `<div class="g" style="cursor:default">${creativeHTML(p, v, 'sq')}</div>`).join('')}</div></div>
         <div class="outhead" style="margin:0"><span class="muted" style="font-size:.84rem">Honest intro for your page</span><button class="btn sm" data-copy="pfT">Copy</button></div>
         <div class="out" id="pfT">Hi, I'm ${esc(me)}. I make AI-powered ads for ${n.kind}s. These are sample ads I made to show my style. I'm taking on my first few clients now at a founding price, month to month, and you approve every ad before it runs.</div>
-        <p class="dim" style="font-size:.78rem">${saved.length ? 'Using your saved ads for this niche.' : 'Showing examples. Save your own ads in the Ad Studio and they appear here.'}</p>`;
+        <p class="dim" style="font-size:.78rem">${saved.length ? 'Using your saved ads for this niche.' : 'Showing examples. Save your own ads in the Ad Maker and they appear here.'}</p>`;
     };
     el.addEventListener('input', go); $('#pfN', el).addEventListener('change', go); go();
   },
@@ -1262,7 +1273,7 @@ const FC_DEMOS = {
     el.innerHTML = head('5-minute quick audit') + C.map((c, i) => `<div class="aq"><span>${c[0]}</span>${segHTML('c' + i, [['Yes', 1], ['No', 0]], st['c' + i])}</div>`).join('') + '<div id="qaOut" class="stack"></div>';
     const go = () => {
       const miss = C.filter((c, i) => !st['c' + i]), score = C.length - miss.length;
-      $('#qaOut', el).innerHTML = `<div class="row" style="justify-content:space-between"><b class="mono">${score}/5 basics done</b><a class="btn sm ghost" href="#audit">Open the full AI Audit</a></div>
+      $('#qaOut', el).innerHTML = `<div class="row" style="justify-content:space-between"><b class="mono">${score}/5 basics done</b><a class="btn sm ghost" href="#audit">Open the full Business Checkup</a></div>
         ${miss.length ? `<div class="outhead" style="margin:0"><span class="muted" style="font-size:.84rem">Your opening line</span><button class="btn sm" data-copy="qaL">Copy</button></div><div class="out" id="qaL">I noticed ${miss[0][1]}.</div>` : '<div class="note ok">This business has the basics covered. Pitch growth: a second platform or better offers.</div>'}`;
     };
     wireSegs(el, st, go); go();
@@ -1496,7 +1507,7 @@ const GR_DEMOS = {
   capacity(el) {
     const S = [['cpH', 'Hours you can work per week', 5, 60, 1, 20, v => v], ['cpC', 'Hours per client per week', 1, 8, 0.5, 2, v => v], ['cpN', 'Clients you have now', 0, 25, 1, 3, v => v]];
     el.innerHTML = head('Capacity check') + `<div class="two"><div class="stack" style="gap:4px">${sliders(S)}</div><div class="stack" id="cpK"></div></div>
-      <div class="stack" style="gap:5px"><span class="tag" style="align-self:flex-start">Weekly routine per client</span>${checksHTML([['Mon: check results, pause losers', true], ['Tue: make 3 new creatives in the Ad Studio', true], ['Wed: launch tests', true], ['Fri: 5-line update to the owner', true]])}</div>`;
+      <div class="stack" style="gap:5px"><span class="tag" style="align-self:flex-start">Weekly routine per client</span>${checksHTML([['Mon: check results, pause losers', true], ['Tue: make 3 new creatives in the Ad Maker', true], ['Wed: launch tests', true], ['Fri: 5-line update to the owner', true]])}</div>`;
     const go = () => {
       const v = readSliders(el, S), max = Math.floor(v.cpH / v.cpC), used = v.cpN * v.cpC, pct = Math.min(100, Math.round(used / v.cpH * 100));
       $('#cpK', el).innerHTML = `<div class="kpi"><small>Max clients</small><b>${max}</b></div><div class="kpi"><small>Time used</small><b>${pct}%</b><div class="progress" style="width:100%;margin-top:6px"><i style="width:${pct}%;background:${pct >= 80 ? 'var(--red)' : 'var(--accent)'}"></i></div></div>
@@ -1581,7 +1592,7 @@ function brandBoardHTML(d, compact) {
     <div class="row" style="gap:5px">${d.k.words.map(w => `<span class="bpill" style="border:1px solid ${c3}33">${w}</span>`).join('')}</div></div>`;
 }
 
-// ---------- Brand Studio ----------
+// ---------- Brand Maker ----------
 const BOUTS = { check: 'Brand check', position: 'Positioning', voice: 'Voice', kit: 'Brand kit', content: 'Content plan', channels: 'Channels', roadmap: '90-day plan', pitch: 'Pitch to owner' };
 function brandInit() {
   $('#bsNiche').innerHTML = Object.entries(NICHES).map(([k, n]) => `<option value="${k}">${n.label}</option>`).join('');
@@ -1659,7 +1670,7 @@ function renderBC() {
   const old = $('#bcDemo'), el = old.cloneNode(false); old.replaceWith(el);
   BC_DEMOS[L.demo](el);
   $('#bcPrev').disabled = bcCur === 0;
-  $('#bcNext').textContent = bcCur === n - 1 ? 'Done: open the Brand Studio' : 'Mark done and continue';
+  $('#bcNext').textContent = bcCur === n - 1 ? 'Done: open the Brand Maker' : 'Mark done and continue';
   $$('#bcNav button')[bcCur].scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 const BC_DEMOS = {
@@ -1826,6 +1837,77 @@ function renderEarn() {
   $('#inSplit').textContent = `AI ads: ${money(s.ads)} · Brand scaling: ${money(s.brand)}`;
   $('#inList').innerHTML = income.length ? income.slice().sort((a, b) => b.date.localeCompare(a.date)).map(x => `<div class="qline"><span>${esc(x.client)} <span class="tag" style="margin-left:4px">${x.svc === 'brand' ? 'Brand' : 'Ads'} · ${x.type === 'monthly' ? 'Monthly' : 'One-time'}</span><br><span class="dim mono" style="font-size:.74rem">${x.date}</span></span><span class="row" style="flex-wrap:nowrap"><b>${money(x.amt)}</b><button class="btn sm ghost" data-rm="${x.id}" aria-label="Delete">×</button></span></div>`).join('')
     : '<div class="note acc">No payments logged yet. When a client pays you, add it here. Only money you actually received counts, so the numbers stay honest.</div>';
+}
+
+// ================= HELP: "How this page works" guides + plain-English glossary =================
+const HELP = {
+  course: ['A 10-step course on making ads with AI.', ['Read the short lesson.', 'Try the practice tool next to it.', 'Click “Mark done and continue” at the bottom.']],
+  bcourse: ['An 8-step course on growing a business’s brand: how people see it, remember it and trust it.', ['Read the short lesson.', 'Try the practice tool next to it.', 'Click “Mark done and continue” at the bottom.']],
+  first: ['A 9-step course on getting your first paying client.', ['Read the short lesson.', 'Practice with the tool next to it.', 'Do each step for real, then mark it done.']],
+  grow: ['How to get work on freelance sites like Upwork and Fiverr, build your name, and grow.', ['Read the short lesson.', 'Use the tool next to it to write your profile, proposals and posts.', 'Copy what you made and use it on the real site.']],
+  studio: ['Makes a complete ad for a business in a few seconds. Built from proven formulas.', ['Pick the type of business and type its name and city.', 'In “2 · Offer”, write the deal and real facts, like their star rating.', 'Check the phone preview, then copy what you need from the results panel.']],
+  brand: ['Makes a brand plan for a business: what to say, which colors and fonts to use, and what to post.', ['Fill in the business and one thing that makes it different.', 'In “2 · Personality”, move the sliders to match how the business feels.', 'Go through the results tabs and copy what you need.']],
+  audit: ['Grades a business’s online presence out of 100. You send the result to the owner for free, which starts a conversation.', ['Look up the business on Google Maps, its website and Facebook.', 'Answer the questions, one tab at a time.', 'Open “Report to send”, copy it and send it to the owner.']],
+  prompts: ['Ready-made instructions to paste into an AI chat like ChatGPT or Claude.', ['Pick a topic at the top.', 'Click Copy on a prompt.', 'Paste it into an AI chat, fill in anything in [brackets], and send.']],
+  earn: ['Your daily to-do list, your work counter and your money tracker.', ['Do the tasks in “Today’s actions”.', 'Click + each time you send a message or follow-up.', 'When someone pays you, add it in the Income tab.']],
+  clients: ['Where to find businesses, what to say to them, and a board to track each one.', ['“Where to find them”: pick a way to find businesses.', '“Scripts”: fill in their name and copy a message.', '“Lead tracker”: add each business and move it along as you talk.']],
+  pricing: ['What to charge businesses. Small plans first, bigger plans once you get results.', ['Look at the packages for ads and for brand work.', 'Open “Quote builder” to make a price for one client.', 'Copy the quote message and send it.']],
+  business: ['How to run this as a real small business: what to offer, who to help, and how to deliver.', ['“The plan”: your offer and first month.', '“Pick a niche”: choose one type of business to focus on.', '“Delivery”: what to do after a client says yes.']]
+};
+const GLOSSARY = [
+  ['Ad (or creative)', 'The picture or video people see in an ad.'], ['Hook', 'The first line or first 2 seconds of an ad. Its job is to make people stop scrolling.'],
+  ['Offer', 'The deal that makes people act now, like “$79 first visit”.'], ['CTA (call to action)', 'The button or instruction, like “Book now”.'],
+  ['Lead', 'Someone who showed interest: they called, messaged or filled in a form.'], ['Niche', 'One type of business you focus on, like dentists or gyms.'],
+  ['Targeting', 'Choosing who sees the ad: the area, ages and interests.'], ['Retargeting', 'Showing ads again to people who already visited the website or watched a video.'],
+  ['A/B test', 'Running two or more versions of an ad to see which works better.'], ['CPM', 'What it costs for an ad to be shown 1,000 times.'],
+  ['CTR (click rate)', 'Out of 100 people who see the ad, how many click it. Shown as a %.'], ['CPC', 'What one click on the ad costs.'],
+  ['CPL', 'What one lead costs. The most important ad number for local businesses.'], ['ROAS', 'Money earned ÷ money spent on ads. A ROAS of 4 means $4 back for every $1.'],
+  ['Ads Manager', 'Facebook’s free tool for making and running ads on Facebook and Instagram.'], ['Advantage+', 'A Facebook setting that lets its AI choose who sees the ad.'],
+  ['Pixel', 'A small piece of code on a website that tells Facebook who visited, so ads can learn.'], ['Brand', 'What people remember and say about a business.'],
+  ['Positioning', 'One sentence: who the business is for and why it’s different.'], ['Brand kit', 'The business’s set colors, fonts and logo, used the same way everywhere.'],
+  ['Audit (checkup)', 'A quick check of a business’s Google listing, website and social pages.'], ['Monthly plan (retainer)', 'A client who pays you every month to keep doing the work.'],
+  ['Monthly recurring', 'The money that comes in every month from your monthly clients.'], ['Freelancer', 'Someone who works for themselves, for different clients.']
+];
+function openHelp(v) {
+  const h = HELP[v]; if (!h) return;
+  $('#helpBody').innerHTML = `<span class="eyebrow">How this page works</span><h2 id="helpT">${esc($(`#nav a[data-v="${v}"]`).textContent.trim())}</h2><p style="font-size:1rem">${h[0]}</p>
+    <ol class="steps">${h[1].map(s => `<li><span>${s}</span></li>`).join('')}</ol>
+    <p class="dim" style="font-size:.84rem">Don’t know a word? <button class="linkbtn" data-glossary>See words explained</button></p>`;
+  showHelp();
+}
+function openGlossary() {
+  $('#helpBody').innerHTML = `<span class="eyebrow">Plain English</span><h2 id="helpT">Words explained</h2><div class="gloss">${GLOSSARY.map(g => `<div><b>${g[0]}</b><span>${g[1]}</span></div>`).join('')}</div>`;
+  showHelp();
+}
+let helpReturn = null;
+function showHelp() { helpReturn = document.activeElement; $('#help').hidden = false; $('#helpClose').focus(); }
+function closeHelp() { $('#help').hidden = true; if (helpReturn && helpReturn.focus) helpReturn.focus(); }
+function maybeHelp(v) {
+  const seen = store.get('helpseen', {});
+  if (seen.all || seen[v] || !HELP[v]) return;
+  seen[v] = 1; store.set('helpseen', seen); openHelp(v);
+}
+function helpInit() {
+  $$('.view').forEach(s => {
+    const v = s.id.slice(2), eb = $('.vhead .eyebrow', s); if (!HELP[v] || !eb) return;
+    eb.insertAdjacentHTML('afterend', `<button class="helplink" data-help="${v}">How this page works</button>`);
+  });
+  document.addEventListener('click', e => {
+    const h = e.target.closest('[data-help]'); if (h) { openHelp(h.dataset.help); return; }
+    if (e.target.closest('[data-glossary]')) { openGlossary(); return; }
+    if (e.target.id === 'help' || e.target.closest('#helpClose')) closeHelp();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#help').hidden) closeHelp(); });
+}
+// home: three steps with live progress
+function renderHomeSteps() {
+  const ads = store.get('gallery', []).length, c1 = done.filter(i => i < 10).length, earned = (store.get('income', [])).reduce((a, x) => a + x.amt, 0);
+  const S = [
+    ['Learn', 'Take the Ads Course (about 2 hours), then the Brand Course.', `${c1}/10 ad steps done`, '#course', 'Start the Ads Course', c1 >= 10],
+    ['Practice', 'Use the Ad Maker to make 3 sample ads. You’ll show these to business owners.', `${Math.min(ads, 3)}/3 sample ads saved`, '#studio', 'Open the Ad Maker', ads >= 3],
+    ['Earn', 'Find local businesses, send each one a free checkup, and track the money you make.', earned ? `${money(earned)} earned so far` : 'Nothing logged yet', '#earn', 'Open Make Money', earned > 0]];
+  $('#homeSteps').innerHTML = S.map((s, i) => `<div class="hstep ${s[5] ? 'ok' : ''}"><div class="row" style="justify-content:space-between"><span class="hnum">${s[5] ? '✓' : i + 1}</span><span class="dim mono" style="font-size:.72rem">${s[2]}</span></div>
+    <h3>${s[0]}</h3><p class="muted" style="font-size:.88rem">${s[1]}</p><a class="btn sm ${i ? 'ghost' : ''}" href="${s[3]}" style="align-self:flex-start;margin-top:auto">${s[4]}</a></div>`).join('');
 }
 
 // ================= OFFER SCORE (used in the course and the studio) =================
@@ -2010,7 +2092,6 @@ function courseInit() {
 function renderProgress() {
   const n = done.filter(i => i < 10).length;
   $('#cProg').style.width = n * 10 + '%'; $('#cProgT').textContent = `${n}/10 done`;
-  $('#sideProg').style.width = n * 10 + '%'; $('#sideProgT').textContent = `${n} of 10 steps`;
   $$('#homePath a').forEach((a, i) => a.classList.toggle('done', done.includes(i)));
 }
 function renderCourse() {
@@ -2027,7 +2108,7 @@ function renderCourse() {
   const old = $('#demo'), el = old.cloneNode(false); old.replaceWith(el);
   DEMOS[L.demo](el);
   $('#cPrev').disabled = cur === 0;
-  $('#cNext').textContent = cur === LESSONS.length - 1 ? 'Open the Ad Studio' : cur === 9 ? 'Mark done and take the quiz' : 'Mark done and continue';
+  $('#cNext').textContent = cur === LESSONS.length - 1 ? 'Open the Ad Maker' : cur === 9 ? 'Mark done and take the quiz' : 'Mark done and continue';
   $$('#stepNav button')[cur].scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 const nicheSelect = (id, sel = 'restaurant') => `<select id="${id}" style="width:auto">${Object.entries(NICHES).map(([k, n]) => `<option value="${k}" ${k === sel ? 'selected' : ''}>${n.label}</option>`).join('')}</select>`;
@@ -2138,7 +2219,7 @@ const DEMOS = {
         c: ['Picked the Leads objective', 'Named the campaign clearly', 'Checked for a special ad category'] },
       'Ad set': { f: [['Conversion location', 'Instant form'], ['Daily budget', '$20'], ['Location', 'Austin + 10 miles'], ['Audience', 'Advantage+, ages 25–65'], ['Placements', 'Advantage+ (automatic)']],
         c: ['Set a $15–$30 daily budget', 'Set the location radius', 'Kept the audience broad'] },
-      Ad: { f: [['Format', 'Single image or video'], ['Media', '3 different creatives from Ad Studio'], ['Primary text', 'PAS version'], ['Headline', '$79 new-patient exam'], ['Button', 'Book Now'], ['Tracking', 'Meta Pixel on']],
+      Ad: { f: [['Format', 'Single image or video'], ['Media', '3 different creatives from Ad Maker'], ['Primary text', 'PAS version'], ['Headline', '$79 new-patient exam'], ['Button', 'Book Now'], ['Tracking', 'Meta Pixel on']],
         c: ['Uploaded 3 different creatives', 'Added text and headline', 'Picked a button that matches the offer', 'Pixel is active'] }
     };
     const ticks = {}; let tab = 'Campaign';
@@ -2236,7 +2317,7 @@ const DEMOS = {
       $$(`[data-q="${i}"]`, el).forEach(x => { const o = +x.dataset.o; if (o === Q[i][2]) x.classList.add('right'); else if (o === j) x.classList.add('wrong'); });
       const n = Object.keys(ans).length, score = Object.entries(ans).filter(([k, v]) => Q[k][2] === v).length;
       $('#qzC', el).textContent = `${n}/8`;
-      if (n === Q.length) { $('#qzOut', el).innerHTML = `<div class="note ${score >= 6 ? 'ok' : ''}"><b>${score}/8.</b> ${score >= 6 ? 'You’re ready. Build 3 demo ads in the Ad Studio, then start the 14-day plan.' : 'Close. Go back over steps 7 to 9 and try again.'}</div>`;
+      if (n === Q.length) { $('#qzOut', el).innerHTML = `<div class="note ${score >= 6 ? 'ok' : ''}"><b>${score}/8.</b> ${score >= 6 ? 'You’re ready. Build 3 demo ads in the Ad Maker, then start the 14-day plan.' : 'Close. Go back over steps 7 to 9 and try again.'}</div>`;
         if (score >= 6 && !done.includes(10)) { done.push(10); store.set('ldone', done); renderProgress(); } } });
   }
 };
@@ -2465,10 +2546,12 @@ function show(v) {
   $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.v === v));
   const on = $(`#nav a[data-v="${v}"]`); if (on && innerWidth <= 900) on.scrollIntoView({ block: 'nearest', inline: 'center' });
   $('#stage').scrollTop = 0; window.scrollTo(0, 0);
+  if (v === 'home') renderHomeSteps();
+  maybeHelp(v);
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); homeInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); businessInit(); promptsInit();
+studioInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); homeInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit();
 show(location.hash.slice(1));
 </script>
 </body>
