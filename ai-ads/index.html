@@ -358,9 +358,12 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 @media (max-width:760px){.studio.bs{grid-template-columns:minmax(0,1fr)}}.earn{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,.95fr);gap:14px;align-items:stretch}
 @media (max-width:1150px){.earn{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.earn>:last-child{grid-column:1/-1}}
 @media (max-width:760px){.earn{grid-template-columns:minmax(0,1fr)}#inList{max-height:none!important}}
+.actrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;align-items:center;font-size:.86rem}
+@media (max-width:760px){#sbGrid,#inGrid{grid-template-columns:minmax(0,1fr)!important}}
 .mstep{display:grid;grid-template-columns:24px minmax(0,1fr);gap:9px;align-items:center;text-decoration:none;padding:4px 8px;border-radius:8px;font-size:.84rem;color:var(--muted)}
 .mstep i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-size:.7rem;border:1.5px solid var(--line2)}
 .mstep b{font-weight:500}
+.mstep.ladder{color:var(--text)} .mstep.ladder i{border-color:var(--gold);color:var(--gold)}
 .mstep.ok i{background:var(--green);border-color:var(--green);color:#0A0D13}
 .mstep.now{background:var(--accent-s);color:var(--text)} .mstep.now i{border-color:var(--accent);color:var(--accent)}
 .navlabel{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:12px 10px 4px}
@@ -469,20 +472,42 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <!-- MAKE MONEY -->
 <section class="view" id="v-earn" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">Freelance business</span><h1>Make money with AI ads</h1><p class="sub">Your daily plan, a fast first offer, and a tracker of the money you actually earn. No one can promise income; this page helps you do the work that leads to it.</p></div>
+    <div><span class="eyebrow">Freelance business</span><h1>Make money with AI ads and brand scaling</h1><p class="sub">Do the daily work, log it, and this page shows what to do next and how your numbers improve. It can't promise income, but steady work here is what leads to it.</p></div>
+    <div class="tabs" id="mmTabs"><button data-t="today" class="on">Today</button><button data-t="score">Scoreboard</button><button data-t="income">Income</button><button data-t="offers">Offers</button></div>
   </div>
-  <div class="earn">
-    <div class="panel stack"><h3>Today</h3><div class="stack" id="todo" style="gap:6px"></div><h3 style="margin-top:6px">Your money path</h3><div class="stack" id="mpath" style="gap:4px"></div></div>
-    <div class="panel stack"><h3>Money you've earned</h3><div class="kpis" id="inK" style="grid-template-columns:repeat(3,minmax(0,1fr))"></div>
+  <div data-pane="today" class="earn">
+    <div class="panel stack"><h3>Today's actions</h3><div class="stack" id="todo" style="gap:6px"></div></div>
+    <div class="panel stack"><h3>Log your work</h3><div class="kpis" id="streak" style="grid-template-columns:repeat(2,minmax(0,1fr))"></div><div class="stack" id="actRows" style="gap:8px"></div></div>
+    <div class="panel stack"><h3>Your money path</h3><div class="stack" id="mpath" style="gap:4px"></div></div>
+  </div>
+  <div data-pane="score" class="grid" style="grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px" hidden id="sbGrid">
+    <div class="panel chart stack"><div class="row" style="justify-content:space-between"><h3>Outreach, last 14 days</h3><span class="tag gold">Goal line: 30 a day</span></div><div id="sbChart"></div></div>
+    <div class="panel stack"><h3>Your real numbers</h3><div class="kpis" id="sbRates" style="grid-template-columns:repeat(2,minmax(0,1fr))"></div><div id="sbCoach"></div><p class="dim" style="font-size:.78rem">Calculated only from the work you log, never from guesses.</p></div>
+  </div>
+  <div data-pane="income" class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px" hidden id="inGrid">
+    <div class="panel stack"><h3>Money you've earned</h3><div class="kpis" id="inK" style="grid-template-columns:repeat(3,minmax(0,1fr))"></div><p class="muted mono" id="inSplit" style="font-size:.8rem"></p>
       <div class="grid" style="grid-template-columns:minmax(0,1.3fr) minmax(0,.8fr);gap:6px"><input type="text" id="inClient" placeholder="Client" aria-label="Client"><input type="number" id="inAmt" placeholder="Amount $" min="0" aria-label="Amount"></div>
-      <div class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px"><select id="inType" aria-label="Payment type"><option value="one">One-time</option><option value="monthly">Monthly</option></select><input type="date" id="inDate" aria-label="Date" style="padding:8px 10px;border-radius:9px;border:1px solid var(--line2);background:var(--bg);color:var(--text)"></div><button class="btn sm" id="inAdd">Log payment</button>
-      <div class="scroll" id="inList" style="max-height:calc(100dvh - 470px);min-height:90px"></div></div>
-    <div class="panel stack"><span class="tag gold" style="align-self:flex-start">Fastest first sale</span><h3>Quick Ad Pack · $99 one-time</h3>
-      <p class="muted" style="font-size:.88rem">A small, easy yes for owners who aren't ready for a monthly plan. You can make it in about an hour with the Ad Studio.</p>
-      <ul class="check"><li><span>3 ready-to-run ads (images + text) for one offer</span></li><li><span>Targeting and budget plan for Facebook + Instagram</span></li><li><span>Delivered in 48 hours, 1 round of changes</span></li><li><span>Then offer Starter ($199/mo) to run them for them</span></li></ul>
-      <div class="outhead" style="margin:4px 0 0"><span class="muted" style="font-size:.84rem">Offer message</span><button class="btn sm" id="qpCopy">Copy</button></div>
-      <div class="out" id="qpMsg" style="font-size:.84rem">Hi [Name], I made a free sample ad for [Business]. If you like it, I can make a full Quick Ad Pack for $99: 3 ready-to-run ads plus a simple targeting plan, delivered in 48 hours. No monthly commitment. Want me to start?</div>
-      <p class="dim" style="font-size:.78rem">The ladder: free audit → $99 Quick Ad Pack → $199–$399/mo plan → upgrades when results come.</p></div>
+      <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:6px"><select id="inSvc" aria-label="Service"><option value="ads">AI ads</option><option value="brand">Brand scaling</option></select><select id="inType" aria-label="Payment type"><option value="one">One-time</option><option value="monthly">Monthly</option></select><input type="date" id="inDate" aria-label="Date" style="padding:8px 10px;border-radius:9px;border:1px solid var(--line2);background:var(--bg);color:var(--text)"></div>
+      <button class="btn sm" id="inAdd">Log payment</button></div>
+    <div class="panel stack"><h3>Payments</h3><div class="scroll" id="inList" style="max-height:calc(100dvh - 300px)"></div></div>
+  </div>
+  <div data-pane="offers" class="earn" hidden>
+    <div class="panel stack"><span class="tag acc" style="align-self:flex-start">AI ads · first sale</span><h3>Quick Ad Pack · $99 once</h3>
+      <ul class="check"><li><span>3 ready-to-run ads (images + text) for one offer</span></li><li><span>Targeting and budget plan</span></li><li><span>Delivered in 48 hours, 1 round of changes</span></li></ul>
+      <div class="outhead" style="margin:4px 0 0"><span class="muted" style="font-size:.84rem">Offer message</span><button class="btn sm" data-copyof="qpMsg">Copy</button></div>
+      <div class="out" id="qpMsg" style="font-size:.84rem">Hi [Name], I made a free sample ad for [Business]. If you like it, I can make a Quick Ad Pack for $99: 3 ready-to-run ads plus a simple targeting plan, delivered in 48 hours. No monthly commitment. Want me to start?</div></div>
+    <div class="panel stack"><span class="tag gold" style="align-self:flex-start">Brand scaling · first sale</span><h3>Brand Kit · $299 once</h3>
+      <ul class="check"><li><span>Brand check + one clear positioning sentence</span></li><li><span>Voice guide, colors, fonts and Canva templates</span></li><li><span>Bios and Google listing rewritten to match</span></li></ul>
+      <div class="outhead" style="margin:4px 0 0"><span class="muted" style="font-size:.84rem">Offer message</span><button class="btn sm" data-copyof="bkMsg">Copy</button></div>
+      <div class="out" id="bkMsg" style="font-size:.84rem">Hi [Name], I did a quick brand check on [Business] and noticed [what you found, e.g. your website and Instagram describe you differently]. For $299 I'll make one clear message, a simple brand kit and matching bios everywhere, in about a week. Want to see the brand board I sketched for you?</div></div>
+    <div class="panel stack"><h3>The money ladder</h3>
+      <div class="stack" style="gap:6px;font-size:.88rem">
+        <div class="mstep ladder"><i>1</i><span><b>Free</b> <span class="dim">· AI audit, sample ad or brand check</span></span></div>
+        <div class="mstep ladder"><i>2</i><span><b>Small first yes</b> <span class="dim">· $99 Quick Ad Pack or $299 Brand Kit</span></span></div>
+        <div class="mstep ladder"><i>3</i><span><b>Monthly plan</b> <span class="dim">· Starter $199, Growth $399, Brand Growth $349</span></span></div>
+        <div class="mstep ladder"><i>4</i><span><b>Cross-sell</b> <span class="dim">· add brand to ad clients, ads to brand clients ($699 Brand + Ads)</span></span></div>
+        <div class="mstep ladder"><i>5</i><span><b>Referrals</b> <span class="dim">· ask every happy client for one name</span></span></div>
+      </div><p class="dim" style="font-size:.78rem">Each step is easier to sell to someone who already said yes to the step before.</p></div>
   </div>
 </section>
 
@@ -1709,56 +1734,98 @@ const BC_DEMOS = {
   }
 };
 
-// ================= MAKE MONEY: plan, today's actions, real income tracker =================
+// ================= MAKE MONEY: daily work, scoreboard, real income, offers =================
+const isoDay = (d = new Date()) => new Date(d.getTime() - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+const addDays = (iso, n) => { const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + n); return isoDay(d); };
+const niceDay = iso => new Date(iso + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 let income = store.get('income', []);
+let acts = store.get('acts', {});
+const ACTS = [['msg', 'First messages sent', 20], ['fu', 'Follow-ups sent', 10], ['aud', 'Audits or sample ads sent', 3], ['rep', 'Replies received', 0], ['call', 'Calls held', 0], ['sale', 'Sales closed', 0]];
+function addAct(k, n) { const d = isoDay(); acts[d] = acts[d] || {}; acts[d][k] = Math.max(0, (acts[d][k] || 0) + n); store.set('acts', acts); if ($('#v-earn') && !$('#v-earn').hidden) renderEarn(); }
 const realLeads = () => leads.filter(l => !/^Example:/.test(l.biz));
+const dueLeads = () => leads.filter(l => l.st >= 1 && l.st <= 3 && l.nextFu && l.nextFu <= isoDay());
+function streak() {
+  const ok = d => { const a = acts[d] || {}; return (a.msg || 0) + (a.fu || 0) >= 5; };
+  let d = isoDay(), n = 0; if (!ok(d)) d = addDays(d, -1);
+  while (ok(d)) { n++; d = addDays(d, -1); }
+  return n;
+}
 function earnState() {
-  const g = store.get('gallery', []).length, L = realLeads(), now = new Date();
+  const g = store.get('gallery', []).length, L = realLeads(), now = new Date(), month = isoDay().slice(0, 7);
   const total = income.reduce((a, x) => a + x.amt, 0);
-  const month = income.filter(x => { const d = new Date(x.date); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear(); }).reduce((a, x) => a + x.amt, 0);
   const latest = {}; income.filter(x => x.type === 'monthly').forEach(x => { if (!latest[x.client] || x.date > latest[x.client].date) latest[x.client] = x; });
-  const mrrList = Object.values(latest).filter(x => (now - new Date(x.date)) / 864e5 <= 35);
-  return { g, L, total, month, mrr: mrrList.reduce((a, x) => a + x.amt, 0), monthlyClients: mrrList.length,
-    contacted: L.filter(l => l.st >= 1).length, calls: L.filter(l => l.st === 2).length, waiting: L.filter(l => l.st === 1).length, quotes: L.filter(l => l.st === 3).length };
+  const mrrList = Object.values(latest).filter(x => (now - new Date(x.date + 'T12:00:00')) / 864e5 <= 35);
+  const sum = k => Object.values(acts).reduce((a, d) => a + (d[k] || 0), 0);
+  return { g, L, total, month: income.filter(x => x.date.slice(0, 7) === month).reduce((a, x) => a + x.amt, 0), mrr: mrrList.reduce((a, x) => a + x.amt, 0),
+    ads: income.filter(x => x.svc !== 'brand').reduce((a, x) => a + x.amt, 0), brand: income.filter(x => x.svc === 'brand').reduce((a, x) => a + x.amt, 0),
+    monthlyClients: mrrList.length, brandClients: mrrList.filter(x => x.svc === 'brand').length,
+    contacted: L.filter(l => l.st >= 1).length, calls: L.filter(l => l.st === 2).length, quotes: L.filter(l => l.st === 3).length,
+    T: Object.fromEntries(ACTS.map(a => [a[0], sum(a[0])])) };
 }
 function earnInit() {
-  $('#inDate').value = new Date().toISOString().slice(0, 10);
+  wireTabs($('#mmTabs'), $('#v-earn'), () => renderEarn());
+  $('#inDate').value = isoDay();
   $('#inAdd').addEventListener('click', () => {
     const client = $('#inClient').value.trim(), amt = Math.round(+$('#inAmt').value * 100) / 100;
     if (!client || !(amt > 0)) { toast('Add a client name and an amount'); return; }
-    income.push({ id: Date.now(), client, amt, type: $('#inType').value, date: $('#inDate').value || new Date().toISOString().slice(0, 10) });
+    income.push({ id: Date.now(), client, amt, type: $('#inType').value, svc: $('#inSvc').value, date: $('#inDate').value || isoDay() });
     store.set('income', income); $('#inClient').value = ''; $('#inAmt').value = ''; renderEarn(); toast('Payment logged');
   });
   $('#inList').addEventListener('click', e => { const b = e.target.closest('[data-rm]'); if (b) { income = income.filter(x => x.id !== +b.dataset.rm); store.set('income', income); renderEarn(); } });
-  $('#todo').addEventListener('change', e => { const k = e.target.dataset.td; if (!k) return; const key = 'todo_' + new Date().toISOString().slice(0, 10), d = store.get(key, {}); d[k] = e.target.checked; store.set(key, d); renderEarn(); });
-  $('#qpCopy').addEventListener('click', () => copyText($('#qpMsg').innerText));
+  $('#actRows').addEventListener('click', e => { const b = e.target.closest('[data-act]'); if (b) addAct(b.dataset.act, +b.dataset.n); });
+  $('#todo').addEventListener('change', e => { const k = e.target.dataset.td; if (!k) return; const key = 'todo_' + isoDay(), d = store.get(key, {}); d[k] = e.target.checked; store.set(key, d); renderEarn(); });
+  $$('[data-copyof]').forEach(b => b.addEventListener('click', () => copyText($('#' + b.dataset.copyof).innerText)));
   window.addEventListener('hashchange', () => { if (location.hash === '#earn') renderEarn(); });
   renderEarn();
 }
 function renderEarn() {
-  const s = earnState();
-  // money path: each milestone is detected from what you actually did in the app
-  const path = [['Make 3 sample ads', s.g >= 3, `${Math.min(s.g, 3)}/3 saved`, '#studio'], ['Add 20 real leads', s.L.length >= 20, `${Math.min(s.L.length, 20)}/20 in tracker`, '#clients'],
-    ['Contact 10 businesses', s.contacted >= 10, `${Math.min(s.contacted, 10)}/10 contacted`, '#first'], ['Book your first call', s.calls + s.quotes > 0 || s.L.some(l => l.st === 4), 'Move a lead to "Call booked"', '#clients'],
-    ['Make your first sale', income.length > 0, 'Log it in the tracker', '#earn'], ['Get a monthly client', income.some(x => x.type === 'monthly'), 'A Starter or Growth plan', '#pricing'],
-    ['Earn your first $1,000', s.total >= 1000, `${money(Math.min(s.total, 1000))} of $1,000`, '#earn']];
+  const s = earnState(), today = acts[isoDay()] || {}, due = dueLeads();
+  // --- today's actions, built from real progress ---
+  const T = [];
+  if (due.length) T.push(['due', `Follow up with ${due.length} lead${due.length > 1 ? 's' : ''}: ${due.slice(0, 3).map(l => esc(l.biz.replace(/^Example: /, ''))).join(', ')}${due.length > 3 ? '…' : ''}`, '#clients']);
+  if (s.g < 3) T.push(['ads', `Make ${3 - s.g} more sample ad${3 - s.g > 1 ? 's' : ''} and save them`, '#studio']);
+  T.push(['find', 'Add 10 new businesses from Google Maps to the Lead tracker', '#clients']);
+  T.push(['msg', 'Send 20 first messages (grade one first)', '#first']);
+  T.push(['aud', 'Send 3 free audits, sample ads or brand checks', '#audit']);
+  if (s.calls) T.push(['call', `Prepare for ${s.calls} call${s.calls > 1 ? 's' : ''}: audit + quote ready`, '#pricing']);
+  if (s.monthlyClients && !s.brand) T.push(['cross', 'Offer a $299 Brand Kit to one of your ad clients', '#brand']);
+  if (s.monthlyClients) T.push(['serve', `Weekly update to your ${s.monthlyClients} monthly client${s.monthlyClients > 1 ? 's' : ''}`, '#business']);
+  const td = store.get('todo_' + isoDay(), {});
+  $('#todo').innerHTML = T.map(t => `<label class="day ${td[t[0]] ? 'done' : ''}" style="grid-template-columns:18px minmax(0,1fr) auto;padding:6px 10px"><input type="checkbox" data-td="${t[0]}" ${td[t[0]] ? 'checked' : ''}><b style="font-weight:500">${t[1]}</b><a href="${t[2]}" class="dim" style="font-size:.78rem">Open</a></label>`).join('');
+  // --- work counters ---
+  $('#actRows').innerHTML = ACTS.map(([k, label, goal]) => { const v = today[k] || 0;
+    return `<div class="actrow"><span>${label}${goal ? ` <span class="dim mono" style="font-size:.72rem">goal ${goal}</span>` : ''}</span><span class="row" style="flex-wrap:nowrap;gap:4px"><button class="btn sm ghost" data-act="${k}" data-n="-1" aria-label="Minus one">−</button><b class="mono" style="min-width:28px;text-align:center">${v}</b><button class="btn sm ghost" data-act="${k}" data-n="1" aria-label="Plus one">+</button>${k === 'msg' || k === 'fu' ? `<button class="btn sm ghost" data-act="${k}" data-n="5">+5</button>` : ''}</span>
+      ${goal ? `<div class="progress" style="width:100%;grid-column:1/-1;height:4px"><i style="width:${Math.min(100, v / goal * 100)}%;background:${v >= goal ? 'var(--green)' : 'var(--accent)'}"></i></div>` : ''}</div>`; }).join('');
+  const st = streak();
+  $('#streak').innerHTML = `<div class="kpi"><small>Streak</small><b>${st} day${st === 1 ? '' : 's'}</b></div><div class="kpi"><small>Outreach today</small><b>${(today.msg || 0) + (today.fu || 0)}/30</b></div>`;
+  // --- money path (ads + brand) ---
+  const path = [['Make 3 sample ads', s.g >= 3, `${Math.min(s.g, 3)}/3 saved`, '#studio'], ['Add 20 real leads', s.L.length >= 20, `${Math.min(s.L.length, 20)}/20`, '#clients'],
+    ['Send 100 first messages', s.T.msg >= 100, `${Math.min(s.T.msg, 100)}/100 logged`, '#first'], ['Book your first call', s.T.call > 0 || s.calls + s.quotes > 0, 'Log it or move a lead', '#clients'],
+    ['Make your first sale', income.length > 0, 'Log it in Income', '#earn'], ['Get a monthly client', income.some(x => x.type === 'monthly'), 'Starter, Growth or Brand Growth', '#pricing'],
+    ['Sell ads and brand work', income.some(x => x.svc === 'brand') && income.some(x => x.svc !== 'brand'), 'Both pillars sold', '#brand'], ['Earn your first $1,000', s.total >= 1000, `${money(Math.min(s.total, 1000))} of $1,000`, '#earn']];
   const next = path.findIndex(p => !p[1]);
   $('#mpath').innerHTML = path.map((p, i) => `<a href="${p[3]}" class="mstep ${p[1] ? 'ok' : i === next ? 'now' : ''}"><i>${p[1] ? '✓' : i + 1}</i><span><b>${p[0]}</b> <span class="dim">· ${p[2]}</span></span></a>`).join('');
-  // today's actions, built from your current state
-  const T = [];
-  if (s.g < 3) T.push(['ads', `Make ${3 - s.g} more sample ad${3 - s.g > 1 ? 's' : ''} and save them`, '#studio']);
-  T.push(['find', 'Find 10 businesses on Google Maps and add them to the Lead tracker', '#clients']);
-  T.push(['msg', 'Send 20 personal messages (grade one first)', '#first']);
-  if (s.waiting) T.push(['fu', `Follow up with ${s.waiting} contacted lead${s.waiting > 1 ? 's' : ''}`, '#first']);
-  if (s.calls) T.push(['call', `Prepare for ${s.calls} call${s.calls > 1 ? 's' : ''}: audit + quote ready`, '#audit']);
-  if (s.quotes) T.push(['quote', `Check in on ${s.quotes} open quote${s.quotes > 1 ? 's' : ''}`, '#clients']);
-  if (s.monthlyClients) T.push(['serve', `Send a weekly update to your ${s.monthlyClients} monthly client${s.monthlyClients > 1 ? 's' : ''}`, '#business']);
-  const td = store.get('todo_' + new Date().toISOString().slice(0, 10), {});
-  $('#todo').innerHTML = T.map(t => `<label class="day ${td[t[0]] ? 'done' : ''}" style="grid-template-columns:18px minmax(0,1fr) auto;padding:6px 10px"><input type="checkbox" data-td="${t[0]}" ${td[t[0]] ? 'checked' : ''}><b style="font-weight:500">${t[1]}</b><a href="${t[2]}" class="dim" style="font-size:.78rem">Open</a></label>`).join('');
-  // income
+  // --- scoreboard: last 14 days + your own rates ---
+  const days = [...Array(14)].map((_, i) => addDays(isoDay(), i - 13)), vals = days.map(d => ((acts[d] || {}).msg || 0) + ((acts[d] || {}).fu || 0)), mx = Math.max(30, ...vals);
+  const W = 520, H = 220, pl = 34, pb = 24, pt = 14, bw = (W - pl - 6) / 14, y = v => H - pb - v / mx * (H - pb - pt);
+  let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Outreach per day, last 14 days">`;
+  [0, mx / 2, mx].forEach(v => { svg += `<line x1="${pl}" x2="${W - 4}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)"/><text x="${pl - 6}" y="${y(v) + 4}" text-anchor="end">${Math.round(v)}</text>`; });
+  svg += `<line x1="${pl}" x2="${W - 4}" y1="${y(30)}" y2="${y(30)}" style="stroke:var(--gold);stroke-dasharray:4 4"/>`;
+  vals.forEach((v, i) => { const x = pl + i * bw + bw * .2; svg += `<rect x="${x}" y="${y(v)}" width="${bw * .6}" height="${Math.max(0, H - pb - y(v))}" rx="3" style="fill:var(--accent);opacity:${i === 13 ? 1 : .55}"/>${i % 2 === 1 ? `<text x="${x + bw * .3}" y="${H - 7}" text-anchor="middle">${days[i].slice(8)}</text>` : ''}`; });
+  $('#sbChart').innerHTML = svg + '</svg>';
+  const pct = (a, b) => b ? Math.round(a / b * 1000) / 10 : 0, R = s.T, reply = pct(R.rep, R.msg), callR = pct(R.call, R.rep), close = pct(R.sale, R.call);
+  $('#sbRates').innerHTML = [['First messages', R.msg], ['Reply rate', R.msg ? reply + '%' : '—'], ['Replies → calls', R.rep ? callR + '%' : '—'], ['Calls → sales', R.call ? close + '%' : '—']].map(k => `<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('');
+  const coach = R.msg < 50 ? ['acc', `Not enough data yet (${R.msg} of 50 messages). Right now the job is volume: about 20 first messages a day plus follow-ups.`, '#first', 'Open the message grader']
+    : reply < 3 ? ['bad', `Only ${reply}% of owners reply. Make the first message more personal: one real observation plus a free audit or sample ad.`, '#first', 'Grade your message']
+    : R.rep >= 5 && callR < 25 ? ['bad', `People reply but only ${callR}% book a call. Offer two specific times and show their sample ad in the reply.`, '#clients', 'See the scripts']
+    : R.call >= 3 && close < 20 ? ['bad', `Calls close at ${close}%. Practice the call, and offer the $99 Quick Ad Pack or $299 Brand Kit as a smaller first yes.`, '#first', 'Practice the sales call']
+    : ['ok', 'Your numbers look healthy. Keep the daily volume and never skip follow-ups.', '#earn', ''];
+  $('#sbCoach').innerHTML = `<div class="note ${coach[0]}">${coach[1]}${coach[3] ? ` <a href="${coach[2]}">${coach[3]}</a>` : ''}</div>`;
+  // --- income ---
   $('#inK').innerHTML = [['Total earned', money(s.total)], ['This month', money(s.month)], ['Monthly recurring', money(s.mrr)]].map(k => `<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('');
-  $('#inList').innerHTML = income.length ? income.slice().sort((a, b) => b.date.localeCompare(a.date)).map(x => `<div class="qline"><span>${esc(x.client)} <span class="tag" style="margin-left:4px">${x.type === 'monthly' ? 'Monthly' : 'One-time'}</span><br><span class="dim mono" style="font-size:.74rem">${x.date}</span></span><span class="row" style="flex-wrap:nowrap"><b>${money(x.amt)}</b><button class="btn sm ghost" data-rm="${x.id}" aria-label="Delete">×</button></span></div>`).join('')
-    : '<div class="note acc">No payments logged yet. When a client pays you, add it above. This page only counts money you actually received, so the numbers stay honest.</div>';
+  $('#inSplit').textContent = `AI ads: ${money(s.ads)} · Brand scaling: ${money(s.brand)}`;
+  $('#inList').innerHTML = income.length ? income.slice().sort((a, b) => b.date.localeCompare(a.date)).map(x => `<div class="qline"><span>${esc(x.client)} <span class="tag" style="margin-left:4px">${x.svc === 'brand' ? 'Brand' : 'Ads'} · ${x.type === 'monthly' ? 'Monthly' : 'One-time'}</span><br><span class="dim mono" style="font-size:.74rem">${x.date}</span></span><span class="row" style="flex-wrap:nowrap"><b>${money(x.amt)}</b><button class="btn sm ghost" data-rm="${x.id}" aria-label="Delete">×</button></span></div>`).join('')
+    : '<div class="note acc">No payments logged yet. When a client pays you, add it here. Only money you actually received counts, so the numbers stay honest.</div>';
 }
 
 // ================= OFFER SCORE (used in the course and the studio) =================
@@ -2327,11 +2394,12 @@ function clientsInit() {
   const save = () => { store.set('leads', leads); drawK(); };
   drawK = () => {
     $('#kanban').innerHTML = STAGES.map((s, i) => { const ls = leads.filter(l => l.st === i);
-      return `<div class="kcol"><h4><span>${s}</span><span class="mono">${ls.length}</span></h4>${ls.map(l => `<div class="lead-c"><b style="font-weight:600">${esc(l.biz)}</b>${l.note ? `<span class="muted">${esc(l.note)}</span>` : ''}<div class="acts">${i > 0 ? `<button data-mv="${l.id}" data-d="-1" aria-label="Move back">←</button>` : ''}${i < 4 ? `<button data-mv="${l.id}" data-d="1" aria-label="Move forward">→</button>` : ''}<button data-rm="${l.id}" aria-label="Delete">×</button></div></div>`).join('')}</div>`; }).join('');
+      return `<div class="kcol"><h4><span>${s}</span><span class="mono">${ls.length}</span></h4>${ls.map(l => `<div class="lead-c"><b style="font-weight:600">${esc(l.biz)}</b>${l.note ? `<span class="muted">${esc(l.note)}</span>` : ''}${l.nextFu && i >= 1 && i <= 3 ? `<span class="mono" style="font-size:.72rem;color:${l.nextFu <= isoDay() ? 'var(--gold)' : 'var(--muted)'}">Follow up ${l.nextFu <= isoDay() ? 'today' : niceDay(l.nextFu)}</span>` : ''}<div class="acts">${i >= 1 && i <= 3 ? `<button data-fu="${l.id}" title="I followed up">Followed up</button>` : ''}${i > 0 ? `<button data-mv="${l.id}" data-d="-1" aria-label="Move back">←</button>` : ''}${i < 4 ? `<button data-mv="${l.id}" data-d="1" aria-label="Move forward">→</button>` : ''}<button data-rm="${l.id}" aria-label="Delete">×</button></div></div>`).join('')}</div>`; }).join('');
   };
   $('#kanban').addEventListener('click', e => {
-    const m = e.target.closest('[data-mv]'), r = e.target.closest('[data-rm]');
-    if (m) { const l = leads.find(x => x.id === +m.dataset.mv); l.st = Math.min(4, Math.max(0, l.st + +m.dataset.d)); if (l.st === 4) toast('New client won'); save(); }
+    const m = e.target.closest('[data-mv]'), r = e.target.closest('[data-rm]'), f = e.target.closest('[data-fu]');
+    if (f) { const l = leads.find(x => x.id === +f.dataset.fu); l.nextFu = addDays(isoDay(), 3); addAct('fu', 1); save(); toast('Follow-up logged. Next one in 3 days'); return; }
+    if (m) { const l = leads.find(x => x.id === +m.dataset.mv); l.st = Math.min(4, Math.max(0, l.st + +m.dataset.d)); if (l.st >= 1 && l.st <= 3 && !l.nextFu) l.nextFu = addDays(isoDay(), 2); if (l.st === 4) toast('New client won'); save(); }
     if (r) { leads = leads.filter(x => x.id !== +r.dataset.rm); save(); }
   });
   $('#lAdd').addEventListener('click', () => { const biz = $('#lBiz').value.trim(); if (!biz) { toast('Type a business name first'); return; }
