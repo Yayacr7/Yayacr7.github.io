@@ -503,7 +503,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
     <div class="row"><button class="btn ghost sm" id="surpriseBtn">Random example</button><button class="btn ghost sm" id="saveBtn">Save to My Ads</button><button class="btn ghost sm" id="copyAll">Copy full pack</button></div>
   </div>
   <div class="studio">
-    <div class="panel inputs">
+    <div class="panel inputs" id="adInputs">
       <div class="tabs" id="inTabs"><button data-t="biz" class="on">1 · Business</button><button data-t="offer">2 · Offer</button><button data-t="style">3 · Style</button></div>
       <div data-pane="biz" class="stack">
         <div class="nichegrid" id="nicheGrid"></div>
@@ -1713,7 +1713,7 @@ function fields() {
   return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette };
 }
 function studioInit() {
-  wireTabs($('#inTabs'), $('.inputs'));
+  wireTabs($('#inTabs'), $('#adInputs'));
   $('#nicheGrid').innerHTML = Object.entries(NICHES).map(([k, n]) => `<button data-n="${k}">${n.label}</button>`).join('');
   $('#toneRow').innerHTML = Object.entries(TONES).map(([k, t]) => `<button class="chip" data-tone="${k}">${t}</button>`).join('');
   $('#swatches').innerHTML = PALETTES.map((p, i) => `<button class="sw" data-pal="${i}" title="${p.name}" aria-label="${p.name} colors" style="background:linear-gradient(135deg,${p.c1},${p.c2})"></button>`).join('');
