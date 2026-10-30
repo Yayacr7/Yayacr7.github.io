@@ -355,7 +355,14 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 @media (max-width:560px){.two{grid-template-columns:minmax(0,1fr)}}
 .studio.bs{grid-template-columns:minmax(250px,290px) minmax(280px,340px) minmax(0,1fr)}
 @media (max-width:1180px){.studio.bs{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
-@media (max-width:760px){.studio.bs{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:760px){.studio.bs{grid-template-columns:minmax(0,1fr)}}.earn{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,.95fr);gap:14px;align-items:stretch}
+@media (max-width:1150px){.earn{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.earn>:last-child{grid-column:1/-1}}
+@media (max-width:760px){.earn{grid-template-columns:minmax(0,1fr)}#inList{max-height:none!important}}
+.mstep{display:grid;grid-template-columns:24px minmax(0,1fr);gap:9px;align-items:center;text-decoration:none;padding:4px 8px;border-radius:8px;font-size:.84rem;color:var(--muted)}
+.mstep i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-size:.7rem;border:1.5px solid var(--line2)}
+.mstep b{font-weight:500}
+.mstep.ok i{background:var(--green);border-color:var(--green);color:#0A0D13}
+.mstep.now{background:var(--accent-s);color:var(--text)} .mstep.now i{border-color:var(--accent);color:var(--accent)}
 .navlabel{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:12px 10px 4px}
 .nav a{padding:7px 10px}
 .pillars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -391,6 +398,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
     <a href="#bcourse" data-v="bcourse"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><circle cx="12" cy="10" r="3"/></svg>Brand Course</a>
     <a href="#brand" data-v="brand"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>Brand Studio</a>
     <span class="navlabel">Freelance business</span>
+    <a href="#earn" data-v="earn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c0-1.4-1.3-2.5-3-2.5s-3 1-3 2.3c0 3.2 6 1.7 6 5 0 1.4-1.3 2.7-3 2.7s-3-1.1-3-2.5M12 5.5v13"/></svg>Make Money</a>
     <a href="#first" data-v="first"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>First Clients</a>
     <a href="#grow" data-v="grow"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Grow</a>
     <a href="#clients" data-v="clients"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14a6 6 0 0 1 3.5 6"/></svg>Get Clients</a>
@@ -416,7 +424,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
         <div class="pillar"><span class="tag gold">Pillar 2</span><h3>Brand Scaling</h3><p class="muted">A brand people remember, trust and come back to.</p>
           <div class="row"><a class="btn sm" href="#bcourse">Learn</a><a class="btn sm ghost" href="#brand">Brand Studio</a></div></div>
       </div>
-      <div class="row" style="font-size:.86rem"><span class="muted">Your freelance business:</span><a href="#first">First clients</a><span class="dim">·</span><a href="#grow">Freelance, brand and scale</a><span class="dim">·</span><a href="#pricing">Pricing</a></div>
+      <div class="row" style="font-size:.86rem"><span class="muted">Your freelance business:</span><a href="#earn">Make money</a><span class="dim">·</span><a href="#first">First clients</a><span class="dim">·</span><a href="#grow">Freelance, brand and scale</a><span class="dim">·</span><a href="#pricing">Pricing</a></div>
     </div>
     <div class="gen">
       <div class="pipe" id="pipe"></div>
@@ -456,6 +464,26 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
   <div class="stepnav" id="grNav"></div>
   <div class="course"><article class="panel lesson" id="grLesson"></article><div class="panel demo" id="grDemo"></div></div>
   <div class="coursefoot"><button class="btn ghost" id="grPrev">Back</button><button class="btn" id="grNext">Mark done and continue</button></div>
+</section>
+
+<!-- MAKE MONEY -->
+<section class="view" id="v-earn" hidden>
+  <div class="vhead">
+    <div><span class="eyebrow">Freelance business</span><h1>Make money with AI ads</h1><p class="sub">Your daily plan, a fast first offer, and a tracker of the money you actually earn. No one can promise income; this page helps you do the work that leads to it.</p></div>
+  </div>
+  <div class="earn">
+    <div class="panel stack"><h3>Today</h3><div class="stack" id="todo" style="gap:6px"></div><h3 style="margin-top:6px">Your money path</h3><div class="stack" id="mpath" style="gap:4px"></div></div>
+    <div class="panel stack"><h3>Money you've earned</h3><div class="kpis" id="inK" style="grid-template-columns:repeat(3,minmax(0,1fr))"></div>
+      <div class="grid" style="grid-template-columns:minmax(0,1.3fr) minmax(0,.8fr);gap:6px"><input type="text" id="inClient" placeholder="Client" aria-label="Client"><input type="number" id="inAmt" placeholder="Amount $" min="0" aria-label="Amount"></div>
+      <div class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px"><select id="inType" aria-label="Payment type"><option value="one">One-time</option><option value="monthly">Monthly</option></select><input type="date" id="inDate" aria-label="Date" style="padding:8px 10px;border-radius:9px;border:1px solid var(--line2);background:var(--bg);color:var(--text)"></div><button class="btn sm" id="inAdd">Log payment</button>
+      <div class="scroll" id="inList" style="max-height:calc(100dvh - 470px);min-height:90px"></div></div>
+    <div class="panel stack"><span class="tag gold" style="align-self:flex-start">Fastest first sale</span><h3>Quick Ad Pack · $99 one-time</h3>
+      <p class="muted" style="font-size:.88rem">A small, easy yes for owners who aren't ready for a monthly plan. You can make it in about an hour with the Ad Studio.</p>
+      <ul class="check"><li><span>3 ready-to-run ads (images + text) for one offer</span></li><li><span>Targeting and budget plan for Facebook + Instagram</span></li><li><span>Delivered in 48 hours, 1 round of changes</span></li><li><span>Then offer Starter ($199/mo) to run them for them</span></li></ul>
+      <div class="outhead" style="margin:4px 0 0"><span class="muted" style="font-size:.84rem">Offer message</span><button class="btn sm" id="qpCopy">Copy</button></div>
+      <div class="out" id="qpMsg" style="font-size:.84rem">Hi [Name], I made a free sample ad for [Business]. If you like it, I can make a full Quick Ad Pack for $99: 3 ready-to-run ads plus a simple targeting plan, delivered in 48 hours. No monthly commitment. Want me to start?</div>
+      <p class="dim" style="font-size:.78rem">The ladder: free audit → $99 Quick Ad Pack → $199–$399/mo plan → upgrades when results come.</p></div>
+  </div>
 </section>
 
 <!-- BRAND COURSE -->
@@ -500,7 +528,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <section class="view" id="v-studio" hidden>
   <div class="vhead">
     <div><span class="eyebrow">The app</span><h1>Ad Studio</h1><p class="sub">Builds ads from proven formulas (templates, not a live AI). For more ideas, paste a Prompt into Claude or ChatGPT.</p></div>
-    <div class="row"><button class="btn ghost sm" id="surpriseBtn">Random</button><button class="btn ghost sm" id="saveBtn">Save</button><button class="btn ghost sm" id="copyAll">Copy text</button><button class="btn sm" id="copyEmail">Copy for email</button></div>
+    <div class="row"><button class="btn ghost sm" id="surpriseBtn">Random</button><button class="btn ghost sm" id="saveBtn">Save</button><button class="btn ghost sm" id="copyAll">Copy text</button></div>
   </div>
   <div class="studio">
     <div class="panel inputs" id="adInputs">
@@ -980,6 +1008,7 @@ const BRAND_TIERS = [
   { name: 'Brand + Ads', price: 699, per: '/mo', plus: 'Everything in Brand Growth, plus', items: ['Growth ad plan: 8 ads a month incl. video', 'Retargeting people who engage with posts', 'Weekly tuning', 'One combined report'], who: 'Owners who want trust and customers now. Saves $49 vs buying both.' }
 ];
 const ADDONS = [
+  { id: 'quickpack', name: 'Quick Ad Pack (3 ready-to-run ads)', price: 99, per: 'once', why: 'The easiest first sale. Owners can try your work without a monthly plan.' },
   { id: 'video', name: 'AI video pack (3 videos)', price: 99, per: 'once', why: 'Video ads are cheap to run and owners love seeing them.' },
   { id: 'landing', name: 'Landing page', price: 299, per: 'once', why: 'A page built for the ad turns more clicks into leads.' },
   { id: 'gbp', name: 'Google Business Profile tune-up', price: 99, per: 'once', why: 'More calls from Google Maps, free traffic for years.' },
@@ -1680,6 +1709,58 @@ const BC_DEMOS = {
   }
 };
 
+// ================= MAKE MONEY: plan, today's actions, real income tracker =================
+let income = store.get('income', []);
+const realLeads = () => leads.filter(l => !/^Example:/.test(l.biz));
+function earnState() {
+  const g = store.get('gallery', []).length, L = realLeads(), now = new Date();
+  const total = income.reduce((a, x) => a + x.amt, 0);
+  const month = income.filter(x => { const d = new Date(x.date); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear(); }).reduce((a, x) => a + x.amt, 0);
+  const latest = {}; income.filter(x => x.type === 'monthly').forEach(x => { if (!latest[x.client] || x.date > latest[x.client].date) latest[x.client] = x; });
+  const mrrList = Object.values(latest).filter(x => (now - new Date(x.date)) / 864e5 <= 35);
+  return { g, L, total, month, mrr: mrrList.reduce((a, x) => a + x.amt, 0), monthlyClients: mrrList.length,
+    contacted: L.filter(l => l.st >= 1).length, calls: L.filter(l => l.st === 2).length, waiting: L.filter(l => l.st === 1).length, quotes: L.filter(l => l.st === 3).length };
+}
+function earnInit() {
+  $('#inDate').value = new Date().toISOString().slice(0, 10);
+  $('#inAdd').addEventListener('click', () => {
+    const client = $('#inClient').value.trim(), amt = Math.round(+$('#inAmt').value * 100) / 100;
+    if (!client || !(amt > 0)) { toast('Add a client name and an amount'); return; }
+    income.push({ id: Date.now(), client, amt, type: $('#inType').value, date: $('#inDate').value || new Date().toISOString().slice(0, 10) });
+    store.set('income', income); $('#inClient').value = ''; $('#inAmt').value = ''; renderEarn(); toast('Payment logged');
+  });
+  $('#inList').addEventListener('click', e => { const b = e.target.closest('[data-rm]'); if (b) { income = income.filter(x => x.id !== +b.dataset.rm); store.set('income', income); renderEarn(); } });
+  $('#todo').addEventListener('change', e => { const k = e.target.dataset.td; if (!k) return; const key = 'todo_' + new Date().toISOString().slice(0, 10), d = store.get(key, {}); d[k] = e.target.checked; store.set(key, d); renderEarn(); });
+  $('#qpCopy').addEventListener('click', () => copyText($('#qpMsg').innerText));
+  window.addEventListener('hashchange', () => { if (location.hash === '#earn') renderEarn(); });
+  renderEarn();
+}
+function renderEarn() {
+  const s = earnState();
+  // money path: each milestone is detected from what you actually did in the app
+  const path = [['Make 3 sample ads', s.g >= 3, `${Math.min(s.g, 3)}/3 saved`, '#studio'], ['Add 20 real leads', s.L.length >= 20, `${Math.min(s.L.length, 20)}/20 in tracker`, '#clients'],
+    ['Contact 10 businesses', s.contacted >= 10, `${Math.min(s.contacted, 10)}/10 contacted`, '#first'], ['Book your first call', s.calls + s.quotes > 0 || s.L.some(l => l.st === 4), 'Move a lead to "Call booked"', '#clients'],
+    ['Make your first sale', income.length > 0, 'Log it in the tracker', '#earn'], ['Get a monthly client', income.some(x => x.type === 'monthly'), 'A Starter or Growth plan', '#pricing'],
+    ['Earn your first $1,000', s.total >= 1000, `${money(Math.min(s.total, 1000))} of $1,000`, '#earn']];
+  const next = path.findIndex(p => !p[1]);
+  $('#mpath').innerHTML = path.map((p, i) => `<a href="${p[3]}" class="mstep ${p[1] ? 'ok' : i === next ? 'now' : ''}"><i>${p[1] ? '✓' : i + 1}</i><span><b>${p[0]}</b> <span class="dim">· ${p[2]}</span></span></a>`).join('');
+  // today's actions, built from your current state
+  const T = [];
+  if (s.g < 3) T.push(['ads', `Make ${3 - s.g} more sample ad${3 - s.g > 1 ? 's' : ''} and save them`, '#studio']);
+  T.push(['find', 'Find 10 businesses on Google Maps and add them to the Lead tracker', '#clients']);
+  T.push(['msg', 'Send 20 personal messages (grade one first)', '#first']);
+  if (s.waiting) T.push(['fu', `Follow up with ${s.waiting} contacted lead${s.waiting > 1 ? 's' : ''}`, '#first']);
+  if (s.calls) T.push(['call', `Prepare for ${s.calls} call${s.calls > 1 ? 's' : ''}: audit + quote ready`, '#audit']);
+  if (s.quotes) T.push(['quote', `Check in on ${s.quotes} open quote${s.quotes > 1 ? 's' : ''}`, '#clients']);
+  if (s.monthlyClients) T.push(['serve', `Send a weekly update to your ${s.monthlyClients} monthly client${s.monthlyClients > 1 ? 's' : ''}`, '#business']);
+  const td = store.get('todo_' + new Date().toISOString().slice(0, 10), {});
+  $('#todo').innerHTML = T.map(t => `<label class="day ${td[t[0]] ? 'done' : ''}" style="grid-template-columns:18px minmax(0,1fr) auto;padding:6px 10px"><input type="checkbox" data-td="${t[0]}" ${td[t[0]] ? 'checked' : ''}><b style="font-weight:500">${t[1]}</b><a href="${t[2]}" class="dim" style="font-size:.78rem">Open</a></label>`).join('');
+  // income
+  $('#inK').innerHTML = [['Total earned', money(s.total)], ['This month', money(s.month)], ['Monthly recurring', money(s.mrr)]].map(k => `<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('');
+  $('#inList').innerHTML = income.length ? income.slice().sort((a, b) => b.date.localeCompare(a.date)).map(x => `<div class="qline"><span>${esc(x.client)} <span class="tag" style="margin-left:4px">${x.type === 'monthly' ? 'Monthly' : 'One-time'}</span><br><span class="dim mono" style="font-size:.74rem">${x.date}</span></span><span class="row" style="flex-wrap:nowrap"><b>${money(x.amt)}</b><button class="btn sm ghost" data-rm="${x.id}" aria-label="Delete">×</button></span></div>`).join('')
+    : '<div class="note acc">No payments logged yet. When a client pays you, add it above. This page only counts money you actually received, so the numbers stay honest.</div>';
+}
+
 // ================= OFFER SCORE (used in the course and the studio) =================
 const OFFER_CHECKS = [
   ['Specific: a number, price or time', /\$|\d|%/, 'Add a number: a price, a percent or a time ("$79", "in 24 hours").'],
@@ -1704,7 +1785,7 @@ if (!TONES[B.tone]) B.tone = 'friendly';
 if (!PALETTES[B.palette]) B.palette = 0;
 let plat = 'fb', variant = 0, outTab = 'hl', pack;
 const PLATS = { fb: 'Facebook', google: 'Google', tiktok: 'TikTok', story: 'Story' };
-const OUTS = { hl: 'Headlines', text: 'Ad text', google: 'Google ad', image: 'Image prompt', video: 'Video', target: 'Targeting', budget: 'Budget', email: 'Email', saved: 'My ads' };
+const OUTS = { hl: 'Headlines', text: 'Ad text', google: 'Google ad', image: 'Image prompt', video: 'Video', target: 'Targeting', budget: 'Budget', saved: 'My ads' };
 const BRAND_STEPS = ['Matching the business type', 'Writing the positioning', 'Choosing colors + fonts', 'Planning a month of content', 'Laying out the brand board'];
 const GEN_STEPS = ['Matching the business type', 'Filling 3 proven copy formulas', 'Adding your offer + proof', 'Laying out the creative', 'Adding targeting + budget'];
 
@@ -1739,7 +1820,6 @@ function studioInit() {
     toast('Saved to My Ads'); if (outTab === 'saved') renderOutputs();
   });
   $('#copyAll').addEventListener('click', () => copyText(packText(pack)));
-  $('#copyEmail').addEventListener('click', () => copyRich(emailHTML(pack, variant, true), emailText(pack, variant)));
   $('#outPane').addEventListener('click', e => {
     const g = store.get('gallery', []), x = e.target.closest('[data-del]'), c = e.target.closest('[data-load]');
     if (x) { g.splice(+x.dataset.del, 1); store.set('gallery', g); renderOutputs(); return; }
@@ -1806,46 +1886,12 @@ function renderOutputs() {
   if (outTab === 'video') h = box('oV', '15 seconds, vertical 9:16', esc(p.video));
   if (outTab === 'target') h = box('oA', 'Set this in the Ad set level of Ads Manager', esc(p.targeting));
   if (outTab === 'budget') h = box('oB', 'Tell the owner this before launch', esc(p.budget));
-  if (outTab === 'email') h = `<div class="outhead"><span class="muted" style="font-size:.84rem">This is exactly what pastes into Gmail or Outlook. Edit the [brackets] after pasting.</span><button class="btn sm" id="emailCopy2">Copy for email</button></div>
-      <div style="background:#fff;border-radius:10px;padding:16px;overflow-x:auto">${emailHTML(p, variant, true)}</div>`;
   if (outTab === 'saved') {
     const g = store.get('gallery', []);
     h = g.length ? `<div class="gallery">${g.map((it, i) => NICHES[it.f.niche] ? `<div class="g" data-load="${i}" role="button" tabindex="0">${creativeHTML(buildPack(Object.assign({}, it.f, { name: it.f.name || 'Your Business', city: it.f.city || 'your city', offer: it.f.offer || NICHES[it.f.niche].offer })), it.v || 0)}<button class="x" data-del="${i}" aria-label="Delete">×</button></div>` : '').join('')}</div><p class="dim" style="font-size:.78rem;margin-top:8px">Saved in this browser. Click one to load it.</p>`
       : '<div class="note acc">No saved ads yet. Click <b>Save to My Ads</b> at the top. Saved ads make a great portfolio to show business owners.</div>';
   }
   $('#outPane').innerHTML = h;
-  const ec = $('#emailCopy2'); if (ec) ec.onclick = () => copyRich(emailHTML(p, variant, true), emailText(p, variant));
-}
-// ---- email-ready ad: table layout + inline styles so Gmail and Outlook keep the design ----
-function emailHTML(p, v, withIntro) {
-  const pal = PALETTES[p.f.palette], e = s => esc(s).replace(/\n/g, '<br>');
-  const intro = withIntro ? `<p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.5;color:#1c1e21;margin:0 0 14px">Hi [Owner name],<br><br>I made this sample ad for ${e(p.f.name)} to show what an ad with a clear offer could look like. It isn't running anywhere. It's yours to keep either way.<br><br>Happy to walk you through it in 10 minutes this week?<br><br>[Your name]</p>` : '';
-  return (`${intro}<table role="presentation" width="480" cellpadding="0" cellspacing="0" style="width:480px;max-width:100%;border-collapse:separate;font-family:Arial,Helvetica,sans-serif;border:1px solid #dadde1;border-radius:12px;background:#ffffff">
-<tr><td style="padding:12px 14px"><table role="presentation" cellpadding="0" cellspacing="0"><tr><td width="36" style="width:36px;padding:0"><div style="width:36px;height:36px;line-height:36px;border-radius:18px;background:${pal.c2};color:#ffffff;font-weight:bold;font-size:13px;text-align:center">${e(initials(p.f.name))}</div></td>
-<td style="padding-left:9px"><div style="font-weight:bold;font-size:14px;color:#1c1e21">${e(p.f.name)}</div><div style="font-size:12px;color:#65676b">Sample ad · not live</div></td></tr></table></td></tr>
-<tr><td style="padding:0 14px 12px;font-size:14px;line-height:1.45;color:#1c1e21">${e(p.texts[v].t)}</td></tr>
-<tr><td bgcolor="${pal.c2}" style="background-color:${pal.c2};background-image:linear-gradient(155deg,${pal.c1},${pal.c2});padding:26px 22px;color:#ffffff">
-<div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#ffffff">${e(p.f.name)} &middot; ${e(p.f.city)}</div>
-<div style="font-size:28px;line-height:1.12;font-weight:bold;color:#ffffff;padding:64px 0 48px">${e(p.hs[v])}</div>
-<span style="display:inline-block;background:#ffffff;color:#0a0d13;font-weight:bold;font-size:13px;padding:7px 11px;border-radius:7px">${e(shortOffer(p.f.offer))}</span>
-<div style="font-size:12px;color:#ffffff;padding-top:10px">${p.f.proof ? (p.f.proof.includes('★') ? '' : '&#9733; ') + e(p.f.proof) : '&#9733; [Add their real rating]'}</div></td></tr>
-<tr><td bgcolor="#f0f2f5" style="background:#f0f2f5;padding:10px 14px;border-radius:0 0 12px 12px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-<td style="font-size:11px;color:#65676b;text-transform:uppercase">${e(p.g.url)}<div style="font-size:14px;font-weight:bold;color:#1c1e21;text-transform:none">${e(p.hs[v])}</div></td>
-<td align="right" style="padding-left:10px"><span style="display:inline-block;background:#e4e6eb;color:#1c1e21;font-weight:bold;font-size:13px;padding:8px 12px;border-radius:6px;white-space:nowrap">${e(p.n.cta)}</span></td></tr></table></td></tr></table>`).replace(/<td /g, '<td valign="middle" ').replace(/style="/g, 'style="border:0;');
-}
-function emailText(p, v) { return `Hi [Owner name],\n\nI made this sample ad for ${p.f.name}. It isn't running anywhere.\n\n${p.hs[v]}\n\n${p.texts[v].t}\n\n[Your name]`; }
-async function copyRich(html, text) {
-  try {
-    if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
-      await navigator.clipboard.write([new ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([text], { type: 'text/plain' }) })]);
-      toast('Copied. Paste it into your email'); return;
-    }
-  } catch (e) {}
-  const box = document.createElement('div'); box.contentEditable = 'true'; box.style.cssText = 'position:fixed;left:-9999px;top:0;background:#fff'; box.innerHTML = html; document.body.appendChild(box);
-  const r = document.createRange(); r.selectNodeContents(box); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
-  let ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
-  s.removeAllRanges(); box.remove();
-  toast(ok ? 'Copied. Paste it into your email' : 'Copy was blocked. Open the Email tab, select the ad and copy it');
 }
 function packText(p) {
   return `AD PACK: ${p.f.name} (${p.n.label}, ${p.f.city})\n\nHEADLINES\n${p.hs.map((h, i) => 'ABC'[i] + ': ' + h).join('\n')}\n\nAD TEXTS\n${p.texts.map((t, i) => `Version ${'ABC'[i]} (${t.f}):\n${t.t}`).join('\n\n')}\n\nGOOGLE AD\n${p.g.hs.join(' | ')}\n${p.g.d1}\n${p.g.d2}\n\nIMAGE PROMPT\n${p.imagePrompt}\n\nVIDEO SCRIPT\n${p.video}\n\nTARGETING\n${p.targeting}\n\nBUDGET\n${p.budget}\n\nBUTTON: ${p.n.cta}\n${p.hashtags}`;
@@ -2343,7 +2389,7 @@ function renderPrompts() {
 }
 
 // ================= ROUTER =================
-const VIEWS = ['home', 'course', 'first', 'grow', 'bcourse', 'brand', 'studio', 'audit', 'pricing', 'clients', 'business', 'prompts'];
+const VIEWS = ['home', 'earn', 'course', 'first', 'grow', 'bcourse', 'brand', 'studio', 'audit', 'pricing', 'clients', 'business', 'prompts'];
 const ALIAS = { learn: 'course', builder: 'studio' };
 function show(v) {
   v = ALIAS[v] || v; if (!VIEWS.includes(v)) v = 'home';
@@ -2354,7 +2400,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); homeInit(); auditInit(); pricingInit(); clientsInit(); businessInit(); promptsInit();
+studioInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); homeInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); businessInit(); promptsInit();
 show(location.hash.slice(1));
 </script>
 </body>

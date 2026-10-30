@@ -24,4 +24,5 @@
 - Made AI advertising and freelance brand scaling the two main parts of the app: home page and menu grouped into AI advertising, Brand scaling, and Freelance business.
 - The site should help you do brand scaling for other businesses: added a Brand Course (8 steps with demos), a Brand Studio (brand check, positioning, voice, brand kit, content plan, channels, 90-day plan, pitch), and brand packages: Brand Kit $299 once, Brand Growth $349/mo, Brand + Ads $699/mo.
 - Asked for a free audit + sample ad for a real business (waiting on the business name and city).
-- Asked if the app can copy an ad into an email and show the ad there. It could not; added "Copy for email" and an Email tab in the Ad Studio.
+- Asked about copying an ad into an email; a "Copy for email" feature was added, then Yaya asked to remove it and forget that request. It is removed. Do not re-add it unless asked.
+- Make sure the website helps you make money with AI ads: added a "Make Money" page (today's actions, a money path of 7 milestones detected from real activity, a tracker that only counts payments you log) and a $99 one-time Quick Ad Pack as the fastest first sale.
