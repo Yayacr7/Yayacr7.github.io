@@ -131,7 +131,7 @@ wire('f-efund', function(){
 
 /* ================= SPENDING CHECK ================= */
 var WK = 12 / 52;   // monthly to weekly
-var SC_VIEW = 'cherry', SC_LAST = null, SC_SIZE = '', SC_WORD = { good: 'Fine', warn: 'A bit over', bad: 'Too much' }, SC_SHORT = { 'Rent or mortgage': 'Rent', 'Subscriptions': 'Subs', 'Fun & hobbies': 'Fun', 'Groceries': 'Food', 'Transport': 'Travel', 'Eating out': 'Eat out', 'Shopping': 'Shop', 'Left over': 'Left' };  // blocks picture state (see drawTree below)
+var SC_VIEW = 'jar', SC_LAST = null, SC_SIZE = '', SC_WORD = { good: 'Fine', warn: 'A bit over', bad: 'Too much' }, SC_SHORT = { 'Rent or mortgage': 'Rent', 'Subscriptions': 'Subs', 'Fun & hobbies': 'Fun', 'Groceries': 'Food', 'Transport': 'Travel', 'Eating out': 'Eat out', 'Shopping': 'Shop', 'Left over': 'Left' };  // blocks picture state (see drawTree below)
 var scWatched = null, scRO = window.ResizeObserver ? new ResizeObserver(function(){ drawTree(false); }) : null;
 // Each category is judged as a share of take-home pay. Guides, not laws: [green up to %, yellow up to %].
 var SPEND = [
@@ -182,7 +182,7 @@ wire('f-spend', function(){
   // Before the line = fine, past the line = too much. Plain dollars, no percent scale.
   // Toolbar: what the colours mean, and a switch between the blocks picture and the bar list.
   html += '<div class="sc-bar-row"><div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Fine</span><span><i class="sc-ic warn">!</i>A bit over</span><span><i class="sc-ic bad">✕</i>Too much</span><span class="sc-size">' + scKey() + '</span></div>' +
-    '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="cherry" aria-pressed="' + (SC_VIEW === 'cherry') + '">Cherry\'s plan</button><button type="button" data-scview="flow" aria-pressed="' + (SC_VIEW === 'flow') + '">Candles</button><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
+    '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="jar" aria-pressed="' + (SC_VIEW === 'jar') + '">Jar</button><button type="button" data-scview="cherry" aria-pressed="' + (SC_VIEW === 'cherry') + '">Cherry\'s plan</button><button type="button" data-scview="flow" aria-pressed="' + (SC_VIEW === 'flow') + '">Candles</button><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
   html += '<div class="sc-tree" role="group" aria-label="Where your take-home pay goes"' + (SC_VIEW === 'list' ? ' hidden' : '') + '></div>';
   html += '<div class="sc-listview"' + (SC_VIEW !== 'list' ? ' hidden' : '') + '>';
   html += '<div class="sc-axis" aria-hidden="true"><span></span><span><b style="left:0">$0</b><b class="lim" style="left:50%">Limit</b><b style="left:100%">2× limit</b></span><span>Spent / limit</span><span></span></div>';
@@ -249,7 +249,7 @@ function scInfo(r, inc){
     : r.st === 'good' ? 'Inside the guide. Keep it there.' : r.tip;
   return { title: r.name, line: base + '. ' + tip };
 }
-function scKey(){ return SC_VIEW === 'cherry' ? 'Per week · green = spending down' : SC_VIEW === 'blocks' ? 'Bigger block = more money' : 'Line = limit'; }
+function scKey(){ return SC_VIEW === 'jar' ? 'Gold = kept · pink = Cherry\'s plan' : SC_VIEW === 'cherry' ? 'Per week · green = spending down' : SC_VIEW === 'blocks' ? 'Bigger block = more money' : 'Line = limit'; }
 function scShow(r, inc){
   var p = document.querySelector('#s-out .sc-detail'); if(!p) return;
   var info = scInfo(r, inc); p.textContent = '';
@@ -264,7 +264,8 @@ function drawTree(animate){
   if(scRO && box !== scWatched){ if(scWatched) scRO.unobserve(scWatched); scRO.observe(box); scWatched = box; }
   box.classList.toggle('flow', SC_VIEW === 'flow');
   var key = document.querySelector('#s-out .sc-size'); if(key) key.textContent = scKey();
-  box.classList.toggle('cherry', SC_VIEW === 'cherry');
+  box.classList.toggle('cherry', SC_VIEW === 'cherry'); box.classList.toggle('jar', SC_VIEW === 'jar'); box.setAttribute('aria-label', 'Where your take-home pay goes');
+  if(SC_VIEW === 'jar'){ drawJar(box, W, H, animate); return; }
   if(SC_VIEW === 'cherry'){ drawCherry(box, W, H, animate); return; }
   if(SC_VIEW === 'flow'){ drawFlow(box, W, H, animate); return; }
   var d = SC_LAST, items = d.rows.filter(function(r){ return r.v > 0; }).map(function(r){ return r; });
@@ -409,6 +410,57 @@ function drawFlow(box, W, H, animate){
   });
   var worst = d.rows.filter(function(r){ return r.st === 'bad' && !r.saving; }).sort(function(a, b){ return (b.v - b.target) - (a.v - a.target); })[0] || d.rows.filter(function(r){ return r.st !== 'good'; })[0] || d.rows[0];
   scShow(worst, inc);
+}
+/* ---------- Spending check: the money jar (opens first) ----------
+   The jar holds what you keep each month: your pay minus what you spend (so saving + left over). Gold = kept now,
+   the pink layer on top = what Cherry's plan adds, the dashed line = keep 20% of your pay (the same goal as the Wealth
+   tracker). Words always say it too. Worked out on this device; nothing leaves it. Drawing: assets/jar.js. */
+var JAR_LAST = null, JAR_KEPT = 0;   // last fill and amount, so the jar rises or drops from where it was instead of from empty
+function jarData(d){
+  var plan = dpPlan(d), spend = d.rows.reduce(function(a, r){ return a + (r.saving ? 0 : r.v); }, 0);
+  var kept = d.inc - spend, extra = plan.saved / WK, withPlan = kept + extra, goal = d.inc * .2;
+  var cap = Math.max(d.inc * .3, withPlan * 1.12, kept * 1.12, 1), rate = kept / d.inc;
+  var st = kept < 0 ? 'bad' : rate >= .2 ? 'good' : rate >= .1 ? 'warn' : 'bad';
+  var word = kept < 0 ? 'Leaking' : { good: 'On track', warn: 'Getting there', bad: 'Fill it up' }[st];
+  return { kept: kept, extra: extra, withPlan: withPlan, goal: goal, cap: cap, rate: rate, st: st, word: word, save: d.rows.filter(function(r){ return r.saving; })[0].v, plan: plan };
+}
+function jarLine(j, d){
+  if(j.kept < 0) return 'You spend ' + money(-j.kept) + ' a month more than you earn, so your jar is leaking. ' + (j.extra > .5 ? 'My plan fixes the biggest overspends first, one a week. Tap Cherry\'s plan to see it.' : 'Cut the red ones first.');
+  var a = 'You keep ' + money(j.kept) + ' a month' + (d.left > 0 && j.save > 0 ? ' (' + money(j.save) + ' saved + ' + money(d.left) + ' left over)' : '') + ': ' + pct(j.rate * 100, 0) + ' of your pay. ';
+  if(j.extra > .5) return a + 'My plan adds ' + money(j.extra) + ' a month, so your jar fills with ' + money(j.withPlan * 12) + ' a year. Tap Cherry\'s plan to see it week by week.';
+  return a + (j.st === 'good' ? 'That\'s 20% or more. Move it to savings on payday so it stays kept.' : 'Aim for 20% (' + money(j.goal) + ' a month). Spend less or earn more to fill it.');
+}
+function drawJar(box, W, H, animate){
+  var d = SC_LAST, j = jarData(d), fill = Math.max(0, j.kept) / j.cap;
+  var aw = Math.round(Math.min(H * 200 / 260, W * (W < 420 ? .4 : .42))), iw = W - aw - (W < 420 ? 22 : 30), labels = aw >= 135;
+  var sm = H < 175 || iw < 230, xs = H < 150 || iw < 190;
+  // A resize (or the caption below changing height) only resizes the jar and rewrites the words, so the coins keep falling.
+  var wrap = box.querySelector('.jar-wrap'), key = [fill, j.withPlan, j.goal, j.kept < 0, labels].join('|'), same = !animate && wrap && box.__jar === key;
+  if(!same){
+    box.textContent = ''; box.__jar = key;
+    wrap = document.createElement('div'); wrap.className = 'jar-wrap'; box.appendChild(wrap);
+    var art = document.createElement('div'); art.className = 'jar-art'; wrap.appendChild(art);
+    var info = document.createElement('div'); info.className = 'jar-info'; wrap.appendChild(info);
+  }
+  art = wrap.querySelector('.jar-art'); info = wrap.querySelector('.jar-info');
+  art.style.width = aw + 'px'; wrap.classList.toggle('sm', sm); wrap.classList.toggle('xs', xs); wrap.classList.toggle('lg', H >= 300 && iw >= 300);
+  info.textContent = '';
+  var p = function(cls){ var e = document.createElement('p'); e.className = cls; info.appendChild(e); return e; };
+  var line = function(parent, tag, cls, text){ var e = document.createElement(tag); if(cls) e.className = cls; if(text != null) e.textContent = text; parent.appendChild(e); return e; };
+  p('jar-k').textContent = 'Your money jar';
+  var big = p('jar-big'), num = line(big, 'b'); line(big, 'span', null, 'kept a month');
+  num.__jv = same ? Math.max(0, j.kept) : JAR_KEPT; SharpJar.count(num, Math.max(0, j.kept), money); JAR_KEPT = Math.max(0, j.kept);
+  p('jar-sub').textContent = j.kept < 0 ? 'You spend more than you earn' : money(j.kept * 12) + ' a year · ' + pct(j.rate * 100, 0) + ' of your pay';
+  var stl = p('jar-st'); line(stl, 'i', 'sc-ic ' + j.st, STATUS[j.st].icon).setAttribute('aria-hidden', 'true'); line(stl, 'span', null, xs ? j.word : j.word + ' · goal 20%');
+  if(j.extra > .5){ var pl = p('jar-plan'); line(pl, 'i').setAttribute('aria-hidden', 'true'); line(pl, 'span', null, sm ? '+' + money(j.extra) + ' a month with Cherry\'s plan' : 'Cherry\'s plan: +' + money(j.extra) + ' a month → ' + money(j.withPlan * 12) + ' a year'); }
+  if(!same){
+    SharpJar.draw(art, { fill: fill, plan: j.extra > .5 ? Math.max(0, j.withPlan) / j.cap : null, goal: j.goal / j.cap, goalText: labels ? '20% goal' : '', planText: labels ? '+' + money(j.extra) : '', leak: j.kept < 0,
+      from: JAR_LAST == null ? 0 : JAR_LAST, animate: animate, coins: JAR_LAST == null || fill > JAR_LAST + .004 ? 5 : 0, icon: 'assets/cherry.svg' });
+    JAR_LAST = fill;
+  }
+  box.setAttribute('aria-label', 'Your money jar: you keep ' + money(Math.max(0, j.kept)) + ' a month. ' + j.word + '.');
+  var dt = document.querySelector('#s-out .sc-detail');
+  if(dt){ dt.textContent = ''; var b = document.createElement('b'); b.textContent = 'Cherry · Your jar: '; dt.appendChild(b); dt.appendChild(document.createTextNode(jarLine(j, d))); }
 }
 /* ---------- Spending check: "Cherry's plan" (weekly candles) ----------
    Cherry's weekly plan: each week Cherry changes one thing, biggest overspend first, until every category sits on its limit.

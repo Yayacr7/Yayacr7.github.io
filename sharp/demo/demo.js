@@ -60,26 +60,18 @@ function count(node, to, fmt){
   (function tick(t){ var p = Math.min(1, (t - t0) / 450), e = 1 - Math.pow(1 - p, 3); node.textContent = fmt(from + (to - from) * e); if(p < 1) requestAnimationFrame(tick); })(t0);
 }
 
-/* ---------- step 1 chart: 12 monthly candles of money kept, trading style ---------- */
-function svgEl(tag, at, parent){ var e = document.createElementNS('http://www.w3.org/2000/svg', tag); for(var a in at) e.setAttribute(a, at[a]); if(parent) parent.appendChild(e); return e; }
-function chart(){
-  var box = $('dm-chart'), W = box.clientWidth, H = box.clientHeight; box.textContent = '';
-  if(W < 60) return;
-  var m = keep().month, top = Math.max(m * 12, 10) * 1.12, AX = 52, T = 26, B = 18, PW = W - AX - 6, PH = H - T - B;
-  var Y = function(v){ return T + (top - v) / top * PH; }, cw = PW / 12, bw = Math.max(6, Math.min(22, cw * .55)), X = function(i){ return 6 + cw * (i + .5); };
-  var svg = svgEl('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, 'aria-hidden': 'true', class: 'fl-svg' }, box), g = svgEl('g', { class: 'fl-grid' }, svg);
-  for(var i = 0; i <= 3; i++){ var v = top / 1.12 * i / 3; svgEl('line', { x1: 0, x2: W - AX, y1: Y(v), y2: Y(v) }, g); if(i && i < 3) svgEl('text', { x: W - AX + 6, y: Y(v) + 4, class: 'fl-ax' }, svg).textContent = money(v); }
-  svgEl('line', { x1: W - AX, x2: W - AX, y1: 0, y2: H, class: 'fl-edge' }, svg);
-  for(i = 0; i < 12; i++){
-    var c = svgEl('g', { class: 'fl-c st-good dm-c', style: 'animation-delay:' + (i * 40) + 'ms' }, svg), y1 = Y(m * (i + 1)), y2 = Y(m * i);
-    svgEl('rect', { x: X(i) - bw / 2, y: y1, width: bw, height: Math.max(2, y2 - y1), rx: 2, class: 'body' }, c);
-    if(i % 3 === 0 || i === 11) svgEl('text', { x: X(i), y: H - 4, class: 'fl-x' }, svg).textContent = 'M' + (i + 1);
-  }
-  var tg = svgEl('g', { class: 'fl-tag pos', transform: 'translate(' + (W - AX + 2) + ',' + Y(m * 12) + ')' }, svg);
-  svgEl('rect', { x: 0, y: -10, width: AX - 4, height: 20, rx: 3 }, tg); svgEl('text', { x: (AX - 4) / 2, y: 4 }, tg).textContent = money(m * 12);
-  var hd = svgEl('text', { x: 8, y: 16, class: 'fl-hd' }, svg);
-  svgEl('tspan', { class: 'pos' }, hd).textContent = '+' + money(m) + '/mo';
-  svgEl('tspan', { class: 'fl-hl', dx: 8 }, hd).textContent = 'kept, month by month';
+/* ---------- step 1: the money jar (assets/jar.js), filling month by month for a year ---------- */
+// The jar is drawn to a fixed size ($600 for a teen, $2,000 for an adult) so it rises and falls as you slide;
+// a bigger year just fills it to the top. Coins drop in whenever what you keep goes up.
+var JAR = { f: null, t: 0 };
+function chart(animate){
+  var box = $('dm-chart'); if(!window.SharpJar || box.clientWidth < 40) return;
+  var y = keep().year, cap = Math.max(y * 1.12, ADULT ? 2000 : 600), f = y / cap, now = Date.now();
+  var drop = animate !== false && (JAR.f == null || f > JAR.f + .004) && now - JAR.t > 700;
+  if(drop) JAR.t = now;
+  window.SharpJar.draw(box, { fill: f, from: JAR.f == null ? 0 : JAR.f, animate: animate !== false, coins: drop ? 5 : 0, icon: '../assets/cherry.svg' });
+  JAR.f = f;
+  box.setAttribute('aria-label', 'Money jar: about ' + money(y) + ' kept in a year.');
 }
 
 /* ---------- render ---------- */
@@ -172,7 +164,7 @@ $('dm-plan').addEventListener('click', function(){
 try{ localStorage.setItem('sharp-demo', '1'); sessionStorage.setItem('sharp-demo-visit', '1'); }catch(e){}
 function intoApp(){ try{ localStorage.setItem('sharp-intro', '1'); }catch(e){} }
 $('dm-sharp').addEventListener('click', intoApp); $('dm-skip').addEventListener('click', intoApp);
-addEventListener('resize', function(){ if(cur === '1') chart(); });
+addEventListener('resize', function(){ if(cur === '1') chart(false); });
 // Teen or adult: the words and sliders that change, then ask first if nothing is picked yet.
 if(ADULT){
   var inc = $('dm-inc'); inc.min = 500; inc.max = 10000; inc.step = 50; inc.value = st.inc; $('dm-sp').step = 10;

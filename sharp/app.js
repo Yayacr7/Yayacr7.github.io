@@ -71,6 +71,10 @@ var dlg = document.getElementById('authDialog'), signinBtn = document.getElement
 var authMsg = document.getElementById('authMsg'), reasonEl = document.getElementById('authReason');
 var sb = null, user = null, pendingPlan = null;
 var authReady = !!(AUTH.supabaseUrl && AUTH.supabaseAnonKey);
+// Never take money we can't deliver: a plan can be bought only when its Stripe link is set, accounts are on (the purchase is
+// tied to the buyer's account, which is what unlocks it), AND PAY_READY is true in config.js, which is set only after a test
+// purchase really unlocked the plan. Otherwise the button says Reserve and no payment is possible.
+function canSell(plan){ return !!PAY[plan] && authReady && CFG.PAY_READY === true; }
 var PLAN_NAMES = { learner: 'Learner ($19.99)', builder: 'Builder ($29.99)', founder: 'Founder ($74.99)' };
 
 function openAuth(reason){
@@ -172,7 +176,7 @@ function reserve(plan){
 }
 function choose(plan){
   if(plan === 'free'){ openAuth(user ? '' : 'Free account: every lesson and tool, under one sign-in.'); return; }
-  if(!PAY[plan]){ reserve(plan); return; }
+  if(!canSell(plan)){ reserve(plan); return; }
   if(authReady && !user){
     pendingPlan = plan;
     try{ sessionStorage.setItem('np-plan', plan); }catch(e){}
@@ -184,7 +188,7 @@ function choose(plan){
 function resumePlan(){
   var plan = pendingPlan;
   if(!plan){ try{ plan = sessionStorage.getItem('np-plan'); }catch(e){} }
-  if(plan && user && PAY[plan]){
+  if(plan && user && canSell(plan)){
     try{ sessionStorage.removeItem('np-plan'); }catch(e){}
     pendingPlan = null; location.href = payUrl(plan);
   }
@@ -192,7 +196,7 @@ function resumePlan(){
 Array.prototype.forEach.call(document.querySelectorAll('[data-plan]'), function(b){
   var plan = b.getAttribute('data-plan');
   b.addEventListener('click', function(){ choose(plan); });
-  if(plan !== 'free' && !PAY[plan]){
+  if(plan !== 'free' && !canSell(plan)){
     b.textContent = 'Reserve ' + PLAN_NAMES[plan].split(' ')[0];
     var n = document.querySelector('[data-note="' + plan + '"]');
     if(n) n.textContent = 'Opens soon. Reserve your spot, no payment yet.';

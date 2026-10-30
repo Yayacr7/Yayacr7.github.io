@@ -19,6 +19,9 @@ window.NP_CONFIG = {
 
   /* Payments: Stripe Payment Links (Stripe > Payment Links). */
   PAY: { learner: "", builder: "", founder: "" },
+  /* Safety lock. Leave false until a TEST purchase (Stripe test mode) really unlocked each plan in someone's account.
+     While false, the buy buttons say "Reserve" and nobody can pay, even if the links above are filled in. */
+  PAY_READY: false,
 
   /* Contact email shown on the privacy, terms and refund pages.
      Use a business address, not a personal one. Blank = "listed here before launch". */

@@ -54,7 +54,7 @@ function render(u, now){
 }
 
 function payUrl(plan, u){
-  var base = PAY[plan]; if(!base) return '';
+  var base = PAY[plan]; if(!base || CFG.PAY_READY !== true) return '';   // never take money we can't deliver (see app.js canSell)
   var q = [];
   if(u && u.email) q.push('prefilled_email=' + encodeURIComponent(u.email));
   if(u && u.id) q.push('client_reference_id=' + encodeURIComponent(u.id));
