@@ -436,3 +436,27 @@ html[data-who="adult"] .who-teen{display:none!important}html:not([data-who="adul
 @media (max-width:480px){.jar-wrap{gap:10px;padding:0 2px}}
 .jar-wrap.lg .jar-info{gap:12px}.jar-wrap.lg .jar-k{font-size:.85rem}.jar-wrap.lg .jar-big b{font-size:clamp(2.8rem,6vw,4rem)}
 .jar-wrap.lg .jar-big span,.jar-wrap.lg .jar-sub,.jar-wrap.lg .jar-st,.jar-wrap.lg .jar-plan{font-size:1.02rem}
+
+/* The money chart (home Spending check "Cherry's plan", demo step 1): glowing, colourful, still a real chart. */
+.pc-hd{font:800 24px var(--f-display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pc-hd.sm{font-size:16px}
+.pc-v{fill:#5ff2bf;filter:drop-shadow(0 0 10px rgba(61,219,165,.6))}
+.pc-sub{font:700 12.5px var(--f-body);fill:#b9bfd8}.pc-gold{fill:#ffd866}
+.pc-chip rect{fill:rgba(61,219,165,.16);stroke:rgba(61,219,165,.6)}.pc-chip text{fill:#9ff0d0;font:800 11px var(--f-body);text-anchor:middle}
+.pc-goal{stroke:#3ddba5;stroke-width:1.6;stroke-dasharray:6 4;filter:drop-shadow(0 0 4px rgba(61,219,165,.9))}
+.pc-nowl{stroke:#ff8a3d;stroke-opacity:.55;stroke-width:1.2;stroke-dasharray:2 4}
+.pc-tag text{fill:#0d1020;font:800 11px var(--f-body);text-anchor:middle;font-variant-numeric:tabular-nums}
+.pc-tag.good path{fill:#3ddba5}.pc-tag.now path{fill:#ff8a3d}.pc-tag.bad path{fill:#ff5a6e}.pc-tag.gold path{fill:#ffd866}
+.pc-c .body{filter:drop-shadow(0 0 8px rgba(61,219,165,.55))}
+.pc-c.st-hold .body{fill:rgba(61,219,165,.07);stroke:#3ddba5;stroke-width:1.5;stroke-dasharray:4 3;filter:none}
+.pc-line{stroke-width:3.5;filter:drop-shadow(0 0 7px rgba(255,79,154,.55))}
+.pc-end{fill:#fff;stroke:#3ddba5;stroke-width:3;filter:drop-shadow(0 0 6px #3ddba5)}
+.pc-area{animation:pcFade .9s .45s both}
+.pc-pill{animation:pcFade .4s both}
+.pc-pill rect{fill:rgba(10,13,26,.9);stroke:rgba(61,219,165,.7);stroke-width:1}
+.pc-pill text{fill:#9ff0d0;font:800 11px var(--f-body);text-anchor:middle;font-variant-numeric:tabular-nums}
+.pc-pill.gold rect{stroke:rgba(255,216,102,.75)}.pc-pill.gold text{fill:#ffe9a8}
+.pc-pulse{transform-box:fill-box;transform-origin:center;animation:pcPulse 1.9s ease-out infinite}
+@keyframes pcFade{from{opacity:0}to{opacity:1}}
+@keyframes pcPulse{0%{transform:scale(1);opacity:.75}100%{transform:scale(2.8);opacity:0}}
+@media (prefers-reduced-motion:reduce){.pc-area,.pc-pill,.pc-pulse{animation:none}.pc-pulse{opacity:0}}

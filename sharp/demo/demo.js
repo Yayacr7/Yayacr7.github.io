@@ -60,18 +60,50 @@ function count(node, to, fmt){
   (function tick(t){ var p = Math.min(1, (t - t0) / 450), e = 1 - Math.pow(1 - p, 3); node.textContent = fmt(from + (to - from) * e); if(p < 1) requestAnimationFrame(tick); })(t0);
 }
 
-/* ---------- step 1: the money jar (assets/jar.js), filling month by month for a year ---------- */
-// The jar is drawn to a fixed size ($600 for a teen, $2,000 for an adult) so it rises and falls as you slide;
-// a bigger year just fills it to the top. Coins drop in whenever what you keep goes up.
-var JAR = { f: null, t: 0 };
-function chart(animate){
-  var box = $('dm-chart'); if(!window.SharpJar || box.clientWidth < 40) return;
-  var y = keep().year, cap = Math.max(y * 1.12, ADULT ? 2000 : 600), f = y / cap, now = Date.now();
-  var drop = animate !== false && (JAR.f == null || f > JAR.f + .004) && now - JAR.t > 700;
-  if(drop) JAR.t = now;
-  window.SharpJar.draw(box, { fill: f, from: JAR.f == null ? 0 : JAR.f, animate: animate !== false, coins: drop ? 5 : 0, icon: '../assets/cherry.svg' });
-  JAR.f = f;
-  box.setAttribute('aria-label', 'Money jar: about ' + money(y) + ' kept in a year.');
+/* ---------- step 1 chart: the money you keep, adding up month by month for a year (glowing, trading style) ---------- */
+function svgEl(tag, at, parent){ var e = document.createElementNS('http://www.w3.org/2000/svg', tag); for(var a in at) e.setAttribute(a, at[a]); if(parent) parent.appendChild(e); return e; }
+function grad(defs, id, at, list){ at.id = id; var g = svgEl('linearGradient', at, defs); list.forEach(function(s){ svgEl('stop', { offset: s[0], 'stop-color': s[1], 'stop-opacity': s[2] == null ? 1 : s[2] }, g); }); }
+function tw(t, est){ try{ var w = t.getComputedTextLength(); return w > 0 ? w : est; }catch(e){ return est; } }
+var CH = { n: 0, drawn: false };
+function chart(){
+  var box = $('dm-chart'), W = box.clientWidth, H = box.clientHeight; box.textContent = '';
+  if(W < 60) return;
+  var anim = !CH.drawn && !reduce; CH.drawn = true;   // grow in once; dragging a slider just redraws
+  box.setAttribute('aria-label', 'Chart: ' + money(keep().month) + ' a month kept, adding up to ' + money(keep().year) + ' in a year.');
+  var m = keep().month, top = Math.max(m * 12, 10) * 1.15, AX = 60, T = 46, B = 22, PW = W - AX - 8, PH = H - T - B;
+  var Y = function(v){ return T + (top - v) / top * PH; }, cw = PW / 12, bw = Math.max(6, Math.min(26, cw * .5)), X = function(i){ return 8 + cw * (i + .5); };
+  var id = 'dmc' + (++CH.n), url = function(k){ return 'url(#' + id + k + ')'; };
+  var svg = svgEl('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, 'aria-hidden': 'true', class: 'fl-svg pc' }, box), defs = svgEl('defs', {}, svg);
+  // Green at month 1, gold by the end of the year.
+  grad(defs, id + 'l', { gradientUnits: 'userSpaceOnUse', x1: X(0), x2: X(11), y1: 0, y2: 0 }, [[0, '#3ddba5'], [.6, '#8ff7cf'], [1, '#ffd866']]);
+  grad(defs, id + 'b', { x1: 0, x2: 0, y1: 0, y2: 1 }, [[0, '#a5fcdb'], [.45, '#3ddba5'], [1, '#12946a']]);
+  grad(defs, id + 'g', { x1: 0, x2: 1, y1: 0, y2: 0 }, [[0, '#3ddba5', .05], [1, '#ffd866', .12]]);
+  grad(defs, id + 'c', { x1: 0, x2: 0, y1: 0, y2: 1 }, [[0, '#3ddba5', .5], [1, '#3ddba5', .04]]);
+  svgEl('rect', { x: 0, y: T - 12, width: W - AX, height: PH + 12, rx: 12, fill: url('g') }, svg);
+  var g = svgEl('g', { class: 'fl-grid' }, svg);
+  for(var i = 0; i <= 3; i++){ var v = top / 1.15 * i / 3; svgEl('line', { x1: 0, x2: W - AX, y1: Y(v), y2: Y(v) }, g); if(i && i < 3) svgEl('text', { x: W - AX + 8, y: Y(v) + 4, class: 'fl-ax' }, svg).textContent = money(v); }
+  svgEl('line', { x1: W - AX, x2: W - AX, y1: 0, y2: H, class: 'fl-edge' }, svg);
+  // Header: what you keep a month, and the year in gold.
+  var hv = svgEl('text', { x: 10, y: 28, class: 'pc-hd pc-v' }, svg); hv.textContent = '+' + money(m) + '/mo';
+  var hs = svgEl('text', { x: 10 + tw(hv, 90) + 12, y: 27, class: 'pc-sub' }, svg);
+  svgEl('tspan', {}, hs).textContent = 'kept · '; svgEl('tspan', { class: 'pc-gold' }, hs).textContent = money(m * 12) + ' in a year';
+  if(10 + tw(hv, 90) + 12 + tw(hs, 0) > W - AX - 4) hs.remove();
+  // Each month is a glowing column of everything kept so far; its bright cap is that month's new money.
+  var pts = []; for(i = 0; i < 12; i++) pts.push(X(i).toFixed(1) + ',' + Y(m * (i + 1)).toFixed(1));
+  for(i = 0; i < 12; i++){
+    var c = svgEl('g', { class: 'fl-c pc-c st-good' + (anim ? ' dm-c' : '') }, svg), y1 = Y(m * (i + 1)), y2 = Y(m * i), r = Math.min(4, bw / 4);
+    if(anim) c.style.animationDelay = (i * 45) + 'ms';
+    svgEl('rect', { x: X(i) - bw / 2, y: y1, width: bw, height: Math.max(0, T + PH - y1), rx: r, fill: url('c') }, c);
+    var b = svgEl('rect', { x: X(i) - bw / 2, y: y1, width: bw, height: Math.max(3, y2 - y1), rx: r, class: 'body' }, c); b.style.fill = url('b');
+    if(i === 2 || i === 5 || i === 8 || i === 11) svgEl('text', { x: Math.min(X(i), W - AX - 14), y: H - 5, class: 'fl-x' }, svg).textContent = i === 11 ? '1 yr' : (i + 1) + ' mo';
+  }
+  var line = svgEl('polyline', { points: pts.join(' '), class: 'fl-trend pc-line' + (anim ? ' draw' : ''), pathLength: 1 }, svg);
+  line.style.stroke = url('l'); line.style.filter = 'drop-shadow(0 0 7px rgba(255,216,102,.55))';
+  var ex = X(11), ey = Y(m * 12);
+  svgEl('circle', { cx: ex, cy: ey, r: 5, fill: '#ffd866', class: 'pc-pulse' }, svg);
+  var dot = svgEl('circle', { cx: ex, cy: ey, r: 5, class: 'pc-end' }, svg); dot.style.stroke = '#ffd866'; dot.style.filter = 'drop-shadow(0 0 6px #ffd866)';
+  var tg = svgEl('g', { class: 'pc-tag gold', transform: 'translate(' + (W - AX + 1) + ',' + ey + ')' }, svg);
+  svgEl('path', { d: 'M0 0L7-10H' + (AX - 4) + 'V10H7Z' }, tg); svgEl('text', { x: (AX + 3) / 2, y: 4 }, tg).textContent = money(m * 12);
 }
 
 /* ---------- render ---------- */
@@ -164,7 +196,7 @@ $('dm-plan').addEventListener('click', function(){
 try{ localStorage.setItem('sharp-demo', '1'); sessionStorage.setItem('sharp-demo-visit', '1'); }catch(e){}
 function intoApp(){ try{ localStorage.setItem('sharp-intro', '1'); }catch(e){} }
 $('dm-sharp').addEventListener('click', intoApp); $('dm-skip').addEventListener('click', intoApp);
-addEventListener('resize', function(){ if(cur === '1') chart(false); });
+addEventListener('resize', function(){ if(cur === '1') chart(); });
 // Teen or adult: the words and sliders that change, then ask first if nothing is picked yet.
 if(ADULT){
   var inc = $('dm-inc'); inc.min = 500; inc.max = 10000; inc.step = 50; inc.value = st.inc; $('dm-sp').step = 10;
