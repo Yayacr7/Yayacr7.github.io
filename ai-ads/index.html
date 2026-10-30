@@ -341,7 +341,8 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .lead-c{background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:8px 9px;font-size:.8rem;display:flex;flex-direction:column;gap:4px}
 .lead-c .acts{display:flex;gap:4px}
 .lead-c .acts button{border:1px solid var(--line2);background:transparent;border-radius:6px;cursor:pointer;font-size:.74rem;padding:1px 7px}
-.findg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.findg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:1150px){.findg{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:900px){.findg{grid-template-columns:minmax(0,1fr)}}
 .chart svg{width:100%;height:auto;display:block}
 .chart text{fill:var(--muted);font-family:var(--f-mono);font-size:11px}
@@ -364,6 +365,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
     <a href="#home" data-v="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
     <a href="#course" data-v="course"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>Course</a>
     <a href="#first" data-v="first"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>First Clients</a>
+    <a href="#grow" data-v="grow"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Grow</a>
     <a href="#studio" data-v="studio"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"/><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Ad Studio</a>
     <a href="#audit" data-v="audit"><svg viewBox="0 0 24 24"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/></svg>AI Audit</a>
     <a href="#pricing" data-v="pricing"><svg viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg>Pricing</a>
@@ -419,6 +421,17 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
   <div class="stepnav" id="fcNav"></div>
   <div class="course"><article class="panel lesson" id="fcLesson"></article><div class="panel demo" id="fcDemo"></div></div>
   <div class="coursefoot"><button class="btn ghost" id="fcPrev">Back</button><button class="btn" id="fcNext">Mark done and continue</button></div>
+</section>
+
+<!-- GROW -->
+<section class="view" id="v-grow" hidden>
+  <div class="vhead">
+    <div><span class="eyebrow">Course 3</span><h1>Freelance, brand and scale</h1></div>
+    <div class="row"><div class="progress"><i id="grProg" style="width:0"></i></div><span class="mono muted" id="grProgT"></span></div>
+  </div>
+  <div class="stepnav" id="grNav"></div>
+  <div class="course"><article class="panel lesson" id="grLesson"></article><div class="panel demo" id="grDemo"></div></div>
+  <div class="coursefoot"><button class="btn ghost" id="grPrev">Back</button><button class="btn" id="grNext">Mark done and continue</button></div>
 </section>
 
 <!-- STUDIO -->
@@ -910,6 +923,8 @@ const ADDONS = [
 
 // ---------- clients ----------
 const FIND = [
+  ['Fast early work', 'Freelance marketplaces', 'Upwork, Fiverr and Contra have buyers already looking for ad help. Set up a profile and send short, tailored proposals. See the Grow course.'],
+  ['Slow but adds up', 'Your own content', 'Post ad makeovers and tips 3 times a week. Owners start to recognize you and message first. Takes months, keeps paying off.'],
   ['Best first move', 'Google Maps + free audit', 'Search “dentist near Austin”. Pick businesses with under 50 reviews, no booking button, or under 4.3 stars. Audit them and send the report.'],
   ['They already pay for ads', 'Meta Ad Library', 'Search your city and business type at facebook.com/ads/library. Businesses running ads have a budget. If their ads are weak, show a better one.'],
   ['Warmest leads', 'People you know', 'Text 20 friends and family: “I’m making AI ads for local businesses. Who do you know who owns one?” Warm intros close far better.'],
@@ -1032,7 +1047,8 @@ function firstInit() {
   $('#fcPrev').onclick = () => { if (fcCur > 0) { fcCur--; renderFirst(); } };
   $('#fcNext').onclick = () => {
     if (!fcDone.includes(fcCur)) { fcDone.push(fcCur); store.set('fcdone', fcDone); }
-    if (fcCur < FC_LESSONS.length - 1) { fcCur++; renderFirst(); } else location.hash = 'clients';
+    if (fcCur < FC_LESSONS.length - 1) fcCur++; else location.hash = 'clients';
+    renderFirst();
   };
   renderFirst();
 }
@@ -1191,6 +1207,191 @@ const FC_DEMOS = {
       $('#agOut', el).textContent = `ADVERTISING SERVICES AGREEMENT\nBetween ${me} ("Provider") and ${c} ("Client"). Start date: ${$('#agD', el).value}.\n\n1. Services (${t.name} plan)\n${all.map(i => '• ' + i).join('\n')}\n\n2. Fee\n${money(t.price)} per month, paid in advance on the start date each month.\n\n3. Ad budget\nThe Client pays the ad platforms (Meta, Google, TikTok) directly with their own card. The ad budget is separate from the fee.\n\n4. Accounts\nThe Client owns their ad accounts, pages, pixel and data. The Provider gets partner access and gives it back when the agreement ends.\n\n5. Approval\nThe Provider sends every ad for approval before it goes live. The Client confirms all offers and claims are true.\n\n6. Results\nAdvertising results can't be guaranteed. The Provider will test, report honestly every month, and work to improve results.\n\n7. Term\nMonth to month. Either side can end it with 14 days' written notice.\n\nSigned: ____________ (${me})    ____________ (${c})`;
     };
     el.addEventListener('input', go); el.addEventListener('change', go); go();
+  }
+};
+
+// ================= GROW TRACK: freelance, personal brand, scaling =================
+const GR_LESSONS = [
+  { t: 'Set up a freelance profile', s: 'Profile', demo: 'profile',
+    why: 'Freelance marketplaces (Upwork, Fiverr, Contra) have buyers already looking for ad help. That makes them one of the quickest places to land paid work.',
+    how: ['Pick one platform first. Upwork for project bids, Fiverr for ready-made packages, Contra for a simple portfolio.', 'Headline: who you help + the result + how. Specific beats general.',
+      'Overview: the problem, what you do, your process, and a clear next step.', 'Add your 3 sample ads as portfolio items, labeled as samples.', 'Use a clear, friendly photo of yourself.'],
+    tip: 'Never buy fake reviews or ask friends to fake orders. Platforms ban accounts for it, and it’s dishonest to buyers.' },
+  { t: 'Write proposals that win', s: 'Proposal', demo: 'proposal',
+    why: 'Clients get dozens of copy-paste proposals. A short one about their goal stands out immediately.',
+    how: ['Open with their goal in your own words, not your life story.', 'Give a 3-step plan for their project.', 'Show one relevant sample.',
+      'Ask one smart question about their business.', 'Keep it under 150 words. Apply within the first few hours of a job going up.'],
+    tip: 'Apply to fewer jobs that fit you well. Ten tailored proposals beat fifty generic ones.' },
+  { t: 'Price your freelance packages', s: 'Gigs', demo: 'gigs',
+    why: 'Small fixed-price packages let strangers try you with low risk. Then you upgrade the good ones to monthly work.',
+    how: ['Make 3 packages: Basic, Standard, Premium. Each one clearly does more.', 'Start low to win your first reviews, then raise prices every 5 good reviews.',
+      'Remember the platform takes a fee from what you earn. Check the current fee on the platform.', 'Say exactly what’s included and how many revisions.'],
+    tip: 'Keep payments on the platform for clients you met there. Moving them off-platform can break the platform’s rules.' },
+  { t: 'Build your personal brand', s: 'Brand', demo: 'brand',
+    why: 'A clear brand makes people remember what you do and send clients your way. It works slowly but keeps paying off.',
+    how: ['Write one positioning sentence: “I help [who] get [result] with AI ads.”', 'Use the same photo, name and sentence on Instagram, LinkedIn, Facebook and your freelance profile.',
+      'Post your sample ads and what you learn, honestly.', 'Choose one main platform: wherever your target owners spend time.'],
+    tip: 'Be the person who teaches, not the one who brags. Useful posts earn trust; hype loses it.' },
+  { t: 'Post content that brings clients', s: 'Content', demo: 'content',
+    why: 'Each useful post is a small ad for you that works while you sleep. Content is slow at first and adds up over months.',
+    how: ['Post 3 times a week. Consistency matters more than perfection.', 'Rotate 5 topics: ad makeovers, quick tips, behind the scenes, real results, myths.',
+      'Only share client work and numbers with written permission.', 'End posts with a soft offer: “Want a free audit? Message me.”'],
+    tip: 'Ad makeovers (“here’s how I’d improve this ad”) are among the most engaging posts. Use your own sample businesses, or get permission first.' },
+  { t: 'Turn gigs into monthly clients', s: 'Retainers', demo: 'retainer',
+    why: 'One-off gigs pay once. Monthly clients pay every month, and that is how the business grows.',
+    how: ['Over-deliver on the first gig and send a short results note.', 'After delivery, offer the next step: “Want me to run and improve these every week?”',
+      'Offer a monthly plan from your Pricing page.', 'Make it month to month so saying yes feels safe.'],
+    tip: 'Ask at the moment they’re happiest: right after they see the finished ads.' },
+  { t: 'Build systems', s: 'Systems', demo: 'capacity',
+    why: 'Without systems, every new client adds stress. With checklists and templates, each client takes less time.',
+    how: ['Write a checklist for every repeated task: onboarding, weekly tuning, monthly report.', 'Save templates: proposals, reports, ad packs, emails.',
+      'Track hours per client for a month so you know your real capacity.', 'Batch work: make all creatives on one day, all reports on another.'],
+    tip: 'If you do a task three times, write it down. That checklist is what you’ll hand to your first helper.' },
+  { t: 'Scale the business', s: 'Scale', demo: 'scale',
+    why: 'Scaling means more income without working endless hours: higher prices, a narrower niche, and help.',
+    how: ['Raise prices for new clients after strong results, and keep loyal clients at their price for a while.', 'Niche down: specialists can charge more than generalists.',
+      'Hire a part-time assistant for creatives and reports once you’re near full capacity.', 'Add referral rewards: one free month for every client a happy client sends you.'],
+    tip: 'Hire only when the work is steady and written down. Hiring too early just spreads the chaos.' }
+];
+
+let grCur = store.get('grcur', 0); if (!(grCur >= 0 && grCur < GR_LESSONS.length)) grCur = 0;
+let grDone = store.get('grdone', []);
+function growInit() {
+  $('#grNav').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (b) { grCur = +b.dataset.s; renderGrow(); } });
+  $('#grPrev').onclick = () => { if (grCur > 0) { grCur--; renderGrow(); } };
+  $('#grNext').onclick = () => {
+    if (!grDone.includes(grCur)) { grDone.push(grCur); store.set('grdone', grDone); }
+    if (grCur < GR_LESSONS.length - 1) grCur++; else location.hash = 'business';
+    renderGrow();
+  };
+  renderGrow();
+}
+function renderGrow() {
+  store.set('grcur', grCur);
+  const L = GR_LESSONS[grCur], n = GR_LESSONS.length;
+  $('#grNav').innerHTML = GR_LESSONS.map((l, i) => `<button data-s="${i}" class="${i === grCur ? 'on' : ''} ${grDone.includes(i) ? 'done' : ''}"><b>${String(i + 1).padStart(2, '0')}</b>${l.s}</button>`).join('');
+  $('#grProg').style.width = (grDone.length / n * 100) + '%'; $('#grProgT').textContent = `${grDone.length}/${n} done`;
+  $('#grLesson').innerHTML = `<span class="eyebrow">Step ${grCur + 1} of ${n}</span><h2>${L.t}</h2><p class="why">${L.why}</p>
+    <div class="stack" style="gap:8px"><span class="tag">How to do it</span><ol class="steps">${L.how.map(h => `<li><span>${h}</span></li>`).join('')}</ol></div>
+    <div class="note acc tip"><b>Pro tip:</b> ${L.tip}</div>`;
+  const old = $('#grDemo'), el = old.cloneNode(false); old.replaceWith(el);
+  GR_DEMOS[L.demo](el);
+  $('#grPrev').disabled = grCur === 0;
+  $('#grNext').textContent = grCur === n - 1 ? 'Done: open the Business plan' : 'Mark done and continue';
+  $$('#grNav button')[grCur].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+}
+const scoreBar = (label, score) => { const col = score >= 8 ? 'var(--green)' : score >= 6 ? 'var(--gold)' : 'var(--red)';
+  return `<div class="row" style="justify-content:space-between"><span class="muted" style="font-size:.84rem">${label}</span><b class="mono" style="color:${col};font-size:1.05rem">${score}/10</b></div>`; };
+const checksHTML = cs => cs.map(c => `<div class="check2 ${c[1] ? 'on' : ''}" style="padding:4px 10px"><i></i>${c[0]}</div>`).join('');
+const sliders = S => S.map(s => `<label class="slider">${s[1]} <output id="${s[0]}O"></output><input type="range" id="${s[0]}" min="${s[2]}" max="${s[3]}" step="${s[4]}" value="${s[5]}"></label>`).join('');
+const readSliders = (el, S) => { const v = {}; S.forEach(s => { v[s[0]] = +$('#' + s[0], el).value; $('#' + s[0] + 'O', el).textContent = s[6](v[s[0]]); }); return v; };
+
+const GR_DEMOS = {
+  profile(el) {
+    el.innerHTML = head('Freelance profile builder', nicheSelect('pbN', 'dentist')) + `<div class="two"><label class="f">Your name<input type="text" id="pbMe" value="Yaya"></label>
+      <label class="f">Result you help with<select id="pbR"><option>more booked appointments</option><option>more calls and quote requests</option><option>more online sales</option><option>more walk-in customers</option></select></label></div>
+      <div class="outhead" style="margin:0"><span class="muted" style="font-size:.84rem">Headline + overview</span><button class="btn sm" data-copy="pbOut">Copy</button></div><div class="out scroll" id="pbOut" style="max-height:130px"></div><div id="pbS" class="stack" style="gap:4px"></div>`;
+    const go = () => {
+      const n = NICHES[$('#pbN', el).value], me = $('#pbMe', el).value || 'Me', r = $('#pbR', el).value;
+      const headline = `AI Ads for ${n.label}s | ${cap(r)}`;
+      $('#pbOut', el).textContent = `${headline}\n\nHi, I'm ${me}. I make and manage AI-powered ads for ${n.kind}s that want ${r}.\n\nWhat you get:\n• Ad copy and visuals built around your best offer\n• 3+ versions tested so we keep only the winners\n• Clear weekly updates in plain English\n\nHow I work:\n1. A free audit of your current ads, Google listing and website\n2. A plan and sample ads for your approval\n3. Launch, test, improve every week\n\nI'm building my portfolio, so you'll see sample ads below, not past client results. Message me with your business name and I'll send a free audit.`;
+      const cs = [['Names who you help', true], ['Names the result', true], ['Honest about experience', true], ['Clear next step', true], [`Headline: ${headline.length} characters (70 or less reads best)`, headline.length <= 70]];
+      $('#pbS', el).innerHTML = scoreBar('Profile strength', Math.round(cs.filter(c => c[1]).length / cs.length * 10)) + checksHTML(cs);
+    };
+    el.addEventListener('input', go); el.addEventListener('change', go); go();
+  },
+  proposal(el) {
+    el.innerHTML = head('Proposal writer + checker') + `<div class="grid" style="grid-template-columns:110px 130px minmax(0,1fr);gap:8px"><label class="f">Client's name<input type="text" id="ppN" value="Sam"></label><label class="f">Business${nicheSelect('ppB', 'gym').replace('style="width:auto"', '')}</label><label class="f">Their goal, in your words<input type="text" id="ppG" value="get more new members from Instagram ads"></label></div>
+      <textarea id="ppT" style="min-height:84px;height:84px"></textarea><div id="ppS" class="stack" style="gap:4px"></div>`;
+    const write = () => {
+      const n = NICHES[$('#ppB', el).value], nm = $('#ppN', el).value || 'there';
+      $('#ppT', el).value = `Hi ${nm}, you want to ${$('#ppG', el).value}. Here's how I'd do it:\n\n1. Build a strong first offer (for a ${n.kind}, something like "${n.offer}")\n2. Make 3 ad versions with AI and test them for 7 days\n3. Keep the winner, cut the rest, and send you a plain-English update every week\n\nHere's a sample ad I made for a ${n.kind}: [link]\n\nOne question: what is a new ${n.thing.replace(/s$/, '')} worth to you over a year?`;
+      check();
+    };
+    const check = () => {
+      const t = $('#ppT', el).value, w = t.split(/\s+/).filter(Boolean).length, goal = $('#ppG', el).value.toLowerCase().split(' ').slice(0, 3).join(' ');
+      const cs = [['Starts with their goal', t.toLowerCase().slice(0, 160).includes(goal)], ['Has a clear plan', /1\.|first,|step/i.test(t)], ['Shows a sample', /sample|portfolio|example/i.test(t)],
+        ['Asks a question', /\?/.test(t)], [`Short: ${w} words (150 or less)`, w > 0 && w <= 150], ['No "Dear Sir" or hype', !/(dear sir|madam|expert!|guarantee|10x|!!)/i.test(t)]];
+      $('#ppS', el).innerHTML = scoreBar('Proposal score', Math.round(cs.filter(c => c[1]).length / cs.length * 10)) + checksHTML(cs);
+    };
+    el.addEventListener('change', e => { if (e.target.tagName === 'SELECT') write(); });
+    el.addEventListener('input', e => { if (e.target.id === 'ppT') check(); else write(); });
+    write();
+  },
+  gigs(el) {
+    const S = [['gB', 'Basic price', 15, 300, 5, 49, v => '$' + v], ['gS', 'Standard price', 30, 600, 5, 99, v => '$' + v], ['gP', 'Premium price', 50, 1500, 10, 199, v => '$' + v], ['gF', 'Platform fee (check the current one)', 0, 30, 1, 20, v => v + '%']];
+    el.innerHTML = head('Gig package builder') + `<div class="two"><div class="stack" style="gap:4px">${sliders(S)}</div><div id="gOut" class="stack" style="gap:8px"></div></div><div id="gN"></div>`;
+    const go = () => {
+      const v = readSliders(el, S), keep = p => p * (1 - v.gF / 100);
+      const P = [['Basic', v.gB, '3 AI ad images + 3 headlines, 1 revision'], ['Standard', v.gS, '6 ad images + ad text in 3 styles + 1 short video script, 2 revisions'], ['Premium', v.gP, 'Full ad pack + campaign setup in their Ads Manager + 7-day check-in']];
+      $('#gOut', el).innerHTML = P.map(p => `<div class="kpi"><small>${p[0]} · you keep ~${money(keep(p[1]))}</small><b>${money(p[1])}</b><p class="muted" style="font-size:.8rem;margin-top:3px">${p[2]}</p></div>`).join('');
+      const ok = v.gB < v.gS && v.gS < v.gP;
+      $('#gN', el).innerHTML = `<div class="note ${ok ? 'ok' : 'bad'}">${ok ? 'Good ladder: each package costs more and does more.' : 'Each package should cost more than the one before it.'} Fiverr's seller fee has been 20%; Upwork's varies. Always check the platform's current fees.</div>`;
+    };
+    el.addEventListener('input', go); go();
+  },
+  brand(el) {
+    el.innerHTML = head('Positioning + bio builder', nicheSelect('brN', 'salon')) + `<div class="two"><label class="f">Your name<input type="text" id="brMe" value="Yaya"></label><label class="f">City or area<input type="text" id="brC" value="Austin"></label></div>
+      <label class="f">Result<select id="brR"><option>more bookings</option><option>more calls</option><option>more online sales</option><option>more regulars</option></select></label><div id="brOut" class="stack" style="gap:8px"></div>`;
+    const go = () => {
+      const n = NICHES[$('#brN', el).value], me = $('#brMe', el).value || 'Me', c = $('#brC', el).value || 'your city', r = $('#brR', el).value;
+      const pos = `I help ${n.kind}s in ${c} get ${r} with AI-powered ads.`;
+      const ig = `AI ads for ${n.kind}s in ${c}\nMore ${r.replace('more ', '')}, tested weekly\nFree ad audit: DM me`;
+      const li = `${me} | AI Advertising for ${n.label}s | Helping ${n.kind}s in ${c} get ${r}`;
+      $('#brOut', el).innerHTML = [['brP', 'Positioning sentence', pos, 0], ['brI', 'Instagram bio', ig, 150], ['brL', 'LinkedIn headline', li, 220]].map(x => `<div><div class="outhead" style="margin-bottom:4px"><span class="muted" style="font-size:.84rem">${x[1]}${x[3] ? ` <span class="cc ${x[2].length <= x[3] ? 'ok' : 'no'}">${x[2].length}/${x[3]}</span>` : ''}</span><button class="btn sm ghost" data-copy="${x[0]}">Copy</button></div><div class="out" id="${x[0]}" style="padding:9px 12px">${esc(x[2])}</div></div>`).join('');
+    };
+    el.addEventListener('input', go); el.addEventListener('change', go); go();
+  },
+  content(el) {
+    const T = {
+      'Ad makeover': n => `Rewriting a sample ${n.kind} ad`,
+      'Quick tip': n => `Offer idea: "${shortOffer(n.offer)}"`,
+      'Behind the scenes': () => `Making 3 ad versions in 15 min`,
+      'Real result': () => `This week's test (real numbers)`,
+      'Myth': () => `Myth: word of mouth is enough`
+    };
+    const keys = Object.keys(T);
+    el.innerHTML = head('30-day content plan', nicheSelect('ctN', 'gym')) + `<div class="tbl"><table><thead><tr><th>Week</th><th>Mon</th><th>Wed</th><th>Fri</th></tr></thead><tbody id="ctB"></tbody></table></div>
+      <div class="row" style="justify-content:space-between"><span class="dim" style="font-size:.8rem">12 posts, 5 topics rotating. End each one with "Want a free audit? Message me."</span><button class="btn sm" id="ctC">Copy plan</button></div>`;
+    let plan = [];
+    const go = () => {
+      const n = NICHES[$('#ctN', el).value]; let k = 0; plan = [];
+      $('#ctB', el).innerHTML = [1, 2, 3, 4].map(w => `<tr><td class="num">W${w}</td>${[0, 1, 2].map(() => { const t = keys[k++ % keys.length], s = T[t](n); plan.push(`Week ${w} · ${t}: ${s}`); return `<td style="font-size:.8rem;padding:7px 10px"><span class="tag" style="margin-bottom:3px">${t}</span><br>${esc(s)}</td>`; }).join('')}</tr>`).join('');
+    };
+    $('#ctN', el).addEventListener('change', go); $('#ctC', el).onclick = () => copyText(plan.join('\n')); go();
+  },
+  retainer(el) {
+    const S = [['rtG', 'One-off gig price', 30, 500, 5, 99, v => '$' + v], ['rtM', 'Monthly plan price', 150, 1200, 25, 399, v => '$' + v], ['rtL', 'Months a client stays', 1, 18, 1, 6, v => v]];
+    el.innerHTML = head('Gig vs monthly client') + `<div class="two"><div class="stack" style="gap:4px">${sliders(S)}</div><div class="stack" id="rtK"></div></div>
+      <div class="outhead" style="margin:0"><span class="muted" style="font-size:.84rem">Upgrade message (send right after delivery)</span><button class="btn sm" data-copy="rtT">Copy</button></div><div class="out" id="rtT"></div>`;
+    const go = () => {
+      const v = readSliders(el, S), mo = v.rtM * v.rtL;
+      $('#rtK', el).innerHTML = `<div class="kpi"><small>One gig</small><b>${money(v.rtG)}</b></div><div class="kpi"><small>Monthly client over ${v.rtL} mo</small><b style="color:var(--green)">${money(mo)}</b></div><div class="note acc">One monthly client is worth about <b>${Math.round(mo / v.rtG)}×</b> a single gig.</div>`;
+      $('#rtT', el).textContent = `Glad you like the ads! A quick idea: ads work best when someone tests and improves them every week. I can run and improve these for you for ${money(v.rtM)} a month, month to month, with a short update every week. Want to try it for a month?`;
+    };
+    el.addEventListener('input', go); go();
+  },
+  capacity(el) {
+    const S = [['cpH', 'Hours you can work per week', 5, 60, 1, 20, v => v], ['cpC', 'Hours per client per week', 1, 8, 0.5, 2, v => v], ['cpN', 'Clients you have now', 0, 25, 1, 3, v => v]];
+    el.innerHTML = head('Capacity check') + `<div class="two"><div class="stack" style="gap:4px">${sliders(S)}</div><div class="stack" id="cpK"></div></div>
+      <div class="stack" style="gap:5px"><span class="tag" style="align-self:flex-start">Weekly routine per client</span>${checksHTML([['Mon: check results, pause losers', true], ['Tue: make 3 new creatives in the Ad Studio', true], ['Wed: launch tests', true], ['Fri: 5-line update to the owner', true]])}</div>`;
+    const go = () => {
+      const v = readSliders(el, S), max = Math.floor(v.cpH / v.cpC), used = v.cpN * v.cpC, pct = Math.min(100, Math.round(used / v.cpH * 100));
+      $('#cpK', el).innerHTML = `<div class="kpi"><small>Max clients</small><b>${max}</b></div><div class="kpi"><small>Time used</small><b>${pct}%</b><div class="progress" style="width:100%;margin-top:6px"><i style="width:${pct}%;background:${pct >= 80 ? 'var(--red)' : 'var(--accent)'}"></i></div></div>
+        <div class="note ${pct >= 80 ? 'bad' : 'ok'}">${pct >= 80 ? 'Near full. Write checklists now and plan your first helper.' : `Room for about ${Math.max(0, max - v.cpN)} more clients.`}</div>`;
+    };
+    el.addEventListener('input', go); go();
+  },
+  scale(el) {
+    const S = [['scN', 'Clients', 1, 30, 1, 8, v => v], ['scF', 'Average monthly fee', 150, 1500, 25, 450, v => '$' + v], ['scR', 'Price raise for all clients', 0, 50, 5, 0, v => v + '%'],
+      ['scA', 'Assistant hours per week', 0, 40, 1, 10, v => v], ['scW', 'Assistant pay per hour', 5, 40, 1, 12, v => '$' + v]];
+    el.innerHTML = head('Scaling calculator') + `<div class="two"><div class="stack" style="gap:4px">${sliders(S)}</div><div class="stack" id="scK"></div></div>`;
+    const go = () => {
+      const v = readSliders(el, S), rev = v.scN * v.scF * (1 + v.scR / 100), help = v.scA * v.scW * 4.3, tools = 40 + v.scN * 10, profit = rev - help - tools;
+      $('#scK', el).innerHTML = [['Monthly revenue', money(rev)], ['Assistant cost', money(help)], ['Tools (estimate)', money(tools)]].map(k => `<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('')
+        + `<div class="kpi" style="border-color:var(--green)"><small>Your monthly profit</small><b style="color:var(--green)">${money(profit)}</b></div><p class="dim" style="font-size:.78rem">Estimates only. ${v.scA ? `The assistant frees about ${v.scA} hours a week for sales and strategy.` : 'Add assistant hours to see what hiring costs.'}</p>`;
+    };
+    el.addEventListener('input', go); go();
   }
 };
 
@@ -1819,7 +2020,7 @@ function renderPrompts() {
 }
 
 // ================= ROUTER =================
-const VIEWS = ['home', 'course', 'first', 'studio', 'audit', 'pricing', 'clients', 'business', 'prompts'];
+const VIEWS = ['home', 'course', 'first', 'grow', 'studio', 'audit', 'pricing', 'clients', 'business', 'prompts'];
 const ALIAS = { learn: 'course', builder: 'studio' };
 function show(v) {
   v = ALIAS[v] || v; if (!VIEWS.includes(v)) v = 'home';
@@ -1830,7 +2031,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); courseInit(); firstInit(); homeInit(); auditInit(); pricingInit(); clientsInit(); businessInit(); promptsInit();
+studioInit(); courseInit(); firstInit(); growInit(); homeInit(); auditInit(); pricingInit(); clientsInit(); businessInit(); promptsInit();
 show(location.hash.slice(1));
 </script>
 </body>

@@ -19,3 +19,5 @@
 - Always check work and be honest. The website must not be a scam.
 - Teach how to get first clients on the website: "First Clients" course (9 steps with practice demos).
 - Open question: "get clients for the app" may mean selling the app itself as a subscription (like the Free/Plus/Pro plans in Yaya-builds). Ask before building.
+- Asked again how to get clients for AI advertising.
+- Added a "Grow" course: freelance profiles and proposals (Upwork, Fiverr, Contra), gig pricing, personal brand, content plan, turning gigs into monthly clients, systems, and scaling (8 steps with practice demos). Added freelance marketplaces and your own content to Get Clients.
