@@ -500,7 +500,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <section class="view" id="v-studio" hidden>
   <div class="vhead">
     <div><span class="eyebrow">The app</span><h1>Ad Studio</h1><p class="sub">Builds ads from proven formulas (templates, not a live AI). For more ideas, paste a Prompt into Claude or ChatGPT.</p></div>
-    <div class="row"><button class="btn ghost sm" id="surpriseBtn">Random example</button><button class="btn ghost sm" id="saveBtn">Save to My Ads</button><button class="btn ghost sm" id="copyAll">Copy full pack</button></div>
+    <div class="row"><button class="btn ghost sm" id="surpriseBtn">Random</button><button class="btn ghost sm" id="saveBtn">Save</button><button class="btn ghost sm" id="copyAll">Copy text</button><button class="btn sm" id="copyEmail">Copy for email</button></div>
   </div>
   <div class="studio">
     <div class="panel inputs" id="adInputs">
@@ -1704,7 +1704,7 @@ if (!TONES[B.tone]) B.tone = 'friendly';
 if (!PALETTES[B.palette]) B.palette = 0;
 let plat = 'fb', variant = 0, outTab = 'hl', pack;
 const PLATS = { fb: 'Facebook', google: 'Google', tiktok: 'TikTok', story: 'Story' };
-const OUTS = { hl: 'Headlines', text: 'Ad text', google: 'Google ad', image: 'Image prompt', video: 'Video', target: 'Targeting', budget: 'Budget', saved: 'My ads' };
+const OUTS = { hl: 'Headlines', text: 'Ad text', google: 'Google ad', image: 'Image prompt', video: 'Video', target: 'Targeting', budget: 'Budget', email: 'Email', saved: 'My ads' };
 const BRAND_STEPS = ['Matching the business type', 'Writing the positioning', 'Choosing colors + fonts', 'Planning a month of content', 'Laying out the brand board'];
 const GEN_STEPS = ['Matching the business type', 'Filling 3 proven copy formulas', 'Adding your offer + proof', 'Laying out the creative', 'Adding targeting + budget'];
 
@@ -1739,6 +1739,7 @@ function studioInit() {
     toast('Saved to My Ads'); if (outTab === 'saved') renderOutputs();
   });
   $('#copyAll').addEventListener('click', () => copyText(packText(pack)));
+  $('#copyEmail').addEventListener('click', () => copyRich(emailHTML(pack, variant, true), emailText(pack, variant)));
   $('#outPane').addEventListener('click', e => {
     const g = store.get('gallery', []), x = e.target.closest('[data-del]'), c = e.target.closest('[data-load]');
     if (x) { g.splice(+x.dataset.del, 1); store.set('gallery', g); renderOutputs(); return; }
@@ -1805,12 +1806,46 @@ function renderOutputs() {
   if (outTab === 'video') h = box('oV', '15 seconds, vertical 9:16', esc(p.video));
   if (outTab === 'target') h = box('oA', 'Set this in the Ad set level of Ads Manager', esc(p.targeting));
   if (outTab === 'budget') h = box('oB', 'Tell the owner this before launch', esc(p.budget));
+  if (outTab === 'email') h = `<div class="outhead"><span class="muted" style="font-size:.84rem">This is exactly what pastes into Gmail or Outlook. Edit the [brackets] after pasting.</span><button class="btn sm" id="emailCopy2">Copy for email</button></div>
+      <div style="background:#fff;border-radius:10px;padding:16px;overflow-x:auto">${emailHTML(p, variant, true)}</div>`;
   if (outTab === 'saved') {
     const g = store.get('gallery', []);
     h = g.length ? `<div class="gallery">${g.map((it, i) => NICHES[it.f.niche] ? `<div class="g" data-load="${i}" role="button" tabindex="0">${creativeHTML(buildPack(Object.assign({}, it.f, { name: it.f.name || 'Your Business', city: it.f.city || 'your city', offer: it.f.offer || NICHES[it.f.niche].offer })), it.v || 0)}<button class="x" data-del="${i}" aria-label="Delete">×</button></div>` : '').join('')}</div><p class="dim" style="font-size:.78rem;margin-top:8px">Saved in this browser. Click one to load it.</p>`
       : '<div class="note acc">No saved ads yet. Click <b>Save to My Ads</b> at the top. Saved ads make a great portfolio to show business owners.</div>';
   }
   $('#outPane').innerHTML = h;
+  const ec = $('#emailCopy2'); if (ec) ec.onclick = () => copyRich(emailHTML(p, variant, true), emailText(p, variant));
+}
+// ---- email-ready ad: table layout + inline styles so Gmail and Outlook keep the design ----
+function emailHTML(p, v, withIntro) {
+  const pal = PALETTES[p.f.palette], e = s => esc(s).replace(/\n/g, '<br>');
+  const intro = withIntro ? `<p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.5;color:#1c1e21;margin:0 0 14px">Hi [Owner name],<br><br>I made this sample ad for ${e(p.f.name)} to show what an ad with a clear offer could look like. It isn't running anywhere. It's yours to keep either way.<br><br>Happy to walk you through it in 10 minutes this week?<br><br>[Your name]</p>` : '';
+  return (`${intro}<table role="presentation" width="480" cellpadding="0" cellspacing="0" style="width:480px;max-width:100%;border-collapse:separate;font-family:Arial,Helvetica,sans-serif;border:1px solid #dadde1;border-radius:12px;background:#ffffff">
+<tr><td style="padding:12px 14px"><table role="presentation" cellpadding="0" cellspacing="0"><tr><td width="36" style="width:36px;padding:0"><div style="width:36px;height:36px;line-height:36px;border-radius:18px;background:${pal.c2};color:#ffffff;font-weight:bold;font-size:13px;text-align:center">${e(initials(p.f.name))}</div></td>
+<td style="padding-left:9px"><div style="font-weight:bold;font-size:14px;color:#1c1e21">${e(p.f.name)}</div><div style="font-size:12px;color:#65676b">Sample ad · not live</div></td></tr></table></td></tr>
+<tr><td style="padding:0 14px 12px;font-size:14px;line-height:1.45;color:#1c1e21">${e(p.texts[v].t)}</td></tr>
+<tr><td bgcolor="${pal.c2}" style="background-color:${pal.c2};background-image:linear-gradient(155deg,${pal.c1},${pal.c2});padding:26px 22px;color:#ffffff">
+<div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#ffffff">${e(p.f.name)} &middot; ${e(p.f.city)}</div>
+<div style="font-size:28px;line-height:1.12;font-weight:bold;color:#ffffff;padding:64px 0 48px">${e(p.hs[v])}</div>
+<span style="display:inline-block;background:#ffffff;color:#0a0d13;font-weight:bold;font-size:13px;padding:7px 11px;border-radius:7px">${e(shortOffer(p.f.offer))}</span>
+<div style="font-size:12px;color:#ffffff;padding-top:10px">${p.f.proof ? (p.f.proof.includes('★') ? '' : '&#9733; ') + e(p.f.proof) : '&#9733; [Add their real rating]'}</div></td></tr>
+<tr><td bgcolor="#f0f2f5" style="background:#f0f2f5;padding:10px 14px;border-radius:0 0 12px 12px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+<td style="font-size:11px;color:#65676b;text-transform:uppercase">${e(p.g.url)}<div style="font-size:14px;font-weight:bold;color:#1c1e21;text-transform:none">${e(p.hs[v])}</div></td>
+<td align="right" style="padding-left:10px"><span style="display:inline-block;background:#e4e6eb;color:#1c1e21;font-weight:bold;font-size:13px;padding:8px 12px;border-radius:6px;white-space:nowrap">${e(p.n.cta)}</span></td></tr></table></td></tr></table>`).replace(/<td /g, '<td valign="middle" ').replace(/style="/g, 'style="border:0;');
+}
+function emailText(p, v) { return `Hi [Owner name],\n\nI made this sample ad for ${p.f.name}. It isn't running anywhere.\n\n${p.hs[v]}\n\n${p.texts[v].t}\n\n[Your name]`; }
+async function copyRich(html, text) {
+  try {
+    if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+      await navigator.clipboard.write([new ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([text], { type: 'text/plain' }) })]);
+      toast('Copied. Paste it into your email'); return;
+    }
+  } catch (e) {}
+  const box = document.createElement('div'); box.contentEditable = 'true'; box.style.cssText = 'position:fixed;left:-9999px;top:0;background:#fff'; box.innerHTML = html; document.body.appendChild(box);
+  const r = document.createRange(); r.selectNodeContents(box); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+  let ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+  s.removeAllRanges(); box.remove();
+  toast(ok ? 'Copied. Paste it into your email' : 'Copy was blocked. Open the Email tab, select the ad and copy it');
 }
 function packText(p) {
   return `AD PACK: ${p.f.name} (${p.n.label}, ${p.f.city})\n\nHEADLINES\n${p.hs.map((h, i) => 'ABC'[i] + ': ' + h).join('\n')}\n\nAD TEXTS\n${p.texts.map((t, i) => `Version ${'ABC'[i]} (${t.f}):\n${t.t}`).join('\n\n')}\n\nGOOGLE AD\n${p.g.hs.join(' | ')}\n${p.g.d1}\n${p.g.d2}\n\nIMAGE PROMPT\n${p.imagePrompt}\n\nVIDEO SCRIPT\n${p.video}\n\nTARGETING\n${p.targeting}\n\nBUDGET\n${p.budget}\n\nBUTTON: ${p.n.cta}\n${p.hashtags}`;
