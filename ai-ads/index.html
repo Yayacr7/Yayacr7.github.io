@@ -353,6 +353,26 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 @media (max-width:760px){#scriptGrid,#growthGrid{grid-template-columns:minmax(0,1fr)!important}}
 .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 @media (max-width:560px){.two{grid-template-columns:minmax(0,1fr)}}
+.studio.bs{grid-template-columns:minmax(250px,290px) minmax(280px,340px) minmax(0,1fr)}
+@media (max-width:1180px){.studio.bs{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+@media (max-width:760px){.studio.bs{grid-template-columns:minmax(0,1fr)}}
+.navlabel{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:12px 10px 4px}
+.nav a{padding:7px 10px}
+.pillars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pillar{border:1px solid var(--line);background:var(--panel);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:8px}
+.pillar:first-child{border-color:var(--accent)} .pillar:last-child{border-color:var(--gold)}
+@media (max-width:560px){.pillars{grid-template-columns:minmax(0,1fr)}}
+.board{border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:14px;width:100%;max-width:340px;box-shadow:0 30px 60px -30px rgba(0,0,0,.9);font-family:var(--f-body)}
+.bmono{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:1.5rem;flex:none}
+.bsw{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.bsw div{display:flex;flex-direction:column;gap:4px;font-family:var(--f-mono);font-size:.6rem}
+.bsw i{display:block;height:38px;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.bpost{border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;align-items:flex-start;min-height:150px;justify-content:space-between}
+.bpill{font-size:.7rem;padding:3px 9px;border-radius:999px;font-weight:600}
+@media (max-width:900px){.nav .studio.bs{grid-template-columns:minmax(250px,290px) minmax(280px,340px) minmax(0,1fr)}
+@media (max-width:1180px){.studio.bs{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+@media (max-width:760px){.studio.bs{grid-template-columns:minmax(0,1fr)}}
+.navlabel{display:none}}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -363,17 +383,22 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
   <a class="logo" href="#home"><i>AI</i><span>Yaya Ad Lab</span></a>
   <nav class="nav" id="nav">
     <a href="#home" data-v="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
-    <a href="#course" data-v="course"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>Course</a>
-    <a href="#first" data-v="first"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>First Clients</a>
-    <a href="#grow" data-v="grow"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Grow</a>
+    <span class="navlabel">AI advertising</span>
+    <a href="#course" data-v="course"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>Ad Course</a>
     <a href="#studio" data-v="studio"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"/><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Ad Studio</a>
     <a href="#audit" data-v="audit"><svg viewBox="0 0 24 24"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/></svg>AI Audit</a>
-    <a href="#pricing" data-v="pricing"><svg viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg>Pricing</a>
+    <span class="navlabel">Brand scaling</span>
+    <a href="#bcourse" data-v="bcourse"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><circle cx="12" cy="10" r="3"/></svg>Brand Course</a>
+    <a href="#brand" data-v="brand"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>Brand Studio</a>
+    <span class="navlabel">Freelance business</span>
+    <a href="#first" data-v="first"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>First Clients</a>
+    <a href="#grow" data-v="grow"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Grow</a>
     <a href="#clients" data-v="clients"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14a6 6 0 0 1 3.5 6"/></svg>Get Clients</a>
+    <a href="#pricing" data-v="pricing"><svg viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg>Pricing</a>
     <a href="#business" data-v="business"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>Business</a>
     <a href="#prompts" data-v="prompts"><svg viewBox="0 0 24 24"><path d="M4 6l6 6-6 6"/><path d="M12 18h8"/></svg>Prompts</a>
   </nav>
-  <div class="mini"><span class="muted">Course progress</span><div class="progress" style="width:100%"><i id="sideProg" style="width:0"></i></div><span class="mono" id="sideProgT">0 of 10 steps</span></div>
+  <div class="mini"><span class="muted">Ad Course progress</span><div class="progress" style="width:100%"><i id="sideProg" style="width:0"></i></div><span class="mono" id="sideProgT">0 of 10 steps</span></div>
 </aside>
 
 <main class="stage" id="stage">
@@ -381,30 +406,29 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <!-- HOME -->
 <section class="view" id="v-home">
   <div class="home">
-    <div class="stack" style="gap:20px">
-      <span class="eyebrow">AI advertising · from zero to paid</span>
-      <h1>Learn every step of <span class="serif">AI advertising.</span> Then build ads that bring in real customers.</h1>
-      <p class="sub">A 10-step course with a working demo in every step, a studio that builds complete ad packs, and honest tools to audit, price and win local clients.</p>
-      <div class="row"><a class="btn" href="#course">Start step 1</a><a class="btn ghost" href="#first">Get your first client</a><a class="btn ghost" href="#studio">Open Ad Studio</a></div>
-      <div class="path" id="homePath"></div>
+    <div class="stack" style="gap:18px">
+      <span class="eyebrow">AI advertising + freelance brand scaling</span>
+      <h1>Two skills every business pays for: <span class="serif">AI advertising</span> and <span class="serif">brand scaling.</span></h1>
+      <p class="sub">Learn both step by step, then do them for real businesses as a freelancer. The tools build the ads, the brand plan and the pitch for you.</p>
+      <div class="pillars">
+        <div class="pillar"><span class="tag acc">Pillar 1</span><h3>AI Advertising</h3><p class="muted">Ads that bring a business new customers this month.</p>
+          <div class="row"><a class="btn sm" href="#course">Learn</a><a class="btn sm ghost" href="#studio">Ad Studio</a><a class="btn sm ghost" href="#audit">Audit</a></div></div>
+        <div class="pillar"><span class="tag gold">Pillar 2</span><h3>Brand Scaling</h3><p class="muted">A brand people remember, trust and come back to.</p>
+          <div class="row"><a class="btn sm" href="#bcourse">Learn</a><a class="btn sm ghost" href="#brand">Brand Studio</a></div></div>
+      </div>
+      <div class="row" style="font-size:.86rem"><span class="muted">Your freelance business:</span><a href="#first">First clients</a><span class="dim">·</span><a href="#grow">Freelance, brand and scale</a><span class="dim">·</span><a href="#pricing">Pricing</a></div>
     </div>
     <div class="gen">
       <div class="pipe" id="pipe"></div>
       <div class="adcard" id="homeAd"></div>
     </div>
   </div>
-  <div class="homestats">
-    <div class="kpi"><small>Course</small><b>10 steps</b></div>
-    <div class="kpi"><small>Business types</small><b>13 ready</b></div>
-    <div class="kpi"><small>Client packages</small><b>$199–$1,199/mo</b></div>
-    <div class="kpi"><small>Cost to start</small><b>$0–$50</b></div>
-  </div>
 </section>
 
 <!-- COURSE -->
 <section class="view" id="v-course" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">The course</span><h1>Every step of AI advertising</h1></div>
+    <div><span class="eyebrow">Pillar 1 · AI advertising</span><h1>Every step of AI advertising</h1></div>
     <div class="row"><div class="progress"><i id="cProg" style="width:0"></i></div><span class="mono muted" id="cProgT"></span></div>
   </div>
   <div class="stepnav" id="stepNav"></div>
@@ -415,7 +439,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <!-- FIRST CLIENTS -->
 <section class="view" id="v-first" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">Course 2</span><h1>Get your first clients</h1></div>
+    <div><span class="eyebrow">Freelance business</span><h1>Get your first clients</h1></div>
     <div class="row"><div class="progress"><i id="fcProg" style="width:0"></i></div><span class="mono muted" id="fcProgT"></span></div>
   </div>
   <div class="stepnav" id="fcNav"></div>
@@ -426,12 +450,50 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <!-- GROW -->
 <section class="view" id="v-grow" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">Course 3</span><h1>Freelance, brand and scale</h1></div>
+    <div><span class="eyebrow">Freelance business</span><h1>Freelance, brand and scale</h1></div>
     <div class="row"><div class="progress"><i id="grProg" style="width:0"></i></div><span class="mono muted" id="grProgT"></span></div>
   </div>
   <div class="stepnav" id="grNav"></div>
   <div class="course"><article class="panel lesson" id="grLesson"></article><div class="panel demo" id="grDemo"></div></div>
   <div class="coursefoot"><button class="btn ghost" id="grPrev">Back</button><button class="btn" id="grNext">Mark done and continue</button></div>
+</section>
+
+<!-- BRAND COURSE -->
+<section class="view" id="v-bcourse" hidden>
+  <div class="vhead">
+    <div><span class="eyebrow">Pillar 2 · Brand scaling</span><h1>Scale a business's brand</h1></div>
+    <div class="row"><div class="progress"><i id="bcProg" style="width:0"></i></div><span class="mono muted" id="bcProgT"></span></div>
+  </div>
+  <div class="stepnav" id="bcNav"></div>
+  <div class="course"><article class="panel lesson" id="bcLesson"></article><div class="panel demo" id="bcDemo"></div></div>
+  <div class="coursefoot"><button class="btn ghost" id="bcPrev">Back</button><button class="btn" id="bcNext">Mark done and continue</button></div>
+</section>
+
+<!-- BRAND STUDIO -->
+<section class="view" id="v-brand" hidden>
+  <div class="vhead">
+    <div><span class="eyebrow">Pillar 2 · The app</span><h1>Brand Studio</h1><p class="sub">Enter a client's business. Get a brand check, positioning, voice, brand kit, content plan and a 90-day scaling plan. Built from templates, so edit it with the owner.</p></div>
+    <button class="btn ghost sm" id="bsCopy">Copy this tab</button>
+  </div>
+  <div class="studio bs">
+    <div class="panel inputs" id="bsInputs">
+      <div class="tabs" id="bsInTabs"><button data-t="biz" class="on">1 · Business</button><button data-t="pers">2 · Personality</button></div>
+      <div data-pane="biz" class="stack">
+        <label class="f">Type<select id="bsNiche"></select></label>
+        <label class="f">Business name<input type="text" id="bsName"></label>
+        <label class="f">City<input type="text" id="bsCity"></label>
+        <label class="f">One true difference<textarea id="bsDiff" style="min-height:70px"></textarea></label>
+      </div>
+      <div data-pane="pers" class="stack" hidden>
+        <label class="slider">Friendly ↔ Formal<input type="range" id="bs_tone" min="0" max="100"></label>
+        <label class="slider">Calm ↔ Bold<input type="range" id="bs_energy" min="0" max="100"></label>
+        <label class="slider">Classic ↔ Modern<input type="range" id="bs_style" min="0" max="100"></label>
+        <label class="f">Brand style</label><div class="row" id="bsKits" style="gap:5px"></div>
+      </div>
+    </div>
+    <div id="bsBoard" class="pcol" style="justify-content:center"></div>
+    <div class="panel outputs"><div class="tabs" id="bsOutTabs"></div><div class="pane" id="bsOut"></div></div>
+  </div>
 </section>
 
 <!-- STUDIO -->
@@ -498,7 +560,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <section class="view" id="v-pricing" hidden>
   <div class="vhead">
     <div><span class="eyebrow">What you charge businesses</span><h1>Fair prices. Each tier does more.</h1><p class="sub">Start low while you build proof. Every tier includes everything below it. Ad budget is paid by the business, straight to Meta or Google.</p></div>
-    <div class="tabs" id="prTabs"><button data-t="tiers" class="on">Packages</button><button data-t="quote">Quote builder</button><button data-t="addons">Add-ons</button></div>
+    <div class="tabs" id="prTabs"><button data-t="tiers" class="on">Ad packages</button><button data-t="brandp">Brand packages</button><button data-t="quote">Quote builder</button><button data-t="addons">Add-ons</button></div>
   </div>
   <div data-pane="tiers" class="stack" style="gap:12px">
     <div class="ladder" id="ladder"></div>
@@ -508,6 +570,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
       <div class="note ok"><b>Month to month.</b> No long contracts. Clients stay because the ads work.</div>
     </div>
   </div>
+  <div data-pane="brandp" class="stack" style="gap:12px" hidden><div class="ladder" id="bLadder" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))"></div><div class="note">Brand results build over 3–6 months. Tell owners that up front, and pair brand work with ads when they need customers sooner.</div></div>
   <div data-pane="quote" class="quote" hidden>
     <div class="panel stack">
       <h4>Package</h4><div class="row" id="qPkg"></div>
@@ -910,6 +973,11 @@ const TIERS = [
   { id: 'growth', name: 'Growth', price: 399, per: '/mo', lvl: 2, best: true, plus: 'Everything in Starter, plus', items: ['8 new ads a month, incl. 1 video', 'Weekly tuning and A/B tests', 'Google Business Profile tune-up', 'Instant lead alerts to the owner'], who: 'Most clients. Your main offer.' },
   { id: 'pro', name: 'Pro', price: 699, per: '/mo', lvl: 3, plus: 'Everything in Growth, plus', items: ['A second platform (Google or TikTok)', '12 ads + 2 videos a month', 'Landing page built and tested', 'Retargeting + report every 2 weeks'], who: 'Dentists, roofers, HVAC and others with bigger tickets.' },
   { id: 'premium', name: 'Premium', price: 1199, per: '/mo', lvl: 4, plus: 'Everything in Pro, plus', items: ['All 3 platforms', '20 ads + 4 videos a month', 'Text and email follow-up automation', 'Weekly report + call, priority help'], who: 'Businesses spending $2,000+ a month on ads.' }
+];
+const BRAND_TIERS = [
+  { name: 'Brand Kit', price: 299, per: ' once', plus: 'One-time setup', items: ['Brand check + positioning sentence', 'Voice guide and 3 brand words', 'Colors, fonts and Canva post templates', 'Bios and Google listing rewritten to match'], who: 'Businesses that look different everywhere.' },
+  { name: 'Brand Growth', price: 349, per: '/mo', plus: 'Everything in Brand Kit, plus', items: ['12 on-brand posts a month', 'Review request system + replies to reviews', 'Monthly content plan', 'Monthly brand report'], who: 'Most brand clients. Steady, visible progress.' },
+  { name: 'Brand + Ads', price: 699, per: '/mo', plus: 'Everything in Brand Growth, plus', items: ['Growth ad plan: 8 ads a month incl. video', 'Retargeting people who engage with posts', 'Weekly tuning', 'One combined report'], who: 'Owners who want trust and customers now. Saves $49 vs buying both.' }
 ];
 const ADDONS = [
   { id: 'video', name: 'AI video pack (3 videos)', price: 99, per: 'once', why: 'Video ads are cheap to run and owners love seeing them.' },
@@ -1395,6 +1463,223 @@ const GR_DEMOS = {
   }
 };
 
+// ================= BRAND SCALING: kits, studio, course =================
+const KITS = [
+  { name: 'Warm & friendly', c: ['#E8603C', '#F6C177', '#2B2523', '#FFF6EE'], fonts: 'Nunito + Nunito Sans', serif: false, words: ['Welcoming', 'Easy', 'Local'] },
+  { name: 'Calm & trusted', c: ['#2F5D8C', '#8FB8DE', '#1C2430', '#F4F7FA'], fonts: 'Source Serif 4 + Source Sans 3', serif: true, words: ['Reliable', 'Clear', 'Caring'] },
+  { name: 'Bold & modern', c: ['#111111', '#FF4D2E', '#6B6B6B', '#F2F2F2'], fonts: 'Archivo Black + Archivo', serif: false, words: ['Direct', 'Confident', 'Fast'] },
+  { name: 'Fresh & natural', c: ['#2E7D5B', '#A8D5BA', '#1F2A24', '#F5F9F6'], fonts: 'Fraunces + Work Sans', serif: true, words: ['Clean', 'Honest', 'Calm'] },
+  { name: 'Premium', c: ['#1E1B18', '#C8A96A', '#6E655C', '#F4EFE6'], fonts: 'Cormorant Garamond + Montserrat', serif: true, words: ['Refined', 'Expert', 'Quiet'] },
+  { name: 'Playful', c: ['#7C4DFF', '#FFB74D', '#1E1A2E', '#FFF8EC'], fonts: 'Fredoka + Rubik', serif: false, words: ['Fun', 'Bright', 'Upbeat'] }
+];
+function pickKit(tone, energy, style) { // sliders 0..100: tone friendly->formal, energy calm->bold, style classic->modern
+  if (tone > 65 && style < 45) return 4;
+  if (energy > 65 && style > 55) return tone < 40 ? 5 : 2;
+  if (tone > 55) return 1;
+  if (energy < 40) return 3;
+  return 0;
+}
+const CHANNELS = {
+  all: [['Google Business Profile', 'Weekly: 1 photo post, reply to every review'], ['Email list', 'Monthly: 1 helpful email with an offer']],
+  visual: [['Instagram', '3 posts + 2 Reels a week'], ['TikTok', '2–3 short videos a week']],
+  local: [['Facebook', '3 posts a week + local groups'], ['Nextdoor', '1 helpful post a month (home services)']],
+  pro: [['LinkedIn', '2 posts a week from the owner'], ['YouTube', '1 short explainer a month']]
+};
+const NICHE_CH = { restaurant: ['visual', 'local'], dentist: ['local', 'visual'], gym: ['visual', 'local'], roofer: ['local'], salon: ['visual'], realestate: ['pro', 'visual'], auto: ['local'],
+  ecommerce: ['visual'], lawyer: ['pro', 'local'], coffee: ['visual', 'local'], hvac: ['local'], medspa: ['visual'], cleaning: ['local'] };
+
+const BR = Object.assign({ niche: 'salon', name: 'Glow Hair Studio', city: 'Austin', diff: 'every stylist does a free 10-minute consult before cutting', tone: 30, energy: 55, style: 70, out: 'check', chk: { logo: 0, line: 0, bios: 0, posts: 1, reviews: 0, replies: 1 } }, store.get('brand', {}));
+if (!NICHES[BR.niche]) BR.niche = 'salon';
+const BCHECK = [['logo', 'Same logo and colors everywhere', 'Use one logo and one color palette on the sign, website, social profiles and Google.'],
+  ['line', 'One clear sentence at the top of the website', 'Put the positioning sentence at the top of the homepage.'],
+  ['bios', 'Social bios say the same thing', 'Copy the same one-line description into every bio.'],
+  ['posts', 'Posts at least weekly', 'Start the content plan: 3 posts a week.'],
+  ['reviews', '50+ Google reviews', 'Start the review request text after every visit.'],
+  ['replies', 'Replies to reviews', 'Reply to every review within 48 hours, in the brand voice.']];
+
+function brandData(b) {
+  const n = NICHES[b.niche], k = KITS[b.kit != null ? b.kit : pickKit(b.tone, b.energy, b.style)], name = b.name.trim() || 'Your Business', city = b.city.trim() || 'your city';
+  const diff = b.diff.trim() || n.benefits[0];
+  const taglines = [`${cap(n.benefits[0])}, right here in ${city}`, `Your ${n.kind} in ${city}`, `${name}: ${n.benefits[2]}`];
+  const friendly = b.tone < 50, bold = b.energy > 50;
+  const voice = {
+    is: [friendly ? 'Warm, like talking to a neighbor' : 'Polite and expert, like a trusted advisor', bold ? 'Short, confident sentences' : 'Calm and reassuring', b.style > 50 ? 'Modern, simple words' : 'Classic and timeless'],
+    not: [friendly ? 'Stiff or corporate' : 'Slangy or jokey', bold ? 'Pushy or shouting' : 'Boring or vague', 'Making promises it can’t keep'],
+    sample: friendly ? `Hey ${city}! ${cap(n.benefits[0])}, and ${diff}. Come say hi.` : `At ${name}, ${diff}. Book your visit today.`
+  };
+  const chans = [...CHANNELS.all, ...(NICHE_CH[b.niche] || ['local']).flatMap(c => CHANNELS[c])];
+  const posts = [];
+  const P = { Proof: () => `Share a real review (with the customer's permission)`, 'Behind the scenes': () => `A day at ${name}: the team at work`, Tip: () => `Tip: how to avoid ${n.pains[0]}`,
+    Difference: () => `Why we do it this way: ${diff}`, Community: () => `Local spotlight: a ${city} business or event we love`, Offer: () => `Offer: ${shortOffer(n.offer)}` };
+  const pk = Object.keys(P); let i = 0;
+  for (let w = 1; w <= 4; w++) for (let d = 0; d < 3; d++) { const t = pk[i++ % pk.length]; posts.push([w, ['Mon', 'Wed', 'Fri'][d], t, P[t]()]); }
+  return { n, k, name, city, diff, taglines, voice, chans, posts,
+    position: `For ${n.who} in ${city}, ${name} is the ${n.kind} where ${diff}. That means ${n.benefits[0]}, without ${n.pains[1]}.` };
+}
+function brandBoardHTML(d, compact) {
+  const [c1, c2, c3, c4] = d.k.c, hf = d.k.serif ? 'font-family:var(--f-serif);font-style:italic;font-weight:400' : 'font-weight:700;letter-spacing:-.03em';
+  return `<div class="board" style="background:${c4};color:${c3}">
+    <div class="row" style="flex-wrap:nowrap;gap:10px"><div class="bmono" style="background:${c1};color:${c4};${hf}">${esc((d.name[0] || 'B').toUpperCase())}</div>
+      <div style="min-width:0"><b style="display:block;font-size:1.02rem;${hf}">${esc(d.name)}</b><span style="font-size:.76rem;opacity:.75">${esc(d.taglines[0])}</span></div></div>
+    <div class="bsw">${d.k.c.map(c => `<div><i style="background:${c}"></i><span>${c}</span></div>`).join('')}</div>
+    <div class="row" style="justify-content:space-between;align-items:flex-end;flex-wrap:nowrap"><span style="font-size:2.6rem;line-height:1;${hf}">Aa</span><span style="font-size:.7rem;opacity:.75;text-align:right">${esc(d.k.fonts)}<br>${esc(d.k.name)}</span></div>
+    ${compact ? '' : `<div class="bpost" style="background:${c1};color:${c4}"><span style="font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85">${esc(d.city)}</span><b style="font-size:1.15rem;line-height:1.15;${hf}">${esc(d.taglines[1])}</b><span class="bpill" style="background:${c2};color:${c3}">${esc(shortOffer(d.n.offer))}</span></div>`}
+    <div class="row" style="gap:5px">${d.k.words.map(w => `<span class="bpill" style="border:1px solid ${c3}33">${w}</span>`).join('')}</div></div>`;
+}
+
+// ---------- Brand Studio ----------
+const BOUTS = { check: 'Brand check', position: 'Positioning', voice: 'Voice', kit: 'Brand kit', content: 'Content plan', channels: 'Channels', roadmap: '90-day plan', pitch: 'Pitch to owner' };
+function brandInit() {
+  $('#bsNiche').innerHTML = Object.entries(NICHES).map(([k, n]) => `<option value="${k}">${n.label}</option>`).join('');
+  $('#bsKits').innerHTML = `<button class="chip" data-kit="auto">Auto</button>` + KITS.map((k, i) => `<button class="chip" data-kit="${i}">${k.name}</button>`).join('');
+  $('#bsOutTabs').innerHTML = Object.entries(BOUTS).map(([k, t]) => `<button data-o="${k}">${t}</button>`).join('');
+  wireTabs($('#bsInTabs'), $('#bsInputs'));
+  [['bsName', 'name'], ['bsCity', 'city'], ['bsDiff', 'diff']].forEach(([id, k]) => $('#' + id).addEventListener('input', e => { BR[k] = e.target.value; renderBrand(false); }));
+  ['tone', 'energy', 'style'].forEach(k => $('#bs_' + k).addEventListener('input', e => { BR[k] = +e.target.value; renderBrand(false); }));
+  $('#bsNiche').addEventListener('change', e => { BR.niche = e.target.value; renderBrand(false); });
+  $('#bsKits').addEventListener('click', e => { const b = e.target.closest('[data-kit]'); if (b) { BR.kit = b.dataset.kit === 'auto' ? null : +b.dataset.kit; renderBrand(); } });
+  $('#bsOutTabs').addEventListener('click', e => { const b = e.target.closest('[data-o]'); if (b) { BR.out = b.dataset.o; renderBrand(); } });
+  $('#bsOut').addEventListener('click', e => { const b = e.target.closest('.seg[data-bc] button'); if (b) { BR.chk[b.parentElement.dataset.bc] = +b.dataset.v; renderBrand(); } });
+  $('#bsCopy').addEventListener('click', () => copyText($('#bsOut').innerText));
+  renderBrand();
+}
+function renderBrand(sync = true) {
+  store.set('brand', BR);
+  const d = brandData(BR);
+  if (sync) { $('#bsName').value = BR.name; $('#bsCity').value = BR.city; $('#bsDiff').value = BR.diff; $('#bsNiche').value = BR.niche; ['tone', 'energy', 'style'].forEach(k => $('#bs_' + k).value = BR[k]); }
+  $$('#bsKits .chip').forEach(b => b.classList.toggle('on', b.dataset.kit === (BR.kit == null ? 'auto' : String(BR.kit))));
+  $$('#bsOutTabs button').forEach(b => b.classList.toggle('on', b.dataset.o === BR.out));
+  $('#bsBoard').innerHTML = brandBoardHTML(d);
+  const o = BR.out; let h = '';
+  if (o === 'check') {
+    const yes = BCHECK.filter(c => BR.chk[c[0]]).length, score = Math.round(yes / BCHECK.length * 10);
+    h = scoreBar('Brand health', score) + BCHECK.map(c => `<div class="aq" style="padding:7px 0"><span>${c[1]}</span>${segHTML('x', [['Yes', 1], ['No', 0]], BR.chk[c[0]] ? 1 : 0).replace('data-g="x"', `data-bc="${c[0]}"`)}</div>`).join('')
+      + `<div class="stack" style="gap:4px;margin-top:6px"><span class="tag" style="align-self:flex-start">Fix first</span>${BCHECK.filter(c => !BR.chk[c[0]]).slice(0, 3).map(c => `<span style="font-size:.86rem">• ${c[2]}</span>`).join('') || '<span class="muted" style="font-size:.86rem">The basics are in place. Focus on content and reviews.</span>'}</div>`;
+  }
+  if (o === 'position') h = `<span class="tag">Positioning statement</span><div class="out">${esc(d.position)}</div><span class="tag">One-line description (for every bio)</span><div class="out">${esc(`${cap(d.n.kind)} in ${d.city} where ${d.diff}.`)}</div><span class="tag">Tagline options</span><div class="out">${d.taglines.map((t, i) => `${i + 1}. ${esc(t)}`).join('\n')}</div>`;
+  if (o === 'voice') h = `<div class="two"><div><span class="tag green">We are</span><div class="out" style="margin-top:6px">${d.voice.is.map(x => '• ' + x).join('\n')}</div></div><div><span class="tag red">We are not</span><div class="out" style="margin-top:6px">${d.voice.not.map(x => '• ' + x).join('\n')}</div></div></div><span class="tag">Sounds like</span><div class="out">${esc(d.voice.sample)}</div><span class="tag">3 brand words</span><div class="out">${d.k.words.join(' · ')}</div>`;
+  if (o === 'kit') h = `<div class="out">Style: ${d.k.name}\nColors: ${d.k.c.join(', ')} (main, accent, text, background)\nFonts: ${d.k.fonts} (free on Google Fonts)\nLogo: simple wordmark of "${esc(d.name)}" in the heading font, main color\nPhotos: real team and customers (with permission), natural light\nRule: use only these colors and fonts everywhere</div><p class="dim" style="font-size:.8rem">Build the logo, post templates and story templates in Canva with these colors and fonts.</p>`;
+  if (o === 'content') h = `<div class="tbl"><table><thead><tr><th>Week</th><th>Day</th><th>Pillar</th><th>Post</th></tr></thead><tbody>${d.posts.map(p => `<tr><td class="num">W${p[0]}</td><td>${p[1]}</td><td><span class="tag">${p[2]}</span></td><td style="font-size:.84rem">${esc(p[3])}</td></tr>`).join('')}</tbody></table></div>`;
+  if (o === 'channels') h = `<div class="tbl"><table><thead><tr><th>Channel</th><th>How often</th></tr></thead><tbody>${d.chans.map(c => `<tr><td><b style="font-weight:500">${c[0]}</b></td><td class="muted">${c[1]}</td></tr>`).join('')}</tbody></table></div><p class="dim" style="font-size:.8rem">Start with Google + the first two social channels. Add more only when those are consistent.</p>`;
+  if (o === 'roadmap') h = [['Month 1 · Foundation', ['Fix the brand check items', 'Write positioning, voice and brand kit', 'Update logo, bios and Google listing everywhere', 'Start asking every customer for a review']],
+    ['Month 2 · Content engine', ['Post 3 times a week from the content plan', '2 short videos a week (team, behind the scenes)', 'Start an email list with a simple sign-up offer', 'Reply to every comment and review in the brand voice']],
+    ['Month 3 · Scale', ['Run ads to people who engaged with the content (retargeting)', 'Partner with 2 local businesses for shared posts', 'Launch a referral reward', 'Monthly report: followers, engagement, reviews, enquiries']]]
+    .map(m => `<div class="kpi"><small>${m[0]}</small><ul class="check" style="margin-top:6px">${m[1].map(x => `<li><span>${x}</span></li>`).join('')}</ul></div>`).join('');
+  if (o === 'pitch') h = `<div class="out">Hi [Owner],\n\nI put together a free brand check for ${esc(d.name)}. A few quick wins stood out:\n${BCHECK.filter(c => !BR.chk[c[0]]).slice(0, 3).map(c => '• ' + c[2]).join('\n') || '• Your basics are strong. The next step is consistent content.'}\n\nI help ${d.n.kind}s in ${esc(d.city)} build a brand people remember: a clear message, a consistent look, and 3 posts a week, plus ads when you're ready.\n\nBrand Growth is $349 a month, month to month. I also made a sample brand board for you (attached). Want to take a look together for 15 minutes?\n\n[Your name]</div>`;
+  $('#bsOut').innerHTML = `<div class="stack">${h}</div>`;
+}
+
+// ---------- Brand course ----------
+const BC_LESSONS = [
+  { t: 'What brand scaling is', s: 'Basics', demo: 'health', why: 'A brand is what people remember and say about a business. Brand scaling means growing that recognition and trust, so more people choose them and come back.',
+    how: ['Ads bring people in fast. A brand makes them trust, remember and return.', 'Brand scaling = clear message + consistent look + steady content + reviews + ads.', 'Results are slower than ads: think 3–6 months. Say so to clients.', 'Sell it together with ads for the best results.'], tip: 'Never promise "going viral". Promise consistency and honest monthly reports.' },
+  { t: 'Audit the brand', s: 'Audit', demo: 'consistency', why: 'Most small businesses describe themselves differently everywhere. Fixing that is the fastest brand win.',
+    how: ['Compare the website, Instagram, Facebook and Google listing side by side.', 'Check: same logo, same colors, same one-line description?', 'Count reviews and check if the owner replies.', 'List the 3 biggest gaps. Those are your first month’s work.'], tip: 'Screenshots side by side make the problem obvious to the owner in seconds.' },
+  { t: 'Find the positioning', s: 'Position', demo: 'position', why: 'Positioning answers: who is this for, and why choose this business over the others?',
+    how: ['Name the main customer (from the reviews and the owner).', 'Name the problem they want solved.', 'Find one true difference: something the business really does differently.', 'Write one sentence and use it everywhere.'], tip: 'The difference must be true and specific. "Great service" is not a difference; "free 10-minute consult before every cut" is.' },
+  { t: 'Build the voice and look', s: 'Identity', demo: 'kit', why: 'A consistent voice and look make a small business feel established and trustworthy.',
+    how: ['Pick 3 personality words with the owner.', 'Choose 4 colors and 2 fonts, then use only those.', 'Write a short voice guide: how we sound, how we don’t.', 'Make Canva templates so every post looks on-brand.'], tip: 'Free Google Fonts and Canva are enough. You don’t need expensive design software.' },
+  { t: 'Create a content system', s: 'Content', demo: 'pillars', why: 'Brands grow through steady, useful content, not random posts.',
+    how: ['Choose 5–6 content pillars: proof, behind the scenes, tips, difference, community, offers.', 'Plan a month at a time: 3 posts a week.', 'Batch it: shoot photos and videos in one session each month.', 'Use AI to draft captions in the brand voice, then edit them.'], tip: 'Real photos of the team beat stock photos almost every time.' },
+  { t: 'Grow reviews and reputation', s: 'Reviews', demo: 'reviews', why: 'Reviews are the brand people trust most, because other customers wrote them.',
+    how: ['Ask every happy customer, by text, right after the visit.', 'Make it one tap: send the direct Google review link.', 'Reply to every review, good or bad, in the brand voice.', 'Never buy, fake or filter reviews.'], tip: 'Fake reviews are illegal in many places, including the US, and platforms remove them. Only ask real customers.' },
+  { t: 'Scale with content + ads', s: 'Scale', demo: 'funnel', why: 'Content builds trust; ads multiply it. Together they grow a brand faster than either alone.',
+    how: ['Boost the best organic posts to local people (awareness).', 'Retarget people who watched or engaged with an offer.', 'Keep most of the budget on proven offers.', 'Track enquiries, not just likes.'], tip: 'A small retargeting budget is often the most profitable money in the whole plan.' },
+  { t: 'Measure and report', s: 'Report', demo: 'scorecard', why: 'Clients stay when they can see progress. Measure the same few numbers every month.',
+    how: ['Followers and reach: is the audience growing?', 'Engagement rate: do people care about the posts?', 'Reviews: count and average rating.', 'Enquiries: calls, messages and bookings that mention social or Google.'], tip: 'Show honest numbers, even in a slow month, and explain the plan to improve.' }
+];
+let bcCur = store.get('bccur', 0); if (!(bcCur >= 0 && bcCur < BC_LESSONS.length)) bcCur = 0;
+let bcDone = store.get('bcdone', []);
+function brandCourseInit() {
+  $('#bcNav').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (b) { bcCur = +b.dataset.s; renderBC(); } });
+  $('#bcPrev').onclick = () => { if (bcCur > 0) { bcCur--; renderBC(); } };
+  $('#bcNext').onclick = () => { if (!bcDone.includes(bcCur)) { bcDone.push(bcCur); store.set('bcdone', bcDone); } if (bcCur < BC_LESSONS.length - 1) bcCur++; else location.hash = 'brand'; renderBC(); };
+  renderBC();
+}
+function renderBC() {
+  store.set('bccur', bcCur);
+  const L = BC_LESSONS[bcCur], n = BC_LESSONS.length;
+  $('#bcNav').innerHTML = BC_LESSONS.map((l, i) => `<button data-s="${i}" class="${i === bcCur ? 'on' : ''} ${bcDone.includes(i) ? 'done' : ''}"><b>${String(i + 1).padStart(2, '0')}</b>${l.s}</button>`).join('');
+  $('#bcProg').style.width = (bcDone.length / n * 100) + '%'; $('#bcProgT').textContent = `${bcDone.length}/${n} done`;
+  $('#bcLesson').innerHTML = `<span class="eyebrow">Step ${bcCur + 1} of ${n}</span><h2>${L.t}</h2><p class="why">${L.why}</p><div class="stack" style="gap:8px"><span class="tag">How to do it</span><ol class="steps">${L.how.map(h => `<li><span>${h}</span></li>`).join('')}</ol></div><div class="note acc tip"><b>Pro tip:</b> ${L.tip}</div>`;
+  const old = $('#bcDemo'), el = old.cloneNode(false); old.replaceWith(el);
+  BC_DEMOS[L.demo](el);
+  $('#bcPrev').disabled = bcCur === 0;
+  $('#bcNext').textContent = bcCur === n - 1 ? 'Done: open the Brand Studio' : 'Mark done and continue';
+  $$('#bcNav button')[bcCur].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+}
+const BC_DEMOS = {
+  health(el) {
+    const S = [['hR', 'People recognize the name locally', 0, 10, 1, 4, v => v + '/10'], ['hT', 'Trust (reviews, rating)', 0, 10, 1, 6, v => v + '/10'], ['hC', 'Same look and message everywhere', 0, 10, 1, 3, v => v + '/10'],
+      ['hP', 'Posts useful content regularly', 0, 10, 1, 2, v => v + '/10'], ['hL', 'Customers come back and refer others', 0, 10, 1, 7, v => v + '/10']];
+    el.innerHTML = head('Brand health check (for a client)') + `<div class="stack" style="gap:4px">${sliders(S)}</div><div id="hOut"></div>`;
+    const go = () => { const v = readSliders(el, S), avg = Math.round(Object.values(v).reduce((a, b) => a + b, 0) / 5), low = S.reduce((m, s) => v[s[0]] < v[m[0]] ? s : m, S[0]);
+      $('#hOut', el).innerHTML = scoreBar('Overall', avg) + `<div class="note acc" style="margin-top:6px">Weakest area: <b>${low[1].toLowerCase()}</b>. Start the plan there.</div>`; };
+    el.addEventListener('input', go); go();
+  },
+  consistency(el) {
+    el.innerHTML = head('Consistency checker', '<button class="btn sm ghost" id="csFix">Show the fix</button>') + `<label class="f">Website headline<input type="text" id="csW" value="Welcome to Glow - your neighborhood beauty place"></label>
+      <label class="f">Instagram bio<input type="text" id="csI" value="Hair magic ✨ book now"></label><label class="f">Google description<input type="text" id="csG" value="Hair salon in Austin offering cuts and color"></label><div id="csOut" class="stack" style="gap:4px"></div>`;
+    const go = () => {
+      const t = ['csW', 'csI', 'csG'].map(id => $('#' + id, el).value.toLowerCase()), kw = 'hair';
+      const cs = [['Website says “hair salon”', t[0].includes(kw)], ['Instagram says “hair salon”', t[1].includes(kw)], ['Google says “hair salon”', t[2].includes(kw)],
+        ['City (Austin) named in 2+ places', t.filter(x => x.includes('austin')).length >= 2], ['No vague hype words', !t.some(x => /(magic|best|amazing)/.test(x))]];
+      $('#csOut', el).innerHTML = scoreBar('Consistency', Math.round(cs.filter(c => c[1]).length / cs.length * 10)) + checksHTML(cs);
+    };
+    $('#csFix', el).onclick = () => { const v = 'Hair salon in Austin where every stylist does a free consult before cutting'; ['csW', 'csI', 'csG'].forEach(id => $('#' + id, el).value = v); go(); };
+    el.addEventListener('input', go); go();
+  },
+  position(el) {
+    el.innerHTML = head('Positioning builder', nicheSelect('poN', 'gym')) + `<label class="f">Business name<input type="text" id="poB" value="IronHouse Fitness"></label>
+      <label class="f">One true difference<input type="text" id="poD" value="every new member gets a coach for their first 4 weeks"></label><div id="poOut" class="stack" style="gap:6px"></div>`;
+    const go = () => {
+      const d = brandData({ niche: $('#poN', el).value, name: $('#poB', el).value, city: 'Austin', diff: $('#poD', el).value, tone: 30, energy: 50, style: 60 }), diff = $('#poD', el).value;
+      const cs = [['Names who it is for', true], ['Names the problem solved', true], ['Difference is specific (has a number or a concrete action)', /\d|every|free|only|same/i.test(diff)], ['No vague words like "best" or "quality"', !/(best|quality|great|amazing)/i.test(diff)]];
+      $('#poOut', el).innerHTML = `<div class="out">${esc(d.position)}</div>` + scoreBar('Positioning score', Math.round(cs.filter(c => c[1]).length / cs.length * 10)) + checksHTML(cs);
+    };
+    el.addEventListener('input', go); $('#poN', el).addEventListener('change', go); go();
+  },
+  kit(el) {
+    el.innerHTML = head('Brand personality → brand kit') + `<div class="two"><div class="stack" style="gap:4px">${sliders([['kT', 'Friendly ↔ Formal', 0, 100, 1, 25, v => v], ['kE', 'Calm ↔ Bold', 0, 100, 1, 60, v => v], ['kS', 'Classic ↔ Modern', 0, 100, 1, 70, v => v]])}
+      <label class="f">Business type${nicheSelect('kN', 'coffee').replace('style="width:auto"', '')}</label></div><div id="kOut"></div></div>`;
+    const go = () => { const d = brandData({ niche: $('#kN', el).value, name: NICHE_NAMES[$('#kN', el).value], city: 'Austin', diff: '', tone: +$('#kT', el).value, energy: +$('#kE', el).value, style: +$('#kS', el).value });
+      ['kT', 'kE', 'kS'].forEach(id => $('#' + id + 'O', el).textContent = $('#' + id, el).value); $('#kOut', el).innerHTML = brandBoardHTML(d, true); };
+    el.addEventListener('input', go); el.addEventListener('change', go); go();
+  },
+  pillars(el) {
+    el.innerHTML = head('Client content calendar', nicheSelect('plN', 'dentist')) + '<div id="plOut" class="tbl scroll" style="max-height:330px"></div>';
+    const go = () => { const k = $('#plN', el).value, d = brandData({ niche: k, name: NICHE_NAMES[k], city: 'Austin', diff: NICHES[k].benefits[2], tone: 40, energy: 50, style: 50 });
+      $('#plOut', el).innerHTML = `<table><thead><tr><th>Week</th><th>Day</th><th>Pillar</th><th>Post idea</th></tr></thead><tbody>${d.posts.map(p => `<tr><td class="num">W${p[0]}</td><td>${p[1]}</td><td><span class="tag">${p[2]}</span></td><td style="font-size:.82rem">${esc(p[3])}</td></tr>`).join('')}</tbody></table>`; };
+    $('#plN', el).addEventListener('change', go); go();
+  },
+  reviews(el) {
+    const S = [['rvN', 'Reviews now', 0, 300, 1, 40, v => v], ['rvC', 'Customers per month', 10, 600, 10, 120, v => v], ['rvA', 'Customers who leave a review when asked', 2, 30, 1, 8, v => v + '%']];
+    el.innerHTML = head('Review growth planner') + `<div class="two"><div class="stack" style="gap:4px">${sliders(S)}</div><div class="stack" id="rvK"></div></div>
+      <div class="outhead" style="margin:0"><span class="muted" style="font-size:.84rem">Text to send after each visit</span><button class="btn sm" data-copy="rvT">Copy</button></div><div class="out" id="rvT">Thanks for visiting [Business] today! If you were happy, would you leave us a quick Google review? It really helps a small local business: [review link]</div>`;
+    const go = () => { const v = readSliders(el, S), per = Math.round(v.rvC * v.rvA / 100);
+      $('#rvK', el).innerHTML = `<div class="kpi"><small>New reviews a month</small><b>${per}</b></div><div class="kpi"><small>In 90 days</small><b style="color:var(--green)">${v.rvN + per * 3}</b></div><p class="dim" style="font-size:.78rem">Rates are guesses. Track the real ask rate for a month.</p>`; };
+    el.addEventListener('input', go); go();
+  },
+  funnel(el) {
+    const S = [['fnB', 'Monthly ad budget (client pays the platform)', 150, 3000, 50, 600, v => '$' + v], ['fnA', 'Share on awareness (boosting best posts)', 10, 70, 5, 40, v => v + '%'], ['fnR', 'Share on retargeting engaged people', 10, 60, 5, 30, v => v + '%']];
+    el.innerHTML = head('Content + ads budget split') + `<div class="stack" style="gap:4px">${sliders(S)}</div><div id="fnOut" class="stack"></div>`;
+    const go = () => { const v = readSliders(el, S), off = Math.max(0, 100 - v.fnA - v.fnR), parts = [['Awareness', v.fnA, '#7B93FF'], ['Retargeting', v.fnR, '#38D39F'], ['Offer to new people', off, '#F0B44C']];
+      $('#fnOut', el).innerHTML = `<div style="display:flex;height:22px;border-radius:6px;overflow:hidden">${parts.map(p => `<i style="width:${p[1]}%;background:${p[2]}" title="${p[0]}"></i>`).join('')}</div>`
+        + `<div class="kpis">${parts.map(p => `<div class="kpi"><small>${p[0]}</small><b>${money(v.fnB * p[1] / 100)}</b></div>`).join('')}</div>`
+        + `<div class="note ${v.fnA + v.fnR > 100 ? 'bad' : 'acc'}">${v.fnA + v.fnR > 100 ? 'The shares add up to more than 100%. Lower one.' : 'A common starting split is about 40 / 30 / 30. Move money toward whatever brings the cheapest real enquiries.'}</div>`; };
+    el.addEventListener('input', go); go();
+  },
+  scorecard(el) {
+    const S = [['scF0', 'Followers at start of month', 0, 5000, 10, 820, v => v], ['scF1', 'Followers at end of month', 0, 5000, 10, 905, v => v], ['scE', 'Average likes + comments per post', 0, 300, 1, 34, v => v],
+      ['scR0', 'Reviews at start', 0, 500, 1, 40, v => v], ['scR1', 'Reviews at end', 0, 500, 1, 49, v => v], ['scQ', 'Enquiries from social or Google', 0, 100, 1, 11, v => v]];
+    el.innerHTML = head('Monthly brand report') + `<div class="two"><div class="stack" style="gap:2px">${sliders(S)}</div><div class="stack"><div class="kpis" id="scK" style="grid-template-columns:repeat(2,minmax(0,1fr))"></div><button class="btn sm" data-copy="scT" style="align-self:flex-start">Copy report</button></div></div><div class="out" id="scT" hidden></div>`;
+    const go = () => { const v = readSliders(el, S), g = v.scF0 ? (v.scF1 - v.scF0) / v.scF0 * 100 : 0, er = v.scF1 ? v.scE / v.scF1 * 100 : 0;
+      $('#scK', el).innerHTML = [['Follower growth', g.toFixed(1) + '%'], ['Engagement rate', er.toFixed(1) + '%'], ['New reviews', v.scR1 - v.scR0], ['Enquiries', v.scQ]].map(k => `<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('');
+      $('#scT', el).textContent = `Monthly brand report\n\nFollowers: ${v.scF0} → ${v.scF1} (${g >= 0 ? '+' : ''}${g.toFixed(1)}%)\nEngagement rate: ${er.toFixed(1)}% per post\nGoogle reviews: ${v.scR0} → ${v.scR1}\nEnquiries from social or Google: ${v.scQ}\n\nWhat worked: [best post]\nWhat we'll change: [one change]\nNext month: [plan]`; };
+    el.addEventListener('input', go); go();
+  }
+};
+
 // ================= OFFER SCORE (used in the course and the studio) =================
 const OFFER_CHECKS = [
   ['Specific: a number, price or time', /\$|\d|%/, 'Add a number: a price, a percent or a time ("$79", "in 24 hours").'],
@@ -1420,6 +1705,7 @@ if (!PALETTES[B.palette]) B.palette = 0;
 let plat = 'fb', variant = 0, outTab = 'hl', pack;
 const PLATS = { fb: 'Facebook', google: 'Google', tiktok: 'TikTok', story: 'Story' };
 const OUTS = { hl: 'Headlines', text: 'Ad text', google: 'Google ad', image: 'Image prompt', video: 'Video', target: 'Targeting', budget: 'Budget', saved: 'My ads' };
+const BRAND_STEPS = ['Matching the business type', 'Writing the positioning', 'Choosing colors + fonts', 'Planning a month of content', 'Laying out the brand board'];
 const GEN_STEPS = ['Matching the business type', 'Filling 3 proven copy formulas', 'Adding your offer + proof', 'Laying out the creative', 'Adding targeting + budget'];
 
 function fields() {
@@ -1534,8 +1820,6 @@ const samplePack = (k = 'restaurant', tone = 'friendly', v = {}) => buildPack(Ob
 // ================= HOME =================
 let heroI = 0;
 function homeInit() {
-  $('#homePath').innerHTML = LESSONS.slice(0, 10).map((l, i) => `<a href="#course" data-go="${i}"><b>${String(i + 1).padStart(2, '0')}</b>${l.s}</a>`).join('');
-  $('#homePath').addEventListener('click', e => { const a = e.target.closest('[data-go]'); if (a) { cur = +a.dataset.go; renderCourse(); } });
   $('#pipe').innerHTML = GEN_STEPS.map(s => `<div class="ok">${s}</div>`).join('');
   heroAd(samplePack('dentist', 'bold'), 0); heroI = 2;
   setTimeout(heroLoop, reduced ? 6000 : 2500); renderProgress();
@@ -1546,15 +1830,16 @@ function heroAd(p, v) {
       ${creativeHTML(p, v, 'sq')}<div class="lk"><div style="min-width:0"><small>${esc(p.g.url)}</small><b>${esc(shortOffer(p.f.offer))}</b></div><span class="cta">${esc(p.n.cta)}</span></div></div>`;
 }
 function heroLoop() {
-  const keys = Object.keys(NICHES), k = keys[heroI % keys.length];
+  const keys = Object.keys(NICHES), k = keys[heroI % keys.length], brand = heroI % 2 === 1;
   const p = samplePack(k, Object.keys(TONES)[heroI % 5], { city: CITIES[heroI % CITIES.length] });
-  const pipe = $('#pipe');
-  pipe.innerHTML = GEN_STEPS.map(s => `<div>${s}</div>`).join('');
+  const pipe = $('#pipe'), steps = brand ? BRAND_STEPS : GEN_STEPS;
+  pipe.innerHTML = steps.map(s => `<div>${s}</div>`).join('');
   const rows = $$('div', pipe), step = reduced ? 0 : 380;
   rows.forEach((r, i) => setTimeout(() => { r.className = 'run'; if (i) rows[i - 1].className = 'ok'; }, i * step));
   setTimeout(() => {
     rows[rows.length - 1].className = 'ok';
-    heroAd(p, heroI % 3);
+    if (brand) $('#homeAd').innerHTML = brandBoardHTML(brandData({ niche: k, name: NICHE_NAMES[k], city: CITIES[heroI % CITIES.length], diff: NICHES[k].benefits[2], tone: (heroI * 37) % 100, energy: (heroI * 53) % 100, style: (heroI * 71) % 100 }));
+    else heroAd(p, heroI % 3);
     $('#homeAd').classList.remove('rise'); void $('#homeAd').offsetWidth; $('#homeAd').classList.add('rise');
     heroI++;
     setTimeout(heroLoop, reduced ? 6000 : 3200);
@@ -1890,6 +2175,9 @@ function pricingInit() {
     <div class="lvl">${[0, 1, 2, 3, 4].map(i => `<i class="${i <= t.lvl ? 'on' : ''}"></i>`).join('')}</div>
     <div class="price">${t.price ? money(t.price) : '$0'}<small>${t.per}</small></div><span class="plus">${t.plus}</span>
     <ul>${t.items.map(i => `<li><span>${i}</span></li>`).join('')}</ul><p class="who">${t.who}</p></div>`).join('');
+  $('#bLadder').innerHTML = BRAND_TIERS.map((t, i) => `<div class="tier${i === 1 ? ' best' : ''}">${i === 1 ? '<span class="tag acc" style="position:absolute;top:-11px;right:12px;background:var(--accent);color:var(--accent-ink)">Most popular</span>' : ''}<h3>${t.name}</h3>
+    <div class="lvl">${[0, 1, 2].map(j => `<i class="${j <= i ? 'on' : ''}"></i>`).join('')}</div><div class="price">${money(t.price)}<small>${t.per}</small></div><span class="plus">${t.plus}</span>
+    <ul>${t.items.map(x => `<li><span>${x}</span></li>`).join('')}</ul><p class="who">${t.who}</p></div>`).join('');
   $('#addonRows').innerHTML = ADDONS.map(a => `<tr><td><b style="font-weight:500">${a.name}</b></td><td class="num">${money(a.price)}${a.per === 'month' ? '/mo' : ' once'}${a.monthly ? ` + ${money(a.monthly)}/mo` : ''}</td><td class="muted">${a.why}</td></tr>`).join('');
   $('#qPkg').innerHTML = TIERS.filter(t => t.price).map(t => `<button class="chip" data-pk="${t.id}">${t.name} · ${money(t.price)}</button>`).join('');
   $('#qAddons').innerHTML = ADDONS.map(a => `<label class="addon"><input type="checkbox" data-ad="${a.id}"><span>${a.name} <span class="muted mono" style="font-size:.76rem">${money(a.price)}${a.per === 'month' ? '/mo' : ' once'}${a.monthly ? ` + ${money(a.monthly)}/mo` : ''}</span></span></label>`).join('');
@@ -2020,7 +2308,7 @@ function renderPrompts() {
 }
 
 // ================= ROUTER =================
-const VIEWS = ['home', 'course', 'first', 'grow', 'studio', 'audit', 'pricing', 'clients', 'business', 'prompts'];
+const VIEWS = ['home', 'course', 'first', 'grow', 'bcourse', 'brand', 'studio', 'audit', 'pricing', 'clients', 'business', 'prompts'];
 const ALIAS = { learn: 'course', builder: 'studio' };
 function show(v) {
   v = ALIAS[v] || v; if (!VIEWS.includes(v)) v = 'home';
@@ -2031,7 +2319,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); courseInit(); firstInit(); growInit(); homeInit(); auditInit(); pricingInit(); clientsInit(); businessInit(); promptsInit();
+studioInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); homeInit(); auditInit(); pricingInit(); clientsInit(); businessInit(); promptsInit();
 show(location.hash.slice(1));
 </script>
 </body>

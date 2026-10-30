@@ -1511,18 +1511,20 @@ The arena canvas also picks its own pixel ratio: on a large, high-resolution
 screen it caps at 1.5x rather than 2x, since nine times the pixels buys
 nothing visible. That alone took a 2x display from 32 fps to 44.
 
-## Yaya AI Ad Lab — learn every step of AI advertising
+## Yaya AI Ad Lab — AI advertising and freelance brand scaling
 
-Open `ai-ads/index.html` in any browser (on GitHub Pages: `/ai-ads/`). One page, no sign-up. Each section fits on one screen, with steps and tabs instead of long scrolling.
+Open `ai-ads/index.html` in any browser (on GitHub Pages: `/ai-ads/`). The app has two main parts, AI advertising and brand scaling, plus tools to run them as a freelance business. Each section fits on one screen.
 
 | Section | What it does |
 | --- | --- |
 | Course | 10 steps with a working demo in each: customer profile builder, offer strength meter (scored out of 10), AI copy writer, image prompt builder, 15-second video storyboard, platform and radius picker, Ads Manager practice run, A/B test simulator, ad results calculator, ad rule checker, then a final quiz |
 | First Clients | 9 steps to your first client, each with a practice demo: how long it takes, niche checker, sample-work page, lead checker, 5-minute audit, first-message grader (scored out of 10), follow-up planner, sales call practice, and a simple client agreement |
 | Grow | 8 steps on freelancing, personal brand and scaling, each with a demo: freelance profile builder, proposal writer and checker, gig package builder, positioning and bio builder, 30-day content plan, gig vs monthly client calculator, capacity check, scaling calculator |
+| Brand Course | 8 steps for scaling a business's brand, each with a demo: brand health check, consistency checker, positioning builder, personality to brand kit, content calendar, review growth planner, content + ads budget split, monthly brand report |
+| Brand Studio | Enter a client's business and get a brand check, positioning, voice guide, brand kit (colors and fonts), 30-day content plan, channel plan, 90-day scaling plan and a pitch to the owner |
 | Ad Studio | Pick 1 of 13 business types, set the offer, your real proof and the style, click Generate. Ads are built from proven templates, not a live AI. Get headlines, 3 ad texts (PAS, AIDA, BAB), a Google ad, an image prompt, a video script, targeting and a budget, with Facebook, Google, TikTok and Story previews. Save ads to My Ads |
 | AI Audit | A step-by-step check of a business, a score out of 100, top fixes, a report to send the owner and a video script |
-| Pricing | What you charge businesses. Each tier includes everything below it: Free Audit $0, Starter $199/mo, Growth $399/mo, Pro $699/mo, Premium $1,199/mo. Plus add-ons and a quote builder that shows your profit |
+| Pricing | Brand packages: Brand Kit $299 once, Brand Growth $349/mo, Brand + Ads $699/mo. Ad packages: Each tier includes everything below it: Free Audit $0, Starter $199/mo, Growth $399/mo, Pro $699/mo, Premium $1,199/mo. Plus add-ons and a quote builder that shows your profit |
 | Get Clients | Where to find clients, a 14-day plan, message scripts for each lead, objection cards, a lead tracker and an outreach calculator |
 | Business | The plan, which niche to pick, a 12-month growth chart and delivery checklists |
 | Prompts | 16 copy-ready AI prompts filled in with the business from the Ad Studio |
