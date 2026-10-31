@@ -381,6 +381,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .hstep:first-child{border-color:var(--accent)}
 .hnum{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-size:.8rem;background:var(--accent-s);color:var(--accent)}
 .hstep.ok .hnum{background:var(--green);color:#0A0D13}
+#inTabs button{padding:7px 8px;font-size:.82rem}
 .navlabel{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:12px 10px 4px}
 .nav a{padding:7px 10px}
 .pillars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -562,13 +563,23 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 <!-- STUDIO -->
 <section class="view" id="v-studio" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">The app</span><h1>Ad Maker</h1><p class="sub">Builds ads from proven formulas (templates, not a live AI). For more ideas, paste a Prompt into Claude or ChatGPT.</p></div>
+    <div><span class="eyebrow">The app</span><h1>Ad Maker</h1><p class="sub">Describe the ad you want and it builds it. On claude.ai, Claude (AI) writes the words; elsewhere it uses proven templates.</p></div>
     <div class="row"><button class="btn ghost sm" id="surpriseBtn">Random</button><button class="btn ghost sm" id="saveBtn">Save</button><button class="btn ghost sm" id="copyAll">Copy text</button></div>
   </div>
   <div class="studio">
     <div class="panel inputs" id="adInputs">
-      <div class="tabs" id="inTabs"><button data-t="biz" class="on">1 · Business</button><button data-t="offer">2 · Offer</button><button data-t="style">3 · Style</button></div>
-      <div data-pane="biz" class="stack">
+      <div class="tabs" id="inTabs"><button data-t="desc" class="on">Describe</button><button data-t="biz">Business</button><button data-t="offer">Offer</button><button data-t="style">Style</button></div>
+      <div data-pane="desc" class="stack">
+        <label class="f" for="dsT">Describe the ad you want: the business, the deal, who it's for, and how it should look.</label>
+        <textarea id="dsT" style="min-height:120px" placeholder="e.g. A bold red Instagram ad for Joe's Pizza in Dallas. 20% off large pizzas this weekend, for families."></textarea>
+        <div class="stack" id="dsEx" style="gap:5px"><span class="dim" style="font-size:.76rem">Try an example:</span>
+          <button class="chip" style="text-align:left;white-space:normal" data-ex="A friendly green Facebook ad for Sparkle Home Cleaning in Tampa. $50 off the first deep clean, for busy parents.">Cleaning company, friendly, green</button>
+          <button class="chip" style="text-align:left;white-space:normal" data-ex="A premium black TikTok ad for Luma Med Spa in Miami. $100 off your first facial this month.">Med spa, premium, black, TikTok</button>
+          <button class="chip" style="text-align:left;white-space:normal" data-ex="A funny orange ad for Bean There Cafe in Denver. Buy one latte, get one free before 10am, for students.">Coffee shop, funny, orange</button></div>
+        <button class="btn" id="dsGo">Make my ad</button>
+        <p class="dim" id="dsMsg" style="font-size:.8rem" aria-live="polite"></p>
+      </div>
+      <div data-pane="biz" class="stack" hidden>
         <div class="nichegrid" id="nicheGrid"></div>
         <label class="f">Business name<input type="text" id="bName"></label>
         <label class="f">City<input type="text" id="bCity"></label>
@@ -1845,7 +1856,7 @@ const HELP = {
   bcourse: ['An 8-step course on growing a business’s brand: how people see it, remember it and trust it.', ['Read the short lesson.', 'Try the practice tool next to it.', 'Click “Mark done and continue” at the bottom.']],
   first: ['A 9-step course on getting your first paying client.', ['Read the short lesson.', 'Practice with the tool next to it.', 'Do each step for real, then mark it done.']],
   grow: ['How to get work on freelance sites like Upwork and Fiverr, build your name, and grow.', ['Read the short lesson.', 'Use the tool next to it to write your profile, proposals and posts.', 'Copy what you made and use it on the real site.']],
-  studio: ['Makes a complete ad for a business in a few seconds. Built from proven formulas.', ['Pick the type of business and type its name and city.', 'In “2 · Offer”, write the deal and real facts, like their star rating.', 'Check the phone preview, then copy what you need from the results panel.']],
+  studio: ['Makes a complete ad for a business in a few seconds. Built from proven formulas.', ['In “Describe”, type the ad you want in your own words and click “Make my ad”. Or fill in the Business, Offer and Style tabs.', 'Add only real facts, like their actual star rating, in the Offer tab.', 'Check the phone preview, then copy what you need from the results panel.']],
   brand: ['Makes a brand plan for a business: what to say, which colors and fonts to use, and what to post.', ['Fill in the business and one thing that makes it different.', 'In “2 · Personality”, move the sliders to match how the business feels.', 'Go through the results tabs and copy what you need.']],
   audit: ['Grades a business’s online presence out of 100. You send the result to the owner for free, which starts a conversation.', ['Look up the business on Google Maps, its website and Facebook.', 'Answer the questions, one tab at a time.', 'Open “Report to send”, copy it and send it to the owner.']],
   prompts: ['Ready-made instructions to paste into an AI chat like ChatGPT or Claude.', ['Pick a topic at the top.', 'Click Copy on a prompt.', 'Paste it into an AI chat, fill in anything in [brackets], and send.']],
@@ -1927,6 +1938,85 @@ function renderHomeSteps() {
     <h3>${s[0]}</h3><p class="muted" style="font-size:.88rem">${s[1]}</p><a class="btn sm ${i ? 'ghost' : ''}" href="${s[3]}" style="align-self:flex-start;margin-top:auto">${s[4]}</a></div>`).join('');
 }
 
+// ================= DESCRIBE YOUR AD: real AI (Claude) inside claude.ai, keyword reader everywhere else =================
+const NICHE_WORDS = {
+  restaurant: /restaurant|pizza|burger|taco|sushi|diner|bbq|grill|food truck|bakery|cafe food|wings/i, dentist: /dentist|dental|teeth|orthodont/i, gym: /gym|fitness|crossfit|yoga|pilates|personal train/i,
+  roofer: /roof/i, salon: /salon|hair|barber|nails?|lash|braids/i, realestate: /real estate|realtor|homes? for sale|property|listing/i, auto: /auto|car repair|mechanic|oil change|tires?|detailing/i,
+  ecommerce: /online store|shop online|e-?commerce|shopify|clothing brand|product/i, lawyer: /lawyer|law firm|attorney|legal|injury/i, coffee: /coffee|espresso|latte|caf[eé]/i,
+  hvac: /hvac|plumb|heating|air condition|\bac\b|furnace/i, medspa: /med ?spa|botox|facial|skin ?care|filler|aesthetic/i, cleaning: /clean|maid|janitor/i
+};
+const COLOR_WORDS = [[0, /red|orange|coral|warm|fire|hot/i], [1, /blue|navy|cobalt|ocean|cool/i], [2, /brown|copper|gold|tan|beige|earth/i], [3, /purple|violet|plum|pink|lilac/i], [4, /green|mint|teal|fresh|nature/i], [5, /black|dark|grey|gray|noir|luxury|sleek/i]];
+// style words the person asked for win over hints like "this weekend"
+const TONE_WORDS = [['funny', /funny|\bfun\b|playful|silly|joke|humor/i], ['luxury', /luxury|premium|elegant|classy|high.end|upscale/i], ['bold', /\bbold\b|strong|loud|confident|punchy/i], ['friendly', /friendly|welcoming|\bkind\b/i], ['urgent', /urgent|limited|hurry|ends|last chance|this week|weekend|flash/i]];
+function parseDescription(t) {
+  const out = {};
+  for (const [k, re] of Object.entries(NICHE_WORDS)) if (re.test(t)) { out.niche = k; break; }
+  for (const [i, re] of COLOR_WORDS) if (re.test(t)) { out.palette = i; break; }
+  for (const [k, re] of TONE_WORDS) if (re.test(t)) { out.tone = k; break; }
+  if (/tiktok|reel/i.test(t)) out.platform = 'tiktok'; else if (/story|stories/i.test(t)) out.platform = 'story'; else if (/google|search/i.test(t)) out.platform = 'google'; else if (/facebook|instagram|\bfb\b|\big\b/i.test(t)) out.platform = 'fb';
+  const name = t.match(/(?:for|called|named)\s+((?:[A-Z][\w'’&.-]*\s?){1,4})/); if (name) out.name = name[1].trim().replace(/\s+(in|at|on)$/i, '');
+  const city = t.match(/\bin\s+([A-Z][a-zA-Z.]+(?:\s[A-Z][a-zA-Z.]+)?)/); if (city) out.city = city[1].trim().replace(/\.+$/, '');
+  const offer = t.match(/(\d+\s?%\s?off[^.,;]*|\$\s?\d+[^.,;]*|free [^.,;]*|buy one[^.,;]*|bogo[^.,;]*|half price[^.,;]*)/i); if (offer) out.offer = cap(offer[1].trim());
+  const aud = t.match(/\bfor\s+((?:families|parents|students|moms|dads|kids|seniors|teens|young|busy|homeowners|locals|women|men|couples)[^.,;]*)/i); if (aud) out.aud = cap(aud[1].trim());
+  return out;
+}
+async function getSample() { try { return window.claude && window.claude.use ? await window.claude.use('sample') : null; } catch (e) { return null; } }
+function aiPrompt(t) {
+  return `You write ads for local businesses. Turn the request below into one ad. Reply with JSON only, no other text.
+
+REQUEST: """${t}"""
+
+Return exactly this JSON shape:
+{"niche": one of ${JSON.stringify(Object.keys(NICHES))} (closest match),
+ "name": business name from the request, or "" if none given,
+ "city": city from the request, or "",
+ "offer": the deal from the request, or a fitting simple offer if none was given,
+ "proof": real facts the request states (rating, review count, years open), or "" if none,
+ "audience": who should see the ad, in under 12 words,
+ "tone": one of ["friendly","bold","urgent","luxury","funny"],
+ "palette": one of ["Ember","Cobalt","Copper","Plum","Forest","Noir"] (Ember=red/orange, Cobalt=blue, Copper=brown/gold, Plum=purple/pink, Forest=green, Noir=black/dark),
+ "platform": one of ["fb","google","tiktok","story"],
+ "headlines": [3 different headlines, each 40 characters or less],
+ "texts": [3 Facebook ad texts under 80 words each: one Problem-Agitate-Solve, one AIDA, one Before-After-Bridge],
+ "imageIdea": one sentence describing a photo for the ad, no text in the image}
+
+Rules: Never invent reviews, star ratings, customer counts, awards, prices or results. Only mention proof if the request gives it. Never call out personal traits (like "Are you overweight?"). No guarantees. Plain, friendly English.`;
+}
+function cleanAI(v) {
+  if (!v || typeof v !== 'object') return null;
+  const pal = PALETTES.findIndex(p => p.name === v.palette), s = x => typeof x === 'string' ? x.trim() : '';
+  const hs = Array.isArray(v.headlines) ? v.headlines.map(s).filter(Boolean).slice(0, 3) : [], tx = Array.isArray(v.texts) ? v.texts.map(s).filter(Boolean).slice(0, 3) : [];
+  if (hs.length < 3 || tx.length < 3) return null;
+  return { niche: NICHES[v.niche] ? v.niche : undefined, name: s(v.name), city: s(v.city), offer: s(v.offer), proof: s(v.proof), aud: s(v.audience),
+    tone: TONES[v.tone] ? v.tone : undefined, palette: pal >= 0 ? pal : undefined, platform: PLATS[v.platform] ? v.platform : undefined, ai: { headlines: hs, texts: tx, imageIdea: s(v.imageIdea) } };
+}
+function applyDescribed(r) {
+  if (r.niche) { B.niche = r.niche; const n = NICHES[r.niche]; B.offer = n.offer; B.aud = n.audience; B.palette = n.palette; if (!r.name) B.name = NICHE_NAMES[r.niche]; }
+  ['name', 'city', 'offer', 'proof', 'aud', 'tone'].forEach(k => { if (r[k]) B[k] = r[k]; });
+  if (r.palette != null) B.palette = r.palette;
+  if (r.platform) plat = r.platform;
+  B.ai = r.ai || null; variant = 0;
+}
+function describeInit() {
+  $('#dsEx').addEventListener('click', e => { const b = e.target.closest('[data-ex]'); if (b) $('#dsT').value = b.dataset.ex; });
+  $('#dsGo').addEventListener('click', async () => {
+    const t = $('#dsT').value.trim(), msg = $('#dsMsg'), btn = $('#dsGo');
+    if (t.length < 8) { msg.textContent = 'Write a little more: what business, what deal, what look.'; return; }
+    btn.disabled = true; msg.textContent = 'Working…';
+    const sample = await getSample();
+    let r = null, how = '';
+    if (sample) {
+      try { msg.textContent = 'Claude is writing your ad…'; r = cleanAI(await sample.json(aiPrompt(t))); how = r ? 'Written by Claude (AI) from your words. Check every fact before using it.' : ''; }
+      catch (e) { how = e && e.code === 'not_granted' ? 'AI writing was not allowed, so the simple maker was used.' : e && e.code === 'rate_limited' ? 'AI is busy right now, so the simple maker was used. Try again in a minute.' : ''; }
+    }
+    if (!r) { r = parseDescription(t); r.ai = null; how = how || 'Built from your words with templates. (AI writing works when the app is opened on claude.ai.)'; }
+    applyDescribed(r); renderStudio(); generate();
+    const found = [r.niche && NICHES[r.niche].label, r.name, r.city, r.offer && `offer “${r.offer}”`, r.palette != null && PALETTES[r.palette].name + ' colors', r.tone && TONES[r.tone] + ' tone'].filter(Boolean);
+    msg.innerHTML = `${esc(how)}${found.length ? `<br>Picked up: ${esc(found.join(', '))}.` : ''} Fine-tune anything in the other tabs.`;
+    btn.disabled = false;
+  });
+}
+
 // ================= OFFER SCORE (used in the course and the studio) =================
 const OFFER_CHECKS = [
   ['Specific: a number, price or time', /\$|\d|%/, 'Add a number: a price, a percent or a time ("$79", "in 24 hours").'],
@@ -1960,7 +2050,8 @@ function fields() {
   return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette };
 }
 function studioInit() {
-  wireTabs($('#inTabs'), $('#adInputs'));
+  wireTabs($('#inTabs'), $('#adInputs'), t => { $('#genBtn').hidden = t === 'desc'; });
+  $('#genBtn').hidden = true;
   $('#nicheGrid').innerHTML = Object.entries(NICHES).map(([k, n]) => `<button data-n="${k}">${n.label}</button>`).join('');
   $('#toneRow').innerHTML = Object.entries(TONES).map(([k, t]) => `<button class="chip" data-tone="${k}">${t}</button>`).join('');
   $('#swatches').innerHTML = PALETTES.map((p, i) => `<button class="sw" data-pal="${i}" title="${p.name}" aria-label="${p.name} colors" style="background:linear-gradient(135deg,${p.c1},${p.c2})"></button>`).join('');
@@ -1968,13 +2059,13 @@ function studioInit() {
   $('#variantBtns').innerHTML = ['A', 'B', 'C'].map((l, i) => `<button data-var="${i}">Version ${l}</button>`).join('');
   $('#outTabs').innerHTML = Object.entries(OUTS).map(([k, t]) => `<button data-o="${k}">${t}</button>`).join('');
   $('#nicheGrid').addEventListener('click', e => { const b = e.target.closest('[data-n]'); if (b) setNiche(b.dataset.n); });
-  $('#toneRow').addEventListener('click', e => { const b = e.target.closest('[data-tone]'); if (b) { B.tone = b.dataset.tone; renderStudio(); } });
+  $('#toneRow').addEventListener('click', e => { const b = e.target.closest('[data-tone]'); if (b) { B.tone = b.dataset.tone; B.ai = null; renderStudio(); } });
   $('#swatches').addEventListener('click', e => { const b = e.target.closest('[data-pal]'); if (b) { B.palette = +b.dataset.pal; renderStudio(); } });
   $('#platTabs').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (b) { plat = b.dataset.p; renderStudio(); } });
   $('#variantBtns').addEventListener('click', e => { const b = e.target.closest('[data-var]'); if (b) { variant = +b.dataset.var; renderStudio(); } });
   $('#outTabs').addEventListener('click', e => { const b = e.target.closest('[data-o]'); if (b) { outTab = b.dataset.o; renderOutputs(); } });
   [['bName', 'name'], ['bCity', 'city'], ['bOffer', 'offer'], ['bAud', 'aud'], ['bProof', 'proof']].forEach(([id, key]) =>
-    $('#' + id).addEventListener('input', e => { B[key] = e.target.value; renderStudio(false); }));
+    $('#' + id).addEventListener('input', e => { B[key] = e.target.value; B.ai = null; renderStudio(false); }));
   $('#genBtn').addEventListener('click', () => generate());
   $('#surpriseBtn').addEventListener('click', () => {
     setNiche(pick(Object.keys(NICHES)), true);
@@ -1995,7 +2086,7 @@ function studioInit() {
 }
 function setNiche(k, force) {
   const sample = Object.values(NICHE_NAMES).includes(B.name) || !B.name.trim();
-  B.niche = k; const n = NICHES[k];
+  B.niche = k; B.ai = null; const n = NICHES[k];
   if (sample || force) B.name = NICHE_NAMES[k];
   B.offer = n.offer; B.aud = n.audience; B.palette = n.palette;
   renderStudio();
@@ -2014,6 +2105,10 @@ function generate() {
 function renderStudio(sync = true) {
   store.set('builder', B);
   pack = buildPack(fields());
+  if (B.ai && B.ai.headlines && B.ai.texts) { // AI-written copy from the Describe tab replaces the template copy
+    pack.hs = B.ai.headlines.slice(0, 3); pack.texts = pack.texts.map((t, i) => ({ f: t.f + ' · written by AI', t: B.ai.texts[i] || t.t }));
+    if (B.ai.imageIdea) pack.imagePrompt = `${B.ai.imageIdea}, vertical 4:5 ad format, photorealistic, high detail, empty space at the top for a headline, no text, no logos`;
+  }
   if (sync) { $('#bName').value = B.name; $('#bCity').value = B.city; $('#bOffer').value = B.offer; $('#bAud').value = B.aud; $('#bProof').value = B.proof || ''; $('#bProof').placeholder = 'e.g. ' + NICHES[B.niche].proofEx; }
   $$('#nicheGrid button').forEach(b => b.classList.toggle('on', b.dataset.n === B.niche));
   $$('#toneRow .chip').forEach(b => b.classList.toggle('on', b.dataset.tone === B.tone));
@@ -2568,7 +2663,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); homeInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit();
+studioInit(); courseInit(); describeInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); homeInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit();
 show(location.hash.slice(1));
 </script>
 </body>
