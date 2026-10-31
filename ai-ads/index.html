@@ -427,11 +427,60 @@ details.mk-more[open]{max-height:44dvh;overflow:auto}
     <a href="#earn" data-v="earn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c0-1.4-1.3-2.5-3-2.5s-3 1-3 2.3c0 3.2 6 1.7 6 5 0 1.4-1.3 2.7-3 2.7s-3-1.1-3-2.5M12 5.5v13"/></svg>Make Money</a>
     <a href="#pricing" data-v="pricing"><svg viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg>Pricing</a>
     <a href="#prompts" data-v="prompts"><svg viewBox="0 0 24 24"><path d="M4 6l6 6-6 6"/><path d="M12 18h8"/></svg>AI Prompts</a>
+    <span class="navlabel">Learn (optional)</span>
+    <a href="#course" data-v="course"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>Ads Course</a>
+    <a href="#bcourse" data-v="bcourse"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><circle cx="12" cy="10" r="3"/></svg>Brand Course</a>
+    <a href="#first" data-v="first"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>Clients Course</a>
+    <a href="#grow" data-v="grow"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Freelance Course</a>
   </nav>
   <div class="mini"><button class="btn sm ghost" data-glossary style="width:100%">Words explained</button><button class="btn sm ghost" data-sources style="width:100%">Facts & sources</button></div>
 </aside>
 
 <main class="stage" id="stage">
+
+<!-- COURSE -->
+<section class="view" id="v-course" hidden>
+  <div class="vhead">
+    <div><span class="eyebrow">Pillar 1 · AI advertising</span><h1>Every step of AI advertising</h1></div>
+    <div class="row"><div class="progress"><i id="cProg" style="width:0"></i></div><span class="mono muted" id="cProgT"></span></div>
+  </div>
+  <div class="stepnav" id="stepNav"></div>
+  <div class="course" id="courseBody"><article class="panel lesson" id="lesson"></article><div class="panel demo" id="demo"></div></div>
+  <div class="coursefoot"><button class="btn ghost" id="cPrev">Back</button><button class="btn" id="cNext">Mark done and continue</button></div>
+</section>
+
+<!-- FIRST CLIENTS -->
+<section class="view" id="v-first" hidden>
+  <div class="vhead">
+    <div><span class="eyebrow">Freelance business</span><h1>Get your first clients</h1></div>
+    <div class="row"><div class="progress"><i id="fcProg" style="width:0"></i></div><span class="mono muted" id="fcProgT"></span></div>
+  </div>
+  <div class="stepnav" id="fcNav"></div>
+  <div class="course"><article class="panel lesson" id="fcLesson"></article><div class="panel demo" id="fcDemo"></div></div>
+  <div class="coursefoot"><button class="btn ghost" id="fcPrev">Back</button><button class="btn" id="fcNext">Mark done and continue</button></div>
+</section>
+
+<!-- GROW -->
+<section class="view" id="v-grow" hidden>
+  <div class="vhead">
+    <div><span class="eyebrow">Freelance business</span><h1>Freelance, brand and scale</h1></div>
+    <div class="row"><div class="progress"><i id="grProg" style="width:0"></i></div><span class="mono muted" id="grProgT"></span></div>
+  </div>
+  <div class="stepnav" id="grNav"></div>
+  <div class="course"><article class="panel lesson" id="grLesson"></article><div class="panel demo" id="grDemo"></div></div>
+  <div class="coursefoot"><button class="btn ghost" id="grPrev">Back</button><button class="btn" id="grNext">Mark done and continue</button></div>
+</section>
+
+<!-- BRAND COURSE -->
+<section class="view" id="v-bcourse" hidden>
+  <div class="vhead">
+    <div><span class="eyebrow">Pillar 2 · Brand scaling</span><h1>Scale a business's brand</h1></div>
+    <div class="row"><div class="progress"><i id="bcProg" style="width:0"></i></div><span class="mono muted" id="bcProgT"></span></div>
+  </div>
+  <div class="stepnav" id="bcNav"></div>
+  <div class="course"><article class="panel lesson" id="bcLesson"></article><div class="panel demo" id="bcDemo"></div></div>
+  <div class="coursefoot"><button class="btn ghost" id="bcPrev">Back</button><button class="btn" id="bcNext">Mark done and continue</button></div>
+</section>
 
 <!-- MAKE MONEY -->
 <section class="view" id="v-earn" hidden>
@@ -1297,7 +1346,7 @@ function growInit() {
   $('#grPrev').onclick = () => { if (grCur > 0) { grCur--; renderGrow(); } };
   $('#grNext').onclick = () => {
     if (!grDone.includes(grCur)) { grDone.push(grCur); store.set('grdone', grDone); }
-    if (grCur < GR_LESSONS.length - 1) grCur++; else location.hash = 'business';
+    if (grCur < GR_LESSONS.length - 1) grCur++; else location.hash = 'earn';
     renderGrow();
   };
   renderGrow();
@@ -1313,7 +1362,7 @@ function renderGrow() {
   const old = $('#grDemo'), el = old.cloneNode(false); old.replaceWith(el);
   GR_DEMOS[L.demo](el);
   $('#grPrev').disabled = grCur === 0;
-  $('#grNext').textContent = grCur === n - 1 ? 'Done: open the Business plan' : 'Mark done and continue';
+  $('#grNext').textContent = grCur === n - 1 ? 'Done: open Make Money' : 'Mark done and continue';
   $$('#grNav button')[grCur].scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 const scoreBar = (label, score) => { const col = score >= 8 ? 'var(--green)' : score >= 6 ? 'var(--gold)' : 'var(--red)';
@@ -1703,7 +1752,7 @@ function renderEarn() {
   T.push(['aud', 'Send 3 free audits, sample ads or brand checks', '#audit']);
   if (s.calls) T.push(['call', `Prepare for ${s.calls} call${s.calls > 1 ? 's' : ''}: audit + quote ready`, '#pricing']);
   if (s.monthlyClients && !s.brand) T.push(['cross', 'Offer a $299 Brand Kit to one of your ad clients', '#brand']);
-  if (s.monthlyClients) T.push(['serve', `Weekly update to your ${s.monthlyClients} monthly client${s.monthlyClients > 1 ? 's' : ''}`, '#business']);
+  if (s.monthlyClients) T.push(['serve', `Weekly update to your ${s.monthlyClients} monthly client${s.monthlyClients > 1 ? 's' : ''} (AI Prompts → Report)`, '#prompts']);
   const td = store.get('todo_' + isoDay(), {});
   $('#todo').innerHTML = T.map(t => `<label class="day ${td[t[0]] ? 'done' : ''}" style="grid-template-columns:18px minmax(0,1fr) auto;padding:6px 10px"><input type="checkbox" data-td="${t[0]}" ${td[t[0]] ? 'checked' : ''}><b style="font-weight:500">${t[1]}</b><a href="${t[2]}" class="dim" style="font-size:.78rem">Open</a></label>`).join('');
   // --- work counters ---
@@ -2537,8 +2586,8 @@ function renderPrompts() {
 }
 
 // ================= ROUTER =================
-const VIEWS = ['studio', 'brand', 'audit', 'clients', 'earn', 'pricing', 'prompts'];
-const ALIAS = { builder: 'studio', home: 'studio' };
+const VIEWS = ['studio', 'brand', 'audit', 'clients', 'earn', 'pricing', 'prompts', 'course', 'bcourse', 'first', 'grow'];
+const ALIAS = { builder: 'studio', home: 'studio', learn: 'course' };
 function show(v) {
   v = ALIAS[v] || v; if (!VIEWS.includes(v)) v = 'studio';
   $$('.view').forEach(s => s.hidden = s.id !== 'v-' + v);
@@ -2549,7 +2598,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); describeInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); promptsInit();
+studioInit(); describeInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); promptsInit();
 show(location.hash.slice(1));
 </script>
 </body>

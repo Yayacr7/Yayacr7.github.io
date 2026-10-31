@@ -1513,7 +1513,7 @@ nothing visible. That alone took a 2x display from 32 fps to 44.
 
 ## Yaya AI Ad Lab — makes ads and brands for local businesses
 
-Open `ai-ads/index.html` in any browser (on GitHub Pages: `/ai-ads/`). It does the work for you; it is not a course.
+Open `ai-ads/index.html` in any browser (on GitHub Pages: `/ai-ads/`). It does the work for you first, with optional courses at the end of the menu.
 
 | Page | What it does |
 | --- | --- |
@@ -1524,5 +1524,7 @@ Open `ai-ads/index.html` in any browser (on GitHub Pages: `/ai-ads/`). It does t
 | Make Money | Today's actions, a work counter with a streak, your real reply and close rates, an income tracker and the two easiest first offers |
 | Pricing | Ad and brand packages and a quote builder |
 | AI Prompts | Copy-ready prompts for any AI chat |
+
+| Learn (optional) | Ads Course (10 steps), Brand Course (8), Clients Course (9) and Freelance Course (8), each step with a short lesson and a practice tool |
 
 "Words explained" and "Facts & sources" are in the menu. Everything you save stays in your own browser.
