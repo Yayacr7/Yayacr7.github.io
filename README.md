@@ -1515,7 +1515,7 @@ nothing visible. That alone took a 2x display from 32 fps to 44.
 
 Open `ai-ads/index.html` in any browser (on GitHub Pages: `/ai-ads/`). The app has two main parts, AI advertising and brand scaling, plus tools to run them as a freelance business. Each section fits on one screen.
 
-Start on the home page: it shows 3 steps (Learn, Practice, Earn). Every page has a "How this page works" button, and "Words explained" lists 24 terms in plain English.
+Start on the home page: it shows 3 steps (Learn, Practice, Earn). Every page has a "How this page works" button, and "Words explained" lists 24 terms in plain English. "Facts & sources" links each key fact (ad rules, fees, typical ad costs) to where it comes from, checked October 2026.
 
 | Section | What it does |
 | --- | --- |

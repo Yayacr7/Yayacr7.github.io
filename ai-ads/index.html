@@ -424,7 +424,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
     <a href="#pricing" data-v="pricing"><svg viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg>Pricing</a>
     <a href="#business" data-v="business"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>Business Plan</a>
   </nav>
-  <div class="mini"><button class="btn sm ghost" data-glossary style="width:100%">Words explained</button></div>
+  <div class="mini"><button class="btn sm ghost" data-glossary style="width:100%">Words explained</button><button class="btn sm ghost" data-sources style="width:100%">Facts & sources</button></div>
 </aside>
 
 <main class="stage" id="stage">
@@ -799,7 +799,7 @@ const NICHES = {
     audience: 'Adults 25–65 within 10 miles', offer: '$79 new-patient exam, cleaning and X-rays',
     pains: ['putting off your checkup for years', 'surprise dental bills', 'hiding your smile in photos'], benefits: ['gentle, pain-free cleanings', 'same-week appointments', 'clear prices before we start'],
     proofEx: 'Trusted by 2,000+ local families', cta: 'Book Now', goal: 'Bookings', visual: 'bright modern dental office, smiling patient in the chair, friendly dentist, clean white tones, natural light',
-    funny: 'Your teeth have been texting us. They miss you.', avgSale: 900, cpl: [25, 70], tier: 'high', ease: 'Medium', palette: 1 },
+    funny: 'Your teeth have been texting us. They miss you.', avgSale: 900, cpl: [40, 90], tier: 'high', ease: 'Medium', palette: 1 },
   gym: { label: 'Gym', kind: 'gym', thing: 'members', who: 'adults who want to get fit but feel lost in a gym', fear: 'wasting money on a membership again',
     audience: 'Adults 20–45 within 7 miles', offer: '7-day free pass + a free coaching session',
     pains: ['starting over every January', 'crowded gyms where nobody helps you', 'paying for a membership you never use'], benefits: ['coaches who learn your name', 'classes that fit a lunch break', 'a plan built for your body'],
@@ -814,7 +814,7 @@ const NICHES = {
     audience: 'Adults 22–55 within 8 miles interested in hair and beauty', offer: '20% off your first cut or color',
     pains: ['a bad haircut you’re still growing out', 'stylists who don’t listen', 'booking weeks ahead'], benefits: ['stylists who listen first', 'online booking in 30 seconds', 'color that lasts for weeks'],
     proofEx: '4.9★ from 300+ clients', cta: 'Book Now', goal: 'Bookings', visual: 'close-up of glossy, freshly colored hair in a salon chair, soft warm light, editorial beauty photo',
-    funny: 'Bad hair day? We can make it a bad hair hour, tops.', avgSale: 120, cpl: [8, 25], tier: 'std', ease: 'Easy', palette: 3 },
+    funny: 'Bad hair day? We can make it a bad hair hour, tops.', avgSale: 120, cpl: [20, 55], tier: 'std', ease: 'Easy', palette: 3 },
   realestate: { label: 'Real Estate', kind: 'real estate agent', thing: 'sellers', who: 'homeowners thinking about selling', fear: 'selling for less than it is worth',
     audience: 'People in your city interested in buying or selling a home (Housing category: no age or zip-code targeting on Meta)', offer: 'Free home value report in 60 seconds',
     pains: ['not knowing what your home is worth', 'selling for less than you should', 'a stressful, slow sale'], benefits: ['a price backed by real local sales', 'photos and video that sell faster', 'a plan you can read in 5 minutes'],
@@ -849,7 +849,7 @@ const NICHES = {
     audience: 'Adults 28–60 within 15 miles interested in skincare', offer: '$100 off your first treatment',
     pains: ['tired-looking skin', 'results that look overdone', 'clinics that feel like a factory'], benefits: ['natural-looking results', 'licensed nurse injectors', 'a free plan before any treatment'],
     proofEx: '5,000+ treatments, 4.9★', cta: 'Book Consultation', goal: 'Bookings', visual: 'calm spa treatment room, glowing skin close-up, soft neutral tones, luxury editorial photo',
-    funny: 'Your skin wants a vacation. We are the vacation.', avgSale: 700, cpl: [20, 60], tier: 'high', ease: 'Medium', palette: 3 },
+    funny: 'Your skin wants a vacation. We are the vacation.', avgSale: 700, cpl: [30, 80], tier: 'high', ease: 'Medium', palette: 3 },
   cleaning: { label: 'Home Cleaning', kind: 'cleaning company', thing: 'homes', who: 'busy families and professionals', fear: 'letting an unreliable stranger into their home',
     audience: 'Homeowners and parents 28–60 within 12 miles', offer: '$50 off your first deep clean',
     pains: ['spending your weekend scrubbing', 'cleaners who cancel last minute', 'coming home to a mess'], benefits: ['background-checked cleaners', 'the same team every visit', 'a 100% happiness guarantee'],
@@ -915,7 +915,7 @@ function buildPack(f) {
   return {
     f, n, hs, texts, g, segs,
     imagePrompt: `${n.visual}, subtle ${pal.name.toLowerCase()} color grading, empty space at the top for a headline, vertical 4:5 ad format, photorealistic, high detail, no text, no logos`,
-    video: segs.map(s => `${s.t.padEnd(7)} ${s.name.toUpperCase()}\n        On screen: "${s.cap}"\n        Shot: ${s.shot}`).join('\n\n') + '\n\nFilm vertical (9:16) on a phone or build it in CapCut or Canva. Add big captions: most people watch with the sound off.',
+    video: segs.map(s => `${s.t.padEnd(7)} ${s.name.toUpperCase()}\n        On screen: "${s.cap}"\n        Shot: ${s.shot}`).join('\n\n') + '\n\nFilm vertical (9:16) on a phone or build it in CapCut or Canva. Add big captions: many people watch with the sound off.',
     targeting: `Location: ${f.city} + ${n.tier === 'high' ? '15–25' : '5–10'} mile radius\nAudience: ${f.aud}\nAudience type: Advantage+ (broad, let Meta's AI find buyers)\nPlacements: Advantage+ (automatic)\nCampaign goal: ${/sales|orders/i.test(n.goal) ? 'Sales' : 'Leads'} (${n.goal})${n.special ? `\nSpecial Ad Category: ${n.special}. Turn it on in Ads Manager or the ad will be rejected.` : ''}`,
     budget: `Test budget: $${daily}/day for 7 days = $${spend} (paid by the business to the ad platform)\nRough guess: about ${leadsLo}–${leadsHi} leads if the offer is good.\nRough guess of cost per lead for a ${n.kind}: $${n.cpl[0]}–$${n.cpl[1]}. Real numbers vary a lot by city and season; trust your own results after 7 days.\nAfter 7 days: keep ads under $${n.cpl[1]} per lead, pause the rest, add 3 new hooks.`,
     hashtags: ['#' + f.city.replace(/\s/g, ''), '#' + n.kind.replace(/\s/g, ''), '#shoplocal', '#smallbusiness'].join(' ')
@@ -967,14 +967,14 @@ const LESSONS = [
   { t: 'Make a short video ad', s: 'Video', demo: 'video',
     why: 'Short vertical video is often the cheapest way to reach new people on Meta and TikTok.',
     how: ['Keep it 15 seconds. Show the hook in the first 2 seconds.', 'Film vertically on a phone, or build it in CapCut or Canva from photos.',
-      'Add big captions. Most people watch with the sound off.', 'Use this order: hook, problem, fix, proof, offer.', 'AI voice-overs and avatars are fine. Label them where the platform asks you to.'],
+      'Add big captions. Many people watch with the sound off.', 'Use this order: hook, problem, fix, proof, offer.', 'AI voice-overs and avatars are fine. Label them where the platform asks you to.'],
     tip: 'A 15-second phone video of the owner talking to camera often beats a polished one.' },
   { t: 'Choose platform and audience', s: 'Targeting', demo: 'targeting',
     why: 'The right ad in the wrong place still fails. Placement is half the job.',
     how: ['Urgent needs (plumber, lawyer): Google Search. Visual or impulse buys: Facebook, Instagram, TikTok.', 'Start each client on one platform.',
       'Set the location radius first: about 3 miles for a coffee shop, 25 for a roofer.', 'Keep targeting broad and let the platform’s AI find buyers (Advantage+ audience).',
       'Aim for at least 50,000 people in the audience.'],
-    tip: 'Housing, jobs, credit and politics are Special Ad Categories with limited targeting. Mark them.' },
+    tip: 'Housing, jobs, financial products (loans, credit, insurance) and politics are Special Ad Categories with limited targeting. Mark them.' },
   { t: 'Launch in Ads Manager', s: 'Launch', demo: 'launch',
     why: 'Most beginners get lost in Ads Manager. Here is the exact path, click by click.',
     how: ['Get partner access to the client’s Meta Business account. The client always owns it.', 'Campaign: choose the goal, Leads (calls, forms) or Sales (online orders).',
@@ -988,7 +988,7 @@ const LESSONS = [
     tip: 'Change one thing at a time, so you know what made the difference.' },
   { t: 'Read the numbers', s: 'Numbers', demo: 'metrics',
     why: 'Owners care about one thing: did ads bring customers for less than they are worth?',
-    how: ['CPM: cost for 1,000 views. CTR: clicks ÷ views (1% okay, 2%+ good).', 'CPC: cost per click. CPL: cost per lead, your most important number.',
+    how: ['CPM: cost for 1,000 views. CTR: clicks ÷ views (about 1.5–2.5% is typical on Facebook; under 1% means the hook needs work).', 'CPC: cost per click. CPL: cost per lead, your most important number.',
       'Conversion rate: how many clicks become leads.', 'ROAS: revenue ÷ ad spend. A ROAS of 4 means $4 back for every $1.'],
     tip: 'Always ask the owner how many leads became paying customers. That is the real score.' },
   { t: 'Improve, report, stay safe', s: 'Improve', demo: 'policy',
@@ -1459,7 +1459,7 @@ const GR_DEMOS = {
       const P = [['Basic', v.gB, '3 AI ad images + 3 headlines, 1 revision'], ['Standard', v.gS, '6 ad images + ad text in 3 styles + 1 short video script, 2 revisions'], ['Premium', v.gP, 'Full ad pack + campaign setup in their Ads Manager + 7-day check-in']];
       $('#gOut', el).innerHTML = P.map(p => `<div class="kpi"><small>${p[0]} · you keep ~${money(keep(p[1]))}</small><b>${money(p[1])}</b><p class="muted" style="font-size:.8rem;margin-top:3px">${p[2]}</p></div>`).join('');
       const ok = v.gB < v.gS && v.gS < v.gP;
-      $('#gN', el).innerHTML = `<div class="note ${ok ? 'ok' : 'bad'}">${ok ? 'Good ladder: each package costs more and does more.' : 'Each package should cost more than the one before it.'} Fiverr's seller fee has been 20%; Upwork's varies. Always check the platform's current fees.</div>`;
+      $('#gN', el).innerHTML = `<div class="note ${ok ? 'ok' : 'bad'}">${ok ? 'Good ladder: each package costs more and does more.' : 'Each package should cost more than the one before it.'} Fiverr takes 20% of each order. Upwork's fee is 0–15%, set per contract (since May 2025). Check the platform's current fees.</div>`;
     };
     el.addEventListener('input', go); go();
   },
@@ -1868,6 +1868,22 @@ const GLOSSARY = [
   ['Audit (checkup)', 'A quick check of a business’s Google listing, website and social pages.'], ['Monthly plan (retainer)', 'A client who pays you every month to keep doing the work.'],
   ['Monthly recurring', 'The money that comes in every month from your monthly clients.'], ['Freelancer', 'Someone who works for themselves, for different clients.']
 ];
+const SOURCES = [
+  ['Fake reviews and testimonials are illegal in the US', 'FTC rule, in effect since October 21, 2024. It also covers AI-written fake reviews.', 'https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials'],
+  ['Facebook bans ads that call out personal traits', 'Meta’s ad standards: ads must not assert or imply personal attributes.', 'https://transparency.meta.com/policies/ad-standards/objectionable-content/privacy-violations-personal-attributes/'],
+  ['Special Ad Categories', 'Housing, employment, financial products and services, and social issues/elections/politics. The first three limit age, gender and ZIP targeting.', 'https://developers.facebook.com/docs/marketing-api/special-ad-category'],
+  ['Health, weight-loss and before-and-after ads', 'Restricted on Meta and updated in 2026. Check the current page before using these images.', 'https://transparency.meta.com/policies/ad-standards/restricted-goods-services/health-wellness'],
+  ['Google ad text limits', 'Up to 15 headlines (30 characters each) and 4 descriptions (90 characters each).', 'https://support.google.com/google-ads/answer/7684791'],
+  ['Facebook lead costs', 'WordStream 2025: about $27.66 per lead on average; about $3 for restaurants and about $77 for dentists.', 'https://www.wordstream.com/blog/facebook-ads-benchmarks-2025'],
+  ['Google ad costs', 'LocaliQ 2025: about $5.26 per click on average; legal about $8.58 per click and about $132 per lead.', 'https://localiq.com/blog/search-advertising-benchmarks/'],
+  ['Freelance platform fees', 'Fiverr takes 20% per order. Upwork charges 0–15% per contract since May 2025.', 'https://www.upwork.com/tools/fiverr-fee-calculator']
+];
+function openSources() {
+  $('#helpBody').innerHTML = `<span class="eyebrow">Checked October 2026</span><h2 id="helpT">Facts & sources</h2>
+    <p class="muted" style="font-size:.9rem">The key facts in this app and where they come from. Rules and prices change, so check the source before relying on a number. Lead costs for each business type are rough guides matched to these benchmarks where data exists; your city and season will differ.</p>
+    <div class="gloss">${SOURCES.map(s => `<div><b>${s[0]}</b><span>${s[1]} <a href="${s[2]}" target="_blank" rel="noopener">Source</a></span></div>`).join('')}</div>`;
+  showHelp();
+}
 function openHelp(v) {
   const h = HELP[v]; if (!h) return;
   $('#helpBody').innerHTML = `<span class="eyebrow">How this page works</span><h2 id="helpT">${esc($(`#nav a[data-v="${v}"]`).textContent.trim())}</h2><p style="font-size:1rem">${h[0]}</p>
@@ -1895,6 +1911,7 @@ function helpInit() {
   document.addEventListener('click', e => {
     const h = e.target.closest('[data-help]'); if (h) { openHelp(h.dataset.help); return; }
     if (e.target.closest('[data-glossary]')) { openGlossary(); return; }
+    if (e.target.closest('[data-sources]')) { openSources(); return; }
     if (e.target.id === 'help' || e.target.closest('#helpClose')) closeHelp();
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#help').hidden) closeHelp(); });
@@ -2287,12 +2304,12 @@ const DEMOS = {
       [/\bguarantee(d|s)?\b/i, 'Promises a guaranteed result. Only use it for a real written policy, like a refund.'],
       [/\bcure(s|d)?\b/i, 'Health claim ("cure"). Ads must not promise medical outcomes.'],
       [/\blose \d+\s?(lbs|pounds|kg)\b/i, 'Specific weight-loss promise. These get rejected.'],
-      [/before (and|&) after/i, 'Before-and-after body photos are not allowed on Meta.'],
+      [/before (and|&) after/i, 'Before-and-after body or weight-loss photos are restricted on Meta and often rejected. Check Meta’s current Health and Wellness policy first.'],
       [/(#1|number one|best in (town|the city|the state))/i, 'A "#1" or "best" claim needs proof, like an award. Add it or soften the claim.'],
       [/!{2,}/, 'Too many exclamation marks look spammy.'],
       [/\b[A-Z]{6,}\b/, 'Long ALL-CAPS words look spammy.'],
       [/\b(like|share|tag) (this|a friend|someone)\b/i, 'Engagement bait ("tag a friend"). Platforms show these ads less.'],
-      [/\b(you|your) (credit|loan|mortgage|job|apartment|rent)\b/i, 'Might be a Special Ad Category (credit, jobs, housing). Mark it in Ads Manager.']];
+      [/\b(you|your) (credit|loan|mortgage|job|apartment|rent)\b/i, 'Might be a Special Ad Category (housing, jobs, or financial products like loans and credit). Mark it in Ads Manager.']];
     el.innerHTML = `<div class="dh"><div><span class="eyebrow">Try it</span><h3>Ad rule checker</h3></div><div class="row"><button class="btn sm" id="poGo">Check</button><button class="btn sm ghost" id="poFix">Show a fixed version</button></div></div>
       <textarea id="poT">Are you overweight?? Our GUARANTEED program helps you lose 30 lbs in 30 days!! We are the #1 gym in town. Tag a friend!</textarea><div id="poOut" class="stack" style="gap:6px"></div>`;
     const go = () => { const t = $('#poT', el).value, hits = R.filter(r => r[0].test(t));
