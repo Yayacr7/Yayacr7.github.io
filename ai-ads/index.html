@@ -483,6 +483,106 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 .adi.L8 .x-q{font-size:46cqw;line-height:.72;height:26cqw;color:var(--acc)}
 .adi.L8 .x-sub{font-size:4.2cqw;opacity:.9}
 .adi.L8 .x-h{font-size:8cqw}
+/* ---------- more color: gradient backgrounds and soft color glows (not on the minimal design) ---------- */
+.adi{background:linear-gradient(158deg,var(--bg) 28%,var(--bg2))}
+.adi:not(.L1):not(.L6)::before,.adi:not(.L1):not(.L6)::after{content:"";position:absolute;border-radius:50%;z-index:0;pointer-events:none}
+.adi:not(.L1):not(.L6)::before{width:78cqw;aspect-ratio:1;right:-30cqw;top:-30cqw;background:radial-gradient(circle,var(--pop) 0,transparent 66%);opacity:.6}
+.adi:not(.L1):not(.L6)::after{width:62cqw;aspect-ratio:1;left:-26cqw;bottom:-24cqw;background:radial-gradient(circle,var(--acc) 0,transparent 66%);opacity:.38}
+.adi.L1 .x-scene{background:radial-gradient(circle at 30% 28%,var(--pop),transparent 46%),radial-gradient(circle at 30% 28%,var(--bg2),var(--bg) 70%)}
+.adi.L1 .d2{background:var(--pop)}
+.adi.L3{background:#0B0B11;background:radial-gradient(circle at 85% 0%,color-mix(in srgb,var(--pop) 38%,#0B0B11),#0B0B11 62%)}
+.adi.L4{background:linear-gradient(152deg,var(--bg) 0,var(--bg2) 60%,var(--acc) 60%)}
+.adi.L5 .x-list li:nth-child(2)::before{background:var(--pop);color:#111}
+.adi.L7 .x-circle{box-shadow:0 0 0 2.6cqw var(--acc),0 0 0 5.2cqw var(--pop)}
+.adi.L2 .x-coupon{box-shadow:2cqw 2cqw 0 var(--pop)}
+/* new ads slide in piece by piece */
+.adi.enter>*{animation:adIn .55s cubic-bezier(.2,.8,.2,1) both}
+.adi.enter>:nth-child(2){animation-delay:.08s}.adi.enter>:nth-child(3){animation-delay:.16s}.adi.enter>:nth-child(4){animation-delay:.24s}.adi.enter>:nth-child(5){animation-delay:.32s}.adi.enter>:nth-child(6){animation-delay:.4s}
+@keyframes adIn{from{opacity:0;transform:translateY(5cqw) scale(.97)}to{opacity:1;transform:none}}
+/* play button on the ad */
+.cplay{position:absolute;z-index:6;right:4cqw;top:4cqw;width:13cqw;height:13cqw;min-width:38px;min-height:38px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;
+  background:rgba(10,10,14,.62);color:#fff;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);box-shadow:0 0 0 2px rgba(255,255,255,.55)}
+.cplay svg{width:42%;height:42%;fill:currentColor;margin-left:8%}
+.cplay:hover{background:rgba(10,10,14,.82)}
+.tt .cplay{top:12cqw}
+/* ---------- the animated demo (Play ad) ---------- */
+.creative.ad.motion .scene{visibility:hidden;opacity:0;transition:opacity .35s,visibility 0s .35s}
+.creative.ad.motion .scene.on{visibility:visible;opacity:1;transition:opacity .35s}
+.m-bar{position:absolute;z-index:8;left:4cqw;right:4cqw;top:2.6cqw;display:flex;gap:1.4cqw}
+.m-bar i{flex:1;height:1cqw;min-height:3px;border-radius:9px;background:rgba(255,255,255,.35);overflow:hidden;box-shadow:0 0 0 .2cqw rgba(0,0,0,.12)}
+.m-bar i b{display:block;height:100%;width:0;background:#fff}
+.m-bar i.run b{animation:mFill var(--d,3s) linear forwards}.m-bar i.done b{width:100%}
+@keyframes mFill{to{width:100%}}
+.scene .m-icon{width:46cqw;color:var(--acc);margin:0 auto}
+.scene.on .m-icon{animation:mSpin .9s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes mSpin{from{transform:scale(.2) rotate(-40deg);opacity:0}to{transform:none;opacity:1}}
+.scene .m-words span{display:inline-block;opacity:0}
+.scene.on .m-words span{animation:mWord .45s cubic-bezier(.2,.9,.3,1.2) both;animation-delay:calc(.25s + var(--i) * .12s)}
+@keyframes mWord{from{opacity:0;transform:translateY(60%) scale(.8)}to{opacity:1;transform:none}}
+.scene.M0{justify-content:center;gap:6cqw}
+.scene .x-brand{position:absolute;top:7cqw;left:7cqw;right:7cqw}
+.scene.M1{justify-content:center;align-items:center;text-align:center;gap:5cqw}
+.scene .m-rays{position:absolute;inset:-40%;z-index:0;background:repeating-conic-gradient(from 0deg,var(--pop) 0 10deg,transparent 10deg 20deg);opacity:.28}
+.scene.on .m-rays{animation:mRot 12s linear infinite}
+@keyframes mRot{to{transform:rotate(360deg)}}
+.scene .m-deal{background:var(--ink);color:var(--bg);border-radius:6cqw;padding:5cqw 7cqw;max-width:100%;box-shadow:2.4cqw 2.4cqw 0 var(--acc)}
+.scene .m-deal .x-big{font-size:30cqw;line-height:.9;color:var(--bg)}
+.scene .m-dl{font-weight:800;font-size:6cqw;text-transform:uppercase;letter-spacing:.04em;overflow-wrap:anywhere}
+.scene.on .m-deal{animation:mPop .7s cubic-bezier(.2,1.5,.4,1) both .1s}
+.scene.on .x-pill{animation:mPop .6s cubic-bezier(.2,1.5,.4,1) both .55s}
+@keyframes mPop{from{transform:scale(.3) rotate(-8deg);opacity:0}to{transform:none;opacity:1}}
+.scene.M2{justify-content:center;gap:5cqw}
+.scene.M2 .x-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3.4cqw;font-size:5.6cqw;font-weight:700;line-height:1.2}
+.scene.M2 .x-list li{display:flex;gap:3cqw;align-items:flex-start;opacity:0}
+.scene.M2 .x-list li::before{content:"✓";flex:none;width:7.4cqw;height:7.4cqw;border-radius:50%;background:var(--acc);color:var(--acci);display:grid;place-items:center;font-size:4.4cqw;font-weight:800}
+.scene.M2 .x-list li:nth-child(2)::before{background:var(--pop);color:#111}
+.scene.M2.on .x-list li{animation:mSlide .5s cubic-bezier(.2,.9,.3,1) both;animation-delay:calc(.2s + var(--i) * .45s)}
+@keyframes mSlide{from{opacity:0;transform:translateX(-12cqw)}to{opacity:1;transform:none}}
+.scene.M3{justify-content:center;align-items:center;text-align:center;gap:4cqw}
+.scene.M3 .m-ic2{width:24cqw;color:var(--acc)}
+.scene.M3 .m-name{font-size:11cqw;line-height:1;overflow-wrap:anywhere}
+.scene.M3 .m-city{font-family:var(--f-mono);font-size:3.4cqw;letter-spacing:.2em;text-transform:uppercase;opacity:.8}
+.scene.M3 .x-btn{font-size:5.2cqw;padding:3.4cqw 7cqw;border-radius:99px;background:var(--acc);color:var(--acci)}
+.scene.M3.on .x-btn{animation:mPop .6s cubic-bezier(.2,1.5,.4,1) both .3s,mPulse 1.4s ease-in-out 1s infinite}
+@keyframes mPulse{50%{transform:scale(1.07);box-shadow:0 0 0 3cqw color-mix(in srgb,var(--acc) 30%,transparent)}}
+.scene.M3.on .m-name{animation:mWord .6s cubic-bezier(.2,.9,.3,1.2) both .1s}
+.m-end{position:absolute;inset:0;z-index:9;display:none;flex-direction:column;align-items:center;justify-content:flex-end;gap:2.4cqw;padding:0 0 8cqw;background:linear-gradient(transparent 55%,rgba(0,0,0,.6))}
+.tt .m-end{padding-bottom:42cqw}.tt.tk .m-end{padding-bottom:66cqw}
+.creative.ad.motion.ended .m-end{display:flex}
+.m-end .row{gap:8px;justify-content:center}
+@media (prefers-reduced-motion:reduce){.adi.enter>*,.scene.on *,.scene.on{animation:none!important}.scene .m-words span,.scene.M2 .x-list li{opacity:1}}
+/* ---------- bigger ad area ---------- */
+.maker{max-width:1200px;gap:40px}
+.maker .phone{height:min(800px,calc(100vh - 150px));height:min(800px,calc(100dvh - 150px));aspect-ratio:9/17.4}
+.maker .pcol{gap:8px}
+.maker .pcol .row{gap:6px}
+.btn.play{display:inline-flex;align-items:center;gap:6px}
+.btn.play svg{width:12px;height:12px;fill:currentColor}
+@media (max-width:900px){.maker .phone{width:min(480px,100%)}}
+/* big view */
+.bigbox{width:min(1000px,100%);max-height:100%;overflow:auto;display:flex;flex-direction:column;gap:10px;align-items:center}
+.bigbox .row{width:100%;justify-content:space-between}
+#bigStage{width:100%;display:grid;place-items:center}
+#bigStage .creative.ad{width:min(100%,calc((100vh - 150px) * .8));width:min(100%,calc((100dvh - 150px) * .8));border-radius:14px;box-shadow:0 40px 80px -30px rgba(0,0,0,.9)}
+#bigStage .creative.ad.tall{width:min(100%,calc((100vh - 150px) * .5625));width:min(100%,calc((100dvh - 150px) * .5625))}
+/* optimize */
+.optbox{display:flex;flex-direction:column;gap:8px}
+#rfTabs{align-self:flex-start}#rfTabs .tag{margin-left:4px;font-size:.66rem;padding:1px 6px}
+.pwrap>.pplay{position:absolute;z-index:6;right:-62px;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;background:var(--accent);color:#0A0D13;box-shadow:0 10px 30px -8px var(--accent)}
+.pwrap>.pplay svg{width:16px;height:16px;fill:currentColor;margin-left:3px}
+@media (max-width:900px){.pwrap>.pplay{right:12px;top:12px;transform:none;width:42px;height:42px}}
+.optbox .optl{font-size:.82rem;font-family:var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.adcheck{display:flex;flex-direction:column;gap:4px;font-size:.8rem}
+.adcheck .ck{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.adcheck .ck span{display:flex;gap:7px;align-items:baseline}
+.adcheck .ck i{font-style:normal;font-weight:800}
+.adcheck .ok i{color:var(--green)} .adcheck .no i{color:var(--gold)}
+.adcheck details summary{cursor:pointer;color:var(--muted);width:fit-content}
+.chip.opt{border-color:var(--line2)}
+.fb .tx.clamp{display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;padding-bottom:0}
+.fb .seemore{display:block;border:0;background:none;color:#65676B;font:inherit;font-weight:600;padding:2px 12px 10px;cursor:pointer}
+.pacts{flex-wrap:wrap}
+.pacts .tabs button{padding:6px 10px}
 .navlabel{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:12px 10px 4px}
 .nav a{padding:7px 10px}
 .pillars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -660,8 +760,14 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
       </div>
       <p class="dim" id="dsMsg" style="font-size:.84rem;min-height:1.3em" aria-live="polite"></p>
       <div class="mk-refine stack" id="refine" hidden>
-        <div class="row" style="flex-wrap:nowrap;gap:6px"><input type="text" id="rfT" aria-label="What to change" placeholder="Want changes? e.g. make it blue, more funny, say 30% off"><button class="btn sm" id="rfGo">Update ad</button></div>
-        <div class="row" style="gap:6px"><button class="chip" data-q="design">New design</button><button class="chip" data-q="variant">Another version</button><button class="chip" data-q="color">Change colors</button><button class="chip" data-q="style">Change style</button></div>
+        <div class="tabs" id="rfTabs"><button data-rt="change" class="on">Change it</button><button data-rt="opt">Optimize <span class="tag" id="adScore"></span></button></div>
+        <div class="stack" data-rp="change" style="gap:8px">
+          <div class="row" style="flex-wrap:nowrap;gap:6px"><input type="text" id="rfT" aria-label="What to change" placeholder="e.g. make it blue, more funny, say 30% off"><button class="btn sm" id="rfGo">Update ad</button></div>
+          <div class="row" style="gap:6px"><button class="chip" data-q="design">New design</button><button class="chip" data-q="variant">Another version</button><button class="chip" data-q="color">Change colors</button><button class="chip" data-q="style">Change style</button></div>
+        </div>
+        <div class="optbox" data-rp="opt" hidden>
+          <div class="row" id="optBtns" style="gap:6px"></div>
+          <div class="adcheck" id="adCheck"></div></div>
       </div>
       <details class="mk-more" id="adInputs"><summary>Edit details</summary>
         <div class="stack" style="gap:10px;margin-top:10px">
@@ -675,12 +781,9 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
       </details>
     </div>
     <div class="pcol">
-      <div class="tabs" id="platTabs"></div>
-      <span class="dim" id="pvNote" style="font-size:.78rem">Example ad. Yours shows up here.</span><span class="tag green" id="pvYours" hidden>Your ad</span>
-      <div class="pwrap" id="pwrap"><div id="preview"></div></div>
-      <span class="dim" id="scrollHint" style="font-size:.74rem">Scroll inside the phone to see the whole ad</span>
-      <div class="row" style="justify-content:center"><div class="tabs" id="variantBtns"></div></div>
-      <div class="row" style="justify-content:center"><button class="btn sm" id="copyAd">Copy ad</button><button class="btn sm ghost" id="saveBtn">Save</button><button class="btn sm ghost" id="moreBtn">More</button></div>
+      <div class="row" style="gap:10px;justify-content:center"><div class="tabs" id="platTabs"></div><span class="dim" id="pvNote" style="font-size:.78rem">Example ad</span><span class="tag green" id="pvYours" hidden>Your ad</span></div>
+      <div class="pwrap" id="pwrap"><div id="preview"></div><button class="pplay" data-play aria-label="Play this ad as a demo with voice" title="Play with voice"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg></button></div>
+      <div class="row pacts" style="justify-content:center"><div class="tabs" id="variantBtns"></div><button class="btn sm play" id="playBtn" data-play><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Play with voice</button><button class="btn sm ghost" id="bigBtn">Big view</button><button class="btn sm ghost" id="copyAd">Copy ad</button><button class="btn sm ghost" id="saveBtn">Save</button><button class="btn sm ghost" id="moreBtn">More</button></div>
     </div>
   </div>
 </section>
@@ -836,6 +939,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 </div>
 <div class="toast" id="toast" role="status"></div>
 <div class="helpwrap" id="moreDlg" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-label="More for this ad" style="width:min(640px,100%)"><div class="row" style="justify-content:space-between"><h2>More for this ad</h2><button class="btn sm ghost" id="moreClose">Close</button></div><div class="tabs" id="outTabs"></div><div id="outPane" class="scroll" style="max-height:60vh;max-height:60dvh"></div><button class="btn sm ghost" id="copyAll" style="align-self:flex-start">Copy everything</button></div></div>
+<div class="helpwrap" id="bigDlg" hidden><div class="bigbox" role="dialog" aria-modal="true" aria-label="Big view of your ad"><div class="row"><button class="btn sm play" data-play><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Play with voice</button><button class="btn sm ghost" id="bigClose">Close</button></div><div id="bigStage"></div><p class="dim" style="font-size:.78rem;text-align:center">Big view. Good for showing a business owner a demo. The voice is your device's built-in voice.</p></div></div>
 <div class="helpwrap" id="help" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-labelledby="helpT"><button class="btn sm ghost" id="helpClose" style="align-self:flex-end">Got it</button><div id="helpBody" class="stack" style="gap:12px"></div></div></div>
 <script>
 // ---------- helpers ----------
@@ -949,30 +1053,38 @@ const NICHE_NAMES = { restaurant: "Tony's Pizza", dentist: 'Bright Smile Dental'
   auto: 'Precision Auto Care', ecommerce: 'Sunny Socks Co.', lawyer: 'Carter Injury Law', coffee: 'Bean There Café', hvac: 'CoolFlow Heating & Air', medspa: 'Luma Med Spa', cleaning: 'Sparkle Home Cleaning' };
 const CITIES = ['Austin', 'Phoenix', 'Atlanta', 'Denver', 'Tampa', 'Charlotte', 'Columbus', 'San Diego', 'Nashville', 'Houston'];
 const PALETTES = [ // c1/c2 kept for swatches and avatars; bg, bg2, ink, accent, accInk drive the ad designs
-  { name: 'Tomato', c1: '#E63B2E', c2: '#FF8A3D', bg: '#E63B2E', bg2: '#FF8A3D', ink: '#FFF8EE', accent: '#FFD43B', accInk: '#2B0F0A' },
-  { name: 'Mustard', c1: '#F6B93B', c2: '#F39C12', bg: '#F6B93B', bg2: '#F39C12', ink: '#2B1B0A', accent: '#C0392B', accInk: '#FFFFFF' },
-  { name: 'Basil', c1: '#1E5631', c2: '#2E7D32', bg: '#1E5631', bg2: '#2E7D32', ink: '#F6F1E7', accent: '#F2C94C', accInk: '#1E1E1E' },
-  { name: 'Mint', c1: '#E8F7F2', c2: '#BDEBDD', bg: '#E8F7F2', bg2: '#BDEBDD', ink: '#0B3B32', accent: '#10B981', accInk: '#FFFFFF' },
-  { name: 'Sky', c1: '#EAF3FF', c2: '#CFE3FF', bg: '#EAF3FF', bg2: '#CFE3FF', ink: '#0B2545', accent: '#2563EB', accInk: '#FFFFFF' },
-  { name: 'Ocean', c1: '#0B3C5D', c2: '#1D70A2', bg: '#0B3C5D', bg2: '#1D70A2', ink: '#FFFFFF', accent: '#5BC0EB', accInk: '#04263A' },
-  { name: 'Volt', c1: '#0D0D0D', c2: '#262626', bg: '#0D0D0D', bg2: '#262626', ink: '#FFFFFF', accent: '#C6FF00', accInk: '#0D0D0D' },
-  { name: 'Fire', c1: '#141414', c2: '#2B0B0B', bg: '#141414', bg2: '#2B0B0B', ink: '#FFFFFF', accent: '#FF3B30', accInk: '#FFFFFF' },
-  { name: 'Navy & Orange', c1: '#102A43', c2: '#243B53', bg: '#102A43', bg2: '#243B53', ink: '#F0F4F8', accent: '#FF7A00', accInk: '#FFFFFF' },
-  { name: 'Slate & Yellow', c1: '#334155', c2: '#475569', bg: '#334155', bg2: '#475569', ink: '#F8FAFC', accent: '#FACC15', accInk: '#1E293B' },
-  { name: 'Blush', c1: '#FBE4E6', c2: '#F7C6CC', bg: '#FBE4E6', bg2: '#F7C6CC', ink: '#4A1D2B', accent: '#C2185B', accInk: '#FFFFFF' },
-  { name: 'Plum', c1: '#3B0A45', c2: '#6A1B5D', bg: '#3B0A45', bg2: '#6A1B5D', ink: '#FFF0F6', accent: '#F8BBD0', accInk: '#3B0A45' },
-  { name: 'Lilac', c1: '#EDE7F6', c2: '#D1C4E9', bg: '#EDE7F6', bg2: '#D1C4E9', ink: '#311B92', accent: '#7C4DFF', accInk: '#FFFFFF' },
-  { name: 'Noir & Gold', c1: '#0E0E10', c2: '#1C1B1F', bg: '#0E0E10', bg2: '#1C1B1F', ink: '#F5F1E8', accent: '#C9A45C', accInk: '#0E0E10' },
-  { name: 'Ivory', c1: '#F6F1E7', c2: '#ECE3D0', bg: '#F6F1E7', bg2: '#ECE3D0', ink: '#1C1917', accent: '#8B5E34', accInk: '#FFFFFF' },
-  { name: 'Espresso', c1: '#3E2723', c2: '#5D4037', bg: '#3E2723', bg2: '#5D4037', ink: '#FFF3E0', accent: '#FFB74D', accInk: '#3E2723' },
-  { name: 'Latte', c1: '#F3E9DC', c2: '#E6CCB2', bg: '#F3E9DC', bg2: '#E6CCB2', ink: '#4B2E1E', accent: '#9C6644', accInk: '#FFFFFF' },
-  { name: 'Citrus', c1: '#FFF4B8', c2: '#FFE066', bg: '#FFF4B8', bg2: '#FFE066', ink: '#2B2100', accent: '#FF6B00', accInk: '#FFFFFF' },
-  { name: 'Peach', c1: '#FFE5D9', c2: '#FFCAD4', bg: '#FFE5D9', bg2: '#FFCAD4', ink: '#3D1A2A', accent: '#FF5D8F', accInk: '#FFFFFF' },
-  { name: 'Pop Blue', c1: '#2D5BFF', c2: '#7B5CFF', bg: '#2D5BFF', bg2: '#7B5CFF', ink: '#FFFFFF', accent: '#FFE14D', accInk: '#111111' },
-  { name: 'Royal', c1: '#13294B', c2: '#1F3A68', bg: '#13294B', bg2: '#1F3A68', ink: '#FFFFFF', accent: '#D4AF37', accInk: '#13294B' },
-  { name: 'Forest & Gold', c1: '#0F3D2E', c2: '#145A41', bg: '#0F3D2E', bg2: '#145A41', ink: '#F1EDE4', accent: '#D9B26A', accInk: '#0F3D2E' },
-  { name: 'Aqua', c1: '#E0F7FA', c2: '#B2EBF2', bg: '#E0F7FA', bg2: '#B2EBF2', ink: '#004D57', accent: '#00ACC1', accInk: '#FFFFFF' },
-  { name: 'Lemon Fresh', c1: '#F7FFE0', c2: '#E3F5A8', bg: '#F7FFE0', bg2: '#E3F5A8', ink: '#23400A', accent: '#7CB518', accInk: '#FFFFFF' }
+  { name: 'Tomato', c1: '#E63B2E', c2: '#FF8A3D', bg: '#D12F23', bg2: '#C2185B', ink: '#FFF8EE', accent: '#FFD43B', accInk: '#2B0F0A', pop: '#2EC4B6' },
+  { name: 'Mustard', c1: '#F6B93B', c2: '#F39C12', bg: '#F6B93B', bg2: '#F39C12', ink: '#2B1B0A', accent: '#C0392B', accInk: '#FFFFFF', pop: '#E63B2E' },
+  { name: 'Basil', c1: '#1E5631', c2: '#2E7D32', bg: '#1E5631', bg2: '#2E7D32', ink: '#F6F1E7', accent: '#F2C94C', accInk: '#1E1E1E', pop: '#FF7A59' },
+  { name: 'Mint', c1: '#E8F7F2', c2: '#BDEBDD', bg: '#E8F7F2', bg2: '#7FDDBF', ink: '#0B3B32', accent: '#10B981', accInk: '#04241C', pop: '#FF8FAB' },
+  { name: 'Sky', c1: '#EAF3FF', c2: '#CFE3FF', bg: '#EAF3FF', bg2: '#9CC3FF', ink: '#0B2545', accent: '#2563EB', accInk: '#FFFFFF', pop: '#FFB703' },
+  { name: 'Ocean', c1: '#0B3C5D', c2: '#1D70A2', bg: '#0B3C5D', bg2: '#1D70A2', ink: '#FFFFFF', accent: '#5BC0EB', accInk: '#04263A', pop: '#FF7A59' },
+  { name: 'Volt', c1: '#0D0D0D', c2: '#262626', bg: '#0D0D0D', bg2: '#262626', ink: '#FFFFFF', accent: '#C6FF00', accInk: '#0D0D0D', pop: '#FF2E93' },
+  { name: 'Fire', c1: '#141414', c2: '#2B0B0B', bg: '#141414', bg2: '#2B0B0B', ink: '#FFFFFF', accent: '#FF3B30', accInk: '#1A0000', pop: '#FFB703' },
+  { name: 'Navy & Orange', c1: '#102A43', c2: '#243B53', bg: '#102A43', bg2: '#243B53', ink: '#F0F4F8', accent: '#FF7A00', accInk: '#1A0E00', pop: '#2EC4B6' },
+  { name: 'Slate & Yellow', c1: '#334155', c2: '#475569', bg: '#334155', bg2: '#475569', ink: '#F8FAFC', accent: '#FACC15', accInk: '#1E293B', pop: '#38BDF8' },
+  { name: 'Blush', c1: '#FBE4E6', c2: '#F7C6CC', bg: '#FBE4E6', bg2: '#F59AAE', ink: '#4A1D2B', accent: '#C2185B', accInk: '#FFFFFF', pop: '#FFB703' },
+  { name: 'Plum', c1: '#3B0A45', c2: '#6A1B5D', bg: '#3B0A45', bg2: '#6A1B5D', ink: '#FFF0F6', accent: '#F8BBD0', accInk: '#3B0A45', pop: '#FFD166' },
+  { name: 'Lilac', c1: '#EDE7F6', c2: '#D1C4E9', bg: '#EDE7F6', bg2: '#B39DFF', ink: '#311B92', accent: '#7C4DFF', accInk: '#FFFFFF', pop: '#FF8FAB' },
+  { name: 'Noir & Gold', c1: '#0E0E10', c2: '#1C1B1F', bg: '#0E0E10', bg2: '#1C1B1F', ink: '#F5F1E8', accent: '#C9A45C', accInk: '#0E0E10', pop: '#7A5C2E' },
+  { name: 'Ivory', c1: '#F6F1E7', c2: '#ECE3D0', bg: '#F6F1E7', bg2: '#ECE3D0', ink: '#1C1917', accent: '#8B5E34', accInk: '#FFFFFF', pop: '#D98E73' },
+  { name: 'Espresso', c1: '#3E2723', c2: '#5D4037', bg: '#3E2723', bg2: '#5D4037', ink: '#FFF3E0', accent: '#FFB74D', accInk: '#3E2723', pop: '#E76F51' },
+  { name: 'Latte', c1: '#F3E9DC', c2: '#E6CCB2', bg: '#F3E9DC', bg2: '#E6CCB2', ink: '#4B2E1E', accent: '#9C6644', accInk: '#FFFFFF', pop: '#E9A23B' },
+  { name: 'Citrus', c1: '#FFF4B8', c2: '#FFE066', bg: '#FFF4B8', bg2: '#FFD23F', ink: '#2B2100', accent: '#FF6B00', accInk: '#2B1100', pop: '#2EC4B6' },
+  { name: 'Peach', c1: '#FFE5D9', c2: '#FFCAD4', bg: '#FFE5D9', bg2: '#FFA3B8', ink: '#3D1A2A', accent: '#FF5D8F', accInk: '#3D0A1E', pop: '#7B5CFF' },
+  { name: 'Pop Blue', c1: '#2D5BFF', c2: '#7B5CFF', bg: '#2D5BFF', bg2: '#6A4BF0', ink: '#FFFFFF', accent: '#FFE14D', accInk: '#111111', pop: '#FF5DA2' },
+  { name: 'Royal', c1: '#13294B', c2: '#1F3A68', bg: '#13294B', bg2: '#1F3A68', ink: '#FFFFFF', accent: '#D4AF37', accInk: '#13294B', pop: '#5BC0EB' },
+  { name: 'Forest & Gold', c1: '#0F3D2E', c2: '#145A41', bg: '#0F3D2E', bg2: '#145A41', ink: '#F1EDE4', accent: '#D9B26A', accInk: '#0F3D2E', pop: '#E76F51' },
+  { name: 'Aqua', c1: '#E0F7FA', c2: '#B2EBF2', bg: '#E0F7FA', bg2: '#6FDCEB', ink: '#004D57', accent: '#00ACC1', accInk: '#00242A', pop: '#FF8FAB' },
+  { name: 'Lemon Fresh', c1: '#F7FFE0', c2: '#E3F5A8', bg: '#F7FFE0', bg2: '#BFEA6E', ink: '#23400A', accent: '#7CB518', accInk: '#142300', pop: '#FF6B6B' },
+  { name: 'Sunset', c1: '#FF5F6D', c2: '#FFC371', bg: '#FF5F6D', bg2: '#FF9A5A', ink: '#2A0712', accent: '#3A0CA3', accInk: '#FFFFFF', pop: '#FFE14D' },
+  { name: 'Electric', c1: '#6A00F4', c2: '#DB00B6', bg: '#5A00D6', bg2: '#C2009F', ink: '#FFFFFF', accent: '#00F5D4', accInk: '#12002E', pop: '#FEE440' },
+  { name: 'Tropical', c1: '#00B4D8', c2: '#06D6A0', bg: '#2BD4E8', bg2: '#06D6A0', ink: '#03262C', accent: '#E63946', accInk: '#FFFFFF', pop: '#FFD166' },
+  { name: 'Berry', c1: '#B5179E', c2: '#F72585', bg: '#9D0F8A', bg2: '#D81B72', ink: '#FFFFFF', accent: '#FFD60A', accInk: '#3A0030', pop: '#4CC9F0' },
+  { name: 'Lime Pop', c1: '#B8F84A', c2: '#4ADE80', bg: '#C6F55A', bg2: '#5BE38D', ink: '#10260A', accent: '#7209B7', accInk: '#FFFFFF', pop: '#FF4D6D' },
+  { name: 'Flame', c1: '#FF4D00', c2: '#FF0054', bg: '#C73600', bg2: '#D6004A', ink: '#FFFFFF', accent: '#FFE600', accInk: '#2A0010', pop: '#7B2CBF' },
+  { name: 'Aurora', c1: '#0B1D51', c2: '#725CFF', bg: '#0B1D51', bg2: '#4B2FBF', ink: '#FFFFFF', accent: '#2EF2C2', accInk: '#062A23', pop: '#FF6EC7' },
+  { name: 'Coral Reef', c1: '#FF8C61', c2: '#FFB4A2', bg: '#FF8C61', bg2: '#FFB08F', ink: '#2B0F14', accent: '#1B7F74', accInk: '#FFFFFF', pop: '#F9C74F' }
 ];
 const TONES = { friendly: 'Friendly', bold: 'Bold', urgent: 'Urgent', luxury: 'Premium', funny: 'Playful' };
 
@@ -987,14 +1099,14 @@ function headlines(n, f) {
   return {
     friendly: [`Hey ${c}! ${o}`, `${c}'s friendliest ${k}`, `Meet your new favorite ${k}`],
     bold: [`Stop ${n.pains[0]}.`, `${b0}. Period.`, `The ${k} ${c} talks about`],
-    urgent: [`This week only: ${o}`, `Last chance: ${o}`, `Only 20 spots left in ${c}`],
+    urgent: [`This week only: ${o}`, `Last chance: ${o}`, `Book now in ${c}: ${o}`],
     luxury: [`${f.name}. Simply better.`, `For people who notice the details`, `${b0}, done beautifully`],
     funny: [n.funny, `Plot twist: the best ${k} is in ${c}`, `${o}. No catch.`]
   }[f.tone];
 }
 function primaryTexts(n, f) {
   const e = f.tone === 'friendly' || f.tone === 'funny', x = (a, b = '') => e ? a : b;
-  const urgent = f.tone === 'urgent' ? '\nEnds Sunday. Spots are limited.' : '';
+  const urgent = f.tone === 'urgent' ? '\nDon\'t wait: grab it before the deal ends.' : '';
   const pas = `${cap(n.pains[0])}? You're not alone. Most people in ${f.city} deal with ${n.pains[1]} too.\n\n${f.name} fixes that: ${n.benefits[0]} and ${n.benefits[1]}.\n${f.proof ? x('⭐ ') + f.proof + '.\n' : ''}\n${x('👉 ')}${f.offer}. Tap "${n.cta}" to grab it.${urgent}`;
   const aida = `${headlines(n, f)[0]}\n\nAt ${f.name} you get ${n.benefits[0]}, ${n.benefits[1]} and ${n.benefits[2]}.${f.proof ? '\n' + f.proof + '.' : ''} We'd love to make you next.\n\n${x('🎁 ')}${f.offer}.\nTap "${n.cta}" now.${urgent}`;
   const bab = `Before: ${n.pains[2]}.\nAfter: ${n.benefits[0]}.\n\nThe bridge? ${f.name}, right here in ${f.city}.${f.proof ? ' ' + f.proof + '.' : ''}\n\n${f.offer}. Tap "${n.cta}" to start.${urgent}`;
@@ -1002,7 +1114,7 @@ function primaryTexts(n, f) {
 }
 function googleAd(n, f) {
   const cut = s => s.length > 30 ? s.slice(0, 30).replace(/\s+\S*$/, '') : s;
-  const hs = [cut(f.name), cut(`${n.cta} Today`), cut(`Top-Rated ${cap(n.kind)} ${f.city}`), cut(shortOffer(f.offer))];
+  const hs = [cut(f.name), cut(`${n.cta} Today`), cut(`${cap(n.kind)} in ${f.city}`), cut(shortOffer(f.offer))];
   const d1 = `${cap(n.benefits[0])}, ${n.benefits[1]}. ${f.proof ? f.proofT + '.' : 'Book online today.'}`.slice(0, 90);
   const d2 = `${f.offer}. ${n.cta} online in under a minute.`.slice(0, 90);
   const slug = f.name.toLowerCase().replace(/[^a-z0-9]+/g, '');
@@ -1019,7 +1131,7 @@ function videoSegs(n, f, h) {
 function buildPack(f) {
   f = Object.assign({}, f, { proof: (f.proof || '').trim() });
   f.proofT = f.proof || '[Real proof here, e.g. 4.8★ from 120 Google reviews]';
-  const n = NICHES[f.niche], hs = headlines(n, f), texts = primaryTexts(n, f), g = googleAd(n, f);
+  const n = f.cta ? Object.assign({}, NICHES[f.niche], { cta: f.cta }) : NICHES[f.niche], hs = headlines(n, f), texts = primaryTexts(n, f), g = googleAd(n, f);
   const daily = n.tier === 'high' ? 25 : 15, spend = daily * 7;
   const leadsLo = Math.max(1, Math.round(spend / n.cpl[1])), leadsHi = Math.max(leadsLo + 1, Math.round(spend / n.cpl[0]));
   const pal = PALETTES[f.palette], segs = videoSegs(n, f, hs[0]);
@@ -1279,11 +1391,13 @@ const FC_LESSONS = [
 // ================= AD DESIGN ENGINE: 9 layouts x 24 color sets x niche artwork =================
 // each business type has a pool of fitting color sets; layouts and colors change per ad and per version
 const NICHE_POOL = {
-  restaurant: [0, 1, 2, 7, 20], dentist: [3, 4, 5, 22, 12], gym: [6, 7, 19, 8, 9], roofer: [8, 9, 20, 7, 5],
-  salon: [10, 11, 12, 18, 13], realestate: [20, 14, 21, 13, 4], auto: [7, 9, 8, 6, 0], ecommerce: [18, 19, 17, 12, 3],
-  lawyer: [20, 21, 13, 14, 5], coffee: [15, 16, 14, 2, 1], hvac: [5, 8, 4, 9, 22], medspa: [10, 14, 13, 12, 3], cleaning: [22, 23, 3, 4, 17]
+  restaurant: [0, 24, 1, 29, 2, 7, 20], dentist: [3, 26, 4, 30, 5, 22, 12], gym: [6, 25, 7, 28, 19, 8, 9], roofer: [8, 29, 9, 30, 20, 7, 5],
+  salon: [10, 27, 11, 31, 12, 18, 13], realestate: [20, 30, 14, 24, 21, 13, 4], auto: [7, 29, 9, 25, 8, 6, 0], ecommerce: [18, 25, 19, 27, 17, 12, 3],
+  lawyer: [20, 30, 21, 13, 14, 5, 31], coffee: [15, 31, 16, 24, 14, 2, 1], hvac: [5, 26, 8, 30, 4, 9, 22], medspa: [10, 27, 14, 31, 13, 12, 3], cleaning: [22, 26, 23, 28, 3, 4, 17]
 };
-const COLOR_FAMS = { red: [0, 7], orange: [8, 1], yellow: [1, 17, 9], green: [2, 3, 21, 23], blue: [4, 5, 8, 19, 20, 22], purple: [11, 12], pink: [10, 18],
+// the bright, colorful sets (used by the "More color" button)
+const VIVID = [24, 25, 26, 27, 28, 29, 30, 31, 0, 19, 6, 1];
+const COLOR_FAMS = { red: [0, 7, 29], orange: [8, 1, 24, 31, 29], yellow: [1, 17, 9], green: [2, 3, 21, 23, 28, 26], blue: [4, 5, 8, 19, 20, 22, 26, 30], purple: [11, 12, 25, 30], pink: [10, 18, 27, 24],
   brown: [15, 16], black: [6, 13, 7], cream: [14, 16], gray: [9], gold: [13, 20, 21] };
 const poolOf = k => NICHE_POOL[k] || NICHE_POOL.restaurant;
 function paletteFor(fam, niche) { const c = COLOR_FAMS[fam]; if (!c) return undefined; const pool = poolOf(niche); return c.find(i => pool.includes(i)) ?? c[0]; }
@@ -1311,6 +1425,11 @@ const ICONS = {
 };
 const icon = (k, cls = '') => `<svg class="ai ${cls}" viewBox="0 0 64 64" aria-hidden="true">${ICONS[k] || ICONS.medspa}</svg>`;
 function bigNumber(offer) { const m = offer.match(/\$\s?\d+(?:\.\d\d)?|\d+\s?%/); return m ? m[0].replace(/\s/g, '') : ''; }
+function adLook(p, v) {
+  const f = p.f, pal = adPal(p, v);
+  return { pal, font: { friendly: 'f-heavy', bold: 'f-poster', urgent: 'f-poster', luxury: 'f-serif', funny: 'f-heavy' }[f.tone] || 'f-heavy', hand: f.tone === 'friendly' || f.tone === 'funny',
+    vars: `--bg:${pal.bg};--bg2:${pal.bg2};--ink:${pal.ink};--acc:${pal.accent};--acci:${pal.accInk};--pop:${pal.pop || pal.accent}` };
+}
 function creativeHTML(p, v = 0, shape = '') {
   const f = p.f, n = p.n, pal = adPal(p, v), lay = (((f.layout || 0) + v * 4) % AD_LAYOUTS + AD_LAYOUTS) % AD_LAYOUTS;
   const H = esc(p.hs[v] || p.hs[0]), O = esc(shortOffer(f.offer)), N = esc(f.name), C = esc(f.city), CTA = esc(n.cta);
@@ -1319,9 +1438,7 @@ function creativeHTML(p, v = 0, shape = '') {
   const PILL = dup ? `${CTA} →` : O;
   const P = f.proof ? `<div class="x-proof">${(f.proof.includes('★') ? '' : '★ ') + esc(f.proof)}</div>` : '';
   const num = bigNumber(f.offer), rest = esc(shortOffer(f.offer).replace(num, '').replace(/^\s*(off\b)?/i, m => m).trim());
-  const font = { friendly: 'f-heavy', bold: 'f-poster', urgent: 'f-poster', luxury: 'f-serif', funny: 'f-heavy' }[f.tone] || 'f-heavy';
-  const hand = f.tone === 'friendly' || f.tone === 'funny';
-  const vars = `--bg:${pal.bg};--bg2:${pal.bg2};--ink:${pal.ink};--acc:${pal.accent};--acci:${pal.accInk}`;
+  const { font, hand, vars } = adLook(p, v);
   const brand = `<div class="x-brand"><span>${N}</span><span>${C}</span></div>`;
   const L = [
     // 0 big type
@@ -2116,9 +2233,9 @@ function parseDescription(t) {
   for (const [k, re] of Object.entries(NICHE_WORDS)) if (re.test(t)) { out.niche = k; break; }
   for (const [fam, re] of COLOR_WORDS) if (re.test(t)) { out.palette = paletteFor(fam, out.niche || B.niche); out.colorLock = true; break; }
   for (const [k, re] of TONE_WORDS) if (re.test(t)) { out.tone = k; break; }
-  if (/tiktok|reel/i.test(t)) out.platform = 'tiktok'; else if (/story|stories/i.test(t)) out.platform = 'story'; else if (/google|search/i.test(t)) out.platform = 'google'; else if (/facebook|instagram|\bfb\b|\big\b/i.test(t)) out.platform = 'fb';
+  if (/tiktok|reel/i.test(t)) out.platform = 'tiktok'; else if (/story|stories/i.test(t)) out.platform = 'story'; else if (/google (ad|search)|search ad|\bon google\b|google(?! reviews?\b| rating)/i.test(t)) out.platform = 'google'; else if (/facebook|instagram|\bfb\b|\big\b/i.test(t)) out.platform = 'fb';
   const name = t.match(/(?:for|called|named)\s+((?:[A-Z][\w'’&.-]*\s?){1,4})/); if (name) out.name = name[1].trim().replace(/\s+(in|at|on)$/i, '');
-  const city = t.match(/\bin\s+([A-Z][a-zA-Z.]+(?:\s[A-Z][a-zA-Z.]+)?)/); if (city) out.city = city[1].trim().replace(/\.+$/, '');
+  const city = t.match(/\bin\s+((?:St\.\s)?[A-Z][a-zA-Z]+(?:\s[A-Z][a-zA-Z]+)?)/); if (city) out.city = city[1].trim().replace(/\.+$/, '');
   const offer = t.match(/(\d+\s?%\s?off[^.,;]*|\$\s?\d+[^.,;]*|free [^.,;]*|buy one[^.,;]*|bogo[^.,;]*|half price[^.,;]*)/i); if (offer) out.offer = cap(offer[1].trim());
   const aud = t.match(/\bfor\s+((?:families|parents|students|moms|dads|kids|seniors|teens|young|busy|homeowners|locals|women|men|couples)[^.,;]*)/i); if (aud) out.aud = cap(aud[1].trim());
   return out;
@@ -2155,7 +2272,7 @@ function cleanAI(v) {
     tone: TONES[v.tone] ? v.tone : undefined, palette: pal >= 0 ? pal : undefined, colorLock: pal >= 0, platform: PLATS[v.platform] ? v.platform : undefined, ai: { headlines: hs, texts: tx, imageIdea: s(v.imageIdea) } };
 }
 function applyDescribed(r) {
-  if (r.niche) { B.niche = r.niche; const n = NICHES[r.niche]; B.offer = n.offer; B.aud = n.audience; if (!r.name) B.name = NICHE_NAMES[r.niche]; }
+  if (r.niche) { B.niche = r.niche; B.cta = ''; const n = NICHES[r.niche]; B.offer = n.offer; B.aud = n.audience; if (!r.name) B.name = NICHE_NAMES[r.niche]; }
   ['name', 'city', 'offer', 'proof', 'aud', 'tone'].forEach(k => { if (r[k]) B[k] = r[k]; });
   if (r.palette != null) { B.palette = r.palette; B.colorLock = true; }
   else if (!B.colorLock && !poolOf(B.niche).includes(B.palette)) B.palette = poolOf(B.niche)[0];
@@ -2184,6 +2301,7 @@ function showAd(note) {
   $('#dsMsg').textContent = note;
   $('#refine').hidden = false;
   $('#preview').classList.remove('rise'); void $('#preview').offsetWidth; $('#preview').classList.add('rise');
+  const ai = $('#preview .adi'); if (ai && !reduced) ai.classList.add('enter');
   if (innerWidth <= 900) $('#pwrap').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
 }
 let aiBusy = false, actSeq = 0; // actSeq: bumped by every user action, so a late AI answer never undoes a newer change
@@ -2205,7 +2323,7 @@ async function aiUpgrade(t, change) {
 // every new ad gets a fresh design, and fresh colors unless the person asked for a color
 function freshLook(newColors) {
   B.layout = Math.floor(Math.random() * AD_LAYOUTS);
-  if (newColors) { const pool = poolOf(B.niche); B.palette = pool[Math.floor(Math.random() * pool.length)]; B.colorLock = false; }
+  if (newColors) { const pool = poolOf(B.niche), bag = pool.concat(pool.filter(i => VIVID.includes(i))); B.palette = bag[Math.floor(Math.random() * bag.length)]; B.colorLock = false; }
 }
 function nextColors() { const pool = poolOf(B.niche), i = pool.indexOf(B.palette); B.palette = pool[(i + 1) % pool.length]; B.colorLock = false; }
 function describeInit() {
@@ -2248,6 +2366,213 @@ function describeInit() {
   narrow.addEventListener('change', place); place();
 }
 
+// ================= PLAY AD: the ad as a short animated demo with a voice-over =================
+// The voice is the browser's built-in speech (free, no account). It plays on this device only and cannot be downloaded.
+const VO = { on: store.get('voiceOn', true), name: store.get('voiceName', '') };
+const canSpeak = () => { try { return 'speechSynthesis' in window && typeof SpeechSynthesisUtterance === 'function'; } catch (e) { return false; } };
+function voiceList() { try { return canSpeak() ? speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang)) : []; } catch (e) { return []; } }
+function pickVoice() {
+  const vs = voiceList(); if (!vs.length) return null;
+  return vs.find(v => v.name === VO.name) || vs.find(v => /natural|neural|online/i.test(v.name) && /en.US/i.test(v.lang)) || vs.find(v => /google us english|samantha|aria|jenny/i.test(v.name))
+    || vs.find(v => /en.US/i.test(v.lang)) || vs[0];
+}
+const sayClean = t => String(t).replace(/★/g, ' stars').replace(/[→👉🎁⭐]/g, '').replace(/\s+/g, ' ').trim();
+// what the voice says, scene by scene (proof is only spoken if the person typed a real one)
+function voiceLines(p, v) {
+  const f = p.f, n = p.n, h = p.hs[v] || p.hs[0], proof = f.proof ? ' ' + f.proof + '.' : '';
+  return [h, `${f.offer.replace(/\.$/, '')}.`, `${cap(n.benefits[0])}, ${n.benefits[1]}, and ${n.benefits[2]}.${proof}`, `${f.name}, in ${f.city}. Tap ${n.cta}.`];
+}
+function voiceScript(p, v) {
+  const L = voiceLines(p, v), names = ['Hook', 'Deal', 'Why us', 'Action'];
+  return L.map((t, i) => `${names[i].toUpperCase()}\n"${sayClean(t)}"`).join('\n\n');
+}
+function motionHTML(p, v = 0, shape = '') {
+  const f = p.f, n = p.n, { font, hand, vars } = adLook(p, v);
+  const H = p.hs[v] || p.hs[0], O = esc(shortOffer(f.offer)), N = esc(f.name), C = esc(f.city), CTA = esc(n.cta);
+  const num = bigNumber(f.offer), rest = esc(shortOffer(f.offer).replace(num, '').trim());
+  const words = H.split(/\s+/).map((w, i) => `<span style="--i:${i}">${esc(w)}</span>`).join(' ');
+  const brand = `<div class="x-brand"><span>${N}</span><span>${C}</span></div>`;
+  const P = f.proof ? `<div class="x-proof">${(f.proof.includes('★') ? '' : '★ ') + esc(f.proof)}</div>` : '';
+  const sc = [
+    `${brand}${icon(f.niche, 'm-icon')}<div class="x-h ${font} m-words">${words}</div>`,
+    `<div class="m-rays"></div><div class="m-deal">${num ? `<div class="x-big f-poster">${esc(num)}</div><div class="m-dl">${rest || 'OFF'}</div>` : `<div class="m-dl" style="font-size:8cqw">${O}</div>`}</div><span class="x-pill">${CTA} →</span>`,
+    `<div class="x-h ${font} x-sm">Why ${N}?</div><ul class="x-list">${n.benefits.map((b, i) => `<li style="--i:${i}">${esc(cap(b))}</li>`).join('')}</ul>${P}`,
+    `${icon(f.niche, 'm-ic2')}<div class="m-name ${font}">${N}</div><div class="m-city">${C}</div><span class="x-btn">${CTA} →</span>`
+  ];
+  return `<div class="creative ad motion ${shape}" style="${vars}">${sc.map((h, i) => `<div class="adi scene M${i} ${hand ? 'hand' : ''}">${h}</div>`).join('')}
+    <div class="m-bar">${sc.map(() => '<i><b></b></i>').join('')}</div>
+    <div class="m-end"><div class="row"><button class="btn sm play" data-play><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Replay</button><button class="btn sm ghost" data-unplay style="background:rgba(0,0,0,.5)">Show the ad</button></div></div></div>`;
+}
+let playing = null;
+function stopAd() {
+  if (!playing) return; playing.timers.forEach(clearTimeout); playing = null;
+  try { if (canSpeak()) speechSynthesis.cancel(); } catch (e) {}
+}
+// plays inside `host` (the phone preview or the big view); returns how it played: 'voice', 'muted' or 'novoice'
+function playAd(host) {
+  stopAd();
+  const cur = host.querySelector('.creative.ad'); if (!cur) return null;
+  const tmp = document.createElement('div'); tmp.innerHTML = motionHTML(pack, variant, cur.classList.contains('tall') ? 'tall' : '');
+  const el = tmp.firstElementChild; cur.replaceWith(el);
+  const scenes = $$('.scene', el), segs = $$('.m-bar i', el), lines = voiceLines(pack, variant);
+  const st = playing = { el, timers: [], i: -1 };
+  const dur = t => Math.max(2600, 900 + sayClean(t).split(/\s+/).length * 340);
+  const go = i => { if (playing !== st || i === st.i) return; st.i = i;
+    scenes.forEach((s, k) => s.classList.toggle('on', k === i));
+    segs.forEach((g, k) => { g.className = k < i ? 'done' : k === i ? 'run' : ''; g.style.setProperty('--d', dur(lines[k]) + 'ms'); }); };
+  const finish = () => { if (playing !== st) return; segs.forEach(g => g.className = 'done'); el.classList.add('ended'); playing = null; };
+  const timed = from => { let t = 0; for (let i = from; i < lines.length; i++) { st.timers.push(setTimeout(() => go(i), t)); t += dur(lines[i]); } st.timers.push(setTimeout(finish, t)); };
+  const voice = VO.on && canSpeak() ? pickVoice() : null;
+  if (!voice) { timed(0); return VO.on ? 'novoice' : 'muted'; }
+  try { speechSynthesis.cancel(); } catch (e) {}
+  const tone = pack.f.tone, rate = { urgent: 1.1, luxury: .92, funny: 1.05 }[tone] || 1, pitch = { luxury: .92, bold: .9, funny: 1.12 }[tone] || 1;
+  let started = false, fell = false;
+  const fallback = from => { if (fell || playing !== st) return; fell = true; try { speechSynthesis.cancel(); } catch (e) {} st.timers.forEach(clearTimeout); st.timers = []; timed(from); };
+  // all lines are queued right away, inside the tap, so iPhone/iPad Safari allows the sound
+  lines.forEach((t, i) => {
+    const u = new SpeechSynthesisUtterance(sayClean(t)); u.voice = voice; u.lang = voice.lang; u.rate = rate; u.pitch = pitch;
+    u.onstart = () => { started = true; if (!fell) go(i); };
+    if (i === lines.length - 1) u.onend = () => { if (!fell) st.timers.push(setTimeout(finish, 1500)); };
+    u.onerror = e => { if (e && (e.error === 'interrupted' || e.error === 'canceled')) return; fallback(Math.max(0, st.i)); };
+    speechSynthesis.speak(u);
+  });
+  go(0);
+  st.timers.push(setTimeout(() => { if (!started) { fallback(0); toast('No voice on this device, so the demo plays without sound'); } }, 2500));
+  st.timers.push(setTimeout(() => { if (!fell) finish(); }, lines.reduce((a, t) => a + dur(t), 0) * 2 + 3000)); // safety net
+  return 'voice';
+}
+function bigRender() {
+  const shape = plat === 'story' || plat === 'tiktok' ? 'tall' : '';
+  $('#bigStage').innerHTML = creativeHTML(pack, variant, shape);
+}
+function openBig(play) {
+  stopAd(); bigRender(); $('#bigDlg').hidden = false;
+  if (play) playAd($('#bigStage')); else $('#bigClose').focus();
+}
+function closeBig() { stopAd(); $('#bigDlg').hidden = true; renderStudio(false); }
+function motionInit() {
+  if (canSpeak()) { try { speechSynthesis.getVoices(); speechSynthesis.addEventListener('voiceschanged', () => { if (outTab === 'voice' && !$('#moreDlg').hidden) renderOutputs(); }); } catch (e) {} }
+  document.addEventListener('click', e => {
+    const pb = e.target.closest('[data-play]'), ub = e.target.closest('[data-unplay]'); if (!pb && !ub) return;
+    const host = (pb || ub).closest('#bigStage, #bigDlg') ? $('#bigStage') : $('#preview');
+    if (ub) { stopAd(); if (host.id === 'bigStage') bigRender(); else renderStudio(false); return; }
+    if (host.id === 'preview' && !host.querySelector('.creative.ad')) { openBig(true); return; } // Google ads have no picture, so play it big
+    if (host.id === 'bigStage' && !host.querySelector('.creative.ad')) bigRender();
+    const how = playAd(host);
+    if (how === 'muted') toast('Voice is off. Turn it on in More, Voice-over.');
+  });
+  $('#bigBtn').addEventListener('click', () => openBig(false));
+  $('#bigClose').addEventListener('click', closeBig);
+  $('#bigDlg').addEventListener('click', e => { if (e.target.id === 'bigDlg') closeBig(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#bigDlg').hidden) closeBig(); });
+  addEventListener('hashchange', stopAd);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) stopAd(); });
+  $('#outPane').addEventListener('change', e => {
+    if (e.target.id === 'voSel') { VO.name = e.target.value; store.set('voiceName', VO.name); }
+    if (e.target.id === 'voOn') { VO.on = e.target.checked; store.set('voiceOn', VO.on); }
+  });
+  $('#outPane').addEventListener('click', e => { if (e.target.id === 'voTest') { stopAd(); $('#moreDlg').hidden = true; const how = playAd($('#preview')); if (how === null) openBig(true); } });
+}
+function voicePaneHTML() {
+  const vs = voiceList(), cur = pickVoice();
+  const sel = vs.length ? `<label class="f">Voice<select id="voSel">${vs.map(v => `<option value="${esc(v.name)}" ${cur && v.name === cur.name ? 'selected' : ''}>${esc(v.name)} (${esc(v.lang)})</option>`).join('')}</select></label>`
+    : `<p class="dim" style="font-size:.8rem">${canSpeak() ? 'No English voices found on this device yet.' : 'This browser has no built-in voice.'} The demo still plays without sound.</p>`;
+  return `<div class="stack" style="gap:10px">
+    <div class="row" style="gap:14px;align-items:flex-end">${sel}<label class="row" style="gap:6px;font-size:.86rem"><input type="checkbox" id="voOn" ${VO.on ? 'checked' : ''}> Voice on</label><button class="btn sm" id="voTest">Play the demo</button></div>
+    <div><div class="outhead"><span class="muted" style="font-size:.84rem">Voice-over script (about 15 seconds)</span><button class="btn sm" data-copy="oVO">Copy</button></div><div class="out" id="oVO">${esc(voiceScript(pack, variant))}</div></div>
+    <p class="dim" style="font-size:.78rem">The preview voice is your device's built-in voice, so it sounds different on each phone or computer, and it can't be downloaded. For a real video ad, read this script yourself (real voices usually feel more trustworthy) or paste it into a voice tool, then add it in CapCut or Canva.</p></div>`;
+}
+
+// ================= OPTIMIZE: one-tap fixes + an honest ad check (basics, not a promise of results) =================
+const OPTS = [['hook', 'Stronger hook'], ['short', 'Shorter text'], ['deal', 'Deal first'], ['local', 'Add the city'], ['read', 'Easier to read'],
+  ['color', 'More color'], ['cta', 'Clearer button'], ['urgent', 'Add urgency'], ['proof', 'Add a real rating'], ['all', 'Fix all']];
+const lumi = h => { const c = h.slice(1).match(/\w\w/g).map(x => parseInt(x, 16) / 255).map(v => v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
+const contrast = (a, b) => { const x = lumi(a), y = lumi(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
+const readScore = pal => Math.min(contrast(pal.ink, pal.bg), contrast(pal.ink, pal.bg2));
+// edits made by the Optimize buttons stay only while the business, deal and style stay the same
+const optSig = () => JSON.stringify([B.niche, B.name, B.city, B.offer, B.tone, B.proof || '', B.ai ? B.ai.headlines[0] : '']);
+function optGet() { if (!B.opt || B.opt.sig !== optSig()) B.opt = { sig: optSig(), hs: {}, ts: {}, hook: 0 }; return B.opt; }
+function applyOpt(p) {
+  if (!B.opt || B.opt.sig !== optSig()) return;
+  for (const [v, h] of Object.entries(B.opt.hs)) if (p.hs[v] != null) p.hs[v] = h;
+  for (const [v, t] of Object.entries(B.opt.ts)) if (p.texts[v]) p.texts[v] = { f: p.texts[v].f + ' · optimized', t };
+}
+const words = t => t.trim().split(/\s+/).filter(Boolean).length;
+function adChecks(p = pack, v = variant) {
+  const f = p.f, h = p.hs[v] || '', t = p.texts[v] ? p.texts[v].t : '', pal = adPal(p, v), city = f.city.toLowerCase();
+  return [
+    { k: 'len', ok: h.length <= 40, t: `Headline is short (${h.length}/40 letters)`, fix: 'short' },
+    { k: 'hook', ok: /\?|\byou|\d|!/i.test(h) || h.toLowerCase().includes(city), t: 'Headline grabs attention (a question, a number or "you")', fix: 'hook' },
+    { k: 'deal', ok: /\$|\d|%|free/i.test(f.offer), t: 'Deal is specific (a price, a % or "free")', fix: 'dealfield' },
+    { k: 'city', ok: (h + ' ' + t).toLowerCase().includes(city), t: 'Says where (the city)', fix: 'local' },
+    { k: 'read', ok: readScore(pal) >= 4.5, t: `Easy to read (text contrast ${readScore(pal).toFixed(1)}, aim for 4.5+)`, fix: 'read' },
+    { k: 'text', ok: words(t) <= 55, t: `Ad text is quick to read (${words(t)} words, aim for 55 or less)`, fix: 'short' }
+  ];
+}
+function renderCheck() {
+  if (!pack || !$('#adCheck')) return;
+  const c = adChecks(), n = c.filter(x => x.ok).length, bad = c.filter(x => !x.ok);
+  $('#adScore').textContent = `${n}/${c.length}`; $('#adScore').className = 'tag ' + (n === c.length ? 'green' : '');
+  const row = x => `<div class="ck ${x.ok ? 'ok' : 'no'}"><span><i>${x.ok ? '✓' : '!'}</i>${esc(x.t)}</span>${x.ok ? '' : `<button class="chip opt" data-opt="${x.fix}">Fix</button>`}</div>`;
+  $('#adCheck').innerHTML = (bad.length ? bad.map(row).join('') : '<div class="ck ok"><span><i>✓</i>All the basics pass.</span></div>')
+    + `<details><summary>All checks</summary>${c.map(row).join('')}<p class="dim" style="font-size:.74rem;margin-top:4px">These are common ad basics, not a promise of results. Real results come from testing 2 or 3 versions with real money.${pack.f.proof ? '' : ' Tip: a real rating (typed by you) usually builds trust.'}</p></details>`;
+}
+function setLayoutTo(target) { B.layout = ((target - variant * 4) % AD_LAYOUTS + AD_LAYOUTS) % AD_LAYOUTS; }
+// each returns a short message for the person, or '' if nothing changed
+function doOpt(k) {
+  const p = pack, f = p.f, n = p.n, v = variant, o = optGet(), h = p.hs[v] || '', so = shortOffer(f.offer), pal = adPal(p, v);
+  if (k === 'hook') {
+    const hooks = [`Tired of ${n.pains[0]}?`, `${f.city}, this one's for you`, `${so} at ${f.name}`, `Still ${n.pains[1]}?`, `${cap(n.benefits[0])} in ${f.city}`, `You deserve ${n.benefits[0]}`]
+      .filter(x => x !== h); const fit = hooks.filter(x => x.length <= 40), list = fit.length ? fit : hooks;
+    o.hs[v] = list[o.hook++ % list.length]; return 'New hook: a line that speaks to the customer.';
+  }
+  if (k === 'short') {
+    let nh = h; if (nh.length > 40) { nh = nh.slice(0, 38).replace(/\s+\S*$/, ''); o.hs[v] = nh; }
+    o.ts[v] = `${nh}\n\n${f.offer.replace(/\.$/, '')}.${f.proof ? ' ' + f.proof + '.' : ''} Here in ${f.city}.\nTap "${n.cta}".`; return 'Shorter: people read ads in about 2 seconds.';
+  }
+  if (k === 'deal') { o.hs[v] = so.length <= 40 ? cap(so) : so.slice(0, 38); setLayoutTo(bigNumber(f.offer) ? 8 : 2); return 'The deal is now the first thing people see.'; }
+  if (k === 'local') {
+    if (h.toLowerCase().includes(f.city.toLowerCase())) return 'The headline already says the city.';
+    o.hs[v] = `${f.city}: ${h}`.length <= 44 ? `${f.city}: ${h}` : `${f.city}: ${so}`; return 'Added the city. Local ads feel made for the people who see them.';
+  }
+  if (k === 'read') {
+    const cands = [...new Set([...poolOf(f.niche), ...PALETTES.map((_, i) => i)])].filter(i => readScore(PALETTES[i]) >= 7);
+    if (readScore(pal) >= 7) return 'The colors are already easy to read.';
+    const best = cands.find(i => poolOf(f.niche).includes(i)) ?? cands[0]; B.palette = best; B.colorLock = true; return `Easier to read: ${PALETTES[best].name} colors with stronger contrast.`;
+  }
+  if (k === 'color') {
+    const now = PALETTES.indexOf(pal), mine = poolOf(f.niche).filter(i => VIVID.includes(i) && i !== now), list = mine.length ? mine : VIVID.filter(i => i !== now);
+    B.palette = list[(o.colorI = ((o.colorI || 0) + 1)) % list.length]; B.colorLock = true; return `More color: ${PALETTES[B.palette].name}.`;
+  }
+  if (k === 'cta') {
+    const base = NICHES[f.niche].cta, list = [...new Set([base, 'Claim Offer', `${base} Today`, 'Get Started'])], i = list.indexOf(n.cta);
+    B.cta = list[(i + 1) % list.length]; if (B.cta === base) B.cta = ''; return `Button now says "${B.cta || base}".`;
+  }
+  if (k === 'urgent') { if (B.tone === 'urgent') return 'It already sounds urgent.'; B.tone = 'urgent'; B.ai = null; return 'Added urgency. Only use this if the deal really ends soon.'; }
+  if (k === 'proof' || k === 'dealfield') {
+    const d = $('#adInputs'); d.open = true; const el = $(k === 'proof' ? '#bProof' : '#bOffer');
+    setTimeout(() => { el.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' }); el.focus(); }, 30);
+    return k === 'proof' ? 'Type a real rating or review count. Never make one up.' : 'Add a number to the deal, like "$50 off" or "20% off". Only offers the owner agreed to.';
+  }
+  if (k === 'all') {
+    const done = [];
+    for (let round = 0; round < 3; round++) for (const c of adChecks(pack, variant)) if (!c.ok && c.fix !== 'dealfield') { doOpt(c.fix); done.push(c.k); renderStudio(); }
+    return done.length ? 'Fixed what could be fixed automatically.' + (adChecks().some(c => !c.ok) ? ' The rest needs your input.' : '') : 'Nothing to fix: all the basics pass.';
+  }
+  return '';
+}
+function optInit() {
+  $('#optBtns').innerHTML = OPTS.map(([k, t]) => `<button class="chip" data-opt="${k}">${t}</button>`).join('');
+  $('#rfTabs').addEventListener('click', e => { const b = e.target.closest('[data-rt]'); if (!b) return;
+    $$('#rfTabs [data-rt]').forEach(x => x.classList.toggle('on', x === b)); $$('#refine [data-rp]').forEach(p => p.hidden = p.dataset.rp !== b.dataset.rt); });
+  $('#refine').addEventListener('click', e => {
+    const b = e.target.closest('[data-opt]'); if (!b) return;
+    actSeq++; const msg = doOpt(b.dataset.opt); renderStudio(false);
+    if (b.dataset.opt === 'proof' || b.dataset.opt === 'dealfield') { $('#dsMsg').textContent = msg; return; }
+    showAd(msg);
+  });
+}
+
 // ================= OFFER SCORE (used in the course and the studio) =================
 const OFFER_CHECKS = [
   ['Specific: a number, price or time', /\$|\d|%/, 'Add a number: a price, a percent or a time ("$79", "in 24 hours").'],
@@ -2272,25 +2597,26 @@ if (!TONES[B.tone]) B.tone = 'friendly';
 if (!PALETTES[B.palette]) B.palette = 0;
 let plat = 'fb', variant = 0, outTab = 'hl', pack;
 const PLATS = { fb: 'Facebook', google: 'Google', tiktok: 'TikTok', story: 'Story' };
-const OUTS = { hl: 'Headlines', text: 'Ad text', google: 'Google ad', image: 'Image prompt', video: 'Video', target: 'Targeting', budget: 'Budget', saved: 'My ads' };
+const OUTS = { hl: 'Headlines', text: 'Ad text', google: 'Google ad', image: 'Image prompt', video: 'Video', target: 'Targeting', budget: 'Budget', voice: 'Voice-over', saved: 'My ads' };
 const BRAND_STEPS = ['Matching the business type', 'Writing the positioning', 'Choosing colors + fonts', 'Planning a month of content', 'Laying out the brand board'];
 const GEN_STEPS = ['Matching the business type', 'Filling 3 proven copy formulas', 'Adding your offer + proof', 'Laying out the creative', 'Adding targeting + budget'];
 
 function fields() {
   const n = NICHES[B.niche];
-  return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette , layout: B.layout || 0, colorLock: !!B.colorLock };
+  return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette , layout: B.layout || 0, colorLock: !!B.colorLock, cta: B.cta || '' };
 }
 function studioInit() {
   $('#nicheGrid').innerHTML = Object.entries(NICHES).map(([k, n]) => `<button data-n="${k}">${n.label}</button>`).join('');
   $('#toneRow').innerHTML = Object.entries(TONES).map(([k, t]) => `<button class="chip" data-tone="${k}">${t}</button>`).join('');
   $('#swatches').innerHTML = PALETTES.map((p, i) => `<button class="sw" data-pal="${i}" title="${p.name}" aria-label="${p.name} colors" style="background:linear-gradient(135deg,${p.c1},${p.c2})"></button>`).join('');
   $('#platTabs').innerHTML = Object.entries(PLATS).map(([k, t]) => `<button data-p="${k}">${t}</button>`).join('');
-  $('#variantBtns').innerHTML = ['1', '2', '3'].map((l, i) => `<button data-var="${i}">Version ${l}</button>`).join('');
+  $('#variantBtns').innerHTML = ['1', '2', '3'].map((l, i) => `<button data-var="${i}" aria-label="Version ${l}" title="Version ${l}">V${l}</button>`).join('');
   $('#outTabs').innerHTML = Object.entries(OUTS).map(([k, t]) => `<button data-o="${k}">${t}</button>`).join('');
   $('#nicheGrid').addEventListener('click', e => { const b = e.target.closest('[data-n]'); if (b) setNiche(b.dataset.n); });
   $('#toneRow').addEventListener('click', e => { const b = e.target.closest('[data-tone]'); if (b) { B.tone = b.dataset.tone; B.ai = null; renderStudio(); } });
   $('#swatches').addEventListener('click', e => { const b = e.target.closest('[data-pal]'); if (b) { B.palette = +b.dataset.pal; B.colorLock = true; renderStudio(); } });
   $('#platTabs').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (b) { plat = b.dataset.p; renderStudio(); } });
+  $('#preview').addEventListener('click', e => { const b = e.target.closest('.seemore'); if (!b) return; const t = b.previousElementSibling; t.classList.toggle('clamp'); b.textContent = t.classList.contains('clamp') ? 'See more' : 'See less'; });
   $('#variantBtns').addEventListener('click', e => { const b = e.target.closest('[data-var]'); if (b) { variant = +b.dataset.var; renderStudio(); } });
   $('#outTabs').addEventListener('click', e => { const b = e.target.closest('[data-o]'); if (b) { outTab = b.dataset.o; renderOutputs(); } });
   [['bName', 'name'], ['bCity', 'city'], ['bOffer', 'offer'], ['bAud', 'aud'], ['bProof', 'proof']].forEach(([id, key]) =>
@@ -2316,7 +2642,7 @@ function setNiche(k, force) {
   const sample = Object.values(NICHE_NAMES).includes(B.name) || !B.name.trim();
   B.niche = k; B.ai = null; const n = NICHES[k];
   if (sample || force) B.name = NICHE_NAMES[k];
-  B.offer = n.offer; B.aud = n.audience; B.palette = n.palette; B.colorLock = false;
+  B.offer = n.offer; B.aud = n.audience; B.palette = n.palette; B.colorLock = false; B.cta = '';
   renderStudio();
 }
 function generate() {
@@ -2331,12 +2657,14 @@ function generate() {
   setTimeout(() => { ov.remove(); $('#preview').classList.remove('rise'); void $('#preview').offsetWidth; $('#preview').classList.add('rise'); toast('Ad pack ready'); }, rows.length * 260 + 250);
 }
 function renderStudio(sync = true) {
+  stopAd();
   store.set('builder', B);
   pack = buildPack(fields());
   if (B.ai && B.ai.headlines && B.ai.texts) { // AI-written copy from the Describe tab replaces the template copy
     pack.hs = B.ai.headlines.slice(0, 3); pack.texts = pack.texts.map((t, i) => ({ f: t.f + ' · written by AI', t: B.ai.texts[i] || t.t }));
     if (B.ai.imageIdea) pack.imagePrompt = `${B.ai.imageIdea}, vertical 4:5 ad format, photorealistic, high detail, empty space at the top for a headline, no text, no logos`;
   }
+  applyOpt(pack);
   if (sync) { $('#bName').value = B.name; $('#bCity').value = B.city; $('#bOffer').value = B.offer; $('#bAud').value = B.aud; $('#bProof').value = B.proof || ''; $('#bProof').placeholder = 'e.g. ' + NICHES[B.niche].proofEx; }
   $$('#nicheGrid button').forEach(b => b.classList.toggle('on', b.dataset.n === B.niche));
   $$('#toneRow .chip').forEach(b => b.classList.toggle('on', b.dataset.tone === B.tone));
@@ -2344,8 +2672,10 @@ function renderStudio(sync = true) {
   $$('#platTabs button').forEach(b => b.classList.toggle('on', b.dataset.p === plat));
   $$('#variantBtns button').forEach(b => b.classList.toggle('on', +b.dataset.var === variant));
   $('#pvNote').hidden = !!B.made; $('#pvYours').hidden = !B.made;
-  $('#scrollHint').hidden = plat !== 'fb';
   $('#preview').innerHTML = `<div class="phone"><div class="screen">${previewHTML(pack, plat, variant)}</div></div>`;
+  const tx = $('#preview .fb .tx'); if (tx) { tx.classList.add('clamp'); tx.insertAdjacentHTML('afterend', '<button class="seemore" type="button">See more</button>'); }
+  if (!$('#bigDlg').hidden) bigRender();
+  renderCheck();
   renderOutputs();
   renderPrompts();
 }
@@ -2376,6 +2706,7 @@ function renderOutputs() {
   if (outTab === 'video') h = box('oV', '15 seconds, vertical 9:16', esc(p.video));
   if (outTab === 'target') h = box('oA', 'Set this in the Ad set level of Ads Manager', esc(p.targeting));
   if (outTab === 'budget') h = box('oB', 'Tell the owner this before launch', esc(p.budget));
+  if (outTab === 'voice') h = voicePaneHTML();
   if (outTab === 'saved') {
     const g = store.get('gallery', []);
     h = g.length ? `<div class="gallery">${g.map((it, i) => NICHES[it.f.niche] ? `<div class="g" data-load="${i}" role="button" tabindex="0">${creativeHTML(buildPack(Object.assign({}, it.f, { name: it.f.name || 'Your Business', city: it.f.city || 'your city', offer: it.f.offer || NICHES[it.f.niche].offer })), it.v || 0)}<button class="x" data-del="${i}" aria-label="Delete">×</button></div>` : '').join('')}</div><p class="dim" style="font-size:.78rem;margin-top:8px">Saved in this browser. Click one to load it.</p>`
@@ -2891,7 +3222,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); describeInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit();
+studioInit(); describeInit(); optInit(); motionInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit();
 show(location.hash.slice(1));
 </script>
 </body>
