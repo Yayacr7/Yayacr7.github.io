@@ -1517,7 +1517,7 @@ Open `ai-ads/index.html` in any browser (on GitHub Pages: `/ai-ads/`). It does t
 
 | Page | What it does |
 | --- | --- |
-| Make an Ad (first screen) | Type the ad you want ("a bold red Instagram ad for Joe's Pizza in Dallas, 20% off this weekend") and click Make my ad. On claude.ai, Claude writes it; on GitHub Pages a keyword reader builds it from templates. Switch between Facebook, Google, TikTok and Story, pick version 1-3, copy or save. "More" has headlines, image prompt, video script, targeting and budget. "Edit details" lets you change the name, deal and real rating |
+| Make an Ad (first screen) | Type the ad you want ("a bold red Instagram ad for Joe's Pizza in Dallas, 20% off this weekend") and click Make my ad. On claude.ai, Claude writes it; on GitHub Pages a keyword reader builds it from templates. Switch between Facebook, Google, TikTok and Story, pick version 1-3, copy or save. "More" has headlines, image prompt, video script, targeting and budget. Not happy? Type a change ("make it blue", "more funny", "say 30% off") or tap Another version, Change colors or Change style. "Edit details" lets you change the name, deal and real rating |
 | Make a Brand | Enter a business and get a brand check, positioning, voice, brand kit, content plan, channels, a 90-day plan and a pitch |
 | Check a Business | Score a business out of 100 and copy a report and video script to send the owner |
 | Find Clients | Where to find businesses, ready-made messages for each lead, objection answers and a lead tracker with follow-up dates |

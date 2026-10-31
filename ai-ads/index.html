@@ -389,6 +389,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .mk-box textarea{border:0;background:transparent;font-size:1.12rem;line-height:1.5;min-height:130px;resize:none;padding:4px 6px}
 .mk-box textarea:focus{border:0}
 .mk-box .btn{align-self:flex-end;padding:11px 20px}
+.maker .pcol .mk-refine{width:100%;max-width:420px}
 details.mk-more summary{cursor:pointer;color:var(--muted);font-size:.88rem;width:fit-content}
 details.mk-more[open]{max-height:44dvh;overflow:auto}
 .maker .phone{height:min(620px,calc(100dvh - 220px))}
@@ -567,6 +568,10 @@ details.mk-more[open]{max-height:44dvh;overflow:auto}
         <button class="chip" data-ex="A premium black TikTok ad for Luma Med Spa in Miami. $100 off your first facial this month.">Med spa</button>
       </div>
       <p class="dim" id="dsMsg" style="font-size:.84rem;min-height:1.3em" aria-live="polite"></p>
+      <div class="mk-refine stack" id="refine" hidden>
+        <div class="row" style="flex-wrap:nowrap;gap:6px"><input type="text" id="rfT" aria-label="What to change" placeholder="Want changes? e.g. make it blue, more funny, say 30% off"><button class="btn sm" id="rfGo">Update ad</button></div>
+        <div class="row" style="gap:6px"><button class="chip" data-q="variant">Another version</button><button class="chip" data-q="color">Change colors</button><button class="chip" data-q="style">Change style</button></div>
+      </div>
       <details class="mk-more" id="adInputs"><summary>Edit details</summary>
         <div class="stack" style="gap:10px;margin-top:10px">
           <div class="nichegrid" id="nicheGrid"></div>
@@ -1941,10 +1946,11 @@ function parseDescription(t) {
   return out;
 }
 async function getSample() { try { return window.claude && window.claude.use ? await window.claude.use('sample') : null; } catch (e) { return null; } }
-function aiPrompt(t) {
+function aiPrompt(t, change) {
+  const cur = change ? `\n\nTHE AD RIGHT NOW:\nHeadline: ${pack.hs[variant]}\nText: ${pack.texts[variant].t}\nBusiness: ${B.name}, ${B.city}. Deal: ${B.offer}.\n\nCHANGE THE PERSON WANTS: """${change}"""\nApply this change. Keep everything else the same unless the change says otherwise.` : '';
   return `You write ads for local businesses. Turn the request below into one ad. Reply with JSON only, no other text.
 
-REQUEST: """${t}"""
+REQUEST: """${t}"""${cur}
 
 Return exactly this JSON shape:
 {"niche": one of ${JSON.stringify(Object.keys(NICHES))} (closest match),
@@ -1957,7 +1963,7 @@ Return exactly this JSON shape:
  "palette": one of ["Ember","Cobalt","Copper","Plum","Forest","Noir"] (Ember=red/orange, Cobalt=blue, Copper=brown/gold, Plum=purple/pink, Forest=green, Noir=black/dark),
  "platform": one of ["fb","google","tiktok","story"],
  "headlines": [3 different headlines, each 40 characters or less],
- "texts": [3 Facebook ad texts under 80 words each: one Problem-Agitate-Solve, one AIDA, one Before-After-Bridge],
+ "texts": [3 short Facebook ad texts, under 60 words each],
  "imageIdea": one sentence describing a photo for the ad, no text in the image}
 
 Rules: Never invent reviews, star ratings, customer counts, awards, prices or results. Only mention proof if the request gives it. Never call out personal traits (like "Are you overweight?"). No guarantees. Plain, friendly English.`;
@@ -1977,23 +1983,74 @@ function applyDescribed(r) {
   if (r.platform) plat = r.platform;
   B.ai = r.ai || null; variant = 0;
 }
+// a change request without AI: apply only what the words clearly ask for
+function applyChange(c) {
+  const r = parseDescription(c); let did = [];
+  if (r.niche && r.niche !== B.niche) { const keep = { name: B.name, city: B.city }; B.niche = r.niche; B.offer = NICHES[r.niche].offer; B.aud = NICHES[r.niche].audience; Object.assign(B, keep); B.ai = null; did.push('business type'); }
+  if (r.name) { B.name = r.name; did.push('name'); }
+  if (r.city) { B.city = r.city; did.push('city'); }
+  if (r.offer) { B.offer = r.offer; B.ai = null; did.push('deal'); }
+  if (r.tone) { B.tone = r.tone; B.ai = null; did.push('style'); }
+  if (r.palette != null) { B.palette = r.palette; did.push('colors'); }
+  else if (/colou?r/i.test(c)) { B.palette = (B.palette + 1) % PALETTES.length; did.push('colors'); }
+  if (!r.tone && /style|tone|vibe/i.test(c)) { const k = Object.keys(TONES); B.tone = k[(k.indexOf(B.tone) + 1) % k.length]; B.ai = null; did.push('style'); }
+  if (r.platform) { plat = r.platform; did.push('platform'); }
+  if (!did.length) { variant = (variant + 1) % 3; did.push('wording'); }
+  return did;
+}
+const AI_WAIT = () => window.__aiWait || 40000;
+const withTimeout = (pr, ms) => Promise.race([pr, new Promise((_, rej) => setTimeout(() => rej({ code: 'timeout' }), ms))]);
+function showAd(note) {
+  $('#dsMsg').textContent = note;
+  $('#refine').hidden = false;
+  $('#preview').classList.remove('rise'); void $('#preview').offsetWidth; $('#preview').classList.add('rise');
+  if (innerWidth <= 900) $('#pwrap').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+}
+let aiBusy = false, actSeq = 0; // actSeq: bumped by every user action, so a late AI answer never undoes a newer change
+async function aiUpgrade(t, change) {
+  if (aiBusy) return; const sample = await getSample(); if (!sample) return;
+  aiBusy = true; const msg = $('#dsMsg'), before = msg.textContent, mine = actSeq;
+  msg.textContent = before + ' AI is writing a better version…';
+  try {
+    const r = cleanAI(await withTimeout(sample.json(aiPrompt(t, change), { modelTier: 'quick', cache: false }), AI_WAIT()));
+    if (mine !== actSeq) { aiBusy = false; return; }
+    if (r) { applyDescribed(r); renderStudio(); showAd(change ? 'Updated by AI. Check the facts before you use it.' : 'Written by AI. Check the facts before you use it.'); }
+    else msg.textContent = before + ' (The AI answer was incomplete, so this version stays.)';
+  } catch (e) {
+    if (mine !== actSeq) { aiBusy = false; return; }
+    msg.textContent = before + (e && e.code === 'not_granted' ? ' (AI writing is turned off, so this version stays.)' : e && e.code === 'timeout' ? ' (The AI took too long, so this version stays.)' : e && e.code === 'rate_limited' ? ' (AI is busy, try again in a minute.)' : ' (AI could not answer, so this version stays.)');
+  }
+  aiBusy = false;
+}
 function describeInit() {
   $('#dsEx').addEventListener('click', e => { const b = e.target.closest('[data-ex]'); if (b) $('#dsT').value = b.dataset.ex; });
-  $('#dsGo').addEventListener('click', async () => {
-    const t = $('#dsT').value.trim(), msg = $('#dsMsg'), btn = $('#dsGo');
-    if (t.length < 8) { msg.textContent = 'Add a bit more: the business, the deal, the look.'; return; }
-    btn.disabled = true; msg.textContent = 'Making your ad…';
-    const sample = await getSample();
-    let r = null, how = '';
-    if (sample) {
-      try { msg.textContent = 'AI is writing your ad…'; r = cleanAI(await sample.json(aiPrompt(t))); how = r ? 'Written by AI. Check the facts before you use it.' : ''; }
-      catch (e) { how = e && e.code === 'not_granted' ? 'AI writing was not allowed, so the simple maker was used.' : e && e.code === 'rate_limited' ? 'AI is busy right now, so the simple maker was used. Try again in a minute.' : ''; }
-    }
-    if (!r) { r = parseDescription(t); r.ai = null; how = how || 'Made from your words. (On claude.ai, AI writes it.)'; }
-    B.made = true; applyDescribed(r); renderStudio(); generate();
-    msg.textContent = how;
-    btn.disabled = false;
-  });
+  const make = () => {
+    const t = $('#dsT').value.trim();
+    if (t.length < 8) { $('#dsMsg').textContent = 'Add a bit more: the business, the deal, the look.'; return; }
+    actSeq++; B.made = true; B.desc = t;
+    const r = parseDescription(t); r.ai = null; applyDescribed(r); renderStudio(); generate();
+    showAd('Here’s your ad. Want changes? Type them in the change box.');
+    aiUpgrade(t);
+  };
+  const change = c => {
+    if (!c) return; actSeq++;
+    const did = applyChange(c); renderStudio(); generate();
+    showAd(`Changed: ${did.join(', ')}.`);
+    if (B.desc) aiUpgrade(B.desc, c);
+  };
+  $('#dsGo').addEventListener('click', make);
+  $('#dsT').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) make(); });
+  $('#rfGo').addEventListener('click', () => { change($('#rfT').value.trim()); $('#rfT').value = ''; });
+  $('#rfT').addEventListener('keydown', e => { if (e.key === 'Enter') { change($('#rfT').value.trim()); $('#rfT').value = ''; } });
+  $('#refine').addEventListener('click', e => { const q = e.target.closest('[data-q]'); if (!q) return; actSeq++;
+    if (q.dataset.q === 'variant') { variant = (variant + 1) % 3; renderStudio(); showAd('Here’s another version.'); }
+    if (q.dataset.q === 'color') { B.palette = (B.palette + 1) % PALETTES.length; renderStudio(); showAd(`New colors: ${PALETTES[B.palette].name}.`); }
+    if (q.dataset.q === 'style') { const k = Object.keys(TONES); B.tone = k[(k.indexOf(B.tone) + 1) % k.length]; B.ai = null; renderStudio(); showAd(`New style: ${TONES[B.tone]}.`); } });
+  if (B.made) $('#refine').hidden = false;
+  // phones stack the screen, so the change box goes right under the ad; on wide screens it stays by the typing box
+  const narrow = matchMedia('(max-width: 900px)'), home = $('#dsMsg');
+  const place = () => { if (narrow.matches) $('.maker .pcol').appendChild($('#refine')); else home.after($('#refine')); };
+  narrow.addEventListener('change', place); place();
 }
 
 // ================= OFFER SCORE (used in the course and the studio) =================
