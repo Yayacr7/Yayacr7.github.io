@@ -9,9 +9,9 @@
 - Remember what Yaya asks for: add every new request or decision to the log below.
 
 ## Big decision (Oct 31, 2026)
-- The app is "does it for you" first: the Ad Maker is the first screen (one big centered box, "What ad do you want?", Make my ad, and the ad beside it). Extra fields stay hidden under "Edit details" and "More". Keep it this simple.
-- KEEP the four courses (Ads, Brand, Clients, Freelance). Yaya said to keep them. They sit at the end of the menu under "Learn (optional)". Never remove them unless Yaya clearly asks.
-- The Business Plan page was removed. Bring it back only if Yaya asks.
+- The app is "does it for you" first and must NOT feel like a learning app. The Ad Maker is the first screen (one big centered box, "What ad do you want?", Make my ad, and the ad beside it). Extra fields stay hidden under "Edit details" and "More". Keep it this simple.
+- KEEP the four guides and the Business Plan. They sit at the end of the menu under "Guides" as Ads Playbook, Brand Playbook, Clients Playbook, Freelance Playbook and Business Plan. Never remove them unless Yaya clearly asks.
+- Use tool wording, not school wording: "playbook", "guide", "tool", "Done, next step", "Ready check". Avoid "course", "lesson", "quiz", "practice", "mark done".
 
 ## Request log
 - Built Yaya AI Ad Lab (`ai-ads/index.html`): learn AI advertising, an ad builder app, an AI audit, client pricing, ways to get clients, demos everywhere, simple language.
@@ -38,3 +38,4 @@
 - Asked for a box to type what ad you want (look, purpose) and have it made: added a "Describe" tab (default) in the Ad Maker. On claude.ai it uses Claude via the sample capability to write the ad (with honesty rules: no invented reviews, ratings or results); everywhere else (GitHub Pages) a keyword reader picks business type, name, city, offer, colors, tone and platform and uses templates. The page says which one it used.
 - Not a learning app: removed courses and Business Plan; app is now Make an Ad (first screen), Make a Brand, Check a Business, Find Clients, Make Money, Pricing, AI Prompts. Ad Maker simplified to a centered typing box plus the ad. Ads no longer show placeholder proof text; real rating appears only if typed.
 - Said: don't remove the four courses, keep them. Restored all four under "Learn (optional)"; tools stay first.
+- Said: bring Business Plan back and keep the four courses, but it must not feel like a learning app. Restored Business Plan; renamed courses to playbooks under "Guides"; changed wording (Tool, Done next step, Ready check).
