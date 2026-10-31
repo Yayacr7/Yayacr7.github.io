@@ -1511,7 +1511,7 @@ The arena canvas also picks its own pixel ratio: on a large, high-resolution
 screen it caps at 1.5x rather than 2x, since nine times the pixels buys
 nothing visible. That alone took a 2x display from 32 fps to 44.
 
-## Sharper.ai — makes ads and brands for local businesses
+## AdSharp.ai — makes ads and brands for local businesses
 
 Open `ai-ads/index.html` in any browser (on GitHub Pages: `/ai-ads/`). It does the work for you first, with step-by-step playbooks at the end of the menu.
 
