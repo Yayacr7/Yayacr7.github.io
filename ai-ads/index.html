@@ -8,7 +8,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Caveat:wght@600;700&family=DM+Serif+Display&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
 <style>
 /* Layout: an ad-tech control room. Fixed sidebar + one centered "stage" per view; steps and tabs instead of long scrolling. Deliberately dark-only. */
 :root{
@@ -150,17 +150,6 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .fb .lk b{font-size:.84rem;display:block;line-height:1.25}
 .fb .cta{flex:none;background:#E4E6EB;border-radius:6px;padding:7px 10px;font-weight:600;font-size:.76rem}
 .fb .acts{display:flex;justify-content:space-around;padding:9px;color:#65676B;font-weight:600;font-size:.74rem;border-top:1px solid #E4E6EB}
-.creative{position:relative;aspect-ratio:4/5;width:100%;max-width:100%;overflow:hidden;color:#fff;display:flex;flex-direction:column;justify-content:space-between;gap:10px;padding:18px;
-  background:radial-gradient(120% 90% at 85% 10%,rgba(255,255,255,.18),transparent 55%),linear-gradient(155deg,var(--c1),var(--c2));font-family:var(--f-body)}
-.creative.sq{aspect-ratio:1} .creative.tall{aspect-ratio:9/16}
-.creative .mg{position:absolute;right:-6%;bottom:-14%;font-size:15rem;font-weight:700;line-height:1;letter-spacing:-.06em;color:rgba(255,255,255,.1);pointer-events:none;font-family:var(--f-serif);font-style:italic}
-.creative .ln{position:absolute;inset:auto -10% 30% auto;width:70%;height:1px;background:rgba(255,255,255,.3);transform:rotate(-24deg)}
-.creative .top{position:relative;display:flex;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
-.creative .ch{position:relative;font-size:1.55rem;font-weight:600;line-height:1.08;letter-spacing:-.025em;text-wrap:balance;max-width:95%}
-.creative .bt{position:relative;display:flex;flex-direction:column;gap:9px;align-items:flex-start}
-.creative .cs{background:#fff;color:#0A0D13;font-weight:600;font-size:.76rem;padding:6px 10px;border-radius:7px;max-width:90%}
-.creative .pr{font-size:.72rem;opacity:.9}
-.creative.tall .ch{font-size:1.75rem}
 .gad{background:#fff;color:#202124;border-radius:12px;padding:14px;font-family:Arial,Helvetica,sans-serif}
 .gad .sp{font-size:.75rem;font-weight:700}
 .gad .url{font-size:.75rem;color:#4D5156;margin:2px 0 4px;overflow-wrap:anywhere}
@@ -274,11 +263,6 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .cc.ok{background:var(--green-s);color:var(--green)} .cc.no{background:var(--red-s);color:var(--red)}
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
 .gallery .g{border-radius:10px;overflow:hidden;cursor:pointer;position:relative;border:1px solid var(--line)}
-.gallery .g .creative{padding:9px;gap:4px}
-.gallery .g .creative .ch{font-size:.78rem}
-.gallery .g .creative .cs{font-size:.56rem;padding:3px 5px}
-.gallery .g .creative .mg{font-size:6rem}
-.gallery .g .creative .top,.gallery .g .creative .pr{display:none}
 .gallery .g .x{position:absolute;top:5px;right:5px;z-index:5;border:0;border-radius:6px;width:22px;height:22px;cursor:pointer;background:rgba(0,0,0,.55);color:#fff}
 
 /* ---------- audit ---------- */
@@ -418,6 +402,87 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
   ol.steps li{font-size:.83rem;line-height:1.35} .stepnav button{font-size:.72rem;padding:4px 8px} .note{padding:7px 11px;font-size:.82rem}
   .demo{gap:8px} .out{padding:9px 11px;font-size:.84rem} .check2{padding:4px 9px}
 }
+/* ---------- ad designs (sizes follow the ad's own width, so thumbnails, phone frames and stories all match) ---------- */
+.creative.ad{container-type:inline-size;position:relative;overflow:hidden;aspect-ratio:4/5;width:100%;max-width:100%;background:var(--bg)}
+.adi{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;gap:3.5cqw;padding:7cqw;background:var(--bg);color:var(--ink);font-family:var(--f-body);text-align:left}
+.creative.ad.sq{aspect-ratio:1} .creative.ad.tall{aspect-ratio:9/16}
+.tt .creative.ad,.reel .creative.ad{height:100%;aspect-ratio:auto}
+/* Stories and TikTok cover the bottom of the screen with their own bar, so keep the design above it */
+.tt .adi{padding-bottom:38cqw}
+.tt .adi.L1 .x-panel{padding-bottom:38cqw}
+.tt.tk .adi{padding-bottom:64cqw;padding-right:18cqw}
+.tt.tk .adi.L1{padding:0}
+.tt.tk .adi.L1 .x-panel{padding-bottom:64cqw;padding-right:18cqw}
+.adi>*{position:relative;z-index:2}
+.ad svg.ai{fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.ad .x-brand{display:flex;justify-content:space-between;gap:3cqw;font-family:var(--f-mono);font-size:3.1cqw;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.ad .x-h{font-size:10cqw;line-height:1.02;letter-spacing:-.02em;text-wrap:balance;overflow-wrap:anywhere}
+.ad .x-h.x-sm{font-size:7.4cqw}
+.ad .f-heavy{font-family:"Archivo Black",var(--f-body);font-weight:400}
+.ad .f-poster{font-family:"Anton","Archivo Black",Impact,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.005em;line-height:.98}
+.ad .f-serif{font-family:"DM Serif Display",var(--f-serif);font-weight:400;letter-spacing:-.01em}
+.ad .x-row{display:flex;align-items:center;gap:3cqw;flex-wrap:wrap}
+.ad .x-cen{justify-content:center}
+.ad .x-center{text-align:center}
+.ad .x-pill{background:var(--acc);color:var(--acci);font-weight:700;font-size:3.8cqw;padding:2.2cqw 3.6cqw;border-radius:99px;line-height:1.2}
+.adi.hand .x-pill{font-family:"Caveat",cursive;font-size:5.6cqw;padding:.8cqw 4cqw;transform:rotate(-2deg)}
+.ad .x-cta{font-weight:800;font-size:3.8cqw}
+.ad .x-proof{font-size:3.3cqw;opacity:.9}
+.ad .x-btn{background:var(--ink);color:var(--bg);font-weight:800;font-size:4cqw;padding:2.6cqw 5cqw;border-radius:2cqw}
+.ad .x-note{font-size:3.6cqw;font-weight:700}
+/* 0 big type */
+.adi.L0 .x-ghost{position:absolute;right:-10%;bottom:10%;width:64%;color:var(--acc);opacity:.4;z-index:1}
+/* 1 split scene */
+.adi.L1{padding:0;gap:0;background:var(--ink)}
+.adi.L1 .x-scene{flex:1.25;background:radial-gradient(circle at 30% 28%,var(--bg2),var(--bg) 70%);display:grid;place-items:center;color:var(--ink);overflow:hidden}
+.adi.L1 .x-hero{width:44%}
+.adi.L1 .x-dot{position:absolute;border-radius:50%;background:var(--acc)}
+.adi.L1 .d1{width:15cqw;aspect-ratio:1;top:16%;left:9%;opacity:.85} .adi.L1 .d2{width:8cqw;aspect-ratio:1;bottom:14%;right:13%;opacity:.7}
+.adi.L1 .x-tagc{position:absolute;top:5cqw;left:6cqw;font-family:var(--f-mono);font-size:3.1cqw;letter-spacing:.14em;text-transform:uppercase}
+.adi.L1 .x-panel{background:var(--ink);color:var(--bg);padding:6cqw 7cqw 7cqw;display:flex;flex-direction:column;gap:3.4cqw}
+.adi.L1 .x-h{font-size:8cqw}
+/* 2 coupon */
+.adi.L2 .x-pat{position:absolute;inset:0;z-index:0;background-image:radial-gradient(var(--bg2) 1.1cqw,transparent 1.2cqw);background-size:7cqw 7cqw}
+.adi.L2 .x-coupon{border:.8cqw dashed var(--ink);border-radius:4cqw;background:var(--bg);padding:5cqw 4cqw;text-align:center;display:flex;flex-direction:column;gap:1.6cqw}
+.adi.L2 .x-big{font-size:24cqw;line-height:.9;color:var(--acc)}
+.adi.L2 .x-cl{font-weight:800;font-size:5cqw;text-transform:uppercase;letter-spacing:.05em;overflow-wrap:anywhere}
+.adi.L2 .x-cut{font-family:var(--f-mono);font-size:3cqw;opacity:.75;border-top:.4cqw dashed currentColor;padding-top:2cqw}
+/* 3 neon poster (always dark, glow in the brand accent) */
+.adi.L3{background:#0B0B11;color:#fff}
+.adi.L3 .x-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(var(--acc) .25cqw,transparent .25cqw),linear-gradient(90deg,var(--acc) .25cqw,transparent .25cqw);background-size:9cqw 9cqw;opacity:.14}
+.adi.L3 .x-up{font-size:11cqw}
+.adi.L3 .x-out{font-size:20cqw;line-height:.9;color:transparent;-webkit-text-stroke:.55cqw var(--acc);text-shadow:0 0 5cqw var(--acc);overflow-wrap:anywhere}
+.adi.L3 .x-pill{background:var(--acc);color:var(--acci)}
+/* 4 diagonal */
+.adi.L4{background:linear-gradient(152deg,var(--bg) 0 60%,var(--acc) 60%)}
+.adi.L4 .x-sticker{position:absolute;top:15cqw;right:6cqw;z-index:3;width:24cqw;aspect-ratio:1;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-content:center;text-align:center;font-family:"Anton",Impact,sans-serif;font-size:7.4cqw;line-height:.95;transform:rotate(10deg)}
+.adi.L4 .x-sticker small{display:block;font-size:3.3cqw;font-family:var(--f-body);font-weight:800;letter-spacing:.06em}
+.adi.L4 .x-h{max-width:68%}
+.adi.L4 .x-corner{position:absolute;right:7cqw;bottom:7cqw;width:30%;color:var(--acci);z-index:1}
+.adi.L4 .x-low .x-pill{background:var(--ink);color:var(--bg)}
+/* 5 checklist */
+.adi.L5{background:linear-gradient(180deg,var(--bg),var(--bg2))}
+.adi.L5 .x-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2.6cqw;font-size:4.5cqw;font-weight:600;line-height:1.25}
+.adi.L5 .x-list li{display:flex;gap:2.6cqw;align-items:flex-start}
+.adi.L5 .x-list li::before{content:"✓";flex:none;width:6cqw;height:6cqw;border-radius:50%;background:var(--acc);color:var(--acci);display:grid;place-items:center;font-size:3.6cqw;font-weight:800}
+/* 6 minimal luxe */
+.adi.L6{justify-content:center;gap:4.5cqw;text-align:center}
+.adi.L6 .x-frame{position:absolute;inset:4cqw;z-index:0;border:.35cqw solid var(--acc);opacity:.75}
+.adi.L6 .x-mono{font-family:var(--f-mono);font-size:3.1cqw;letter-spacing:.3em;text-transform:uppercase;color:var(--acc)}
+.adi.L6 .x-h{font-size:9.6cqw}
+.adi.L6 .x-rule{width:14cqw;height:.4cqw;background:var(--acc);margin:0 auto}
+.adi.L6 .x-offer{font-size:4.6cqw;font-style:italic;font-family:var(--f-serif)}
+.adi.L6 .x-small{font-size:2.8cqw;opacity:.75}
+/* 7 circle hero */
+.adi.L7{background:var(--bg2)}
+.adi.L7 .x-circle{width:50cqw;aspect-ratio:1;border-radius:50%;background:var(--bg);margin:0 auto;display:grid;place-items:center;box-shadow:0 0 0 2.6cqw var(--acc)}
+.adi.L7 .x-cic{width:54%;color:var(--ink)}
+/* 8 big number / question */
+.adi.L8 .x-num{font-size:38cqw;line-height:.82;color:var(--acc);letter-spacing:-.01em}
+.adi.L8 .x-numl{font-weight:800;font-size:6cqw;text-transform:uppercase;letter-spacing:.07em;overflow-wrap:anywhere}
+.adi.L8 .x-q{font-size:46cqw;line-height:.72;height:26cqw;color:var(--acc)}
+.adi.L8 .x-sub{font-size:4.2cqw;opacity:.9}
+.adi.L8 .x-h{font-size:8cqw}
 .navlabel{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:12px 10px 4px}
 .nav a{padding:7px 10px}
 .pillars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -596,7 +661,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
       <p class="dim" id="dsMsg" style="font-size:.84rem;min-height:1.3em" aria-live="polite"></p>
       <div class="mk-refine stack" id="refine" hidden>
         <div class="row" style="flex-wrap:nowrap;gap:6px"><input type="text" id="rfT" aria-label="What to change" placeholder="Want changes? e.g. make it blue, more funny, say 30% off"><button class="btn sm" id="rfGo">Update ad</button></div>
-        <div class="row" style="gap:6px"><button class="chip" data-q="variant">Another version</button><button class="chip" data-q="color">Change colors</button><button class="chip" data-q="style">Change style</button></div>
+        <div class="row" style="gap:6px"><button class="chip" data-q="design">New design</button><button class="chip" data-q="variant">Another version</button><button class="chip" data-q="color">Change colors</button><button class="chip" data-q="style">Change style</button></div>
       </div>
       <details class="mk-more" id="adInputs"><summary>Edit details</summary>
         <div class="stack" style="gap:10px;margin-top:10px">
@@ -823,69 +888,91 @@ const NICHES = {
     audience: 'Adults 25–65 within 10 miles', offer: '$79 new-patient exam, cleaning and X-rays',
     pains: ['putting off your checkup for years', 'surprise dental bills', 'hiding your smile in photos'], benefits: ['gentle, pain-free cleanings', 'same-week appointments', 'clear prices before we start'],
     proofEx: 'Trusted by 2,000+ local families', cta: 'Book Now', goal: 'Bookings', visual: 'bright modern dental office, smiling patient in the chair, friendly dentist, clean white tones, natural light',
-    funny: 'Your teeth have been texting us. They miss you.', avgSale: 900, cpl: [40, 90], tier: 'high', ease: 'Medium', palette: 1 },
+    funny: 'Your teeth have been texting us. They miss you.', avgSale: 900, cpl: [40, 90], tier: 'high', ease: 'Medium', palette: 3 },
   gym: { label: 'Gym', kind: 'gym', thing: 'members', who: 'adults who want to get fit but feel lost in a gym', fear: 'wasting money on a membership again',
     audience: 'Adults 20–45 within 7 miles', offer: '7-day free pass + a free coaching session',
     pains: ['starting over every January', 'crowded gyms where nobody helps you', 'paying for a membership you never use'], benefits: ['coaches who learn your name', 'classes that fit a lunch break', 'a plan built for your body'],
     proofEx: '500+ members hit their goal last year', cta: 'Claim Free Pass', goal: 'Sign-ups', visual: 'group fitness class mid-workout, people smiling, bright modern gym, dynamic angle',
-    funny: 'Your couch will be fine without you. We checked.', avgSale: 600, cpl: [10, 35], tier: 'std', ease: 'Easy', palette: 0 },
+    funny: 'Your couch will be fine without you. We checked.', avgSale: 600, cpl: [10, 35], tier: 'std', ease: 'Easy', palette: 6 },
   roofer: { label: 'Roofer', kind: 'roofer', thing: 'jobs', who: 'homeowners with an older or storm-damaged roof', fear: 'getting ripped off by a contractor',
     audience: 'Homeowners 35–70 within 25 miles', offer: 'Free roof inspection with photos in 24 hours',
     pains: ['a leak you keep ignoring', 'storm damage you can’t see from the ground', 'contractors who never call back'], benefits: ['a written quote in 24 hours', 'licensed and insured crews', 'help with your insurance claim'],
     proofEx: '1,200+ roofs replaced, 4.9★ on Google', cta: 'Get Free Inspection', goal: 'Calls', visual: 'drone photo of a crew installing dark shingles on a suburban roof, clear blue sky, golden hour',
-    funny: 'Your roof is older than your phone. By about 20 years.', avgSale: 12000, cpl: [40, 150], tier: 'high', ease: 'Medium', palette: 2 },
+    funny: 'Your roof is older than your phone. By about 20 years.', avgSale: 12000, cpl: [40, 150], tier: 'high', ease: 'Medium', palette: 8 },
   salon: { label: 'Hair Salon', kind: 'salon', thing: 'clients', who: 'people who want a stylist they can trust', fear: 'a bad cut or color',
     audience: 'Adults 22–55 within 8 miles interested in hair and beauty', offer: '20% off your first cut or color',
     pains: ['a bad haircut you’re still growing out', 'stylists who don’t listen', 'booking weeks ahead'], benefits: ['stylists who listen first', 'online booking in 30 seconds', 'color that lasts for weeks'],
     proofEx: '4.9★ from 300+ clients', cta: 'Book Now', goal: 'Bookings', visual: 'close-up of glossy, freshly colored hair in a salon chair, soft warm light, editorial beauty photo',
-    funny: 'Bad hair day? We can make it a bad hair hour, tops.', avgSale: 120, cpl: [20, 55], tier: 'std', ease: 'Easy', palette: 3 },
+    funny: 'Bad hair day? We can make it a bad hair hour, tops.', avgSale: 120, cpl: [20, 55], tier: 'std', ease: 'Easy', palette: 10 },
   realestate: { label: 'Real Estate', kind: 'real estate agent', thing: 'sellers', who: 'homeowners thinking about selling', fear: 'selling for less than it is worth',
     audience: 'People in your city interested in buying or selling a home (Housing category: no age or zip-code targeting on Meta)', offer: 'Free home value report in 60 seconds',
     pains: ['not knowing what your home is worth', 'selling for less than you should', 'a stressful, slow sale'], benefits: ['a price backed by real local sales', 'photos and video that sell faster', 'a plan you can read in 5 minutes'],
     proofEx: 'Sold 85 local homes last year', cta: 'Get My Home Value', goal: 'Leads', visual: 'modern family home at dusk with warm lights on, neat lawn, wide-angle real estate photo',
-    funny: 'Your house might be worth more than the internet thinks.', avgSale: 9000, cpl: [20, 80], tier: 'high', ease: 'Hard', special: 'Housing', palette: 5 },
+    funny: 'Your house might be worth more than the internet thinks.', avgSale: 9000, cpl: [20, 80], tier: 'high', ease: 'Hard', special: 'Housing', palette: 20 },
   auto: { label: 'Auto Repair', kind: 'auto shop', thing: 'drivers', who: 'drivers who need repairs done fast and fair', fear: 'being upsold or overcharged',
     audience: 'Drivers 25–65 within 10 miles', offer: '$29.99 oil change + a free brake check',
     pains: ['the check-engine light you keep ignoring', 'getting upsold on things you don’t need', 'waiting all day for a simple fix'], benefits: ['honest quotes with photos', 'most repairs done the same day', 'a 12-month parts and labor warranty'],
     proofEx: 'Family owned, 4.8★ from 900+ drivers', cta: 'Book Service', goal: 'Calls', visual: 'clean bright auto repair garage, mechanic beside a car on a lift, cinematic light',
-    funny: 'That noise your car makes? It’s not “probably fine.”', avgSale: 350, cpl: [12, 35], tier: 'std', ease: 'Easy', palette: 5 },
+    funny: 'That noise your car makes? It’s not “probably fine.”', avgSale: 350, cpl: [12, 35], tier: 'std', ease: 'Easy', palette: 7 },
   ecommerce: { label: 'Online Store', kind: 'online shop', thing: 'orders', who: 'online shoppers who care about quality', fear: 'a product that disappoints',
     audience: 'Shoppers 18–45 interested in your product type, plus a lookalike of past buyers', offer: '15% off your first order + free shipping',
     pains: ['products that look better online than in person', 'slow shipping', 'returns that are a hassle'], benefits: ['free shipping on every order', '30-day easy returns', 'made to last, not to toss'],
     proofEx: 'Loved by 10,000+ customers', cta: 'Shop Now', goal: 'Online sales', visual: 'flat-lay product photo on a soft neutral background, gentle shadows, matching props, studio light',
-    funny: 'Add to cart. Your future self says thanks.', avgSale: 60, cpl: [8, 30], tier: 'std', ease: 'Medium', palette: 4 },
+    funny: 'Add to cart. Your future self says thanks.', avgSale: 60, cpl: [8, 30], tier: 'std', ease: 'Medium', palette: 18 },
   lawyer: { label: 'Law Firm', kind: 'injury lawyer', thing: 'cases', who: 'people hurt in an accident', fear: 'being lowballed by the insurance company',
     audience: 'Adults 25–65 within 30 miles', offer: 'Free 15-minute case review. No fee unless we win.',
     pains: ['an insurance company that keeps saying no', 'medical bills piling up after an accident', 'not knowing your rights'], benefits: ['a lawyer who calls back the same day', 'no upfront fees', 'clear answers in plain English'],
     proofEx: '$40M+ recovered for local clients', cta: 'Get Free Review', goal: 'Calls', visual: 'attorney in a bright modern office shaking hands with a client, warm, trustworthy',
-    funny: 'The insurance company has lawyers. Shouldn’t you?', avgSale: 5000, cpl: [60, 250], tier: 'high', ease: 'Hard', palette: 1 },
+    funny: 'The insurance company has lawyers. Shouldn’t you?', avgSale: 5000, cpl: [60, 250], tier: 'high', ease: 'Hard', palette: 20 },
   coffee: { label: 'Coffee Shop', kind: 'coffee shop', thing: 'regulars', who: 'commuters, students and remote workers nearby', fear: 'wasting money on bad coffee',
     audience: 'Adults 18–45 within 3 miles', offer: 'BOGO lattes before 10am',
     pains: ['burnt chain-store coffee', 'long drive-thru lines', 'nowhere cozy to work'], benefits: ['beans roasted this week', 'your order ready in 3 minutes', 'free Wi-Fi and comfy seats'],
     proofEx: 'Voted best coffee in town', cta: 'Get Directions', goal: 'Store visits', visual: 'latte art in a ceramic cup on a sunny cafe table, steam, cozy morning light',
-    funny: 'Monday called. We answered with espresso.', avgSale: 40, cpl: [2, 8], tier: 'std', ease: 'Easy', palette: 2 },
+    funny: 'Monday called. We answered with espresso.', avgSale: 40, cpl: [2, 8], tier: 'std', ease: 'Easy', palette: 15 },
   hvac: { label: 'HVAC & Plumbing', kind: 'HVAC company', thing: 'service calls', who: 'homeowners whose AC or heat is acting up', fear: 'a huge surprise repair bill',
     audience: 'Homeowners 30–70 within 20 miles', offer: '$49 AC tune-up (normally $129)',
     pains: ['an AC that dies on the hottest day', 'surprise repair bills', 'waiting days for a tech'], benefits: ['same-day service', 'upfront flat prices', 'techs who wear shoe covers'],
     proofEx: '4.9★ and 24/7 emergency service', cta: 'Call Now', goal: 'Calls', visual: 'HVAC technician in uniform servicing an outdoor AC unit beside a home, sunny day',
-    funny: 'Sweating in your own living room is not a personality.', avgSale: 1500, cpl: [25, 90], tier: 'high', ease: 'Medium', palette: 1 },
+    funny: 'Sweating in your own living room is not a personality.', avgSale: 1500, cpl: [25, 90], tier: 'high', ease: 'Medium', palette: 5 },
   medspa: { label: 'Med Spa', kind: 'med spa', thing: 'clients', who: 'adults who want to look fresh, not overdone', fear: 'results that look fake',
     audience: 'Adults 28–60 within 15 miles interested in skincare', offer: '$100 off your first treatment',
     pains: ['tired-looking skin', 'results that look overdone', 'clinics that feel like a factory'], benefits: ['natural-looking results', 'licensed nurse injectors', 'a free plan before any treatment'],
     proofEx: '5,000+ treatments, 4.9★', cta: 'Book Consultation', goal: 'Bookings', visual: 'calm spa treatment room, glowing skin close-up, soft neutral tones, luxury editorial photo',
-    funny: 'Your skin wants a vacation. We are the vacation.', avgSale: 700, cpl: [30, 80], tier: 'high', ease: 'Medium', palette: 3 },
+    funny: 'Your skin wants a vacation. We are the vacation.', avgSale: 700, cpl: [30, 80], tier: 'high', ease: 'Medium', palette: 10 },
   cleaning: { label: 'Home Cleaning', kind: 'cleaning company', thing: 'homes', who: 'busy families and professionals', fear: 'letting an unreliable stranger into their home',
     audience: 'Homeowners and parents 28–60 within 12 miles', offer: '$50 off your first deep clean',
     pains: ['spending your weekend scrubbing', 'cleaners who cancel last minute', 'coming home to a mess'], benefits: ['background-checked cleaners', 'the same team every visit', 'a 100% happiness guarantee'],
     proofEx: '2,500+ homes cleaned', cta: 'Get a Quote', goal: 'Bookings', visual: 'sparkling clean bright living room, sunlight, fresh flowers, tidy and airy',
-    funny: 'Dust bunnies are not pets.', avgSale: 900, cpl: [15, 45], tier: 'std', ease: 'Easy', palette: 4 }
+    funny: 'Dust bunnies are not pets.', avgSale: 900, cpl: [15, 45], tier: 'std', ease: 'Easy', palette: 22 }
 };
 const NICHE_NAMES = { restaurant: "Tony's Pizza", dentist: 'Bright Smile Dental', gym: 'IronHouse Fitness', roofer: 'Peak Roofing', salon: 'Glow Hair Studio', realestate: 'Maria Lopez Homes',
   auto: 'Precision Auto Care', ecommerce: 'Sunny Socks Co.', lawyer: 'Carter Injury Law', coffee: 'Bean There Café', hvac: 'CoolFlow Heating & Air', medspa: 'Luma Med Spa', cleaning: 'Sparkle Home Cleaning' };
 const CITIES = ['Austin', 'Phoenix', 'Atlanta', 'Denver', 'Tampa', 'Charlotte', 'Columbus', 'San Diego', 'Nashville', 'Houston'];
-const PALETTES = [
-  { name: 'Ember', c1: '#FF6B4A', c2: '#A3123F' }, { name: 'Cobalt', c1: '#4766FF', c2: '#101845' }, { name: 'Copper', c1: '#D98A55', c2: '#4A2212' },
-  { name: 'Plum', c1: '#8B5CF6', c2: '#1E1847' }, { name: 'Forest', c1: '#1BAA82', c2: '#062F26' }, { name: 'Noir', c1: '#3A4252', c2: '#06080C' }
+const PALETTES = [ // c1/c2 kept for swatches and avatars; bg, bg2, ink, accent, accInk drive the ad designs
+  { name: 'Tomato', c1: '#E63B2E', c2: '#FF8A3D', bg: '#E63B2E', bg2: '#FF8A3D', ink: '#FFF8EE', accent: '#FFD43B', accInk: '#2B0F0A' },
+  { name: 'Mustard', c1: '#F6B93B', c2: '#F39C12', bg: '#F6B93B', bg2: '#F39C12', ink: '#2B1B0A', accent: '#C0392B', accInk: '#FFFFFF' },
+  { name: 'Basil', c1: '#1E5631', c2: '#2E7D32', bg: '#1E5631', bg2: '#2E7D32', ink: '#F6F1E7', accent: '#F2C94C', accInk: '#1E1E1E' },
+  { name: 'Mint', c1: '#E8F7F2', c2: '#BDEBDD', bg: '#E8F7F2', bg2: '#BDEBDD', ink: '#0B3B32', accent: '#10B981', accInk: '#FFFFFF' },
+  { name: 'Sky', c1: '#EAF3FF', c2: '#CFE3FF', bg: '#EAF3FF', bg2: '#CFE3FF', ink: '#0B2545', accent: '#2563EB', accInk: '#FFFFFF' },
+  { name: 'Ocean', c1: '#0B3C5D', c2: '#1D70A2', bg: '#0B3C5D', bg2: '#1D70A2', ink: '#FFFFFF', accent: '#5BC0EB', accInk: '#04263A' },
+  { name: 'Volt', c1: '#0D0D0D', c2: '#262626', bg: '#0D0D0D', bg2: '#262626', ink: '#FFFFFF', accent: '#C6FF00', accInk: '#0D0D0D' },
+  { name: 'Fire', c1: '#141414', c2: '#2B0B0B', bg: '#141414', bg2: '#2B0B0B', ink: '#FFFFFF', accent: '#FF3B30', accInk: '#FFFFFF' },
+  { name: 'Navy & Orange', c1: '#102A43', c2: '#243B53', bg: '#102A43', bg2: '#243B53', ink: '#F0F4F8', accent: '#FF7A00', accInk: '#FFFFFF' },
+  { name: 'Slate & Yellow', c1: '#334155', c2: '#475569', bg: '#334155', bg2: '#475569', ink: '#F8FAFC', accent: '#FACC15', accInk: '#1E293B' },
+  { name: 'Blush', c1: '#FBE4E6', c2: '#F7C6CC', bg: '#FBE4E6', bg2: '#F7C6CC', ink: '#4A1D2B', accent: '#C2185B', accInk: '#FFFFFF' },
+  { name: 'Plum', c1: '#3B0A45', c2: '#6A1B5D', bg: '#3B0A45', bg2: '#6A1B5D', ink: '#FFF0F6', accent: '#F8BBD0', accInk: '#3B0A45' },
+  { name: 'Lilac', c1: '#EDE7F6', c2: '#D1C4E9', bg: '#EDE7F6', bg2: '#D1C4E9', ink: '#311B92', accent: '#7C4DFF', accInk: '#FFFFFF' },
+  { name: 'Noir & Gold', c1: '#0E0E10', c2: '#1C1B1F', bg: '#0E0E10', bg2: '#1C1B1F', ink: '#F5F1E8', accent: '#C9A45C', accInk: '#0E0E10' },
+  { name: 'Ivory', c1: '#F6F1E7', c2: '#ECE3D0', bg: '#F6F1E7', bg2: '#ECE3D0', ink: '#1C1917', accent: '#8B5E34', accInk: '#FFFFFF' },
+  { name: 'Espresso', c1: '#3E2723', c2: '#5D4037', bg: '#3E2723', bg2: '#5D4037', ink: '#FFF3E0', accent: '#FFB74D', accInk: '#3E2723' },
+  { name: 'Latte', c1: '#F3E9DC', c2: '#E6CCB2', bg: '#F3E9DC', bg2: '#E6CCB2', ink: '#4B2E1E', accent: '#9C6644', accInk: '#FFFFFF' },
+  { name: 'Citrus', c1: '#FFF4B8', c2: '#FFE066', bg: '#FFF4B8', bg2: '#FFE066', ink: '#2B2100', accent: '#FF6B00', accInk: '#FFFFFF' },
+  { name: 'Peach', c1: '#FFE5D9', c2: '#FFCAD4', bg: '#FFE5D9', bg2: '#FFCAD4', ink: '#3D1A2A', accent: '#FF5D8F', accInk: '#FFFFFF' },
+  { name: 'Pop Blue', c1: '#2D5BFF', c2: '#7B5CFF', bg: '#2D5BFF', bg2: '#7B5CFF', ink: '#FFFFFF', accent: '#FFE14D', accInk: '#111111' },
+  { name: 'Royal', c1: '#13294B', c2: '#1F3A68', bg: '#13294B', bg2: '#1F3A68', ink: '#FFFFFF', accent: '#D4AF37', accInk: '#13294B' },
+  { name: 'Forest & Gold', c1: '#0F3D2E', c2: '#145A41', bg: '#0F3D2E', bg2: '#145A41', ink: '#F1EDE4', accent: '#D9B26A', accInk: '#0F3D2E' },
+  { name: 'Aqua', c1: '#E0F7FA', c2: '#B2EBF2', bg: '#E0F7FA', bg2: '#B2EBF2', ink: '#004D57', accent: '#00ACC1', accInk: '#FFFFFF' },
+  { name: 'Lemon Fresh', c1: '#F7FFE0', c2: '#E3F5A8', bg: '#F7FFE0', bg2: '#E3F5A8', ink: '#23400A', accent: '#7CB518', accInk: '#FFFFFF' }
 ];
 const TONES = { friendly: 'Friendly', bold: 'Bold', urgent: 'Urgent', luxury: 'Premium', funny: 'Playful' };
 
@@ -945,17 +1032,10 @@ function buildPack(f) {
     hashtags: ['#' + f.city.replace(/\s/g, ''), '#' + n.kind.replace(/\s/g, ''), '#shoplocal', '#smallbusiness'].join(' ')
   };
 }
-function creativeHTML(p, v = 0, shape = '') {
-  const pal = PALETTES[p.f.palette], init = (p.f.name.trim()[0] || 'A').toUpperCase();
-  return `<div class="creative ${shape}" style="--c1:${pal.c1};--c2:${pal.c2}"><div class="mg" aria-hidden="true">${esc(init)}</div><div class="ln"></div>
-    <div class="top"><span>${esc(p.f.name)}</span><span>${esc(p.f.city)}</span></div>
-    <div class="ch">${esc(p.hs[v])}</div>
-    <div class="bt"><div class="cs">${esc(shortOffer(p.f.offer))}</div>${p.f.proof ? `<div class="pr">${(p.f.proof.includes('★') ? '' : '★ ') + esc(p.f.proof)}</div>` : ''}</div></div>`;
-}
 const initials = s => s.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
 function fbHTML(p, v = 0, bar = true) {
-  const pal = PALETTES[p.f.palette];
-  return `<div class="fb">${bar ? '<div class="bar"><span>9:41</span><span>●●● ▮</span></div>' : ''}<div class="hd"><div class="av" style="background:linear-gradient(135deg,${pal.c1},${pal.c2})">${esc(initials(p.f.name))}</div>
+  const pal = adPal(p, v);
+  return `<div class="fb">${bar ? '<div class="bar"><span>9:41</span><span>●●● ▮</span></div>' : ''}<div class="hd"><div class="av" style="background:${pal.accent};color:${pal.accInk}">${esc(initials(p.f.name))}</div>
     <div class="who"><b>${esc(p.f.name)}</b><span>Sponsored · Public</span></div></div>
     <div class="tx">${esc(p.texts[v].t)}</div>${creativeHTML(p, v)}
     <div class="lk"><div style="min-width:0"><small>${esc(p.g.url)}</small><b>${esc(p.hs[v])}</b></div><span class="cta">${esc(p.n.cta)}</span></div>
@@ -1195,6 +1275,77 @@ const FC_LESSONS = [
       'Launch within 5 days. Send a short update every week.', 'After 30 days, ask for an honest review and permission to share real results.', 'Ask: "Who else do you know who could use this?"'],
     tip: 'Use real numbers only in your case study, even if they are small. Real beats impressive.' }
 ];
+
+// ================= AD DESIGN ENGINE: 9 layouts x 24 color sets x niche artwork =================
+// each business type has a pool of fitting color sets; layouts and colors change per ad and per version
+const NICHE_POOL = {
+  restaurant: [0, 1, 2, 7, 20], dentist: [3, 4, 5, 22, 12], gym: [6, 7, 19, 8, 9], roofer: [8, 9, 20, 7, 5],
+  salon: [10, 11, 12, 18, 13], realestate: [20, 14, 21, 13, 4], auto: [7, 9, 8, 6, 0], ecommerce: [18, 19, 17, 12, 3],
+  lawyer: [20, 21, 13, 14, 5], coffee: [15, 16, 14, 2, 1], hvac: [5, 8, 4, 9, 22], medspa: [10, 14, 13, 12, 3], cleaning: [22, 23, 3, 4, 17]
+};
+const COLOR_FAMS = { red: [0, 7], orange: [8, 1], yellow: [1, 17, 9], green: [2, 3, 21, 23], blue: [4, 5, 8, 19, 20, 22], purple: [11, 12], pink: [10, 18],
+  brown: [15, 16], black: [6, 13, 7], cream: [14, 16], gray: [9], gold: [13, 20, 21] };
+const poolOf = k => NICHE_POOL[k] || NICHE_POOL.restaurant;
+function paletteFor(fam, niche) { const c = COLOR_FAMS[fam]; if (!c) return undefined; const pool = poolOf(niche); return c.find(i => pool.includes(i)) ?? c[0]; }
+function adPal(p, v) {
+  const f = p.f, pool = poolOf(f.niche), base = PALETTES[f.palette] ? f.palette : pool[0];
+  if (f.colorLock || !v) return PALETTES[base];
+  const at = Math.max(0, pool.indexOf(base));
+  return PALETTES[pool[(at + v) % pool.length]];
+}
+const AD_LAYOUTS = 9;
+const ICONS = {
+  restaurant: '<path d="M32 6 56 50Q32 60 8 50Z"/><path d="M11 45q21 9 42 0"/><circle cx="31" cy="27" r="4"/><circle cx="24" cy="39" r="3.5"/><circle cx="40" cy="40" r="3.5"/>',
+  dentist: '<path d="M21 8c-8 0-13 7-12 15 1 7 4 11 5 18 1 8 2 17 7 17 4 0 4-10 7-14 2-3 6-3 8 0 3 4 3 14 7 14 5 0 6-9 7-17 1-7 4-11 5-18 1-8-4-15-12-15-6 0-8 3-11 3s-5-3-11-3z"/><path d="M24 18q8 4 16 0"/>',
+  gym: '<path d="M8 24v16M15 17v30M49 17v30M56 24v16M15 32h34"/>',
+  roofer: '<path d="M6 31 32 9l26 22"/><path d="M13 26v29h38V26"/><path d="M27 55V40h10v15"/><path d="M44 18V10h6v13"/>',
+  salon: '<circle cx="18" cy="47" r="7"/><circle cx="46" cy="47" r="7"/><path d="M23 42 48 9M41 42 16 9"/>',
+  realestate: '<circle cx="20" cy="32" r="11"/><circle cx="20" cy="32" r="3"/><path d="M31 32h27M50 32v9M57 32v6"/>',
+  auto: '<path d="M8 42v-9l7-13h34l7 13v9z"/><circle cx="20" cy="43" r="5"/><circle cx="44" cy="43" r="5"/><path d="M17 31h30"/>',
+  ecommerce: '<path d="M13 22h38l-3 34H16z"/><path d="M24 22v-4a8 8 0 0 1 16 0v4"/><path d="M25 32a7 7 0 0 0 14 0"/>',
+  lawyer: '<path d="M32 9v45M20 55h24M11 18h42"/><circle cx="32" cy="9" r="3"/><path d="M11 18 5 34h12zM53 18l-6 16h12z"/>',
+  coffee: '<path d="M11 27h35v13a14 14 0 0 1-14 14h-7a14 14 0 0 1-14-14z"/><path d="M46 31h4a6 6 0 0 1 0 12h-4"/><path d="M22 8c-3 4 3 7 0 11M32 8c-3 4 3 7 0 11"/>',
+  hvac: '<path d="M32 7v50M10 20l44 24M10 44l44-24"/><path d="m27 11 5 5 5-5M27 53l5-5 5 5"/>',
+  medspa: '<path d="M32 6l5 17 17 5-17 5-5 17-5-17-17-5 17-5z"/><path d="M51 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>',
+  cleaning: '<path d="M21 14h19v8H21z"/><path d="M40 17h9"/><path d="M27 22v5h8v-5"/><path d="M22 27h19l2 28H20z"/><circle cx="54" cy="12" r="1.5"/><circle cx="56" cy="19" r="1.5"/><circle cx="52" cy="24" r="1.5"/>'
+};
+const icon = (k, cls = '') => `<svg class="ai ${cls}" viewBox="0 0 64 64" aria-hidden="true">${ICONS[k] || ICONS.medspa}</svg>`;
+function bigNumber(offer) { const m = offer.match(/\$\s?\d+(?:\.\d\d)?|\d+\s?%/); return m ? m[0].replace(/\s/g, '') : ''; }
+function creativeHTML(p, v = 0, shape = '') {
+  const f = p.f, n = p.n, pal = adPal(p, v), lay = (((f.layout || 0) + v * 4) % AD_LAYOUTS + AD_LAYOUTS) % AD_LAYOUTS;
+  const H = esc(p.hs[v] || p.hs[0]), O = esc(shortOffer(f.offer)), N = esc(f.name), C = esc(f.city), CTA = esc(n.cta);
+  // if the headline already says the deal, the pill shows the button text instead of repeating it
+  const dup = (p.hs[v] || '').toLowerCase().includes(shortOffer(f.offer).toLowerCase().slice(0, 14));
+  const PILL = dup ? `${CTA} →` : O;
+  const P = f.proof ? `<div class="x-proof">${(f.proof.includes('★') ? '' : '★ ') + esc(f.proof)}</div>` : '';
+  const num = bigNumber(f.offer), rest = esc(shortOffer(f.offer).replace(num, '').replace(/^\s*(off\b)?/i, m => m).trim());
+  const font = { friendly: 'f-heavy', bold: 'f-poster', urgent: 'f-poster', luxury: 'f-serif', funny: 'f-heavy' }[f.tone] || 'f-heavy';
+  const hand = f.tone === 'friendly' || f.tone === 'funny';
+  const vars = `--bg:${pal.bg};--bg2:${pal.bg2};--ink:${pal.ink};--acc:${pal.accent};--acci:${pal.accInk}`;
+  const brand = `<div class="x-brand"><span>${N}</span><span>${C}</span></div>`;
+  const L = [
+    // 0 big type
+    () => `${brand}${icon(f.niche, 'x-ghost')}<div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${dup ? '' : `<span class="x-cta">${CTA} →</span>`}</div>${P}`,
+    // 1 split scene
+    () => `<div class="x-scene">${icon(f.niche, 'x-hero')}<i class="x-dot d1"></i><i class="x-dot d2"></i><span class="x-tagc">${N}</span></div><div class="x-panel"><div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${P}</div></div>`,
+    // 2 coupon
+    () => `<div class="x-pat"></div>${brand}<div class="x-h ${font} x-sm">${H}</div><div class="x-coupon"><div class="x-big f-poster">${num ? esc(num) : 'DEAL'}</div><div class="x-cl">${num ? (rest || 'OFF') : O}</div><div class="x-cut">${CTA} · ${C}</div></div>${P}`,
+    // 3 neon poster
+    () => `<div class="x-grid"></div>${brand}<div class="x-h f-poster x-up">${H}</div><div class="x-out f-poster">${num ? esc(num) : N}</div><div class="x-row"><span class="x-pill">${PILL}</span></div>`,
+    // 4 diagonal
+    () => `${brand}<span class="x-sticker">${num ? esc(num) : 'NEW'}<small>${num ? 'OFF' : 'OFFER'}</small></span><div class="x-h ${font}">${H}</div>${icon(f.niche, 'x-corner')}<div class="x-row x-low"><span class="x-pill">${PILL}</span></div>`,
+    // 5 checklist
+    () => `${brand}<div class="x-h ${font} x-sm">${H}</div><ul class="x-list">${n.benefits.map(b => `<li>${esc(cap(b))}</li>`).join('')}</ul><div class="x-row"><span class="x-btn">${CTA}</span><span class="x-note">${dup ? '' : O}</span></div>${P}`,
+    // 6 minimal luxe
+    () => `<div class="x-frame"></div><div class="x-mono">${N}</div><div class="x-h f-serif x-center">${H}</div><div class="x-rule"></div><div class="x-center x-offer">${dup ? CTA : O}</div><div class="x-mono x-small">${C}</div>`,
+    // 7 circle hero
+    () => `${brand}<div class="x-circle">${icon(f.niche, 'x-cic')}</div><div class="x-h ${font} x-center x-sm">${H}</div><div class="x-row x-cen"><span class="x-pill">${PILL}</span></div>${P}`,
+    // 8 big number / question
+    () => num ? `${brand}<div class="x-num f-poster">${esc(num)}</div><div class="x-numl">${rest || 'OFF'}</div><div class="x-h ${font} x-sm">${H}</div><div class="x-row"><span class="x-btn">${CTA}</span></div>`
+      : `${brand}<div class="x-q f-serif">?</div><div class="x-h ${font}">${esc(cap(n.pains[0]))}?</div><div class="x-sub">${esc(f.name)} fixes that. ${O}.</div><div class="x-row"><span class="x-btn">${CTA}</span></div>`
+  ];
+  return `<div class="creative ad ${shape}" style="${vars}"><div class="adi L${lay} ${hand ? 'hand' : ''}">${L[lay]()}</div></div>`;
+}
 
 // ================= FIRST CLIENTS TRACK =================
 let fcCur = store.get('fccur', 0); if (!(fcCur >= 0 && fcCur < FC_LESSONS.length)) fcCur = 0;
@@ -1957,13 +2108,13 @@ const NICHE_WORDS = {
   ecommerce: /online store|shop online|e-?commerce|shopify|clothing brand|product/i, lawyer: /lawyer|law firm|attorney|legal|injury/i, coffee: /coffee|espresso|latte|caf[eé]/i,
   hvac: /hvac|plumb|heating|air condition|\bac\b|furnace/i, medspa: /med ?spa|botox|facial|skin ?care|filler|aesthetic/i, cleaning: /clean|maid|janitor/i
 };
-const COLOR_WORDS = [[0, /red|orange|coral|warm|fire|hot/i], [1, /blue|navy|cobalt|ocean|cool/i], [2, /brown|copper|gold|tan|beige|earth/i], [3, /purple|violet|plum|pink|lilac/i], [4, /green|mint|teal|fresh|nature/i], [5, /black|dark|grey|gray|noir|luxury|sleek/i]];
+const COLOR_WORDS = [['red', /\bred\b|crimson|fire|tomato/i], ['orange', /orange|coral|tangerine/i], ['yellow', /yellow|lemon|mustard/i], ['gold', /\bgold/i], ['green', /green|mint|teal|lime|olive/i], ['blue', /blue|navy|cobalt|ocean|sky/i], ['purple', /purple|violet|plum|lilac|lavender/i], ['pink', /pink|blush|rose|peach/i], ['brown', /brown|coffee|copper|tan|beige|earth/i], ['black', /black|dark|noir|neon/i], ['cream', /cream|white|ivory/i], ['gray', /gr[ae]y|silver|slate/i]];
 // style words the person asked for win over hints like "this weekend"
 const TONE_WORDS = [['funny', /funny|\bfun\b|playful|silly|joke|humor/i], ['luxury', /luxury|premium|elegant|classy|high.end|upscale/i], ['bold', /\bbold\b|strong|loud|confident|punchy/i], ['friendly', /friendly|welcoming|\bkind\b/i], ['urgent', /urgent|limited|hurry|ends|last chance|this week|weekend|flash/i]];
 function parseDescription(t) {
   const out = {};
   for (const [k, re] of Object.entries(NICHE_WORDS)) if (re.test(t)) { out.niche = k; break; }
-  for (const [i, re] of COLOR_WORDS) if (re.test(t)) { out.palette = i; break; }
+  for (const [fam, re] of COLOR_WORDS) if (re.test(t)) { out.palette = paletteFor(fam, out.niche || B.niche); out.colorLock = true; break; }
   for (const [k, re] of TONE_WORDS) if (re.test(t)) { out.tone = k; break; }
   if (/tiktok|reel/i.test(t)) out.platform = 'tiktok'; else if (/story|stories/i.test(t)) out.platform = 'story'; else if (/google|search/i.test(t)) out.platform = 'google'; else if (/facebook|instagram|\bfb\b|\big\b/i.test(t)) out.platform = 'fb';
   const name = t.match(/(?:for|called|named)\s+((?:[A-Z][\w'’&.-]*\s?){1,4})/); if (name) out.name = name[1].trim().replace(/\s+(in|at|on)$/i, '');
@@ -1987,7 +2138,7 @@ Return exactly this JSON shape:
  "proof": real facts the request states (rating, review count, years open), or "" if none,
  "audience": who should see the ad, in under 12 words,
  "tone": one of ["friendly","bold","urgent","luxury","funny"],
- "palette": one of ["Ember","Cobalt","Copper","Plum","Forest","Noir"] (Ember=red/orange, Cobalt=blue, Copper=brown/gold, Plum=purple/pink, Forest=green, Noir=black/dark),
+ "color": the main color the person asked for, one of ["red","orange","yellow","gold","green","blue","purple","pink","brown","black","cream","gray"], or "any" if they did not ask,
  "platform": one of ["fb","google","tiktok","story"],
  "headlines": [3 different headlines, each 40 characters or less],
  "texts": [3 short Facebook ad texts, under 60 words each],
@@ -1997,16 +2148,17 @@ Rules: Never invent reviews, star ratings, customer counts, awards, prices or re
 }
 function cleanAI(v) {
   if (!v || typeof v !== 'object') return null;
-  const pal = PALETTES.findIndex(p => p.name === v.palette), s = x => typeof x === 'string' ? x.trim() : '';
+  const niche = NICHES[v.niche] ? v.niche : B.niche, pal = COLOR_FAMS[v.color] ? paletteFor(v.color, niche) : -1, s = x => typeof x === 'string' ? x.trim() : '';
   const hs = Array.isArray(v.headlines) ? v.headlines.map(s).filter(Boolean).slice(0, 3) : [], tx = Array.isArray(v.texts) ? v.texts.map(s).filter(Boolean).slice(0, 3) : [];
   if (hs.length < 3 || tx.length < 3) return null;
   return { niche: NICHES[v.niche] ? v.niche : undefined, name: s(v.name), city: s(v.city), offer: s(v.offer), proof: s(v.proof), aud: s(v.audience),
-    tone: TONES[v.tone] ? v.tone : undefined, palette: pal >= 0 ? pal : undefined, platform: PLATS[v.platform] ? v.platform : undefined, ai: { headlines: hs, texts: tx, imageIdea: s(v.imageIdea) } };
+    tone: TONES[v.tone] ? v.tone : undefined, palette: pal >= 0 ? pal : undefined, colorLock: pal >= 0, platform: PLATS[v.platform] ? v.platform : undefined, ai: { headlines: hs, texts: tx, imageIdea: s(v.imageIdea) } };
 }
 function applyDescribed(r) {
-  if (r.niche) { B.niche = r.niche; const n = NICHES[r.niche]; B.offer = n.offer; B.aud = n.audience; B.palette = n.palette; if (!r.name) B.name = NICHE_NAMES[r.niche]; }
+  if (r.niche) { B.niche = r.niche; const n = NICHES[r.niche]; B.offer = n.offer; B.aud = n.audience; if (!r.name) B.name = NICHE_NAMES[r.niche]; }
   ['name', 'city', 'offer', 'proof', 'aud', 'tone'].forEach(k => { if (r[k]) B[k] = r[k]; });
-  if (r.palette != null) B.palette = r.palette;
+  if (r.palette != null) { B.palette = r.palette; B.colorLock = true; }
+  else if (!B.colorLock && !poolOf(B.niche).includes(B.palette)) B.palette = poolOf(B.niche)[0];
   if (r.platform) plat = r.platform;
   B.ai = r.ai || null; variant = 0;
 }
@@ -2018,8 +2170,9 @@ function applyChange(c) {
   if (r.city) { B.city = r.city; did.push('city'); }
   if (r.offer) { B.offer = r.offer; B.ai = null; did.push('deal'); }
   if (r.tone) { B.tone = r.tone; B.ai = null; did.push('style'); }
-  if (r.palette != null) { B.palette = r.palette; did.push('colors'); }
-  else if (/colou?r/i.test(c)) { B.palette = (B.palette + 1) % PALETTES.length; did.push('colors'); }
+  if (r.palette != null) { B.palette = r.palette; B.colorLock = true; did.push('colors'); }
+  else if (/colou?r/i.test(c)) { nextColors(); did.push('colors'); }
+  if (/design|layout|look/i.test(c) && !did.length) { B.layout = (B.layout || 0) + 1; did.push('design'); }
   if (!r.tone && /style|tone|vibe/i.test(c)) { const k = Object.keys(TONES); B.tone = k[(k.indexOf(B.tone) + 1) % k.length]; B.ai = null; did.push('style'); }
   if (r.platform) { plat = r.platform; did.push('platform'); }
   if (!did.length) { variant = (variant + 1) % 3; did.push('wording'); }
@@ -2049,6 +2202,12 @@ async function aiUpgrade(t, change) {
   }
   aiBusy = false;
 }
+// every new ad gets a fresh design, and fresh colors unless the person asked for a color
+function freshLook(newColors) {
+  B.layout = Math.floor(Math.random() * AD_LAYOUTS);
+  if (newColors) { const pool = poolOf(B.niche); B.palette = pool[Math.floor(Math.random() * pool.length)]; B.colorLock = false; }
+}
+function nextColors() { const pool = poolOf(B.niche), i = pool.indexOf(B.palette); B.palette = pool[(i + 1) % pool.length]; B.colorLock = false; }
 function describeInit() {
   let liveT;
   $('#dsEx').addEventListener('click', e => { const b = e.target.closest('[data-ex]'); if (b) $('#dsT').value = b.dataset.ex; });
@@ -2057,7 +2216,7 @@ function describeInit() {
     const t = $('#dsT').value.trim();
     if (t.length < 8) { $('#dsMsg').textContent = 'Add a bit more: the business, the deal, the look.'; return; }
     actSeq++; B.made = true; B.desc = t;
-    const r = parseDescription(t); r.ai = null; applyDescribed(r); renderStudio(); generate();
+    const r = parseDescription(t); r.ai = null; if (!r.colorLock) B.colorLock = false; applyDescribed(r); freshLook(!r.colorLock); renderStudio(); generate();
     showAd('Here’s your ad. Want changes? Type them in the change box.');
     aiUpgrade(t);
   };
@@ -2073,13 +2232,14 @@ function describeInit() {
   // live preview: when typing pauses, show the ad from the words so far (no AI call, no scrolling)
   $('#dsT').addEventListener('input', () => { clearTimeout(liveT); liveT = setTimeout(() => {
     const t = $('#dsT').value.trim(); if (t.length < 15) return;
-    actSeq++; B.made = true; B.desc = t; const r = parseDescription(t); r.ai = null; applyDescribed(r); renderStudio();
+    actSeq++; const first = !B.made; B.made = true; B.desc = t; const r = parseDescription(t); r.ai = null; if (!r.colorLock && first) B.colorLock = false; applyDescribed(r); if (first) freshLook(!r.colorLock); renderStudio();
     $('#dsMsg').textContent = 'Preview of your ad. Press Make my ad (or Enter) when you’re done.'; $('#refine').hidden = false; }, 900); });
   $('#rfGo').addEventListener('click', () => { change($('#rfT').value.trim()); $('#rfT').value = ''; });
   $('#rfT').addEventListener('keydown', e => { if (e.key === 'Enter') { change($('#rfT').value.trim()); $('#rfT').value = ''; } });
   $('#refine').addEventListener('click', e => { const q = e.target.closest('[data-q]'); if (!q) return; actSeq++;
     if (q.dataset.q === 'variant') { variant = (variant + 1) % 3; renderStudio(); showAd('Here’s another version.'); }
-    if (q.dataset.q === 'color') { B.palette = (B.palette + 1) % PALETTES.length; renderStudio(); showAd(`New colors: ${PALETTES[B.palette].name}.`); }
+    if (q.dataset.q === 'color') { nextColors(); renderStudio(); showAd(`New colors: ${PALETTES[B.palette].name}.`); }
+    if (q.dataset.q === 'design') { B.layout = (B.layout || 0) + 1; renderStudio(); showAd('Here’s a new design.'); }
     if (q.dataset.q === 'style') { const k = Object.keys(TONES); B.tone = k[(k.indexOf(B.tone) + 1) % k.length]; B.ai = null; renderStudio(); showAd(`New style: ${TONES[B.tone]}.`); } });
   if (B.made) $('#refine').hidden = false;
   // phones stack the screen, so the change box goes right under the ad; on wide screens it stays by the typing box
@@ -2118,7 +2278,7 @@ const GEN_STEPS = ['Matching the business type', 'Filling 3 proven copy formulas
 
 function fields() {
   const n = NICHES[B.niche];
-  return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette };
+  return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette , layout: B.layout || 0, colorLock: !!B.colorLock };
 }
 function studioInit() {
   $('#nicheGrid').innerHTML = Object.entries(NICHES).map(([k, n]) => `<button data-n="${k}">${n.label}</button>`).join('');
@@ -2129,7 +2289,7 @@ function studioInit() {
   $('#outTabs').innerHTML = Object.entries(OUTS).map(([k, t]) => `<button data-o="${k}">${t}</button>`).join('');
   $('#nicheGrid').addEventListener('click', e => { const b = e.target.closest('[data-n]'); if (b) setNiche(b.dataset.n); });
   $('#toneRow').addEventListener('click', e => { const b = e.target.closest('[data-tone]'); if (b) { B.tone = b.dataset.tone; B.ai = null; renderStudio(); } });
-  $('#swatches').addEventListener('click', e => { const b = e.target.closest('[data-pal]'); if (b) { B.palette = +b.dataset.pal; renderStudio(); } });
+  $('#swatches').addEventListener('click', e => { const b = e.target.closest('[data-pal]'); if (b) { B.palette = +b.dataset.pal; B.colorLock = true; renderStudio(); } });
   $('#platTabs').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (b) { plat = b.dataset.p; renderStudio(); } });
   $('#variantBtns').addEventListener('click', e => { const b = e.target.closest('[data-var]'); if (b) { variant = +b.dataset.var; renderStudio(); } });
   $('#outTabs').addEventListener('click', e => { const b = e.target.closest('[data-o]'); if (b) { outTab = b.dataset.o; renderOutputs(); } });
@@ -2156,7 +2316,7 @@ function setNiche(k, force) {
   const sample = Object.values(NICHE_NAMES).includes(B.name) || !B.name.trim();
   B.niche = k; B.ai = null; const n = NICHES[k];
   if (sample || force) B.name = NICHE_NAMES[k];
-  B.offer = n.offer; B.aud = n.audience; B.palette = n.palette;
+  B.offer = n.offer; B.aud = n.audience; B.palette = n.palette; B.colorLock = false;
   renderStudio();
 }
 function generate() {
@@ -2184,6 +2344,7 @@ function renderStudio(sync = true) {
   $$('#platTabs button').forEach(b => b.classList.toggle('on', b.dataset.p === plat));
   $$('#variantBtns button').forEach(b => b.classList.toggle('on', +b.dataset.var === variant));
   $('#pvNote').hidden = !!B.made; $('#pvYours').hidden = !B.made;
+  $('#scrollHint').hidden = plat !== 'fb';
   $('#preview').innerHTML = `<div class="phone"><div class="screen">${previewHTML(pack, plat, variant)}</div></div>`;
   renderOutputs();
   renderPrompts();
@@ -2198,7 +2359,7 @@ function previewHTML(p, pl, v) {
       <div class="gad" style="opacity:.45;margin-top:4px"><div class="url">www.competitor.com</div><div class="ttl">Other ${esc(p.n.kind)} | ${esc(p.f.city)}</div><div class="ds">Organic result…</div></div>`;
   }
   const tall = creativeHTML(p, v, 'tall');
-  if (pl === 'tiktok') return `<div class="tt">${tall}<div class="side2"><span><i>♥</i>8.2k</span><span><i>…</i>214</span><span><i>↗</i>Share</span></div>
+  if (pl === 'tiktok') return `<div class="tt tk">${tall}<div class="side2"><span><i>♥</i>8.2k</span><span><i>…</i>214</span><span><i>↗</i>Share</span></div>
       <div class="ov"><b>@${esc(p.f.name.toLowerCase().replace(/[^a-z0-9]+/g, ''))} · Sponsored</b>${esc(p.hs[(v + 1) % 3])}<span class="ctab">${esc(p.n.cta)}</span></div></div>`;
   return `<div class="tt">${tall}<div class="ov" style="padding-right:14px;text-align:center"><b>${esc(p.f.name)} · Sponsored</b><span class="ctab" style="background:#fff;color:#000">${esc(p.n.cta)}</span></div></div>`;
 }
@@ -2235,8 +2396,8 @@ function homeInit() {
   setTimeout(heroLoop, reduced ? 6000 : 2500); renderProgress();
 }
 function heroAd(p, v) {
-  const pal = PALETTES[p.f.palette];
-  $('#homeAd').innerHTML = `<div class="fb"><div class="hd"><div class="av" style="background:linear-gradient(135deg,${pal.c1},${pal.c2})">${esc(initials(p.f.name))}</div><div class="who"><b>${esc(p.f.name)}</b><span>Example ad · made-up ${esc(p.n.label.toLowerCase())}</span></div></div>
+  const pal = adPal(p, v);
+  $('#homeAd').innerHTML = `<div class="fb"><div class="hd"><div class="av" style="background:${pal.accent};color:${pal.accInk}">${esc(initials(p.f.name))}</div><div class="who"><b>${esc(p.f.name)}</b><span>Example ad · made-up ${esc(p.n.label.toLowerCase())}</span></div></div>
       ${creativeHTML(p, v, 'sq')}<div class="lk"><div style="min-width:0"><small>${esc(p.g.url)}</small><b>${esc(shortOffer(p.f.offer))}</b></div><span class="cta">${esc(p.n.cta)}</span></div></div>`;
 }
 function heroLoop() {
