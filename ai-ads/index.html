@@ -382,6 +382,17 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .hnum{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-size:.8rem;background:var(--accent-s);color:var(--accent)}
 .hstep.ok .hnum{background:var(--green);color:#0A0D13}
 #inTabs button{padding:7px 8px;font-size:.82rem}
+.maker{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:48px;align-items:center;max-width:1060px;margin:0 auto;width:100%}
+.mk-title{font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.035em}
+.mk-box{display:flex;flex-direction:column;gap:10px;background:var(--panel);border:1px solid var(--line2);border-radius:18px;padding:14px 14px 12px}
+.mk-box:focus-within{border-color:var(--accent)}
+.mk-box textarea{border:0;background:transparent;font-size:1.12rem;line-height:1.5;min-height:130px;resize:none;padding:4px 6px}
+.mk-box textarea:focus{border:0}
+.mk-box .btn{align-self:flex-end;padding:11px 20px}
+details.mk-more summary{cursor:pointer;color:var(--muted);font-size:.88rem;width:fit-content}
+details.mk-more[open]{max-height:44dvh;overflow:auto}
+.maker .phone{height:min(620px,calc(100dvh - 220px))}
+@media (max-width:900px){.maker{grid-template-columns:minmax(0,1fr);gap:24px}details.mk-more[open]{max-height:none}}
 .navlabel{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:12px 10px 4px}
 .nav a{padding:7px 10px}
 .pillars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -406,79 +417,21 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 
 <div class="app">
 <aside class="side">
-  <a class="logo" href="#home"><i>AI</i><span>Yaya Ad Lab</span></a>
+  <a class="logo" href="#studio"><i>AI</i><span>Yaya Ad Lab</span></a>
   <nav class="nav" id="nav">
-    <a href="#home" data-v="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home (start here)</a>
-    <span class="navlabel">1 · Learn</span>
-    <a href="#course" data-v="course"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>Ads Course</a>
-    <a href="#bcourse" data-v="bcourse"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><circle cx="12" cy="10" r="3"/></svg>Brand Course</a>
-    <a href="#first" data-v="first"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>Clients Course</a>
-    <a href="#grow" data-v="grow"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Freelance Course</a>
-    <span class="navlabel">2 · Make</span>
-    <a href="#studio" data-v="studio"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"/><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Ad Maker</a>
-    <a href="#brand" data-v="brand"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>Brand Maker</a>
-    <a href="#audit" data-v="audit"><svg viewBox="0 0 24 24"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/></svg>Business Checkup</a>
-    <a href="#prompts" data-v="prompts"><svg viewBox="0 0 24 24"><path d="M4 6l6 6-6 6"/><path d="M12 18h8"/></svg>AI Prompts</a>
-    <span class="navlabel">3 · Earn</span>
-    <a href="#earn" data-v="earn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c0-1.4-1.3-2.5-3-2.5s-3 1-3 2.3c0 3.2 6 1.7 6 5 0 1.4-1.3 2.7-3 2.7s-3-1.1-3-2.5M12 5.5v13"/></svg>Make Money</a>
+    <a href="#studio" data-v="studio"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"/><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Make an Ad</a>
+    <a href="#brand" data-v="brand"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>Make a Brand</a>
+    <a href="#audit" data-v="audit"><svg viewBox="0 0 24 24"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/></svg>Check a Business</a>
+    <span class="navlabel">Clients & money</span>
     <a href="#clients" data-v="clients"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14a6 6 0 0 1 3.5 6"/></svg>Find Clients</a>
+    <a href="#earn" data-v="earn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c0-1.4-1.3-2.5-3-2.5s-3 1-3 2.3c0 3.2 6 1.7 6 5 0 1.4-1.3 2.7-3 2.7s-3-1.1-3-2.5M12 5.5v13"/></svg>Make Money</a>
     <a href="#pricing" data-v="pricing"><svg viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg>Pricing</a>
-    <a href="#business" data-v="business"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>Business Plan</a>
+    <a href="#prompts" data-v="prompts"><svg viewBox="0 0 24 24"><path d="M4 6l6 6-6 6"/><path d="M12 18h8"/></svg>AI Prompts</a>
   </nav>
   <div class="mini"><button class="btn sm ghost" data-glossary style="width:100%">Words explained</button><button class="btn sm ghost" data-sources style="width:100%">Facts & sources</button></div>
 </aside>
 
 <main class="stage" id="stage">
-
-<!-- HOME -->
-<section class="view" id="v-home">
-  <div class="home">
-    <div class="stack" style="gap:18px">
-      <span class="eyebrow">Start here</span>
-      <h1>Learn to make <span class="serif">ads</span> and <span class="serif">brands</span> for local businesses. Then get paid to do it.</h1>
-      <p class="sub">This app is a course plus tools that do the hard parts. Follow the 3 steps in order.</p>
-      <div class="hsteps" id="homeSteps"></div>
-      <p class="muted" style="font-size:.86rem">Two skills: <b style="color:var(--text);font-weight:500">AI ads</b> bring a business customers now. <b style="color:var(--text);font-weight:500">Brand scaling</b> makes people trust and remember it. New words? <button class="linkbtn" data-glossary>See words explained</button></p>
-    </div>
-    <div class="stack" style="gap:8px">
-      <span class="dim" style="font-size:.78rem;text-align:center">Live example: the Ad Maker and Brand Maker at work</span>
-      <div class="gen"><div class="pipe" id="pipe"></div><div class="adcard" id="homeAd"></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- COURSE -->
-<section class="view" id="v-course" hidden>
-  <div class="vhead">
-    <div><span class="eyebrow">Pillar 1 · AI advertising</span><h1>Every step of AI advertising</h1></div>
-    <div class="row"><div class="progress"><i id="cProg" style="width:0"></i></div><span class="mono muted" id="cProgT"></span></div>
-  </div>
-  <div class="stepnav" id="stepNav"></div>
-  <div class="course" id="courseBody"><article class="panel lesson" id="lesson"></article><div class="panel demo" id="demo"></div></div>
-  <div class="coursefoot"><button class="btn ghost" id="cPrev">Back</button><button class="btn" id="cNext">Mark done and continue</button></div>
-</section>
-
-<!-- FIRST CLIENTS -->
-<section class="view" id="v-first" hidden>
-  <div class="vhead">
-    <div><span class="eyebrow">Freelance business</span><h1>Get your first clients</h1></div>
-    <div class="row"><div class="progress"><i id="fcProg" style="width:0"></i></div><span class="mono muted" id="fcProgT"></span></div>
-  </div>
-  <div class="stepnav" id="fcNav"></div>
-  <div class="course"><article class="panel lesson" id="fcLesson"></article><div class="panel demo" id="fcDemo"></div></div>
-  <div class="coursefoot"><button class="btn ghost" id="fcPrev">Back</button><button class="btn" id="fcNext">Mark done and continue</button></div>
-</section>
-
-<!-- GROW -->
-<section class="view" id="v-grow" hidden>
-  <div class="vhead">
-    <div><span class="eyebrow">Freelance business</span><h1>Freelance, brand and scale</h1></div>
-    <div class="row"><div class="progress"><i id="grProg" style="width:0"></i></div><span class="mono muted" id="grProgT"></span></div>
-  </div>
-  <div class="stepnav" id="grNav"></div>
-  <div class="course"><article class="panel lesson" id="grLesson"></article><div class="panel demo" id="grDemo"></div></div>
-  <div class="coursefoot"><button class="btn ghost" id="grPrev">Back</button><button class="btn" id="grNext">Mark done and continue</button></div>
-</section>
 
 <!-- MAKE MONEY -->
 <section class="view" id="v-earn" hidden>
@@ -522,17 +475,6 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
   </div>
 </section>
 
-<!-- BRAND COURSE -->
-<section class="view" id="v-bcourse" hidden>
-  <div class="vhead">
-    <div><span class="eyebrow">Pillar 2 · Brand scaling</span><h1>Scale a business's brand</h1></div>
-    <div class="row"><div class="progress"><i id="bcProg" style="width:0"></i></div><span class="mono muted" id="bcProgT"></span></div>
-  </div>
-  <div class="stepnav" id="bcNav"></div>
-  <div class="course"><article class="panel lesson" id="bcLesson"></article><div class="panel demo" id="bcDemo"></div></div>
-  <div class="coursefoot"><button class="btn ghost" id="bcPrev">Back</button><button class="btn" id="bcNext">Mark done and continue</button></div>
-</section>
-
 <!-- BRAND STUDIO -->
 <section class="view" id="v-brand" hidden>
   <div class="vhead">
@@ -561,49 +503,37 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 </section>
 
 <!-- STUDIO -->
-<section class="view" id="v-studio" hidden>
-  <div class="vhead">
-    <div><span class="eyebrow">The app</span><h1>Ad Maker</h1><p class="sub">Describe the ad you want and it builds it. On claude.ai, Claude (AI) writes the words; elsewhere it uses proven templates.</p></div>
-    <div class="row"><button class="btn ghost sm" id="surpriseBtn">Random</button><button class="btn ghost sm" id="saveBtn">Save</button><button class="btn ghost sm" id="copyAll">Copy text</button></div>
-  </div>
-  <div class="studio">
-    <div class="panel inputs" id="adInputs">
-      <div class="tabs" id="inTabs"><button data-t="desc" class="on">Describe</button><button data-t="biz">Business</button><button data-t="offer">Offer</button><button data-t="style">Style</button></div>
-      <div data-pane="desc" class="stack">
-        <label class="f" for="dsT">Describe the ad you want: the business, the deal, who it's for, and how it should look.</label>
-        <textarea id="dsT" style="min-height:120px" placeholder="e.g. A bold red Instagram ad for Joe's Pizza in Dallas. 20% off large pizzas this weekend, for families."></textarea>
-        <div class="stack" id="dsEx" style="gap:5px"><span class="dim" style="font-size:.76rem">Try an example:</span>
-          <button class="chip" style="text-align:left;white-space:normal" data-ex="A friendly green Facebook ad for Sparkle Home Cleaning in Tampa. $50 off the first deep clean, for busy parents.">Cleaning company, friendly, green</button>
-          <button class="chip" style="text-align:left;white-space:normal" data-ex="A premium black TikTok ad for Luma Med Spa in Miami. $100 off your first facial this month.">Med spa, premium, black, TikTok</button>
-          <button class="chip" style="text-align:left;white-space:normal" data-ex="A funny orange ad for Bean There Cafe in Denver. Buy one latte, get one free before 10am, for students.">Coffee shop, funny, orange</button></div>
+<section class="view" id="v-studio">
+  <div class="maker">
+    <div class="stack mk-left" style="gap:14px">
+      <h1 class="mk-title">What ad do you want?</h1>
+      <div class="mk-box">
+        <textarea id="dsT" aria-label="Describe the ad you want" placeholder="e.g. A bold red Instagram ad for Joe's Pizza in Dallas. 20% off this weekend."></textarea>
         <button class="btn" id="dsGo">Make my ad</button>
-        <p class="dim" id="dsMsg" style="font-size:.8rem" aria-live="polite"></p>
       </div>
-      <div data-pane="biz" class="stack" hidden>
-        <div class="nichegrid" id="nicheGrid"></div>
-        <label class="f">Business name<input type="text" id="bName"></label>
-        <label class="f">City<input type="text" id="bCity"></label>
+      <div class="row" id="dsEx" style="gap:6px"><span class="dim" style="font-size:.8rem">Try:</span>
+        <button class="chip" data-ex="A bold red Instagram ad for Joe's Pizza in Dallas. 20% off large pizzas this weekend.">Pizza place</button>
+        <button class="chip" data-ex="A friendly green Facebook ad for Sparkle Home Cleaning in Tampa. $50 off the first deep clean.">Cleaning company</button>
+        <button class="chip" data-ex="A premium black TikTok ad for Luma Med Spa in Miami. $100 off your first facial this month.">Med spa</button>
       </div>
-      <div data-pane="offer" class="stack" hidden>
-        <label class="f">The offer<textarea id="bOffer" style="min-height:64px"></textarea></label>
-        <div id="offerScore"></div>
-        <label class="f">Real proof (only true facts)<input type="text" id="bProof"></label>
-        <label class="f">Who should see it<textarea id="bAud" style="min-height:56px"></textarea></label>
-      </div>
-      <div data-pane="style" class="stack" hidden>
-        <label class="f">Tone</label><div class="row" id="toneRow"></div>
-        <label class="f">Colors</label><div class="swatches" id="swatches"></div>
-      </div>
-      <button class="btn" id="genBtn" style="margin-top:auto">Generate ad pack</button>
+      <p class="dim" id="dsMsg" style="font-size:.84rem;min-height:1.3em" aria-live="polite"></p>
+      <details class="mk-more" id="adInputs"><summary>Edit details</summary>
+        <div class="stack" style="gap:10px;margin-top:10px">
+          <div class="nichegrid" id="nicheGrid"></div>
+          <div class="two"><label class="f">Business name<input type="text" id="bName"></label><label class="f">City<input type="text" id="bCity"></label></div>
+          <label class="f">The deal<input type="text" id="bOffer"></label>
+          <label class="f">Real rating or reviews (optional, true facts only)<input type="text" id="bProof"></label>
+          <label class="f">Who should see it<input type="text" id="bAud"></label>
+          <div class="row" id="toneRow"></div><div class="swatches" id="swatches"></div>
+        </div>
+      </details>
     </div>
     <div class="pcol">
       <div class="tabs" id="platTabs"></div>
+      <span class="dim" id="pvNote" style="font-size:.78rem">Example ad. Yours shows up here.</span>
       <div class="pwrap" id="pwrap"><div id="preview"></div></div>
-      <div class="tabs" id="variantBtns"></div>
-    </div>
-    <div class="panel outputs">
-      <div class="tabs" id="outTabs"></div>
-      <div class="pane" id="outPane"></div>
+      <div class="row" style="justify-content:center"><div class="tabs" id="variantBtns"></div></div>
+      <div class="row" style="justify-content:center"><button class="btn sm" id="copyAd">Copy ad</button><button class="btn sm ghost" id="saveBtn">Save</button><button class="btn sm ghost" id="moreBtn">More</button></div>
     </div>
   </div>
 </section>
@@ -707,45 +637,6 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
   </div>
 </section>
 
-<!-- BUSINESS -->
-<section class="view" id="v-business" hidden>
-  <div class="vhead">
-    <div><span class="eyebrow">Your business</span><h1>Run it like a real agency</h1><p class="sub">You sell results to local businesses. AI does the heavy lifting on copy, images and video.</p></div>
-    <div class="tabs" id="bzTabs"><button data-t="plan" class="on">The plan</button><button data-t="niche">Pick a niche</button><button data-t="growth">Growth</button><button data-t="delivery">Delivery</button></div>
-  </div>
-  <div data-pane="plan" class="grid g3">
-    <div class="panel stack"><span class="tag acc">Your offer</span><h3>One clear sentence</h3><p class="out">"I help [type of business] in [city] get more customers with AI-made ads, managed every week, from $199 a month."</p></div>
-    <div class="panel stack"><span class="tag green">Startup cost</span><h3>$0 to $50</h3><p class="muted">Free: Meta Ads Manager, Google Ads, Canva, CapCut, Loom, Google Sheets, Calendly. Later: one paid AI plan (about $20 a month) and a domain (about $12 a year).</p></div>
-    <div class="panel stack"><span class="tag gold">Your role</span><h3>Strategist, not button-pusher</h3><p class="muted">You choose the offer, the audience and what to test. AI writes and designs. The ad platform's AI finds buyers. You read the numbers and improve every week.</p></div>
-    <div class="panel stack"><span class="tag">Week 1</span><h3>Learn + build proof</h3><p class="muted">Finish the course. Make 3 demo ads for one niche in the Ad Maker. Run your own $5-a-day test ad to learn Ads Manager.</p></div>
-    <div class="panel stack"><span class="tag">Weeks 2–4</span><h3>First clients</h3><p class="muted">Follow the 14-day plan. Offer Starter or Growth with the founding discount. Deliver more than promised.</p></div>
-    <div class="panel stack"><span class="tag">Month 2+</span><h3>Grow</h3><p class="muted">Turn results into case studies. Move happy clients up a tier when they want more. Ask each for one referral.</p></div>
-  </div>
-  <div data-pane="niche" hidden><div class="tbl scroll" style="max-height:calc(100dvh - 240px)"><table><thead><tr><th>Business type</th><th>One customer is worth</th><th>Easy to sell?</th><th>Start at</th><th>Cost per lead (rough guess)</th></tr></thead><tbody id="nicheRows"></tbody></table></div></div>
-  <div data-pane="growth" hidden class="grid" style="grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:14px" id="growthGrid">
-    <div class="panel stack">
-      <label class="slider">New clients a month <output id="gNewO"></output><input type="range" id="gNew" min="0.5" max="4" step="0.5" value="1.5"></label>
-      <label class="slider">Average monthly fee <output id="gFeeO"></output><input type="range" id="gFee" min="150" max="1200" step="25" value="399"></label>
-      <label class="slider">Clients who leave each month <output id="gChurnO"></output><input type="range" id="gChurn" min="0" max="25" value="8"></label>
-      <div class="kpis" id="gKpis"></div>
-    </div>
-    <div class="panel chart" id="gChart"></div>
-  </div>
-  <div data-pane="delivery" hidden class="grid g2">
-    <div class="panel stack"><h4>After they say yes (days 0–3)</h4><ul class="check">
-      <li>Send a simple agreement and invoice (Stripe, PayPal or Square invoices).</li>
-      <li>Ask for partner access to their Meta Business account. The client owns it.</li>
-      <li>Collect their logo, 10+ real photos, prices, best offer and phone or booking link.</li>
-      <li>Install the Meta Pixel and Google tag, or use an instant form.</li>
-      <li>Agree on one goal number: calls, bookings or sales a month.</li></ul></div>
-    <div class="panel stack"><h4>Every month</h4><ul class="check">
-      <li>Week 1: new creatives from the Ad Maker, launch a 3×3 test.</li>
-      <li>Week 2: pause ads costing 2× the target per lead, move budget to winners.</li>
-      <li>Week 3: new hooks on the winner, ask the owner how lead quality looks.</li>
-      <li>Week 4: send a short report (spend, leads, cost per lead, customers) and the plan for next month.</li></ul></div>
-  </div>
-</section>
-
 <!-- PROMPTS -->
 <section class="view" id="v-prompts" hidden>
   <div class="vhead">
@@ -758,6 +649,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 </main>
 </div>
 <div class="toast" id="toast" role="status"></div>
+<div class="helpwrap" id="moreDlg" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-label="More for this ad" style="width:min(640px,100%)"><div class="row" style="justify-content:space-between"><h2>More for this ad</h2><button class="btn sm ghost" id="moreClose">Close</button></div><div class="tabs" id="outTabs"></div><div id="outPane" class="scroll" style="max-height:60dvh"></div><button class="btn sm ghost" id="copyAll" style="align-self:flex-start">Copy everything</button></div></div>
 <div class="helpwrap" id="help" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-labelledby="helpT"><button class="btn sm ghost" id="helpClose" style="align-self:flex-end">Got it</button><div id="helpBody" class="stack" style="gap:12px"></div></div></div>
 <script>
 // ---------- helpers ----------
@@ -895,9 +787,9 @@ function headlines(n, f) {
 function primaryTexts(n, f) {
   const e = f.tone === 'friendly' || f.tone === 'funny', x = (a, b = '') => e ? a : b;
   const urgent = f.tone === 'urgent' ? '\nEnds Sunday. Spots are limited.' : '';
-  const pas = `${cap(n.pains[0])}? You're not alone. Most people in ${f.city} deal with ${n.pains[1]} too.\n\n${f.name} fixes that: ${n.benefits[0]} and ${n.benefits[1]}.\n${x('⭐ ')}${f.proofT}.\n\n${x('👉 ')}${f.offer}. Tap "${n.cta}" to grab it.${urgent}`;
-  const aida = `${headlines(n, f)[0]}\n\nAt ${f.name} you get ${n.benefits[0]}, ${n.benefits[1]} and ${n.benefits[2]}.\n${f.proofT}. We'd love to make you next.\n\n${x('🎁 ')}${f.offer}.\nTap "${n.cta}" now.${urgent}`;
-  const bab = `Before: ${n.pains[2]}.\nAfter: ${n.benefits[0]}.\n\nThe bridge? ${f.name}, right here in ${f.city}. ${f.proofT}.\n\n${f.offer}. Tap "${n.cta}" to start.${urgent}`;
+  const pas = `${cap(n.pains[0])}? You're not alone. Most people in ${f.city} deal with ${n.pains[1]} too.\n\n${f.name} fixes that: ${n.benefits[0]} and ${n.benefits[1]}.\n${f.proof ? x('⭐ ') + f.proof + '.\n' : ''}\n${x('👉 ')}${f.offer}. Tap "${n.cta}" to grab it.${urgent}`;
+  const aida = `${headlines(n, f)[0]}\n\nAt ${f.name} you get ${n.benefits[0]}, ${n.benefits[1]} and ${n.benefits[2]}.${f.proof ? '\n' + f.proof + '.' : ''} We'd love to make you next.\n\n${x('🎁 ')}${f.offer}.\nTap "${n.cta}" now.${urgent}`;
+  const bab = `Before: ${n.pains[2]}.\nAfter: ${n.benefits[0]}.\n\nThe bridge? ${f.name}, right here in ${f.city}.${f.proof ? ' ' + f.proof + '.' : ''}\n\n${f.offer}. Tap "${n.cta}" to start.${urgent}`;
   return [{ f: 'PAS · Problem, Agitate, Solve', t: pas }, { f: 'AIDA · Attention, Interest, Desire, Action', t: aida }, { f: 'BAB · Before, After, Bridge', t: bab }];
 }
 function googleAd(n, f) {
@@ -912,7 +804,7 @@ function videoSegs(n, f, h) {
   return [
     { t: '0–3s', name: 'Hook', cap: h, shot: `Close-up, fast movement: ${n.visual.split(',')[0]}` },
     { t: '3–8s', name: 'Problem → fix', cap: `Tired of ${n.pains[0]}?`, shot: `Show the team and the result: ${n.benefits[0]}` },
-    { t: '8–12s', name: 'Proof', cap: f.proofT, shot: 'Real reviews on screen, star rating, happy customer (with permission)' },
+    { t: '8–12s', name: 'Proof', cap: f.proof || 'Real customers, real results', shot: 'Real reviews on screen, star rating, happy customer (with permission)' },
     { t: '12–15s', name: 'Offer + action', cap: `${shortOffer(f.offer)}. Tap ${n.cta}.`, shot: 'Logo, offer card, point to the button' }
   ];
 }
@@ -937,7 +829,7 @@ function creativeHTML(p, v = 0, shape = '') {
   return `<div class="creative ${shape}" style="--c1:${pal.c1};--c2:${pal.c2}"><div class="mg" aria-hidden="true">${esc(init)}</div><div class="ln"></div>
     <div class="top"><span>${esc(p.f.name)}</span><span>${esc(p.f.city)}</span></div>
     <div class="ch">${esc(p.hs[v])}</div>
-    <div class="bt"><div class="cs">${esc(shortOffer(p.f.offer))}</div><div class="pr">${p.f.proof ? (p.f.proof.includes('★') ? '' : '★ ') + esc(p.f.proof) : '★ Add your real rating'}</div></div></div>`;
+    <div class="bt"><div class="cs">${esc(shortOffer(p.f.offer))}</div>${p.f.proof ? `<div class="pr">${(p.f.proof.includes('★') ? '' : '★ ') + esc(p.f.proof)}</div>` : ''}</div></div>`;
 }
 const initials = s => s.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
 function fbHTML(p, v = 0, bar = true) {
@@ -1807,7 +1699,7 @@ function renderEarn() {
   if (due.length) T.push(['due', `Follow up with ${due.length} lead${due.length > 1 ? 's' : ''}: ${due.slice(0, 3).map(l => esc(l.biz.replace(/^Example: /, ''))).join(', ')}${due.length > 3 ? '…' : ''}`, '#clients']);
   if (s.g < 3) T.push(['ads', `Make ${3 - s.g} more sample ad${3 - s.g > 1 ? 's' : ''} and save them`, '#studio']);
   T.push(['find', 'Add 10 new businesses from Google Maps to the Lead tracker', '#clients']);
-  T.push(['msg', 'Send 20 first messages (grade one first)', '#first']);
+  T.push(['msg', 'Send 20 first messages (Find Clients → Scripts)', '#clients']);
   T.push(['aud', 'Send 3 free audits, sample ads or brand checks', '#audit']);
   if (s.calls) T.push(['call', `Prepare for ${s.calls} call${s.calls > 1 ? 's' : ''}: audit + quote ready`, '#pricing']);
   if (s.monthlyClients && !s.brand) T.push(['cross', 'Offer a $299 Brand Kit to one of your ad clients', '#brand']);
@@ -1822,7 +1714,7 @@ function renderEarn() {
   $('#streak').innerHTML = `<div class="kpi"><small>Streak</small><b>${st} day${st === 1 ? '' : 's'}</b></div><div class="kpi"><small>Outreach today</small><b>${(today.msg || 0) + (today.fu || 0)}/30</b></div>`;
   // --- money path (ads + brand) ---
   const path = [['Make 3 sample ads', s.g >= 3, `${Math.min(s.g, 3)}/3 saved`, '#studio'], ['Add 20 real leads', s.L.length >= 20, `${Math.min(s.L.length, 20)}/20`, '#clients'],
-    ['Send 100 first messages', s.T.msg >= 100, `${Math.min(s.T.msg, 100)}/100 logged`, '#first'], ['Book your first call', s.T.call > 0 || s.calls + s.quotes > 0, 'Log it or move a lead', '#clients'],
+    ['Send 100 first messages', s.T.msg >= 100, `${Math.min(s.T.msg, 100)}/100 logged`, '#clients'], ['Book your first call', s.T.call > 0 || s.calls + s.quotes > 0, 'Log it or move a lead', '#clients'],
     ['Make your first sale', income.length > 0, 'Log it in Income', '#earn'], ['Get a monthly client', income.some(x => x.type === 'monthly'), 'Starter, Growth or Brand Growth', '#pricing'],
     ['Sell ads and brand work', income.some(x => x.svc === 'brand') && income.some(x => x.svc !== 'brand'), 'Both pillars sold', '#brand'], ['Earn your first $1,000', s.total >= 1000, `${money(Math.min(s.total, 1000))} of $1,000`, '#earn']];
   const next = path.findIndex(p => !p[1]);
@@ -1837,10 +1729,10 @@ function renderEarn() {
   $('#sbChart').innerHTML = svg + '</svg>';
   const pct = (a, b) => b ? Math.round(a / b * 1000) / 10 : 0, R = s.T, reply = pct(R.rep, R.msg), callR = pct(R.call, R.rep), close = pct(R.sale, R.call);
   $('#sbRates').innerHTML = [['First messages', R.msg], ['Reply rate', R.msg ? reply + '%' : '—'], ['Replies → calls', R.rep ? callR + '%' : '—'], ['Calls → sales', R.call ? close + '%' : '—']].map(k => `<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('');
-  const coach = R.msg < 50 ? ['acc', `Not enough data yet (${R.msg} of 50 messages). Right now the job is volume: about 20 first messages a day plus follow-ups.`, '#first', 'Open the message grader']
-    : reply < 3 ? ['bad', `Only ${reply}% of owners reply. Make the first message more personal: one real observation plus a free audit or sample ad.`, '#first', 'Grade your message']
+  const coach = R.msg < 50 ? ['acc', `Not enough data yet (${R.msg} of 50 messages). Right now the job is volume: about 20 first messages a day plus follow-ups.`, '#clients', 'Open the scripts']
+    : reply < 3 ? ['bad', `Only ${reply}% of owners reply. Make the first message more personal: one real observation plus a free audit or sample ad.`, '#clients', 'Open the scripts']
     : R.rep >= 5 && callR < 25 ? ['bad', `People reply but only ${callR}% book a call. Offer two specific times and show their sample ad in the reply.`, '#clients', 'See the scripts']
-    : R.call >= 3 && close < 20 ? ['bad', `Calls close at ${close}%. Practice the call, and offer the $99 Quick Ad Pack or $299 Brand Kit as a smaller first yes.`, '#first', 'Practice the sales call']
+    : R.call >= 3 && close < 20 ? ['bad', `Calls close at ${close}%. Practice the call, and offer the $99 Quick Ad Pack or $299 Brand Kit as a smaller first yes.`, '#clients', 'See the call script']
     : ['ok', 'Your numbers look healthy. Keep the daily volume and never skip follow-ups.', '#earn', ''];
   $('#sbCoach').innerHTML = `<div class="note ${coach[0]}">${coach[1]}${coach[3] ? ` <a href="${coach[2]}">${coach[3]}</a>` : ''}</div>`;
   // --- income ---
@@ -1856,7 +1748,6 @@ const HELP = {
   bcourse: ['An 8-step course on growing a business’s brand: how people see it, remember it and trust it.', ['Read the short lesson.', 'Try the practice tool next to it.', 'Click “Mark done and continue” at the bottom.']],
   first: ['A 9-step course on getting your first paying client.', ['Read the short lesson.', 'Practice with the tool next to it.', 'Do each step for real, then mark it done.']],
   grow: ['How to get work on freelance sites like Upwork and Fiverr, build your name, and grow.', ['Read the short lesson.', 'Use the tool next to it to write your profile, proposals and posts.', 'Copy what you made and use it on the real site.']],
-  studio: ['Makes a complete ad for a business in a few seconds. Built from proven formulas.', ['In “Describe”, type the ad you want in your own words and click “Make my ad”. Or fill in the Business, Offer and Style tabs.', 'Add only real facts, like their actual star rating, in the Offer tab.', 'Check the phone preview, then copy what you need from the results panel.']],
   brand: ['Makes a brand plan for a business: what to say, which colors and fonts to use, and what to post.', ['Fill in the business and one thing that makes it different.', 'In “2 · Personality”, move the sliders to match how the business feels.', 'Go through the results tabs and copy what you need.']],
   audit: ['Grades a business’s online presence out of 100. You send the result to the owner for free, which starts a conversation.', ['Look up the business on Google Maps, its website and Facebook.', 'Answer the questions, one tab at a time.', 'Open “Report to send”, copy it and send it to the owner.']],
   prompts: ['Ready-made instructions to paste into an AI chat like ChatGPT or Claude.', ['Pick a topic at the top.', 'Click Copy on a prompt.', 'Paste it into an AI chat, fill in anything in [brackets], and send.']],
@@ -2001,18 +1892,17 @@ function describeInit() {
   $('#dsEx').addEventListener('click', e => { const b = e.target.closest('[data-ex]'); if (b) $('#dsT').value = b.dataset.ex; });
   $('#dsGo').addEventListener('click', async () => {
     const t = $('#dsT').value.trim(), msg = $('#dsMsg'), btn = $('#dsGo');
-    if (t.length < 8) { msg.textContent = 'Write a little more: what business, what deal, what look.'; return; }
-    btn.disabled = true; msg.textContent = 'Working…';
+    if (t.length < 8) { msg.textContent = 'Add a bit more: the business, the deal, the look.'; return; }
+    btn.disabled = true; msg.textContent = 'Making your ad…';
     const sample = await getSample();
     let r = null, how = '';
     if (sample) {
-      try { msg.textContent = 'Claude is writing your ad…'; r = cleanAI(await sample.json(aiPrompt(t))); how = r ? 'Written by Claude (AI) from your words. Check every fact before using it.' : ''; }
+      try { msg.textContent = 'AI is writing your ad…'; r = cleanAI(await sample.json(aiPrompt(t))); how = r ? 'Written by AI. Check the facts before you use it.' : ''; }
       catch (e) { how = e && e.code === 'not_granted' ? 'AI writing was not allowed, so the simple maker was used.' : e && e.code === 'rate_limited' ? 'AI is busy right now, so the simple maker was used. Try again in a minute.' : ''; }
     }
-    if (!r) { r = parseDescription(t); r.ai = null; how = how || 'Built from your words with templates. (AI writing works when the app is opened on claude.ai.)'; }
-    applyDescribed(r); renderStudio(); generate();
-    const found = [r.niche && NICHES[r.niche].label, r.name, r.city, r.offer && `offer “${r.offer}”`, r.palette != null && PALETTES[r.palette].name + ' colors', r.tone && TONES[r.tone] + ' tone'].filter(Boolean);
-    msg.innerHTML = `${esc(how)}${found.length ? `<br>Picked up: ${esc(found.join(', '))}.` : ''} Fine-tune anything in the other tabs.`;
+    if (!r) { r = parseDescription(t); r.ai = null; how = how || 'Made from your words. (On claude.ai, AI writes it.)'; }
+    B.made = true; applyDescribed(r); renderStudio(); generate();
+    msg.textContent = how;
     btn.disabled = false;
   });
 }
@@ -2050,13 +1940,11 @@ function fields() {
   return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette };
 }
 function studioInit() {
-  wireTabs($('#inTabs'), $('#adInputs'), t => { $('#genBtn').hidden = t === 'desc'; });
-  $('#genBtn').hidden = true;
   $('#nicheGrid').innerHTML = Object.entries(NICHES).map(([k, n]) => `<button data-n="${k}">${n.label}</button>`).join('');
   $('#toneRow').innerHTML = Object.entries(TONES).map(([k, t]) => `<button class="chip" data-tone="${k}">${t}</button>`).join('');
   $('#swatches').innerHTML = PALETTES.map((p, i) => `<button class="sw" data-pal="${i}" title="${p.name}" aria-label="${p.name} colors" style="background:linear-gradient(135deg,${p.c1},${p.c2})"></button>`).join('');
   $('#platTabs').innerHTML = Object.entries(PLATS).map(([k, t]) => `<button data-p="${k}">${t}</button>`).join('');
-  $('#variantBtns').innerHTML = ['A', 'B', 'C'].map((l, i) => `<button data-var="${i}">Version ${l}</button>`).join('');
+  $('#variantBtns').innerHTML = ['1', '2', '3'].map((l, i) => `<button data-var="${i}">Version ${l}</button>`).join('');
   $('#outTabs').innerHTML = Object.entries(OUTS).map(([k, t]) => `<button data-o="${k}">${t}</button>`).join('');
   $('#nicheGrid').addEventListener('click', e => { const b = e.target.closest('[data-n]'); if (b) setNiche(b.dataset.n); });
   $('#toneRow').addEventListener('click', e => { const b = e.target.closest('[data-tone]'); if (b) { B.tone = b.dataset.tone; B.ai = null; renderStudio(); } });
@@ -2066,12 +1954,11 @@ function studioInit() {
   $('#outTabs').addEventListener('click', e => { const b = e.target.closest('[data-o]'); if (b) { outTab = b.dataset.o; renderOutputs(); } });
   [['bName', 'name'], ['bCity', 'city'], ['bOffer', 'offer'], ['bAud', 'aud'], ['bProof', 'proof']].forEach(([id, key]) =>
     $('#' + id).addEventListener('input', e => { B[key] = e.target.value; B.ai = null; renderStudio(false); }));
-  $('#genBtn').addEventListener('click', () => generate());
-  $('#surpriseBtn').addEventListener('click', () => {
-    setNiche(pick(Object.keys(NICHES)), true);
-    B.city = pick(CITIES); B.tone = pick(Object.keys(TONES)); variant = Math.floor(Math.random() * 3);
-    generate();
-  });
+  $('#copyAd').addEventListener('click', () => copyText(`${pack.hs[variant]}\n\n${pack.texts[variant].t}\n\nButton: ${pack.n.cta}`));
+  $('#moreBtn').addEventListener('click', () => { $('#moreDlg').hidden = false; $('#moreClose').focus(); });
+  $('#moreClose').addEventListener('click', () => { $('#moreDlg').hidden = true; $('#moreBtn').focus(); });
+  $('#moreDlg').addEventListener('click', e => { if (e.target.id === 'moreDlg') $('#moreDlg').hidden = true; });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') $('#moreDlg').hidden = true; });
   $('#saveBtn').addEventListener('click', () => {
     const g = store.get('gallery', []); g.unshift({ f: { ...B }, v: variant }); store.set('gallery', g.slice(0, 24));
     toast('Saved to My Ads'); if (outTab === 'saved') renderOutputs();
@@ -2115,7 +2002,7 @@ function renderStudio(sync = true) {
   $$('#swatches .sw').forEach(b => b.classList.toggle('on', +b.dataset.pal === B.palette));
   $$('#platTabs button').forEach(b => b.classList.toggle('on', b.dataset.p === plat));
   $$('#variantBtns button').forEach(b => b.classList.toggle('on', +b.dataset.var === variant));
-  $('#offerScore').innerHTML = offerScoreHTML(fields().offer);
+  $('#pvNote').hidden = !!B.made;
   $('#preview').innerHTML = `<div class="phone"><div class="screen">${previewHTML(pack, plat, variant)}</div></div>`;
   renderOutputs();
   renderPrompts();
@@ -2650,20 +2537,19 @@ function renderPrompts() {
 }
 
 // ================= ROUTER =================
-const VIEWS = ['home', 'earn', 'course', 'first', 'grow', 'bcourse', 'brand', 'studio', 'audit', 'pricing', 'clients', 'business', 'prompts'];
-const ALIAS = { learn: 'course', builder: 'studio' };
+const VIEWS = ['studio', 'brand', 'audit', 'clients', 'earn', 'pricing', 'prompts'];
+const ALIAS = { builder: 'studio', home: 'studio' };
 function show(v) {
-  v = ALIAS[v] || v; if (!VIEWS.includes(v)) v = 'home';
+  v = ALIAS[v] || v; if (!VIEWS.includes(v)) v = 'studio';
   $$('.view').forEach(s => s.hidden = s.id !== 'v-' + v);
   $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.v === v));
   const on = $(`#nav a[data-v="${v}"]`); if (on && innerWidth <= 900) on.scrollIntoView({ block: 'nearest', inline: 'center' });
   $('#stage').scrollTop = 0; window.scrollTo(0, 0);
-  if (v === 'home') renderHomeSteps();
   maybeHelp(v);
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); courseInit(); describeInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); homeInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit();
+studioInit(); describeInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); promptsInit();
 show(location.hash.slice(1));
 </script>
 </body>

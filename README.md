@@ -1511,25 +1511,18 @@ The arena canvas also picks its own pixel ratio: on a large, high-resolution
 screen it caps at 1.5x rather than 2x, since nine times the pixels buys
 nothing visible. That alone took a 2x display from 32 fps to 44.
 
-## Yaya AI Ad Lab — AI advertising and freelance brand scaling
+## Yaya AI Ad Lab — makes ads and brands for local businesses
 
-Open `ai-ads/index.html` in any browser (on GitHub Pages: `/ai-ads/`). The app has two main parts, AI advertising and brand scaling, plus tools to run them as a freelance business. Each section fits on one screen.
+Open `ai-ads/index.html` in any browser (on GitHub Pages: `/ai-ads/`). It does the work for you; it is not a course.
 
-Start on the home page: it shows 3 steps (Learn, Practice, Earn). Every page has a "How this page works" button, and "Words explained" lists 24 terms in plain English. "Facts & sources" links each key fact (ad rules, fees, typical ad costs) to where it comes from, checked October 2026.
-
-| Section | What it does |
+| Page | What it does |
 | --- | --- |
-| Course | 10 steps with a working demo in each: customer profile builder, offer strength meter (scored out of 10), AI copy writer, image prompt builder, 15-second video storyboard, platform and radius picker, Ads Manager practice run, A/B test simulator, ad results calculator, ad rule checker, then a final quiz |
-| First Clients | 9 steps to your first client, each with a practice demo: how long it takes, niche checker, sample-work page, lead checker, 5-minute audit, first-message grader (scored out of 10), follow-up planner, sales call practice, and a simple client agreement |
-| Grow | 8 steps on freelancing, personal brand and scaling, each with a demo: freelance profile builder, proposal writer and checker, gig package builder, positioning and bio builder, 30-day content plan, gig vs monthly client calculator, capacity check, scaling calculator |
-| Make Money | For AI ads and brand scaling. Today: actions built from your progress (including follow-ups due), a work log with daily goals and a streak, and an 8-step money path. Scoreboard: 14 days of outreach and your real reply, call and close rates with coaching. Income: payments split by ads and brand, counting only money you log. Offers: $99 Quick Ad Pack, $299 Brand Kit and the money ladder |
-| Brand Course | 8 steps for scaling a business's brand, each with a demo: brand health check, consistency checker, positioning builder, personality to brand kit, content calendar, review growth planner, content + ads budget split, monthly brand report |
-| Brand Maker | Enter a client's business and get a brand check, positioning, voice guide, brand kit (colors and fonts), 30-day content plan, channel plan, 90-day scaling plan and a pitch to the owner |
-| Ad Maker | Type the ad you want in your own words in the Describe tab (business, deal, audience, look) and click Make my ad. On claude.ai, Claude writes the ad; on GitHub Pages a keyword reader picks the business type, offer, colors, style and platform and builds it from templates. Or fill in the Business, Offer and Style tabs. Previews for Facebook, Google, TikTok and Story, plus headlines, ad texts, an image prompt, a video script, targeting and a budget |
-| Business Checkup | A step-by-step check of a business, a score out of 100, top fixes, a report to send the owner and a video script |
-| Pricing | Brand packages: Brand Kit $299 once, Brand Growth $349/mo, Brand + Ads $699/mo. Ad packages: Each tier includes everything below it: Free Audit $0, Starter $199/mo, Growth $399/mo, Pro $699/mo, Premium $1,199/mo. Plus add-ons and a quote builder that shows your profit |
-| Get Clients | Where to find clients, a 14-day plan, message scripts for each lead, objection cards, a lead tracker and an outreach calculator |
-| Business | The plan, which niche to pick, a 12-month growth chart and delivery checklists |
-| Prompts | 16 copy-ready AI prompts filled in with the business from the Ad Maker |
+| Make an Ad (first screen) | Type the ad you want ("a bold red Instagram ad for Joe's Pizza in Dallas, 20% off this weekend") and click Make my ad. On claude.ai, Claude writes it; on GitHub Pages a keyword reader builds it from templates. Switch between Facebook, Google, TikTok and Story, pick version 1-3, copy or save. "More" has headlines, image prompt, video script, targeting and budget. "Edit details" lets you change the name, deal and real rating |
+| Make a Brand | Enter a business and get a brand check, positioning, voice, brand kit, content plan, channels, a 90-day plan and a pitch |
+| Check a Business | Score a business out of 100 and copy a report and video script to send the owner |
+| Find Clients | Where to find businesses, ready-made messages for each lead, objection answers and a lead tracker with follow-up dates |
+| Make Money | Today's actions, a work counter with a streak, your real reply and close rates, an income tracker and the two easiest first offers |
+| Pricing | Ad and brand packages and a quote builder |
+| AI Prompts | Copy-ready prompts for any AI chat |
 
-Progress, saved ads, quotes and leads are kept in your own browser only.
+"Words explained" and "Facts & sources" are in the menu. Everything you save stays in your own browser.

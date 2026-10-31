@@ -8,6 +8,10 @@
 - Always check your work before saying it is done: run it, test it, look at it. Report honestly what was tested, what failed, and what was not checked.
 - Remember what Yaya asks for: add every new request or decision to the log below.
 
+## Big decision (Oct 31, 2026)
+- This is NOT a learning app. It is a "does it for you" app. All courses (Ads, Brand, Clients, Freelance) and the Business Plan page were removed. Do not add courses or lessons back unless Yaya asks.
+- The Ad Maker is the first screen: one big centered box ("What ad do you want?"), a Make my ad button, and the ad right next to it. Extra fields stay hidden under "Edit details" and "More". Keep it this simple.
+
 ## Request log
 - Built Yaya AI Ad Lab (`ai-ads/index.html`): learn AI advertising, an ad builder app, an AI audit, client pricing, ways to get clients, demos everywhere, simple language.
 - Not childish: professional dark design, no bright candy colors or emoji.
@@ -31,3 +35,4 @@
 - Asked if the course is factual. Fact-checked key claims against official sources and benchmarks (Oct 2026), fixed what was outdated (Special Ad Categories now "financial products and services", before-and-after rule softened, CTR guide, dentist/salon/med spa lead costs, Upwork fee), and added a "Facts & sources" page with links. Keep facts sourced; label anything unverified as a guess.
 - Asked how to get a first client today: gave a same-day plan (warm texts, walk-ins with a sample ad, $99 Quick Ad Pack with a Stripe Payment Link, online messages, log it).
 - Asked for a box to type what ad you want (look, purpose) and have it made: added a "Describe" tab (default) in the Ad Maker. On claude.ai it uses Claude via the sample capability to write the ad (with honesty rules: no invented reviews, ratings or results); everywhere else (GitHub Pages) a keyword reader picks business type, name, city, offer, colors, tone and platform and uses templates. The page says which one it used.
+- Not a learning app: removed courses and Business Plan; app is now Make an Ad (first screen), Make a Brand, Check a Business, Find Clients, Make Money, Pricing, AI Prompts. Ad Maker simplified to a centered typing box plus the ad. Ads no longer show placeholder proof text; real rating appears only if typed.
