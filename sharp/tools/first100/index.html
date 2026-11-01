@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
+<link rel="canonical" href="https://sharpbasics.com/tools/first100/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://c.daily.co; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cherry.contact-yayabuilds.workers.dev https://cloudflareinsights.com https://api.vapi.ai https://*.daily.co wss://*.daily.co; form-action 'none'; worker-src 'self' blob:; media-src 'self' blob:; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>First $100 Plan · Sharp Basics</title>
+<meta name="description" content="Earn your first $100: pick a skill and your free hours, and Cherry works out your price, the jobs it takes and a 30-day plan.">
+<meta property="og:title" content="First $100 Plan · Sharp Basics">
+<meta property="og:description" content="Earn your first $100: pick a skill and your free hours, and Cherry works out your price, the jobs it takes and a 30-day plan.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpbasics.com/tools/first100/">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/sharp.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.f1-top{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:16px;background:#0d2a22;border:1px solid #1d5a4a;margin-bottom:16px}.f1-top .ch-face{width:52px;height:52px;font-size:18px;flex:none}.f1-top h2{margin:0;font-size:1.3rem;color:#e9fff6}.f1-top p{margin:6px 0 0;color:#bfeedd;line-height:1.55}.f1-tag{display:inline-flex;gap:6px;align-items:center;margin-bottom:4px;font:700 .72rem var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:#5fe0b0}.f1-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:16px}@media (max-width:860px){.f1-grid{grid-template-columns:1fr}}.f1-grid .card{min-width:0}.f1-f{display:grid;grid-template-columns:1fr 1fr;gap:12px}.f1-f label{display:grid;gap:6px;font-weight:700}.f1-f .wide{grid-column:1/-1}.f1-f input,.f1-f select{width:100%;min-width:0}.f1-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 6px}.f1-stats div{background:var(--surface-2);border-radius:12px;padding:10px 12px}.f1-stats span{display:block;font-size:.76rem;color:var(--muted)}.f1-stats b{font:800 1.3rem var(--f-display)}#f1-chart{position:relative;height:280px;margin-top:6px}.f1-goal{stroke:#5fe0b0;stroke-width:1.5;stroke-dasharray:6 4}.f1-say{margin:10px 0 0;padding:14px 16px;border-radius:12px;background:var(--surface-2);border-left:4px solid var(--accent);font-size:1.02rem;line-height:1.55;user-select:all;-webkit-user-select:all}#f1-steps{list-style:none;margin:0;padding:0;display:grid;gap:14px}.f1-wk h3{margin:0 0 6px;font-size:1rem}.f1-wk ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}.f1-wk label{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:var(--surface-2);cursor:pointer;line-height:1.45}.f1-wk input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--accent)}.f1-wk input:checked+span{color:var(--muted);text-decoration:line-through}#f1-log .row{display:flex;gap:8px;flex-wrap:wrap}#f1-log input{flex:1 1 120px;min-width:0}.f1-msg{min-height:1.2em;margin:6px 0 0;color:#ff8d7d;font-size:.9rem}#f1-logs{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}#f1-logs li{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border-radius:10px;background:var(--surface-2);border-left:4px solid var(--st-good)}#f1-logs span{color:var(--muted);font-size:.9rem}.f1-sale{list-style:none;margin:0;padding:0;display:grid;gap:10px}.f1-sale li{display:grid;gap:4px;padding:12px 14px;border-radius:12px;background:var(--surface-2)}.f1-sale span{color:var(--muted);line-height:1.5}.f1-sale q{display:block;margin-top:4px;padding-left:12px;border-left:3px solid var(--accent);color:var(--ink);font-style:italic;line-height:1.5}.f1-fit{margin:14px 0 0;line-height:1.55}.f1-prac{margin-top:14px;padding:14px 16px;border-radius:12px;background:#0d2a22;border:1px solid #1d5a4a}.f1-prac h3{margin:0 0 6px;font-size:1rem;color:#e9fff6}.f1-prac p,.f1-prac li{color:#bfeedd;line-height:1.5}.f1-prac ol{margin:6px 0 8px;padding-left:1.3em}.f1-two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}@media (max-width:860px){.f1-two{grid-template-columns:1fr}}.f1-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../../index.html" aria-label="Sharp home"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../../learn/index.html">Courses</a>
+      <a href="../../tools/index.html" aria-current="page">Tools</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="signin" href="../../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../../index.html">Sharp</a> / <a href="../../tools/index.html">Tools</a> / First $100 Plan</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Business tools</span>
+    <h1>First $100 Plan</h1>
+    <p class="lede">Pick what you'll do and how many hours you have. Cherry works out the maths, tells you who to ask and what to say, then tracks every dollar you earn.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <div class="f1-top"><span class="ch-face" aria-hidden="true">C</span><div><span class="f1-tag"><i class="sc-ic good" id="f1-st" aria-hidden="true">✓</i><span id="f1-stw">On track</span> · Cherry's take</span><h2 id="f1-head" tabindex="-1">Let's plan your first $100.</h2><p id="f1-body"></p></div></div>
+    <div class="f1-grid">
+      <div class="card">
+        <h2 style="margin:0 0 12px;font-size:1.15rem">Your business</h2>
+        <form class="f1-f" novalidate onsubmit="return false">
+          <label for="f1-skill" class="wide">What will you do?<select id="f1-skill"></select></label>
+          <label for="f1-price">Your price per job ($)<input type="number" id="f1-price" min="0" step="any" inputmode="decimal"></label>
+          <label for="f1-cost">Costs per job ($)<input type="number" id="f1-cost" min="0" step="any" inputmode="decimal"></label>
+          <label for="f1-hours">Free hours a week<input type="number" id="f1-hours" min="0" step="any" inputmode="decimal"></label>
+          <label for="f1-goal">Your goal ($)<input type="number" id="f1-goal" min="1" step="any" inputmode="decimal"></label>
+          <p class="fine wide" id="f1-range" style="margin:0"></p>
+        </form>
+      </div>
+      <div class="card">
+        <div class="f1-stats"><div><span>Earned so far</span><b id="f1-s1">$0</b></div><div><span>Jobs to go</span><b id="f1-s2">0</b></div><div><span>Weeks to go</span><b id="f1-s3">0</b></div></div>
+        <div id="f1-chart" role="img" aria-label="Chart of the money you have logged, stacking up toward your goal line. The same numbers are in the money log."></div>
+        <form id="f1-log" novalidate><label for="f1-amt" style="display:grid;gap:6px;font-weight:700">Earned money? Log it here ($)
+          <span class="row"><input type="number" id="f1-amt" min="0" step="any" inputmode="decimal" placeholder="e.g. 25"><input type="text" id="f1-note" maxlength="40" placeholder="Who or what (optional)" aria-label="Who or what (optional)"><button class="btn" type="submit">Add</button></span></label>
+          <p class="f1-msg" id="f1-msg" role="status"></p></form>
+        <p class="fine" id="f1-empty">No money logged yet. Your first job goes here.</p>
+        <ul id="f1-logs"></ul>
+        <div class="f1-act"><button class="btn ghost" type="button" id="f1-undo">Undo last</button><button class="btn" type="button" id="f1-next" hidden>Set my next goal</button></div>
+      </div>
+    </div>
+    <div class="f1-two">
+      <div class="card">
+        <h2 style="margin:0;font-size:1.15rem">What to say</h2>
+        <p class="fine" id="f1-who" style="margin:6px 0 10px"></p>
+        <div class="f1-f"><label for="f1-name">Your first name (optional)<input type="text" id="f1-name" maxlength="40" autocomplete="given-name"></label><label for="f1-area">Your street or area (optional)<input type="text" id="f1-area" maxlength="40"></label></div>
+        <p class="f1-say" id="f1-line"></p>
+        <div class="f1-act"><button class="btn" type="button" id="f1-copy">Copy message</button><button class="btn ghost" type="button" data-cherry hidden>Ask Cherry</button></div>
+        <p class="fine" id="f1-tip" style="margin-top:12px"></p>
+      </div>
+      <div class="card">
+        <h2 style="margin:0;font-size:1.15rem">Your 30-day plan</h2>
+        <p class="fine" id="f1-prog" style="margin:6px 0 12px"></p>
+        <ol id="f1-steps"></ol>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2 style="margin:0;font-size:1.15rem">Make the sale: 6 steps</h2>
+      <p class="fine" style="margin:6px 0 12px">The examples change with the business you picked above.</p>
+      <ol id="f1-sale" class="f1-sale"></ol>
+      <p class="f1-fit"><b>Your goal is to find a fit, not to convince everyone.</b> Your job is to make a clear offer. Their decision is theirs. That takes the pressure off.</p>
+      <div class="f1-prac"><h3>Practise in 10 minutes</h3><p>Ask a friend to play a business owner or customer. Your job:</p>
+        <ol><li>Ask questions about their situation.</li><li>Sum up their problem in one sentence.</li><li>Make one offer that fits it.</li><li>Ask for the sale.</li></ol>
+        <p class="fine">Role-play helps, but real conversations teach you what people actually care about. After one practice, talk to a real customer.</p>
+        <a class="btn ghost" href="../practice/index.html" data-ai>Practise with Cherry →</a></div>
+    </div>
+    <p class="fine who-teen" style="margin-top:14px">Stay safe: only work for people you or your family know, tell an adult where you're going, and never go inside a stranger's home alone. Your plan and money log stay on this device. Prices are a guide, not a promise.</p>
+    <p class="fine who-adult" style="margin-top:14px">Stay safe: meet new customers somewhere public first, tell someone where you're going, and check local rules on licences and taxes. Your plan and money log stay on this device. Prices are a guide, not a promise.</p>
+    <div class="f1-act"><button class="btn ghost" type="button" id="f1-reset">Start over</button><a class="btn ghost" href="../ladder/index.html">Next: the money ladder</a><a class="btn ghost" href="../business-plan/index.html">Pricing calculator</a><a class="btn ghost" href="../money-plan/index.html">Money plan</a></div>
+
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../../index.html" style="display:inline-flex;margin-bottom:10px"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Sharp</p></div>
+    <div><h4>Courses</h4><a href="../../learn/index.html#money">Finance</a><a href="../../learn/index.html#business">Business</a><a href="../../learn/index.html#mkt-basics">Marketing</a><a href="../../learn/index.html#negotiation">Negotiation</a><a href="../../learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="../../tools/million/index.html">Road to $1 million</a><a href="../../tools/ladder/index.html">Money ladder</a><a href="../../tools/tracker/index.html">Wealth tracker</a><a href="../../tools/marketing/index.html">Marketing calculators</a><a href="../../index.html#check">Spending check</a><a href="../../tools/idea-check/index.html">Idea check</a><a href="../../tools/ai/index.html">AI at work</a><a href="../../tools/money-plan/index.html">Money plan</a><a href="../../tools/budget/index.html">Budget planner</a><a href="../../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../../tools/negotiation/index.html">Negotiation prep</a><a href="../../tools/investors/index.html">Investor pressure drill</a></div>
+    <div><h4>Sharp</h4><a href="../../demo/index.html">60-second demo</a><a href="../../ask/index.html" data-ai>Ask Cherry (AI)</a><a href="../../plan/index.html" data-ai>Idea to Plan (AI)</a><a href="../../pricing/index.html">Pricing</a><a href="../../trial/index.html">Free trial</a><a href="../../books/index.html">Book notes</a><a href="../../learn/index.html#prompts">AI prompts</a><a href="../../learn/index.html#glossary">Glossary</a><a href="../../about/index.html">About</a><a href="../../about/index.html#install">Install the app</a><a href="../../privacy/index.html">Privacy</a><a href="../../terms/index.html">Terms</a><a href="../../refunds/index.html">Refunds</a></div>
+  </div>
+</footer>
+<script src="../../assets/who.js"></script><script src="../../assets/tools.js"></script><script src="../../assets/biz.js"></script><script src="../../tools/first100/first100.js"></script><script src="../../assets/shell.js"></script>
+</body>
+</html>

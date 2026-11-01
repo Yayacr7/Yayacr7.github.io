@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1020">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Sharp">
+<link rel="canonical" href="https://sharpbasics.com/tools/practice/">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://c.daily.co; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cherry.contact-yayabuilds.workers.dev https://cloudflareinsights.com https://api.vapi.ai https://*.daily.co wss://*.daily.co; form-action 'none'; worker-src 'self' blob:; media-src 'self' blob:; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Sales practice with Cherry · Sharp Basics</title>
+<meta name="description" content="Practise selling with Cherry: she plays a real customer for your business, then scores your sale out of 10 with one thing to fix.">
+<meta property="og:title" content="Sales practice with Cherry · Sharp Basics">
+<meta property="og:description" content="Practise selling with Cherry: she plays a real customer for your business, then scores your sale out of 10 with one thing to fix.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpbasics.com/tools/practice/">
+<meta property="og:image" content="https://sharpbasics.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/fonts.css">
+<link rel="stylesheet" href="../../assets/sharp.css">
+<style>
+.tool-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.tool-grid .result{margin-top:0;position:sticky;top:90px}
+.tool h2{margin-bottom:4px}
+@media (max-width:860px){ .tool-grid{grid-template-columns:1fr} .tool-grid .result{position:static} }
+.pr{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;align-items:start}@media (max-width:860px){.pr{grid-template-columns:1fr}}.pr-card{display:grid;gap:12px}.pr-card h2{margin:0;font-size:1.2rem}.pr-l{display:grid;gap:6px;font-weight:700}.pr-l select{width:100%}.pr-pill{justify-self:start;font-size:1.05rem;padding:14px 22px;box-shadow:0 0 34px -6px rgba(255,120,80,.75)}.pr-best{margin:0;font-weight:700;color:#9ff0d0}.pr-cust{margin:0;font-weight:800;color:#e9fff6}.pr-chat{display:grid;gap:10px;max-height:52vh;overflow:auto;padding:4px 2px}.pr-b{max-width:86%;padding:10px 14px;border-radius:16px;line-height:1.45}.pr-b p{margin:2px 0 0}.pr-who{font:800 .72rem var(--f-body);letter-spacing:.1em;text-transform:uppercase;opacity:.75}.pr-b.them{justify-self:start;background:#0d2a22;border:1px solid #1d5a4a;color:#e3fbf1}.pr-b.me{justify-self:end;background:var(--surface-2);border:1px solid var(--line)}.pr-form{display:flex;gap:8px;align-items:flex-end}.pr-form textarea{flex:1;min-width:0;resize:vertical;min-height:52px}.pr-act{display:flex;gap:8px;flex-wrap:wrap}.pr-msg{min-height:1.3em;margin:0;font-weight:700;color:var(--muted)}.pr-msg.err{color:#ff8d7d}.pr-steps-card h2{margin:0 0 8px;font-size:1.1rem}.pr-steps{margin:0;padding:0;list-style:none;display:grid;gap:6px}.pr-steps li{padding:8px 10px;border-radius:10px;background:var(--surface-2);font-weight:600}.pr-top{display:flex;gap:18px;align-items:center;flex-wrap:wrap}.pr-ring{--p:0%;--c:var(--st-good);width:112px;height:112px;border-radius:50%;display:grid;place-items:center;align-content:center;background:radial-gradient(closest-side,var(--surface) 78%,transparent 79%),conic-gradient(var(--c) var(--p),var(--surface-2) 0);box-shadow:0 0 40px -12px var(--c)}.pr-ring.warn{--c:var(--st-warn)}.pr-ring.bad{--c:var(--st-bad)}.pr-ring b{font:800 2.6rem/1 var(--f-display)}.pr-ring span{color:var(--muted);font-weight:700}.pr-verdict{flex:1;min-width:200px;margin:0;font:800 1.2rem/1.35 var(--f-display);color:#fff}.pr-check{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}@media (max-width:560px){.pr-check{grid-template-columns:1fr}}.pr-check li{display:flex;gap:8px;align-items:center;padding:8px 10px;border-radius:10px;background:var(--surface-2);border-left:4px solid var(--st-good)}.pr-check li.bad{border-left-color:var(--st-bad)}.pr-notes{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media (max-width:560px){.pr-notes{grid-template-columns:1fr}}.pr-notes>div{padding:12px 14px;border-radius:12px;background:var(--surface-2)}.pr-notes .wide{grid-column:1/-1}.pr-notes span{display:block;font:800 .72rem var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:#5fe0b0;margin-bottom:4px}.pr-notes p{margin:0;line-height:1.5}.pr-notes q{display:block;font-style:italic;line-height:1.5}.pr-off h2{margin:0 0 8px}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="../../index.html" aria-label="Sharp home"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../../learn/index.html">Courses</a>
+      <a href="../../tools/index.html" aria-current="page">Tools</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../trial/index.html">Free trial</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="signin" href="../../index.html#signin" style="text-decoration:none">Sign in</a>
+  </div>
+</header>
+<main>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="../../index.html">Sharp</a> / <a href="../../tools/index.html">Tools</a> / Sales practice with Cherry</p>
+    <span class="eyebrow" style="display:block;margin-top:18px">Earn money</span>
+    <h1>Sales practice with Cherry</h1>
+    <p class="lede">Cherry plays a real customer. You practise Sharp's 6-step sale by typing, then she scores you out of 10 and tells you the one thing to fix.</p>
+    <div class="ch-tip" role="note" aria-label="Cherry's tip"><span class="ch-face" aria-hidden="true">C</span><p><b>Cherry's tip:</b> Ask before you pitch. The seller who asks the best questions, then says the price and stops talking, makes the sale.</p><button class="btn ch-btn" type="button" data-cherry hidden><span class="ch-face sm" aria-hidden="true">C</span>Talk to Cherry</button></div>
+  </div>
+  <div class="wrap" style="padding-bottom:80px">
+    <div class="card pr-off" data-ai-off><h2>Sales practice switches on soon</h2><p>Until then, practise with a friend: there's a 10-minute role-play in the First $100 Plan.</p><a class="btn" href="../first100/index.html">Open the First $100 Plan</a></div>
+    <div class="pr" data-ai>
+      <div style="display:grid;gap:12px;min-width:0">
+        <section class="card pr-card" id="pr-setup" aria-labelledby="pr-setup-h">
+          <h2 id="pr-setup-h">Pick your business</h2>
+          <label for="pr-skill" class="pr-l">What do you sell?<select id="pr-skill"></select></label>
+          <button class="btn pr-pill" type="button" id="pr-start">Start practice</button>
+          <p class="fine" style="margin:0">Free: 1 practice a day. Builder: 10 a day. Founder: unlimited. Don't type private details.</p>
+          <p class="pr-best" id="pr-best"></p>
+        </section>
+        <section class="card pr-card" id="pr-play" hidden aria-labelledby="pr-cust">
+          <p class="pr-cust" id="pr-cust"></p><p class="fine" id="pr-left" style="margin:0"></p>
+          <div class="pr-chat" id="pr-chat"></div>
+          <form id="pr-form" class="pr-form" novalidate><label for="pr-q" class="sr-only">Your reply</label><textarea id="pr-q" rows="2" maxlength="400" placeholder="Type what you'd say…"></textarea><button class="btn" type="submit" id="pr-send">Send</button></form>
+          <div class="pr-act"><button class="btn ghost" type="button" id="pr-score" disabled>Score my sale</button></div>
+        </section>
+        <section class="card pr-card" id="pr-result" hidden aria-labelledby="pr-result-h">
+          <h2 id="pr-result-h" tabindex="-1">Cherry's score</h2>
+          <div class="pr-top"><div class="pr-ring" id="pr-ring"><b id="pr-score-n">0</b><span>out of 10</span></div><p class="pr-verdict" id="pr-verdict"></p></div>
+          <ul class="pr-check" id="pr-check" aria-label="Sharp's 6 steps"></ul>
+          <div class="pr-notes"><div><span>What you did well</span><p id="pr-good"></p></div><div><span>Fix this</span><p id="pr-fix"></p></div><div class="wide"><span>Try saying</span><q id="pr-try"></q></div></div>
+          <button class="btn pr-pill" type="button" id="pr-again">Practise again</button>
+        </section>
+        <p class="pr-msg" id="pr-msg" role="status" aria-live="polite"></p>
+      </div>
+      <aside class="card pr-steps-card" aria-labelledby="pr-steps-h"><h2 id="pr-steps-h">Sharp's 6 steps</h2><ol class="pr-steps" id="pr-steps"></ol><p class="fine" style="margin:10px 0 0">Your goal is to find a fit, not to convince everyone.</p></aside>
+    </div>
+    <p class="fine" style="margin-top:14px">Your practice messages go to Cherry's AI so she can play the customer and score you (see <a href="../../privacy/index.html#ask">Privacy</a>). Your best score stays on this device.</p>
+
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap cols">
+    <div><a class="logo" href="../../index.html" style="display:inline-flex;margin-bottom:10px"><img src="../../icon.svg" width="30" height="30" alt="" class="logo-mark">Sharp</a><p>Business school for aspiring entrepreneurs. Education, not financial advice.</p><p style="margin-top:8px">© 2026 Sharp</p></div>
+    <div><h4>Courses</h4><a href="../../learn/index.html#money">Finance</a><a href="../../learn/index.html#business">Business</a><a href="../../learn/index.html#mkt-basics">Marketing</a><a href="../../learn/index.html#negotiation">Negotiation</a><a href="../../learn/index.html#pitching">Investors</a></div>
+    <div><h4>Tools</h4><a href="../../tools/million/index.html">Road to $1 million</a><a href="../../tools/ladder/index.html">Money ladder</a><a href="../../tools/tracker/index.html">Wealth tracker</a><a href="../../tools/marketing/index.html">Marketing calculators</a><a href="../../index.html#check">Spending check</a><a href="../../tools/idea-check/index.html">Idea check</a><a href="../../tools/ai/index.html">AI at work</a><a href="../../tools/money-plan/index.html">Money plan</a><a href="../../tools/budget/index.html">Budget planner</a><a href="../../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../../tools/negotiation/index.html">Negotiation prep</a><a href="../../tools/investors/index.html">Investor pressure drill</a></div>
+    <div><h4>Sharp</h4><a href="../../demo/index.html">60-second demo</a><a href="../../ask/index.html" data-ai>Ask Cherry (AI)</a><a href="../../plan/index.html" data-ai>Idea to Plan (AI)</a><a href="../../pricing/index.html">Pricing</a><a href="../../trial/index.html">Free trial</a><a href="../../books/index.html">Book notes</a><a href="../../learn/index.html#prompts">AI prompts</a><a href="../../learn/index.html#glossary">Glossary</a><a href="../../about/index.html">About</a><a href="../../about/index.html#install">Install the app</a><a href="../../privacy/index.html">Privacy</a><a href="../../terms/index.html">Terms</a><a href="../../refunds/index.html">Refunds</a></div>
+  </div>
+</footer>
+<script src="../../assets/who.js"></script><script src="../../assets/tools.js"></script><script src="../../tools/practice/practice.js"></script><script src="../../assets/shell.js"></script>
+</body>
+</html>
