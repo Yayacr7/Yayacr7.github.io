@@ -134,7 +134,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .rise{animation:rise .4s ease}
 
 /* ---------- ad mockups ---------- */
-.phone{height:min(620px,calc(100vh - 200px));height:min(620px,calc(100dvh - 200px));min-height:460px;aspect-ratio:9/18.6;max-width:100%;margin:0 auto;border-radius:38px;padding:9px;
+.phone{--h:min(620px,calc(100vh - 200px));--ar:.4839;height:max(460px,var(--h));width:calc(max(460px,var(--h)) * var(--ar));max-width:100%;margin:0 auto;border-radius:38px;padding:9px;
   background:linear-gradient(160deg,#2A3140,#0E1118);box-shadow:0 0 0 1px #343D4F,0 40px 80px -30px rgba(0,0,0,.8)}
 .phone .screen{height:100%;border-radius:30px;overflow:auto;background:#fff;color:#1C1E21;scrollbar-width:none;position:relative}
 .phone .screen::-webkit-scrollbar{display:none}
@@ -254,7 +254,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .sw.on{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--accent)}
 .pcol{display:flex;flex-direction:column;gap:10px;align-items:center;position:relative}
 .pwrap{position:relative;scroll-margin-top:110px}
-.pcol .phone{height:min(620px,calc(100vh - 275px));height:min(620px,calc(100dvh - 275px))}
+.pcol .phone{--h:min(620px,calc(100vh - 275px))}
 .gener{position:absolute;inset:9px;border-radius:30px;z-index:10;background:rgba(10,13,19,.9);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);display:flex;flex-direction:column;justify-content:center;gap:10px;padding:28px}
 .outputs{display:flex;flex-direction:column;gap:10px;min-height:0}
 .outputs .pane{flex:1;min-height:0;overflow:auto;max-height:calc(100vh - 290px);max-height:calc(100dvh - 290px)}
@@ -389,7 +389,6 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .maker .pcol .mk-refine{width:100%;max-width:420px}
 details.mk-more summary{cursor:pointer;color:var(--muted);font-size:.88rem;width:fit-content}
 details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
-.maker .phone{height:min(620px,calc(100vh - 244px));height:min(620px,calc(100dvh - 244px))}
 @media (max-width:900px){.maker{grid-template-columns:minmax(0,1fr);gap:24px}details.mk-more[open]{max-height:none}
   .maker .phone{height:auto;min-height:0;aspect-ratio:auto;width:min(360px,100%)}.maker .phone .screen{height:auto;overflow:visible}.maker .phone .tt{height:auto;aspect-ratio:9/16}#scrollHint{display:none}}
 .nav .mob-only{align-items:center;white-space:nowrap;border:0;background:transparent;color:var(--muted);font-weight:500;padding:7px 10px;border-radius:9px;cursor:pointer;font-size:.88rem}
@@ -619,7 +618,9 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 #phNote button{background:none;border:0;color:var(--accent);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
 /* ---------- bigger ad area ---------- */
 .maker{max-width:1200px;gap:40px}
-.maker .phone{height:min(800px,calc(100vh - 172px));height:min(800px,calc(100dvh - 172px));aspect-ratio:9/17.4}
+.maker .phone{--h:min(800px,calc(100vh - 172px));--ar:.5172}
+/* the phone frame gets a real width from its height (Safari on iPad squeezed it to a sliver when the width came only from aspect-ratio) */
+@supports (height:100dvh){.phone{--h:min(620px,calc(100dvh - 200px))}.pcol .phone{--h:min(620px,calc(100dvh - 275px))}.maker .phone{--h:min(800px,calc(100dvh - 172px))}}
 .maker .pcol{gap:8px}
 .maker .pcol .row{gap:6px}
 .btn.play{display:inline-flex;align-items:center;gap:6px}
@@ -849,7 +850,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
     <div class="pcol">
       <div class="row" style="gap:10px;justify-content:center"><div class="tabs" id="platTabs"></div><span class="dim" id="pvNote" style="font-size:.78rem">Example ad</span><span class="tag green" id="pvYours" hidden>Your ad</span></div>
       <div class="pwrap" id="pwrap"><div id="preview"></div><button class="pplay" data-play aria-label="Play this ad as a short demo" title="Play demo"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg></button></div>
-      <div class="row pacts" style="justify-content:center"><div class="tabs" id="variantBtns"></div><button class="btn sm play" id="playBtn" data-play><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Play demo</button><button class="btn sm ghost" id="bigBtn">Big view</button><button class="btn sm ghost" id="copyAd">Copy ad</button><button class="btn sm ghost" id="saveBtn">Save</button><button class="btn sm ghost" id="moreBtn">More</button></div>
+      <div class="row pacts" style="justify-content:center"><div class="tabs" id="variantBtns"></div><button class="btn sm ghost" id="bigBtn">Big view</button><button class="btn sm ghost" id="copyAd">Copy ad</button><button class="btn sm ghost" id="saveBtn">Save</button><button class="btn sm ghost" id="moreBtn">More</button></div>
       <p class="dim" id="phNote" aria-live="polite"></p>
     </div>
   </div>
