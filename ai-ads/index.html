@@ -491,7 +491,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 .adi.L7 .x-circle{width:50cqw;aspect-ratio:1;border-radius:50%;background:var(--bg);margin:0 auto;display:grid;place-items:center;box-shadow:0 0 0 2.6cqw var(--acc)}
 .adi.L7 .x-cic{width:54%;color:var(--ink)}
 /* 8 big number / question */
-.adi.L8 .x-num{font-size:38cqw;line-height:.82;color:var(--acc);letter-spacing:-.01em}
+.adi.L8 .x-num{font-size:38cqw;line-height:.82;color:var(--acc);letter-spacing:-.01em}.adi.L8 .x-num.long{font-size:25cqw}
 .adi.L8 .x-numl{font-weight:800;font-size:6cqw;text-transform:uppercase;letter-spacing:.07em;overflow-wrap:anywhere}
 .adi.L8 .x-q{font-size:46cqw;line-height:.72;height:26cqw;color:var(--acc)}
 .adi.L8 .x-sub{font-size:4.2cqw;opacity:.9}
@@ -564,14 +564,67 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 .creative.ad.motion.ended .m-end{display:flex}
 .m-end .row{gap:8px;justify-content:center}
 @media (prefers-reduced-motion:reduce){.adi.enter>*,.scene.on *,.scene.on{animation:none!important}.scene .m-words span,.scene.M2 .x-list li{opacity:1}}
+/* ---------- photo designs ---------- */
+.ad .x-ph{background:var(--bg2) var(--ph) var(--phpos,center)/cover no-repeat}
+.creative.ad::after{content:"";position:absolute;inset:0;z-index:7;pointer-events:none;opacity:.13;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.ad .x-burst{position:absolute;z-index:4;width:27cqw;aspect-ratio:1;background:var(--acc);color:var(--acci);display:grid;place-content:center;text-align:center;line-height:.9;transform:rotate(-10deg);filter:drop-shadow(0 1.2cqw 1.5cqw rgba(0,0,0,.3))}
+.ad .x-burst b{font-size:8.4cqw;font-weight:400;display:block}
+.ad .x-burst small{font-size:3.4cqw;font-weight:800;letter-spacing:.06em;display:block;margin-top:.6cqw}
+/* 9 full photo */
+.adi.L9{color:#fff;background:#111}
+.adi.L9::before,.adi.L9::after{display:none}
+.adi.L9 .x-ph,.adi.L9 .x-scrim,.scene .x-ph,.scene .x-scrim{position:absolute;inset:0;z-index:0}
+.adi.L9 .x-scrim,.scene .x-scrim{background:linear-gradient(180deg,rgba(0,0,0,.45) 0,rgba(0,0,0,0) 26%,rgba(0,0,0,.1) 42%,rgba(0,0,0,.82) 100%)}
+.adi.L9 .x-bot{display:flex;flex-direction:column;gap:3.5cqw;margin-top:auto}
+.adi.L9 .x-h{text-shadow:0 .4cqw 3cqw rgba(0,0,0,.45)}
+.adi.L9 .x-cta{color:#fff}
+/* 10 photo top + card */
+.adi.L10{padding:0;gap:0;justify-content:flex-start}
+.adi.L10::before,.adi.L10::after{display:none}
+.adi.L10 .x-ph{flex:1 1 56%;min-height:0}
+.adi.L10 .x-card{flex:0 0 auto;background:linear-gradient(160deg,var(--bg),var(--bg2));padding:7cqw 7cqw 7cqw;display:flex;flex-direction:column;gap:3cqw;border-top:1.4cqw solid var(--acc)}
+.adi.L10 .x-mini{font-family:var(--f-mono);font-size:3cqw;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.adi.L10 .x-burst{right:5cqw;top:calc(56% - 16cqw)}
+.tt .adi.L10 .x-card{padding-bottom:38cqw}
+.tt.tk .adi.L10{padding:0}.tt.tk .adi.L10 .x-card{padding-bottom:64cqw;padding-right:18cqw}
+.tt .adi.L10 .x-burst{top:24%}
+/* 11 duotone poster */
+.adi.L11{background:var(--bg)}
+.adi.L11::before,.adi.L11::after{display:none}
+.adi.L11 .x-ph.duo{position:absolute;inset:0;z-index:0;filter:grayscale(1) contrast(1.25) brightness(1.05)}
+.adi.L11 .x-tint{position:absolute;inset:0;z-index:1;background:linear-gradient(160deg,var(--bg) 20%,var(--bg2));mix-blend-mode:multiply;opacity:.95}
+.adi.L11 .x-tint{isolation:auto}
+.adi.L11{color:#fff}
+.adi.L11 .x-tint::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0) 30%,rgba(0,0,0,.25) 50%,rgba(0,0,0,.8))}
+.adi.L11 .x-h{font-size:12.5cqw;color:#fff;text-shadow:1cqw 1cqw 0 var(--acc),0 0 4cqw rgba(0,0,0,.5);margin-top:auto}
+/* 12 polaroid */
+.adi.L12{background:radial-gradient(circle at 20% 15%,var(--pop),transparent 45%),linear-gradient(160deg,var(--bg) 30%,var(--bg2))}
+.adi.L12 .x-pol{align-self:center;width:64cqw;background:#fff;padding:3cqw 3cqw 9cqw;transform:rotate(-4deg);box-shadow:0 2.4cqw 5cqw rgba(0,0,0,.35);position:relative;flex:0 0 auto}
+.adi.L12 .x-pol .x-ph{aspect-ratio:1.05}
+.adi.L12 .x-cap{position:absolute;left:0;right:0;bottom:2.2cqw;text-align:center;font-family:"Caveat",cursive;font-size:6cqw;color:#222;line-height:1}
+.adi.L12 .x-tape{position:absolute;top:-3cqw;left:50%;width:22cqw;height:6.5cqw;transform:translateX(-50%) rotate(3deg);background:var(--acc);opacity:.85}
+.adi.L12 .x-h{font-size:7cqw}
+/* 13 round photo + burst */
+.adi.L13 .x-ring{width:58cqw;aspect-ratio:1;border-radius:50%;margin:0 auto;padding:2.2cqw;background:conic-gradient(var(--acc),var(--pop),var(--acc));flex:0 0 auto}
+.adi.L13 .x-ring .x-ph{width:100%;height:100%;border-radius:50%;border:1.4cqw solid var(--bg)}
+.adi.L13 .x-burst{right:8cqw;top:15cqw}
+.tt .adi.L13 .x-burst{top:24%}
+/* the demo: slow zoom on the photo behind the hook */
+.scene.onph{color:#fff}.scene.onph .x-h{text-shadow:0 .4cqw 3cqw rgba(0,0,0,.5)}
+.scene.M0.onph{justify-content:flex-end}
+.scene.on .m-kb{animation:mKb 7s ease-out both}
+@keyframes mKb{from{transform:scale(1.18)}to{transform:scale(1)}}
+#phNote{font-size:.74rem;text-align:center;max-width:560px;margin:0}
+#phNote button{background:none;border:0;color:var(--accent);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
 /* ---------- bigger ad area ---------- */
 .maker{max-width:1200px;gap:40px}
-.maker .phone{height:min(800px,calc(100vh - 150px));height:min(800px,calc(100dvh - 150px));aspect-ratio:9/17.4}
+.maker .phone{height:min(800px,calc(100vh - 172px));height:min(800px,calc(100dvh - 172px));aspect-ratio:9/17.4}
 .maker .pcol{gap:8px}
 .maker .pcol .row{gap:6px}
 .btn.play{display:inline-flex;align-items:center;gap:6px}
 .btn.play svg{width:12px;height:12px;fill:currentColor}
-@media (max-width:900px){.maker .phone{width:min(480px,100%);height:auto;min-height:0;aspect-ratio:auto}}
+@media (max-width:900px){.maker .pwrap{width:min(480px,100%)}.maker .phone{width:100%;height:auto;min-height:0;aspect-ratio:auto}}
 /* big view */
 .bigbox{width:min(1000px,100%);max-height:100%;overflow:auto;display:flex;flex-direction:column;gap:10px;align-items:center}
 .bigbox .row{width:100%;justify-content:space-between}
@@ -776,7 +829,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
         <div class="tabs" id="rfTabs"><button data-rt="change" class="on">Change it</button><button data-rt="opt">Optimize <span class="tag" id="adScore"></span></button></div>
         <div class="stack" data-rp="change" style="gap:8px">
           <div class="row" style="flex-wrap:nowrap;gap:6px"><input type="text" id="rfT" aria-label="What to change" placeholder="e.g. make it blue, more funny, say 30% off"><button class="btn sm" id="rfGo">Update ad</button></div>
-          <div class="row" style="gap:6px"><button class="chip" data-q="design">New design</button><button class="chip" data-q="variant">Another version</button><button class="chip" data-q="color">Change colors</button><button class="chip" data-q="style">Change style</button></div>
+          <div class="row" style="gap:6px"><button class="chip" data-q="design">New design</button><button class="chip" data-q="variant">Another version</button><button class="chip" data-q="color">Change colors</button><button class="chip" data-q="style">Change style</button><button class="chip" data-q="photo">Use my photo</button><button class="chip" data-q="nophoto" hidden>Remove my photo</button><input type="file" id="upPhoto" accept="image/*" hidden></div>
         </div>
         <div class="optbox" data-rp="opt" hidden>
           <div class="row" id="optBtns" style="gap:6px"></div>
@@ -797,6 +850,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
       <div class="row" style="gap:10px;justify-content:center"><div class="tabs" id="platTabs"></div><span class="dim" id="pvNote" style="font-size:.78rem">Example ad</span><span class="tag green" id="pvYours" hidden>Your ad</span></div>
       <div class="pwrap" id="pwrap"><div id="preview"></div><button class="pplay" data-play aria-label="Play this ad as a demo with voice" title="Play with voice"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg></button></div>
       <div class="row pacts" style="justify-content:center"><div class="tabs" id="variantBtns"></div><button class="btn sm play" id="playBtn" data-play><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Play with voice</button><button class="btn sm ghost" id="bigBtn">Big view</button><button class="btn sm ghost" id="copyAd">Copy ad</button><button class="btn sm ghost" id="saveBtn">Save</button><button class="btn sm ghost" id="moreBtn">More</button></div>
+      <p class="dim" id="phNote" aria-live="polite"></p>
     </div>
   </div>
 </section>
@@ -1116,7 +1170,7 @@ const TONES = { friendly: 'Friendly', bold: 'Bold', urgent: 'Urgent', luxury: 'P
 // ---------- ad generator ----------
 function shortOffer(o) {
   if (o.length <= 34) return o;
-  const s = o.split(/[.,+(]| with | in /)[0].trim();
+  const s = o.split(/(?<!\d)\.|\.(?!\d)|[,+(]| with | in /)[0].trim(); // a period inside a price ($29.99) does not end the deal
   return s.length <= 34 ? s : s.slice(0, 34).replace(/\s+\S*$/, '');
 }
 function headlines(n, f) {
@@ -1443,7 +1497,21 @@ function adPal(p, v) {
   const at = Math.max(0, pool.indexOf(base));
   return PALETTES[pool[(at + v) % pool.length]];
 }
-const AD_LAYOUTS = 9;
+const AD_LAYOUTS = 14; // 0-8 drawn designs, 9-13 photo designs
+const PHOTO_LAYOUTS = [9, 10, 11, 12, 13];
+// free-license stock photos from Pexels (no faces, no brand logos), stored next to the page in photos/<id>.jpg
+const PHOTOS = { restaurant: [1435907, 2619967, 1552635], dentist: [6809634, 287237, 6812453], gym: [4164763, 2652236, 7209145], roofer: [18098285, 18815467],
+  salon: [853427, 7750099, 705255], realestate: [4626268, 7587880, 8134821], auto: [3686360, 8985514], ecommerce: [4004226, 5632323], lawyer: [5668882, 8693379, 6077326],
+  coffee: [312418, 11137171, 12703064], hvac: [20046694, 3964736, 7616651], medspa: [6621357, 7691112], cleaning: [5218022, 4440568] };
+let USERPHOTO = '';
+const PHOTO_POS = { 11137171: '50% 82%', 4440568: '50% 85%', 3964736: '50% 40%' }; // where the subject is, for tight crops
+function photoFor(f, v = 0) {
+  if (f.userPhoto) return f.userPhoto;
+  const list = PHOTOS[f.niche] || []; return list.length ? `photos/${list[((f.photoI || 0) + v) % list.length]}.jpg` : '';
+}
+const isPhotoLay = l => PHOTO_LAYOUTS.includes(l);
+const layOf = (f, v) => (((f.layout || 0) + v * 4) % AD_LAYOUTS + AD_LAYOUTS) % AD_LAYOUTS;
+const BURST = 'polygon(' + Array.from({ length: 28 }, (_, i) => { const a = i / 28 * Math.PI * 2, r = i % 2 ? 41 : 50; return `${(50 + r * Math.cos(a)).toFixed(1)}% ${(50 + r * Math.sin(a)).toFixed(1)}%`; }).join(',') + ')';
 const ICONS = {
   restaurant: '<path d="M32 6 56 50Q32 60 8 50Z"/><path d="M11 45q21 9 42 0"/><circle cx="31" cy="27" r="4"/><circle cx="24" cy="39" r="3.5"/><circle cx="40" cy="40" r="3.5"/>',
   dentist: '<path d="M21 8c-8 0-13 7-12 15 1 7 4 11 5 18 1 8 2 17 7 17 4 0 4-10 7-14 2-3 6-3 8 0 3 4 3 14 7 14 5 0 6-9 7-17 1-7 4-11 5-18 1-8-4-15-12-15-6 0-8 3-11 3s-5-3-11-3z"/><path d="M24 18q8 4 16 0"/>',
@@ -1464,10 +1532,11 @@ function bigNumber(offer) { const m = offer.match(/\$\s?\d+(?:\.\d\d)?|\d+\s?%/)
 function adLook(p, v) {
   const f = p.f, pal = adPal(p, v);
   return { pal, font: { friendly: 'f-heavy', bold: 'f-poster', urgent: 'f-poster', luxury: 'f-serif', funny: 'f-heavy' }[f.tone] || 'f-heavy', hand: f.tone === 'friendly' || f.tone === 'funny',
-    vars: `--bg:${pal.bg};--bg2:${pal.bg2};--ink:${pal.ink};--acc:${pal.accent};--acci:${pal.accInk};--pop:${pal.pop || pal.accent}` };
+    ph: photoFor(f, v), vars: `--bg:${pal.bg};--bg2:${pal.bg2};--ink:${pal.ink};--acc:${pal.accent};--acci:${pal.accInk};--pop:${pal.pop || pal.accent}${photoFor(f, v) ? `;--ph:url('${photoFor(f, v)}');--phpos:${(photoFor(f, v).match(/(\d+)\.jpg$/) && PHOTO_POS[photoFor(f, v).match(/(\d+)\.jpg$/)[1]]) || 'center'}` : ''}` };
 }
 function creativeHTML(p, v = 0, shape = '') {
-  const f = p.f, n = p.n, pal = adPal(p, v), lay = (((f.layout || 0) + v * 4) % AD_LAYOUTS + AD_LAYOUTS) % AD_LAYOUTS;
+  const f = p.f, n = p.n, pal = adPal(p, v); let lay = layOf(f, v);
+  if (isPhotoLay(lay) && !photoFor(f, v)) lay = lay - 9; // no photo for this business type: use a drawn design
   const H = esc(p.hs[v] || p.hs[0]), O = esc(shortOffer(f.offer)), N = esc(f.name), C = esc(f.city), CTA = esc(n.cta);
   // if the headline already says the deal, the pill shows the button text instead of repeating it
   const dup = (p.hs[v] || '').toLowerCase().includes(shortOffer(f.offer).toLowerCase().slice(0, 14));
@@ -1475,6 +1544,8 @@ function creativeHTML(p, v = 0, shape = '') {
   const P = f.proof ? `<div class="x-proof">${(f.proof.includes('★') ? '' : '★ ') + esc(f.proof)}</div>` : '';
   const num = bigNumber(f.offer), rest = esc(shortOffer(f.offer).replace(num, '').replace(/^\s*(off\b)?/i, m => m).trim());
   const { font, hand, vars } = adLook(p, v);
+  const bLabel = num ? esc(num) : 'DEAL', bSmall = num ? (/\boff\b/i.test(f.offer) ? 'OFF' : '') : '';
+  const burst = `<span class="x-burst" style="clip-path:${BURST}"><b class="f-poster">${bLabel}</b>${bSmall ? `<small>${bSmall}</small>` : ''}</span>`;
   const brand = `<div class="x-brand"><span>${N}</span><span>${C}</span></div>`;
   const L = [
     // 0 big type
@@ -1494,10 +1565,20 @@ function creativeHTML(p, v = 0, shape = '') {
     // 7 circle hero
     () => `${brand}<div class="x-circle">${icon(f.niche, 'x-cic')}</div><div class="x-h ${font} x-center x-sm">${H}</div><div class="x-row x-cen"><span class="x-pill">${PILL}</span></div>${P}`,
     // 8 big number / question
-    () => num ? `${brand}<div class="x-num f-poster">${esc(num)}</div><div class="x-numl">${rest || 'OFF'}</div><div class="x-h ${font} x-sm">${H}</div><div class="x-row"><span class="x-btn">${CTA}</span></div>`
-      : `${brand}<div class="x-q f-serif">?</div><div class="x-h ${font}">${esc(cap(n.pains[0]))}?</div><div class="x-sub">${esc(f.name)} fixes that. ${O}.</div><div class="x-row"><span class="x-btn">${CTA}</span></div>`
+    () => num ? `${brand}<div class="x-num f-poster${num.length >= 5 ? ' long' : ''}">${esc(num)}</div><div class="x-numl">${rest || 'OFF'}</div><div class="x-h ${font} x-sm">${H}</div><div class="x-row"><span class="x-btn">${CTA}</span></div>`
+      : `${brand}<div class="x-q f-serif">?</div><div class="x-h ${font}">${esc(cap(n.pains[0]))}?</div><div class="x-sub">${esc(f.name)} fixes that. ${O}.</div><div class="x-row"><span class="x-btn">${CTA}</span></div>`,
+    // 9 full photo
+    () => `<div class="x-ph"></div><div class="x-scrim"></div>${brand}<div class="x-bot"><div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${dup ? '' : `<span class="x-cta">${CTA} →</span>`}</div>${P}</div>`,
+    // 10 photo on top, color card below, price burst on the seam
+    () => `<div class="x-ph"></div>${burst}<div class="x-card"><div class="x-mini">${N} · ${C}</div><div class="x-h ${font} x-sm">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${P}</div></div>`,
+    // 11 duotone poster (photo tinted in the brand colors)
+    () => `<div class="x-ph duo"></div><div class="x-tint"></div>${brand}<div class="x-h f-poster x-up x-shadow">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${P}</div>`,
+    // 12 polaroid
+    () => `${brand}<div class="x-pol"><div class="x-ph"></div><span class="x-cap">${N}</span><i class="x-tape"></i></div><div class="x-h ${font} x-sm">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${dup ? '' : `<span class="x-cta">${CTA} →</span>`}</div>`,
+    // 13 round photo + price burst
+    () => `${brand}<div class="x-ring"><div class="x-ph"></div></div>${burst}<div class="x-h ${font} x-center x-sm">${H}</div><div class="x-row x-cen"><span class="x-pill">${PILL}</span></div>`
   ];
-  return `<div class="creative ad ${shape}" style="${vars}"><div class="adi L${lay} ${hand ? 'hand' : ''}">${L[lay]()}</div></div>`;
+  return `<div class="creative ad ${shape}${isPhotoLay(lay) ? ' photo' : ''}" style="${vars}"><div class="adi L${lay} ${hand ? 'hand' : ''}">${L[lay]()}</div></div>`;
 }
 
 // ================= FIRST CLIENTS TRACK =================
@@ -2358,7 +2439,8 @@ async function aiUpgrade(t, change) {
 }
 // every new ad gets a fresh design, and fresh colors unless the person asked for a color
 function freshLook(newColors) {
-  B.layout = Math.floor(Math.random() * AD_LAYOUTS);
+  const bag = [...Array(9).keys(), ...PHOTO_LAYOUTS, ...PHOTO_LAYOUTS, ...(USERPHOTO ? PHOTO_LAYOUTS.concat(PHOTO_LAYOUTS) : [])];
+  B.layout = bag[Math.floor(Math.random() * bag.length)]; B.photoI = Math.floor(Math.random() * 3);
   if (newColors) { const pool = poolOf(B.niche), bag = pool.concat(pool.filter(i => VIVID.includes(i))); B.palette = bag[Math.floor(Math.random() * bag.length)]; B.colorLock = false; }
 }
 function nextColors() { const pool = poolOf(B.niche), i = pool.indexOf(B.palette); B.palette = pool[(i + 1) % pool.length]; B.colorLock = false; }
@@ -2423,19 +2505,19 @@ function voiceScript(p, v) {
   return L.map((t, i) => `${names[i].toUpperCase()}\n"${sayClean(t)}"`).join('\n\n');
 }
 function motionHTML(p, v = 0, shape = '') {
-  const f = p.f, n = p.n, { font, hand, vars } = adLook(p, v);
+  const f = p.f, n = p.n, { font, hand, vars, ph } = adLook(p, v);
   const H = p.hs[v] || p.hs[0], O = esc(shortOffer(f.offer)), N = esc(f.name), C = esc(f.city), CTA = esc(n.cta);
   const num = bigNumber(f.offer), rest = esc(shortOffer(f.offer).replace(num, '').trim());
   const words = H.split(/\s+/).map((w, i) => `<span style="--i:${i}">${esc(w)}</span>`).join(' ');
   const brand = `<div class="x-brand"><span>${N}</span><span>${C}</span></div>`;
   const P = f.proof ? `<div class="x-proof">${(f.proof.includes('★') ? '' : '★ ') + esc(f.proof)}</div>` : '';
   const sc = [
-    `${brand}${icon(f.niche, 'm-icon')}<div class="x-h ${font} m-words">${words}</div>`,
+    ph ? `<div class="x-ph m-kb"></div><div class="x-scrim"></div>${brand}<div class="x-h ${font} m-words">${words}</div>` : `${brand}${icon(f.niche, 'm-icon')}<div class="x-h ${font} m-words">${words}</div>`,
     `<div class="m-rays"></div><div class="m-deal">${num ? `<div class="x-big f-poster">${esc(num)}</div><div class="m-dl">${rest || 'OFF'}</div>` : `<div class="m-dl" style="font-size:8cqw">${O}</div>`}</div><span class="x-pill">${CTA} →</span>`,
     `<div class="x-h ${font} x-sm">Why ${N}?</div><ul class="x-list">${n.benefits.map((b, i) => `<li style="--i:${i}">${esc(cap(b))}</li>`).join('')}</ul>${P}`,
     `${icon(f.niche, 'm-ic2')}<div class="m-name ${font}">${N}</div><div class="m-city">${C}</div><span class="x-btn">${CTA} →</span>`
   ];
-  return `<div class="creative ad motion ${shape}" style="${vars}">${sc.map((h, i) => `<div class="adi scene M${i} ${hand ? 'hand' : ''}">${h}</div>`).join('')}
+  return `<div class="creative ad motion ${shape}" style="${vars}">${sc.map((h, i) => `<div class="adi scene M${i} ${hand ? 'hand' : ''}${i === 0 && ph ? ' onph' : ''}">${h}</div>`).join('')}
     <div class="m-bar">${sc.map(() => '<i><b></b></i>').join('')}</div>
     <div class="m-end"><div class="row"><button class="btn sm play" data-play><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Replay</button><button class="btn sm ghost" data-unplay style="background:rgba(0,0,0,.5)">Show the ad</button></div></div></div>`;
 }
@@ -2609,6 +2691,43 @@ function optInit() {
   });
 }
 
+// ================= YOUR OWN PHOTO: resized in the browser, kept only on this device =================
+USERPHOTO = store.get('userphoto', '');
+function readPhoto(file) {
+  return new Promise((ok, bad) => {
+    if (!file || !/^image\//.test(file.type)) return bad(new Error('not an image'));
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => { const max = 1080, k = Math.min(1, max / Math.max(img.width, img.height)), c = document.createElement('canvas');
+      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url); ok(c.toDataURL('image/jpeg', .82)); };
+    img.onerror = () => { URL.revokeObjectURL(url); bad(new Error('could not read')); };
+    img.src = url;
+  });
+}
+function photoNote() {
+  const shown = !!$('#preview .creative.ad.photo');
+  $('#phNote').innerHTML = !shown ? (USERPHOTO ? '' : 'Tip: <button type="button" data-q="photo">add your own photo</button> for a real-looking ad.')
+    : USERPHOTO ? 'Your photo: only use photos you took or may use. <button type="button" data-q="nophoto">Remove</button>'
+    : 'Free stock photo (Pexels). <button type="button" data-q="photo">Use a real photo</button> before running it.';
+  $$('#refine [data-q="nophoto"]').forEach(b => b.hidden = !USERPHOTO);
+  $$('#refine [data-q="photo"]').forEach(b => b.textContent = USERPHOTO ? 'Change my photo' : 'Use my photo');
+}
+function photoInit() {
+  $('#upPhoto').addEventListener('change', async e => {
+    const f = e.target.files && e.target.files[0]; e.target.value = ''; if (!f) return;
+    try {
+      USERPHOTO = await readPhoto(f); store.set('userphoto', USERPHOTO); actSeq++;
+      if (!isPhotoLay(layOf(fields(), variant))) setLayoutTo(9);
+      B.made = true; renderStudio(); showAd('Your photo is in the ad. Try New design to see it in other styles.');
+    } catch (err) { toast('That file could not be used. Try a JPG or PNG photo.'); }
+  });
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-q="photo"],[data-q="nophoto"]'); if (!b) return;
+    if (b.dataset.q === 'photo') { $('#upPhoto').click(); return; }
+    USERPHOTO = ''; store.set('userphoto', ''); actSeq++; renderStudio(); showAd('Removed your photo.');
+  });
+}
+
 // ================= OFFER SCORE (used in the course and the studio) =================
 const OFFER_CHECKS = [
   ['Specific: a number, price or time', /\$|\d|%/, 'Add a number: a price, a percent or a time ("$79", "in 24 hours").'],
@@ -2639,7 +2758,7 @@ const GEN_STEPS = ['Matching the business type', 'Filling 3 proven copy formulas
 
 function fields() {
   const n = NICHES[B.niche];
-  return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette , layout: B.layout || 0, colorLock: !!B.colorLock, cta: B.cta || '' };
+  return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette , layout: B.layout || 0, colorLock: !!B.colorLock, cta: B.cta || '', photoI: B.photoI || 0, userPhoto: USERPHOTO };
 }
 function studioInit() {
   $('#nicheGrid').innerHTML = Object.entries(NICHES).map(([k, n]) => `<button data-n="${k}">${n.label}</button>`).join('');
@@ -2711,7 +2830,7 @@ function renderStudio(sync = true) {
   $('#preview').innerHTML = `<div class="phone"><div class="screen">${previewHTML(pack, plat, variant)}</div></div>`;
   const tx = $('#preview .fb .tx'); if (tx) { tx.classList.add('clamp'); tx.insertAdjacentHTML('afterend', '<button class="seemore" type="button">See more</button>'); }
   if (!$('#bigDlg').hidden) bigRender();
-  renderCheck();
+  renderCheck(); photoNote();
   renderOutputs();
   renderPrompts();
 }
@@ -3298,7 +3417,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); describeInit(); optInit(); motionInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit();
+studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit();
 show(location.hash.slice(1));
 </script>
 </body>
