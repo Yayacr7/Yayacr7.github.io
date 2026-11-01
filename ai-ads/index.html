@@ -848,8 +848,8 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
     </div>
     <div class="pcol">
       <div class="row" style="gap:10px;justify-content:center"><div class="tabs" id="platTabs"></div><span class="dim" id="pvNote" style="font-size:.78rem">Example ad</span><span class="tag green" id="pvYours" hidden>Your ad</span></div>
-      <div class="pwrap" id="pwrap"><div id="preview"></div><button class="pplay" data-play aria-label="Play this ad as a demo with voice" title="Play with voice"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg></button></div>
-      <div class="row pacts" style="justify-content:center"><div class="tabs" id="variantBtns"></div><button class="btn sm play" id="playBtn" data-play><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Play with voice</button><button class="btn sm ghost" id="bigBtn">Big view</button><button class="btn sm ghost" id="copyAd">Copy ad</button><button class="btn sm ghost" id="saveBtn">Save</button><button class="btn sm ghost" id="moreBtn">More</button></div>
+      <div class="pwrap" id="pwrap"><div id="preview"></div><button class="pplay" data-play aria-label="Play this ad as a short demo" title="Play demo"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg></button></div>
+      <div class="row pacts" style="justify-content:center"><div class="tabs" id="variantBtns"></div><button class="btn sm play" id="playBtn" data-play><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Play demo</button><button class="btn sm ghost" id="bigBtn">Big view</button><button class="btn sm ghost" id="copyAd">Copy ad</button><button class="btn sm ghost" id="saveBtn">Save</button><button class="btn sm ghost" id="moreBtn">More</button></div>
       <p class="dim" id="phNote" aria-live="polite"></p>
     </div>
   </div>
@@ -1018,7 +1018,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 </div>
 <div class="toast" id="toast" role="status"></div>
 <div class="helpwrap" id="moreDlg" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-label="More for this ad" style="width:min(640px,100%)"><div class="row" style="justify-content:space-between"><h2>More for this ad</h2><button class="btn sm ghost" id="moreClose">Close</button></div><div class="tabs" id="outTabs"></div><div id="outPane" class="scroll" style="max-height:60vh;max-height:60dvh"></div><button class="btn sm ghost" id="copyAll" style="align-self:flex-start">Copy everything</button></div></div>
-<div class="helpwrap" id="bigDlg" hidden><div class="bigbox" role="dialog" aria-modal="true" aria-label="Big view of your ad"><div class="row"><button class="btn sm play" data-play><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Play with voice</button><button class="btn sm ghost" id="bigClose">Close</button></div><div id="bigStage"></div><p class="dim" style="font-size:.78rem;text-align:center">Big view. Good for showing a business owner a demo. The voice is your device's built-in voice.</p></div></div>
+<div class="helpwrap" id="bigDlg" hidden><div class="bigbox" role="dialog" aria-modal="true" aria-label="Big view of your ad"><div class="row"><button class="btn sm play" data-play><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Play demo</button><button class="btn sm ghost" id="bigClose">Close</button></div><div id="bigStage"></div><p class="dim" style="font-size:.78rem;text-align:center">Big view. Good for showing a business owner a demo.</p></div></div>
 <div class="helpwrap" id="help" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-labelledby="helpT"><button class="btn sm ghost" id="helpClose" style="align-self:flex-end">Got it</button><div id="helpBody" class="stack" style="gap:12px"></div></div></div>
 <script>
 // ---------- helpers ----------
@@ -2484,25 +2484,12 @@ function describeInit() {
   narrow.addEventListener('change', place); place();
 }
 
-// ================= PLAY AD: the ad as a short animated demo with a voice-over =================
-// The voice is the browser's built-in speech (free, no account). It plays on this device only and cannot be downloaded.
-const VO = { on: store.get('voiceOn', true), name: store.get('voiceName', '') };
-const canSpeak = () => { try { return 'speechSynthesis' in window && typeof SpeechSynthesisUtterance === 'function'; } catch (e) { return false; } };
-function voiceList() { try { return canSpeak() ? speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang)) : []; } catch (e) { return []; } }
-function pickVoice() {
-  const vs = voiceList(); if (!vs.length) return null;
-  return vs.find(v => v.name === VO.name) || vs.find(v => /natural|neural|online/i.test(v.name) && /en.US/i.test(v.lang)) || vs.find(v => /google us english|samantha|aria|jenny/i.test(v.name))
-    || vs.find(v => /en.US/i.test(v.lang)) || vs[0];
-}
-const sayClean = t => String(t).replace(/★/g, ' stars').replace(/[→👉🎁⭐]/g, '').replace(/\s+/g, ' ').trim();
-// what the voice says, scene by scene (proof is only spoken if the person typed a real one)
-function voiceLines(p, v) {
+// ================= PLAY AD: the ad as a short, silent animated demo (no sound) =================
+const sceneText = t => String(t).replace(/[→👉🎁⭐]/g, '').replace(/\s+/g, ' ').trim();
+// the words each scene shows, used to time how long each scene stays on screen
+function sceneLines(p, v) {
   const f = p.f, n = p.n, h = p.hs[v] || p.hs[0], proof = f.proof ? ' ' + f.proof + '.' : '';
   return [h, `${f.offer.replace(/\.$/, '')}.`, `${cap(n.benefits[0])}, ${n.benefits[1]}, and ${n.benefits[2]}.${proof}`, `${f.name}, in ${f.city}. Tap ${n.cta}.`];
-}
-function voiceScript(p, v) {
-  const L = voiceLines(p, v), names = ['Hook', 'Deal', 'Why us', 'Action'];
-  return L.map((t, i) => `${names[i].toUpperCase()}\n"${sayClean(t)}"`).join('\n\n');
 }
 function motionHTML(p, v = 0, shape = '') {
   const f = p.f, n = p.n, { font, hand, vars, ph } = adLook(p, v);
@@ -2524,40 +2511,23 @@ function motionHTML(p, v = 0, shape = '') {
 let playing = null;
 function stopAd() {
   if (!playing) return; playing.timers.forEach(clearTimeout); playing = null;
-  try { if (canSpeak()) speechSynthesis.cancel(); } catch (e) {}
 }
-// plays inside `host` (the phone preview or the big view); returns how it played: 'voice', 'muted' or 'novoice'
+// plays inside `host` (the phone preview or the big view)
 function playAd(host) {
   stopAd();
   const cur = host.querySelector('.creative.ad'); if (!cur) return null;
   const tmp = document.createElement('div'); tmp.innerHTML = motionHTML(pack, variant, cur.classList.contains('tall') ? 'tall' : '');
   const el = tmp.firstElementChild; cur.replaceWith(el);
-  const scenes = $$('.scene', el), segs = $$('.m-bar i', el), lines = voiceLines(pack, variant);
+  const scenes = $$('.scene', el), segs = $$('.m-bar i', el), lines = sceneLines(pack, variant);
   const st = playing = { el, timers: [], i: -1 };
-  const dur = t => Math.max(2600, 900 + sayClean(t).split(/\s+/).length * 340);
+  const dur = t => Math.max(2600, 900 + sceneText(t).split(/\s+/).length * 340);
   const go = i => { if (playing !== st || i === st.i) return; st.i = i;
     scenes.forEach((s, k) => s.classList.toggle('on', k === i));
     segs.forEach((g, k) => { g.className = k < i ? 'done' : k === i ? 'run' : ''; g.style.setProperty('--d', dur(lines[k]) + 'ms'); }); };
   const finish = () => { if (playing !== st) return; segs.forEach(g => g.className = 'done'); el.classList.add('ended'); playing = null; };
-  const timed = from => { let t = 0; for (let i = from; i < lines.length; i++) { st.timers.push(setTimeout(() => go(i), t)); t += dur(lines[i]); } st.timers.push(setTimeout(finish, t)); };
-  const voice = VO.on && canSpeak() ? pickVoice() : null;
-  if (!voice) { timed(0); return VO.on ? 'novoice' : 'muted'; }
-  try { speechSynthesis.cancel(); } catch (e) {}
-  const tone = pack.f.tone, rate = { urgent: 1.1, luxury: .92, funny: 1.05 }[tone] || 1, pitch = { luxury: .92, bold: .9, funny: 1.12 }[tone] || 1;
-  let started = false, fell = false;
-  const fallback = from => { if (fell || playing !== st) return; fell = true; try { speechSynthesis.cancel(); } catch (e) {} st.timers.forEach(clearTimeout); st.timers = []; timed(from); };
-  // all lines are queued right away, inside the tap, so iPhone/iPad Safari allows the sound
-  lines.forEach((t, i) => {
-    const u = new SpeechSynthesisUtterance(sayClean(t)); u.voice = voice; u.lang = voice.lang; u.rate = rate; u.pitch = pitch;
-    u.onstart = () => { started = true; if (!fell) go(i); };
-    if (i === lines.length - 1) u.onend = () => { if (!fell) st.timers.push(setTimeout(finish, 1500)); };
-    u.onerror = e => { if (e && (e.error === 'interrupted' || e.error === 'canceled')) return; fallback(Math.max(0, st.i)); };
-    speechSynthesis.speak(u);
-  });
-  go(0);
-  st.timers.push(setTimeout(() => { if (!started) { fallback(0); toast('No voice on this device, so the demo plays without sound'); } }, 2500));
-  st.timers.push(setTimeout(() => { if (!fell) finish(); }, lines.reduce((a, t) => a + dur(t), 0) * 2 + 3000)); // safety net
-  return 'voice';
+  let t = 0; for (let i = 0; i < lines.length; i++) { const at = t; st.timers.push(setTimeout(() => go(i), at)); t += dur(lines[i]); }
+  st.timers.push(setTimeout(finish, t));
+  return true;
 }
 function bigRender() {
   const shape = plat === 'story' || plat === 'tiktok' ? 'tall' : '';
@@ -2569,15 +2539,13 @@ function openBig(play) {
 }
 function closeBig() { stopAd(); $('#bigDlg').hidden = true; renderStudio(false); }
 function motionInit() {
-  if (canSpeak()) { try { speechSynthesis.getVoices(); speechSynthesis.addEventListener('voiceschanged', () => { if (outTab === 'voice' && !$('#moreDlg').hidden) renderOutputs(); }); } catch (e) {} }
   document.addEventListener('click', e => {
     const pb = e.target.closest('[data-play]'), ub = e.target.closest('[data-unplay]'); if (!pb && !ub) return;
     const host = (pb || ub).closest('#bigStage, #bigDlg') ? $('#bigStage') : $('#preview');
     if (ub) { stopAd(); if (host.id === 'bigStage') bigRender(); else renderStudio(false); return; }
     if (host.id === 'preview' && !host.querySelector('.creative.ad')) { openBig(true); return; } // Google ads have no picture, so play it big
     if (host.id === 'bigStage' && !host.querySelector('.creative.ad')) bigRender();
-    const how = playAd(host);
-    if (how === 'muted') toast('Voice is off. Turn it on in More, Voice-over.');
+    playAd(host);
   });
   $('#bigBtn').addEventListener('click', () => openBig(false));
   $('#bigClose').addEventListener('click', closeBig);
@@ -2585,20 +2553,6 @@ function motionInit() {
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#bigDlg').hidden) closeBig(); });
   addEventListener('hashchange', stopAd);
   document.addEventListener('visibilitychange', () => { if (document.hidden) stopAd(); });
-  $('#outPane').addEventListener('change', e => {
-    if (e.target.id === 'voSel') { VO.name = e.target.value; store.set('voiceName', VO.name); }
-    if (e.target.id === 'voOn') { VO.on = e.target.checked; store.set('voiceOn', VO.on); }
-  });
-  $('#outPane').addEventListener('click', e => { if (e.target.id === 'voTest') { stopAd(); $('#moreDlg').hidden = true; const how = playAd($('#preview')); if (how === null) openBig(true); } });
-}
-function voicePaneHTML() {
-  const vs = voiceList(), cur = pickVoice();
-  const sel = vs.length ? `<label class="f">Voice<select id="voSel">${vs.map(v => `<option value="${esc(v.name)}" ${cur && v.name === cur.name ? 'selected' : ''}>${esc(v.name)} (${esc(v.lang)})</option>`).join('')}</select></label>`
-    : `<p class="dim" style="font-size:.8rem">${canSpeak() ? 'No English voices found on this device yet.' : 'This browser has no built-in voice.'} The demo still plays without sound.</p>`;
-  return `<div class="stack" style="gap:10px">
-    <div class="row" style="gap:14px;align-items:flex-end">${sel}<label class="row" style="gap:6px;font-size:.86rem"><input type="checkbox" id="voOn" ${VO.on ? 'checked' : ''}> Voice on</label><button class="btn sm" id="voTest">Play the demo</button></div>
-    <div><div class="outhead"><span class="muted" style="font-size:.84rem">Voice-over script (about 15 seconds)</span><button class="btn sm" data-copy="oVO">Copy</button></div><div class="out" id="oVO">${esc(voiceScript(pack, variant))}</div></div>
-    <p class="dim" style="font-size:.78rem">The preview voice is your device's built-in voice, so it sounds different on each phone or computer, and it can't be downloaded. For a real video ad, read this script yourself (real voices usually feel more trustworthy) or paste it into a voice tool, then add it in CapCut or Canva.</p></div>`;
 }
 
 // ================= OPTIMIZE: one-tap fixes + an honest ad check (basics, not a promise of results) =================
@@ -2752,7 +2706,7 @@ if (!TONES[B.tone]) B.tone = 'friendly';
 if (!PALETTES[B.palette]) B.palette = 0;
 let plat = 'fb', variant = 0, outTab = 'hl', pack;
 const PLATS = { fb: 'Facebook', google: 'Google', tiktok: 'TikTok', story: 'Story' };
-const OUTS = { hl: 'Headlines', text: 'Ad text', google: 'Google ad', image: 'Image prompt', video: 'Video', target: 'Targeting', budget: 'Budget', voice: 'Voice-over', saved: 'My ads' };
+const OUTS = { hl: 'Headlines', text: 'Ad text', google: 'Google ad', image: 'Image prompt', video: 'Video', target: 'Targeting', budget: 'Budget', saved: 'My ads' };
 const BRAND_STEPS = ['Matching the business type', 'Writing the positioning', 'Choosing colors + fonts', 'Planning a month of content', 'Laying out the brand board'];
 const GEN_STEPS = ['Matching the business type', 'Filling 3 proven copy formulas', 'Adding your offer + proof', 'Laying out the creative', 'Adding targeting + budget'];
 
@@ -2861,7 +2815,6 @@ function renderOutputs() {
   if (outTab === 'video') h = box('oV', '15 seconds, vertical 9:16', esc(p.video));
   if (outTab === 'target') h = box('oA', 'Set this in the Ad set level of Ads Manager', esc(p.targeting));
   if (outTab === 'budget') h = box('oB', 'Tell the owner this before launch', esc(p.budget));
-  if (outTab === 'voice') h = voicePaneHTML();
   if (outTab === 'saved') {
     const g = store.get('gallery', []);
     h = g.length ? `<div class="gallery">${g.map((it, i) => NICHES[it.f.niche] ? `<div class="g" data-load="${i}" role="button" tabindex="0">${creativeHTML(buildPack(Object.assign({}, it.f, { name: it.f.name || 'Your Business', city: it.f.city || 'your city', offer: it.f.offer || NICHES[it.f.niche].offer })), it.v || 0)}<button class="x" data-del="${i}" aria-label="Delete">×</button></div>` : '').join('')}</div><p class="dim" style="font-size:.78rem;margin-top:8px">Saved in this browser. Click one to load it.</p>`
