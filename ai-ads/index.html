@@ -293,6 +293,10 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .tier .lvl i{height:4px;flex:1;border-radius:4px;background:var(--line)}
 .tier .lvl i.on{background:var(--accent)}
 .tier .plus{font-size:.76rem;color:var(--accent);font-family:var(--f-mono)}
+.tier .perad{font-family:var(--f-mono);font-size:.74rem;color:var(--green);margin-top:-4px}.tier .perad s{color:var(--dim);margin-left:4px}
+.tstats{display:flex;flex-direction:column;gap:3px;font-size:.78rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:7px 0}
+.tstats div{display:flex;justify-content:space-between;gap:8px}.tstats span{color:var(--muted)}.tstats b{font-weight:600;text-align:right}
+.tstats .up b{color:var(--text)}.tstats i{font-style:normal;color:var(--green)}
 .tier ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;font-size:.82rem}
 .tier ul li{display:grid;grid-template-columns:14px minmax(0,1fr);gap:6px}
 .tier ul li::before{content:"+";color:var(--accent);font-family:var(--f-mono)}
@@ -813,7 +817,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 <!-- PRICING -->
 <section class="view" id="v-pricing" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">What you charge businesses</span><h1>Fair prices. Each tier does more.</h1><p class="sub">Start low while you build proof. Every tier includes everything below it. Ad budget is paid by the business, straight to Meta or Google.</p></div>
+    <div><span class="eyebrow">What you charge businesses</span><h1>Fair prices. Each step up gets better.</h1><p class="sub">Every tier includes everything below it, gives more of everything (↑), and costs less per ad. Ad budget is paid by the business, straight to Meta or Google.</p></div>
     <div class="tabs" id="prTabs"><button data-t="tiers" class="on">Ad packages</button><button data-t="brandp">Brand packages</button><button data-t="quote">Quote builder</button><button data-t="addons">Add-ons</button></div>
   </div>
   <div data-pane="tiers" class="stack" style="gap:12px">
@@ -1247,17 +1251,28 @@ const AUDIT_DEMOS = {
 };
 
 // ---------- pricing: each tier includes everything below it ----------
+// each tier gets more of the same things (stats), so every step up is clearly better; "per ad" is just the price divided by the ads
+const TIER_STATS = ['Ads a month', 'Videos (in the ads)', 'Platforms', 'Updates', 'Replies'];
 const TIERS = [
-  { id: 'free', name: 'Free Audit', price: 0, per: '', lvl: 0, plus: 'Start here', items: ['AI audit with a score out of 100', 'Top 5 fixes', '1 sample ad made for them', '2-minute video walkthrough'], who: 'Every business you contact. It opens the door.' },
-  { id: 'starter', name: 'Starter', price: 199, per: '/mo', lvl: 1, plus: 'Everything in Free, plus', items: ['Campaign setup on Facebook + Instagram', '4 new AI ads a month', 'Pixel and lead form setup', 'Monthly results report'], who: 'Small shops trying ads for the first time.' },
-  { id: 'growth', name: 'Growth', price: 399, per: '/mo', lvl: 2, best: true, plus: 'Everything in Starter, plus', items: ['8 new ads a month, incl. 1 video', 'Weekly tuning and A/B tests', 'Google Business Profile tune-up', 'Instant lead alerts to the owner'], who: 'Most clients. Your main offer.' },
-  { id: 'pro', name: 'Pro', price: 699, per: '/mo', lvl: 3, plus: 'Everything in Growth, plus', items: ['A second platform (Google or TikTok)', '12 ads + 2 videos a month', 'Landing page built and tested', 'Retargeting + report every 2 weeks'], who: 'Dentists, roofers, HVAC and others with bigger tickets.' },
-  { id: 'premium', name: 'Premium', price: 1199, per: '/mo', lvl: 4, plus: 'Everything in Pro, plus', items: ['All 3 platforms', '20 ads + 4 videos a month', 'Text and email follow-up automation', 'Weekly report + call, priority help'], who: 'Businesses spending $2,000+ a month on ads.' }
+  { id: 'free', name: 'Free Audit', price: 0, per: '', lvl: 0, ads: 0, plus: 'Start here', stats: ['1 sample', '–', '–', 'Once', '–'], adds: ['AI audit + top 5 fixes', '2-minute video walkthrough'],
+    items: ['AI audit with a score out of 100', 'Top 5 fixes', '1 sample ad made for them', '2-minute video walkthrough'], who: 'Every business you contact. It opens the door.' },
+  { id: 'starter', name: 'Starter', price: 199, per: '/mo', lvl: 1, ads: 4, plus: 'Everything in Free, plus', stats: ['4', '–', '1', 'Monthly report', 'In 2 days'], adds: ['Facebook + Instagram setup', 'Pixel + lead form'],
+    items: ['Campaign setup on Facebook + Instagram', '4 new AI ads a month', 'Pixel and lead form setup', 'Monthly results report', 'Replies within 2 business days'], who: 'Small shops trying ads for the first time.' },
+  { id: 'growth', name: 'Growth', price: 399, per: '/mo', lvl: 2, ads: 10, best: true, plus: 'Everything in Starter, plus', stats: ['10', '1', '1', 'Weekly tuning', 'In 1 day'], adds: ['Weekly A/B tests', 'Google profile tune-up + lead alerts'],
+    items: ['10 new ads a month, including 1 video', 'Weekly tuning and A/B tests', 'Google Business Profile tune-up', 'Instant lead alerts to the owner', 'Replies within 1 business day'], who: 'Most clients. Your main offer.' },
+  { id: 'pro', name: 'Pro', price: 699, per: '/mo', lvl: 3, ads: 20, plus: 'Everything in Growth, plus', stats: ['20', '2', '2', 'Report every 2 weeks', 'Same day'], adds: ['Landing page built + tested', 'Retargeting'],
+    items: ['A second platform (Google or TikTok)', '20 new ads a month, including 2 videos', 'Landing page built and tested', 'Retargeting', 'Report every 2 weeks', 'Same-day replies'], who: 'Dentists, roofers, HVAC and others with bigger tickets.' },
+  { id: 'premium', name: 'Premium', price: 1199, per: '/mo', lvl: 4, ads: 40, plus: 'Everything in Pro, plus', stats: ['40', '4', '3', 'Weekly report + call', 'Within 4 hours'], adds: ['Text + email follow-up', 'Priority help'],
+    items: ['All 3 platforms (Facebook/Instagram, Google, TikTok)', '40 new ads a month, including 4 videos', 'Text and email follow-up automation', 'Weekly report + call', 'Priority help: replies within 4 business hours'], who: 'Businesses spending $2,000+ a month on ads.' }
 ];
+const BRAND_STATS = ['Posts a month', 'Ads a month', 'Updates'];
 const BRAND_TIERS = [
-  { name: 'Brand Kit', price: 299, per: ' once', plus: 'One-time setup', items: ['Brand check + positioning sentence', 'Voice guide and 3 brand words', 'Colors, fonts and Canva post templates', 'Bios and Google listing rewritten to match'], who: 'Businesses that look different everywhere.' },
-  { name: 'Brand Growth', price: 349, per: '/mo', plus: 'Everything in Brand Kit, plus', items: ['12 on-brand posts a month', 'Review request system + replies to reviews', 'Monthly content plan', 'Monthly brand report'], who: 'Most brand clients. Steady, visible progress.' },
-  { name: 'Brand + Ads', price: 699, per: '/mo', plus: 'Everything in Brand Growth, plus', items: ['Growth ad plan: 8 ads a month incl. video', 'Retargeting people who engage with posts', 'Weekly tuning', 'One combined report'], who: 'Owners who want trust and customers now. Saves $49 vs buying both.' }
+  { name: 'Brand Kit', price: 299, per: ' once', pieces: 0, plus: 'One-time setup', stats: ['–', '–', 'Once'], adds: ['Brand check, voice + colors', 'Canva templates, bios, Google listing'],
+    items: ['Brand check + positioning sentence', 'Voice guide and 3 brand words', 'Colors, fonts and Canva post templates', 'Bios and Google listing rewritten to match'], who: 'Businesses that look different everywhere.' },
+  { name: 'Brand Growth', price: 349, per: '/mo', pieces: 12, plus: 'Everything in Brand Kit, plus', stats: ['12', '–', 'Monthly report'], adds: ['Review requests + replies', 'Monthly content plan'],
+    items: ['12 on-brand posts a month', 'Review request system + replies to reviews', 'Monthly content plan', 'Monthly brand report'], who: 'Most brand clients. Steady, visible progress.' },
+  { name: 'Brand + Ads', price: 699, per: '/mo', pieces: 26, plus: 'Everything in Brand Growth, plus', stats: ['16', '10', 'Weekly tuning'], adds: ['Retargeting people who engage', 'One combined report'],
+    items: ['16 on-brand posts a month', 'The Growth ad plan: 10 ads a month, including 1 video', 'Retargeting people who engage with posts', 'Weekly tuning', 'One combined report'], who: 'Owners who want trust and customers now. $49 less than buying both, with 4 more posts.' }
 ];
 const ADDONS = [
   { id: 'quickpack', name: 'Quick Ad Pack (3 ready-to-run ads)', price: 99, per: 'once', why: 'The easiest first sale. Owners can try your work without a monthly plan.' },
@@ -3069,16 +3084,25 @@ function renderAuditResults() {
 
 // ================= PRICING =================
 const Q = Object.assign({ tier: 'growth', addons: [], months: 6, spend: 450, found: false }, store.get('quote', {}));
-const HOURS = { starter: 3, growth: 5, pro: 9, premium: 14 };
+const HOURS = { starter: 3, growth: 6, pro: 10, premium: 18 };
 function pricingInit() {
   wireTabs($('#prTabs'), $('#v-pricing'));
-  $('#ladder').innerHTML = TIERS.map(t => `<div class="tier${t.best ? ' best' : ''}"><div class="row" style="justify-content:space-between"><h3>${t.name}</h3>${t.best ? '<span class="tag acc" style="position:absolute;top:-11px;right:12px;background:var(--accent);color:var(--accent-ink)">Most popular</span>' : ''}</div>
+  // a stat that grew since the tier below gets an up arrow, so each step up is easy to see
+  const statRows = (labels, list, k) => `<div class="tstats">${labels.map((l, r) => { const v = list[k].stats[r], prev = k ? list[k - 1].stats[r] : null, up = k && v !== prev && v !== '–';
+    return `<div class="${up ? 'up' : ''}"><span>${l}</span><b>${v}${up ? ' <i aria-label="more than the tier below">↑</i>' : ''}</b></div>`; }).join('')}</div>`;
+  const perUnit = (price, n, word, prev) => n ? `<span class="perad">≈ ${money(price / n)} per ${word}${prev ? ` <s>${money(prev)}</s>` : ''}</span>` : '<span class="perad dim">&nbsp;</span>';
+  const badge = '<span class="tag acc" style="position:absolute;top:-11px;right:12px;background:var(--accent);color:var(--accent-ink)">Most popular</span>';
+  $('#ladder').innerHTML = TIERS.map((t, k) => { const pv = k > 1 ? TIERS[k - 1].price / TIERS[k - 1].ads : 0;
+    return `<div class="tier${t.best ? ' best' : ''}"><div class="row" style="justify-content:space-between"><h3>${t.name}</h3>${t.best ? badge : ''}</div>
     <div class="lvl">${[0, 1, 2, 3, 4].map(i => `<i class="${i <= t.lvl ? 'on' : ''}"></i>`).join('')}</div>
-    <div class="price">${t.price ? money(t.price) : '$0'}<small>${t.per}</small></div><span class="plus">${t.plus}</span>
-    <ul>${t.items.map(i => `<li><span>${i}</span></li>`).join('')}</ul><p class="who">${t.who}</p></div>`).join('');
-  $('#bLadder').innerHTML = BRAND_TIERS.map((t, i) => `<div class="tier${i === 1 ? ' best' : ''}">${i === 1 ? '<span class="tag acc" style="position:absolute;top:-11px;right:12px;background:var(--accent);color:var(--accent-ink)">Most popular</span>' : ''}<h3>${t.name}</h3>
-    <div class="lvl">${[0, 1, 2].map(j => `<i class="${j <= i ? 'on' : ''}"></i>`).join('')}</div><div class="price">${money(t.price)}<small>${t.per}</small></div><span class="plus">${t.plus}</span>
-    <ul>${t.items.map(x => `<li><span>${x}</span></li>`).join('')}</ul><p class="who">${t.who}</p></div>`).join('');
+    <div class="price">${t.price ? money(t.price) : '$0'}<small>${t.per}</small></div>${perUnit(t.price, t.ads, 'ad', pv)}
+    ${statRows(TIER_STATS, TIERS, k)}<span class="plus">${k ? 'New at this level' : 'Includes'}</span>
+    <ul>${t.adds.map(i => `<li><span>${i}</span></li>`).join('')}</ul><p class="who">${t.who}</p></div>`; }).join('');
+  $('#bLadder').innerHTML = BRAND_TIERS.map((t, i) => { const pv = i > 1 ? BRAND_TIERS[i - 1].price / BRAND_TIERS[i - 1].pieces : 0;
+    return `<div class="tier${i === 1 ? ' best' : ''}">${i === 1 ? badge : ''}<h3>${t.name}</h3>
+    <div class="lvl">${[0, 1, 2].map(j => `<i class="${j <= i ? 'on' : ''}"></i>`).join('')}</div><div class="price">${money(t.price)}<small>${t.per}</small></div>${perUnit(t.price, t.pieces, i > 1 ? 'post or ad' : 'post', pv)}
+    ${statRows(BRAND_STATS, BRAND_TIERS, i)}<span class="plus">${i ? 'New at this level' : 'Includes'}</span>
+    <ul>${t.adds.map(x => `<li><span>${x}</span></li>`).join('')}</ul><p class="who">${t.who}</p></div>`; }).join('');
   $('#addonRows').innerHTML = ADDONS.map(a => `<tr><td><b style="font-weight:500">${a.name}</b></td><td class="num">${money(a.price)}${a.per === 'month' ? '/mo' : ' once'}${a.monthly ? ` + ${money(a.monthly)}/mo` : ''}</td><td class="muted">${a.why}</td></tr>`).join('');
   $('#qPkg').innerHTML = TIERS.filter(t => t.price).map(t => `<button class="chip" data-pk="${t.id}">${t.name} · ${money(t.price)}</button>`).join('');
   $('#qAddons').innerHTML = ADDONS.map(a => `<label class="addon"><input type="checkbox" data-ad="${a.id}"><span>${a.name} <span class="muted mono" style="font-size:.76rem">${money(a.price)}${a.per === 'month' ? '/mo' : ' once'}${a.monthly ? ` + ${money(a.monthly)}/mo` : ''}</span></span></label>`).join('');
