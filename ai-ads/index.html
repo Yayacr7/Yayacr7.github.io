@@ -802,7 +802,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
       <div class="row" style="gap:8px"><button class="btn sm">Make all ads</button><button type="button" class="btn sm ghost" id="lcLeads">Add all to Lead tracker</button><button type="button" class="btn sm ghost" id="lcListCopy">Copy all text</button><button type="button" class="btn sm ghost" id="lcClear">Clear list</button><span class="dim" id="lcCount" style="font-size:.8rem"></span></div></form>
     <div class="lc-grid lc-lgrid" id="lcLGrid"></div>
   </div>
-  <p class="dim lc-note">Templates: deals and stock photos are samples (in Ready ads, names too). Ads with a real name use plain selling points, not made-up promises; check every line with the owner. Use the real name, a deal the owner agrees to, and a real photo before running. Local places in the hooks were checked Nov 2, 2026.</p>
+  <p class="dim lc-note">Ready ads are templates: names, deals and stock photos are samples. Ads with a real name have no deal and no made-up promises; add a deal only if the owner agrees to it. Use the real name, a deal the owner agrees to, and a real photo before running. Local places in the hooks were checked Nov 2, 2026.</p>
 </section>
 
 <!-- COURSE -->
@@ -1302,6 +1302,13 @@ const HOOKS = {
 };
 const hooksFor = k => HOOKS[k] || HOOKS.restaurant;
 // selling points for ads that carry a REAL business name: plain and true for almost any business of that type (no numbers, speeds, warranties or prices)
+// ads with a REAL business name carry no deal (Yaya, Nov 2, 2026: no sample deals): a plain invitation instead, and a button that promises nothing free
+const REAL_INVITE = { restaurant: 'Come hungry', coffee: 'Come warm up', salon: 'Book your next cut', dentist: 'Book a checkup', auto: 'Book a service visit',
+  hvac: 'Book a furnace check', roofer: 'Ask for a roof check', cleaning: 'Book a clean', gym: 'Come try a class', medspa: 'Book a consult',
+  realestate: 'Ask what your home is worth', lawyer: 'Ask your questions', ecommerce: 'Take a look' };
+const REAL_CTA = { gym: 'Learn More', roofer: 'Get a Quote', lawyer: 'Learn More' };
+const REAL_SWAP = { 2: 6, 4: 1, 8: 5 }; // coupon, DEAL sticker and "fixes that" designs swap to designs that need no deal
+const realDeal = (f, k) => Object.assign(f, { offer: REAL_INVITE[k] || 'Learn more', tone: f.tone === 'urgent' ? 'bold' : f.tone, cta: REAL_CTA[k] || '', real: true });
 const REAL_BEN = {
   restaurant: ['a warm meal on a cold night', 'a table for the whole crew', 'dinner without the dishes'],
   dentist: ['a friendly team', 'checkups and cleanings', 'answers before any work starts'],
@@ -1330,6 +1337,11 @@ function headlines(n, f) {
 }
 function primaryTexts(n, f) {
   const e = f.tone === 'friendly' || f.tone === 'funny', x = (a, b = '') => e ? a : b;
+  if (f.real) { // no deal: plain words, no "grab it", no gift emoji
+    return [{ f: 'PAS · Problem, Agitate, Solve', t: `${cap(n.pains[0])}? You're not alone in ${f.city}.\n\n${f.name} is here for that: ${n.benefits[0]} and ${n.benefits[1]}.\n\n${f.offer}. Tap "${n.cta}".` },
+      { f: 'AIDA · Attention, Interest, Desire, Action', t: `${(f.hooks || [])[0] || cap(n.benefits[0])}\n\nAt ${f.name} in ${f.city}: ${n.benefits[0]}, ${n.benefits[1]} and ${n.benefits[2]}.\n\n${f.offer}. Tap "${n.cta}".` },
+      { f: 'BAB · Before, After, Bridge', t: `Before: ${n.pains[2]}.\nAfter: ${n.benefits[0]}.\n\nThe bridge? ${f.name}, right here in ${f.city}.\n\n${f.offer}. Tap "${n.cta}".` }];
+  }
   const urgent = f.tone === 'urgent' ? '\nDon\'t wait: grab it before the deal ends.' : '';
   const pas = `${cap(n.pains[0])}? You're not alone. Most people in ${f.city} deal with ${n.pains[1]} too.\n\n${f.name} fixes that: ${n.benefits[0]} and ${n.benefits[1]}.\n${f.proof ? x('⭐ ') + f.proof + '.\n' : ''}\n${x('👉 ')}${f.offer}. Tap "${n.cta}" to grab it.${urgent}`;
   const aida = `${headlines(n, f)[0]}\n\nAt ${f.name} you get ${n.benefits[0]}, ${n.benefits[1]} and ${n.benefits[2]}.${f.proof ? '\n' + f.proof + '.' : ''} We'd love to make you next.\n\n${x('🎁 ')}${f.offer}.\nTap "${n.cta}" now.${urgent}`;
@@ -1348,7 +1360,7 @@ function videoSegs(n, f, h) {
   return [
     { t: '0–3s', name: 'Hook', cap: h, shot: `Close-up, fast movement: ${n.visual.split(',')[0]}` },
     { t: '3–8s', name: 'Problem → fix', cap: `Tired of ${n.pains[0]}?`, shot: `Show the team and the result: ${n.benefits[0]}` },
-    { t: '8–12s', name: 'Proof', cap: f.proof || 'Real customers, real results', shot: 'Real reviews on screen, star rating, happy customer (with permission)' },
+    { t: '8–12s', name: 'Proof', cap: f.proof || (f.real ? 'A real review (with permission)' : 'Real customers, real results'), shot: 'Real reviews on screen, star rating, happy customer (with permission)' },
     { t: '12–15s', name: 'Offer + action', cap: `${shortOffer(f.offer)}. Tap ${n.cta}.`, shot: 'Logo, offer card, point to the button' }
   ];
 }
@@ -1693,6 +1705,7 @@ function adLook(p, v) {
 function creativeHTML(p, v = 0, shape = '') {
   const f = p.f, n = p.n, pal = adPal(p, v); let lay = layOf(f, v);
   if (isPhotoLay(lay) && !photoFor(f, v)) lay = lay % 9; // no photo for this business type: use a drawn design
+  if (f.real && !bigNumber(f.offer) && REAL_SWAP[lay] !== undefined) lay = REAL_SWAP[lay];
   // the eye lands on one highlighted part of the headline: the price or %, else the last word or two
   const emph = h => { const m = h.match(/\$\s?\d[\d.,]*|\d+\s?%/); if (m) return h.replace(m[0], `<mark>${m[0]}</mark>`);
     const w = h.split(' '); if (w.length < 3) return h; const k = w.length > 5 ? 2 : 1; return w.slice(0, -k).join(' ') + ` <mark>${w.slice(-k).join(' ')}</mark>`; };
@@ -1704,11 +1717,11 @@ function creativeHTML(p, v = 0, shape = '') {
   const num = bigNumber(f.offer), rest = esc(shortOffer(f.offer).replace(num, '').replace(/^\s*(off\b)?/i, m => m).trim());
   const { font, hand, vars } = adLook(p, v);
   const bLabel = num ? esc(num) : 'DEAL', bSmall = num ? (/\boff\b/i.test(f.offer) ? 'OFF' : '') : '';
-  const burst = `<span class="x-burst" style="clip-path:${BURST}"><b class="f-poster">${bLabel}</b>${bSmall ? `<small>${bSmall}</small>` : ''}</span>`;
+  const burst = f.real && !num ? '' : `<span class="x-burst" style="clip-path:${BURST}"><b class="f-poster">${bLabel}</b>${bSmall ? `<small>${bSmall}</small>` : ''}</span>`;
   const brand = `<div class="x-brand"><span>${N}</span><span>${C}</span></div>`;
   const L = [
     // 0 big type
-    () => `${brand}${icon(f.icon || f.niche, 'x-ghost')}<div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${dup ? '' : `<span class="x-cta">${CTA} →</span>`}</div>${P}`,
+    () => `${brand}${icon(f.icon || f.niche, 'x-ghost')}<div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${dup || f.real ? '' : `<span class="x-cta">${CTA} →</span>`}</div>${P}`,
     // 1 split scene
     () => `<div class="x-scene">${icon(f.icon || f.niche, 'x-hero')}<i class="x-dot d1"></i><i class="x-dot d2"></i><span class="x-tagc">${N}</span></div><div class="x-panel"><div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${P}</div></div>`,
     // 2 coupon
@@ -1727,13 +1740,13 @@ function creativeHTML(p, v = 0, shape = '') {
     () => num ? `${brand}<div class="x-num f-poster${num.length >= 5 ? ' long' : ''}">${esc(num)}</div><div class="x-numl">${rest || 'OFF'}</div><div class="x-h ${font} x-sm">${H}</div><div class="x-row"><span class="x-btn">${CTA}</span></div>`
       : `${brand}<div class="x-q f-serif">?</div><div class="x-h ${font}">${esc(cap(n.pains[0]))}?</div><div class="x-sub">${esc(f.name)} fixes that. ${O}.</div><div class="x-row"><span class="x-btn">${CTA}</span></div>`,
     // 9 full photo
-    () => `<div class="x-ph"></div><div class="x-scrim"></div>${brand}<div class="x-bot"><div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${dup ? '' : `<span class="x-cta">${CTA} →</span>`}</div>${P}</div>`,
+    () => `<div class="x-ph"></div><div class="x-scrim"></div>${brand}<div class="x-bot"><div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${dup || f.real ? '' : `<span class="x-cta">${CTA} →</span>`}</div>${P}</div>`,
     // 10 photo on top, color card below, price burst on the seam
     () => `<div class="x-ph"></div>${burst}<div class="x-card"><div class="x-mini">${N} · ${C}</div><div class="x-h ${font} x-sm">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${P}</div></div>`,
     // 11 duotone poster (photo tinted in the brand colors)
     () => `<div class="x-ph duo"></div><div class="x-tint"></div>${brand}<div class="x-h f-poster x-up x-shadow">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${P}</div>`,
     // 12 polaroid
-    () => `${brand}<div class="x-pol"><div class="x-ph"></div><span class="x-cap">${N}</span><i class="x-tape"></i></div><div class="x-h ${font} x-sm">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${dup ? '' : `<span class="x-cta">${CTA} →</span>`}</div>`,
+    () => `${brand}<div class="x-pol"><div class="x-ph"></div><span class="x-cap">${N}</span><i class="x-tape"></i></div><div class="x-h ${font} x-sm">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${dup || f.real ? '' : `<span class="x-cta">${CTA} →</span>`}</div>`,
     // 13 round photo + price burst
     () => `${brand}<div class="x-ring"><div class="x-ph"></div></div>${burst}<div class="x-h ${font} x-center x-sm">${H}</div><div class="x-row x-cen"><span class="x-pill">${PILL}</span></div>`,
     // 14 chat: looks like a text conversation with the business
@@ -3881,7 +3894,7 @@ function listFields(b, i) {
   hooks = b.special ? [b.special, hooks[(i + 1) % 3], hooks[(i + 2) % 3]] : [hooks[i % 3], hooks[(i + 1) % 3], hooks[(i + 2) % 3]]; // neighbours in the list lead with different hooks
   const extra = {};
   if (b.k === 'restaurant' || b.k === 'coffee') { extra.photos = b.food ? FOOD_PHOTOS[b.food] : b.k === 'restaurant' ? [] : undefined; if (b.k === 'restaurant' && b.food !== 'pizza' && b.food !== 'pasta') extra.icon = 'dish'; }
-  return Object.assign(f, { name: b.name, city: b.city, hooks, real: true }, extra);
+  return realDeal(Object.assign(f, { name: b.name, city: b.city, hooks }, extra), b.k);
 }
 function listPacks() { return parseList(lcListText).out.map((b, i) => ({ b, p: buildPack(listFields(b, i)) })); }
 function renderList() {
@@ -3922,23 +3935,23 @@ function localInit() {
     parseList(lcListText).out.forEach(b => { if (have.has(b.name.toLowerCase())) return; have.add(b.name.toLowerCase()); leads.push({ id: Date.now() + n, biz: b.name, note: `${NICHES[b.k].label} · ${b.city} · sample ad made`, st: 0 }); n++; });
     store.set('leads', leads); drawK(); toast(n ? `${n} added to your Lead tracker` : 'They are already in your Lead tracker'); });
   $('#lcListCopy').addEventListener('click', () => { const l = listPacks(); if (!l.length) { toast('Paste your list first'); return; }
-    copyText(l.map(({ p }) => `${p.f.name.toUpperCase()} (${p.n.label}, ${p.f.city}) · the deal is a sample\nHeadlines:\n${p.hs.map((h, i) => 'ABC'[i] + ': ' + h).join('\n')}\nAd text:\n${p.texts[0].t}\nButton: ${p.n.cta}`).join('\n\n----------\n\n')); });
+    copyText(l.map(({ p }) => `${p.f.name.toUpperCase()} (${p.n.label}, ${p.f.city})\nHeadlines:\n${p.hs.map((h, i) => 'ABC'[i] + ': ' + h).join('\n')}\nAd text:\n${p.texts[0].t}\nButton: ${p.n.cta}`).join('\n\n----------\n\n')); });
   $('#lcClear').addEventListener('click', () => { if (lcListText && !confirm('Clear your pasted list? (Leads you added stay.)')) return; lcListText = ''; store.set('lclist', ''); renderList(); });
   renderLocal();
 }
 function openListAd(f) {
-  Object.assign(B, { niche: f.niche, name: f.name, city: f.city, offer: f.offer, aud: f.aud, proof: '', tone: f.tone, palette: f.palette, colorLock: false, layout: f.layout, photoI: f.photoI, cta: '', ai: null, made: true,
+  Object.assign(B, { niche: f.niche, name: f.name, city: f.city, offer: f.offer, aud: f.aud, proof: '', tone: f.tone, palette: f.palette, colorLock: false, layout: f.layout, photoI: f.photoI, cta: f.cta || '', ai: null, made: true,
     local: { key: f.niche + '|' + f.city, hooks: f.hooks, pains: f.pains, real: true, photos: f.photos, icon: f.icon } });
   variant = 0; plat = 'fb'; renderStudio(); location.hash = '#studio';
-  setTimeout(() => showAd(`Ad for ${f.name} (${f.city}). The deal is a sample: change it under “Edit details” to one the owner agrees to.`), 80);
+  setTimeout(() => showAd(`Ad for ${f.name} (${f.city}). No deal on it: add one under “Edit details” only if the owner agrees to it.`), 80);
 }
 function openLocalAd(k, realName) {
-    const f = mnFields(k, lcCity, Object.keys(NICHES).indexOf(k));
-    Object.assign(B, { niche: k, name: realName || f.name, city: f.city, offer: f.offer, aud: f.aud, proof: '', tone: f.tone, palette: f.palette, colorLock: false, layout: f.layout, photoI: f.photoI, cta: '', ai: null, made: true,
+    const f = mnFields(k, lcCity, Object.keys(NICHES).indexOf(k)); if (realName) realDeal(f, k);
+    Object.assign(B, { niche: k, name: realName || f.name, city: f.city, offer: f.offer, aud: f.aud, proof: '', tone: f.tone, palette: f.palette, colorLock: false, layout: f.layout, photoI: f.photoI, cta: f.cta || '', ai: null, made: true,
       local: { key: k + '|' + f.city, hooks: f.hooks, pains: f.pains, real: !!realName } });
     variant = 0; plat = 'fb'; renderStudio(); location.hash = '#studio';
     // the hash change resets the scroll, so show the ad after it
-    setTimeout(() => showAd(realName ? `Ad for ${realName} (${f.city}). The deal is a sample: change it under “Edit details” to one the owner agrees to. Added to your Lead tracker.` : `${NICHES[k].label} ad for ${f.city}. Put in the real business name and deal under “Edit details”.`), 80);
+    setTimeout(() => showAd(realName ? `Ad for ${realName} (${f.city}). No deal on it: add one under “Edit details” only if the owner agrees to it. Added to your Lead tracker.` : `${NICHES[k].label} ad for ${f.city}. Put in the real business name and deal under “Edit details”.`), 80);
 }
 const VIEWS = ['studio', 'local', 'brand', 'audit', 'clients', 'earn', 'pricing', 'prompts', 'course', 'bcourse', 'first', 'grow', 'business'];
 const ALIAS = { builder: 'studio', home: 'studio', learn: 'course' };
