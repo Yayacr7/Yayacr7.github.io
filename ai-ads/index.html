@@ -261,6 +261,16 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 @media (max-width:1180px){.outputs .pane{max-height:none}}
 .cc{font-family:var(--f-mono);font-size:.68rem;padding:1px 6px;border-radius:5px;margin-left:6px}
 .cc.ok{background:var(--green-s);color:var(--green)} .cc.no{background:var(--red-s);color:var(--red)}
+.lc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px;overflow:auto;max-height:calc(100vh - 270px);max-height:calc(100dvh - 270px);padding:2px 4px 2px 2px}
+.lc-card{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:12px;padding:6px;background:var(--panel);cursor:pointer;text-align:left;color:inherit;font:inherit}
+.lc-card:hover,.lc-card:focus-visible{border-color:var(--accent)}
+.lc-card .creative.ad{border-radius:8px}
+.lc-card .lc-meta{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:.76rem;padding:0 2px 2px}
+.lc-card .lc-meta b{font-weight:600}
+.lc-card .lc-meta span{color:var(--accent);white-space:nowrap}
+.lc-note{font-size:.76rem;margin:0;max-width:110ch}
+@media (max-width:1200px){.lc-grid{max-height:none;overflow:visible}}
+@media (max-width:520px){.lc-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
 .gallery .g{border-radius:10px;overflow:hidden;cursor:pointer;position:relative;border:1px solid var(--line)}
 .gallery .g .x{position:absolute;top:5px;right:5px;z-index:5;border:0;border-radius:6px;width:22px;height:22px;cursor:pointer;background:rgba(0,0,0,.55);color:#fff}
@@ -737,6 +747,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
   <a class="logo" href="#studio"><i>A</i><span>AdSharp.ai</span></a>
   <nav class="nav" id="nav">
     <a href="#studio" data-v="studio"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"/><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Make an Ad</a>
+    <a href="#local" data-v="local"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>City Ad Packs</a>
     <a href="#brand" data-v="brand"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>Make a Brand</a>
     <a href="#audit" data-v="audit"><svg viewBox="0 0 24 24"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/></svg>Check a Business</a>
     <span class="navlabel">Clients & money</span>
@@ -757,6 +768,18 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 </aside>
 
 <main class="stage" id="stage">
+
+<!-- CITY AD PACKS -->
+<section class="view" id="v-local" hidden>
+  <div class="vhead">
+    <div><span class="eyebrow">Tool · Minnesota north metro</span><h1>City ad packs</h1>
+      <p class="sub">A ready ad for every type of business in each city. Tap one to edit it.</p></div>
+    <div class="row" style="gap:8px"><button class="btn sm ghost" id="lcNew">New designs</button><button class="btn sm ghost" id="lcCopy">Copy all text</button></div>
+  </div>
+  <div class="row" style="gap:6px" id="lcCities" role="tablist" aria-label="City"></div>
+  <div class="lc-grid" id="lcGrid"></div>
+  <p class="dim lc-note">Templates: names, deals and stock photos are samples. Use the real name, a deal the owner agrees to, and a real photo before running. Local places in the hooks were checked Nov 2, 2026.</p>
+</section>
 
 <!-- COURSE -->
 <section class="view" id="v-course" hidden>
@@ -1292,7 +1315,9 @@ function videoSegs(n, f, h) {
 function buildPack(f) {
   f = Object.assign({}, f, { proof: (f.proof || '').trim() });
   f.proofT = f.proof || '[Real proof here, e.g. 4.8★ from 120 Google reviews]';
-  const n = f.cta ? Object.assign({}, NICHES[f.niche], { cta: f.cta }) : NICHES[f.niche], hs = headlines(n, f), texts = primaryTexts(n, f), g = googleAd(n, f);
+  let n = f.cta ? Object.assign({}, NICHES[f.niche], { cta: f.cta }) : NICHES[f.niche];
+  if (f.pains) n = Object.assign({}, n, { pains: f.pains }); // season-right pains (a furnace in a Minnesota winter, not an AC)
+  const hs = f.hooks && f.hooks.length === 3 ? f.hooks.slice() : headlines(n, f), texts = primaryTexts(n, f), g = googleAd(n, f);
   const daily = n.tier === 'high' ? 25 : 15, spend = daily * 7;
   const leadsLo = Math.max(1, Math.round(spend / n.cpl[1])), leadsHi = Math.max(leadsLo + 1, Math.round(spend / n.cpl[0]));
   const pal = PALETTES[f.palette], segs = videoSegs(n, f, hs[0]);
@@ -2457,6 +2482,7 @@ function renderEarn() {
 
 // ================= HELP: "How this page works" guides + plain-English glossary =================
 const HELP = {
+  local: ['Ready ads for every type of business in Coon Rapids, Blaine, Maple Grove, Brooklyn Park and Champlin, with local and Minnesota-winter hooks.', ['Pick a city at the top.', 'Tap an ad to open it in the Ad Maker, then put in the real business name and deal.', 'Use “New designs” for fresh looks. Show the ad to the owner as a free sample.']],
   course: ['A 10-step playbook for making and running ads for a business, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
   bcourse: ['An 8-step playbook for growing a business’s brand, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
   first: ['A 9-step playbook for landing your first paying client, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Do the step for real, then click “Done, next step”.']],
@@ -2490,6 +2516,9 @@ const GLOSSARY = [
   ['Special Ad Categories', 'Facebook rules for ads about housing, jobs, credit and other financial services, and politics. They limit who you can target.']
 ];
 const SOURCES = [
+  ['City ad packs: local places in the hooks (checked Nov 2, 2026)', 'Coon Rapids Dam Regional Park (Coon Rapids side of the Mississippi), the National Sports Center in Blaine (NSC), Arbor Lakes in Maple Grove, Mississippi Gateway Regional Park in Brooklyn Park, the Mississippi River in Champlin.', 'https://www.nps.gov/miss/planyourvisit/eastcoon.htm'],
+  ['National Sports Center, Blaine', 'State-owned sports complex at 1700 105th Ave NE, Blaine, opened in 1990.', 'https://en.wikipedia.org/wiki/National_Sports_Center'],
+  ['Mississippi Gateway Regional Park, Brooklyn Park', 'The west side of the Coon Rapids Dam park, renamed; run by Three Rivers Park District with Brooklyn Park.', 'https://www.nps.gov/miss/planyourvisit/mississippi-gateway-regional-park.htm'],
   ['Fake reviews and testimonials are illegal in the US', 'FTC rule, in effect since October 21, 2024. It also covers AI-written fake reviews.', 'https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials'],
   ['Facebook bans ads that call out personal traits', 'Meta’s ad standards: ads must not assert or imply personal attributes.', 'https://transparency.meta.com/policies/ad-standards/objectionable-content/privacy-violations-personal-attributes/'],
   ['Special Ad Categories', 'Housing, employment, financial products and services, and social issues/elections/politics. The first three limit age, gender and ZIP targeting.', 'https://developers.facebook.com/docs/marketing-api/special-ad-category'],
@@ -2607,7 +2636,7 @@ function applyDescribed(r) {
   if (r.palette != null) { B.palette = r.palette; B.colorLock = true; }
   else if (!B.colorLock && !poolOf(B.niche).includes(B.palette)) B.palette = poolOf(B.niche)[0];
   if (r.platform) plat = r.platform;
-  B.ai = r.ai || null; variant = 0;
+  B.ai = r.ai || null; B.local = null; variant = 0;
 }
 // a change request without AI: apply only what the words clearly ask for
 function applyChange(c) {
@@ -3073,7 +3102,8 @@ const GEN_STEPS = ['Matching the business type', 'Filling 3 proven copy formulas
 
 function fields() {
   const n = NICHES[B.niche];
-  return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette , layout: B.layout || 0, colorLock: !!B.colorLock, cta: B.cta || '', photoI: B.photoI || 0, userPhoto: USERPHOTO };
+  return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette , layout: B.layout || 0, colorLock: !!B.colorLock, cta: B.cta || '', photoI: B.photoI || 0, userPhoto: USERPHOTO,
+    ...(B.local && B.local.key === B.niche + '|' + B.city.trim() ? { hooks: B.local.hooks, pains: B.local.pains } : {}) };
 }
 function studioInit() {
   $('#nicheGrid').innerHTML = Object.entries(NICHES).map(([k, n]) => `<button data-n="${k}">${n.label}</button>`).join('');
@@ -3112,7 +3142,7 @@ function setNiche(k, force) {
   const sample = Object.values(NICHE_NAMES).includes(B.name) || !B.name.trim();
   B.niche = k; B.ai = null; const n = NICHES[k];
   if (sample || force) B.name = NICHE_NAMES[k];
-  B.offer = n.offer; B.aud = n.audience; B.palette = n.palette; B.colorLock = false; B.cta = '';
+  B.offer = n.offer; B.aud = n.audience; B.palette = n.palette; B.colorLock = false; B.cta = ''; B.local = null;
   renderStudio();
 }
 function generate() {
@@ -3717,7 +3747,69 @@ function renderPrompts() {
 }
 
 // ================= ROUTER =================
-const VIEWS = ['studio', 'brand', 'audit', 'clients', 'earn', 'pricing', 'prompts', 'course', 'bcourse', 'first', 'grow', 'business'];
+
+// ---------- city ad packs: Minnesota north metro ----------
+// local places used below were checked on Nov 2, 2026 (see the note on the page); hooks never claim a business is near a place
+const MN_CITIES = ['Coon Rapids', 'Blaine', 'Maple Grove', 'Brooklyn Park', 'Champlin'];
+// Minnesota winter: what people in these cities are dealing with right now (no claims the owner would have to prove)
+const MN_SEASON = {
+  restaurant: 'Too cold to cook? Perfect.', dentist: 'Many dental plans reset Jan 1.', gym: 'Beat the January rush.',
+  roofer: 'Ice dams start on the roof.', salon: 'Winter hair, fixed.', realestate: 'Spring move? Plan it this winter.',
+  auto: 'Will it start at -10°?', ecommerce: 'Gifts sorted before the big snow.', lawyer: 'Slipped on ice? Know your options.',
+  coffee: 'Cold out. Warm cup in here.', hvac: 'Furnace ready for -15°?', medspa: 'Winter skin? Let’s fix that.', cleaning: 'Salt, slush, mud. We’ve got it.'
+};
+// one hook per business type that names the city
+const MN_CITY = {
+  restaurant: c => `${c}, dinner's handled.`, dentist: c => `${c}: cleaning overdue?`, gym: c => `${c}, day one starts here.`,
+  roofer: c => `${c} roofs: checked lately?`, salon: c => `${c}, book the cut you saved.`, realestate: c => `${c}: what's your home worth?`,
+  auto: c => `${c} drivers: that dash light?`, ecommerce: c => `${c}, you'll want two.`, lawyer: c => `Hurt in ${c}? Know your options.`,
+  coffee: c => `${c}'s new morning stop.`, hvac: c => `${c}, is your furnace ready?`, medspa: c => `${c}, glow minus the guesswork.`, cleaning: c => `${c}, come home to clean.`
+};
+// a few lines that use a real local place or a Minnesota phrase (they replace the city line for that business type)
+const MN_LOCAL = {
+  'Coon Rapids': { coffee: 'Walk the Dam. Then warm up here.', restaurant: 'Walk the Dam. Then come eat.' },
+  Blaine: { restaurant: 'Tournament day at the NSC? Eat after.', coffee: 'Early game at the NSC? Coffee first.' },
+  'Maple Grove': { ecommerce: 'Skip the Arbor Lakes parking lot.' },
+  'Brooklyn Park': { coffee: 'Mississippi Gateway walk, then coffee.' },
+  Champlin: { coffee: 'River walk in Champlin? Coffee first.' }
+};
+const MN_FUN = { auto: 'Ope. That’s your check engine light.', hvac: 'Uff da. Is that the furnace?' };
+// winter-right sample deals and worries (samples: the owner sets the real deal)
+const MN_OFFER = { hvac: '$79 furnace tune-up', auto: '$29.99 oil change + a free battery test', roofer: 'Free roof and ice dam check with photos' };
+const MN_PAINS = { hvac: ['a furnace that quits on the coldest night', 'surprise repair bills', 'waiting days for a tech'], roofer: ['ice dams and leaks', 'surprise repair bills after a storm', 'not knowing what shape the roof is in'], auto: ['a car that won’t start on a cold morning', 'surprise repair bills', 'waiting all day for a quote'] };
+let lcCity = store.get('lccity', 'Coon Rapids'); if (!MN_CITIES.includes(lcCity)) lcCity = 'Coon Rapids';
+let lcSeed = store.get('lcseed', 0);
+function mnHooks(k, c) {
+  const local = (MN_LOCAL[c] || {})[k], cityLine = local || MN_CITY[k](c), base = hooksFor(k);
+  return [cityLine, MN_SEASON[k], MN_FUN[k] || base[(lcSeed + 1) % base.length]];
+}
+function mnFields(k, c, i) {
+  const n = NICHES[k], pool = poolOf(k), bag = [...Array(9).keys(), ...PHOTO_LAYOUTS, ...NATIVE_LAYOUTS, ...PHOTO_LAYOUTS];
+  const h = (lcSeed * 7 + i * 5 + MN_CITIES.indexOf(c) * 3) >>> 0;
+  return { niche: k, name: NICHE_NAMES[k], city: c, offer: MN_OFFER[k] || n.offer, aud: n.audience, proof: '', tone: (/medspa|salon|realestate|lawyer/.test(k) ? ['luxury', 'friendly', 'bold'] : ['friendly', 'bold', 'funny', 'urgent'])[h % (/medspa|salon|realestate|lawyer/.test(k) ? 3 : 4)],
+    palette: pool[(h + i) % pool.length], layout: bag[(h * 3 + i) % bag.length], photoI: h % 3, hooks: mnHooks(k, c), pains: MN_PAINS[k] };
+}
+function mnPacks(c) { return Object.keys(NICHES).map((k, i) => buildPack(mnFields(k, c, i))); }
+function renderLocal() {
+  $('#lcCities').innerHTML = MN_CITIES.map(c => `<button class="chip ${c === lcCity ? 'on' : ''}" role="tab" aria-selected="${c === lcCity}" data-city="${c}">${c}</button>`).join('');
+  $('#lcGrid').innerHTML = mnPacks(lcCity).map((p, i) => `<button type="button" class="lc-card" data-lc="${p.f.niche}" aria-label="${esc(p.n.label)} ad for ${esc(lcCity)}: ${esc(p.hs[0])}. Edit in Ad Maker">${creativeHTML(p, 0)}<span class="lc-meta"><b>${esc(p.n.label)}</b><span>Edit →</span></span></button>`).join('');
+}
+function localInit() {
+  $('#lcCities').addEventListener('click', e => { const b = e.target.closest('[data-city]'); if (!b) return; lcCity = b.dataset.city; store.set('lccity', lcCity); renderLocal(); });
+  $('#lcNew').addEventListener('click', () => { lcSeed++; store.set('lcseed', lcSeed); renderLocal(); toast('New designs'); });
+  $('#lcCopy').addEventListener('click', () => copyText(mnPacks(lcCity).map(p => `${p.n.label.toUpperCase()} (${p.f.city}) · sample name and deal\nHeadlines:\n${p.hs.map((h, i) => 'ABC'[i] + ': ' + h).join('\n')}\nAd text:\n${p.texts[0].t}\nButton: ${p.n.cta}`).join('\n\n----------\n\n')));
+  $('#lcGrid').addEventListener('click', e => {
+    const b = e.target.closest('[data-lc]'); if (!b) return;
+    const k = b.dataset.lc, f = mnFields(k, lcCity, Object.keys(NICHES).indexOf(k));
+    Object.assign(B, { niche: k, name: f.name, city: f.city, offer: f.offer, aud: f.aud, proof: '', tone: f.tone, palette: f.palette, colorLock: false, layout: f.layout, photoI: f.photoI, cta: '', ai: null, made: true,
+      local: { key: k + '|' + f.city, hooks: f.hooks, pains: f.pains } });
+    variant = 0; plat = 'fb'; renderStudio(); location.hash = '#studio';
+    // the hash change resets the scroll, so show the ad after it
+    setTimeout(() => showAd(`${NICHES[k].label} ad for ${f.city}. Put in the real business name and deal under “Edit details”.`), 80);
+  });
+  renderLocal();
+}
+const VIEWS = ['studio', 'local', 'brand', 'audit', 'clients', 'earn', 'pricing', 'prompts', 'course', 'bcourse', 'first', 'grow', 'business'];
 const ALIAS = { builder: 'studio', home: 'studio', learn: 'course' };
 function show(v) {
   v = ALIAS[v] || v; if (!VIEWS.includes(v)) v = 'studio';
@@ -3729,7 +3821,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit(); mentorInit();
+studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit(); mentorInit(); localInit();
 show(location.hash.slice(1));
 </script>
 </body>
