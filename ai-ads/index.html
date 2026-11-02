@@ -627,6 +627,16 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 .mreply{font-size:.84rem;margin:0;color:var(--text)}
 @media (min-width:1201px) and (max-height:860px){#v-course .vhead h1,#v-first .vhead h1,#v-grow .vhead h1,#v-bcourse .vhead h1{font-size:1.4rem;line-height:1.15}#v-course .eyebrow,#v-first .vhead .eyebrow,#v-grow .vhead .eyebrow,#v-bcourse .vhead .eyebrow{margin:0}#v-course,#v-first,#v-grow,#v-bcourse{gap:8px}}
 .mhow summary{cursor:pointer;list-style:none;width:fit-content}.mhow summary::-webkit-details-marker{display:none}.mhow[open] summary{margin-bottom:6px}
+.plain{margin:-4px 0 0;font-size:.9rem;color:var(--text)}.plain b{color:var(--green);font-weight:600}
+.jw{all:unset;cursor:help;border-bottom:1.5px dotted var(--accent);color:inherit}.jw:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+#jpop{position:fixed;z-index:95;background:var(--panel);border:1px solid var(--accent);border-radius:10px;padding:9px 12px;box-shadow:0 20px 40px -14px rgba(0,0,0,.8);display:flex;flex-direction:column;gap:3px;font-size:.86rem;line-height:1.4}
+#jpop[hidden]{display:none}#jpop b{color:var(--accent)}
+.mright{display:flex;flex-direction:column;align-items:flex-end;gap:4px;max-width:100%;flex:0 1 auto;min-width:0}
+#v-course .vhead>div:first-child,#v-first .vhead>div:first-child,#v-grow .vhead>div:first-child,#v-bcourse .vhead>div:first-child{flex:1 1 320px;min-width:0}
+@media (min-width:901px) and (max-width:1400px){.mflow .mfl{display:none}}@media (max-width:900px){.mright{align-items:flex-start}}
+.mnote{font-size:.7rem;color:var(--dim);text-align:right}@media (max-width:900px){.mnote{text-align:left}}
+.mflow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.76rem}.mflow span{background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:2px 8px;white-space:nowrap}.mflow .mfl{background:none;border:0;padding:0;color:var(--dim);font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase}.mflow i{font-style:normal;color:var(--accent)}
+@media (min-width:1201px) and (max-height:860px){.mstep{display:none}}
 .mfaq{border:1px solid var(--line);border-radius:10px;padding:8px 10px}.mfaq summary{cursor:pointer;font-weight:600;font-size:.88rem}.mfaq p{font-size:.86rem;margin:6px 0 0}
 /* ---------- bigger ad area ---------- */
 .maker{max-width:1200px;gap:40px}
@@ -2286,7 +2296,11 @@ const GLOSSARY = [
   ['Pixel', 'A small piece of code on a website that tells Facebook who visited, so ads can learn.'], ['Brand', 'What people remember and say about a business.'],
   ['Positioning', 'One sentence: who the business is for and why it’s different.'], ['Brand kit', 'The business’s set colors, fonts and logo, used the same way everywhere.'],
   ['Audit (checkup)', 'A quick check of a business’s Google listing, website and social pages.'], ['Monthly plan (retainer)', 'A client who pays you every month to keep doing the work.'],
-  ['Monthly recurring', 'The money that comes in every month from your monthly clients.'], ['Freelancer', 'Someone who works for themselves, for different clients.']
+  ['Monthly recurring', 'The money that comes in every month from your monthly clients.'], ['Freelancer', 'Someone who works for themselves, for different clients.'],
+  ['Copy (ad copy)', 'The words in an ad: the headline and the text.'], ['Conversion', 'When someone does what the ad asked: books, buys, calls or fills in a form.'],
+  ['Landing page', 'One web page made just for an ad, with one clear button.'], ['Organic', 'Free posts and visits, not paid ads.'],
+  ['Engagement', 'Likes, comments, shares and saves on a post.'], ['Case study', 'A short true story about one client: the problem, what you did and the real result, shared with their permission.'],
+  ['Special Ad Categories', 'Facebook rules for ads about housing, jobs, credit and other financial services, and politics. They limit who you can target.']
 ];
 const SOURCES = [
   ['Fake reviews and testimonials are illegal in the US', 'FTC rule, in effect since October 21, 2024. It also covers AI-written fake reviews.', 'https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials'],
@@ -2697,7 +2711,8 @@ function photoInit() {
 // ================= MENTORSHIP: each playbook step = the mentor's advice + one real money move today + a check-in =================
 // The mentor is this app (rules written by people, plus Claude AI on claude.ai). It is not a real person and never promises income.
 const MENTOR = {
-  course: { name: 'Ads', goal: 'Sell your first $99 Quick Ad Pack', tool: ['#studio', 'Ad Maker'], moves: [
+  course: { name: 'Ads', goal: 'Sell your first $99 Quick Ad Pack', tool: ['#studio', 'Ad Maker'], plain: ["Learn the exact words customers use, so your ad sounds like them.", "Give people a deal that is easy to say yes to.", "Write the words of the ad, with AI helping you.", "Make the picture people see first.", "Make a short phone video, because people watch videos.", "Choose who sees the ad: where they live and who they are.", "Turn the ad on in Facebook's ad tool.", "Run 2 or 3 versions and keep the one that works best.", "Check what each new customer costs, so you know if the ad works.", "Fix what is weak, tell the owner how it went, and follow the ad rules.", "A quick check that you are ready to do this for a paying client."],
+    flow: ["You make the ads", "The business gets customers", "They pay you every month"], moves: [
     ['Read 10 reviews of one real local business. Write down 3 phrases customers use.'],
     ['Write one offer for a real local business with the offer tool on the right.'],
     ['Make one ad in the Ad Maker for a real business near you, and save it.'],
@@ -2709,7 +2724,8 @@ const MENTOR = {
     ['Offer the $99 Quick Ad Pack to 5 owners who saw your sample.', 'msg', 5],
     ['Follow up with everyone who has not replied yet.', 'fu', 5],
     ['Do the ready check, then send 10 more messages today.', 'msg', 10]] },
-  first: { name: 'Clients', goal: 'Land your first paying client', tool: ['#clients', 'Find Clients'], moves: [
+  first: { name: 'Clients', goal: 'Land your first paying client', tool: ['#clients', 'Find Clients'], plain: ["Know the numbers: many messages lead to a few clients.", "Pick one type of business in one city, so you are easy to remember.", "Make sample ads, so owners can see your work.", "Make a list of real businesses to contact.", "Give each owner a free checkup first, so you are helping, not selling.", "Write a short first message that gets a reply.", "Many replies come only after a follow-up, so always follow up.", "On the call: ask, listen, then offer a plan.", "Get paid, do great work, then ask for a review."],
+    flow: ["You offer something free", "The owner says yes", "They pay you"], moves: [
     ['Set your daily number: 20 first messages a day for 2 weeks. Send the first 5 now.', 'msg', 5],
     ['Pick 1 business type and 1 city. Write them at the top of a Google Sheet.'],
     ['Make 3 sample ads for that business type in the Ad Maker, and save them.'],
@@ -2719,7 +2735,8 @@ const MENTOR = {
     ['Follow up with everyone you messaged 3 or more days ago.', 'fu', 5],
     ['Practice the call tool twice, then book 1 real call.'],
     ['Send one quote (Pricing → Quote builder) to your warmest lead.']] },
-  grow: { name: 'Freelance', goal: 'Win your first paid freelance gig', tool: ['#pricing', 'Pricing'], moves: [
+  grow: { name: 'Freelance', goal: 'Win your first paid freelance gig', tool: ['#pricing', 'Pricing'], plain: ["Make a profile on a site where buyers already look for help.", "Write short replies to job posts that show you read them.", "Set 3 clear packages with clear prices.", "Show your work online, so people know what you do.", "Post helpful things often, so clients come to you.", "Turn one-time buyers into monthly clients.", "Save templates, so each job takes less time.", "Grow step by step: higher prices, then help with the work."],
+    flow: ["Your profile shows your work", "A buyer hires you", "They become a monthly client"], moves: [
     ['Finish one freelance profile (Upwork, Fiverr or Contra) and publish it.'],
     ['Send 5 tailored proposals to real job posts.', 'msg', 5],
     ['Publish 3 packages on your profile: basic, standard and premium.'],
@@ -2728,7 +2745,8 @@ const MENTOR = {
     ['Offer a monthly plan to your last gig client or your warmest lead.', 'msg', 1],
     ['Save your best message, proposal and quote as copy-paste templates.'],
     ['Write down this month\'s real numbers on the Make Money page.']] },
-  bcourse: { name: 'Brand', goal: 'Sell your first $299 Brand Kit', tool: ['#brand', 'Brand Maker'], moves: [
+  bcourse: { name: 'Brand', goal: 'Sell your first $299 Brand Kit', tool: ['#brand', 'Brand Maker'], plain: ["Brand scaling means making a business look and sound the same everywhere, so more people trust it.", "Find where the business looks or sounds different from place to place.", "Write one sentence: who it is for and why it is different.", "Pick the colors, fonts and way of talking, and use them everywhere.", "Plan posts ahead, so the business shows up every week.", "Get more good reviews, because reviews build trust.", "Use posts and ads together to reach more people.", "Track a few numbers and show the owner the progress."],
+    flow: ["You make their brand clear", "More people trust them", "They pay you for it"], moves: [
     ['Find 3 local businesses whose look changes from place to place. Note what is different.'],
     ['Run a brand check on 1 real business in the Brand Maker.'],
     ['Write a one-sentence positioning for that business.'],
@@ -2744,13 +2762,27 @@ const MREPLY = {
   stuck: 'Do the smallest version right now: just one (one message, one business, one post). If the words are the problem, copy a script from Find Clients → Scripts and change the name.'
 };
 let MCHK = store.get('mentor', {});
+// jargon words in the mentor text get a dotted underline; tap one to see what it means (meanings come from Words explained)
+const JARGON = [[/\bhooks?\b/i, 'Hook'], [/\bCTA\b/, 'CTA (call to action)'], [/\bleads?\b/i, 'Lead'], [/\bniches?\b/i, 'Niche'], [/\bre-?target(ing|ed)?\b/i, 'Retargeting'],
+  [/\btargeting\b/i, 'Targeting'], [/\bA\/B test(s|ing)?\b/i, 'A/B test'], [/\bCPM\b/, 'CPM'], [/\bCTR\b/, 'CTR (click rate)'], [/\bCPC\b/, 'CPC'], [/\bCPL\b/, 'CPL'], [/\bROAS\b/, 'ROAS'],
+  [/\bAds Manager\b/i, 'Ads Manager'], [/\bAdvantage\+/, 'Advantage+'], [/\bpixel\b/i, 'Pixel'], [/\bpositioning\b/i, 'Positioning'], [/\bbrand kit\b/i, 'Brand kit'],
+  [/\bretainers?\b/i, 'Monthly plan (retainer)'], [/\b(ad copy|the copy)\b/i, 'Copy (ad copy)'], [/\bconversions?\b/i, 'Conversion'], [/\blanding pages?\b/i, 'Landing page'],
+  [/\borganic\b/i, 'Organic'], [/\bengagement\b/i, 'Engagement'], [/\bcase stud(y|ies)\b/i, 'Case study'], [/\bSpecial Ad Categor(y|ies)\b/i, 'Special Ad Categories']];
+const GLOSS_MAP = Object.fromEntries(GLOSSARY.map(g => [g[0], g[1]]));
+function explainify(text, used) { // only touches text, never HTML tags; each word is marked once per step
+  return String(text).split(/(<[^>]+>)/).map(part => {
+    if (part.startsWith('<')) return part;
+    for (const [re, term] of JARGON) { if (used.has(term) || !GLOSS_MAP[term]) continue; const m = part.match(re); if (!m) continue;
+      used.add(term); part = part.slice(0, m.index) + `<button type="button" class="jw" data-term="${esc(term)}">${m[0]}</button>` + part.slice(m.index + m[0].length); }
+    return part; }).join('');
+}
 const mKey = (pb, i) => pb + ':' + i;
 function mentorLessonHTML(pb, L, i, n) {
-  const M = MENTOR[pb], mv = M.moves[i] || M.moves[M.moves.length - 1], c = MCHK[mKey(pb, i)];
-  return `<span class="eyebrow">Step ${i + 1} of ${n}</span><h2>${L.t}</h2>
-    <div class="mbub"><span class="mav" aria-hidden="true">M</span><div><p class="why">${L.why}</p>${L.tip ? `<p class="mtip"><b>What I'd do:</b> ${L.tip}</p>` : ''}</div></div>
-    ${L.how ? `<details class="mhow" ${innerHeight >= 880 || innerWidth <= 1200 ? 'open' : ''}><summary><span class="tag">Do it with me · ${L.how.length} steps</span></summary><ol class="steps">${L.how.map(h => `<li><span>${h}</span></li>`).join('')}</ol></details>` : ''}
-    <div class="mmove" data-pb="${pb}" data-i="${i}"><span class="eyebrow">Your money move today</span><b>${mv[0]}</b>
+  const M = MENTOR[pb], mv = M.moves[i] || M.moves[M.moves.length - 1], c = MCHK[mKey(pb, i)], used = new Set(), X = t => explainify(t, used);
+  return `<span class="eyebrow mstep">Step ${i + 1} of ${n}</span><h2>${L.t}</h2>${M.plain[i] ? `<p class="plain"><b>In plain words:</b> ${M.plain[i]}</p>` : ''}
+    <div class="mbub"><span class="mav" aria-hidden="true">M</span><div><p class="why">${X(L.why)}</p>${L.tip ? `<p class="mtip"><b>What I'd do:</b> ${X(L.tip)}</p>` : ''}</div></div>
+    ${L.how ? `<details class="mhow" ${innerWidth <= 1200 || innerHeight >= 1000 ? 'open' : ''}><summary><span class="tag">Do it with me · ${L.how.length} steps</span></summary><ol class="steps">${L.how.map(h => `<li><span>${X(h)}</span></li>`).join('')}</ol></details>` : ''}
+    <div class="mmove" data-pb="${pb}" data-i="${i}"><span class="eyebrow">Your money move today</span><b>${X(mv[0])}</b>
       ${c ? `<p class="mreply"><span class="tag green">Done</span> ${MREPLY[c.how] || ''}</p><div class="row" style="gap:6px"><button class="chip" data-mundo>Undo</button><button class="chip" data-mask>Ask your mentor</button></div>`
         : `<div class="row mchk" style="gap:6px"><span class="dim" style="font-size:.78rem">Did it? How did it go?</span><button class="chip" data-mhow="well">Went well</button><button class="chip" data-mhow="none">No reply yet</button><button class="chip" data-mhow="stuck">I got stuck</button><button class="chip" data-mask>Ask your mentor</button></div>`}
     </div>`;
@@ -2761,7 +2793,11 @@ function mentorHeads() {
   for (const [pb, M] of Object.entries(MENTOR)) {
     const v = $('#v-' + pb); if (!v) continue; const box = $('.vhead > div', v); if (!box || $('.mgoal', box)) continue;
     const done = M.moves.filter((_, i) => MCHK[mKey(pb, i)]).length;
-    box.insertAdjacentHTML('beforeend', `<p class="mgoal">Goal: <b>${M.goal}</b> · <span data-mcount="${pb}">${done}/${M.moves.length}</span> moves · <span class="dim" title="Your mentor is this app (rules plus AI on claude.ai), not a real person. Results depend on your work; no income is promised.">mentor = this app, no income promised</span></p>`);
+    const right = $('.vhead > .row', v);
+    if (right && !$('.mflow', v)) { const col = document.createElement('div'); col.className = 'mright'; right.before(col); col.appendChild(right);
+      col.insertAdjacentHTML('beforeend', '<span class="mnote" title="Your mentor is this app (rules, plus AI on claude.ai), not a real person. Results depend on your work.">Your mentor is this app, not a person · No income is promised</span>');
+      col.insertAdjacentHTML('afterbegin', `<div class="mflow" aria-label="How the money works"><span class="mfl">How the money works</span>${M.flow.map((f, k) => `${k ? '<i aria-hidden="true">→</i>' : ''}<span>${f}</span>`).join('')}</div>`); }
+    box.insertAdjacentHTML('beforeend', `<p class="mgoal">Goal: <b>${M.goal}</b> · <span data-mcount="${pb}">${done}/${M.moves.length}</span> moves</p>`);
   }
 }
 function mentorCount(pb) { const M = MENTOR[pb], el = $(`[data-mcount="${pb}"]`); if (el) el.textContent = `${M.moves.filter((_, i) => MCHK[mKey(pb, i)]).length}/${M.moves.length}`; }
@@ -2788,8 +2824,20 @@ Rules: never promise income or results, never suggest fake reviews, fake numbers
     out.innerHTML = r && r.answer ? `<div class="mbub"><span class="mav" aria-hidden="true">M</span><p>${esc(r.answer)}</p></div><p class="dim" style="font-size:.74rem">Written by AI. Use your own judgment.</p>` : '<p class="dim">No answer came back. Try asking again.</p>';
   } catch (e) { out.innerHTML = `<p class="dim">${e && e.code === 'timeout' ? 'The AI took too long. Try again.' : e && e.code === 'not_granted' ? 'AI answers are turned off for this page.' : 'The AI could not answer right now. Try again in a minute.'}</p>`; }
 }
+function jpopShow(btn) {
+  let pop = $('#jpop'); if (!pop) { pop = document.createElement('div'); pop.id = 'jpop'; pop.setAttribute('role', 'tooltip'); document.body.appendChild(pop); }
+  const term = btn.dataset.term; pop.innerHTML = `<b>${esc(term)}</b><span>${esc(GLOSS_MAP[term] || '')}</span>`; pop.hidden = false;
+  const r = btn.getBoundingClientRect(), w = Math.min(300, innerWidth - 24); pop.style.width = w + 'px';
+  pop.style.left = Math.max(12, Math.min(innerWidth - w - 12, r.left + r.width / 2 - w / 2)) + 'px';
+  const below = r.bottom + 8, h = pop.offsetHeight; pop.style.top = (below + h > innerHeight - 8 ? Math.max(8, r.top - h - 8) : below) + 'px';
+  $$('.jw[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded', 'false')); btn.setAttribute('aria-expanded', 'true');
+}
+function jpopHide() { const p = $('#jpop'); if (p) p.hidden = true; $$('.jw[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded', 'false')); }
 function mentorInit() {
   mentorHeads();
+  document.addEventListener('click', e => { const w = e.target.closest('.jw'); if (w) { e.stopPropagation(); jpopShow(w); } else if (!e.target.closest('#jpop')) jpopHide(); }, true);
+  addEventListener('scroll', jpopHide, true); addEventListener('resize', jpopHide); addEventListener('hashchange', jpopHide);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') jpopHide(); });
   document.addEventListener('click', e => {
     const box = e.target.closest('.mmove'); if (box) {
       const pb = box.dataset.pb, i = +box.dataset.i, k = mKey(pb, i), mv = MENTOR[pb].moves[i] || [];
