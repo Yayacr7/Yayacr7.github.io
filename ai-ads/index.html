@@ -637,6 +637,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 .mnote{font-size:.7rem;color:var(--dim);text-align:right}@media (max-width:900px){.mnote{text-align:left}}
 .mflow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.76rem}.mflow span{background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:2px 8px;white-space:nowrap}.mflow .mfl{background:none;border:0;padding:0;color:var(--dim);font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase}.mflow i{font-style:normal;color:var(--accent)}
 @media (min-width:1201px) and (max-height:860px){.mstep{display:none}}
+.cgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.cgrid .check2{font-size:.8rem;padding:3px 8px!important}@media (max-width:560px){.cgrid{grid-template-columns:minmax(0,1fr)}}
 .mfaq{border:1px solid var(--line);border-radius:10px;padding:8px 10px}.mfaq summary{cursor:pointer;font-weight:600;font-size:.88rem}.mfaq p{font-size:.86rem;margin:6px 0 0}
 /* ---------- bigger ad area ---------- */
 .maker{max-width:1200px;gap:40px}
@@ -2176,6 +2177,120 @@ const BC_DEMOS = {
   }
 };
 
+// ================= BRAND PLAYBOOK: full path from zero to monthly brand clients (16 steps, 4 phases) =================
+const BC_NEW = {
+  boffer: { t: 'Pick your brand offer', s: 'Offer', demo: 'boffer', why: 'Owners buy a clear package, not "branding". Decide exactly what you sell, to whom, and for how much before you look for clients.',
+    how: ['Pick one type of business to start with, like salons, cafes or dentists.', 'Lead with the one-time Brand Kit ($299): it is easy to say yes to.', 'Offer Brand Growth ($349 a month) once the kit is done.', 'Write one sentence: "I help [type] in [city] look the same everywhere and get more reviews."'],
+    tip: 'A narrow offer sounds expert. "Brands for cafes in Austin" beats "I do branding".' },
+  bspot: { t: 'Spot businesses that need it', s: 'Prospects', demo: 'bspot', why: 'The best brand clients already have customers but look messy online. They have something to grow, and the fix is easy to show.',
+    how: ['Search Google Maps for your business type in your city.', 'Look for good reviews but an old logo, mismatched bios or no posts for weeks.', 'Skip places that look closed or have almost no customers.', 'Save 20 good fits in a sheet.'],
+    tip: 'Real customers plus a messy brand is the easiest yes. Perfect brands do not need you, and empty businesses cannot pay.' },
+  bpitch: { t: 'Pitch with a free brand check', s: 'Pitch', demo: 'bpitch', why: 'Owners ignore "I do branding". They answer when you show them something about their own business.',
+    how: ['Screenshot their website, Instagram and Google profile side by side.', 'Point out 2 specific gaps, kindly.', 'Offer one free fix, like a new bio, with no strings attached.', 'End with one easy question: "Want me to send the full check?"'],
+    tip: 'Be kind. They built the business; you are pointing out easy wins, not mistakes.' },
+  bcall: { t: 'Run the discovery call', s: 'Call', demo: 'bcall', why: 'On the first call you listen more than you talk. The owner tells you what to sell them.',
+    how: ['Ask who their best customers are and why they choose them.', 'Ask what they wish people knew about the business.', 'Ask what they have tried and what they spend now.', 'Repeat their problem in one sentence, then suggest one package.'],
+    tip: 'Write down their exact words. They become the positioning and your proposal.' },
+  bonboard: { t: 'Onboard the client', s: 'Onboard', demo: 'bonboard', why: 'A smooth start makes the client feel safe and saves you weeks of back-and-forth.',
+    how: ['Send a simple agreement and the first invoice before you start.', 'Send a short brand questionnaire.', 'Collect logo files and photos, and ask to be added as a manager on their pages.', 'Set a kickoff date and the date of the first delivery.'],
+    tip: 'Ask to be added as a manager on their Google Business Profile and Facebook/Instagram instead of asking for passwords.' },
+  bgbp: { t: 'Fix the Google profile', s: 'Google', demo: 'bgbp', why: 'For local businesses, the Google Business Profile is often the first thing people see. Fixing it is quick and easy to show.',
+    how: ['Check that the name, category, hours, phone and website are right.', 'Put the positioning sentence in the description.', 'Add real, recent photos: outside, inside, the team and the work.', 'Reply to reviews and keep the hours updated, including holidays.'],
+    tip: 'Never add extra keywords to the business name. Google\'s guidelines say it must match the real-world name.' },
+  bcase: { t: 'Turn results into a case study', s: 'Case study', demo: 'bcase', why: 'One honest story about real results sells your next clients better than any pitch.',
+    how: ['Ask the client for permission first.', 'Write three parts: the problem, what you did, the real result.', 'Only use real numbers from your reports. If you have none yet, describe the work.', 'Add before-and-after screenshots.'],
+    tip: 'Never round up or guess results. A small true result beats a big made-up one.' },
+  bgrow: { t: 'Grow your brand business', s: 'Grow', demo: 'bgrow', why: 'Growth comes from more monthly clients, fair price raises and less time per client.',
+    how: ['Aim for monthly clients, not one-off jobs.', 'Turn every task into a checklist or a template.', 'Raise prices for new clients after 3 happy ones.', 'Get part-time help (an editor or designer) only when you are fully booked.'],
+    tip: 'Only hire help once steady monthly income can pay for it.' }
+};
+// new order: old steps keep their content, new ones fill the gaps
+const BC_ORDER = ['health', 'boffer', 'bspot', 'bpitch', 'bcall', 'bonboard', 'consistency', 'position', 'kit', 'bgbp', 'pillars', 'reviews', 'funnel', 'scorecard', 'bcase', 'bgrow'];
+const BC_PHASES = [[0, 'Set up'], [2, 'Get clients'], [6, 'Deliver'], [13, 'Keep and grow']];
+{ const old = Object.fromEntries(BC_LESSONS.map(l => [l.demo, l])); const list = BC_ORDER.map(k => old[k] || BC_NEW[k]); BC_LESSONS.length = 0; BC_LESSONS.push(...list); }
+// people who used the 8-step version keep their progress (old step i → its new place)
+(() => { if (store.get('bcver', 1) >= 2) return; const map = [0, 6, 7, 8, 10, 11, 12, 13];
+  store.set('bcdone', (store.get('bcdone', []) || []).map(i => map[i]).filter(i => i != null)); store.set('bccur', map[store.get('bccur', 0)] || 0);
+  const m = store.get('mentor', {}), out = {}; for (const [k, v] of Object.entries(m)) { const [pb, i] = k.split(':'); out[pb === 'bcourse' && map[+i] != null ? 'bcourse:' + map[+i] : k] = v; }
+  store.set('mentor', out); store.set('bcver', 2); })();
+bcCur = store.get('bccur', 0); if (!(bcCur >= 0 && bcCur < BC_LESSONS.length)) bcCur = 0; bcDone = store.get('bcdone', []);
+const bcPhase = i => { let p = BC_PHASES[0], n = 0; BC_PHASES.forEach((x, k) => { if (i >= x[0]) { p = x; n = k; } }); return `Phase ${n + 1} of 4 · ${p[1]}`; };
+// score + only what still needs fixing (keeps the tool on one screen)
+const checksGrid = (label, cs) => { const bad = cs.filter(c => !c[1]); return scoreBar(label, Math.round((cs.length - bad.length) / cs.length * 10)) + (bad.length ? `<div class="cgrid">${checksHTML(bad)}</div>` : `<p style="font-size:.8rem;color:var(--green);margin:0">All ${cs.length} checks pass: ${cs.map(c => c[0].split(':')[0].toLowerCase()).join(', ')}.</p>`); };
+const toggles = (items, on) => `<div class="stack" style="gap:4px">${items.map((t, i) => `<button type="button" class="check2 tg ${on[i] ? 'on' : ''}" data-tg="${i}" aria-pressed="${!!on[i]}" style="padding:5px 10px;text-align:left"><i></i>${t}</button>`).join('')}</div>`;
+function wireToggles(el, on, go) { el.addEventListener('click', e => { const b = e.target.closest('[data-tg]'); if (!b) return; const i = +b.dataset.tg; on[i] = !on[i]; b.classList.toggle('on', on[i]); b.setAttribute('aria-pressed', on[i]); go(); }); }
+Object.assign(BC_DEMOS, {
+  boffer(el) {
+    const st = { pk: 0 };
+    el.innerHTML = head('Brand offer builder', nicheSelect('boN', 'coffee')) + `<label class="f">Your city<input type="text" id="boC" value="Austin"></label>
+      <div class="row" style="gap:8px"><span class="dim" style="font-size:.84rem">Lead with:</span>${segHTML('pk', BRAND_TIERS.map((t, i) => [t.name, i]), 0)}</div><div id="boOut" class="stack" style="gap:6px"></div>`;
+    const go = () => { const n = NICHES[$('#boN', el).value], c = $('#boC', el).value.trim(), t = BRAND_TIERS[st.pk];
+      const line = `I help ${n.kind}s in ${c || '[your city]'} look the same everywhere, get more reviews and post every week.`;
+      const cs = [['Names one type of business', true], ['Names your city', !!c], ['Has a clear first package and price', true], ['No hype words like "viral" or "guaranteed"', true]];
+      $('#boOut', el).innerHTML = `<div class="outhead" style="margin:0"><span class="muted" style="font-size:.84rem">Your offer</span><button class="btn sm" data-copy="boT">Copy</button></div><div class="out" id="boT">${esc(line)}\n\nStart: ${t.name}, ${money(t.price)}${t.per}\n${t.items.map(x => '• ' + x).join('\n')}</div>` + checksGrid('Offer score', cs); };
+    wireSegs(el, st, go); el.addEventListener('input', go); el.addEventListener('change', go); go();
+  },
+  bspot(el) {
+    const items = ['Has 20+ Google reviews (real customers)', 'Rating 4.0 or higher', 'Logo or colors differ between website and Instagram', 'No posts in the last 2 weeks', 'Bio does not say what they do or where', 'Few or no replies to reviews', 'Looks open and active (recent photos, hours)'], on = [1, 1, 1, 1, 0, 1, 1];
+    el.innerHTML = head('Is this a good brand client?') + '<p class="dim" style="font-size:.82rem">Tap what is true for the business you are looking at.</p>' + toggles(items, on) + '<div id="bsV"></div>';
+    const go = () => { const need = [2, 3, 4, 5].filter(i => on[i]).length, can = [0, 1, 6].filter(i => on[i]).length;
+      const v = can === 3 && need >= 2 ? ['ok', 'Great fit: real customers and easy brand wins. Pitch them.'] : can >= 2 && need >= 1 ? ['acc', 'Maybe: worth a message, but not first on your list.'] : ['bad', can < 2 ? 'Skip for now: they may not have enough customers to pay you.' : 'Skip: their brand already looks consistent.'];
+      $('#bsV', el).innerHTML = `<div class="note ${v[0]}" style="margin-top:6px">${v[1]}</div>`; };
+    wireToggles(el, on, go); go();
+  },
+  bpitch(el) {
+    el.innerHTML = head('Brand pitch writer', '<button class="btn sm" data-copy="bpT">Copy</button>') + `<div class="two"><label class="f">Owner's first name<input type="text" id="bpO" value="Maria"></label><label class="f">Business name<input type="text" id="bpB" value="Glow Hair Studio"></label></div>
+      <div class="two"><label class="f">Gap 1<select id="bp1">${BCHECK.map((c, i) => `<option value="${i}">${c[1]}</option>`).join('')}</select></label><label class="f">Gap 2<select id="bp2">${BCHECK.map((c, i) => `<option value="${i}" ${i === 3 ? 'selected' : ''}>${c[1]}</option>`).join('')}</select></label></div>
+      <div class="out" id="bpT"></div><div id="bpS" class="stack" style="gap:4px"></div>`;
+    const go = () => { const o = $('#bpO', el).value.trim(), b = $('#bpB', el).value.trim(), g = [BCHECK[+$('#bp1', el).value], BCHECK[+$('#bp2', el).value]];
+      const t = `Hi ${o || 'there'}, I was looking at ${b || 'your business'} online and noticed two easy wins:\n• ${g[0][2]}\n• ${g[1][2]}\n\nI put together a free brand check with screenshots. Want me to send it over?`;
+      $('#bpT', el).textContent = t; const w = t.split(/\s+/).length;
+      $('#bpS', el).innerHTML = checksGrid('Message score', [['Uses their name and business name', !!o && !!b], ['Two specific gaps', g[0] !== g[1]], ['Offers something free', true], ['Ends with an easy question', /\?$/.test(t.trim())], [`Short: ${w} words (90 or less)`, w <= 90]]); };
+    el.addEventListener('input', go); el.addEventListener('change', go); go();
+  },
+  bcall(el) {
+    const qs = ['Who are your best customers, and why do they choose you?', 'What do you wish more people knew about the business?', 'Where do new customers find you today?', 'What have you tried for marketing, and how did it go?', 'What do you spend on marketing now?', 'If this went well, what would be different in 3 months?', 'What worries you about working with someone on this?', 'Who else needs to say yes?'];
+    const st = { need: 'look' }, rec = { look: 0, steady: 1, now: 2 };
+    el.innerHTML = head('Discovery call guide', '<button class="btn sm" data-copy="bcQ">Copy questions</button>') + `<ol class="steps" id="bcQ" style="font-size:.86rem">${qs.map(q => `<li><span>${q}</span></li>`).join('')}</ol>
+      <div class="row" style="gap:8px;flex-wrap:wrap"><span class="dim" style="font-size:.84rem">What they need most:</span>${segHTML('need', [['Same look', 'look'], ['Posts + reviews', 'steady'], ['Customers now', 'now']], 'look')}</div><div id="bcR"></div>`;
+    const go = () => { const t = BRAND_TIERS[rec[st.need]]; $('#bcR', el).innerHTML = `<div class="note acc" style="margin-top:6px">Suggest <b>${t.name}</b> (${money(t.price)}${t.per}). Say it back first: "So the main thing is… Did I get that right?"</div>`; };
+    wireSegs(el, st, go); go();
+  },
+  bonboard(el) {
+    const items = ['Agreement signed', 'First invoice paid', 'Brand questionnaire sent', 'Logo files and photos received', 'Added as manager on the Google Business Profile', 'Added to their Facebook/Instagram (no passwords)', 'Kickoff date set', 'First delivery date set'], on = items.map(() => 0);
+    const qn = 'Brand questionnaire\n\n1. In one sentence, what do you do and for whom?\n2. Who is your best customer?\n3. Why do customers choose you over others? (only true reasons)\n4. Three words that describe how you want to come across:\n5. Brands or businesses you like the look of:\n6. Anything we must never say or show?\n7. Colors or fonts you already use:\n8. Who approves posts, and how fast can they reply?';
+    el.innerHTML = head('Onboarding checklist', '<button class="btn sm" data-copy="boQ">Copy questionnaire</button>') + toggles(items, on) + `<div id="boP"></div><div class="out" id="boQ" hidden>${esc(qn)}</div><p class="dim" style="font-size:.76rem">Not legal advice: use a simple service agreement template and adjust it for where you live.</p>`;
+    const go = () => { const n = on.filter(Boolean).length; $('#boP', el).innerHTML = `<div class="row" style="justify-content:space-between;margin-top:6px"><span class="muted" style="font-size:.84rem">Ready to start</span><b class="mono">${n}/${items.length}</b></div><div class="progress" style="width:100%"><i style="width:${n / items.length * 100}%"></i></div>`; };
+    wireToggles(el, on, go); go();
+  },
+  bgbp(el) {
+    const items = ['Real business name (no extra keywords)', 'Right main category', 'Hours correct, including holidays', 'Phone and website work', 'Description says who it is for and why', '10+ real, recent photos', 'Replies to recent reviews', 'Posted an update this month'], on = [1, 1, 0, 1, 0, 0, 0, 0];
+    el.innerHTML = head('Google profile checkup') + toggles(items, on) + `<div id="gbS"></div><label class="f" style="margin-top:6px">Write the description <span class="mono dim" id="gbC"></span><textarea id="gbD" rows="2">Hair salon in Austin where every stylist does a free consult before cutting. Book online in under a minute.</textarea></label>`;
+    const go = () => { const n = on.filter(Boolean).length, d = $('#gbD', el).value.length; $('#gbS', el).innerHTML = scoreBar('Profile score', Math.round(n / items.length * 10));
+      const c = $('#gbC', el); c.textContent = `${d}/750`; c.style.color = d > 750 ? 'var(--red)' : ''; };
+    wireToggles(el, on, go); el.addEventListener('input', go); go();
+  },
+  bcase(el) {
+    el.innerHTML = head('Case study writer') + `<div class="two"><label class="f">Client (type + city)<input type="text" id="caC" value="A hair salon in Austin"></label><label class="f">The problem<input type="text" id="caP" value="looked different on every platform and rarely posted"></label></div>
+      <div class="two"><label class="f">What you did<input type="text" id="caW" value="one positioning sentence, a brand kit, 12 posts a month and review requests"></label>
+      <label class="f">Real result (empty if none yet)<input type="text" id="caR" placeholder="e.g. reviews 40 → 61 in 3 months"></label></div>
+      <label class="row" style="gap:6px;font-size:.86rem"><input type="checkbox" id="caOk"> The client said yes to sharing this</label>
+      <div class="outhead" style="margin:0"><span class="muted" style="font-size:.84rem">Case study</span><button class="btn sm" data-copy="caT">Copy</button></div><div class="out" id="caT"></div><div id="caN"></div>`;
+    const go = () => { const v = id => $('#' + id, el).value.trim(), r = v('caR');
+      $('#caT', el).textContent = `${v('caC')}\n\nThe problem: ${v('caP')}.\nWhat we did: ${v('caW')}.\nThe result: ${r || '[add real numbers from your reports when you have them]'}.`;
+      $('#caN', el).innerHTML = !$('#caOk', el).checked ? '<div class="note bad">Do not share this until the client says yes.</div>' : !r ? '<div class="note acc">No result yet? That is fine. Share the work, and add numbers later.</div>' : '<div class="note ok">Ready to share. Only use numbers you can show.</div>'; };
+    el.addEventListener('input', go); el.addEventListener('change', go); go();
+  },
+  bgrow(el) {
+    const S = [['gwN', 'Monthly brand clients', 1, 20, 1, 4, v => v], ['gwP', 'Average price a month', 199, 1500, 25, 349, v => '$' + v], ['gwH', 'Hours per client a month', 2, 30, 1, 8, v => v + ' h'], ['gwT', 'Tools a month (Canva etc.)', 0, 300, 5, 40, v => '$' + v]];
+    el.innerHTML = head('Growth calculator') + `<div class="two"><div class="stack" style="gap:4px">${sliders(S)}</div><div class="stack" id="gwK"></div></div><p class="dim" style="font-size:.76rem">Math only, from the numbers you set. Not a promise of income.</p>`;
+    const go = () => { const v = readSliders(el, S), rev = v.gwN * v.gwP, hrs = v.gwN * v.gwH, per = hrs ? (rev - v.gwT) / hrs : 0;
+      $('#gwK', el).innerHTML = [['Money in a month', money(rev)], ['Hours a month', hrs + ' h'], ['Per hour after tools', money(per)]].map(k => `<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('')
+        + `<div class="note ${hrs > 120 ? 'acc' : 'ok'}">${hrs > 120 ? 'That is a full schedule. Time for templates, a price raise for new clients, or part-time help.' : 'Room to grow. Add monthly clients before hiring anyone.'}</div>`; };
+    el.addEventListener('input', go); go();
+  }
+});
+
 // ================= MAKE MONEY: daily work, scoreboard, real income, offers =================
 const isoDay = (d = new Date()) => new Date(d.getTime() - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
 const addDays = (iso, n) => { const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + n); return isoDay(d); };
@@ -2300,6 +2415,8 @@ const GLOSSARY = [
   ['Copy (ad copy)', 'The words in an ad: the headline and the text.'], ['Conversion', 'When someone does what the ad asked: books, buys, calls or fills in a form.'],
   ['Landing page', 'One web page made just for an ad, with one clear button.'], ['Organic', 'Free posts and visits, not paid ads.'],
   ['Engagement', 'Likes, comments, shares and saves on a post.'], ['Case study', 'A short true story about one client: the problem, what you did and the real result, shared with their permission.'],
+  ['Google Business Profile', 'The free Google listing that shows a business on Maps and Search, with hours, photos and reviews.'], ['Discovery call', 'A first call where you ask questions to learn what the client really needs.'],
+  ['Onboarding', 'Everything you do to start working with a new client: agreement, invoice, files and access.'],
   ['Special Ad Categories', 'Facebook rules for ads about housing, jobs, credit and other financial services, and politics. They limit who you can target.']
 ];
 const SOURCES = [
@@ -2745,16 +2862,8 @@ const MENTOR = {
     ['Offer a monthly plan to your last gig client or your warmest lead.', 'msg', 1],
     ['Save your best message, proposal and quote as copy-paste templates.'],
     ['Write down this month\'s real numbers on the Make Money page.']] },
-  bcourse: { name: 'Brand', goal: 'Sell your first $299 Brand Kit', tool: ['#brand', 'Brand Maker'], plain: ["Brand scaling means making a business look and sound the same everywhere, so more people trust it.", "Find where the business looks or sounds different from place to place.", "Write one sentence: who it is for and why it is different.", "Pick the colors, fonts and way of talking, and use them everywhere.", "Plan posts ahead, so the business shows up every week.", "Get more good reviews, because reviews build trust.", "Use posts and ads together to reach more people.", "Track a few numbers and show the owner the progress."],
-    flow: ["You make their brand clear", "More people trust them", "They pay you for it"], moves: [
-    ['Find 3 local businesses whose look changes from place to place. Note what is different.'],
-    ['Run a brand check on 1 real business in the Brand Maker.'],
-    ['Write a one-sentence positioning for that business.'],
-    ['Make a sample brand kit in the Brand Maker and screenshot it.'],
-    ['Plan 12 posts for that business with the content tool.'],
-    ['Send the owner a free review-request text they can use today.', 'aud', 1],
-    ['Offer the $299 Brand Kit to 5 owners, with your sample attached.', 'msg', 5],
-    ['Follow up with everyone who saw your Brand Kit offer.', 'fu', 5]] }
+  bcourse: { name: 'Brand', goal: 'Sell your first $299 Brand Kit, then a monthly plan', tool: ['#brand', 'Brand Maker'], phases: true, plain: ["Brand scaling means making a business look and sound the same everywhere, so more people trust it.", "Decide exactly what you sell, to whom, and for how much.", "Find businesses that have customers but look messy online.", "Show owners a free, specific tip about their own brand.", "On the call, ask and listen, then suggest one package.", "Start every client the same smooth way.", "Find where the business looks or sounds different from place to place.", "Write one sentence: who it is for and why it is different.", "Pick the colors, fonts and way of talking, and use them everywhere.", "Make the Google profile complete and correct, because people often see it first.", "Plan posts ahead, so the business shows up every week.", "Get more good reviews, because reviews build trust.", "Use posts and ads together to reach more people.", "Track a few numbers and show the owner the progress.", "Turn real results into a short, true story that wins the next client.", "Grow with monthly clients, fair price raises and simple systems."],
+    flow: ["You make their brand clear", "More people trust them", "They pay you every month"], moves: [["Find 3 local businesses whose look changes from place to place. Note what is different."],["Write your one-sentence brand offer with the tool, and save it."],["Find 10 businesses that are a great fit and save them in a sheet."],["Send 5 pitch messages, each with one free tip for that business.","msg",5],["Practice the call questions out loud, then book 1 discovery call."],["Get your agreement, invoice and questionnaire ready, so you can start the day someone says yes."],["Run a brand check on 1 real business in the Brand Maker."],["Write a one-sentence positioning for that business."],["Make a sample brand kit in the Brand Maker and screenshot it."],["Check 3 Google profiles in your niche and send one owner the easiest fix.","aud",1],["Plan 12 posts for that business with the content tool."],["Send the owner a free review-request text they can use today.","aud",1],["Offer the $299 Brand Kit to 5 owners, with your sample attached.","msg",5],["Follow up with everyone who saw your Brand Kit offer.","fu",5],["Write a case study from your best work so far. Label sample work as a sample."],["Put your real numbers in the growth calculator and set one goal for next month."]] }
 };
 const MREPLY = {
   well: 'Good. Write down exactly what you said or did, so you can repeat it. Repeating what works is how this turns into steady money.',
@@ -2767,7 +2876,7 @@ const JARGON = [[/\bhooks?\b/i, 'Hook'], [/\bCTA\b/, 'CTA (call to action)'], [/
   [/\btargeting\b/i, 'Targeting'], [/\bA\/B test(s|ing)?\b/i, 'A/B test'], [/\bCPM\b/, 'CPM'], [/\bCTR\b/, 'CTR (click rate)'], [/\bCPC\b/, 'CPC'], [/\bCPL\b/, 'CPL'], [/\bROAS\b/, 'ROAS'],
   [/\bAds Manager\b/i, 'Ads Manager'], [/\bAdvantage\+/, 'Advantage+'], [/\bpixel\b/i, 'Pixel'], [/\bpositioning\b/i, 'Positioning'], [/\bbrand kit\b/i, 'Brand kit'],
   [/\bretainers?\b/i, 'Monthly plan (retainer)'], [/\b(ad copy|the copy)\b/i, 'Copy (ad copy)'], [/\bconversions?\b/i, 'Conversion'], [/\blanding pages?\b/i, 'Landing page'],
-  [/\borganic\b/i, 'Organic'], [/\bengagement\b/i, 'Engagement'], [/\bcase stud(y|ies)\b/i, 'Case study'], [/\bSpecial Ad Categor(y|ies)\b/i, 'Special Ad Categories']];
+  [/\borganic\b/i, 'Organic'], [/\bengagement\b/i, 'Engagement'], [/\bcase stud(y|ies)\b/i, 'Case study'], [/\bSpecial Ad Categor(y|ies)\b/i, 'Special Ad Categories'], [/\bGoogle Business Profile\b/i, 'Google Business Profile'], [/\bdiscovery call\b/i, 'Discovery call'], [/\bonboard(ing)?\b/i, 'Onboarding']];
 const GLOSS_MAP = Object.fromEntries(GLOSSARY.map(g => [g[0], g[1]]));
 function explainify(text, used) { // only touches text, never HTML tags; each word is marked once per step
   return String(text).split(/(<[^>]+>)/).map(part => {
@@ -2779,7 +2888,7 @@ function explainify(text, used) { // only touches text, never HTML tags; each wo
 const mKey = (pb, i) => pb + ':' + i;
 function mentorLessonHTML(pb, L, i, n) {
   const M = MENTOR[pb], mv = M.moves[i] || M.moves[M.moves.length - 1], c = MCHK[mKey(pb, i)], used = new Set(), X = t => explainify(t, used);
-  return `<span class="eyebrow mstep">Step ${i + 1} of ${n}</span><h2>${L.t}</h2>${M.plain[i] ? `<p class="plain"><b>In plain words:</b> ${M.plain[i]}</p>` : ''}
+  return `<span class="eyebrow ${M.phases ? 'mphase' : 'mstep'}">${M.phases ? bcPhase(i) + ' · ' : ''}Step ${i + 1} of ${n}</span><h2>${L.t}</h2>${M.plain[i] ? `<p class="plain"><b>In plain words:</b> ${M.plain[i]}</p>` : ''}
     <div class="mbub"><span class="mav" aria-hidden="true">M</span><div><p class="why">${X(L.why)}</p>${L.tip ? `<p class="mtip"><b>What I'd do:</b> ${X(L.tip)}</p>` : ''}</div></div>
     ${L.how ? `<details class="mhow" ${innerWidth <= 1200 || innerHeight >= 1000 ? 'open' : ''}><summary><span class="tag">Do it with me · ${L.how.length} steps</span></summary><ol class="steps">${L.how.map(h => `<li><span>${X(h)}</span></li>`).join('')}</ol></details>` : ''}
     <div class="mmove" data-pb="${pb}" data-i="${i}"><span class="eyebrow">Your money move today</span><b>${X(mv[0])}</b>
