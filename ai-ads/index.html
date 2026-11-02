@@ -616,6 +616,18 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 @keyframes mKb{from{transform:scale(1.18)}to{transform:scale(1)}}
 #phNote{font-size:.74rem;text-align:center;max-width:560px;margin:0}
 #phNote button{background:none;border:0;color:var(--accent);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
+/* ---------- mentorship ---------- */
+.mgoal{font-size:.8rem;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}@media (max-width:700px){.mgoal{white-space:normal}}.mgoal b{color:var(--text)}
+.mbub{display:flex;gap:10px;align-items:flex-start;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.mbub p{margin:0}.mbub .why{font-size:.95rem}
+.mav{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink,#0A0D13);font-weight:800;font-family:var(--f-mono);font-size:.85rem}
+.mtip{font-size:.84rem;color:var(--muted);margin-top:6px!important}.mtip b{color:var(--accent)}
+.mmove{border:1px solid var(--accent);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;background:linear-gradient(180deg,var(--accent-s),transparent)}
+.mmove>b{font-size:.92rem;line-height:1.35}
+.mreply{font-size:.84rem;margin:0;color:var(--text)}
+@media (min-width:1201px) and (max-height:860px){#v-course .vhead h1,#v-first .vhead h1,#v-grow .vhead h1,#v-bcourse .vhead h1{font-size:1.4rem;line-height:1.15}#v-course .eyebrow,#v-first .vhead .eyebrow,#v-grow .vhead .eyebrow,#v-bcourse .vhead .eyebrow{margin:0}#v-course,#v-first,#v-grow,#v-bcourse{gap:8px}}
+.mhow summary{cursor:pointer;list-style:none;width:fit-content}.mhow summary::-webkit-details-marker{display:none}.mhow[open] summary{margin-bottom:6px}
+.mfaq{border:1px solid var(--line);border-radius:10px;padding:8px 10px}.mfaq summary{cursor:pointer;font-weight:600;font-size:.88rem}.mfaq p{font-size:.86rem;margin:6px 0 0}
 /* ---------- bigger ad area ---------- */
 .maker{max-width:1200px;gap:40px}
 .maker .phone{--h:min(800px,calc(100vh - 172px));--ar:.5172}
@@ -684,7 +696,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
     <a href="#earn" data-v="earn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c0-1.4-1.3-2.5-3-2.5s-3 1-3 2.3c0 3.2 6 1.7 6 5 0 1.4-1.3 2.7-3 2.7s-3-1.1-3-2.5M12 5.5v13"/></svg>Make Money</a>
     <a href="#pricing" data-v="pricing"><svg viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg>Pricing</a>
     <a href="#prompts" data-v="prompts"><svg viewBox="0 0 24 24"><path d="M4 6l6 6-6 6"/><path d="M12 18h8"/></svg>AI Prompts</a>
-    <span class="navlabel">Guides</span>
+    <span class="navlabel">Mentorship</span>
     <a href="#course" data-v="course"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>Ads Playbook</a>
     <a href="#bcourse" data-v="bcourse"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><circle cx="12" cy="10" r="3"/></svg>Brand Playbook</a>
     <a href="#first" data-v="first"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>Clients Playbook</a>
@@ -701,7 +713,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 <!-- COURSE -->
 <section class="view" id="v-course" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">Guide</span><h1>Ads playbook</h1></div>
+    <div><span class="eyebrow">Mentorship</span><h1>Ads playbook</h1></div>
     <div class="row"><div class="progress"><i id="cProg" style="width:0"></i></div><span class="mono muted" id="cProgT"></span></div>
   </div>
   <div class="stepnav" id="stepNav"></div>
@@ -712,7 +724,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 <!-- FIRST CLIENTS -->
 <section class="view" id="v-first" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">Guide</span><h1>Clients playbook</h1></div>
+    <div><span class="eyebrow">Mentorship</span><h1>Clients playbook</h1></div>
     <div class="row"><div class="progress"><i id="fcProg" style="width:0"></i></div><span class="mono muted" id="fcProgT"></span></div>
   </div>
   <div class="stepnav" id="fcNav"></div>
@@ -723,7 +735,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 <!-- GROW -->
 <section class="view" id="v-grow" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">Guide</span><h1>Freelance playbook</h1></div>
+    <div><span class="eyebrow">Mentorship</span><h1>Freelance playbook</h1></div>
     <div class="row"><div class="progress"><i id="grProg" style="width:0"></i></div><span class="mono muted" id="grProgT"></span></div>
   </div>
   <div class="stepnav" id="grNav"></div>
@@ -734,7 +746,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 <!-- BRAND COURSE -->
 <section class="view" id="v-bcourse" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">Guide</span><h1>Brand playbook</h1></div>
+    <div><span class="eyebrow">Mentorship</span><h1>Brand playbook</h1></div>
     <div class="row"><div class="progress"><i id="bcProg" style="width:0"></i></div><span class="mono muted" id="bcProgT"></span></div>
   </div>
   <div class="stepnav" id="bcNav"></div>
@@ -1020,6 +1032,9 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 <div class="toast" id="toast" role="status"></div>
 <div class="helpwrap" id="moreDlg" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-label="More for this ad" style="width:min(640px,100%)"><div class="row" style="justify-content:space-between"><h2>More for this ad</h2><button class="btn sm ghost" id="moreClose">Close</button></div><div class="tabs" id="outTabs"></div><div id="outPane" class="scroll" style="max-height:60vh;max-height:60dvh"></div><button class="btn sm ghost" id="copyAll" style="align-self:flex-start">Copy everything</button></div></div>
 <div class="helpwrap" id="bigDlg" hidden><div class="bigbox" role="dialog" aria-modal="true" aria-label="Big view of your ad"><div class="row"><button class="btn sm play" data-play><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Play demo</button><button class="btn sm ghost" id="bigClose">Close</button></div><div id="bigStage"></div><p class="dim" style="font-size:.78rem;text-align:center">Big view. Good for showing a business owner a demo.</p></div></div>
+<div class="helpwrap" id="mAsk" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-label="Ask your mentor"><div class="row" style="justify-content:space-between"><h2>Ask your mentor</h2><button class="btn sm ghost" id="mAskClose">Close</button></div>
+  <div class="row" style="flex-wrap:nowrap;gap:6px"><input type="text" id="mAskQ" aria-label="Your question" placeholder="e.g. What do I say when they ask for results?"><button class="btn sm" id="mAskGo">Ask</button></div>
+  <div id="mAskOut" class="stack" style="gap:8px;margin-top:6px"></div></div></div>
 <div class="helpwrap" id="help" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-labelledby="helpT"><button class="btn sm ghost" id="helpClose" style="align-self:flex-end">Got it</button><div id="helpBody" class="stack" style="gap:12px"></div></div></div>
 <script>
 // ---------- helpers ----------
@@ -1600,9 +1615,7 @@ function renderFirst() {
   const L = FC_LESSONS[fcCur], n = FC_LESSONS.length;
   $('#fcNav').innerHTML = FC_LESSONS.map((l, i) => `<button data-s="${i}" class="${i === fcCur ? 'on' : ''} ${fcDone.includes(i) ? 'done' : ''}"><b>${String(i + 1).padStart(2, '0')}</b>${l.s}</button>`).join('');
   $('#fcProg').style.width = (fcDone.length / n * 100) + '%'; $('#fcProgT').textContent = `${fcDone.length}/${n} done`;
-  $('#fcLesson').innerHTML = `<span class="eyebrow">Step ${fcCur + 1} of ${n}</span><h2>${L.t}</h2><p class="why">${L.why}</p>
-    <div class="stack" style="gap:8px"><span class="tag">How to do it</span><ol class="steps">${L.how.map(h => `<li><span>${h}</span></li>`).join('')}</ol></div>
-    <div class="note acc tip"><b>Pro tip:</b> ${L.tip}</div>`;
+  $('#fcLesson').innerHTML = mentorLessonHTML('first', L, fcCur, n);
   const old = $('#fcDemo'), el = old.cloneNode(false); old.replaceWith(el);
   FC_DEMOS[L.demo](el);
   $('#fcPrev').disabled = fcCur === 0;
@@ -1814,9 +1827,7 @@ function renderGrow() {
   const L = GR_LESSONS[grCur], n = GR_LESSONS.length;
   $('#grNav').innerHTML = GR_LESSONS.map((l, i) => `<button data-s="${i}" class="${i === grCur ? 'on' : ''} ${grDone.includes(i) ? 'done' : ''}"><b>${String(i + 1).padStart(2, '0')}</b>${l.s}</button>`).join('');
   $('#grProg').style.width = (grDone.length / n * 100) + '%'; $('#grProgT').textContent = `${grDone.length}/${n} done`;
-  $('#grLesson').innerHTML = `<span class="eyebrow">Step ${grCur + 1} of ${n}</span><h2>${L.t}</h2><p class="why">${L.why}</p>
-    <div class="stack" style="gap:8px"><span class="tag">How to do it</span><ol class="steps">${L.how.map(h => `<li><span>${h}</span></li>`).join('')}</ol></div>
-    <div class="note acc tip"><b>Pro tip:</b> ${L.tip}</div>`;
+  $('#grLesson').innerHTML = mentorLessonHTML('grow', L, grCur, n);
   const old = $('#grDemo'), el = old.cloneNode(false); old.replaceWith(el);
   GR_DEMOS[L.demo](el);
   $('#grPrev').disabled = grCur === 0;
@@ -2076,7 +2087,7 @@ function renderBC() {
   const L = BC_LESSONS[bcCur], n = BC_LESSONS.length;
   $('#bcNav').innerHTML = BC_LESSONS.map((l, i) => `<button data-s="${i}" class="${i === bcCur ? 'on' : ''} ${bcDone.includes(i) ? 'done' : ''}"><b>${String(i + 1).padStart(2, '0')}</b>${l.s}</button>`).join('');
   $('#bcProg').style.width = (bcDone.length / n * 100) + '%'; $('#bcProgT').textContent = `${bcDone.length}/${n} done`;
-  $('#bcLesson').innerHTML = `<span class="eyebrow">Step ${bcCur + 1} of ${n}</span><h2>${L.t}</h2><p class="why">${L.why}</p><div class="stack" style="gap:8px"><span class="tag">How to do it</span><ol class="steps">${L.how.map(h => `<li><span>${h}</span></li>`).join('')}</ol></div><div class="note acc tip"><b>Pro tip:</b> ${L.tip}</div>`;
+  $('#bcLesson').innerHTML = mentorLessonHTML('bcourse', L, bcCur, n);
   const old = $('#bcDemo'), el = old.cloneNode(false); old.replaceWith(el);
   BC_DEMOS[L.demo](el);
   $('#bcPrev').disabled = bcCur === 0;
@@ -2683,6 +2694,120 @@ function photoInit() {
   });
 }
 
+// ================= MENTORSHIP: each playbook step = the mentor's advice + one real money move today + a check-in =================
+// The mentor is this app (rules written by people, plus Claude AI on claude.ai). It is not a real person and never promises income.
+const MENTOR = {
+  course: { name: 'Ads', goal: 'Sell your first $99 Quick Ad Pack', tool: ['#studio', 'Ad Maker'], moves: [
+    ['Read 10 reviews of one real local business. Write down 3 phrases customers use.'],
+    ['Write one offer for a real local business with the offer tool on the right.'],
+    ['Make one ad in the Ad Maker for a real business near you, and save it.'],
+    ['Make the image for that ad (Ad Maker → More → Image prompt).'],
+    ['Record one 15-second vertical video on your phone from the Video script.'],
+    ['Write the targeting for your sample ad: area, ages and interests.'],
+    ['Show your sample ad to 3 business owners (message, text or walk in).', 'aud', 3],
+    ['Make 2 more versions of your sample ad, so you have 3 to test.'],
+    ['Offer the $99 Quick Ad Pack to 5 owners who saw your sample.', 'msg', 5],
+    ['Follow up with everyone who has not replied yet.', 'fu', 5],
+    ['Do the ready check, then send 10 more messages today.', 'msg', 10]] },
+  first: { name: 'Clients', goal: 'Land your first paying client', tool: ['#clients', 'Find Clients'], moves: [
+    ['Set your daily number: 20 first messages a day for 2 weeks. Send the first 5 now.', 'msg', 5],
+    ['Pick 1 business type and 1 city. Write them at the top of a Google Sheet.'],
+    ['Make 3 sample ads for that business type in the Ad Maker, and save them.'],
+    ['Add 20 real businesses to your sheet: name, phone, website, rating.'],
+    ['Run 3 Business Checkups and send each owner their report.', 'aud', 3],
+    ['Send 10 first messages using the scripts.', 'msg', 10],
+    ['Follow up with everyone you messaged 3 or more days ago.', 'fu', 5],
+    ['Practice the call tool twice, then book 1 real call.'],
+    ['Send one quote (Pricing → Quote builder) to your warmest lead.']] },
+  grow: { name: 'Freelance', goal: 'Win your first paid freelance gig', tool: ['#pricing', 'Pricing'], moves: [
+    ['Finish one freelance profile (Upwork, Fiverr or Contra) and publish it.'],
+    ['Send 5 tailored proposals to real job posts.', 'msg', 5],
+    ['Publish 3 packages on your profile: basic, standard and premium.'],
+    ['Post your best sample ad with a 2-line caption on one social account.'],
+    ['Plan 3 posts for this week: an ad makeover, a tip and a sample.'],
+    ['Offer a monthly plan to your last gig client or your warmest lead.', 'msg', 1],
+    ['Save your best message, proposal and quote as copy-paste templates.'],
+    ['Write down this month\'s real numbers on the Make Money page.']] },
+  bcourse: { name: 'Brand', goal: 'Sell your first $299 Brand Kit', tool: ['#brand', 'Brand Maker'], moves: [
+    ['Find 3 local businesses whose look changes from place to place. Note what is different.'],
+    ['Run a brand check on 1 real business in the Brand Maker.'],
+    ['Write a one-sentence positioning for that business.'],
+    ['Make a sample brand kit in the Brand Maker and screenshot it.'],
+    ['Plan 12 posts for that business with the content tool.'],
+    ['Send the owner a free review-request text they can use today.', 'aud', 1],
+    ['Offer the $299 Brand Kit to 5 owners, with your sample attached.', 'msg', 5],
+    ['Follow up with everyone who saw your Brand Kit offer.', 'fu', 5]] }
+};
+const MREPLY = {
+  well: 'Good. Write down exactly what you said or did, so you can repeat it. Repeating what works is how this turns into steady money.',
+  none: 'Normal. Most first messages get no answer, and many replies only come after a follow-up. Send a short, friendly follow-up in 2 to 3 days and keep your daily number going.',
+  stuck: 'Do the smallest version right now: just one (one message, one business, one post). If the words are the problem, copy a script from Find Clients → Scripts and change the name.'
+};
+let MCHK = store.get('mentor', {});
+const mKey = (pb, i) => pb + ':' + i;
+function mentorLessonHTML(pb, L, i, n) {
+  const M = MENTOR[pb], mv = M.moves[i] || M.moves[M.moves.length - 1], c = MCHK[mKey(pb, i)];
+  return `<span class="eyebrow">Step ${i + 1} of ${n}</span><h2>${L.t}</h2>
+    <div class="mbub"><span class="mav" aria-hidden="true">M</span><div><p class="why">${L.why}</p>${L.tip ? `<p class="mtip"><b>What I'd do:</b> ${L.tip}</p>` : ''}</div></div>
+    ${L.how ? `<details class="mhow" ${innerHeight >= 880 || innerWidth <= 1200 ? 'open' : ''}><summary><span class="tag">Do it with me · ${L.how.length} steps</span></summary><ol class="steps">${L.how.map(h => `<li><span>${h}</span></li>`).join('')}</ol></details>` : ''}
+    <div class="mmove" data-pb="${pb}" data-i="${i}"><span class="eyebrow">Your money move today</span><b>${mv[0]}</b>
+      ${c ? `<p class="mreply"><span class="tag green">Done</span> ${MREPLY[c.how] || ''}</p><div class="row" style="gap:6px"><button class="chip" data-mundo>Undo</button><button class="chip" data-mask>Ask your mentor</button></div>`
+        : `<div class="row mchk" style="gap:6px"><span class="dim" style="font-size:.78rem">Did it? How did it go?</span><button class="chip" data-mhow="well">Went well</button><button class="chip" data-mhow="none">No reply yet</button><button class="chip" data-mhow="stuck">I got stuck</button><button class="chip" data-mask>Ask your mentor</button></div>`}
+    </div>`;
+}
+function mentorRerender(pb) { ({ course: renderCourse, first: renderFirst, grow: renderGrow, bcourse: renderBC })[pb](); }
+// the goal line under each mentorship title
+function mentorHeads() {
+  for (const [pb, M] of Object.entries(MENTOR)) {
+    const v = $('#v-' + pb); if (!v) continue; const box = $('.vhead > div', v); if (!box || $('.mgoal', box)) continue;
+    const done = M.moves.filter((_, i) => MCHK[mKey(pb, i)]).length;
+    box.insertAdjacentHTML('beforeend', `<p class="mgoal">Goal: <b>${M.goal}</b> · <span data-mcount="${pb}">${done}/${M.moves.length}</span> moves · <span class="dim" title="Your mentor is this app (rules plus AI on claude.ai), not a real person. Results depend on your work; no income is promised.">mentor = this app, no income promised</span></p>`);
+  }
+}
+function mentorCount(pb) { const M = MENTOR[pb], el = $(`[data-mcount="${pb}"]`); if (el) el.textContent = `${M.moves.filter((_, i) => MCHK[mKey(pb, i)]).length}/${M.moves.length}`; }
+// ask your mentor: Claude AI on claude.ai, quick honest answers everywhere else
+const MFAQ = [
+  ['No one replies to my messages', 'Normal at the start. Send 20 a day, make each one personal (their name and one thing you noticed), attach a sample ad, and follow up after 3 days. Track it on Make Money so you can see what changes.', '#clients', 'Scripts'],
+  ['They said it is too expensive', 'Offer the smaller first step: the $99 Quick Ad Pack, or month one at half price for your first 3 clients. Show the "pays for itself" math on the Pricing page. Never cut your monthly price in half forever.', '#pricing', 'Pricing'],
+  ['I do not know what to charge', 'Start with the Starter or Growth plan from the Pricing page. After 3 happy clients with real results, raise prices for new clients.', '#pricing', 'Pricing'],
+  ['I am scared to message owners', 'Lead with something free: a Business Checkup report or a sample ad made for them. You are giving, not begging. Start with 5 today, not 20.', '#audit', 'Business Checkup']
+];
+async function askMentor(pb, i, q) {
+  const out = $('#mAskOut'), M = MENTOR[pb], L = ({ course: LESSONS, first: FC_LESSONS, grow: GR_LESSONS, bcourse: BC_LESSONS })[pb][i];
+  const sample = await getSample();
+  if (!sample) { out.innerHTML = '<p class="dim" style="font-size:.84rem">Typed questions get an AI answer in the claude.ai version of the app. Here are honest answers to the most common problems:</p>'
+    + MFAQ.map(f => `<details class="mfaq"><summary>${f[0]}</summary><p>${f[1]} <a href="${f[2]}" data-mclose>Open ${f[3]}</a></p></details>`).join(''); return; }
+  out.innerHTML = '<p class="dim">Thinking…</p>';
+  const prompt = `You are a practical, honest business mentor inside an app that helps beginners earn money making AI ads and brand content for local businesses.
+The learner is on the "${M.name}" mentorship, step "${L.t}". Their goal: ${M.goal}. Today's money move: ${M.moves[i] ? M.moves[i][0] : ''}.
+Their question: """${q}"""
+Reply with JSON only: {"answer": "..."}. The answer: plain simple English, under 110 words, 2 to 4 concrete next steps they can do today.
+Rules: never promise income or results, never suggest fake reviews, fake numbers or misleading claims, no hype. If the question is not about this business, gently bring it back.`;
+  try {
+    const r = await withTimeout(sample.json(prompt, { modelTier: 'quick', cache: false }), 40000);
+    out.innerHTML = r && r.answer ? `<div class="mbub"><span class="mav" aria-hidden="true">M</span><p>${esc(r.answer)}</p></div><p class="dim" style="font-size:.74rem">Written by AI. Use your own judgment.</p>` : '<p class="dim">No answer came back. Try asking again.</p>';
+  } catch (e) { out.innerHTML = `<p class="dim">${e && e.code === 'timeout' ? 'The AI took too long. Try again.' : e && e.code === 'not_granted' ? 'AI answers are turned off for this page.' : 'The AI could not answer right now. Try again in a minute.'}</p>`; }
+}
+function mentorInit() {
+  mentorHeads();
+  document.addEventListener('click', e => {
+    const box = e.target.closest('.mmove'); if (box) {
+      const pb = box.dataset.pb, i = +box.dataset.i, k = mKey(pb, i), mv = MENTOR[pb].moves[i] || [];
+      const h = e.target.closest('[data-mhow]'), u = e.target.closest('[data-mundo]'), a = e.target.closest('[data-mask]');
+      if (h) { const did = h.dataset.mhow !== 'stuck', log = did && !!mv[1]; // being stuck is not done work, so it is never counted
+        if (!did) { $('.mreply-tmp', box) && $('.mreply-tmp', box).remove(); box.insertAdjacentHTML('beforeend', `<p class="mreply mreply-tmp">${MREPLY.stuck}</p>`); return; }
+        MCHK[k] = { how: h.dataset.mhow, d: isoDay(), log }; if (log) addAct(mv[1], mv[2]); store.set('mentor', MCHK); toast(log ? 'Logged on Make Money' : 'Nice. Marked done.'); mentorRerender(pb); mentorCount(pb); return; }
+      if (u) { const c = MCHK[k]; if (c && c.log && mv[1] && c.d === isoDay()) addAct(mv[1], -mv[2]); delete MCHK[k]; store.set('mentor', MCHK); mentorRerender(pb); mentorCount(pb); return; }
+      if (a) { $('#mAsk').dataset.pb = pb; $('#mAsk').dataset.i = i; $('#mAskQ').value = ''; $('#mAskOut').innerHTML = ''; $('#mAsk').hidden = false; $('#mAskQ').focus(); return; }
+    }
+    if (e.target.closest('[data-mclose]') || e.target.id === 'mAskClose' || e.target.id === 'mAsk') $('#mAsk').hidden = true;
+  });
+  const send = () => { const q = $('#mAskQ').value.trim(), d = $('#mAsk').dataset; if (q.length < 3) { $('#mAskOut').innerHTML = '<p class="dim">Type your question first.</p>'; return; } askMentor(d.pb, +d.i, q); };
+  $('#mAskGo').addEventListener('click', send);
+  $('#mAskQ').addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') $('#mAsk').hidden = true; });
+}
+
 // ================= OFFER SCORE (used in the course and the studio) =================
 const OFFER_CHECKS = [
   ['Specific: a number, price or time', /\$|\d|%/, 'Add a number: a price, a percent or a time ("$79", "in 24 hours").'],
@@ -2883,9 +3008,7 @@ function renderCourse() {
   const lesson = $('#lesson');
   lesson.hidden = quiz;
   $('#courseBody').style.gridTemplateColumns = quiz ? 'minmax(0,1fr)' : '';
-  lesson.innerHTML = `<span class="eyebrow">Step ${cur + 1} of 10</span><h2>${L.t}</h2><p class="why">${L.why}</p>
-    <div class="stack" style="gap:8px"><span class="tag">How to do it</span><ol class="steps">${L.how.map(h => `<li><span>${h}</span></li>`).join('')}</ol></div>
-    ${L.tip ? `<div class="note acc tip"><b>Pro tip:</b> ${L.tip}</div>` : ''}`;
+  lesson.innerHTML = mentorLessonHTML('course', L, cur, 10);
   const old = $('#demo'), el = old.cloneNode(false); old.replaceWith(el);
   DEMOS[L.demo](el);
   $('#cPrev').disabled = cur === 0;
@@ -3371,7 +3494,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit();
+studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit(); mentorInit();
 show(location.hash.slice(1));
 </script>
 </body>
