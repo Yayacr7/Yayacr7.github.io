@@ -278,6 +278,13 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .lc-biz input{flex:1;min-width:0}
 @media (max-width:1200px){.lc-find{max-height:none;overflow:visible}}
 .lc-note{font-size:.76rem;margin:0;max-width:110ch}
+.lc-list{display:flex;flex-direction:column;gap:10px;min-height:0}
+.lc-paste{display:flex;flex-direction:column;gap:8px}
+.lc-paste textarea{width:100%;resize:vertical;min-height:70px}
+.lc-lgrid{max-height:calc(100vh - 390px);max-height:calc(100dvh - 390px)}
+.lc-card .lc-meta small{display:block;color:var(--dim,#8a93a6);font-size:.7rem}
+.lc-skip{font-size:.78rem;margin:0}
+@media (max-width:1200px){.lc-lgrid{max-height:none;overflow:visible}}
 @media (max-width:1200px){.lc-grid{max-height:none;overflow:visible}}
 @media (max-width:520px){.lc-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
@@ -482,6 +489,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 .adi.L3{background:#0B0B11;color:#fff}
 .adi.L3 .x-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(var(--acc) .25cqw,transparent .25cqw),linear-gradient(90deg,var(--acc) .25cqw,transparent .25cqw);background-size:9cqw 9cqw;opacity:.14}
 .adi.L3 .x-up{font-size:11cqw}
+.adi.L3 .x-out.x-mid{font-size:14cqw}.adi.L3 .x-out.x-long{font-size:10.5cqw}
 .adi.L3 .x-out{font-size:20cqw;line-height:.9;color:transparent;-webkit-text-stroke:.55cqw var(--acc);text-shadow:0 0 5cqw var(--acc);overflow-wrap:anywhere}
 .adi.L3 .x-pill{background:var(--acc);color:var(--acci)}
 /* 4 diagonal */
@@ -783,13 +791,18 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
   <div class="vhead">
     <div><span class="eyebrow">Tool · Minnesota north metro</span><h1>City ad packs</h1>
       <p class="sub" id="lcSub"></p></div>
-    <div class="row" style="gap:8px"><span class="seg" id="lcMode"><button data-m="find">Find businesses</button><button data-m="ads">Ready ads</button></span>
+    <div class="row" style="gap:8px"><span class="seg" id="lcMode"><button data-m="find">Find businesses</button><button data-m="list">My list</button><button data-m="ads">Ready ads</button></span>
       <button class="btn sm ghost" id="lcNew">New designs</button><button class="btn sm ghost" id="lcCopy">Copy all text</button></div>
   </div>
   <div class="row" style="gap:6px" id="lcCities" role="tablist" aria-label="City"></div>
   <div class="lc-grid" id="lcGrid"></div>
   <div class="lc-find" id="lcFind" hidden></div>
-  <p class="dim lc-note">Templates: names, deals and stock photos are samples. Use the real name, a deal the owner agrees to, and a real photo before running. Local places in the hooks were checked Nov 2, 2026.</p>
+  <div class="lc-list" id="lcList" hidden>
+    <form class="lc-paste" id="lcPaste"><textarea id="lcText" rows="4" aria-label="Your list of businesses" placeholder="Paste your list, one business per line: Name | Type | City&#10;Example: Kingdom Coffee (Main St) | Coffee | Maple Grove"></textarea>
+      <div class="row" style="gap:8px"><button class="btn sm">Make all ads</button><button type="button" class="btn sm ghost" id="lcLeads">Add all to Lead tracker</button><button type="button" class="btn sm ghost" id="lcListCopy">Copy all text</button><button type="button" class="btn sm ghost" id="lcClear">Clear list</button><span class="dim" id="lcCount" style="font-size:.8rem"></span></div></form>
+    <div class="lc-grid lc-lgrid" id="lcLGrid"></div>
+  </div>
+  <p class="dim lc-note">Templates: deals and stock photos are samples (in Ready ads, names too). Ads with a real name use plain selling points, not made-up promises; check every line with the owner. Use the real name, a deal the owner agrees to, and a real photo before running. Local places in the hooks were checked Nov 2, 2026.</p>
 </section>
 
 <!-- COURSE -->
@@ -1288,6 +1301,22 @@ const HOOKS = {
   cleaning: ['Come home to clean.', 'Get your weekend back.', 'Dust bunnies are not pets.']
 };
 const hooksFor = k => HOOKS[k] || HOOKS.restaurant;
+// selling points for ads that carry a REAL business name: plain and true for almost any business of that type (no numbers, speeds, warranties or prices)
+const REAL_BEN = {
+  restaurant: ['a warm meal on a cold night', 'a table for the whole crew', 'dinner without the dishes'],
+  dentist: ['a friendly team', 'checkups and cleanings', 'answers before any work starts'],
+  gym: ['a place to start, at any level', 'people to train with', 'a routine you can keep'],
+  roofer: ['roof checks and repairs', 'help before small leaks grow', 'a quote before work starts'],
+  salon: ['a stylist who listens', 'cuts, color and styling', 'a fresh look for the season'],
+  realestate: ['a local agent', 'a plan for your move', 'straight answers about your home'],
+  auto: ['repairs and maintenance', 'straight answers about your car', 'a car ready for winter'],
+  ecommerce: ['things you will actually use', 'gifts people remember', 'a local shop to support'],
+  lawyer: ['a local lawyer', 'answers in plain words', 'help knowing your options'],
+  coffee: ['a warm drink on a cold day', 'a cozy spot to sit', 'your usual, made your way'],
+  hvac: ['furnace checks and repairs', 'a warm house all winter', 'the fix explained before it starts'],
+  medspa: ['skin care made for you', 'a natural-looking approach', 'time that is just for you'],
+  cleaning: ['a clean home without the work', 'more free weekends', 'one less thing on your list']
+};
 function headlines(n, f) {
   const H = hooksFor(f.niche);
   const k = n.kind, c = f.city, o = shortOffer(f.offer), b0 = cap(n.benefits[0]);
@@ -1327,7 +1356,8 @@ function buildPack(f) {
   f = Object.assign({}, f, { proof: (f.proof || '').trim() });
   f.proofT = f.proof || '[Real proof here, e.g. 4.8★ from 120 Google reviews]';
   let n = f.cta ? Object.assign({}, NICHES[f.niche], { cta: f.cta }) : NICHES[f.niche];
-  if (f.pains) n = Object.assign({}, n, { pains: f.pains }); // season-right pains (a furnace in a Minnesota winter, not an AC)
+  if (f.pains) n = Object.assign({}, n, { pains: f.pains });
+  if (f.real && REAL_BEN[f.niche]) n = Object.assign({}, n, { benefits: REAL_BEN[f.niche] }); // a real business: no made-up numbers, warranties or speeds // season-right pains (a furnace in a Minnesota winter, not an AC)
   const hs = f.hooks && f.hooks.length === 3 ? f.hooks.slice() : headlines(n, f), texts = primaryTexts(n, f), g = googleAd(n, f);
   const daily = n.tier === 'high' ? 25 : 15, spend = daily * 7;
   const leadsLo = Math.max(1, Math.round(spend / n.cpl[1])), leadsHi = Math.max(leadsLo + 1, Math.round(spend / n.cpl[0]));
@@ -1622,11 +1652,17 @@ const NATIVE_LAYOUTS = [14, 15]; // look like everyday phone content, not like a
 const PHOTOS = { restaurant: [1435907, 2619967, 1552635], dentist: [6809634, 287237, 6812453], gym: [4164763, 2652236, 7209145], roofer: [18098285, 18815467],
   salon: [853427, 7750099, 705255], realestate: [4626268, 7587880, 8134821], auto: [3686360, 8985514], ecommerce: [4004226, 5632323], lawyer: [5668882, 8693379, 6077326],
   coffee: [312418, 11137171, 12703064], hvac: [20046694, 3964736, 7616651], medspa: [6621357, 7691112], cleaning: [5218022, 4440568] };
+// food photos by cuisine, used for ads with a real restaurant or cafe name so a sushi bar never shows pizza (also free Pexels, no faces or logos; checked by eye Nov 2, 2026)
+const FOOD_PHOTOS = { mex: [14179985, 2087748, 8448339], sushi: [2098134], asian: [17848654, 2347311, 5409319], burger: [1552641, 3219547, 70497], steak: [4765772, 769289],
+  hotpot: [13688385, 6426069], med: [29285458, 8018079], pasta: [769969, 8545576], pizza: [1435907, 2619967, 1552635], boba: [12666797], tea: [15675493, 15582504], bakery: [3892469, 19279845, 1775034] };
+const FOOD_SET = [[/hot ?pot/i, 'hotpot'], [/brazil|steak/i, 'steak'], [/pizza/i, 'pizza'], [/mexican|taco|cantina|zocalo|fiesta|cancun|loro|casita/i, 'mex'], [/italian|italiano|pasta|buona/i, 'pasta'],
+  [/greek|gyro|mediterranean|shawarma/i, 'med'], [/japanese|sushi|osaka/i, 'sushi'], [/thai|asian|chinese|chow mein|mandarin|vietnam|rolls|bowls|lotus|china|basil|lemon grass/i, 'asian'],
+  [/burger|fried chicken|sports bar|bar & grill|roadhouse|wood grill/i, 'burger'], [/boba/i, 'boba'], [/\btea\b|teas/i, 'tea'], [/bakery|crepe|pastr/i, 'bakery']];
 let USERPHOTO = '';
 const PHOTO_POS = { 11137171: '50% 82%', 4440568: '50% 85%', 3964736: '50% 40%' }; // where the subject is, for tight crops
 function photoFor(f, v = 0) {
   if (f.userPhoto) return f.userPhoto;
-  const list = PHOTOS[f.niche] || []; return list.length ? `photos/${list[((f.photoI || 0) + v) % list.length]}.jpg` : '';
+  const list = f.photos || PHOTOS[f.niche] || []; return list.length ? `photos/${list[((f.photoI || 0) + v) % list.length]}.jpg` : '';
 }
 const isPhotoLay = l => PHOTO_LAYOUTS.includes(l);
 const layOf = (f, v) => (((f.layout || 0) + v * 4) % AD_LAYOUTS + AD_LAYOUTS) % AD_LAYOUTS;
@@ -1644,6 +1680,7 @@ const ICONS = {
   coffee: '<path d="M11 27h35v13a14 14 0 0 1-14 14h-7a14 14 0 0 1-14-14z"/><path d="M46 31h4a6 6 0 0 1 0 12h-4"/><path d="M22 8c-3 4 3 7 0 11M32 8c-3 4 3 7 0 11"/>',
   hvac: '<path d="M32 7v50M10 20l44 24M10 44l44-24"/><path d="m27 11 5 5 5-5M27 53l5-5 5 5"/>',
   medspa: '<path d="M32 6l5 17 17 5-17 5-5 17-5-17-17-5 17-5z"/><path d="M51 6l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>',
+  dish: '<path d="M8 46h48"/><path d="M12 46a20 20 0 0 1 40 0"/><path d="M32 22v-5"/><circle cx="32" cy="15" r="2.5"/><path d="M20 52h24"/>',
   cleaning: '<path d="M21 14h19v8H21z"/><path d="M40 17h9"/><path d="M27 22v5h8v-5"/><path d="M22 27h19l2 28H20z"/><circle cx="54" cy="12" r="1.5"/><circle cx="56" cy="19" r="1.5"/><circle cx="52" cy="24" r="1.5"/>'
 };
 const icon = (k, cls = '') => `<svg class="ai ${cls}" viewBox="0 0 64 64" aria-hidden="true">${ICONS[k] || ICONS.medspa}</svg>`;
@@ -1671,21 +1708,21 @@ function creativeHTML(p, v = 0, shape = '') {
   const brand = `<div class="x-brand"><span>${N}</span><span>${C}</span></div>`;
   const L = [
     // 0 big type
-    () => `${brand}${icon(f.niche, 'x-ghost')}<div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${dup ? '' : `<span class="x-cta">${CTA} →</span>`}</div>${P}`,
+    () => `${brand}${icon(f.icon || f.niche, 'x-ghost')}<div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${dup ? '' : `<span class="x-cta">${CTA} →</span>`}</div>${P}`,
     // 1 split scene
-    () => `<div class="x-scene">${icon(f.niche, 'x-hero')}<i class="x-dot d1"></i><i class="x-dot d2"></i><span class="x-tagc">${N}</span></div><div class="x-panel"><div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${P}</div></div>`,
+    () => `<div class="x-scene">${icon(f.icon || f.niche, 'x-hero')}<i class="x-dot d1"></i><i class="x-dot d2"></i><span class="x-tagc">${N}</span></div><div class="x-panel"><div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${P}</div></div>`,
     // 2 coupon
     () => `<div class="x-pat"></div>${brand}<div class="x-h ${font} x-sm">${H}</div><div class="x-coupon"><div class="x-big f-poster">${num ? esc(num) : 'DEAL'}</div><div class="x-cl">${num ? (rest || 'OFF') : O}</div><div class="x-cut">${CTA} · ${C}</div></div>${P}`,
     // 3 neon poster
-    () => `<div class="x-grid"></div>${brand}<div class="x-h f-poster x-up">${H}</div><div class="x-out f-poster">${num ? esc(num) : N}</div><div class="x-row"><span class="x-pill">${PILL}</span></div>`,
+    () => `<div class="x-grid"></div>${brand}<div class="x-h f-poster x-up">${H}</div><div class="x-out f-poster${!num && f.name.length > 22 ? ' x-long' : !num && f.name.length > 14 ? ' x-mid' : ''}">${num ? esc(num) : N}</div><div class="x-row"><span class="x-pill">${PILL}</span></div>`,
     // 4 diagonal
-    () => `${brand}<span class="x-sticker">${num ? esc(num) : 'DEAL'}${num && /\boff\b/i.test(f.offer) ? '<small>OFF</small>' : ''}</span><div class="x-h ${font}">${H}</div>${icon(f.niche, 'x-corner')}<div class="x-row x-low"><span class="x-pill">${PILL}</span></div>`,
+    () => `${brand}<span class="x-sticker">${num ? esc(num) : 'DEAL'}${num && /\boff\b/i.test(f.offer) ? '<small>OFF</small>' : ''}</span><div class="x-h ${font}">${H}</div>${icon(f.icon || f.niche, 'x-corner')}<div class="x-row x-low"><span class="x-pill">${PILL}</span></div>`,
     // 5 checklist
     () => `${brand}<div class="x-h ${font} x-sm">${H}</div><ul class="x-list">${n.benefits.map(b => `<li>${esc(cap(b))}</li>`).join('')}</ul><div class="x-row"><span class="x-btn">${CTA}</span><span class="x-note">${dup ? '' : O}</span></div>${P}`,
     // 6 minimal luxe
     () => `<div class="x-frame"></div><div class="x-mono">${N}</div><div class="x-h f-serif x-center">${H}</div><div class="x-rule"></div><div class="x-center x-offer">${dup ? CTA : O}</div><div class="x-mono x-small">${C}</div>`,
     // 7 circle hero
-    () => `${brand}<div class="x-circle">${icon(f.niche, 'x-cic')}</div><div class="x-h ${font} x-center x-sm">${H}</div><div class="x-row x-cen"><span class="x-pill">${PILL}</span></div>${P}`,
+    () => `${brand}<div class="x-circle">${icon(f.icon || f.niche, 'x-cic')}</div><div class="x-h ${font} x-center x-sm">${H}</div><div class="x-row x-cen"><span class="x-pill">${PILL}</span></div>${P}`,
     // 8 big number / question
     () => num ? `${brand}<div class="x-num f-poster${num.length >= 5 ? ' long' : ''}">${esc(num)}</div><div class="x-numl">${rest || 'OFF'}</div><div class="x-h ${font} x-sm">${H}</div><div class="x-row"><span class="x-btn">${CTA}</span></div>`
       : `${brand}<div class="x-q f-serif">?</div><div class="x-h ${font}">${esc(cap(n.pains[0]))}?</div><div class="x-sub">${esc(f.name)} fixes that. ${O}.</div><div class="x-row"><span class="x-btn">${CTA}</span></div>`,
@@ -2493,7 +2530,7 @@ function renderEarn() {
 
 // ================= HELP: "How this page works" guides + plain-English glossary =================
 const HELP = {
-  local: ['Find real businesses in Coon Rapids, Blaine, Maple Grove, Brooklyn Park and Champlin on Google Maps, then make their ad in one tap. “Ready ads” has a sample ad for every type of business, with local and Minnesota-winter hooks.', ['Pick a city. In “Find businesses”, open Google Maps for a business type.', 'Type a business name from the map and tap “Make their ad”. It also goes into your Lead tracker.', 'Use “New designs” for fresh looks. Show the ad to the owner as a free sample.']],
+  local: ['Find real businesses in Coon Rapids, Blaine, Maple Grove, Brooklyn Park and Champlin on Google Maps, then make their ad in one tap. “Ready ads” has a sample ad for every type of business, with local and Minnesota-winter hooks.', ['Pick a city. In “Find businesses”, open Google Maps for a business type.', 'Type a business name from the map and tap “Make their ad”. It also goes into your Lead tracker. Have a whole list? Paste it in “My list” (Name | Type | City, one per line) to get every ad at once.', 'Use “New designs” for fresh looks. Show the ad to the owner as a free sample.']],
   course: ['A 10-step playbook for making and running ads for a business, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
   bcourse: ['An 8-step playbook for growing a business’s brand, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
   first: ['A 9-step playbook for landing your first paying client, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Do the step for real, then click “Done, next step”.']],
@@ -2752,10 +2789,10 @@ function motionHTML(p, v = 0, shape = '') {
   const brand = `<div class="x-brand"><span>${N}</span><span>${C}</span></div>`;
   const P = f.proof ? `<div class="x-proof">${(f.proof.includes('★') ? '' : '★ ') + esc(f.proof)}</div>` : '';
   const sc = [
-    ph ? `<div class="x-ph m-kb"></div><div class="x-scrim"></div>${brand}<div class="x-h ${font} m-words">${words}</div>` : `${brand}${icon(f.niche, 'm-icon')}<div class="x-h ${font} m-words">${words}</div>`,
+    ph ? `<div class="x-ph m-kb"></div><div class="x-scrim"></div>${brand}<div class="x-h ${font} m-words">${words}</div>` : `${brand}${icon(f.icon || f.niche, 'm-icon')}<div class="x-h ${font} m-words">${words}</div>`,
     `<div class="m-rays"></div><div class="m-deal">${num ? `<div class="x-big f-poster">${esc(num)}</div><div class="m-dl">${rest || 'OFF'}</div>` : `<div class="m-dl" style="font-size:8cqw">${O}</div>`}</div><span class="x-pill">${CTA} →</span>`,
     `<div class="x-h ${font} x-sm">Why ${N}?</div><ul class="x-list">${n.benefits.map((b, i) => `<li style="--i:${i}">${esc(cap(b))}</li>`).join('')}</ul>${P}`,
-    `${icon(f.niche, 'm-ic2')}<div class="m-name ${font}">${N}</div><div class="m-city">${C}</div><span class="x-btn">${CTA} →</span>`
+    `${icon(f.icon || f.niche, 'm-ic2')}<div class="m-name ${font}">${N}</div><div class="m-city">${C}</div><span class="x-btn">${CTA} →</span>`
   ];
   return `<div class="creative ad motion ${shape}" style="${vars}">${sc.map((h, i) => `<div class="adi scene M${i} ${hand ? 'hand' : ''}${i === 0 && ph ? ' onph' : ''}">${h}</div>`).join('')}
     <div class="m-bar">${sc.map(() => '<i><b></b></i>').join('')}</div>
@@ -3114,7 +3151,7 @@ const GEN_STEPS = ['Matching the business type', 'Filling 3 proven copy formulas
 function fields() {
   const n = NICHES[B.niche];
   return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette , layout: B.layout || 0, colorLock: !!B.colorLock, cta: B.cta || '', photoI: B.photoI || 0, userPhoto: USERPHOTO,
-    ...(B.local && B.local.key === B.niche + '|' + B.city.trim() ? { hooks: B.local.hooks, pains: B.local.pains } : {}) };
+    ...(B.local && B.local.key === B.niche + '|' + B.city.trim() ? { hooks: B.local.hooks, pains: B.local.pains, real: !!B.local.real, photos: B.local.photos, icon: B.local.icon } : {}) };
 }
 function studioInit() {
   $('#nicheGrid').innerHTML = Object.entries(NICHES).map(([k, n]) => `<button data-n="${k}">${n.label}</button>`).join('');
@@ -3792,7 +3829,7 @@ const MN_PAINS = { hvac: ['a furnace that quits on the coldest night', 'surprise
 const MAPS_Q = { restaurant: 'restaurants', dentist: 'dentists', gym: 'gyms', roofer: 'roofing contractors', salon: 'hair salons', realestate: 'real estate agents', auto: 'auto repair shops',
   ecommerce: 'boutiques and gift shops', lawyer: 'personal injury lawyers', coffee: 'coffee shops', hvac: 'HVAC and furnace repair', medspa: 'med spas', cleaning: 'house cleaning services' };
 const mapsURL = (k, c) => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(`${MAPS_Q[k]} in ${c}, MN`);
-let lcMode = store.get('lcmode', 'find'); if (lcMode !== 'ads') lcMode = 'find';
+let lcMode = store.get('lcmode', 'find'); if (!['ads', 'list'].includes(lcMode)) lcMode = 'find';
 let lcCity = store.get('lccity', 'Coon Rapids'); if (!MN_CITIES.includes(lcCity)) lcCity = 'Coon Rapids';
 let lcSeed = store.get('lcseed', 0);
 function mnHooks(k, c) {
@@ -3806,10 +3843,60 @@ function mnFields(k, c, i) {
     palette: pool[(h + i) % pool.length], layout: bag[(h * 3 + i) % bag.length], photoI: h % 3, hooks: mnHooks(k, c), pains: MN_PAINS[k] };
 }
 function mnPacks(c) { return Object.keys(NICHES).map((k, i) => buildPack(mnFields(k, c, i))); }
+// ---------- my list: paste real businesses (Name | Type | City), get one ad each; kept only on this device ----------
+const LIST_TYPES = [[/dent|dds|orthodont/i, 'dentist'], [/med ?spa|esthetic|laser|botox/i, 'medspa'], [/hair|salon|barber|cut/i, 'salon'], [/auto|car|tire|brake|collision|mechanic/i, 'auto'],
+  [/roof|exterior|siding|gutter/i, 'roofer'], [/hvac|heat|cool|furnace|air|plumb/i, 'hvac'], [/clean|maid|dust/i, 'cleaning'], [/gym|fitness|boot ?camp|yoga|crossfit/i, 'gym'],
+  [/coffee|cafe|café|espresso|tea|boba/i, 'coffee'], [/restaurant|food|grill|kitchen|diner|bar\b|pizza|bistro/i, 'restaurant'], [/real estate|realtor|realty/i, 'realestate'],
+  [/law|attorney|injury/i, 'lawyer'], [/shop|store|boutique|gift/i, 'ecommerce']];
+// hooks that fit what the business actually sells (from its name or the note in brackets): no claims the owner would have to prove
+const SPECIAL = [[/hot ?pot/i, 'Cold night. Hot pot.'], [/brazil|steakhouse/i, 'Meat, carved at your table.'], [/sports bar/i, 'Game on. Your table’s ready.'],
+  [/pizza/i, 'Pizza night is a plan.'], [/mexican|taco|cantina|zocalo/i, 'Tacos tonight? Obviously.'], [/italian|italiano|pasta/i, 'Pasta night. No dishes.'],
+  [/greek|gyro/i, 'Gyro o’clock.'], [/mediterranean|shawarma/i, 'Shawarma beats leftovers.'], [/japanese|sushi|osaka/i, 'Sushi night, sorted.'],
+  [/thai/i, 'Craving Thai? Same.'], [/pan-asian|asian|rolls|bowls/i, 'Noodles, rolls, bowls. Pick one.'], [/chinese|chow mein|mandarin/i, 'Chow mein beats cooking.'],
+  [/burger|fried chicken/i, 'Burger night. You earned it.'], [/scratch/i, 'Made from scratch. Come taste it.'], [/roadhouse|tavern|bar & grill|wood grill/i, 'Cold out. Warm booth in here.'],
+  [/yemeni/i, 'Ever tried Yemeni coffee?'], [/boba/i, 'Boba run? Say less.'], [/crepe/i, 'Coffee + crepes. Good plan.'], [/bakery/i, 'Pastry + coffee. Good morning.'],
+  [/\btea\b|teas/i, 'Tea time, upgraded.'], [/barber|fade|cutz|kutz/i, 'Fresh cut. Fresh week.', 'salon'], [/spa\b/i, 'Hair done. Mind off.', 'salon'],
+  [/tire/i, 'Winter tires on yet?', 'auto'], [/brake/i, 'Squeaky brakes? Let’s look.', 'auto'], [/collision|body/i, 'Winter fender bender? Breathe.', 'auto'], [/transmission/i, 'Slipping gears? Get a straight answer.', 'auto'],
+  [/performance/i, 'Make it sound right.', 'auto'], [/boot ?camp/i, 'Boot camp. Bring a friend.', 'gym'], [/cosmetic/i, 'The smile you keep hiding.', 'dentist']];
+let lcListText = store.get('lclist', '');
+function parseList(t) {
+  const out = [], skipped = [];
+  t.split(/\n/).map(l => l.trim()).filter(Boolean).forEach(line => {
+    const parts = line.split('|').map(x => x.trim()); const raw = parts[0] || '', note = (raw.match(/\(([^)]*)\)/) || [])[1] || '';
+    const name = raw.replace(/\s*\([^)]*\)?\s*/g, ' ').replace(/\s+/g, ' ').trim();
+    const typeTxt = parts.length > 2 ? parts[1] : raw, cityTxt = parts.length > 2 ? parts[2] : (parts[1] || '');
+    const tm = LIST_TYPES.find(([re]) => re.test(typeTxt)) || LIST_TYPES.find(([re]) => re.test(raw));
+    const city = MN_CITIES.find(c => new RegExp(c, 'i').test(cityTxt || line)) || cityTxt.trim();
+    if (!name || !tm || !city) { skipped.push(line); return; }
+    const sp = SPECIAL.find(([re, , only]) => (!only || only === tm[1]) && re.test(name + ' ' + note));
+    const fs = (tm[1] === 'restaurant' || tm[1] === 'coffee') && FOOD_SET.find(([re]) => re.test(name + ' ' + note));
+    out.push({ name, k: tm[1], city, special: sp ? sp[1] : '', food: fs ? fs[1] : '' });
+  });
+  return { out, skipped };
+}
+function listFields(b, i) {
+  const known = MN_CITIES.includes(b.city), f = mnFields(b.k, known ? b.city : MN_CITIES[0], i);
+  const cityLine = known ? f.hooks[0] : MN_CITY[b.k](b.city), base = hooksFor(b.k);
+  let hooks = [cityLine, MN_SEASON[b.k], MN_FUN[b.k] || base[i % base.length]];
+  hooks = b.special ? [b.special, hooks[(i + 1) % 3], hooks[(i + 2) % 3]] : [hooks[i % 3], hooks[(i + 1) % 3], hooks[(i + 2) % 3]]; // neighbours in the list lead with different hooks
+  const extra = {};
+  if (b.k === 'restaurant' || b.k === 'coffee') { extra.photos = b.food ? FOOD_PHOTOS[b.food] : b.k === 'restaurant' ? [] : undefined; if (b.k === 'restaurant' && b.food !== 'pizza' && b.food !== 'pasta') extra.icon = 'dish'; }
+  return Object.assign(f, { name: b.name, city: b.city, hooks, real: true }, extra);
+}
+function listPacks() { return parseList(lcListText).out.map((b, i) => ({ b, p: buildPack(listFields(b, i)) })); }
+function renderList() {
+  const { out, skipped } = parseList(lcListText); if ($('#lcText').value !== lcListText) $('#lcText').value = lcListText;
+  $('#lcCount').textContent = out.length ? `${out.length} ads${skipped.length ? ` · ${skipped.length} lines skipped` : ''}` : '';
+  $('#lcLGrid').innerHTML = out.map((b, i) => { const p = buildPack(listFields(b, i));
+    return `<button type="button" class="lc-card" data-li="${i}" aria-label="Ad for ${esc(b.name)}, ${esc(b.city)}: ${esc(p.hs[0])}. Edit in Ad Maker">${creativeHTML(p, 0)}<span class="lc-meta"><span style="color:inherit;white-space:normal"><b>${esc(b.name)}</b><small>${esc(p.n.label)} · ${esc(b.city)}</small></span><span>Edit →</span></span></button>`; }).join('')
+    + (skipped.length ? `<p class="dim lc-skip" style="grid-column:1/-1">Skipped (no business type or city found): ${skipped.map(esc).join(' · ')}</p>` : '')
+    + (!out.length && !skipped.length ? '<p class="dim lc-skip" style="grid-column:1/-1">Paste your list above. Each line becomes one ad with the real business name. Your list stays on this device.</p>' : '');
+}
 function renderLocal() {
   $$('#lcMode button').forEach(b => b.classList.toggle('on', b.dataset.m === lcMode));
-  $('#lcGrid').hidden = lcMode !== 'ads'; $('#lcFind').hidden = lcMode !== 'find'; $('#lcNew').hidden = $('#lcCopy').hidden = lcMode !== 'ads';
-  $('#lcSub').textContent = lcMode === 'find' ? 'Open the real, current list on Google Maps, pick a business, type its name here and make its ad.' : 'A ready ad for every type of business in each city. Tap one to edit it.';
+  $('#lcGrid').hidden = lcMode !== 'ads'; $('#lcFind').hidden = lcMode !== 'find'; $('#lcList').hidden = lcMode !== 'list'; $('#lcCities').hidden = lcMode === 'list'; $('#lcNew').hidden = lcMode === 'find'; $('#lcCopy').hidden = lcMode !== 'ads';
+  $('#lcSub').textContent = lcMode === 'find' ? 'Open the real, current list on Google Maps, pick a business, type its name here and make its ad.' : lcMode === 'list' ? 'Paste your list of real businesses and get one ad for each, with their real name. Tap one to edit it.' : 'A ready ad for every type of business in each city. Tap one to edit it.';
+  if (lcMode === 'list') renderList();
   const draft = {}; $$('#lcFind input').forEach(i => { if (i.value) draft[i.name] = i.value; });
   $('#lcFind').innerHTML = Object.keys(NICHES).map(k => `<div class="lc-biz"><div class="lc-top"><b>${esc(NICHES[k].label)}</b><a href="${mapsURL(k, lcCity)}" target="_blank" rel="noopener">All on Google Maps ↗</a></div>
     <form data-mk="${k}"><input type="text" name="${k}" aria-label="${esc(NICHES[k].label)} business name" placeholder="Business name" value="${esc(draft[k] || '')}"><button class="btn sm">Make their ad</button></form></div>`).join('');
@@ -3828,12 +3915,27 @@ function localInit() {
   $('#lcGrid').addEventListener('click', e => {
     const b = e.target.closest('[data-lc]'); if (b) openLocalAd(b.dataset.lc);
   });
+  $('#lcPaste').addEventListener('submit', e => { e.preventDefault(); lcListText = $('#lcText').value; store.set('lclist', lcListText); renderList();
+    const n = parseList(lcListText).out.length; toast(n ? `${n} ads made` : 'No businesses found. Use: Name | Type | City'); });
+  $('#lcLGrid').addEventListener('click', e => { const b = e.target.closest('[data-li]'); if (!b) return; const it = listPacks()[+b.dataset.li]; if (it) openListAd(it.p.f); });
+  $('#lcLeads').addEventListener('click', () => { const have = new Set(leads.map(l => l.biz.toLowerCase())); let n = 0;
+    parseList(lcListText).out.forEach(b => { if (have.has(b.name.toLowerCase())) return; have.add(b.name.toLowerCase()); leads.push({ id: Date.now() + n, biz: b.name, note: `${NICHES[b.k].label} · ${b.city} · sample ad made`, st: 0 }); n++; });
+    store.set('leads', leads); drawK(); toast(n ? `${n} added to your Lead tracker` : 'They are already in your Lead tracker'); });
+  $('#lcListCopy').addEventListener('click', () => { const l = listPacks(); if (!l.length) { toast('Paste your list first'); return; }
+    copyText(l.map(({ p }) => `${p.f.name.toUpperCase()} (${p.n.label}, ${p.f.city}) · the deal is a sample\nHeadlines:\n${p.hs.map((h, i) => 'ABC'[i] + ': ' + h).join('\n')}\nAd text:\n${p.texts[0].t}\nButton: ${p.n.cta}`).join('\n\n----------\n\n')); });
+  $('#lcClear').addEventListener('click', () => { if (lcListText && !confirm('Clear your pasted list? (Leads you added stay.)')) return; lcListText = ''; store.set('lclist', ''); renderList(); });
   renderLocal();
+}
+function openListAd(f) {
+  Object.assign(B, { niche: f.niche, name: f.name, city: f.city, offer: f.offer, aud: f.aud, proof: '', tone: f.tone, palette: f.palette, colorLock: false, layout: f.layout, photoI: f.photoI, cta: '', ai: null, made: true,
+    local: { key: f.niche + '|' + f.city, hooks: f.hooks, pains: f.pains, real: true, photos: f.photos, icon: f.icon } });
+  variant = 0; plat = 'fb'; renderStudio(); location.hash = '#studio';
+  setTimeout(() => showAd(`Ad for ${f.name} (${f.city}). The deal is a sample: change it under “Edit details” to one the owner agrees to.`), 80);
 }
 function openLocalAd(k, realName) {
     const f = mnFields(k, lcCity, Object.keys(NICHES).indexOf(k));
     Object.assign(B, { niche: k, name: realName || f.name, city: f.city, offer: f.offer, aud: f.aud, proof: '', tone: f.tone, palette: f.palette, colorLock: false, layout: f.layout, photoI: f.photoI, cta: '', ai: null, made: true,
-      local: { key: k + '|' + f.city, hooks: f.hooks, pains: f.pains } });
+      local: { key: k + '|' + f.city, hooks: f.hooks, pains: f.pains, real: !!realName } });
     variant = 0; plat = 'fb'; renderStudio(); location.hash = '#studio';
     // the hash change resets the scroll, so show the ad after it
     setTimeout(() => showAd(realName ? `Ad for ${realName} (${f.city}). The deal is a sample: change it under “Edit details” to one the owner agrees to. Added to your Lead tracker.` : `${NICHES[k].label} ad for ${f.city}. Put in the real business name and deal under “Edit details”.`), 80);
