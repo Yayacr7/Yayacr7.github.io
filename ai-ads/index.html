@@ -639,6 +639,43 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 @media (min-width:1201px) and (max-height:860px){.mstep{display:none}}
 .cgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.cgrid .check2{font-size:.8rem;padding:3px 8px!important}@media (max-width:560px){.cgrid{grid-template-columns:minmax(0,1fr)}}
 .mfaq{border:1px solid var(--line);border-radius:10px;padding:8px 10px}.mfaq summary{cursor:pointer;font-weight:600;font-size:.88rem}.mfaq p{font-size:.86rem;margin:6px 0 0}
+/* ---------- stand-out extras: highlight, chat, note card, magazine cover ---------- */
+.ad .x-h mark{background:linear-gradient(transparent 58%,var(--acc) 58%,var(--acc) 92%,transparent 92%);color:inherit;padding:0 .08em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.adi.L3 .x-h mark,.adi.L9 .x-h mark,.adi.L11 .x-h mark,.adi.L16 .x-h mark,.adi.L1 .x-panel .x-h mark,.scene .x-h mark{background:var(--acc);color:var(--acci);text-shadow:none;padding:0 .14em;border-radius:.08em}
+.adi.L4 .x-h mark,.adi.L7 .x-h mark{background:linear-gradient(transparent 58%,var(--pop) 58%,var(--pop) 92%,transparent 92%)}
+/* 14 chat */
+.adi.L14{justify-content:flex-start;gap:4cqw}
+.adi.L14 .x-chathd{display:flex;align-items:center;gap:3cqw;padding-bottom:3cqw;border-bottom:.3cqw solid color-mix(in srgb,var(--ink) 18%,transparent)}
+.adi.L14 .x-av{width:11cqw;height:11cqw;border-radius:50%;background:var(--acc);color:var(--acci);display:grid;place-items:center;font-weight:800;font-size:4cqw;flex:none}
+.adi.L14 .x-chathd b{display:block;font-size:4.4cqw}.adi.L14 .x-chathd small{font-size:3cqw;opacity:.7}
+.adi.L14 .x-chat{display:flex;flex-direction:column;gap:2.6cqw;flex:1;justify-content:center}
+.adi.L14 .x-chat p{margin:0;max-width:80%;padding:2.6cqw 4cqw;border-radius:5cqw;font-size:4.4cqw;line-height:1.28;font-weight:600}
+.adi.L14.long .x-chat p{font-size:3.9cqw}.adi.L14.long .x-typing{display:none!important}.adi.L14.long .them.x-deal{font-size:5.4cqw}
+.adi.L14 .me{align-self:flex-end;background:#fff;color:#111;border-bottom-right-radius:1.4cqw}
+.adi.L14 .them{align-self:flex-start;background:var(--acc);color:var(--acci);border-bottom-left-radius:1.4cqw}
+.adi.L14 .them.x-deal{font-family:"Anton",Impact,sans-serif;font-weight:400;font-size:6.4cqw;text-transform:uppercase;letter-spacing:.01em}
+.adi.L14 .x-typing{align-self:flex-start;background:color-mix(in srgb,var(--ink) 16%,transparent)!important;display:flex;gap:1.4cqw;padding:3cqw 4cqw!important}
+.adi.L14 .x-typing i{width:1.8cqw;height:1.8cqw;border-radius:50%;background:var(--ink);opacity:.6}
+/* 15 note card */
+.adi.L15{justify-content:center;gap:5cqw}
+.adi.L15 .x-note{position:relative;background:#FFFDF6;color:#222;padding:7cqw 6cqw 6cqw;transform:rotate(-2.5deg);box-shadow:0 2cqw 5cqw rgba(0,0,0,.3);border-radius:1cqw;
+  background-image:repeating-linear-gradient(transparent 0 7.6cqw,rgba(70,110,200,.18) 7.6cqw 7.9cqw)}
+.adi.L15 .x-pin{position:absolute;top:-2.4cqw;left:50%;width:6cqw;height:6cqw;border-radius:50%;background:var(--acc);box-shadow:0 .8cqw 1.4cqw rgba(0,0,0,.35);transform:translateX(-50%)}
+.adi.L15 .x-nt{font-family:"Caveat",cursive;font-size:8.4cqw;font-weight:700;line-height:1;margin-bottom:2cqw}
+.adi.L15 ul{list-style:none;margin:0;padding:0;font-family:"Caveat",cursive;font-size:6.2cqw;line-height:1.22}
+.adi.L15 li::before{content:"✓ ";color:#1a8f4c;font-weight:700}
+.adi.L15 .x-nd{margin-top:2.4cqw;font-family:"Caveat",cursive;font-size:6.6cqw;font-weight:700;display:inline-block;background:linear-gradient(transparent 55%,#FFE14D 55%)}
+/* 16 magazine cover */
+.adi.L16{color:#fff;background:#111;justify-content:flex-start;gap:1cqw}
+.adi.L16::before,.adi.L16::after{display:none}
+.adi.L16 .x-ph,.adi.L16 .x-scrim{position:absolute;inset:0;z-index:0}
+.adi.L16 .x-scrim{background:linear-gradient(180deg,rgba(0,0,0,.5) 0,rgba(0,0,0,.05) 32%,rgba(0,0,0,.15) 55%,rgba(0,0,0,.85) 100%)}
+.adi.L16 .x-mast{font-size:15cqw;line-height:.86;letter-spacing:-.01em;overflow-wrap:anywhere;text-shadow:0 .6cqw 3cqw rgba(0,0,0,.35)}
+.adi.L16 .x-issue{font-family:var(--f-mono);font-size:2.8cqw;letter-spacing:.2em;text-transform:uppercase;opacity:.85;border-top:.3cqw solid rgba(255,255,255,.6);padding-top:1.6cqw;width:fit-content}
+.adi.L16 .x-cover{margin-top:auto;display:flex;flex-direction:column;gap:3cqw}
+.adi.L16 .x-h{font-size:8.6cqw;text-shadow:0 .4cqw 3cqw rgba(0,0,0,.5)}
+.adi.L16 .x-burst{right:6cqw;top:42%}
+.tt .adi.L16 .x-burst{top:34%}
 /* ---------- bigger ad area ---------- */
 .maker{max-width:1200px;gap:40px}
 .maker .phone{--h:min(800px,calc(100vh - 172px));--ar:.5172}
@@ -1200,14 +1237,32 @@ function shortOffer(o) {
   const s = o.split(/(?<!\d)\.|\.(?!\d)|[,+(]| with | in /)[0].trim(); // a period inside a price ($29.99) does not end the deal
   return s.length <= 34 ? s : s.slice(0, 34).replace(/\s+\S*$/, '');
 }
+// hand-written scroll-stoppers per business type: specific, curious, and no claims the owner would have to prove
+const HOOKS = {
+  restaurant: ["Dinner's handled. You're welcome.", 'Skip the dishes tonight.', 'Tonight, someone else cooks.'],
+  dentist: ['Scared of the dentist? Same.', 'The cleaning you keep putting off.', 'No lectures. Just clean teeth.'],
+  gym: ['Day one starts here.', 'Hate gyms? Try ours first.', "You don't need to be fit to start."],
+  roofer: ['Look up. When did you last check?', 'Small leak today. Big bill later.', 'Know your roof before the storm.'],
+  salon: ['Book the cut you keep screenshotting.', 'Your hair, on its best day.', 'New season. New hair.'],
+  realestate: ["What's your home worth today?", 'Curious what your house would sell for?', 'Thinking of moving? Start here.'],
+  auto: ["That light on your dash? Let's check.", 'Fix the noise before it gets louder.', 'Car trouble? Get a straight answer.'],
+  ecommerce: ["You'll want two.", 'The one your friends will ask about.', 'Made for the way you actually live.'],
+  lawyer: ['Hurt? Know your options first.', 'Talk to a lawyer before you sign.', 'Insurance said no? Ask us why.'],
+  coffee: ['Your morning, upgraded.', 'Better than your office coffee.', 'Your new morning stop.'],
+  hvac: ['Hot house? Not for long.', 'Fix the AC before the heatwave.', 'Is your AC ready for summer?'],
+  medspa: ['Glow, minus the guesswork.', 'Skin that looks rested.', 'Your skin, on its best day.'],
+  cleaning: ['Come home to clean.', 'Get your weekend back.', 'Dust bunnies are not pets.']
+};
+const hooksFor = k => HOOKS[k] || HOOKS.restaurant;
 function headlines(n, f) {
+  const H = hooksFor(f.niche);
   const k = n.kind, c = f.city, o = shortOffer(f.offer), b0 = cap(n.benefits[0]);
   return {
-    friendly: [`Hey ${c}! ${o}`, `${c}'s friendliest ${k}`, `Meet your new favorite ${k}`],
-    bold: [`Stop ${n.pains[0]}.`, `${b0}. Period.`, `The ${k} ${c} talks about`],
-    urgent: [`This week only: ${o}`, `Last chance: ${o}`, `Book now in ${c}: ${o}`],
-    luxury: [`${f.name}. Simply better.`, `For people who notice the details`, `${b0}, done beautifully`],
-    funny: [n.funny, `Plot twist: the best ${k} is in ${c}`, `${o}. No catch.`]
+    friendly: [`Hey ${c}! ${o}`, H[1], H[0]],
+    bold: [H[0], `${b0}. Period.`, `Stop ${n.pains[0]}.`],
+    urgent: [`This week only: ${o}`, H[1], `Book now in ${c}: ${o}`],
+    luxury: [H[2], `For people who notice the details`, `${b0}, done beautifully`],
+    funny: [n.funny, H[0], `${o}. No catch.`]
   }[f.tone];
 }
 function primaryTexts(n, f) {
@@ -1524,8 +1579,9 @@ function adPal(p, v) {
   const at = Math.max(0, pool.indexOf(base));
   return PALETTES[pool[(at + v) % pool.length]];
 }
-const AD_LAYOUTS = 14; // 0-8 drawn designs, 9-13 photo designs
-const PHOTO_LAYOUTS = [9, 10, 11, 12, 13];
+const AD_LAYOUTS = 17; // 0-8 drawn designs, 9-13 photo designs, 14 chat, 15 note card, 16 magazine cover
+const PHOTO_LAYOUTS = [9, 10, 11, 12, 13, 16];
+const NATIVE_LAYOUTS = [14, 15]; // look like everyday phone content, not like an ad
 // free-license stock photos from Pexels (no faces, no brand logos), stored next to the page in photos/<id>.jpg
 const PHOTOS = { restaurant: [1435907, 2619967, 1552635], dentist: [6809634, 287237, 6812453], gym: [4164763, 2652236, 7209145], roofer: [18098285, 18815467],
   salon: [853427, 7750099, 705255], realestate: [4626268, 7587880, 8134821], auto: [3686360, 8985514], ecommerce: [4004226, 5632323], lawyer: [5668882, 8693379, 6077326],
@@ -1563,8 +1619,11 @@ function adLook(p, v) {
 }
 function creativeHTML(p, v = 0, shape = '') {
   const f = p.f, n = p.n, pal = adPal(p, v); let lay = layOf(f, v);
-  if (isPhotoLay(lay) && !photoFor(f, v)) lay = lay - 9; // no photo for this business type: use a drawn design
-  const H = esc(p.hs[v] || p.hs[0]), O = esc(shortOffer(f.offer)), N = esc(f.name), C = esc(f.city), CTA = esc(n.cta);
+  if (isPhotoLay(lay) && !photoFor(f, v)) lay = lay % 9; // no photo for this business type: use a drawn design
+  // the eye lands on one highlighted part of the headline: the price or %, else the last word or two
+  const emph = h => { const m = h.match(/\$\s?\d[\d.,]*|\d+\s?%/); if (m) return h.replace(m[0], `<mark>${m[0]}</mark>`);
+    const w = h.split(' '); if (w.length < 3) return h; const k = w.length > 5 ? 2 : 1; return w.slice(0, -k).join(' ') + ` <mark>${w.slice(-k).join(' ')}</mark>`; };
+  const H = emph(esc(p.hs[v] || p.hs[0])), Hplain = esc(p.hs[v] || p.hs[0]), O = esc(shortOffer(f.offer)), N = esc(f.name), C = esc(f.city), CTA = esc(n.cta);
   // if the headline already says the deal, the pill shows the button text instead of repeating it
   const dup = (p.hs[v] || '').toLowerCase().includes(shortOffer(f.offer).toLowerCase().slice(0, 14));
   const PILL = dup ? `${CTA} →` : O;
@@ -1584,7 +1643,7 @@ function creativeHTML(p, v = 0, shape = '') {
     // 3 neon poster
     () => `<div class="x-grid"></div>${brand}<div class="x-h f-poster x-up">${H}</div><div class="x-out f-poster">${num ? esc(num) : N}</div><div class="x-row"><span class="x-pill">${PILL}</span></div>`,
     // 4 diagonal
-    () => `${brand}<span class="x-sticker">${num ? esc(num) : 'NEW'}<small>${num ? 'OFF' : 'OFFER'}</small></span><div class="x-h ${font}">${H}</div>${icon(f.niche, 'x-corner')}<div class="x-row x-low"><span class="x-pill">${PILL}</span></div>`,
+    () => `${brand}<span class="x-sticker">${num ? esc(num) : 'DEAL'}${num && /\boff\b/i.test(f.offer) ? '<small>OFF</small>' : ''}</span><div class="x-h ${font}">${H}</div>${icon(f.niche, 'x-corner')}<div class="x-row x-low"><span class="x-pill">${PILL}</span></div>`,
     // 5 checklist
     () => `${brand}<div class="x-h ${font} x-sm">${H}</div><ul class="x-list">${n.benefits.map(b => `<li>${esc(cap(b))}</li>`).join('')}</ul><div class="x-row"><span class="x-btn">${CTA}</span><span class="x-note">${dup ? '' : O}</span></div>${P}`,
     // 6 minimal luxe
@@ -1603,9 +1662,20 @@ function creativeHTML(p, v = 0, shape = '') {
     // 12 polaroid
     () => `${brand}<div class="x-pol"><div class="x-ph"></div><span class="x-cap">${N}</span><i class="x-tape"></i></div><div class="x-h ${font} x-sm">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${dup ? '' : `<span class="x-cta">${CTA} →</span>`}</div>`,
     // 13 round photo + price burst
-    () => `${brand}<div class="x-ring"><div class="x-ph"></div></div>${burst}<div class="x-h ${font} x-center x-sm">${H}</div><div class="x-row x-cen"><span class="x-pill">${PILL}</span></div>`
+    () => `${brand}<div class="x-ring"><div class="x-ph"></div></div>${burst}<div class="x-h ${font} x-center x-sm">${H}</div><div class="x-row x-cen"><span class="x-pill">${PILL}</span></div>`,
+    // 14 chat: looks like a text conversation with the business
+    () => `<div class="x-chathd"><span class="x-av">${esc(initials(f.name))}</span><span><b>${N}</b><small>${C}</small></span></div>
+      <div class="x-chat"><p class="me">${esc(cap(n.pains[0]))}… any ideas?</p><p class="them">${Hplain}</p>${dup ? '' : `<p class="them x-deal">${O}</p>`}<p class="x-typing"><i></i><i></i><i></i></p></div>
+      <div class="x-row x-cen"><span class="x-pill">${CTA} →</span></div>`,
+    // 15 handwritten note card
+    () => `<div class="x-note"><i class="x-pin"></i><div class="x-nt">Why try ${N}</div><ul>${n.benefits.map(b => `<li>${esc(cap(b))}</li>`).join('')}</ul>${dup ? '' : `<div class="x-nd">${O}</div>`}</div>
+      <div class="x-h ${font} x-sm x-center">${H}</div><div class="x-row x-cen"><span class="x-pill">${CTA} →</span></div>`,
+    // 16 magazine cover
+    () => `<div class="x-ph"></div><div class="x-scrim"></div><div class="x-mast f-poster">${N}</div><div class="x-issue">${C} · ${new Date().toLocaleString('en-US', { month: 'long' })}</div>
+      <div class="x-cover"><div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${P}</div></div>${burst}`
   ];
-  return `<div class="creative ad ${shape}${isPhotoLay(lay) ? ' photo' : ''}" style="${vars}"><div class="adi L${lay} ${hand ? 'hand' : ''}">${L[lay]()}</div></div>`;
+  const long = lay === 14 && (n.pains[0].length + (p.hs[v] || '').length + (dup ? 0 : O.length)) > 88;
+  return `<div class="creative ad ${shape}${isPhotoLay(lay) ? ' photo' : ''}" style="${vars}"><div class="adi L${lay} ${hand ? 'hand' : ''}${long ? ' long' : ''}">${L[lay]()}</div></div>`;
 }
 
 // ================= FIRST CLIENTS TRACK =================
@@ -2582,7 +2652,7 @@ async function aiUpgrade(t, change) {
 }
 // every new ad gets a fresh design, and fresh colors unless the person asked for a color
 function freshLook(newColors) {
-  const bag = [...Array(9).keys(), ...PHOTO_LAYOUTS, ...PHOTO_LAYOUTS, ...(USERPHOTO ? PHOTO_LAYOUTS.concat(PHOTO_LAYOUTS) : [])];
+  const bag = [...Array(9).keys(), ...PHOTO_LAYOUTS, ...PHOTO_LAYOUTS, ...NATIVE_LAYOUTS, ...NATIVE_LAYOUTS, ...(USERPHOTO ? PHOTO_LAYOUTS.concat(PHOTO_LAYOUTS) : [])];
   B.layout = bag[Math.floor(Math.random() * bag.length)]; B.photoI = Math.floor(Math.random() * 3);
   if (newColors) { const pool = poolOf(B.niche), bag = pool.concat(pool.filter(i => VIVID.includes(i))); B.palette = bag[Math.floor(Math.random() * bag.length)]; B.colorLock = false; }
 }
@@ -2699,7 +2769,7 @@ function motionInit() {
 }
 
 // ================= OPTIMIZE: one-tap fixes + an honest ad check (basics, not a promise of results) =================
-const OPTS = [['hook', 'Stronger hook'], ['short', 'Shorter text'], ['deal', 'Deal first'], ['local', 'Add the city'], ['read', 'Easier to read'],
+const OPTS = [['pop', 'Make it pop'], ['hook', 'Stronger hook'], ['short', 'Shorter text'], ['deal', 'Deal first'], ['local', 'Add the city'], ['read', 'Easier to read'],
   ['color', 'More color'], ['cta', 'Clearer button'], ['urgent', 'Add urgency'], ['proof', 'Add a real rating'], ['all', 'Fix all']];
 const lumi = h => { const c = h.slice(1).match(/\w\w/g).map(x => parseInt(x, 16) / 255).map(v => v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
 const contrast = (a, b) => { const x = lumi(a), y = lumi(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
@@ -2712,15 +2782,17 @@ function applyOpt(p) {
   for (const [v, h] of Object.entries(B.opt.hs)) if (p.hs[v] != null) p.hs[v] = h;
   for (const [v, t] of Object.entries(B.opt.ts)) if (p.texts[v]) p.texts[v] = { f: p.texts[v].f + ' · optimized', t };
 }
+const GENERIC = /\b(the best|best in town|quality|amazing|top-notch|world-class|#1|number one|simply better|great service|affordable prices?)\b/i;
 const words = t => t.trim().split(/\s+/).filter(Boolean).length;
 function adChecks(p = pack, v = variant) {
   const f = p.f, h = p.hs[v] || '', t = p.texts[v] ? p.texts[v].t : '', pal = adPal(p, v), city = f.city.toLowerCase();
   return [
     { k: 'len', ok: h.length <= 40, t: `Headline is short (${h.length}/40 letters)`, fix: 'short' },
-    { k: 'hook', ok: /\?|\byou|\d|!/i.test(h) || h.toLowerCase().includes(city), t: 'Headline grabs attention (a question, a number or "you")', fix: 'hook' },
+    { k: 'hook', ok: /\?|\byou|\d|!/i.test(h) || h.toLowerCase().includes(city) || words(h) <= 6, t: 'Headline grabs attention (short and punchy, a question, a number or "you")', fix: 'hook' },
     { k: 'deal', ok: /\$|\d|%|free/i.test(f.offer), t: 'Deal is specific (a price, a % or "free")', fix: 'dealfield' },
     { k: 'city', ok: (h + ' ' + t).toLowerCase().includes(city), t: 'Says where (the city)', fix: 'local' },
     { k: 'read', ok: readScore(pal) >= 4.5, t: `Easy to read (text contrast ${readScore(pal).toFixed(1)}, aim for 4.5+)`, fix: 'read' },
+    { k: 'generic', ok: !GENERIC.test(h + ' ' + t), t: 'No generic words (best, quality, amazing…): specific stands out', fix: 'hook' },
     { k: 'text', ok: words(t) <= 55, t: `Ad text is quick to read (${words(t)} words, aim for 55 or less)`, fix: 'short' }
   ];
 }
@@ -2737,10 +2809,16 @@ function setLayoutTo(target) { B.layout = ((target - variant * 4) % AD_LAYOUTS +
 function doOpt(k) {
   const p = pack, f = p.f, n = p.n, v = variant, o = optGet(), h = p.hs[v] || '', so = shortOffer(f.offer), pal = adPal(p, v);
   if (k === 'hook') {
-    const hooks = [`Tired of ${n.pains[0]}?`, `${f.city}, this one's for you`, `${so} at ${f.name}`, `Still ${n.pains[1]}?`, `${cap(n.benefits[0])} in ${f.city}`, `You deserve ${n.benefits[0]}`]
+    const hooks = [...hooksFor(f.niche), `Tired of ${n.pains[0]}?`, `${f.city}, this one's for you`, `${so} at ${f.name}`, `Still ${n.pains[1]}?`, `${cap(n.benefits[0])} in ${f.city}`, `You deserve ${n.benefits[0]}`]
       .filter(x => x !== h); const fit = hooks.filter(x => x.length <= 40), list = fit.length ? fit : hooks;
     o.hs[v] = list[o.hook++ % list.length]; return 'New hook: a line that speaks to the customer.';
   }
+  if (k === 'pop') { // a scroll-stopping look + a bright color set + a hand-written hook, all at once
+    const stand = [16, 14, 9, 3, 11, 15, 13], list = stand.filter(l => !isPhotoLay(l) || photoFor(f, v)), cur = layOf(f, v), nx = list[(list.indexOf(cur) + 1) % list.length];
+    setLayoutTo(nx); const now = PALETTES.indexOf(pal), viv = poolOf(f.niche).filter(i => VIVID.includes(i) && i !== now);
+    if (!B.colorLock && viv.length) { B.palette = viv[Math.floor(Math.random() * viv.length)]; }
+    const hk = hooksFor(f.niche).filter(x => x !== h); o.hs[v] = hk[(o.hook++) % hk.length];
+    return 'Made it pop: a stand-out design, bold colors and a fresh hook.'; }
   if (k === 'short') {
     let nh = h; if (nh.length > 40) { nh = nh.slice(0, 38).replace(/\s+\S*$/, ''); o.hs[v] = nh; }
     o.ts[v] = `${nh}\n\n${f.offer.replace(/\.$/, '')}.${f.proof ? ' ' + f.proof + '.' : ''} Here in ${f.city}.\nTap "${n.cta}".`; return 'Shorter: people read ads in about 2 seconds.';
