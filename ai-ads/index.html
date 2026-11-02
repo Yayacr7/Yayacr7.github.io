@@ -268,6 +268,15 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .lc-card .lc-meta{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:.76rem;padding:0 2px 2px}
 .lc-card .lc-meta b{font-weight:600}
 .lc-card .lc-meta span{color:var(--accent);white-space:nowrap}
+.lc-find{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px;overflow:auto;max-height:calc(100vh - 270px);max-height:calc(100dvh - 270px);padding:2px}
+.lc-biz{display:flex;flex-direction:column;gap:8px;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--panel)}
+.lc-biz .lc-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.lc-biz .lc-top b{font-weight:600;font-size:.92rem}
+.lc-biz .lc-top a{font-size:.8rem;color:var(--accent);text-decoration:none;white-space:nowrap}
+.lc-biz .lc-top a:hover{text-decoration:underline}
+.lc-biz form{display:flex;gap:6px}
+.lc-biz input{flex:1;min-width:0}
+@media (max-width:1200px){.lc-find{max-height:none;overflow:visible}}
 .lc-note{font-size:.76rem;margin:0;max-width:110ch}
 @media (max-width:1200px){.lc-grid{max-height:none;overflow:visible}}
 @media (max-width:520px){.lc-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
@@ -773,11 +782,13 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 <section class="view" id="v-local" hidden>
   <div class="vhead">
     <div><span class="eyebrow">Tool · Minnesota north metro</span><h1>City ad packs</h1>
-      <p class="sub">A ready ad for every type of business in each city. Tap one to edit it.</p></div>
-    <div class="row" style="gap:8px"><button class="btn sm ghost" id="lcNew">New designs</button><button class="btn sm ghost" id="lcCopy">Copy all text</button></div>
+      <p class="sub" id="lcSub"></p></div>
+    <div class="row" style="gap:8px"><span class="seg" id="lcMode"><button data-m="find">Find businesses</button><button data-m="ads">Ready ads</button></span>
+      <button class="btn sm ghost" id="lcNew">New designs</button><button class="btn sm ghost" id="lcCopy">Copy all text</button></div>
   </div>
   <div class="row" style="gap:6px" id="lcCities" role="tablist" aria-label="City"></div>
   <div class="lc-grid" id="lcGrid"></div>
+  <div class="lc-find" id="lcFind" hidden></div>
   <p class="dim lc-note">Templates: names, deals and stock photos are samples. Use the real name, a deal the owner agrees to, and a real photo before running. Local places in the hooks were checked Nov 2, 2026.</p>
 </section>
 
@@ -2482,7 +2493,7 @@ function renderEarn() {
 
 // ================= HELP: "How this page works" guides + plain-English glossary =================
 const HELP = {
-  local: ['Ready ads for every type of business in Coon Rapids, Blaine, Maple Grove, Brooklyn Park and Champlin, with local and Minnesota-winter hooks.', ['Pick a city at the top.', 'Tap an ad to open it in the Ad Maker, then put in the real business name and deal.', 'Use “New designs” for fresh looks. Show the ad to the owner as a free sample.']],
+  local: ['Find real businesses in Coon Rapids, Blaine, Maple Grove, Brooklyn Park and Champlin on Google Maps, then make their ad in one tap. “Ready ads” has a sample ad for every type of business, with local and Minnesota-winter hooks.', ['Pick a city. In “Find businesses”, open Google Maps for a business type.', 'Type a business name from the map and tap “Make their ad”. It also goes into your Lead tracker.', 'Use “New designs” for fresh looks. Show the ad to the owner as a free sample.']],
   course: ['A 10-step playbook for making and running ads for a business, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
   bcourse: ['An 8-step playbook for growing a business’s brand, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
   first: ['A 9-step playbook for landing your first paying client, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Do the step for real, then click “Done, next step”.']],
@@ -3777,6 +3788,11 @@ const MN_FUN = { auto: 'Ope. That’s your check engine light.', hvac: 'Uff da. 
 // winter-right sample deals and worries (samples: the owner sets the real deal)
 const MN_OFFER = { hvac: '$79 furnace tune-up', auto: '$29.99 oil change + a free battery test', roofer: 'Free roof and ice dam check with photos' };
 const MN_PAINS = { hvac: ['a furnace that quits on the coldest night', 'surprise repair bills', 'waiting days for a tech'], roofer: ['ice dams and leaks', 'surprise repair bills after a storm', 'not knowing what shape the roof is in'], auto: ['a car that won’t start on a cold morning', 'surprise repair bills', 'waiting all day for a quote'] };
+// what to type into Google Maps for each business type
+const MAPS_Q = { restaurant: 'restaurants', dentist: 'dentists', gym: 'gyms', roofer: 'roofing contractors', salon: 'hair salons', realestate: 'real estate agents', auto: 'auto repair shops',
+  ecommerce: 'boutiques and gift shops', lawyer: 'personal injury lawyers', coffee: 'coffee shops', hvac: 'HVAC and furnace repair', medspa: 'med spas', cleaning: 'house cleaning services' };
+const mapsURL = (k, c) => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(`${MAPS_Q[k]} in ${c}, MN`);
+let lcMode = store.get('lcmode', 'find'); if (lcMode !== 'ads') lcMode = 'find';
 let lcCity = store.get('lccity', 'Coon Rapids'); if (!MN_CITIES.includes(lcCity)) lcCity = 'Coon Rapids';
 let lcSeed = store.get('lcseed', 0);
 function mnHooks(k, c) {
@@ -3791,23 +3807,36 @@ function mnFields(k, c, i) {
 }
 function mnPacks(c) { return Object.keys(NICHES).map((k, i) => buildPack(mnFields(k, c, i))); }
 function renderLocal() {
+  $$('#lcMode button').forEach(b => b.classList.toggle('on', b.dataset.m === lcMode));
+  $('#lcGrid').hidden = lcMode !== 'ads'; $('#lcFind').hidden = lcMode !== 'find'; $('#lcNew').hidden = $('#lcCopy').hidden = lcMode !== 'ads';
+  $('#lcSub').textContent = lcMode === 'find' ? 'Open the real, current list on Google Maps, pick a business, type its name here and make its ad.' : 'A ready ad for every type of business in each city. Tap one to edit it.';
+  const draft = {}; $$('#lcFind input').forEach(i => { if (i.value) draft[i.name] = i.value; });
+  $('#lcFind').innerHTML = Object.keys(NICHES).map(k => `<div class="lc-biz"><div class="lc-top"><b>${esc(NICHES[k].label)}</b><a href="${mapsURL(k, lcCity)}" target="_blank" rel="noopener">All on Google Maps ↗</a></div>
+    <form data-mk="${k}"><input type="text" name="${k}" aria-label="${esc(NICHES[k].label)} business name" placeholder="Business name" value="${esc(draft[k] || '')}"><button class="btn sm">Make their ad</button></form></div>`).join('');
   $('#lcCities').innerHTML = MN_CITIES.map(c => `<button class="chip ${c === lcCity ? 'on' : ''}" role="tab" aria-selected="${c === lcCity}" data-city="${c}">${c}</button>`).join('');
   $('#lcGrid').innerHTML = mnPacks(lcCity).map((p, i) => `<button type="button" class="lc-card" data-lc="${p.f.niche}" aria-label="${esc(p.n.label)} ad for ${esc(lcCity)}: ${esc(p.hs[0])}. Edit in Ad Maker">${creativeHTML(p, 0)}<span class="lc-meta"><b>${esc(p.n.label)}</b><span>Edit →</span></span></button>`).join('');
 }
 function localInit() {
+  $('#lcMode').addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (!b) return; lcMode = b.dataset.m; store.set('lcmode', lcMode); renderLocal(); });
+  $('#lcFind').addEventListener('submit', e => {
+    e.preventDefault(); const fm = e.target.closest('[data-mk]'), name = fm.querySelector('input').value.trim(); if (!name) { fm.querySelector('input').focus(); toast('Type the business name first'); return; }
+    const k = fm.dataset.mk; addLead(name, `${NICHES[k].label} · ${lcCity} · sample ad made`); openLocalAd(k, name);
+  });
   $('#lcCities').addEventListener('click', e => { const b = e.target.closest('[data-city]'); if (!b) return; lcCity = b.dataset.city; store.set('lccity', lcCity); renderLocal(); });
   $('#lcNew').addEventListener('click', () => { lcSeed++; store.set('lcseed', lcSeed); renderLocal(); toast('New designs'); });
   $('#lcCopy').addEventListener('click', () => copyText(mnPacks(lcCity).map(p => `${p.n.label.toUpperCase()} (${p.f.city}) · sample name and deal\nHeadlines:\n${p.hs.map((h, i) => 'ABC'[i] + ': ' + h).join('\n')}\nAd text:\n${p.texts[0].t}\nButton: ${p.n.cta}`).join('\n\n----------\n\n')));
   $('#lcGrid').addEventListener('click', e => {
-    const b = e.target.closest('[data-lc]'); if (!b) return;
-    const k = b.dataset.lc, f = mnFields(k, lcCity, Object.keys(NICHES).indexOf(k));
-    Object.assign(B, { niche: k, name: f.name, city: f.city, offer: f.offer, aud: f.aud, proof: '', tone: f.tone, palette: f.palette, colorLock: false, layout: f.layout, photoI: f.photoI, cta: '', ai: null, made: true,
+    const b = e.target.closest('[data-lc]'); if (b) openLocalAd(b.dataset.lc);
+  });
+  renderLocal();
+}
+function openLocalAd(k, realName) {
+    const f = mnFields(k, lcCity, Object.keys(NICHES).indexOf(k));
+    Object.assign(B, { niche: k, name: realName || f.name, city: f.city, offer: f.offer, aud: f.aud, proof: '', tone: f.tone, palette: f.palette, colorLock: false, layout: f.layout, photoI: f.photoI, cta: '', ai: null, made: true,
       local: { key: k + '|' + f.city, hooks: f.hooks, pains: f.pains } });
     variant = 0; plat = 'fb'; renderStudio(); location.hash = '#studio';
     // the hash change resets the scroll, so show the ad after it
-    setTimeout(() => showAd(`${NICHES[k].label} ad for ${f.city}. Put in the real business name and deal under “Edit details”.`), 80);
-  });
-  renderLocal();
+    setTimeout(() => showAd(realName ? `Ad for ${realName} (${f.city}). The deal is a sample: change it under “Edit details” to one the owner agrees to. Added to your Lead tracker.` : `${NICHES[k].label} ad for ${f.city}. Put in the real business name and deal under “Edit details”.`), 80);
 }
 const VIEWS = ['studio', 'local', 'brand', 'audit', 'clients', 'earn', 'pricing', 'prompts', 'course', 'bcourse', 'first', 'grow', 'business'];
 const ALIAS = { builder: 'studio', home: 'studio', learn: 'course' };
