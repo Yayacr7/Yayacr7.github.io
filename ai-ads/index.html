@@ -802,7 +802,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
       <div class="row" style="gap:8px"><button class="btn sm">Make all ads</button><button type="button" class="btn sm ghost" id="lcLeads">Add all to Lead tracker</button><button type="button" class="btn sm ghost" id="lcListCopy">Copy all text</button><button type="button" class="btn sm ghost" id="lcClear">Clear list</button><span class="dim" id="lcCount" style="font-size:.8rem"></span></div></form>
     <div class="lc-grid lc-lgrid" id="lcLGrid"></div>
   </div>
-  <p class="dim lc-note">Ready ads are templates: names, deals and stock photos are samples. Ads with a real name have no deal and no made-up promises; add a deal only if the owner agrees to it. Use the real name, a deal the owner agrees to, and a real photo before running. Local places in the hooks were checked Nov 2, 2026.</p>
+  <p class="dim lc-note">Ads with a real name are finished and ready: no deals and no made-up promises. Post one only after the owner says yes. Ready ads are templates (names, deals and photos are examples). Local places in the hooks were checked Nov 2, 2026.</p>
 </section>
 
 <!-- COURSE -->
@@ -2543,7 +2543,7 @@ function renderEarn() {
 
 // ================= HELP: "How this page works" guides + plain-English glossary =================
 const HELP = {
-  local: ['Find real businesses in Coon Rapids, Blaine, Maple Grove, Brooklyn Park and Champlin on Google Maps, then make their ad in one tap. “Ready ads” has a sample ad for every type of business, with local and Minnesota-winter hooks.', ['Pick a city. In “Find businesses”, open Google Maps for a business type.', 'Type a business name from the map and tap “Make their ad”. It also goes into your Lead tracker. Have a whole list? Paste it in “My list” (Name | Type | City, one per line) to get every ad at once.', 'Use “New designs” for fresh looks. Show the ad to the owner as a free sample.']],
+  local: ['Find real businesses in Coon Rapids, Blaine, Maple Grove, Brooklyn Park and Champlin on Google Maps, then make their ad in one tap. “Ready ads” has a sample ad for every type of business, with local and Minnesota-winter hooks.', ['Pick a city. In “Find businesses”, open Google Maps for a business type.', 'Type a business name from the map and tap “Make their ad”. It also goes into your Lead tracker. Have a whole list? Paste it in “My list” (Name | Type | City, one per line) to get every ad at once.', 'Use “New designs” for fresh looks. Your ads are finished and ready: show one to the owner, and post it once they say yes.']],
   course: ['A 10-step playbook for making and running ads for a business, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
   bcourse: ['An 8-step playbook for growing a business’s brand, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
   first: ['A 9-step playbook for landing your first paying client, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Do the step for real, then click “Done, next step”.']],
@@ -2973,6 +2973,7 @@ function photoNote() {
   const shown = !!$('#preview .creative.ad.photo');
   $('#phNote').innerHTML = !shown ? (USERPHOTO ? '' : 'Tip: <button type="button" data-q="photo">add your own photo</button> for a real-looking ad.')
     : USERPHOTO ? 'Your photo: only use photos you took or may use. <button type="button" data-q="nophoto">Remove</button>'
+    : B.local && B.local.real ? 'Stock photo (Pexels, free to use in ads). <button type="button" data-q="photo">Use their own photo</button> if they send one.'
     : 'Free stock photo (Pexels). <button type="button" data-q="photo">Use a real photo</button> before running it.';
   $$('#refine [data-q="nophoto"]').forEach(b => b.hidden = !USERPHOTO);
   $$('#refine [data-q="photo"]').forEach(b => b.textContent = USERPHOTO ? 'Change my photo' : 'Use my photo');
@@ -3920,7 +3921,7 @@ function localInit() {
   $('#lcMode').addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (!b) return; lcMode = b.dataset.m; store.set('lcmode', lcMode); renderLocal(); });
   $('#lcFind').addEventListener('submit', e => {
     e.preventDefault(); const fm = e.target.closest('[data-mk]'), name = fm.querySelector('input').value.trim(); if (!name) { fm.querySelector('input').focus(); toast('Type the business name first'); return; }
-    const k = fm.dataset.mk; addLead(name, `${NICHES[k].label} · ${lcCity} · sample ad made`); openLocalAd(k, name);
+    const k = fm.dataset.mk; addLead(name, `${NICHES[k].label} · ${lcCity} · ad made`); openLocalAd(k, name);
   });
   $('#lcCities').addEventListener('click', e => { const b = e.target.closest('[data-city]'); if (!b) return; lcCity = b.dataset.city; store.set('lccity', lcCity); renderLocal(); });
   $('#lcNew').addEventListener('click', () => { lcSeed++; store.set('lcseed', lcSeed); renderLocal(); toast('New designs'); });
@@ -3932,7 +3933,7 @@ function localInit() {
     const n = parseList(lcListText).out.length; toast(n ? `${n} ads made` : 'No businesses found. Use: Name | Type | City'); });
   $('#lcLGrid').addEventListener('click', e => { const b = e.target.closest('[data-li]'); if (!b) return; const it = listPacks()[+b.dataset.li]; if (it) openListAd(it.p.f); });
   $('#lcLeads').addEventListener('click', () => { const have = new Set(leads.map(l => l.biz.toLowerCase())); let n = 0;
-    parseList(lcListText).out.forEach(b => { if (have.has(b.name.toLowerCase())) return; have.add(b.name.toLowerCase()); leads.push({ id: Date.now() + n, biz: b.name, note: `${NICHES[b.k].label} · ${b.city} · sample ad made`, st: 0 }); n++; });
+    parseList(lcListText).out.forEach(b => { if (have.has(b.name.toLowerCase())) return; have.add(b.name.toLowerCase()); leads.push({ id: Date.now() + n, biz: b.name, note: `${NICHES[b.k].label} · ${b.city} · ad made`, st: 0 }); n++; });
     store.set('leads', leads); drawK(); toast(n ? `${n} added to your Lead tracker` : 'They are already in your Lead tracker'); });
   $('#lcListCopy').addEventListener('click', () => { const l = listPacks(); if (!l.length) { toast('Paste your list first'); return; }
     copyText(l.map(({ p }) => `${p.f.name.toUpperCase()} (${p.n.label}, ${p.f.city})\nHeadlines:\n${p.hs.map((h, i) => 'ABC'[i] + ': ' + h).join('\n')}\nAd text:\n${p.texts[0].t}\nButton: ${p.n.cta}`).join('\n\n----------\n\n')); });
