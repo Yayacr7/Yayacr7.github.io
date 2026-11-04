@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Imagine Smiles</title>
+<meta name="description" content="Demo app for Imagine Smiles in Blaine, MN: hours, call and directions. Not the official app.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f6f2ff">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Imagine Smiles">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{--hl:#7c4dee;--bg:#f6f2ff;--ink:#22114a;--acc:#7c4dee;--acc2:#16b8d4;--on:#ffffff;--surf:rgba(255,255,255,.72);--line:rgba(0,0,0,.09);--dim:rgba(0,0,0,.6);--disp:"Plus Jakarta Sans",Georgia,serif}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,-apple-system,sans-serif;overflow-x:hidden}
+a{color:inherit}
+.demo{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;padding:8px 16px;padding-top:max(8px,env(safe-area-inset-top));font-size:.74rem;line-height:1.35;text-align:center;background:rgba(0,0,0,.06);color:var(--dim)}
+.demo b{color:var(--ink);font-weight:600}
+.app{max-width:480px;margin:0 auto;padding:0 16px calc(104px + env(safe-area-inset-bottom));position:relative}
+.blob{position:absolute;border-radius:50%;filter:blur(48px);opacity:.45;pointer-events:none;z-index:0}
+.fx{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.b1{width:260px;height:260px;background:var(--acc);top:-60px;right:max(-90px,calc(50% - 330px));animation:float 14s ease-in-out infinite}
+.b2{width:200px;height:200px;background:var(--acc2);top:170px;left:max(-110px,calc(50% - 350px));animation:float 18s ease-in-out infinite reverse}
+@keyframes float{50%{transform:translate(-26px,34px) scale(1.1)}}
+.top,.hero,.card,.acts{position:relative;z-index:1}
+.top{display:flex;align-items:center;gap:12px;padding:22px 0 8px}
+.logo{width:52px;height:52px;border-radius:15px;flex:none;display:grid;place-items:center;background:linear-gradient(135deg,var(--acc),var(--acc2));box-shadow:0 8px 24px -8px var(--acc)}
+.logo svg{width:30px;height:30px}
+.top h1{font:800 1.12rem/1.2 var(--disp);margin:0;letter-spacing:-.01em}
+.top p{margin:2px 0 0;font-size:.8rem;color:var(--dim)}
+.hero{padding:26px 0 8px}
+.hooks{display:grid;min-height:3.2em;font:800 clamp(2.05rem,10vw,2.75rem)/1.06 var(--disp);letter-spacing:-.02em}
+.hook{grid-area:1/1;opacity:0;transform:translateY(14px);transition:opacity .6s,transform .6s}
+.hook.on{opacity:1;transform:none}
+mark{background:linear-gradient(transparent 58%,var(--acc2) 58%,var(--acc2) 92%,transparent 92%);color:inherit;padding:0 .04em}
+.dots{display:flex;gap:6px;margin:14px 0 0}
+.dots i{width:7px;height:7px;border-radius:9px;background:var(--line);transition:width .4s,background .4s}
+.dots i.on{width:22px;background:var(--acc)}
+.status{display:inline-flex;align-items:center;gap:9px;margin-top:20px;padding:9px 14px;border-radius:99px;background:var(--surf);border:1px solid var(--line);font-weight:600;font-size:.9rem;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.status .pulse{width:10px;height:10px;border-radius:50%;background:#9aa0a6;flex:none}
+.status.open .pulse{background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:pulse 2s infinite}
+.status.soon .pulse{background:#f59e0b}
+.status.closed .pulse{background:#ef4444}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+.status small{font-weight:500;color:var(--dim)}
+.acts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:26px 0 18px}
+.act{display:flex;flex-direction:column;align-items:center;gap:7px;padding:14px 4px 12px;border-radius:18px;background:var(--surf);border:1px solid var(--line);text-decoration:none;font:600 .78rem Inter,sans-serif;color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s}
+.act:active{transform:scale(.95)}
+.act svg{width:24px;height:24px}
+.act.main{background:var(--acc);color:var(--on);border-color:transparent;box-shadow:0 10px 26px -12px var(--acc)}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:22px;padding:18px;margin:0 0 14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.card h2{font:800 1.05rem/1.2 var(--disp);margin:0 0 12px}
+.why{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.why li{display:flex;gap:12px;align-items:center;font-weight:500}
+.why li span{width:34px;height:34px;flex:none;border-radius:11px;display:grid;place-items:center;background:var(--acc);color:var(--on);font:800 .9rem var(--disp)}
+.week{display:grid;gap:2px;margin:0}
+.week div{display:flex;justify-content:space-between;gap:12px;padding:9px 10px;border-radius:10px;font-size:.94rem}
+.week dt{font-weight:600}
+.week dd{margin:0;color:var(--dim);text-align:right}
+.week div.today{background:var(--acc);color:var(--on)}
+.week div.today dd{color:inherit;font-weight:600}
+.big{display:flex;align-items:center;gap:14px}
+.big svg{width:46px;height:46px;flex:none}
+.big b{display:block;font:800 1.25rem/1.15 var(--disp)}
+.big p{margin:2px 0 0;color:var(--dim);font-size:.88rem;overflow-wrap:anywhere}
+.big>div{min-width:0}
+.emerg{background:linear-gradient(135deg,var(--acc),var(--acc2));color:var(--on);border:0}
+.emerg p{color:inherit;opacity:.85}
+.note{font-size:.76rem;color:var(--dim);text-align:center;margin:18px 8px 0;line-height:1.45}
+.install{display:none;margin:14px auto 0;padding:11px 18px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--ink);font:600 .86rem Inter,sans-serif;cursor:pointer}
+.install.show{display:block}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;gap:10px;justify-content:center;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(255,255,255,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+.bar a{flex:1;max-width:224px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:16px;font-weight:700;text-decoration:none;font-size:.98rem}
+.bar .call{background:var(--acc);color:var(--on)}
+.bar .dir{background:var(--surf);border:1px solid var(--line)}
+.bar svg{width:19px;height:19px}
+.toast{position:fixed;left:50%;bottom:96px;transform:translate(-50%,20px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:.86rem;transition:.3s;z-index:9;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.rise{animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (min-width:700px){.app{padding-top:20px}}
+</style>
+</head>
+<body>
+<div class="demo"><span><b>Demo app</b> made by AdSharp to show Imagine Smiles. Not their official app.</span><span>Hours may change: call to confirm.</span></div>
+<div class="fx" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i></div>
+<main class="app">
+  <header class="top rise"><div class="logo"><svg viewBox="0 0 64 64" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8c-8 0-13 7-12 15 1 7 4 11 5 18 1 8 2 17 7 17 4 0 4-10 7-14 2-3 6-3 8 0 3 4 3 14 7 14 5 0 6-9 7-17 1-7 4-11 5-18 1-8-4-15-12-15-6 0-8 3-11 3s-5-3-11-3z"/></svg></div><div><h1>Imagine Smiles</h1><p>Dentist · Blaine, MN · Dr. Case</p></div></header>
+  <section class="hero">
+    <div class="hooks rise" style="animation-delay:.08s" aria-live="polite"><span class="hook on">Imagine a 7am <mark>cleaning.</mark></span><span class="hook">Meet Dr. Case <mark>in Blaine.</mark></span><span class="hook">Imagine Smiles. Picture <mark>yours.</mark></span></div>
+    <div class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+    <div class="status rise" id="status" style="animation-delay:.16s"><i class="pulse"></i><span id="stT">Checking hours…</span></div>
+  </section>
+  <nav class="acts rise" style="animation-delay:.24s" aria-label="Quick actions">
+    <a class="act main" href="tel:+17632698650"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8h-8a4 4 0 0 0-4 4c0 23 19 42 42 42a4 4 0 0 0 4-4v-8l-11-5-6 6c-7-3-15-11-18-18l6-6z"/></svg>Call</a>
+    <a class="act" href="https://www.google.com/maps/search/?api=1&query=Imagine%20Smiles%2C%20Blaine%2C%20MN" target="_blank" rel="noopener"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M32 58S12 38 12 25a20 20 0 0 1 40 0c0 13-20 33-20 33z"/><circle cx="32" cy="25" r="7"/></svg>Directions</a>
+    <a class="act" href="mailto:info@imagine-smiles.com"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="14" width="48" height="36" rx="5"/><path d="m10 18 22 17 22-17"/></svg>Email</a>
+    <button class="act" id="share" type="button"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M32 40V8M20 20 32 8l12 12M14 30v20a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V30"/></svg>Share</button>
+  </nav>
+  
+  <section class="card rise" style="animation-delay:.34s"><h2>Why Imagine Smiles</h2><ul class="why"><li><span>1</span>Appointments from 7am</li><li><span>2</span>Dr. Case, here in Blaine</li><li><span>3</span>Open Monday to Friday</li></ul></section>
+  <section class="card rise" style="animation-delay:.4s"><h2>Hours</h2>
+    <dl class="week" id="week"></dl></section>
+  <section class="card rise" style="animation-delay:.46s"><div class="big"><svg viewBox="0 0 64 64" fill="none" stroke="var(--acc)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8c-8 0-13 7-12 15 1 7 4 11 5 18 1 8 2 17 7 17 4 0 4-10 7-14 2-3 6-3 8 0 3 4 3 14 7 14 5 0 6-9 7-17 1-7 4-11 5-18 1-8-4-15-12-15-6 0-8 3-11 3s-5-3-11-3z"/></svg><div><b>Call to book</b><p><a href="tel:+17632698650">763-269-8650</a> · <a href="mailto:info@imagine-smiles.com">info@imagine-smiles.com</a><br>Blaine, Minnesota</p></div></div></section>
+  <button class="install" id="install" type="button">Add to home screen</button>
+  <p class="note">Demo made by AdSharp to show the owner. Not affiliated with or approved by Imagine Smiles yet. Hours and phone may change: please call to confirm.</p>
+</main>
+<div class="bar"><a class="call" href="tel:+17632698650"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8h-8a4 4 0 0 0-4 4c0 23 19 42 42 42a4 4 0 0 0 4-4v-8l-11-5-6 6c-7-3-15-11-18-18l6-6z"/></svg>Call now</a><a class="dir" href="https://www.google.com/maps/search/?api=1&query=Imagine%20Smiles%2C%20Blaine%2C%20MN" target="_blank" rel="noopener"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M32 58S12 38 12 25a20 20 0 0 1 40 0c0 13-20 33-20 33z"/><circle cx="32" cy="25" r="7"/></svg>Directions</a></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const D = {"week":[null,[420,1020],[420,1020],[420,1020],[420,960],[420,780],null],"emergency":false,"name":"Imagine Smiles"};
+const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const t12 = m => { const h = Math.floor(m / 60) % 24, mm = m % 60; if (h === 12 && !mm) return 'noon'; if (h === 0 && !mm) return 'midnight'; return (h % 12 || 12) + (mm ? ':' + String(mm).padStart(2, '0') : '') + (h < 12 ? 'am' : 'pm'); };
+function now() { // the business's own clock (Minnesota), whatever the phone's time zone
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', weekday: 'short', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(new Date()).map(x => [x.type, x.value]));
+  return { d: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(p.weekday), m: (+p.hour % 24) * 60 + +p.minute };
+}
+function status() {
+  const { d, m } = now(), el = document.getElementById('status'), T = document.getElementById('stT'), w = D.week, today = w[d];
+  el.className = 'status';
+  const set = (cls, html) => { el.classList.add(cls); T.innerHTML = html; };
+  if (Array.isArray(today) && m >= today[0] && m < today[1]) {
+    const left = today[1] - m;
+    return left <= 60 ? set('soon', 'Closing soon <small>· until ' + t12(today[1]) + '</small>') : set('open', 'Open now <small>· until ' + t12(today[1]) + '</small>');
+  }
+  if (today === null && !D.emergency) { // this day is not on the list: never claim it is closed
+    for (let i = 1; i < 8; i++) { const dd = (d + i) % 7, h = w[dd]; if (Array.isArray(h)) return set('unk', 'Today’s hours not listed <small>· call to check</small>'); }
+  }
+  for (let i = 0; i < 8; i++) { // next opening
+    const dd = (d + i) % 7, h = w[dd];
+    if (Array.isArray(h) && (i > 0 || m < h[0])) {
+      const when = i === 0 ? 'today' : i === 1 ? 'tomorrow' : DAYS[dd];
+      return set(D.emergency ? 'open' : 'closed', (D.emergency ? 'Emergency line open 24/7 <small>· office opens ' : 'Closed now <small>· opens ') + when + ' ' + t12(h[0]) + '</small>');
+    }
+  }
+  if (D.emergency) return set('open', 'Emergency line open 24/7');
+  set('closed', 'Call to check today’s hours');
+}
+const wk = document.getElementById('week');
+if (wk) { const d = now().d; wk.innerHTML = [1, 2, 3, 4, 5, 6, 0].map(i => { const h = D.week[i]; return '<div' + (i === d ? ' class="today"' : '') + '><dt>' + DAYS[i] + (i === d ? ' · today' : '') + '</dt><dd>' + (h === 'closed' ? 'Closed' : Array.isArray(h) ? t12(h[0]) + ' – ' + t12(h[1]) : 'Not listed: call') + '</dd></div>'; }).join(''); }
+status(); setInterval(status, 30000);
+// rotating headlines
+const hs = [...document.querySelectorAll('.hook')], ds = [...document.querySelectorAll('.dots i')]; let k = 0;
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => { hs[k].classList.remove('on'); ds[k].classList.remove('on'); k = (k + 1) % hs.length; hs[k].classList.add('on'); ds[k].classList.add('on'); }, 3600);
+const toast = t => { const e = document.getElementById('toast'); e.textContent = t; e.classList.add('on'); setTimeout(() => e.classList.remove('on'), 2200); };
+document.getElementById('share').addEventListener('click', async () => {
+  const data = { title: D.name, text: D.name + ': hours, call and directions', url: location.href };
+  try { if (navigator.share) { await navigator.share(data); return; } await navigator.clipboard.writeText(location.href); toast('Link copied'); } catch (e) { if (e.name !== 'AbortError') toast('Copy the link from the address bar'); }
+});
+// install as an app
+let ev = null; const ib = document.getElementById('install');
+const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); ev = e; ib.classList.add('show'); });
+if (!standalone && /iphone|ipad|ipod/i.test(navigator.userAgent)) ib.classList.add('show');
+ib.addEventListener('click', async () => { if (ev) { ev.prompt(); ev = null; ib.classList.remove('show'); } else toast('Tap Share, then “Add to Home Screen”'); });
+if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+</script>
+</body>
+</html>

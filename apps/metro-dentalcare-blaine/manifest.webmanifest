@@ -1,0 +1,33 @@
+{
+  "name": "Metro Dentalcare Blaine",
+  "short_name": "Metro Dental",
+  "description": "Hours, call and directions for Metro Dentalcare Blaine in Blaine, MN (demo).",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fdfaf3",
+  "theme_color": "#fdfaf3",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
