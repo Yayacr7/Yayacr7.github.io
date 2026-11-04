@@ -261,25 +261,6 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 @media (max-width:1180px){.outputs .pane{max-height:none}}
 .cc{font-family:var(--f-mono);font-size:.68rem;padding:1px 6px;border-radius:5px;margin-left:6px}
 .cc.ok{background:var(--green-s);color:var(--green)} .cc.no{background:var(--red-s);color:var(--red)}
-.lc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px;overflow:auto;max-height:calc(100vh - 270px);max-height:calc(100dvh - 270px);padding:2px 4px 2px 2px}
-.lc-card{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:12px;padding:6px;background:var(--panel);cursor:pointer;text-align:left;color:inherit;font:inherit}
-.lc-card:hover,.lc-card:focus-visible{border-color:var(--accent)}
-.lc-card .creative.ad{border-radius:8px}
-.lc-card .lc-meta{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:.76rem;padding:0 2px 2px}
-.lc-card .lc-meta b{font-weight:600}
-.lc-card .lc-meta span{color:var(--accent);white-space:nowrap}
-.lc-find{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px;overflow:auto;max-height:calc(100vh - 270px);max-height:calc(100dvh - 270px);padding:2px}
-.lc-biz{display:flex;flex-direction:column;gap:8px;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--panel)}
-.lc-biz .lc-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.lc-biz .lc-top b{font-weight:600;font-size:.92rem}
-.lc-biz .lc-top a{font-size:.8rem;color:var(--accent);text-decoration:none;white-space:nowrap}
-.lc-biz .lc-top a:hover{text-decoration:underline}
-.lc-biz form{display:flex;gap:6px}
-.lc-biz input{flex:1;min-width:0}
-@media (max-width:1200px){.lc-find{max-height:none;overflow:visible}}
-.lc-note{font-size:.76rem;margin:0;max-width:110ch}
-@media (max-width:1200px){.lc-grid{max-height:none;overflow:visible}}
-@media (max-width:520px){.lc-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
 .gallery .g{border-radius:10px;overflow:hidden;cursor:pointer;position:relative;border:1px solid var(--line)}
 .gallery .g .x{position:absolute;top:5px;right:5px;z-index:5;border:0;border-radius:6px;width:22px;height:22px;cursor:pointer;background:rgba(0,0,0,.55);color:#fff}
@@ -695,6 +676,13 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 .adi.L16 .x-h{font-size:8.6cqw;text-shadow:0 .4cqw 3cqw rgba(0,0,0,.5)}
 .adi.L16 .x-burst{right:6cqw;top:42%}
 .tt .adi.L16 .x-burst{top:34%}
+/* client logo (uploaded by the user) */
+.ad .x-lgw{display:inline-flex;align-items:center;background:rgba(255,255,255,.94);border-radius:1.4cqw;padding:1cqw 1.8cqw;box-shadow:0 .4cqw 1.6cqw rgba(0,0,0,.15)}
+.ad .x-logo{display:block;height:9cqw;width:auto;max-width:46cqw;object-fit:contain}
+.ad .x-brand{align-items:center}
+.adi.L16 .x-lgw{margin-bottom:2cqw}.adi.L16 .x-logo{height:10cqw;max-width:52cqw}
+.adi.L14 .x-avl{background:#fff;padding:1.2cqw;box-sizing:border-box}.adi.L14 .x-avl img{width:100%;height:100%;object-fit:contain}
+.fb .av.avl{padding:3px;box-sizing:border-box;box-shadow:inset 0 0 0 1px #ddd}.fb .av.avl img{width:100%;height:100%;object-fit:contain;border-radius:50%}
 /* ---------- bigger ad area ---------- */
 .maker{max-width:1200px;gap:40px}
 .maker .phone{--h:min(800px,calc(100vh - 172px));--ar:.5172}
@@ -756,7 +744,6 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
   <a class="logo" href="#studio"><i>A</i><span>AdSharp.ai</span></a>
   <nav class="nav" id="nav">
     <a href="#studio" data-v="studio"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"/><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Make an Ad</a>
-    <a href="#local" data-v="local"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>City Ad Packs</a>
     <a href="#brand" data-v="brand"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>Make a Brand</a>
     <a href="#audit" data-v="audit"><svg viewBox="0 0 24 24"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/></svg>Check a Business</a>
     <span class="navlabel">Clients & money</span>
@@ -777,20 +764,6 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 </aside>
 
 <main class="stage" id="stage">
-
-<!-- CITY AD PACKS -->
-<section class="view" id="v-local" hidden>
-  <div class="vhead">
-    <div><span class="eyebrow">Tool · Minnesota north metro</span><h1>City ad packs</h1>
-      <p class="sub" id="lcSub"></p></div>
-    <div class="row" style="gap:8px"><span class="seg" id="lcMode"><button data-m="find">Find businesses</button><button data-m="ads">Ready ads</button></span>
-      <button class="btn sm ghost" id="lcNew">New designs</button><button class="btn sm ghost" id="lcCopy">Copy all text</button></div>
-  </div>
-  <div class="row" style="gap:6px" id="lcCities" role="tablist" aria-label="City"></div>
-  <div class="lc-grid" id="lcGrid"></div>
-  <div class="lc-find" id="lcFind" hidden></div>
-  <p class="dim lc-note">Templates: names, deals and stock photos are samples. Use the real name, a deal the owner agrees to, and a real photo before running. Local places in the hooks were checked Nov 2, 2026.</p>
-</section>
 
 <!-- COURSE -->
 <section class="view" id="v-course" hidden>
@@ -924,7 +897,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
         <div class="tabs" id="rfTabs"><button data-rt="change" class="on">Change it</button><button data-rt="opt">Optimize <span class="tag" id="adScore"></span></button></div>
         <div class="stack" data-rp="change" style="gap:8px">
           <div class="row" style="flex-wrap:nowrap;gap:6px"><input type="text" id="rfT" aria-label="What to change" placeholder="e.g. make it blue, more funny, say 30% off"><button class="btn sm" id="rfGo">Update ad</button></div>
-          <div class="row" style="gap:6px"><button class="chip" data-q="design">New design</button><button class="chip" data-q="variant">Another version</button><button class="chip" data-q="color">Change colors</button><button class="chip" data-q="style">Change style</button><button class="chip" data-q="photo">Use my photo</button><button class="chip" data-q="nophoto" hidden>Remove my photo</button><input type="file" id="upPhoto" accept="image/*" hidden></div>
+          <div class="row" style="gap:6px"><button class="chip" data-q="design">New design</button><button class="chip" data-q="variant">Another version</button><button class="chip" data-q="color">Change colors</button><button class="chip" data-q="style">Change style</button><button class="chip" data-q="photo">Use my photo</button><button class="chip" data-q="nophoto" hidden>Remove my photo</button><button class="chip" data-q="logo">Add logo</button><button class="chip" data-q="nologo" hidden>Remove logo</button><input type="file" id="upPhoto" accept="image/*" hidden><input type="file" id="upLogo" accept="image/png,image/jpeg,image/svg+xml,image/webp" hidden></div>
         </div>
         <div class="optbox" data-rp="opt" hidden>
           <div class="row" id="optBtns" style="gap:6px"></div>
@@ -1326,9 +1299,7 @@ function videoSegs(n, f, h) {
 function buildPack(f) {
   f = Object.assign({}, f, { proof: (f.proof || '').trim() });
   f.proofT = f.proof || '[Real proof here, e.g. 4.8★ from 120 Google reviews]';
-  let n = f.cta ? Object.assign({}, NICHES[f.niche], { cta: f.cta }) : NICHES[f.niche];
-  if (f.pains) n = Object.assign({}, n, { pains: f.pains }); // season-right pains (a furnace in a Minnesota winter, not an AC)
-  const hs = f.hooks && f.hooks.length === 3 ? f.hooks.slice() : headlines(n, f), texts = primaryTexts(n, f), g = googleAd(n, f);
+  const n = f.cta ? Object.assign({}, NICHES[f.niche], { cta: f.cta }) : NICHES[f.niche], hs = headlines(n, f), texts = primaryTexts(n, f), g = googleAd(n, f);
   const daily = n.tier === 'high' ? 25 : 15, spend = daily * 7;
   const leadsLo = Math.max(1, Math.round(spend / n.cpl[1])), leadsHi = Math.max(leadsLo + 1, Math.round(spend / n.cpl[0]));
   const pal = PALETTES[f.palette], segs = videoSegs(n, f, hs[0]);
@@ -1344,7 +1315,7 @@ function buildPack(f) {
 const initials = s => s.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
 function fbHTML(p, v = 0, bar = true) {
   const pal = adPal(p, v);
-  return `<div class="fb">${bar ? '<div class="bar"><span>9:41</span><span>●●● ▮</span></div>' : ''}<div class="hd"><div class="av" style="background:${pal.accent};color:${pal.accInk}">${esc(initials(p.f.name))}</div>
+  return `<div class="fb">${bar ? '<div class="bar"><span>9:41</span><span>●●● ▮</span></div>' : ''}<div class="hd"><div class="av${p.f.logo ? ' avl' : ''}" style="background:${p.f.logo ? '#fff' : pal.accent};color:${pal.accInk}">${p.f.logo ? `<img src="${p.f.logo}" alt="">` : esc(initials(p.f.name))}</div>
     <div class="who"><b>${esc(p.f.name)}</b><span>Sponsored · Public</span></div></div>
     <div class="tx">${esc(p.texts[v].t)}</div>${creativeHTML(p, v)}
     <div class="lk"><div style="min-width:0"><small>${esc(p.g.url)}</small><b>${esc(p.hs[v])}</b></div><span class="cta">${esc(p.n.cta)}</span></div>
@@ -1668,12 +1639,14 @@ function creativeHTML(p, v = 0, shape = '') {
   const { font, hand, vars } = adLook(p, v);
   const bLabel = num ? esc(num) : 'DEAL', bSmall = num ? (/\boff\b/i.test(f.offer) ? 'OFF' : '') : '';
   const burst = `<span class="x-burst" style="clip-path:${BURST}"><b class="f-poster">${bLabel}</b>${bSmall ? `<small>${bSmall}</small>` : ''}</span>`;
-  const brand = `<div class="x-brand"><span>${N}</span><span>${C}</span></div>`;
+  // the client's own logo (uploaded by you, with their permission) replaces the typed name wherever the name shows
+  const LG = f.logo ? `<span class="x-lgw"><img class="x-logo" src="${f.logo}" alt="${N} logo"></span>` : '';
+  const brand = `<div class="x-brand">${LG || `<span>${N}</span>`}<span>${C}</span></div>`;
   const L = [
     // 0 big type
     () => `${brand}${icon(f.niche, 'x-ghost')}<div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${dup ? '' : `<span class="x-cta">${CTA} →</span>`}</div>${P}`,
     // 1 split scene
-    () => `<div class="x-scene">${icon(f.niche, 'x-hero')}<i class="x-dot d1"></i><i class="x-dot d2"></i><span class="x-tagc">${N}</span></div><div class="x-panel"><div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${P}</div></div>`,
+    () => `<div class="x-scene">${icon(f.niche, 'x-hero')}<i class="x-dot d1"></i><i class="x-dot d2"></i><span class="x-tagc">${LG || N}</span></div><div class="x-panel"><div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${P}</div></div>`,
     // 2 coupon
     () => `<div class="x-pat"></div>${brand}<div class="x-h ${font} x-sm">${H}</div><div class="x-coupon"><div class="x-big f-poster">${num ? esc(num) : 'DEAL'}</div><div class="x-cl">${num ? (rest || 'OFF') : O}</div><div class="x-cut">${CTA} · ${C}</div></div>${P}`,
     // 3 neon poster
@@ -1683,7 +1656,7 @@ function creativeHTML(p, v = 0, shape = '') {
     // 5 checklist
     () => `${brand}<div class="x-h ${font} x-sm">${H}</div><ul class="x-list">${n.benefits.map(b => `<li>${esc(cap(b))}</li>`).join('')}</ul><div class="x-row"><span class="x-btn">${CTA}</span><span class="x-note">${dup ? '' : O}</span></div>${P}`,
     // 6 minimal luxe
-    () => `<div class="x-frame"></div><div class="x-mono">${N}</div><div class="x-h f-serif x-center">${H}</div><div class="x-rule"></div><div class="x-center x-offer">${dup ? CTA : O}</div><div class="x-mono x-small">${C}</div>`,
+    () => `<div class="x-frame"></div><div class="x-mono">${LG || N}</div><div class="x-h f-serif x-center">${H}</div><div class="x-rule"></div><div class="x-center x-offer">${dup ? CTA : O}</div><div class="x-mono x-small">${C}</div>`,
     // 7 circle hero
     () => `${brand}<div class="x-circle">${icon(f.niche, 'x-cic')}</div><div class="x-h ${font} x-center x-sm">${H}</div><div class="x-row x-cen"><span class="x-pill">${PILL}</span></div>${P}`,
     // 8 big number / question
@@ -1700,14 +1673,14 @@ function creativeHTML(p, v = 0, shape = '') {
     // 13 round photo + price burst
     () => `${brand}<div class="x-ring"><div class="x-ph"></div></div>${burst}<div class="x-h ${font} x-center x-sm">${H}</div><div class="x-row x-cen"><span class="x-pill">${PILL}</span></div>`,
     // 14 chat: looks like a text conversation with the business
-    () => `<div class="x-chathd"><span class="x-av">${esc(initials(f.name))}</span><span><b>${N}</b><small>${C}</small></span></div>
+    () => `<div class="x-chathd"><span class="x-av${LG ? ' x-avl' : ''}">${f.logo ? `<img src="${f.logo}" alt="">` : esc(initials(f.name))}</span><span><b>${N}</b><small>${C}</small></span></div>
       <div class="x-chat"><p class="me">${esc(cap(n.pains[0]))}… any ideas?</p><p class="them">${Hplain}</p>${dup ? '' : `<p class="them x-deal">${O}</p>`}<p class="x-typing"><i></i><i></i><i></i></p></div>
       <div class="x-row x-cen"><span class="x-pill">${CTA} →</span></div>`,
     // 15 handwritten note card
     () => `<div class="x-note"><i class="x-pin"></i><div class="x-nt">Why try ${N}</div><ul>${n.benefits.map(b => `<li>${esc(cap(b))}</li>`).join('')}</ul>${dup ? '' : `<div class="x-nd">${O}</div>`}</div>
       <div class="x-h ${font} x-sm x-center">${H}</div><div class="x-row x-cen"><span class="x-pill">${CTA} →</span></div>`,
     // 16 magazine cover
-    () => `<div class="x-ph"></div><div class="x-scrim"></div><div class="x-mast f-poster">${N}</div><div class="x-issue">${C} · ${new Date().toLocaleString('en-US', { month: 'long' })}</div>
+    () => `<div class="x-ph"></div><div class="x-scrim"></div>${LG ? `<div>${LG}</div>` : ''}<div class="x-mast f-poster">${N}</div><div class="x-issue">${C} · ${new Date().toLocaleString('en-US', { month: 'long' })}</div>
       <div class="x-cover"><div class="x-h ${font}">${H}</div><div class="x-row"><span class="x-pill">${PILL}</span>${P}</div></div>${burst}`
   ];
   const long = lay === 14 && (n.pains[0].length + (p.hs[v] || '').length + (dup ? 0 : O.length)) > 88;
@@ -2493,7 +2466,6 @@ function renderEarn() {
 
 // ================= HELP: "How this page works" guides + plain-English glossary =================
 const HELP = {
-  local: ['Find real businesses in Coon Rapids, Blaine, Maple Grove, Brooklyn Park and Champlin on Google Maps, then make their ad in one tap. “Ready ads” has a sample ad for every type of business, with local and Minnesota-winter hooks.', ['Pick a city. In “Find businesses”, open Google Maps for a business type.', 'Type a business name from the map and tap “Make their ad”. It also goes into your Lead tracker.', 'Use “New designs” for fresh looks. Show the ad to the owner as a free sample.']],
   course: ['A 10-step playbook for making and running ads for a business, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
   bcourse: ['An 8-step playbook for growing a business’s brand, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
   first: ['A 9-step playbook for landing your first paying client, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Do the step for real, then click “Done, next step”.']],
@@ -2527,9 +2499,6 @@ const GLOSSARY = [
   ['Special Ad Categories', 'Facebook rules for ads about housing, jobs, credit and other financial services, and politics. They limit who you can target.']
 ];
 const SOURCES = [
-  ['City ad packs: local places in the hooks (checked Nov 2, 2026)', 'Coon Rapids Dam Regional Park (Coon Rapids side of the Mississippi), the National Sports Center in Blaine (NSC), Arbor Lakes in Maple Grove, Mississippi Gateway Regional Park in Brooklyn Park, the Mississippi River in Champlin.', 'https://www.nps.gov/miss/planyourvisit/eastcoon.htm'],
-  ['National Sports Center, Blaine', 'State-owned sports complex at 1700 105th Ave NE, Blaine, opened in 1990.', 'https://en.wikipedia.org/wiki/National_Sports_Center'],
-  ['Mississippi Gateway Regional Park, Brooklyn Park', 'The west side of the Coon Rapids Dam park, renamed; run by Three Rivers Park District with Brooklyn Park.', 'https://www.nps.gov/miss/planyourvisit/mississippi-gateway-regional-park.htm'],
   ['Fake reviews and testimonials are illegal in the US', 'FTC rule, in effect since October 21, 2024. It also covers AI-written fake reviews.', 'https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials'],
   ['Facebook bans ads that call out personal traits', 'Meta’s ad standards: ads must not assert or imply personal attributes.', 'https://transparency.meta.com/policies/ad-standards/objectionable-content/privacy-violations-personal-attributes/'],
   ['Special Ad Categories', 'Housing, employment, financial products and services, and social issues/elections/politics. The first three limit age, gender and ZIP targeting.', 'https://developers.facebook.com/docs/marketing-api/special-ad-category'],
@@ -2647,7 +2616,7 @@ function applyDescribed(r) {
   if (r.palette != null) { B.palette = r.palette; B.colorLock = true; }
   else if (!B.colorLock && !poolOf(B.niche).includes(B.palette)) B.palette = poolOf(B.niche)[0];
   if (r.platform) plat = r.platform;
-  B.ai = r.ai || null; B.local = null; variant = 0;
+  B.ai = r.ai || null; variant = 0;
 }
 // a change request without AI: apply only what the words clearly ask for
 function applyChange(c) {
@@ -2706,7 +2675,7 @@ function describeInit() {
     if (t.length < 8) { $('#dsMsg').textContent = 'Add a bit more: the business, the deal, the look.'; return; }
     actSeq++; B.made = true; B.desc = t;
     const r = parseDescription(t); r.ai = null; if (!r.colorLock) B.colorLock = false; applyDescribed(r); freshLook(!r.colorLock); renderStudio(); generate();
-    showAd('Here’s your ad. Want changes? Type them in the change box.');
+    showAd('Here’s your ad. Want changes? Type them in the change box.' + (BIG_BRANDS.test(t) ? ' Note: big brand names and logos are trademarks. Only use them if you work for that brand and they sent you the files.' : ''));
     aiUpgrade(t);
   };
   const change = c => {
@@ -2908,6 +2877,22 @@ function optInit() {
 
 // ================= YOUR OWN PHOTO: resized in the browser, kept only on this device =================
 USERPHOTO = store.get('userphoto', '');
+// the client's logo, saved with the business name it belongs to, so it never shows up on a different business's ad
+let LOGO = store.get('userlogo', null);
+const logoFor = name => LOGO && LOGO.data && LOGO.name === (name || '').trim() ? LOGO.data : '';
+function readLogo(file) {
+  return new Promise((ok, bad) => {
+    if (!file || !/^image\//.test(file.type)) return bad(new Error('not an image'));
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => { const w = img.naturalWidth || 400, h = img.naturalHeight || 400, k = Math.min(1, 480 / Math.max(w, h)), c = document.createElement('canvas');
+      c.width = Math.max(1, Math.round(w * k)); c.height = Math.max(1, Math.round(h * k)); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url); ok(c.toDataURL('image/png')); }; // PNG keeps see-through backgrounds
+    img.onerror = () => { URL.revokeObjectURL(url); bad(new Error('could not read')); };
+    img.src = url;
+  });
+}
+// big brands' names and logos are trademarks: only for people who really work for them
+const BIG_BRANDS = /\b(mcdonald'?s?|starbucks|nike|adidas|walmart|target|coca[- ]?cola|coke|pepsi|burger king|wendy'?s|chick[- ]?fil[- ]?a|subway|taco bell|kfc|domino'?s|pizza hut|dunkin'?|apple|amazon|google|tesla|disney|chipotle|popeyes|sephora|ulta|home depot|lowe'?s|costco|ikea|zara|gucci|louis vuitton|chanel)\b/i;
 function readPhoto(file) {
   return new Promise((ok, bad) => {
     if (!file || !/^image\//.test(file.type)) return bad(new Error('not an image'));
@@ -2924,6 +2909,10 @@ function photoNote() {
   $('#phNote').innerHTML = !shown ? (USERPHOTO ? '' : 'Tip: <button type="button" data-q="photo">add your own photo</button> for a real-looking ad.')
     : USERPHOTO ? 'Your photo: only use photos you took or may use. <button type="button" data-q="nophoto">Remove</button>'
     : 'Free stock photo (Pexels). <button type="button" data-q="photo">Use a real photo</button> before running it.';
+  const lg = logoFor(B.name);
+  if (lg) $('#phNote').insertAdjacentHTML('beforeend', `${$('#phNote').textContent ? '<br>' : ''}Logo: only use a logo the business gave you. <button type="button" data-q="nologo">Remove logo</button>`);
+  $$('#refine [data-q="nologo"]').forEach(b => b.hidden = !lg);
+  $$('#refine [data-q="logo"]').forEach(b => b.textContent = lg ? 'Change logo' : 'Add logo');
   $$('#refine [data-q="nophoto"]').forEach(b => b.hidden = !USERPHOTO);
   $$('#refine [data-q="photo"]').forEach(b => b.textContent = USERPHOTO ? 'Change my photo' : 'Use my photo');
 }
@@ -2936,7 +2925,14 @@ function photoInit() {
       B.made = true; renderStudio(); showAd('Your photo is in the ad. Try New design to see it in other styles.');
     } catch (err) { toast('That file could not be used. Try a JPG or PNG photo.'); }
   });
+  $('#upLogo').addEventListener('change', async e => {
+    const f = e.target.files && e.target.files[0]; e.target.value = ''; if (!f) return;
+    try { LOGO = { name: (B.name || '').trim(), data: await readLogo(f) }; store.set('userlogo', LOGO); actSeq++; B.made = true; renderStudio(); showAd(`Logo added for ${B.name}. It shows on this business's ads only.`); }
+    catch (err) { toast('That file could not be used. Try a PNG, JPG or SVG logo.'); }
+  });
   document.addEventListener('click', e => {
+    const l = e.target.closest('[data-q="logo"],[data-q="nologo"]');
+    if (l) { if (l.dataset.q === 'logo') $('#upLogo').click(); else { LOGO = null; store.set('userlogo', null); actSeq++; renderStudio(); showAd('Removed the logo.'); } return; }
     const b = e.target.closest('[data-q="photo"],[data-q="nophoto"]'); if (!b) return;
     if (b.dataset.q === 'photo') { $('#upPhoto').click(); return; }
     USERPHOTO = ''; store.set('userphoto', ''); actSeq++; renderStudio(); showAd('Removed your photo.');
@@ -3113,8 +3109,7 @@ const GEN_STEPS = ['Matching the business type', 'Filling 3 proven copy formulas
 
 function fields() {
   const n = NICHES[B.niche];
-  return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette , layout: B.layout || 0, colorLock: !!B.colorLock, cta: B.cta || '', photoI: B.photoI || 0, userPhoto: USERPHOTO,
-    ...(B.local && B.local.key === B.niche + '|' + B.city.trim() ? { hooks: B.local.hooks, pains: B.local.pains } : {}) };
+  return { niche: B.niche, name: B.name.trim() || 'Your Business', city: B.city.trim() || 'your city', offer: B.offer.trim() || n.offer, aud: B.aud.trim() || n.audience, proof: (B.proof || '').trim(), tone: B.tone, palette: B.palette , layout: B.layout || 0, colorLock: !!B.colorLock, cta: B.cta || '', photoI: B.photoI || 0, userPhoto: USERPHOTO, logo: logoFor(B.name) };
 }
 function studioInit() {
   $('#nicheGrid').innerHTML = Object.entries(NICHES).map(([k, n]) => `<button data-n="${k}">${n.label}</button>`).join('');
@@ -3153,7 +3148,7 @@ function setNiche(k, force) {
   const sample = Object.values(NICHE_NAMES).includes(B.name) || !B.name.trim();
   B.niche = k; B.ai = null; const n = NICHES[k];
   if (sample || force) B.name = NICHE_NAMES[k];
-  B.offer = n.offer; B.aud = n.audience; B.palette = n.palette; B.colorLock = false; B.cta = ''; B.local = null;
+  B.offer = n.offer; B.aud = n.audience; B.palette = n.palette; B.colorLock = false; B.cta = '';
   renderStudio();
 }
 function generate() {
@@ -3758,87 +3753,7 @@ function renderPrompts() {
 }
 
 // ================= ROUTER =================
-
-// ---------- city ad packs: Minnesota north metro ----------
-// local places used below were checked on Nov 2, 2026 (see the note on the page); hooks never claim a business is near a place
-const MN_CITIES = ['Coon Rapids', 'Blaine', 'Maple Grove', 'Brooklyn Park', 'Champlin'];
-// Minnesota winter: what people in these cities are dealing with right now (no claims the owner would have to prove)
-const MN_SEASON = {
-  restaurant: 'Too cold to cook? Perfect.', dentist: 'Many dental plans reset Jan 1.', gym: 'Beat the January rush.',
-  roofer: 'Ice dams start on the roof.', salon: 'Winter hair, fixed.', realestate: 'Spring move? Plan it this winter.',
-  auto: 'Will it start at -10°?', ecommerce: 'Gifts sorted before the big snow.', lawyer: 'Slipped on ice? Know your options.',
-  coffee: 'Cold out. Warm cup in here.', hvac: 'Furnace ready for -15°?', medspa: 'Winter skin? Let’s fix that.', cleaning: 'Salt, slush, mud. We’ve got it.'
-};
-// one hook per business type that names the city
-const MN_CITY = {
-  restaurant: c => `${c}, dinner's handled.`, dentist: c => `${c}: cleaning overdue?`, gym: c => `${c}, day one starts here.`,
-  roofer: c => `${c} roofs: checked lately?`, salon: c => `${c}, book the cut you saved.`, realestate: c => `${c}: what's your home worth?`,
-  auto: c => `${c} drivers: that dash light?`, ecommerce: c => `${c}, you'll want two.`, lawyer: c => `Hurt in ${c}? Know your options.`,
-  coffee: c => `${c}'s new morning stop.`, hvac: c => `${c}, is your furnace ready?`, medspa: c => `${c}, glow minus the guesswork.`, cleaning: c => `${c}, come home to clean.`
-};
-// a few lines that use a real local place or a Minnesota phrase (they replace the city line for that business type)
-const MN_LOCAL = {
-  'Coon Rapids': { coffee: 'Walk the Dam. Then warm up here.', restaurant: 'Walk the Dam. Then come eat.' },
-  Blaine: { restaurant: 'Tournament day at the NSC? Eat after.', coffee: 'Early game at the NSC? Coffee first.' },
-  'Maple Grove': { ecommerce: 'Skip the Arbor Lakes parking lot.' },
-  'Brooklyn Park': { coffee: 'Mississippi Gateway walk, then coffee.' },
-  Champlin: { coffee: 'River walk in Champlin? Coffee first.' }
-};
-const MN_FUN = { auto: 'Ope. That’s your check engine light.', hvac: 'Uff da. Is that the furnace?' };
-// winter-right sample deals and worries (samples: the owner sets the real deal)
-const MN_OFFER = { hvac: '$79 furnace tune-up', auto: '$29.99 oil change + a free battery test', roofer: 'Free roof and ice dam check with photos' };
-const MN_PAINS = { hvac: ['a furnace that quits on the coldest night', 'surprise repair bills', 'waiting days for a tech'], roofer: ['ice dams and leaks', 'surprise repair bills after a storm', 'not knowing what shape the roof is in'], auto: ['a car that won’t start on a cold morning', 'surprise repair bills', 'waiting all day for a quote'] };
-// what to type into Google Maps for each business type
-const MAPS_Q = { restaurant: 'restaurants', dentist: 'dentists', gym: 'gyms', roofer: 'roofing contractors', salon: 'hair salons', realestate: 'real estate agents', auto: 'auto repair shops',
-  ecommerce: 'boutiques and gift shops', lawyer: 'personal injury lawyers', coffee: 'coffee shops', hvac: 'HVAC and furnace repair', medspa: 'med spas', cleaning: 'house cleaning services' };
-const mapsURL = (k, c) => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(`${MAPS_Q[k]} in ${c}, MN`);
-let lcMode = store.get('lcmode', 'find'); if (lcMode !== 'ads') lcMode = 'find';
-let lcCity = store.get('lccity', 'Coon Rapids'); if (!MN_CITIES.includes(lcCity)) lcCity = 'Coon Rapids';
-let lcSeed = store.get('lcseed', 0);
-function mnHooks(k, c) {
-  const local = (MN_LOCAL[c] || {})[k], cityLine = local || MN_CITY[k](c), base = hooksFor(k);
-  return [cityLine, MN_SEASON[k], MN_FUN[k] || base[(lcSeed + 1) % base.length]];
-}
-function mnFields(k, c, i) {
-  const n = NICHES[k], pool = poolOf(k), bag = [...Array(9).keys(), ...PHOTO_LAYOUTS, ...NATIVE_LAYOUTS, ...PHOTO_LAYOUTS];
-  const h = (lcSeed * 7 + i * 5 + MN_CITIES.indexOf(c) * 3) >>> 0;
-  return { niche: k, name: NICHE_NAMES[k], city: c, offer: MN_OFFER[k] || n.offer, aud: n.audience, proof: '', tone: (/medspa|salon|realestate|lawyer/.test(k) ? ['luxury', 'friendly', 'bold'] : ['friendly', 'bold', 'funny', 'urgent'])[h % (/medspa|salon|realestate|lawyer/.test(k) ? 3 : 4)],
-    palette: pool[(h + i) % pool.length], layout: bag[(h * 3 + i) % bag.length], photoI: h % 3, hooks: mnHooks(k, c), pains: MN_PAINS[k] };
-}
-function mnPacks(c) { return Object.keys(NICHES).map((k, i) => buildPack(mnFields(k, c, i))); }
-function renderLocal() {
-  $$('#lcMode button').forEach(b => b.classList.toggle('on', b.dataset.m === lcMode));
-  $('#lcGrid').hidden = lcMode !== 'ads'; $('#lcFind').hidden = lcMode !== 'find'; $('#lcNew').hidden = $('#lcCopy').hidden = lcMode !== 'ads';
-  $('#lcSub').textContent = lcMode === 'find' ? 'Open the real, current list on Google Maps, pick a business, type its name here and make its ad.' : 'A ready ad for every type of business in each city. Tap one to edit it.';
-  const draft = {}; $$('#lcFind input').forEach(i => { if (i.value) draft[i.name] = i.value; });
-  $('#lcFind').innerHTML = Object.keys(NICHES).map(k => `<div class="lc-biz"><div class="lc-top"><b>${esc(NICHES[k].label)}</b><a href="${mapsURL(k, lcCity)}" target="_blank" rel="noopener">All on Google Maps ↗</a></div>
-    <form data-mk="${k}"><input type="text" name="${k}" aria-label="${esc(NICHES[k].label)} business name" placeholder="Business name" value="${esc(draft[k] || '')}"><button class="btn sm">Make their ad</button></form></div>`).join('');
-  $('#lcCities').innerHTML = MN_CITIES.map(c => `<button class="chip ${c === lcCity ? 'on' : ''}" role="tab" aria-selected="${c === lcCity}" data-city="${c}">${c}</button>`).join('');
-  $('#lcGrid').innerHTML = mnPacks(lcCity).map((p, i) => `<button type="button" class="lc-card" data-lc="${p.f.niche}" aria-label="${esc(p.n.label)} ad for ${esc(lcCity)}: ${esc(p.hs[0])}. Edit in Ad Maker">${creativeHTML(p, 0)}<span class="lc-meta"><b>${esc(p.n.label)}</b><span>Edit →</span></span></button>`).join('');
-}
-function localInit() {
-  $('#lcMode').addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (!b) return; lcMode = b.dataset.m; store.set('lcmode', lcMode); renderLocal(); });
-  $('#lcFind').addEventListener('submit', e => {
-    e.preventDefault(); const fm = e.target.closest('[data-mk]'), name = fm.querySelector('input').value.trim(); if (!name) { fm.querySelector('input').focus(); toast('Type the business name first'); return; }
-    const k = fm.dataset.mk; addLead(name, `${NICHES[k].label} · ${lcCity} · sample ad made`); openLocalAd(k, name);
-  });
-  $('#lcCities').addEventListener('click', e => { const b = e.target.closest('[data-city]'); if (!b) return; lcCity = b.dataset.city; store.set('lccity', lcCity); renderLocal(); });
-  $('#lcNew').addEventListener('click', () => { lcSeed++; store.set('lcseed', lcSeed); renderLocal(); toast('New designs'); });
-  $('#lcCopy').addEventListener('click', () => copyText(mnPacks(lcCity).map(p => `${p.n.label.toUpperCase()} (${p.f.city}) · sample name and deal\nHeadlines:\n${p.hs.map((h, i) => 'ABC'[i] + ': ' + h).join('\n')}\nAd text:\n${p.texts[0].t}\nButton: ${p.n.cta}`).join('\n\n----------\n\n')));
-  $('#lcGrid').addEventListener('click', e => {
-    const b = e.target.closest('[data-lc]'); if (b) openLocalAd(b.dataset.lc);
-  });
-  renderLocal();
-}
-function openLocalAd(k, realName) {
-    const f = mnFields(k, lcCity, Object.keys(NICHES).indexOf(k));
-    Object.assign(B, { niche: k, name: realName || f.name, city: f.city, offer: f.offer, aud: f.aud, proof: '', tone: f.tone, palette: f.palette, colorLock: false, layout: f.layout, photoI: f.photoI, cta: '', ai: null, made: true,
-      local: { key: k + '|' + f.city, hooks: f.hooks, pains: f.pains } });
-    variant = 0; plat = 'fb'; renderStudio(); location.hash = '#studio';
-    // the hash change resets the scroll, so show the ad after it
-    setTimeout(() => showAd(realName ? `Ad for ${realName} (${f.city}). The deal is a sample: change it under “Edit details” to one the owner agrees to. Added to your Lead tracker.` : `${NICHES[k].label} ad for ${f.city}. Put in the real business name and deal under “Edit details”.`), 80);
-}
-const VIEWS = ['studio', 'local', 'brand', 'audit', 'clients', 'earn', 'pricing', 'prompts', 'course', 'bcourse', 'first', 'grow', 'business'];
+const VIEWS = ['studio', 'brand', 'audit', 'clients', 'earn', 'pricing', 'prompts', 'course', 'bcourse', 'first', 'grow', 'business'];
 const ALIAS = { builder: 'studio', home: 'studio', learn: 'course' };
 function show(v) {
   v = ALIAS[v] || v; if (!VIEWS.includes(v)) v = 'studio';
@@ -3850,7 +3765,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit(); mentorInit(); localInit();
+studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit(); mentorInit();
 show(location.hash.slice(1));
 </script>
 </body>
