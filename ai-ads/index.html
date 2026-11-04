@@ -279,7 +279,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .lc-hrs{font-size:.7rem;line-height:1.35}
 .lc-warn{font-size:.7rem;line-height:1.35;color:var(--warn,#e8b04b)}
 .lc-acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
-.lc-acts .btn{flex:1}
+.lc-acts .btn{flex:1 1 40%;text-align:center;text-decoration:none}
 .lc-biz{display:flex;flex-direction:column;gap:8px;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--panel)}
 .lc-biz .lc-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .lc-biz .lc-top b{font-weight:600;font-size:.92rem}
@@ -3949,6 +3949,8 @@ function bizFields(b, i) {
   return { niche: b.k, name: b.name, city: b.city, offer: b.offer, aud: NICHES[b.k].audience, proof: b.yrs ? '20+ years in business' : '', tone: ['friendly', 'bold', 'funny', 'luxury'][h % 4],
     palette: pool[(h + i) % pool.length], layout: bag[(h * 3 + i) % bag.length], photoI: h % 3, cta: 'Call Now', hooks: b.hooks, pains: b.pains, benefits: b.benefits, badge: b.badge, icon: b.icon, noPhoto: b.noPhoto, biz: b.id };
 }
+// same folder names as apps/src/build.js (one demo phone app per business)
+const appSlug = n => n.toLowerCase().replace(/[’']/g, '').replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const bizShown = () => BIZ_LIST.filter(b => bizCity === 'All' || b.city === bizCity);
 function renderBiz() {
   $('#lcBiz').innerHTML = bizShown().map(b => {
@@ -3957,7 +3959,7 @@ function renderBiz() {
       <div class="lc-info"><b>${esc(b.name)}</b><span class="dim">${esc(NICHES[b.k].label)} · ${esc(b.city)}${b.who ? ' · ' + esc(b.who) : ''}${b.chain ? ' · chain' : ''}</span>
       <a href="tel:+1${b.phone.replace(/\D/g, '')}">${esc(b.phone)}</a>${b.email ? `<a href="mailto:${esc(b.email)}">${esc(b.email)}</a>` : ''}<span class="dim lc-hrs">${esc(b.hours)}</span>
       ${b.chain ? '<span class="lc-warn">Chain: ads are often decided by head office. Ask who handles marketing.</span>' : ''}${b.check ? `<span class="lc-warn">${esc(b.check)}</span>` : ''}</div>
-      <div class="lc-acts"><button class="btn sm" data-bz="${b.id}">Edit</button><button class="btn sm ghost" data-bcopy="${b.id}">Copy</button><button class="btn sm ghost" data-blead="${b.id}">+ Lead</button></div></div>`;
+      <div class="lc-acts"><button class="btn sm" data-bz="${b.id}">Edit</button><button class="btn sm ghost" data-bcopy="${b.id}">Copy</button><button class="btn sm ghost" data-blead="${b.id}">+ Lead</button><a class="btn sm ghost" href="../apps/${appSlug(b.name)}/" target="_blank" rel="noopener" title="Open the demo phone app made for ${esc(b.name)}">App ↗</a></div></div>`;
   }).join('');
 }
 function bizCopy(b) {

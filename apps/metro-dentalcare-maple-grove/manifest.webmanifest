@@ -1,0 +1,33 @@
+{
+  "name": "Metro Dentalcare Maple Grove",
+  "short_name": "Metro Dental",
+  "description": "Hours, call and directions for Metro Dentalcare Maple Grove in Maple Grove, MN (demo).",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#12122a",
+  "theme_color": "#12122a",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
