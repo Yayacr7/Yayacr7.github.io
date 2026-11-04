@@ -263,28 +263,6 @@ for (const b of list) {
 }
 fs.writeFileSync(path.join(__dirname, 'apps.json'), JSON.stringify(out, null, 2));
 
-// gallery for Yaya: every app, with its link to send to the owner
-const cards = out.map(a => `<article class="c"><a class="shot" href="${a.slug}/" target="_blank" rel="noopener"><img src="${a.slug}/preview.png" alt="${esc(a.name)} app" loading="lazy" width="390" height="844"></a>
-  <div class="m"><b>${esc(a.name)}</b><span>${esc(KIND[a.k])} · ${esc(a.city)}${a.chain ? ' · chain' : ''}</span>${a.check ? `<em>${esc(a.check)}</em>` : ''}
-  <div class="r"><a class="btn" href="${a.slug}/" target="_blank" rel="noopener">Open app</a><button class="btn g" data-copy="${a.slug}/">Copy link</button></div></div></article>`).join('\n');
-fs.writeFileSync(path.join(ROOT, 'index.html'), `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Apps</title><meta name="robots" content="noindex,nofollow">
-<style>
-:root{--bg:#0b0d12;--p:#141822;--l:rgba(255,255,255,.1);--t:#eef1f7;--d:#98a2b3;--a:#7c8cff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font:15px/1.5 Inter,system-ui,sans-serif}
-.w{max-width:1200px;margin:0 auto;padding:28px 16px 48px}h1{margin:0;font-size:1.7rem;letter-spacing:-.02em}
-.sub{color:var(--d);margin:6px 0 22px;max-width:75ch}.sub b{color:var(--t)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
-.c{background:var(--p);border:1px solid var(--l);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
-.shot{display:block;aspect-ratio:390/600;overflow:hidden;background:#000}.shot img{width:100%;height:auto;display:block;transition:transform .4s}.shot:hover img{transform:scale(1.03)}
-.m{padding:12px;display:flex;flex-direction:column;gap:3px;flex:1}.m span{color:var(--d);font-size:.82rem}.m em{color:#e8b04b;font-size:.76rem;font-style:normal}
-.r{display:flex;gap:8px;margin-top:auto;padding-top:10px}.btn{flex:1;text-align:center;padding:9px;border-radius:10px;background:var(--a);color:#0b0d12;font-weight:600;font-size:.84rem;font-family:inherit;text-decoration:none;border:0;cursor:pointer}.btn.g{background:transparent;color:var(--t);border:1px solid var(--l)}
-</style></head><body><div class="w">
-<h1>Business apps</h1>
-<p class="sub">A phone app for each of your ${out.length} businesses. Each one shows live open/closed status, tap-to-call, directions and hours, and can be added to the home screen. <b>Every app says it is a demo, not the official app</b>, until the owner says yes. Hours, phones and "20+ years" come from your list: confirm them with the owner. Search engines are asked not to list these pages.</p>
-<div class="grid">${cards}</div></div>
-<script>document.addEventListener('click',async e=>{const b=e.target.closest('[data-copy]');if(!b)return;const u=new URL(b.dataset.copy,location.href).href;try{await navigator.clipboard.writeText(u);b.textContent='Copied'}catch{prompt('Copy this link',u)}setTimeout(()=>b.textContent='Copy link',1600)});</script>
-</body></html>
-`);
+// No page lists all the apps (Yaya's choice, Nov 4, 2026): each owner gets only their own link.
+// Yaya finds every app from the "App" buttons in AdSharp's City Ad Packs > Your list.
 console.log('built', out.length, 'apps');
