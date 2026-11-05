@@ -765,6 +765,12 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 @media (max-width:1180px){.studio.bs{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 @media (max-width:760px){.studio.bs{grid-template-columns:minmax(0,1fr)}}
 .navlabel{display:none}}
+.ts-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:900px){.ts-grid{grid-template-columns:minmax(0,1fr)}}
+.ts-plan{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;counter-reset:ts}
+.ts-plan li{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.88rem}
+.ts-plan li b{font-size:.86rem;color:var(--accent)}.ts-plan a{color:var(--accent)}
+#tsK{grid-template-columns:repeat(2,minmax(0,1fr))}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -789,6 +795,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
     <a href="#first" data-v="first"><svg viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>Clients Playbook</a>
     <a href="#grow" data-v="grow"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Freelance Playbook</a>
     <a href="#business" data-v="business"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>Business Plan</a>
+    <a href="#test" data-v="test"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/><path d="M7.5 14h9"/></svg>Tester program</a>
     <button class="mob-only" data-glossary>Words explained</button>
     <button class="mob-only" data-sources>Facts &amp; sources</button>
   </nav>
@@ -1083,6 +1090,59 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 </section>
 
 <!-- BUSINESS -->
+<section class="view" id="v-test" hidden>
+  <div class="vhead">
+    <div><span class="eyebrow">Mentorship</span><h1>Tester program</h1><p class="sub">Does this app really teach a beginner to earn money? A 14-day test with real people answers that honestly.</p></div>
+    <div class="tabs" id="tsTabs"><button data-t="do" class="on">For testers</button><button data-t="send">Send results</button><button data-t="find">Find testers</button></div>
+  </div>
+  <div data-pane="do" class="ts-grid">
+    <div class="panel stack" style="gap:10px">
+      <div class="mbub"><span class="mav" aria-hidden="true">M</span><p>Thanks for testing. For 14 days, do the plan below and log what really happens on Make Money. Good or bad, your honest results are the whole point. Nobody can promise you will earn money; this test finds out what the app can and cannot do.</p></div>
+      <div class="row" style="justify-content:space-between"><b id="tsDay"></b><button class="btn sm" id="tsStart"></button></div>
+      <ol class="ts-plan">
+        <li><b>Days 1–2 · Get ready</b><span>Make 3 sample ads in <a href="#studio">Make an Ad</a> and save them. Do steps 1–5 of the <a href="#first">Clients Playbook</a>.</span></li>
+        <li><b>Days 3–12 · Reach out</b><span>20 first messages a day with the scripts in <a href="#clients">Find Clients</a>. Follow up after 3 days. Do each step's money move.</span></li>
+        <li><b>Every day · Log it</b><span>Count messages, replies, calls and sales on <a href="#earn">Make Money</a>. Only log what really happened.</span></li>
+        <li><b>Days 13–14 · Tell us</b><span>Open <b>Send results</b>, answer 6 short questions and send it.</span></li>
+      </ol>
+    </div>
+    <div class="panel stack" style="gap:8px"><span class="eyebrow">Your real numbers since you started</span><div class="kpis" id="tsK"></div><p class="dim" style="font-size:.78rem" id="tsKn"></p></div>
+  </div>
+  <div data-pane="send" class="ts-grid" hidden>
+    <div class="panel stack" style="gap:8px">
+      <label class="f">Your first name<input type="text" id="tq_name"></label>
+      <div class="row" style="gap:8px"><span class="muted" style="font-size:.86rem">Had you made money online before?</span><span class="seg" data-g="before"><button data-v="no">No</button><button data-v="yes">Yes</button></span></div>
+      <label class="f">What did the app teach you that you did not know?<input type="text" id="tq_learn"></label>
+      <label class="f">What confused you, or felt useless?<input type="text" id="tq_bad"></label>
+      <label class="slider">How likely are you to tell a friend about it? <output id="tq_recO"></output><input type="range" id="tq_rec" min="0" max="10" value="7"></label>
+      <div class="row" style="gap:8px"><span class="muted" style="font-size:.86rem">Can Yaya quote your answers?</span><span class="seg" data-g="quote"><button data-v="no">No</button><button data-v="first">First name only</button><button data-v="yes">Yes</button></span></div>
+    </div>
+    <div class="panel stack" style="gap:8px"><div class="outhead"><span class="muted">Your results (your numbers are filled in for you)</span><span class="row" style="gap:6px"><button class="btn sm ghost" id="tsShare" hidden>Share</button><button class="btn sm" data-copy="tsOut">Copy</button></span></div>
+      <div class="out scroll" id="tsOut" style="max-height:340px"></div><p class="dim" style="font-size:.78rem">Nothing is sent by itself. You copy or share it and choose who gets it.</p></div>
+  </div>
+  <div data-pane="find" class="ts-grid" hidden>
+    <div class="panel stack" style="gap:8px">
+      <span class="tag acc">For you, Yaya</span><h3 style="margin:0">Find 5 to 10 testers</h3>
+      <ul class="check"><li><span>People who want to earn money but have never run ads: friends, cousins, classmates, coworkers.</span></li><li><span>Local Facebook groups or Discord servers about side hustles (read each group's rules first).</span></li><li><span>Ask in person. "Can you test my app for 2 weeks?" works better than a public post.</span></li></ul>
+      <div class="outhead" style="margin:0"><span class="muted" style="font-size:.84rem">Text or DM</span><button class="btn sm" data-copy="tsInv1">Copy</button></div>
+      <div class="out" id="tsInv1"></div>
+      <div class="outhead" style="margin:0"><span class="muted" style="font-size:.84rem">Group post</span><button class="btn sm" data-copy="tsInv2">Copy</button></div>
+      <div class="out" id="tsInv2"></div>
+    </div>
+    <div class="panel stack" style="gap:8px">
+      <h3 style="margin:0">Keep the test honest</h3>
+      <ul class="check"><li><span>Never promise testers they will make money.</span></li><li><span>They can stop any time, no hard feelings.</span></li><li><span>Never share a tester's name, words or numbers without their yes.</span></li><li><span>Only count what they really logged.</span></li></ul>
+      <h3 style="margin:6px 0 0">How to read the results</h3>
+      <div class="tbl"><table><tbody>
+        <tr><td><b>They did not do the work</b></td><td class="muted">The mentoring needs fixing: clearer daily steps, more check-ins.</td></tr>
+        <tr><td><b>Lots of messages, no replies</b></td><td class="muted">The messages or the sample ads need fixing.</td></tr>
+        <tr><td><b>Replies, but no sales</b></td><td class="muted">The offer, the price or the call needs fixing.</td></tr>
+        <tr><td><b>Someone got paid</b></td><td class="muted">Ask what made the difference, and ask before sharing it.</td></tr>
+      </tbody></table></div>
+      <p class="dim" style="font-size:.78rem">5 to 10 testers show what works and what to fix. They cannot prove the app works for everyone, so never advertise it that way.</p>
+    </div>
+  </div>
+</section>
 <section class="view" id="v-business" hidden>
   <div class="vhead">
     <div><span class="eyebrow">Guide</span><h1>Business plan</h1><p class="sub">You sell results to local businesses. AI does the heavy lifting on copy, images and video.</p></div>
@@ -2519,6 +2579,7 @@ function renderEarn() {
 
 // ================= HELP: "How this page works" guides + plain-English glossary =================
 const HELP = {
+  test: ['A 14-day test to see if the app really teaches someone to earn money.', ['Testers press Start and follow the plan.', 'They log real work on Make Money; their numbers fill in here.', 'On day 14 they answer 6 questions and send you the results.']],
   local: ['“Your list” has a ready ad for each of your 25 businesses, made only from their real hours, phone and years. “Find businesses” opens Google Maps to find more. “Ready ads” has a sample ad for every type of business.', ['In “Your list”, tap an ad to edit it, Copy its text, or + Lead to add it to your Lead tracker. Confirm hours and phone with the owner.', 'Pick a city. In “Find businesses”, open Google Maps for a business type.', 'Type a business name from the map and tap “Make their ad”. It also goes into your Lead tracker.', 'Use “New designs” for fresh looks. Show the ad to the owner as a free sample.']],
   course: ['A 10-step playbook for making and running ads for a business, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
   bcourse: ['An 8-step playbook for growing a business’s brand, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
@@ -4025,7 +4086,45 @@ function openLocalAd(k, realName) {
     // the hash change resets the scroll, so show the ad after it
     setTimeout(() => showAd(realName ? `Ad for ${realName} (${f.city}). The deal is a sample: change it under “Edit details” to one the owner agrees to. Added to your Lead tracker.` : `${NICHES[k].label} ad for ${f.city}. Put in the real business name and deal under “Edit details”.`), 80);
 }
-const VIEWS = ['studio', 'local', 'brand', 'audit', 'clients', 'earn', 'pricing', 'prompts', 'course', 'bcourse', 'first', 'grow', 'business'];
+
+// ================= TESTER PROGRAM: 14-day real-world test; results come only from what the tester logged =================
+let TST = store.get('tester', { start: '', before: '', quote: '' });
+const tsSince = d => !TST.start || d >= TST.start;
+function tsStats() {
+  const sum = k => Object.entries(acts).filter(([d]) => tsSince(d)).reduce((a, [, v]) => a + (v[k] || 0), 0);
+  const paid = income.filter(x => tsSince(x.date)), moves = Object.values(MCHK || {}).filter(c => c && c.d && tsSince(c.d)).length;
+  const steps = ['ldone', 'fcdone', 'grdone', 'bcdone'].reduce((a, k) => a + (store.get(k, []) || []).length, 0);
+  return { ads: store.get('gallery', []).length, msg: sum('msg'), fu: sum('fu'), aud: sum('aud'), rep: sum('rep'), call: sum('call'), sale: sum('sale'), money: paid.reduce((a, x) => a + x.amt, 0), moves, steps };
+}
+function tsDayNo() { if (!TST.start) return 0; return Math.floor((new Date(isoDay() + 'T12:00:00') - new Date(TST.start + 'T12:00:00')) / 864e5) + 1; }
+function renderTest() {
+  store.set('tester', TST);
+  const s = tsStats(), d = tsDayNo();
+  $('#tsDay').textContent = TST.start ? (d <= 14 ? `Day ${d} of 14` : `Test finished (day ${d}). Send your results.`) : 'Not started yet';
+  $('#tsStart').textContent = TST.start ? 'Restart the test' : 'Start my 14-day test';
+  $('#tsK').innerHTML = [['Sample ads saved', s.ads], ['First messages', s.msg], ['Follow-ups', s.fu], ['Replies', s.rep], ['Calls', s.call], ['Sales', s.sale], ['Money logged', money(s.money)], ['Money moves done', s.moves]]
+    .map(k => `<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('');
+  $('#tsKn').textContent = TST.start ? `Counted from ${TST.start}. These numbers only come from what you logged in this app on this device.` : 'Press Start, then log your work on Make Money. Your numbers show up here.';
+  $$('#v-test .seg[data-g] button').forEach(b => b.classList.toggle('on', TST[b.parentElement.dataset.g] === b.dataset.v));
+  ['name', 'learn', 'bad'].forEach(k => { const el = $('#tq_' + k); if (document.activeElement !== el) el.value = TST[k] || ''; });
+  $('#tq_rec').value = TST.rec ?? 7; $('#tq_recO').textContent = `${$('#tq_rec').value}/10`;
+  const q = { no: 'No', first: 'Yes, first name only', yes: 'Yes' };
+  $('#tsOut').textContent = `AdSharp.ai tester results\n\nName: ${TST.name || '[first name]'}\nTest days: ${TST.start ? `${TST.start}, day ${d}` : 'not started in the app'}\nMade money online before: ${TST.before === 'yes' ? 'Yes' : TST.before === 'no' ? 'No' : '[answer]'}\n\nWhat I did (logged in the app):\n• Sample ads saved: ${s.ads}\n• First messages: ${s.msg}\n• Follow-ups: ${s.fu}\n• Free audits or sample ads sent: ${s.aud}\n• Replies: ${s.rep}\n• Calls: ${s.call}\n• Sales: ${s.sale}\n• Money logged: ${money(s.money)}\n• Money moves done: ${s.moves}\n• Playbook steps done: ${s.steps}\n\nWhat the app taught me: ${TST.learn || '[answer]'}\nWhat confused me or felt useless: ${TST.bad || '[answer]'}\nHow likely I am to tell a friend: ${$('#tq_rec').value}/10\nYaya may quote me: ${q[TST.quote] || '[answer]'}`;
+  const link = 'https://yayacr7.github.io/ai-ads/#test';
+  $('#tsInv1').textContent = `Hey [name]! I built a free app that shows you how to make money making ads for local businesses. I need 5 people to test it for 14 days and tell me honestly if it worked. It is free, and you can stop any time. I can't promise you'll make money; that's what the test is for. Want in? ${link}`;
+  $('#tsInv2').textContent = `Looking for 5–10 testers (free, 14 days). I built an app that teaches beginners to make and sell ads for local businesses, with a step-by-step mentor and daily money moves. I want honest feedback: does it actually help you get a first client? No cost and no promises. Comment or DM me if you want to try it: ${link}`;
+}
+function testInit() {
+  wireTabs($('#tsTabs'), $('#v-test'));
+  $('#tsStart').addEventListener('click', () => { if (TST.start && !confirm('Restart the 14-day test from today?')) return; TST.start = isoDay(); renderTest(); toast('Test started. Day 1 of 14.'); });
+  $('#v-test').addEventListener('click', e => { const b = e.target.closest('.seg[data-g] button'); if (!b) return; TST[b.parentElement.dataset.g] = b.dataset.v; renderTest(); });
+  ['name', 'learn', 'bad'].forEach(k => $('#tq_' + k).addEventListener('input', e => { TST[k] = e.target.value; renderTest(); }));
+  $('#tq_rec').addEventListener('input', e => { TST.rec = +e.target.value; renderTest(); });
+  if (navigator.share) { $('#tsShare').hidden = false; $('#tsShare').addEventListener('click', () => navigator.share({ title: 'AdSharp.ai tester results', text: $('#tsOut').textContent }).catch(() => {})); }
+  addEventListener('hashchange', () => { if (location.hash === '#test') renderTest(); });
+  renderTest();
+}
+const VIEWS = ['studio', 'local', 'brand', 'audit', 'clients', 'earn', 'pricing', 'prompts', 'course', 'bcourse', 'first', 'grow', 'business', 'test'];
 const ALIAS = { builder: 'studio', home: 'studio', learn: 'course' };
 function show(v) {
   v = ALIAS[v] || v; if (!VIEWS.includes(v)) v = 'studio';
@@ -4037,7 +4136,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit(); mentorInit(); localInit();
+studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit(); mentorInit(); localInit(); testInit();
 show(location.hash.slice(1));
 </script>
 </body>
