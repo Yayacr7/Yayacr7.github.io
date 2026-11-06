@@ -668,7 +668,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 @media (min-width:901px) and (max-width:1400px){.mflow .mfl{display:none}}@media (max-width:900px){.mright{align-items:flex-start}}
 .mnote{font-size:.7rem;color:var(--dim);text-align:right}@media (max-width:900px){.mnote{text-align:left}}
 .mflow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.76rem}.mflow span{background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:2px 8px;white-space:nowrap}.mflow .mfl{background:none;border:0;padding:0;color:var(--dim);font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase}.mflow i{font-style:normal;color:var(--accent)}
-@media (min-width:1201px) and (max-height:860px){.mstep{display:none}}
+@media (min-width:1201px) and (max-height:860px){.mstepno{display:none}}
 .cgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.cgrid .check2{font-size:.8rem;padding:3px 8px!important}@media (max-width:560px){.cgrid{grid-template-columns:minmax(0,1fr)}}
 .mfaq{border:1px solid var(--line);border-radius:10px;padding:8px 10px}.mfaq summary{cursor:pointer;font-weight:600;font-size:.88rem}.mfaq p{font-size:.86rem;margin:6px 0 0}
 /* ---------- stand-out extras: highlight, chat, note card, magazine cover ---------- */
@@ -777,6 +777,24 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 @media (min-width:1201px) and (max-height:860px){#v-course .lesson,#v-first .lesson,#v-grow .lesson,#v-bcourse .lesson{gap:8px}.mbub{padding:8px 11px}.mbub .why{font-size:.88rem;line-height:1.38}.mtip{font-size:.79rem;margin-top:4px!important}.kfact{font-size:.78rem;line-height:1.35}.kfact.rt .dim{display:none}.plain{font-size:.86rem}.mmove{padding:8px 11px;gap:4px}}
 .mright [data-cheat]{padding:3px 11px;font-size:.78rem;line-height:1.4}
 table.cheat td{vertical-align:top;font-size:.82rem;line-height:1.4}table.cheat td a{color:var(--accent)}table.cheat th{white-space:nowrap}
+/* ---------- calmer screens (Nov 6, 2026): same content, quieter look ---------- */
+:root{--line:#24241F;--line2:#2F2F28}
+.navg{all:unset;box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;cursor:pointer;width:100%;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:12px 10px 4px;border-radius:6px}
+.navg:focus-visible{outline:2px solid var(--accent)}
+.navg::after{content:"▾";font-size:.7rem;opacity:.6;transition:transform .15s}.navg.shut::after{transform:rotate(-90deg)}
+.navg:hover{color:var(--muted)}
+@media (min-width:1201px){.nav a.ghide{display:none}}
+@media (max-width:1200px){.navg{display:none!important}}
+.calm-hide{display:none!important}
+.chx{display:contents}.chx[hidden]{display:none}
+.mtipd{margin-top:6px}.mtipd summary{cursor:pointer;color:var(--accent);font-size:.8rem;width:fit-content;list-style:none}.mtipd summary::-webkit-details-marker{display:none}
+.mtipd[open] summary{margin-bottom:4px}
+.mlink{all:unset;cursor:pointer;color:var(--muted);font-size:.8rem;text-decoration:underline;text-underline-offset:3px;padding:4px 2px}.mlink:hover{color:var(--text)}
+.mmove{border:1px solid var(--line2);border-left:3px solid var(--accent);background:var(--panel2)}
+.mbub{background:transparent;border:0;padding:4px 0}
+.mflow-h{display:none}
+.panel{border-color:var(--line)}
+@media (min-width:901px){.pwrap>.pplay{right:-25px}}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -958,7 +976,7 @@ table.cheat td{vertical-align:top;font-size:.82rem;line-height:1.4}table.cheat t
         <div class="tabs" id="rfTabs"><button data-rt="change" class="on">Change it</button><button data-rt="opt">Optimize <span class="tag" id="adScore"></span></button></div>
         <div class="stack" data-rp="change" style="gap:8px">
           <div class="row" style="flex-wrap:nowrap;gap:6px"><input type="text" id="rfT" aria-label="What to change" placeholder="e.g. make it blue, more funny, say 30% off"><button class="btn sm" id="rfGo">Update ad</button></div>
-          <div class="row" style="gap:6px"><button class="chip" data-q="design">New design</button><button class="chip" data-q="variant">Another version</button><button class="chip" data-q="color">Change colors</button><button class="chip" data-q="style">Change style</button><button class="chip" data-q="photo">Use my photo</button><button class="chip" data-q="nophoto" hidden>Remove my photo</button><button class="chip" data-q="logo">Add logo</button><button class="chip" data-q="nologo" hidden>Remove logo</button><input type="file" id="upPhoto" accept="image/*" hidden><input type="file" id="upLogo" accept="image/png,image/jpeg,image/svg+xml,image/webp" hidden></div>
+          <div class="row" style="gap:6px"><button class="chip" data-q="design">New design</button><button class="chip" data-q="variant">Another version</button><button class="chip" data-q="color">Change colors</button><button class="chip" data-q="photo">Use my photo</button><button class="chip" id="chMore" aria-expanded="false">More ▾</button><span class="chx" hidden><button class="chip" data-q="style">Change style</button><button class="chip" data-q="nophoto" hidden>Remove my photo</button><button class="chip" data-q="logo">Add logo</button><button class="chip" data-q="nologo" hidden>Remove logo</button></span><input type="file" id="upPhoto" accept="image/*" hidden><input type="file" id="upLogo" accept="image/png,image/jpeg,image/svg+xml,image/webp" hidden></div>
         </div>
         <div class="optbox" data-rp="opt" hidden>
           <div class="row" id="optBtns" style="gap:6px"></div>
@@ -3192,7 +3210,7 @@ function cheatText(pb) {
 function openCheat(pb) {
   const M = MENTOR[pb], L = CHEAT_LESSONS()[pb];
   $('#cheatT').textContent = `${M.name} playbook: the short version`;
-  $('#cheatBody').innerHTML = `<p class="dim" style="font-size:.8rem;margin:0">Goal: <b style="color:var(--text)">${M.goal}</b>. Every step in one line, with one fact. Facts link to the official source; rules of thumb are labeled.</p>
+  $('#cheatBody').innerHTML = `<div class="mflow" aria-label="How the money works"><span class="mfl">How the money works</span>${M.flow.map((f, k) => `${k ? '<i aria-hidden="true">→</i>' : ''}<span>${f}</span>`).join('')}</div><p class="dim" style="font-size:.8rem;margin:0">Goal: <b style="color:var(--text)">${M.goal}</b>. Every step in one line, with one fact. Facts link to the official source; rules of thumb are labeled.</p>
     <div class="tbl"><table class="cheat"><thead><tr><th>#</th><th>Step, in plain words</th><th>Key fact</th><th>Money move</th></tr></thead><tbody>${L.map((l, i) => { const k = (KFACTS[pb] || [])[i];
       return `<tr><td class="num">${i + 1}</td><td><b>${l.t}</b><br><span class="muted">${M.plain[i] || ''}</span></td><td>${k ? (k[0] === 'f' ? `${k[1]} <a href="${FSRC[k[2]][1]}" target="_blank" rel="noopener">${FSRC[k[2]][0]} ↗</a>` : `<span class="dim">Rule of thumb:</span> ${k[1]}`) : ''}</td><td>${(M.moves[i] || [''])[0]}</td></tr>`; }).join('')}</tbody></table></div>`;
   $('#cheatDlg').dataset.pb = pb; $('#cheatDlg').hidden = false; $('#cheatClose').focus();
@@ -3206,13 +3224,13 @@ function cheatInit() {
 }
 function mentorLessonHTML(pb, L, i, n) {
   const M = MENTOR[pb], mv = M.moves[i] || M.moves[M.moves.length - 1], c = MCHK[mKey(pb, i)], used = new Set(), X = t => explainify(t, used);
-  return `<span class="eyebrow ${M.phases ? 'mphase' : 'mstep'}">${M.phases ? bcPhase(i) + ' · ' : ''}Step ${i + 1} of ${n}</span><h2>${L.t}</h2>${M.plain[i] ? `<p class="plain"><b>In plain words:</b> ${M.plain[i]}</p>` : ''}
+  return `<span class="eyebrow ${M.phases ? 'mphase' : 'mstepno'}">${M.phases ? bcPhase(i) + ' · ' : ''}Step ${i + 1} of ${n}</span><h2>${L.t}</h2>${M.plain[i] ? `<p class="plain"><b>In plain words:</b> ${M.plain[i]}</p>` : ''}
     ${kfactHTML(pb, i)}
-    <div class="mbub"><span class="mav" aria-hidden="true">M</span><div><p class="why">${X(L.why)}</p>${L.tip ? `<p class="mtip"><b>What I'd do:</b> ${X(L.tip)}</p>` : ''}</div></div>
+    <div class="mbub"><span class="mav" aria-hidden="true">M</span><div><p class="why">${X(L.why)}</p>${L.tip ? `<details class="mtipd"><summary>What I'd do ›</summary><p class="mtip">${X(L.tip)}</p></details>` : ''}</div></div>
     ${L.how ? `<details class="mhow" ${innerWidth <= 1200 || innerHeight >= 1000 ? 'open' : ''}><summary><span class="tag">Do it with me · ${L.how.length} steps</span></summary><ol class="steps">${L.how.map(h => `<li><span>${X(h)}</span></li>`).join('')}</ol></details>` : ''}
     <div class="mmove" data-pb="${pb}" data-i="${i}"><span class="eyebrow">Your money move today</span><b>${X(mv[0])}</b>
       ${c ? `<p class="mreply"><span class="tag green">Done</span> ${MREPLY[c.how] || ''}</p><div class="row" style="gap:6px"><button class="chip" data-mundo>Undo</button><button class="chip" data-mask>Ask your mentor</button></div>`
-        : `<div class="row mchk" style="gap:6px"><span class="dim" style="font-size:.78rem">Did it? How did it go?</span><button class="chip" data-mhow="well">Went well</button><button class="chip" data-mhow="none">No reply yet</button><button class="chip" data-mhow="stuck">I got stuck</button><button class="chip" data-mask>Ask your mentor</button></div>`}
+        : `<div class="row mchk" style="gap:6px"><span class="dim" style="font-size:.78rem">How did it go?</span><button class="chip" data-mhow="well">Went well</button><button class="chip" data-mhow="none">No reply yet</button><button class="chip" data-mhow="stuck">I got stuck</button><button class="mlink" data-mask>Ask your mentor</button></div>`}
     </div>`;
 }
 function mentorRerender(pb) { ({ course: renderCourse, first: renderFirst, grow: renderGrow, bcourse: renderBC })[pb](); }
@@ -3224,7 +3242,7 @@ function mentorHeads() {
     const right = $('.vhead > .row', v);
     if (right && !$('.mflow', v)) { const col = document.createElement('div'); col.className = 'mright'; right.before(col); col.appendChild(right);
       col.insertAdjacentHTML('beforeend', '<span class="mnote" title="Your mentor is this app (rules, plus AI on claude.ai), not a real person. Results depend on your work.">Your mentor is this app, not a person · No income is promised</span>');
-      col.insertAdjacentHTML('afterbegin', `<div class="mflow" aria-label="How the money works"><span class="mfl">How the money works</span>${M.flow.map((f, k) => `${k ? '<i aria-hidden="true">→</i>' : ''}<span>${f}</span>`).join('')}</div>`); }
+      col.insertAdjacentHTML('afterbegin', `<div class="mflow mflow-h" aria-label="How the money works"><span class="mfl">How the money works</span>${M.flow.map((f, k) => `${k ? '<i aria-hidden="true">→</i>' : ''}<span>${f}</span>`).join('')}</div>`); }
     box.insertAdjacentHTML('beforeend', `<p class="mgoal">Goal: <b>${M.goal}</b> · <span data-mcount="${pb}">${done}/${M.moves.length}</span> moves</p>`);
   }
 }
@@ -4211,6 +4229,28 @@ function testInit() {
   addEventListener('hashchange', () => { if (location.hash === '#test') renderTest(); });
   renderTest();
 }
+
+// ================= CALMER SCREENS: same features, less at once =================
+function calmInit() {
+  // menu groups fold away when you are not using them (computer sidebar only); the group of the open page always shows
+  const nav = $('#nav'), labels = $$('.navlabel', nav), open = store.get('navopen', {});
+  labels.forEach((lb, gi) => {
+    const items = []; let n = lb.nextElementSibling;
+    while (n && !n.classList.contains('navlabel') && n.tagName === 'A') { items.push(n); n = n.nextElementSibling; }
+    const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'navlabel navg'; btn.textContent = lb.textContent; lb.replaceWith(btn);
+    const key = btn.textContent.trim();
+    const set = o => { btn.setAttribute('aria-expanded', o); btn.classList.toggle('shut', !o); items.forEach(a => a.classList.toggle('ghide', !o)); };
+    btn.addEventListener('click', () => { const o = btn.getAttribute('aria-expanded') !== 'true'; open[key] = o; store.set('navopen', open); set(o); });
+    const sync = () => set(open[key] === true || items.some(a => ('#' + a.dataset.v) === (location.hash || '#studio')));
+    addEventListener('hashchange', sync); sync();
+  });
+  // Ad Maker: "More ▾" shows the extra change buttons
+  const mb = $('#chMore'); if (mb) mb.addEventListener('click', () => { const x = $('.chx'); x.hidden = !x.hidden; mb.setAttribute('aria-expanded', !x.hidden); mb.textContent = x.hidden ? 'More ▾' : 'Less ▴'; });
+  // the "Try:" examples are for getting started; they step aside once you have an ad
+  // (they come back as soon as the typing box is empty)
+  const ex = () => { const d = $('#dsEx'), t = $('#dsT'); if (d) d.classList.toggle('calm-hide', !!B.made && !!(t && t.value.trim())); };
+  ex(); document.addEventListener('click', () => setTimeout(ex, 0)); $('#dsT') && ['keydown', 'input'].forEach(k => $('#dsT').addEventListener(k, () => setTimeout(ex, 50)));
+}
 const VIEWS = ['studio', 'local', 'brand', 'audit', 'clients', 'earn', 'pricing', 'prompts', 'course', 'bcourse', 'first', 'grow', 'business', 'test'];
 const ALIAS = { builder: 'studio', home: 'studio', learn: 'course' };
 function show(v) {
@@ -4223,7 +4263,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit(); mentorInit(); localInit(); testInit(); cheatInit();
+studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit(); mentorInit(); localInit(); testInit(); cheatInit(); calmInit();
 show(location.hash.slice(1));
 </script>
 </body>
