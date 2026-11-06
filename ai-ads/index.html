@@ -1186,7 +1186,7 @@ table.cheat td{vertical-align:top;font-size:.82rem;line-height:1.4}table.cheat t
 </section>
 <section class="view" id="v-plan" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">Made for you</span><h1>My Plan</h1><p class="sub" id="plSub">Tell it about your day once. It plans what to do and when, using your real leads.</p></div>
+    <div><span class="eyebrow">Made for you</span><h1>My Plan</h1><p class="sub" id="plSub">Tell it what you do once. It plans your day for that work.</p></div>
     <div class="tabs" id="plTabs"><button data-t="today" class="on">Today</button><button data-t="days">14 days</button><button data-t="setup">My answers</button></div>
   </div>
   <div data-pane="today" class="pl-grid">
@@ -2640,7 +2640,7 @@ function renderEarn() {
 
 // ================= HELP: "How this page works" guides + plain-English glossary =================
 const HELP = {
-  plan: ['Your own daily plan, built from your answers and your real leads.', ['Answer 6 quick questions once.', 'Follow today\'s timed blocks; calls and walk-ins come while businesses are open.', 'Tick each block when it is done; counts go to Make Money.']],
+  plan: ['Your own daily plan for the work you do: ads, brand work, freelance, a local service, products, food, content, tutoring or something else.', ['Pick what you do and answer 6 quick questions once.', 'Follow today\'s timed blocks. They only talk about your kind of work.', 'Tick each block when it is done; counts go to Make Money.']],
   test: ['A 14-day test to see if the app really teaches someone to earn money.', ['Testers press Start and follow the plan.', 'They log real work on Make Money; their numbers fill in here.', 'On day 14 they answer 6 questions and send you the results.']],
   local: ['“Your list” has a ready ad for each of your 25 businesses, made only from their real hours, phone and years. “Find businesses” opens Google Maps to find more. “Ready ads” has a sample ad for every type of business.', ['In “Your list”, tap an ad to edit it, Copy its text, or + Lead to add it to your Lead tracker. Confirm hours and phone with the owner.', 'Pick a city. In “Find businesses”, open Google Maps for a business type.', 'Type a business name from the map and tap “Make their ad”. It also goes into your Lead tracker.', 'Use “New designs” for fresh looks. Show the ad to the owner as a free sample.']],
   course: ['A 10-step playbook for making and running ads for a business, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
@@ -4289,89 +4289,152 @@ function calmInit() {
   ex(); document.addEventListener('click', () => setTimeout(ex, 0)); $('#dsT') && ['keydown', 'input'].forEach(k => $('#dsT').addEventListener(k, () => setTimeout(ex, 50)));
 }
 
-// ================= MY PLAN: a personal daily schedule built from your answers and your real leads =================
+// ================= MY PLAN: a personal daily schedule for YOUR kind of work, built from your answers and your real leads =================
 const PLQ = store.get('myplan', null);
-let PL = Object.assign({ sell: 'ads', stage: 'new', wake: '09:00', hours: 2, days: 5, niche: 'restaurant', city: '', start: '' }, PLQ || {});
+let PL = Object.assign({ job: '', detail: '', sell: 'ads', stage: 'new', wake: '09:00', hours: 2, days: 5, niche: 'restaurant', city: '', start: '' }, PLQ || {});
+if (!PL.job) PL.job = PL.sell === 'brand' ? 'brand' : 'ads';
 let PLD = store.get('plandone', {});
 const plMin = t => { const [h, m] = String(t || '09:00').split(':').map(Number); return (h || 0) * 60 + (m || 0); };
 const plFmt = m => { m = Math.round(m / 5) * 5; const h = Math.floor(m / 60) % 24, mm = m % 60; return `${(h % 12) || 12}:${String(mm).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`; };
 const plDay = () => PL.start ? Math.max(1, Math.floor((new Date(isoDay() + 'T12:00:00') - new Date(PL.start + 'T12:00:00')) / 864e5) + 1) : 1;
-const plMaps = () => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${NICHES[PL.niche].kind}s in ${PL.city || 'my city'}`)}`;
+const plMapsQ = q => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+const COTTAGE = 'https://www.nal.usda.gov/aglaw/local-foods', FTC_INF = 'https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers';
+// the different jobs people do as entrepreneurs; each one only talks about its own work
+const JOBS = {
+  ads: { label: 'AI ads for local businesses', b2b: true, people: 'clients', target: 'Get 1 reply today.', why: 'Replies turn into calls, and calls turn into clients.',
+    stages: ['Brand new', 'I have sample ads', 'I have clients'], setupF: 'Set up: lead list + sample ads', mainF: 'Messages, checkups, walk-ins' },
+  brand: { label: 'Brand work for businesses', b2b: true, people: 'clients', target: 'Get 1 reply today.', why: 'Replies turn into calls, and calls turn into clients.',
+    stages: ['Brand new', 'I have samples', 'I have clients'], setupF: 'Set up: lead list + sample brand kit', mainF: 'Brand checks, messages, walk-ins' },
+  freelance: { label: 'Freelance services (design, editing, writing, web…)', people: 'clients', target: 'Get 1 reply today.', why: 'Proposals turn into replies, and replies turn into paid work.',
+    stages: ['Just starting', 'A few clients', 'Busy, want more'], setupF: 'Set up: profile + 1 portfolio piece', mainF: 'Proposals, samples, follow-ups', ph: 'e.g. video editing' },
+  local: { label: 'Local service (cleaning, lawn care, detailing, hair, handyman…)', people: 'customers', target: 'Book 1 job.', why: 'Jobs come from people who know you are doing this, so tell more people every day.',
+    stages: ['Just starting', 'A few customers', 'Busy, want more'], setupF: 'Set up: your offer + flyer or ad', mainF: 'Tell people, local groups, flyers', ph: 'e.g. lawn care' },
+  products: { label: 'Selling products (online store, reselling, crafts…)', people: 'buyers', target: 'Make 1 sale.', why: 'More good listings, answered fast, means more chances to sell.',
+    stages: ['Just starting', 'Some sales', 'Selling often'], setupF: 'Set up: source items + first listings', mainF: 'List, answer buyers, share', ph: 'e.g. sneakers' },
+  food: { label: 'Food (baking, catering, meal prep…)', people: 'customers', target: 'Get 3 pre-orders.', why: 'Pre-orders tell you how much to make, so nothing goes to waste.',
+    stages: ['Just starting', 'Some regulars', 'Busy, want more'], setupF: 'Set up: check the rules, menu + prices', mainF: 'Post the menu, take pre-orders', ph: 'e.g. cupcakes' },
+  creator: { label: 'Content creator', people: 'brands', target: 'Post 1 video.', why: 'Posting often finds your audience; pitching turns it into money.',
+    stages: ['Just starting', 'Small audience', 'Growing'], setupF: 'Set up: pick your topic + first posts', mainF: 'Post, reply, pitch brands', ph: 'e.g. fitness, cooking' },
+  tutor: { label: 'Tutoring, coaching or lessons', people: 'students', target: 'Book 1 session.', why: 'Most first students come from people who already know you.',
+    stages: ['Just starting', 'A few students', 'Busy, want more'], setupF: 'Set up: your offer + price', mainF: 'Tell people, local groups, referrals', ph: 'e.g. math tutoring' },
+  other: { label: 'Something else', people: 'customers', target: 'Get 1 yes today.', why: 'Every business starts by telling people what you do and asking.',
+    stages: ['Just starting', 'A few customers', 'Busy, want more'], setupF: 'Set up: your offer in one sentence', mainF: 'Tell people, follow up', ph: 'e.g. pet sitting' }
+};
+const plJob = () => JOBS[PL.job] || JOBS.ads;
+const plWhat = () => (PL.detail || '').trim() || (PL.job === 'other' ? 'your business' : '');
 function plBlocks() {
-  const n = NICHES[PL.niche] || NICHES.restaurant, kind = n.kind + 's', day = plDay(), h = +PL.hours || 2, setup = PL.stage === 'new' && day <= 2;
-  const due = dueLeads().filter(l => !/^Example:/.test(l.biz)), calls = realLeads().filter(l => l.st === 2);
-  const msgs = setup ? 10 : ({ 1: 10, 2: 20, 4: 30, 6: 40 }[h] || 20), B = [];
-  const add = (id, min, t, sub, link, act, n2, when) => B.push({ id, min, t, sub, link, act, n: n2, when: when || 'any' });
-  add('set', 10, 'Get set', 'Open your plan, check your follow-ups and your lead list.', '#clients');
-  calls.forEach(l => add('call-' + l.id, 20, `Call ${l.biz}`, 'Call booked. Have the call guide open: ask, listen, then offer one plan.', '#first', 'call', 1, 'open'));
-  if (due.length) add('fu', Math.min(30, 5 + due.length * 5), `Follow up: ${due.slice(0, 3).map(l => l.biz).join(', ')}${due.length > 3 ? ` +${due.length - 3} more` : ''}`, `${due.length} follow-up${due.length > 1 ? 's' : ''} due today. A short, friendly nudge.`, '#clients', 'fu', due.length, 'open');
-  if (PL.stage === 'clients') {
-    add('work', Math.max(30, h * 20), 'Client work', 'Make this week\'s ads or posts for your clients first. Paying clients come before new ones.', '#studio');
-    add('upd', 15, 'Send a client update', 'Tick the real work and numbers, then send it.', '#pricing');
-    add('ref', 10, 'Ask one happy client for a referral', '"Do you know another owner who could use this?"', '#clients', 'msg', 1);
-  }
-  if (setup) {
-    add('find', 30, `Find 10 ${kind} in ${PL.city || 'your city'}`, 'Use Google Maps. Pick ones with real reviews but a weak look online. Add them to your Lead tracker.', plMaps());
-    add('samp', h >= 2 ? 40 : 20, `Make ${h >= 2 ? 3 : 1} sample ad${h >= 2 ? 's' : ''} for ${kind}`, 'Make them in the Ad Maker and save them. This is your portfolio.', '#studio');
+  const J = plJob(), job = PL.job, day = plDay(), h = +PL.hours || 2, setup = PL.stage === 'new' && day <= 2, busy = PL.stage === 'clients';
+  const sc = base => Math.max(1, Math.round(base * ({ 1: .5, 2: 1, 4: 1.5, 6: 2 }[h] || 1))), what = plWhat(), city = PL.city || 'your city';
+  const due = dueLeads().filter(l => !/^Example:/.test(l.biz)), calls = realLeads().filter(l => l.st === 2), B = [];
+  // add(id, minutes, title, detail, link, logs-as, count, needs-open-hours, priority (lower = more important), order in the day)
+  const add = (id, min, t, sub, link, act, n, open, p, q) => B.push({ id, min, t, sub, link, act, n, when: open ? 'open' : 'any', p, q });
+  add('set', 10, 'Get set', `Open your plan and check who is waiting on you.`, J.b2b || job === 'freelance' ? '#clients' : '', '', 0, false, 0, 0);
+  calls.forEach(l => add('call-' + l.id, 20, `Call ${l.biz}`, 'Call booked. Ask, listen, then offer one clear next step.', '#clients', 'call', 1, true, 1, 5));
+  if (due.length) add('fu', Math.min(30, 5 + due.length * 5), `Follow up: ${due.slice(0, 3).map(l => l.biz).join(', ')}${due.length > 3 ? ` +${due.length - 3} more` : ''}`, `${due.length} follow-up${due.length > 1 ? 's' : ''} due today. A short, friendly nudge.`, '#clients', 'fu', due.length, true, 2, 8);
+  const kind = (NICHES[PL.niche] || NICHES.restaurant).kind + 's';
+  if (job === 'ads' || job === 'brand') {
+    if (busy) add('work', Math.max(30, h * 20), 'Client work first', `Make this week's ${job === 'ads' ? 'ads' : 'posts'} for your clients. Paying clients come before new ones.`, job === 'ads' ? '#studio' : '#brand', '', 0, false, 2, 12);
+    if (busy) add('upd', 15, 'Send a client update', 'Tick the real work and numbers, then send it.', '#pricing', '', 0, false, 6, 14);
+    add('find', setup ? 30 : 15, setup ? `Find 10 ${kind} in ${city}` : `Add 5 more ${kind} to your list`, 'Google Maps: real reviews but a weak look online. Then + Lead.', plMapsQ(`${kind} in ${city}`), '', 0, false, setup ? 5 : 7, 20);
+    if (job === 'ads') { if (setup) add('samp', h >= 2 ? 40 : 20, `Make ${h >= 2 ? 3 : 1} sample ad${h >= 2 ? 's' : ''} for ${kind}`, 'Make them in the Ad Maker and save them.', '#studio', '', 0, false, 4, 30); add('aud', 20, 'Send 3 free checkups', 'Business Checkup, then send each owner their report.', '#audit', 'aud', 3, false, 5, 50); }
+    else add('bchk', 25, 'Run 2 brand checks', 'Brand Maker: a quick check you can send as a free tip.', '#brand', 'aud', 2, false, 4, 30);
+    if (!setup) add('walk', 30, `Call or walk in to 3 ${kind}`, 'Bring the sample you made for them. Quiet hours (2–4 PM) are often best.', '#local', 'msg', 3, true, 6, 40);
+    add('msg', Math.round(sc(setup ? 10 : 20) * 2.2), `Send ${sc(setup ? 10 : 20)} first messages`, 'Use the scripts: their name and one thing you noticed.', '#clients', 'msg', sc(setup ? 10 : 20), false, 3, 60);
+  } else if (job === 'freelance') {
+    if (busy) add('work', Math.max(30, h * 20), 'Client work first', 'Do today\'s paid work and deliver on time. Happy clients send referrals.', '#grow', '', 0, false, 2, 12);
+    if (setup) add('prof', 30, 'Finish one freelance profile', `Upwork, Fiverr or Contra: who you help with ${what || 'your skill'}, and 3 samples.`, '#grow', '', 0, false, 4, 20);
+    add('port', setup ? 40 : 20, setup ? `Make 1 portfolio sample of your ${what || 'work'}` : 'Improve 1 portfolio piece', 'Show real work. Label practice pieces as samples.', '#grow', '', 0, false, 5, 30);
+    add('prop', sc(5) * 8, `Send ${sc(5)} proposals or messages`, 'Answer their exact problem in the first 2 lines.', '#grow', 'msg', sc(5), false, 3, 60);
+    if (!setup) add('post', 15, 'Post 1 sample where clients look', 'LinkedIn, Instagram or your portfolio: one piece, two lines about it.', '#grow', '', 0, false, 6, 40);
+  } else if (job === 'local') {
+    if (busy) add('work', Math.max(45, h * 25), 'Today\'s jobs', 'Do great work, then ask for a review before you leave.', '', '', 0, true, 2, 12);
+    if (setup) add('ad', 25, `Make a flyer or ad for your ${what || 'service'}`, 'Use the Ad Maker. Put your price or first-job deal and your phone number on it.', '#studio', '', 0, false, 4, 20);
+    add('tell', sc(10) * 2, `Message ${sc(10)} people you know`, 'Friends, family, neighbors: what you do and your price. Ask who might need it.', '', 'msg', sc(10), false, 3, 30);
+    add('grp', 20, 'Post in 2 local groups', 'Facebook groups or Nextdoor for your area. Read each group\'s rules first.', '', 'msg', 2, false, 5, 40);
+    if (!setup) add('fly', 40, 'Hand out 20 flyers on one street', 'Where your kind of customer lives. Smile, keep it short.', '#studio', 'msg', 20, true, 6, 50);
+    if (!PL.stage.startsWith('new')) add('rev', 10, 'Ask happy customers for a Google review', 'Just ask. Google does not allow offering discounts or gifts for reviews.', '', '', 0, false, 7, 70);
+  } else if (job === 'products') {
+    add('ans', 15, 'Answer every buyer message', 'Fast, friendly replies sell more. Do this first.', '', '', 0, false, 1, 4);
+    if (busy) add('ship', 30, 'Pack and ship today\'s orders', 'Ship on time and say thank you.', '', '', 0, false, 2, 10);
+    add('src', setup ? 45 : 25, setup ? `Source or make 5 ${what || 'items'}` : `Source or make 3 more ${what || 'items'}`, 'Only buy what you know you can sell for more.', '', '', 0, false, 4, 20);
+    add('list', sc(5) * 8, `List ${sc(5)} items`, 'Clear photos in daylight, honest condition, a fair price.', '', '', 0, false, 3, 30);
+    add('share', 15, 'Share 1 post or story about an item', 'Show it in use. One clear photo or a short video.', '#studio', '', 0, false, 6, 50);
+  } else if (job === 'food') {
+    if (day === 1) add('rules', 20, 'Check your state\'s home-food rules', 'Rules for selling food made at home differ a lot from state to state. Check your state before you sell.', COTTAGE, '', 0, false, 1, 3);
+    if (busy) add('prep', Math.max(45, h * 25), 'Prep today\'s orders', 'Label each order. Keep it clean and on time.', '', '', 0, false, 2, 10);
+    if (setup) add('menu', 25, 'Set this week\'s menu and prices', `Start small: 3 ${what || 'items'} you make really well.`, '', '', 0, false, 4, 20);
+    add('photo', 20, 'Make and photograph 1 item', 'Daylight, plain background, close up.', '', '', 0, false, 6, 30);
+    add('post', 15, 'Post this week\'s menu and take pre-orders', 'One post with the menu, prices and pickup time.', '#studio', '', 0, false, 3, 40);
+    add('ask', sc(10) * 2, `Message ${sc(10)} people for orders`, 'Friends, coworkers, a local office or team. Pre-orders only.', '', 'msg', sc(10), false, 3, 50);
+  } else if (job === 'creator') {
+    add('hook', 15, 'Write 3 hooks for your next posts', 'The first 2 seconds decide if people stay.', '#prompts', '', 0, false, 5, 10);
+    add('film', setup ? 60 : 40, `Film and post 1 short video${what ? ` about ${what}` : ''}`, 'Vertical, captions on, one clear idea.', '', '', 0, false, 3, 20);
+    add('reply', 15, 'Reply to every comment', 'People come back when you talk with them.', '', '', 0, false, 4, 40);
+    if (!setup) add('pitch', 25, 'Pitch 3 small brands or local businesses', 'Offer one paid post. If they pay or send free products, the post must clearly say "ad" (FTC rule).', FTC_INF, 'msg', 3, false, 5, 50);
   } else {
-    add('find', 15, `Add 5 more ${kind} to your list`, 'Google Maps, then + Lead.', plMaps());
+    if (busy) add('work', Math.max(45, h * 25), `Today's work for your ${J.people}`, 'Do it well, then ask for a referral.', '', '', 0, false, 2, 10);
+    if (setup) add('offer', 20, 'Write your offer in one sentence', `Who it is for, what you do${what ? ` (${what})` : ''}, and the price.`, '', '', 0, false, 4, 20);
+    if (job === 'tutor' || job === 'other') add('grp', 20, 'Post in 2 local groups', job === 'tutor' ? 'Parent, school or community groups. Read each group\'s rules first.' : 'Community groups or Nextdoor for your area. Read each group\'s rules first.', '', 'msg', 2, false, 5, 30);
+    add('tell', sc(10) * 2, `Message ${sc(10)} people you know`, `Tell them what you do${what ? ` (${what})` : ''} and ask who might need it.`, '', 'msg', sc(10), false, 3, 40);
+    if (!PL.stage.startsWith('new')) add('ref', 10, `Ask 1 happy ${job === 'tutor' ? 'student or parent' : 'customer'} for a referral`, '"Do you know someone else who could use this?"', '', 'msg', 1, false, 6, 50);
   }
-  if (PL.sell !== 'ads') add('bchk', 20, 'Run 1 brand check', 'Brand Maker: a quick check you can send as a free tip.', '#brand', 'aud', 1);
-  if (!setup) add('walk', 30, `Call or walk in to 3 ${kind}`, 'Show the sample ad made for them. Quiet hours (2–4 PM) are often best.', '#local', 'msg', 3, 'open');
-  add('aud', 20, 'Send 3 free checkups', 'Business Checkup, then send each owner their report.', '#audit', 'aud', 3);
-  add('msg', Math.round(msgs * 2.2), `Send ${msgs} first messages`, 'Use the scripts. Personal: their name and one thing you noticed.', '#clients', 'msg', msgs);
-  const nextStep = (() => { const pb = PL.sell === 'brand' ? 'bcourse' : PL.stage === 'new' ? 'first' : 'course', M = MENTOR[pb], k = M.moves.findIndex((_, i) => !MCHK[mKey(pb, i)]); return { pb, i: k < 0 ? 0 : k }; })();
-  add('learn', 15, 'One playbook step', `Next: ${({ course: LESSONS, first: FC_LESSONS, bcourse: BC_LESSONS })[nextStep.pb][nextStep.i].t}.`, '#' + nextStep.pb);
-  add('log', 10, 'Log today and plan tomorrow', 'Make Money: messages, replies, calls, sales. Only what really happened.', '#earn');
-  // fit the blocks into the hours you have, most important first (booked calls, follow-ups, messages); then put them in a sensible order
-  const pri = b => { const k = b.id.startsWith('call-') ? 'call' : b.id; const P = ['set', 'log', 'call', 'fu', 'work', 'msg', 'aud', 'samp', 'walk', 'find', 'bchk', 'upd', 'ref', 'learn']; return P.indexOf(k) < 0 ? 99 : P.indexOf(k); };
+  if (job === 'ads' || job === 'brand' || job === 'freelance') {
+    const pb = job === 'brand' ? 'bcourse' : job === 'freelance' ? 'grow' : PL.stage === 'new' ? 'first' : 'course', M = MENTOR[pb], k = M.moves.findIndex((_, i) => !MCHK[mKey(pb, i)]), L = ({ course: LESSONS, first: FC_LESSONS, grow: GR_LESSONS, bcourse: BC_LESSONS })[pb][k < 0 ? 0 : k];
+    add('learn', 15, 'One playbook step', `Next: ${L.t}.`, '#' + pb, '', 0, false, 8, 70);
+  }
+  add('log', 10, 'Log today and plan tomorrow', 'Make Money: what you sent, replies, sales. Only what really happened.', '#earn', '', 0, false, 0, 99);
+  // fit the blocks into your hours, most important first; then put them in order; things that need open businesses go first if you start late
   const budget = h * 60; let used = 0; const pick = new Set();
-  [...B].sort((a, b) => pri(a) - pri(b)).forEach(b => { const must = pri(b) <= 4; if (must || used + b.min <= budget) { pick.add(b); used += b.min; } });
-  const SEQ = ['set', 'call', 'fu', 'work', 'upd', 'ref', 'find', 'samp', 'bchk', 'walk', 'aud', 'msg', 'learn', 'log'], seq = b => SEQ.indexOf(b.id.startsWith('call-') ? 'call' : b.id);
-  const keep = B.filter(b => pick.has(b)).sort((a, b) => seq(a) - seq(b));
-  // things that need businesses to be open (calls, walk-ins) go first if the day starts late
-  const start = plMin(PL.wake), late = start + used > 17 * 60;
+  [...B].sort((a, b) => a.p - b.p).forEach(b => { if (b.p <= 2 || used + b.min <= budget) { pick.add(b); used += b.min; } });
+  const keep = B.filter(b => pick.has(b)).sort((a, b) => a.q - b.q);
+  const start = plMin(PL.wake), late = start + used > 17 * 60 && J.b2b;
   const order = late ? [...keep.filter(b => b.id === 'set'), ...keep.filter(b => b.when === 'open'), ...keep.filter(b => b.id !== 'set' && b.when !== 'open')] : keep;
-  let t = start; order.forEach(b => { b.at = t; b.late = b.when === 'open' && t >= 17 * 60; t += b.min; });
+  let t = start; order.forEach(b => { b.at = t; b.late = J.b2b && b.when === 'open' && t >= 17 * 60; t += b.min; });
   return order;
 }
 function renderPlan() {
   store.set('myplan', PL); store.set('plandone', PLD);
-  const set = !!store.get('myplan_set', false), today = isoDay(), done = PLD[today] || {};
-  $('#plSetup').innerHTML = `<p class="muted" style="margin:0">Answer once. Change anything any time.</p>
-    <div class="pl-q"><span>What do you want to sell first?</span>${segHTML('sell', [['AI ads', 'ads'], ['Brand work', 'brand'], ['Both', 'both']], PL.sell)}</div>
-    <div class="pl-q"><span>Where are you starting?</span>${segHTML('stage', [['Brand new', 'new'], ['I have sample ads', 'samples'], ['I have clients', 'clients']], PL.stage)}</div>
+  const set = !!store.get('myplan_set', false), today = isoDay(), done = PLD[today] || {}, J = plJob();
+  $('#plSetup').innerHTML = `<p class="muted" style="margin:0">Answer once. The plan only talks about your kind of work. Change anything any time.</p>
+    <div class="pl-q"><span>What do you do?</span><select id="plJob" style="width:auto;max-width:100%">${Object.entries(JOBS).map(([k, j]) => `<option value="${k}" ${k === PL.job ? 'selected' : ''}>${j.label}</option>`).join('')}</select></div>
+    <div class="pl-q" id="plDetailQ" ${JOBS[PL.job].b2b ? 'hidden' : ''}><span>In a few words</span><input type="text" id="plDetail" placeholder="${JOBS[PL.job].ph || ''}" value="${esc(PL.detail)}" style="width:220px"></div>
+    <div class="pl-q"><span>Where are you starting?</span>${segHTML('stage', J.stages.map((l, i) => [l, ['new', 'samples', 'clients'][i]]), PL.stage)}</div>
     <div class="pl-q"><span>What time do you start your day?</span><input type="time" id="plWake" value="${PL.wake}" style="width:auto"></div>
     <div class="pl-q"><span>Hours a day for this</span>${segHTML('hours', [['1', 1], ['2', 2], ['4', 4], ['6', 6]], +PL.hours)}</div>
     <div class="pl-q"><span>Days a week</span>${segHTML('days', [['3', 3], ['5', 5], ['7', 7]], +PL.days)}</div>
-    <div class="pl-q"><span>Business type and city to start with</span><span class="row" style="gap:6px">${nicheSelect('plNiche', PL.niche)}<input type="text" id="plCity" placeholder="Your city" value="${esc(PL.city)}" style="width:150px"></span></div>
+    <div class="pl-q"><span id="plWhereL">${J.b2b ? 'Businesses you sell to, and your city' : 'Your city'}</span><span class="row" style="gap:6px"><span id="plNicheW" ${J.b2b ? '' : 'hidden'}>${nicheSelect('plNiche', PL.niche)}</span><input type="text" id="plCity" placeholder="Your city" value="${esc(PL.city)}" style="width:150px"></span></div>
     <div class="row" style="justify-content:flex-end"><button class="btn" id="plGo">${set ? 'Update my plan' : 'Build my plan'}</button></div>`;
   if (!set) { $$('#plTabs [data-t]').forEach(b => b.classList.toggle('on', b.dataset.t === 'setup')); $$('#v-plan [data-pane]').forEach(p => p.hidden = p.dataset.pane !== 'setup'); $('#plSub').textContent = 'Answer 6 quick questions. Your plan is ready right after.'; return; }
-  $('#plSub').textContent = `Day ${plDay()} · ${+PL.hours} hour${+PL.hours > 1 ? 's' : ''} a day from ${plFmt(plMin(PL.wake))} · ${NICHES[PL.niche].kind}s in ${PL.city || 'your city'}`;
+  const what = J.b2b ? `${(NICHES[PL.niche] || NICHES.restaurant).kind}s in ${PL.city || 'your city'}` : `${plWhat() || J.label.split(' (')[0].toLowerCase()}${PL.city ? ' in ' + PL.city : ''}`;
+  $('#plSub').textContent = `Day ${plDay()} · ${+PL.hours} hour${+PL.hours > 1 ? 's' : ''} a day from ${plFmt(plMin(PL.wake))} · ${what}`;
   const blocks = plBlocks(), due = dueLeads().filter(l => !/^Example:/.test(l.biz)), calls = realLeads().filter(l => l.st === 2);
-  $('#plCoach').innerHTML = `<span class="mav" aria-hidden="true">M</span><p>${calls.length ? `You have ${calls.length === 1 ? 'a call' : calls.length + ' calls'} booked (${esc(calls.map(l => l.biz).join(', '))}). That is the most important thing today. ` : due.length ? `${due.length} follow-up${due.length > 1 ? 's are' : ' is'} due. Many replies only come after a follow-up, so do those first. ` : ''}Want a client? Here is today, step by step. Tick each block when it is done.</p>`;
+  $('#plCoach').innerHTML = `<span class="mav" aria-hidden="true">M</span><p>${calls.length ? `You have ${calls.length === 1 ? 'a call' : calls.length + ' calls'} booked (${esc(calls.map(l => l.biz).join(', '))}). That comes first today. ` : due.length ? `${due.length} follow-up${due.length > 1 ? 's are' : ' is'} due, so do those first. ` : ''}Want more ${J.people}? Here is today, step by step. Tick each block when it is done.</p>`;
   const nextId = (blocks.find(b => !done[b.id]) || {}).id;
   $('#plTime').innerHTML = blocks.map(b => { const ok = !!done[b.id], ext = /^https?:/.test(b.link);
     return `<li class="${ok ? 'ok' : ''} ${b.id === nextId ? 'next' : ''}"><time>${plFmt(b.at)}</time><div><b>${esc(b.t)}</b><span>${esc(b.sub)}${b.late ? ' <em class="pl-warn">Many businesses close around 5 PM: try this one earlier tomorrow.</em>' : ''}</span></div>
-      <span class="pl-act"><a class="btn sm ghost" href="${b.link}" ${ext ? 'target="_blank" rel="noopener"' : ''}>Open</a>${ok ? `<button class="btn sm ghost" data-pundo="${b.id}">Undo</button>` : b.act ? `<span class="pl-n"><input type="number" min="0" value="${b.n}" aria-label="How many did you do" data-pn="${b.id}"><button class="btn sm" data-pdone="${b.id}">Done</button></span>` : `<button class="btn sm" data-pdone="${b.id}">Done</button>`}</span></li>`; }).join('');
+      <span class="pl-act">${b.link ? `<a class="btn sm ghost" href="${b.link}" ${ext ? 'target="_blank" rel="noopener"' : ''}>Open</a>` : ''}${ok ? `<button class="btn sm ghost" data-pundo="${b.id}">Undo</button>` : b.act && b.n ? `<span class="pl-n"><input type="number" min="0" value="${b.n}" aria-label="How many did you do" data-pn="${b.id}"><button class="btn sm" data-pdone="${b.id}">Done</button></span>` : `<button class="btn sm" data-pdone="${b.id}">Done</button>`}</span></li>`; }).join('');
   const tdy = acts[today] || {};
-  $('#plTarget').innerHTML = `<p style="margin:0;font-size:.95rem"><b>${PL.stage === 'clients' ? 'Keep clients happy, then 1 new reply.' : 'Get 1 reply today.'}</b></p><p class="dim" style="font-size:.8rem;margin:4px 0 0">Replies turn into calls, and calls turn into clients. That is the whole game.</p>`;
-  $('#plK').innerHTML = [['Blocks done', `${blocks.filter(b => done[b.id]).length}/${blocks.length}`], ['Messages', (tdy.msg || 0) + (tdy.fu || 0)], ['Replies', tdy.rep || 0], ['Calls', tdy.call || 0]].map(k => `<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('');
-  $('#plNote').textContent = 'Your mentor is this app, not a person. It plans your time; it cannot promise anyone will call or buy. Log replies on Make Money when they come in.';
+  $('#plTarget').innerHTML = `<p style="margin:0;font-size:.95rem"><b>${plBusy() ? 'Take care of current ' + J.people + ' first, then: ' : ''}${J.target}</b></p><p class="dim" style="font-size:.8rem;margin:4px 0 0">${J.why}</p>`;
+  $('#plK').innerHTML = [['Blocks done', `${blocks.filter(b => done[b.id]).length}/${blocks.length}`], ['Messages', (tdy.msg || 0) + (tdy.fu || 0)], ['Replies', tdy.rep || 0], ['Sales', tdy.sale || 0]].map(k => `<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('');
+  $('#plNote').textContent = 'Your mentor is this app, not a person. It plans your time; it cannot promise anyone will call or buy. Log replies and sales on Make Money when they come in.';
   const D = Array.from({ length: 14 }, (_, k) => k + 1), cur = plDay(), wk = +PL.days;
-  const focus = d => PL.stage === 'clients' ? (d % 7 === 1 ? 'Client updates + referrals' : 'Client work, then 1 hour of outreach') : PL.stage === 'new' && d <= 2 ? (d === 1 ? 'Set up: lead list + sample ads' : 'Set up: finish samples, first 10 messages') : d % 7 === 0 ? 'Review: what got replies? Do more of that' : d <= 7 ? 'Outreach: messages, checkups, walk-ins' : 'Follow-ups + calls + new outreach';
+  const focus = d => PL.stage === 'clients' ? (d % 7 === 1 ? `Current ${J.people} first + ask for referrals` : `Work for ${J.people}, then 1 hour of finding more`) : PL.stage === 'new' && d <= 2 ? J.setupF : d % 7 === 0 ? 'Review: what worked? Do more of that' : d <= 7 ? J.mainF : `Follow-ups + ${J.mainF.toLowerCase()}`;
   $('#plDays').innerHTML = D.map(d => { const off = wk < 7 && ((d - 1) % 7) >= wk; return `<div class="pl-d ${d === cur ? 'on' : ''} ${d < cur ? 'past' : ''} ${off ? 'off' : ''}"><small>Day ${d}</small><b>${off ? 'Rest day' : focus(d)}</b></div>`; }).join('');
 }
+const plBusy = () => PL.stage === 'clients';
 function planInit() {
   wireTabs($('#plTabs'), $('#v-plan'));
+  $('#v-plan').addEventListener('change', e => { if (e.target.id === 'plJob') { PL.job = e.target.value; PL.detail = $('#plDetail') ? $('#plDetail').value.trim() : PL.detail; PL.city = $('#plCity').value.trim(); renderPlan(); } });
   $('#v-plan').addEventListener('click', e => {
     const sg = e.target.closest('#plSetup .seg[data-g] button'); if (sg) { const g = sg.parentElement.dataset.g; PL[g] = isNaN(+sg.dataset.v) ? sg.dataset.v : +sg.dataset.v; $$('button', sg.parentElement).forEach(x => x.classList.toggle('on', x === sg)); return; }
-    if (e.target.id === 'plGo') { PL.wake = $('#plWake').value || '09:00'; PL.niche = $('#plNiche').value; PL.city = $('#plCity').value.trim(); if (!PL.start) PL.start = isoDay(); store.set('myplan_set', true);
-      store.set('myplan', PL); $$('#plTabs [data-t]').forEach(b => b.classList.toggle('on', b.dataset.t === 'today')); $$('#v-plan [data-pane]').forEach(p => p.hidden = p.dataset.pane !== 'today'); renderPlan(); toast('Your plan is ready'); return; }
+    if (e.target.id === 'plGo') { PL.job = $('#plJob').value; PL.detail = ($('#plDetail') && $('#plDetail').value.trim()) || ''; PL.wake = $('#plWake').value || '09:00'; PL.niche = $('#plNiche').value; PL.city = $('#plCity').value.trim();
+      if (PL.job === 'other' && !PL.detail) { toast('Type what you do in a few words'); $('#plDetail').focus(); return; }
+      if (!PL.start) PL.start = isoDay(); store.set('myplan_set', true); store.set('myplan', PL);
+      $$('#plTabs [data-t]').forEach(b => b.classList.toggle('on', b.dataset.t === 'today')); $$('#v-plan [data-pane]').forEach(p => p.hidden = p.dataset.pane !== 'today'); renderPlan(); toast('Your plan is ready'); return; }
     const d = e.target.closest('[data-pdone]'), u = e.target.closest('[data-pundo]'), today = isoDay(); PLD[today] = PLD[today] || {};
     if (d) { const b = plBlocks().find(x => x.id === d.dataset.pdone); if (!b) return; let n = 0;
-      if (b.act) { const inp = $(`[data-pn="${b.id}"]`); n = Math.max(0, Math.round(+(inp && inp.value) || 0)); if (n) addAct(b.act, n); }
-      PLD[today][b.id] = { act: b.act || '', n }; if (b.id === 'fu') dueLeads().forEach(l => { l.nextFu = addDays(today, 3); }); store.set('leads', leads);
+      if (b.act && b.n) { const inp = $(`[data-pn="${b.id}"]`); n = Math.max(0, Math.round(+(inp && inp.value) || 0)); if (n) addAct(b.act, n); }
+      PLD[today][b.id] = { act: b.act || '', n }; if (b.id === 'fu') { dueLeads().forEach(l => { l.nextFu = addDays(today, 3); }); store.set('leads', leads); }
       renderPlan(); toast(n ? `Logged ${n} on Make Money` : 'Done'); }
     if (u) { const c = PLD[today][u.dataset.pundo]; if (c && c.act && c.n) addAct(c.act, -c.n); delete PLD[today][u.dataset.pundo]; renderPlan(); }
   });
