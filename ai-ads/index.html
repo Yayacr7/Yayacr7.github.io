@@ -771,6 +771,11 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 .ts-plan li{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.88rem}
 .ts-plan li b{font-size:.86rem;color:var(--accent)}.ts-plan a{color:var(--accent)}
 #tsK{grid-template-columns:repeat(2,minmax(0,1fr))}
+.kfact{margin:-2px 0 0;font-size:.82rem;line-height:1.4;border-left:3px solid var(--green);padding:2px 0 2px 9px}.kfact b{color:var(--green)}
+.kfact.rt{border-left-color:var(--gold)}.kfact.rt b{color:var(--gold)}.kfact a{color:var(--accent);white-space:nowrap}
+@media (min-width:1201px) and (max-height:860px){#v-course .lesson,#v-first .lesson,#v-grow .lesson,#v-bcourse .lesson{gap:8px}.mbub{padding:8px 11px}.mbub .why{font-size:.88rem;line-height:1.38}.mtip{font-size:.79rem;margin-top:4px!important}.kfact{font-size:.78rem;line-height:1.35}.kfact.rt .dim{display:none}.plain{font-size:.86rem}.mmove{padding:8px 11px;gap:4px}}
+.mright [data-cheat]{padding:3px 11px;font-size:.78rem;line-height:1.4}
+table.cheat td{vertical-align:top;font-size:.82rem;line-height:1.4}table.cheat td a{color:var(--accent)}table.cheat th{white-space:nowrap}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -1195,6 +1200,7 @@ details.mk-more[open]{max-height:44vh;max-height:44dvh;overflow:auto}
 <div class="toast" id="toast" role="status"></div>
 <div class="helpwrap" id="moreDlg" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-label="More for this ad" style="width:min(640px,100%)"><div class="row" style="justify-content:space-between"><h2>More for this ad</h2><button class="btn sm ghost" id="moreClose">Close</button></div><div class="tabs" id="outTabs"></div><div id="outPane" class="scroll" style="max-height:60vh;max-height:60dvh"></div><button class="btn sm ghost" id="copyAll" style="align-self:flex-start">Copy everything</button></div></div>
 <div class="helpwrap" id="bigDlg" hidden><div class="bigbox" role="dialog" aria-modal="true" aria-label="Big view of your ad"><div class="row"><button class="btn sm play" data-play><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Play demo</button><button class="btn sm ghost" id="bigClose">Close</button></div><div id="bigStage"></div><p class="dim" style="font-size:.78rem;text-align:center">Big view. Good for showing a business owner a demo.</p></div></div>
+<div class="helpwrap" id="cheatDlg" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-labelledby="cheatT" style="width:min(980px,100%)"><div class="row" style="justify-content:space-between"><h2 id="cheatT">Cheat sheet</h2><span class="row" style="gap:6px"><button class="btn sm" id="cheatCopy">Copy all</button><button class="btn sm ghost" id="cheatClose">Close</button></span></div><div id="cheatBody" class="stack" style="gap:8px"></div></div></div>
 <div class="helpwrap" id="mAsk" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-label="Ask your mentor"><div class="row" style="justify-content:space-between"><h2>Ask your mentor</h2><button class="btn sm ghost" id="mAskClose">Close</button></div>
   <div class="row" style="flex-wrap:nowrap;gap:6px"><input type="text" id="mAskQ" aria-label="Your question" placeholder="e.g. What do I say when they ask for results?"><button class="btn sm" id="mAskGo">Ask</button></div>
   <div id="mAskOut" class="stack" style="gap:8px;margin-top:6px"></div></div></div>
@@ -2614,6 +2620,17 @@ const GLOSSARY = [
   ['Special Ad Categories', 'Facebook rules for ads about housing, jobs, credit and other financial services, and politics. They limit who you can target.']
 ];
 const SOURCES = [
+  ['Meta: ad text length (checked Nov 6, 2026)', 'Facebook Feed image ads: about 50–150 characters of main text and a 27-character headline are recommended; longer text can be cut off.', 'https://www.facebook.com/business/ads-guide/update/image'],
+  ['Meta: picture and video shapes', '1:1 or 4:5 for the feed, 9:16 for Stories and Reels.', 'https://www.facebook.com/business/help/103816146375741'],
+  ['Meta: learning phase', 'An ad set needs about 50 optimization events in 7 days; significant edits restart learning.', 'https://www.facebook.com/business/help/269269737396981'],
+  ['Meta: personal attributes rule', 'Ads must not assert or imply personal attributes of the viewer.', 'https://transparency.meta.com/policies/ad-standards/objectionable-content/privacy-violations-personal-attributes/'],
+  ['FTC: sales emails (CAN-SPAM)', 'Include a valid postal address and a clear opt-out; honor opt-outs within 10 business days.', 'https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business'],
+  ['IRS: self-employment tax', '15.3% (12.4% Social Security + 2.9% Medicare); file Schedule SE when net earnings are $400 or more.', 'https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes'],
+  ['Google: Business Profile description', 'Up to 750 characters; describe the business, not promotions.', 'https://support.google.com/business/answer/3039617'],
+  ['Google: business name guideline', 'Use the real-world name; no taglines, hours or locations.', 'https://support.google.com/business/answer/3038177'],
+  ['Google Maps: no paid or selective reviews', 'No incentives for reviews; no asking only happy customers.', 'https://support.google.com/contributionpolicy/answer/7400114'],
+  ['Google Ads: search ad limits', 'Up to 15 headlines (30 characters) and 4 descriptions (90 characters).', 'https://support.google.com/google-ads/answer/17092074'],
+  ['Upwork: freelancer service fee', '0% to 15% per contract, shown before you submit a proposal.', 'https://support.upwork.com/hc/en-us/articles/211062538-Learn-about-the-Freelancer-Service-Fee'],
   ['City ad packs: local places in the hooks (checked Nov 2, 2026)', 'Coon Rapids Dam Regional Park (Coon Rapids side of the Mississippi), the National Sports Center in Blaine (NSC), Arbor Lakes in Maple Grove, Mississippi Gateway Regional Park in Brooklyn Park, the Mississippi River in Champlin.', 'https://www.nps.gov/miss/planyourvisit/eastcoon.htm'],
   ['National Sports Center, Blaine', 'State-owned sports complex at 1700 105th Ave NE, Blaine, opened in 1990.', 'https://en.wikipedia.org/wiki/National_Sports_Center'],
   ['Mississippi Gateway Regional Park, Brooklyn Park', 'The west side of the Coon Rapids Dam park, renamed; run by Three Rivers Park District with Brooklyn Park.', 'https://www.nps.gov/miss/planyourvisit/mississippi-gateway-regional-park.htm'],
@@ -3118,9 +3135,78 @@ function explainify(text, used) { // only touches text, never HTML tags; each wo
     return part; }).join('');
 }
 const mKey = (pb, i) => pb + ':' + i;
+
+// ================= KEY FACTS + CHEAT SHEETS: the short version, with official sources (checked Nov 6, 2026) =================
+// 'f' = fact from the official source named; 'r' = rule of thumb (experience, not an official rule) and labeled that way
+const FSRC = {
+  metaText: ['Meta Ads Guide', 'https://www.facebook.com/business/ads-guide/update/image'],
+  metaRatio: ['Meta: aspect ratios', 'https://www.facebook.com/business/help/103816146375741'],
+  metaLearn: ['Meta: learning phase', 'https://www.facebook.com/business/help/269269737396981'],
+  metaAttr: ['Meta Advertising Standards', 'https://transparency.meta.com/policies/ad-standards/objectionable-content/privacy-violations-personal-attributes/'],
+  ftcReviews: ['FTC: reviews rule', 'https://www.ftc.gov/business-guidance/resources/consumer-reviews-testimonials-rule-questions-answers'],
+  canSpam: ['FTC: CAN-SPAM guide', 'https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business'],
+  irs: ['IRS: self-employment tax', 'https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes'],
+  gbpDesc: ['Google Business Profile Help', 'https://support.google.com/business/answer/3039617'],
+  gbpName: ['Google: profile guidelines', 'https://support.google.com/business/answer/3038177'],
+  gReviews: ['Google Maps content policy', 'https://support.google.com/contributionpolicy/answer/7400114'],
+  gRsa: ['Google Ads Help', 'https://support.google.com/google-ads/answer/17092074'],
+  upwork: ['Upwork Help', 'https://support.upwork.com/hc/en-us/articles/211062538-Learn-about-the-Freelancer-Service-Fee']
+};
+const KF = {
+  attr: ['f', 'Ads cannot say or hint that the viewer has a personal trait. "Depression counseling" is allowed; "Depression getting you down?" is not.', 'metaAttr'],
+  text: ['f', 'For Facebook Feed image ads, Meta recommends about 50 to 150 characters of main text and a headline of about 27 characters. Longer text gets cut off.', 'metaText'],
+  ratio: ['f', 'Meta recommends square (1:1) or 4:5 pictures for the feed and tall 9:16 for Stories and Reels.', 'metaRatio'],
+  vert: ['f', 'Most people hold their phone upright, so Meta recommends tall 9:16 videos for Stories and Reels.', 'metaRatio'],
+  learn: ['f', 'An ad set needs about 50 results in 7 days to finish Meta\'s learning phase. Big edits start it over.', 'metaLearn'],
+  oneSet: ['f', 'Meta recommends one ad set instead of several with the same audience, so it reaches 50 results sooner.', 'metaLearn'],
+  fake: ['f', 'Fake reviews and fake testimonials are banned by an FTC rule in effect since October 21, 2024.', 'ftcReviews'],
+  sample: ['f', 'Label sample work as samples. The FTC rule bans fake reviews and testimonials (since October 21, 2024).', 'ftcReviews'],
+  spam: ['f', 'Sales emails must show your real postal address and an easy way to opt out. Opt-outs must be honored within 10 business days.', 'canSpam'],
+  tax: ['f', 'If you make $400 or more from freelancing in a year, you owe self-employment tax: 15.3% (12.4% Social Security + 2.9% Medicare).', 'irs'],
+  taxPrice: ['f', 'Set prices that cover taxes: self-employment tax is 15.3%, charged on most of your net earnings.', 'irs'],
+  desc: ['f', 'A Google Business Profile description can be up to 750 characters and should describe the business, not promotions or prices.', 'gbpDesc'],
+  gname: ['f', 'Google says the profile name must be the real-world business name: no taglines, hours or locations added.', 'gbpName'],
+  greviews: ['f', 'Google does not allow offering discounts or free things for reviews, or asking only happy customers for them.', 'gReviews'],
+  rsa: ['f', 'Google search ads take up to 15 headlines of 30 characters and up to 4 descriptions of 90 characters.', 'gRsa'],
+  upwork: ['f', 'Upwork\'s freelancer fee is 0% to 15% per contract, and you see the exact rate before you send a proposal.', 'upwork']
+};
+const RT = t => ['r', t];
+const KFACTS = {
+  course: [RT('The best ad lines often reuse the exact words customers write in reviews.'), RT('An offer with a number ("$79 first visit") is easier to act on than a vague one.'), KF.text, KF.ratio, KF.vert, KF.attr, KF.learn, KF.oneSet, RT('Judge ads by what one lead costs, not by likes.'), KF.fake, KF.rsa],
+  first: [RT('Most first messages get no reply. Many replies come only after a follow-up.'), RT('One business type in one city makes you easier to remember and to recommend.'), KF.sample, RT('A business with real reviews but a weak profile is the easiest yes.'), KF.desc, KF.spam, RT('Follow up 2 or 3 times, a few days apart, then stop.'), RT('On a sales call, listen more than you talk.'), KF.tax],
+  grow: [KF.upwork, RT('Answer the client\'s exact problem in the first 2 lines.'), KF.taxPrice, RT('People hire people they have seen before. Show your work where buyers look.'), RT('Posting a little every week beats posting a lot once.'), RT('A monthly client is worth many one-time gigs.'), RT('Templates make each new job faster.'), KF.tax],
+  bcourse: [RT('Brand work is slower than ads: think 3 to 6 months. Say so up front.'), RT('A narrow offer sounds expert.'), RT('Real customers plus a messy brand is the easiest yes.'), KF.spam, RT('Write down the owner\'s exact words on the call.'), RT('A smooth start makes clients stay longer.'), KF.gname, RT('A difference must be true and specific to count.'), RT('Free tools like Canva and Google Fonts are enough.'), KF.desc, KF.ratio, KF.greviews, KF.learn, RT('Show honest numbers, even in a slow month.'), KF.fake, KF.tax]
+};
+function kfactHTML(pb, i) {
+  const k = (KFACTS[pb] || [])[i]; if (!k) return '';
+  if (k[0] === 'r') return `<p class="kfact rt"><b>Rule of thumb:</b> ${k[1]} <span class="dim">(from experience, not an official rule)</span></p>`;
+  const src = FSRC[k[2]]; return `<p class="kfact"><b>Fact:</b> ${k[1]} <a href="${src[1]}" target="_blank" rel="noopener">Source: ${src[0]} ↗</a></p>`;
+}
+const CHEAT_LESSONS = () => ({ course: LESSONS, first: FC_LESSONS, grow: GR_LESSONS, bcourse: BC_LESSONS });
+function cheatText(pb) {
+  const M = MENTOR[pb], L = CHEAT_LESSONS()[pb];
+  return `${M.name} playbook: the short version\nGoal: ${M.goal}\n\n` + L.map((l, i) => { const k = (KFACTS[pb] || [])[i];
+    return `${i + 1}. ${l.t}\n   In plain words: ${M.plain[i] || ''}\n   ${k ? (k[0] === 'f' ? `Fact: ${k[1]} (${FSRC[k[2]][0]})` : `Rule of thumb: ${k[1]}`) : ''}\n   Money move: ${(M.moves[i] || [''])[0]}`; }).join('\n\n');
+}
+function openCheat(pb) {
+  const M = MENTOR[pb], L = CHEAT_LESSONS()[pb];
+  $('#cheatT').textContent = `${M.name} playbook: the short version`;
+  $('#cheatBody').innerHTML = `<p class="dim" style="font-size:.8rem;margin:0">Goal: <b style="color:var(--text)">${M.goal}</b>. Every step in one line, with one fact. Facts link to the official source; rules of thumb are labeled.</p>
+    <div class="tbl"><table class="cheat"><thead><tr><th>#</th><th>Step, in plain words</th><th>Key fact</th><th>Money move</th></tr></thead><tbody>${L.map((l, i) => { const k = (KFACTS[pb] || [])[i];
+      return `<tr><td class="num">${i + 1}</td><td><b>${l.t}</b><br><span class="muted">${M.plain[i] || ''}</span></td><td>${k ? (k[0] === 'f' ? `${k[1]} <a href="${FSRC[k[2]][1]}" target="_blank" rel="noopener">${FSRC[k[2]][0]} ↗</a>` : `<span class="dim">Rule of thumb:</span> ${k[1]}`) : ''}</td><td>${(M.moves[i] || [''])[0]}</td></tr>`; }).join('')}</tbody></table></div>`;
+  $('#cheatDlg').dataset.pb = pb; $('#cheatDlg').hidden = false; $('#cheatClose').focus();
+}
+function cheatInit() {
+  for (const pb of Object.keys(MENTOR)) { const row = $(`#v-${pb} .mright > .row`); if (row && !$('[data-cheat]', row)) row.insertAdjacentHTML('afterbegin', `<button class="btn sm" data-cheat="${pb}">Cheat sheet</button>`); }
+  document.addEventListener('click', e => { const b = e.target.closest('[data-cheat]'); if (b) openCheat(b.dataset.cheat);
+    if (e.target.id === 'cheatClose' || e.target.id === 'cheatDlg') $('#cheatDlg').hidden = true;
+    if (e.target.id === 'cheatCopy') copyText(cheatText($('#cheatDlg').dataset.pb)); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') $('#cheatDlg').hidden = true; });
+}
 function mentorLessonHTML(pb, L, i, n) {
   const M = MENTOR[pb], mv = M.moves[i] || M.moves[M.moves.length - 1], c = MCHK[mKey(pb, i)], used = new Set(), X = t => explainify(t, used);
   return `<span class="eyebrow ${M.phases ? 'mphase' : 'mstep'}">${M.phases ? bcPhase(i) + ' · ' : ''}Step ${i + 1} of ${n}</span><h2>${L.t}</h2>${M.plain[i] ? `<p class="plain"><b>In plain words:</b> ${M.plain[i]}</p>` : ''}
+    ${kfactHTML(pb, i)}
     <div class="mbub"><span class="mav" aria-hidden="true">M</span><div><p class="why">${X(L.why)}</p>${L.tip ? `<p class="mtip"><b>What I'd do:</b> ${X(L.tip)}</p>` : ''}</div></div>
     ${L.how ? `<details class="mhow" ${innerWidth <= 1200 || innerHeight >= 1000 ? 'open' : ''}><summary><span class="tag">Do it with me · ${L.how.length} steps</span></summary><ol class="steps">${L.how.map(h => `<li><span>${X(h)}</span></li>`).join('')}</ol></details>` : ''}
     <div class="mmove" data-pb="${pb}" data-i="${i}"><span class="eyebrow">Your money move today</span><b>${X(mv[0])}</b>
@@ -3290,7 +3376,7 @@ function renderStudio(sync = true) {
     if (B.ai.imageIdea) pack.imagePrompt = `${B.ai.imageIdea}, vertical 4:5 ad format, photorealistic, high detail, empty space at the top for a headline, no text, no logos`;
   }
   applyOpt(pack);
-  if (sync) { $('#bName').value = B.name; $('#bCity').value = B.city; $('#bOffer').value = B.offer; $('#bAud').value = B.aud; $('#bProof').value = B.proof || ''; $('#bProof').placeholder = 'e.g. ' + NICHES[B.niche].proofEx; }
+  if (sync) { $('#bName').value = B.name; $('#bCity').value = B.city; $('#bOffer').value = B.offer; $('#bAud').value = B.aud; $('#bProof').value = B.proof || ''; $('#bProof').placeholder = 'e.g. ' + NICHES[B.niche].proofEx + ' (only if true)'; }
   $$('#nicheGrid button').forEach(b => b.classList.toggle('on', b.dataset.n === B.niche));
   $$('#toneRow .chip').forEach(b => b.classList.toggle('on', b.dataset.tone === B.tone));
   $$('#swatches .sw').forEach(b => b.classList.toggle('on', +b.dataset.pal === B.palette));
@@ -3341,7 +3427,7 @@ function renderOutputs() {
 function packText(p) {
   return `AD PACK: ${p.f.name} (${p.n.label}, ${p.f.city})\n\nHEADLINES\n${p.hs.map((h, i) => 'ABC'[i] + ': ' + h).join('\n')}\n\nAD TEXTS\n${p.texts.map((t, i) => `Version ${'ABC'[i]} (${t.f}):\n${t.t}`).join('\n\n')}\n\nGOOGLE AD\n${p.g.hs.join(' | ')}\n${p.g.d1}\n${p.g.d2}\n\nIMAGE PROMPT\n${p.imagePrompt}\n\nVIDEO SCRIPT\n${p.video}\n\nTARGETING\n${p.targeting}\n\nBUDGET\n${p.budget}\n\nBUTTON: ${p.n.cta}\n${p.hashtags}`;
 }
-const samplePack = (k = 'restaurant', tone = 'friendly', v = {}) => buildPack(Object.assign({ niche: k, name: NICHE_NAMES[k], city: 'Austin', offer: NICHES[k].offer, aud: NICHES[k].audience, proof: NICHES[k].proofEx, tone, palette: NICHES[k].palette }, v));
+const samplePack = (k = 'restaurant', tone = 'friendly', v = {}) => buildPack(Object.assign({ niche: k, name: NICHE_NAMES[k], city: 'Austin', offer: NICHES[k].offer, aud: NICHES[k].audience, proof: '', tone, palette: NICHES[k].palette }, v));
 
 // ================= HOME =================
 let heroI = 0;
@@ -4136,7 +4222,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit(); mentorInit(); localInit(); testInit();
+studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit(); mentorInit(); localInit(); testInit(); cheatInit();
 show(location.hash.slice(1));
 </script>
 </body>
