@@ -12,9 +12,10 @@
 <style>
 /* Layout: an ad-tech control room. Fixed sidebar + one centered "stage" per view; steps and tabs instead of long scrolling. Deliberately dark-only. */
 :root{
-  --bg:#0A0D13; --panel:#111620; --panel2:#171D2A; --raise:#1D2433; --line:#242C3C; --line2:#2F3949;
-  --text:#E8EBF2; --muted:#8B95A9; --dim:#5D677B;
-  --accent:#7B93FF; --accent-ink:#0A0D13; --accent-s:rgba(123,147,255,.13);
+  /* AdSharp colorway: warm ink black + electric lime (Nov 6, 2026) */
+  --bg:#0B0B09; --panel:#141411; --panel2:#1B1B17; --raise:#22221D; --line:#2B2B25; --line2:#38382F;
+  --text:#F3F2EA; --muted:#A6A597; --dim:#727165;
+  --accent:#D4FF3A; --accent-ink:#10130A; --accent-s:rgba(212,255,58,.12); --accent2:#7BC800;
   --gold:#F0B44C; --gold-s:rgba(240,180,76,.13);
   --green:#38D39F; --green-s:rgba(56,211,159,.13); --red:#FF6170; --red-s:rgba(255,97,112,.13); --amber:#F5A524;
   --f-body:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -50,7 +51,7 @@ button,input,select,textarea{font:inherit;color:inherit}
   padding-block:22px;padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:14px;overflow:auto}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;letter-spacing:-.01em;padding:0 6px}
 .logo i{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-size:.72rem;font-weight:600;
-  background:linear-gradient(135deg,var(--accent),#3B4FB8);color:#fff}
+  background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-ink)}
 .nav{display:flex;flex-direction:column;gap:2px}
 .nav a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--muted);font-weight:500;padding:9px 10px;border-radius:9px;white-space:nowrap}
 .nav a svg{width:17px;height:17px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
@@ -255,7 +256,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .pcol{display:flex;flex-direction:column;gap:10px;align-items:center;position:relative}
 .pwrap{position:relative;scroll-margin-top:110px}
 .pcol .phone{--h:min(620px,calc(100vh - 275px))}
-.gener{position:absolute;inset:9px;border-radius:30px;z-index:10;background:rgba(10,13,19,.9);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);display:flex;flex-direction:column;justify-content:center;gap:10px;padding:28px}
+.gener{position:absolute;inset:9px;border-radius:30px;z-index:10;background:rgba(11,11,9,.9);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);display:flex;flex-direction:column;justify-content:center;gap:10px;padding:28px}
 .outputs{display:flex;flex-direction:column;gap:10px;min-height:0}
 .outputs .pane{flex:1;min-height:0;overflow:auto;max-height:calc(100vh - 290px);max-height:calc(100dvh - 290px)}
 @media (max-width:1180px){.outputs .pane{max-height:none}}
@@ -396,7 +397,7 @@ ol.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.75re
 .helplink{background:none;color:var(--muted);font-size:.74rem;cursor:pointer;margin-left:10px;padding:2px 8px;border:1px solid var(--line2);border-radius:999px;vertical-align:1px}
 .helplink:hover{color:var(--text);border-color:var(--accent)}
 .linkbtn{border:0;background:none;color:var(--accent);cursor:pointer;padding:0;font-size:inherit;text-decoration:underline}
-.helpwrap{position:fixed;inset:0;z-index:90;background:rgba(5,7,11,.72);display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.helpwrap{position:fixed;inset:0;z-index:90;background:rgba(8,8,6,.74);display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
 .helpbox{width:min(520px,100%);max-height:100%;overflow:auto;background:var(--panel);border:1px solid var(--line2);border-radius:16px;padding:20px 22px 24px;display:flex;flex-direction:column;gap:6px;box-shadow:0 40px 80px -30px rgba(0,0,0,.9)}
 .gloss{display:flex;flex-direction:column;gap:9px;font-size:.9rem}
 .gloss div{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;padding-bottom:9px;border-bottom:1px solid var(--line)}
@@ -1502,7 +1503,7 @@ const LESSONS = [
 
 // ---------- audit ----------
 const AUDIT = [
-  { cat: 'Google & reviews', color: '#7B93FF', qs: [
+  { cat: 'Google & reviews', color: '#D4FF3A', qs: [
     { id: 'gbp', q: 'Google Business Profile claimed and complete?', type: 'yn', pts: 6, fix: 'Finish the Google Business Profile: hours, 20+ photos, services and a booking link. It is free and often the top source of calls.' },
     { id: 'reviews', q: 'Number of Google reviews', type: 'range', min: 0, max: 400, step: 5, pts: 7, score: v => Math.min(1, v / 150), fix: 'Send a review request by text after every visit. Goal: 10 new reviews a month. Ads convert better with 100+ reviews.' },
     { id: 'rating', q: 'Star rating', type: 'range', min: 1, max: 5, step: 0.1, pts: 4, score: v => Math.max(0, Math.min(1, (v - 3.5) / 1.3)), fix: 'Reply calmly to bad reviews and ask happy customers to post. Under 4.3 stars costs clicks.' },
@@ -2358,7 +2359,7 @@ const BC_DEMOS = {
   funnel(el) {
     const S = [['fnB', 'Monthly ad budget (client pays the platform)', 150, 3000, 50, 600, v => '$' + v], ['fnA', 'Share on awareness (boosting best posts)', 10, 70, 5, 40, v => v + '%'], ['fnR', 'Share on retargeting engaged people', 10, 60, 5, 30, v => v + '%']];
     el.innerHTML = head('Content + ads budget split') + `<div class="stack" style="gap:4px">${sliders(S)}</div><div id="fnOut" class="stack"></div>`;
-    const go = () => { const v = readSliders(el, S), off = Math.max(0, 100 - v.fnA - v.fnR), parts = [['Awareness', v.fnA, '#7B93FF'], ['Retargeting', v.fnR, '#38D39F'], ['Offer to new people', off, '#F0B44C']];
+    const go = () => { const v = readSliders(el, S), off = Math.max(0, 100 - v.fnA - v.fnR), parts = [['Awareness', v.fnA, '#D4FF3A'], ['Retargeting', v.fnR, '#38D39F'], ['Offer to new people', off, '#F0B44C']];
       $('#fnOut', el).innerHTML = `<div style="display:flex;height:22px;border-radius:6px;overflow:hidden">${parts.map(p => `<i style="width:${p[1]}%;background:${p[2]}" title="${p[0]}"></i>`).join('')}</div>`
         + `<div class="kpis">${parts.map(p => `<div class="kpi"><small>${p[0]}</small><b>${money(v.fnB * p[1] / 100)}</b></div>`).join('')}</div>`
         + `<div class="note ${v.fnA + v.fnR > 100 ? 'bad' : 'acc'}">${v.fnA + v.fnR > 100 ? 'The shares add up to more than 100%. Lower one.' : 'A common starting split is about 40 / 30 / 30. Move money toward whatever brings the cheapest real enquiries.'}</div>`; };
@@ -3628,7 +3629,7 @@ const DEMOS = {
   },
   abtest(el) {
     let truth, data, day;
-    const names = ['Hook A', 'Hook B', 'Hook C'], cols = ['#7B93FF', '#F0B44C', '#38D39F'];
+    const names = ['Hook A', 'Hook B', 'Hook C'], cols = ['#D4FF3A', '#F0B44C', '#38D39F'];
     const lines = ['“Tired of crowded gyms?”', '“7-day free pass, no catch”', '“Your couch will be fine without you”'];
     el.innerHTML = `<div class="dh"><div><span class="eyebrow">Tool</span><h3>A/B test simulator</h3></div><span class="mono muted" id="abDay"></span></div>
       <p class="muted" style="font-size:.86rem">Three gym ads. Each day, each gets 1,000 views. Run at least 3 days, then pick the winner.</p>
