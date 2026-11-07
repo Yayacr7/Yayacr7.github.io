@@ -4,6 +4,8 @@ const list = require('./businesses.js');
 const NOTE = {'walsh-plumbing':'No website: info from your list and public listings. Call first.','fairy-tails-grooming':'Address unclear: listings disagree. Call first.','performance-music-lessons':'Address unclear: listings disagree. Call first.','kristinas-cleaning-company':'No shop address: they come to you.','grooming-station':'No website: info from public listings. Call first.','mns-all-seasons-comforts':'No website: info from public listings. Call first.','mccoys-auto-repair':'No website: info from public listings. Call first.','qc-dance':'Phone and address from your list.'};
 const apps = [{slug:'vividly-clean', name:'Vividly Clean', what:'Home & business cleaning', city:'Blaine', accent:'#0f766e', phoneShow:'763.434.0206', phone:'7634340206', email:'Jenni@vividlyclean.com', address:'10130 Davenport St NE #140, Blaine, MN 55449'}]
   .concat(list.map(b => ({slug:b.slug, name:b.name, what:b.eyebrow.split(' · ')[0].replace(/^./, c => c.toUpperCase()), city:b.kicker.replace(/, MN$/,'').replace(/^.* · /,''), accent:b.theme.accent, phoneShow:b.phoneShow, phone:b.phone, textShow: b.text && b.text !== b.phone ? b.textShow : (b.text ? 'same number' : ''), email:b.email || '', address:b.address || ''})));
+const ORDER = ['vividly-clean','augusta-greens','cutting-edge-barbershop','creative-paws-pet-grooming','skin-med-spa','qc-dance','minnesota-school-of-music','stone-mountain-pet-lodge','restoring-wellness-chiropractic','walsh-plumbing','something-sweet-by-maddie-lu','zacs-barbershop','todaze-hair','muddy-paws-doggy-daycare','sterling-auto-detail','tc-medspa','fairy-tails-grooming','grooming-station','kristinas-cleaning-company','addie-lane-floral','performance-music-lessons','mns-all-seasons-comforts','mccoys-auto-repair'];
+apps.sort((x, y) => ORDER.indexOf(x.slug) - ORDER.indexOf(y.slug));
 const pages = {};
 for (const a of apps) {
   const body = fs.readFileSync(path.join(S, 'pages', a.slug + '.html'), 'utf8');
@@ -35,13 +37,18 @@ dt{color:var(--dim)}
 dd{margin:0;overflow-wrap:anywhere;user-select:text}
 .warn{margin-top:6px;font-size:13px;color:var(--dim)}
 .open{flex:none;align-self:center;background:var(--hi);color:var(--bg);border:0;border-radius:10px;padding:10px 14px;font:700 14px var(--body);cursor:pointer;white-space:nowrap}
-@media(max-width:520px){.item{flex-wrap:wrap}.open{width:100%;margin-top:4px}}
+
 .open:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .sw{width:12px;height:40px;border-radius:6px;flex:none}
 .item span.t{flex:1;min-width:0}
 .item b{display:block;font-size:16.5px}
 .item small{display:block;color:var(--dim);font-size:14px}
 .item i{font-style:normal;color:var(--hi);font-weight:700;font-size:14px;white-space:nowrap}
+.list{list-style:decimal;margin:0;padding-left:1.6em;display:flex;flex-direction:column;gap:12px}
+.row{line-height:1.6;font-size:15.5px;overflow-wrap:anywhere;padding-left:4px}
+.row::marker{font-weight:700;color:var(--dim)}
+.row b{font-weight:700}
+.open{display:inline;background:none;border:0;padding:0;color:var(--hi);font:700 15.5px var(--body);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .note{color:var(--dim);font-size:13px;margin-top:18px}
 #viewer{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;z-index:5}
 #viewer[hidden]{display:none}
@@ -50,10 +57,8 @@ dd{margin:0;overflow-wrap:anywhere;user-select:text}
 .bar b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 iframe{flex:1;width:100%;border:0;background:#fff}
 </style>
-<header><div class="wrap"><h1>Local business app demos</h1><p>Every business with its phone, email and address. Tap “Open app” to show its app.</p><span class="count">${apps.length} apps · Anoka County, MN</span></div></header>
-<main><div class="wrap"><div class="list">${apps.map((a, i) => `<div class="item"><span class="num">${i+1}</span><span class="sw" style="background:${a.accent}"></span><span class="t"><b>${esc(a.name)}</b><small>${esc(a.what)} · ${esc(a.city)}</small>
-<dl><dt>Phone</dt><dd>${esc(a.phoneShow)}${a.textShow ? ' · text ' + esc(a.textShow) : ''}</dd><dt>Email</dt><dd>${a.email ? esc(a.email) : 'None found'}</dd><dt>Address</dt><dd>${a.address ? esc(a.address) : 'Call to confirm'}</dd></dl>
-${NOTE[a.slug] ? `<div class="warn">${esc(NOTE[a.slug])}</div>` : ''}</span><button class="open" type="button" data-app="${a.slug}">Open app →</button></div>`).join('')}</div>
+<header><div class="wrap"><h1>Local business app demos</h1><p>Every business in one list. Tap “Open app” to show its app.</p><span class="count">${apps.length} apps · Anoka County, MN</span></div></header>
+<main><div class="wrap"><ol class="list">${apps.map((a, i) => `<li class="row"><b>${esc(a.name)}</b>, ${esc(a.city)} · ${esc(a.phoneShow)}${a.textShow ? (a.textShow === 'same number' ? ' (call or text)' : ' · text ' + esc(a.textShow)) : ''} · ${a.email ? esc(a.email) : 'no email'} · ${a.address ? esc(a.address.replace(/, (Blaine|Coon Rapids|Andover|Oak Grove|Brooklyn Park), MN \d{5}$/, '')) : (a.slug === 'kristinas-cleaning-company' ? 'they come to you' : 'call to confirm address')} · <button class="open" type="button" data-app="${a.slug}">Open app</button></li>`).join('')}</ol>
 <p class="note">Demos made by AdSharp. These are not the businesses' official apps.</p></div></main>
 <div id="viewer" hidden><div class="bar"><button type="button" id="back">← All apps</button><b id="vname"></b></div><iframe id="frame" title="App"></iframe></div>
 <script id="data" type="application/json">${JSON.stringify(pages).replace(/</g,'\\u003c')}</script>
