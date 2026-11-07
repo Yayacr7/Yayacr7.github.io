@@ -81,6 +81,8 @@ var MODULES = [
 var LESSONS = [
 /* ---------------- MODULE 1 ---------------- */
 { id: "m1l1", module: "m1", title: "What AI can do, and where it goes wrong", minutes: 15,
+  mistake: "Trusting a confident tone. AI sounds equally sure when it is right and when it is wrong.",
+  facts: [],
   goal: "Name three kinds of work AI helps with and four common ways it makes mistakes.",
   terms: [
     ["AI (artificial intelligence)", "Software that does tasks that used to need a person, like writing a paragraph or sorting photos."],
@@ -105,9 +107,11 @@ var LESSONS = [
     q("Which task is AI usually MOST reliable at?", ["Rewriting your own paragraph to be shorter and friendlier", "Telling you today’s exact price of a product", "Quoting a law word for word"], 0,
       ["Right. Rewriting text you supplied plays to its strength: words and structure, with your facts.", "Prices change, and AI may be out of date or guess. Check the official site.", "AI can misquote or invent legal text. Read the official source."]),
     q("What is a “hallucination” in AI?", ["When the AI refuses to answer", "When the AI states something false as if it were true", "When the AI is slow"], 1,
-      ["A refusal is a different behavior. A hallucination is a confident false statement.", "Right. Made-up facts, quotes and links are all hallucinations.", "Speed has nothing to do with it."])
+      ["A refusal is a different behavior. A hallucination is a confident false statement.", "Right. Made-up facts, quotes and links are all hallucinations.", "Speed has nothing to do with it. A hallucination is about accuracy, not timing."])
   ]},
 { id: "m1l2", module: "m1", title: "Write useful prompts and check the output", minutes: 20,
+  mistake: "Asking for a whole project in one giant prompt. Break it into small steps you can check one by one.",
+  facts: [],
   goal: "Write a five-part prompt and check AI output with a four-step routine before using it.",
   terms: [
     ["Prompt", "The instructions you type to an AI."],
@@ -137,6 +141,8 @@ var LESSONS = [
 
 /* ---------------- MODULE 2 ---------------- */
 { id: "m2l1", module: "m2", title: "Match a skill to your time, money and interests", minutes: 15,
+  mistake: "Choosing the path that sounds most impressive instead of the one where you can actually reach customers.",
+  facts: [],
   goal: "Choose one starting path with a clear reason, and know its main costs and limits.",
   terms: [
     ["Service", "Work you do for someone, usually paid per project or per month (a website, an automation)."],
@@ -159,11 +165,13 @@ var LESSONS = [
     q("Why do services often reach a first payment faster than products?", ["They are always more profitable", "One customer saying yes is enough to get paid", "They need no communication"], 1,
       ["Not always. Products can be more profitable over time.", "Right. A product usually needs many people to find it; a service needs one yes.", "Services need more communication, not less."]),
     q("Which is a skill people would pay for?", ["“I know how to use AI”", "“I set up a booking form that fills your calendar automatically”", "“I am good with computers”"], 1,
-      ["Too vague: it does not say what result someone gets.", "Right. It names a specific, useful result.", "Too vague to buy."]),
+      ["Too vague: it does not say what result someone gets.", "Right. It names a specific, useful result.", "Too vague to buy: nobody knows what result they would be paying for."]),
     q("The questionnaire suggested a path you are unsure about. What is best?", ["Switch paths every week until one works", "Pick one path for 30 days, then review honestly", "Do all three paths at once"], 1,
       ["Constant switching means never finishing anything.", "Right. A fixed trial period gives you real information.", "Splitting a few hours across three paths makes progress very slow."])
   ]},
 { id: "m2l2", module: "m2", title: "Your first practice project", minutes: 25,
+  mistake: "Making the practice project so big it never gets finished. Small and finished teaches more.",
+  facts: [{ text: "GitHub Pages: published sites can be up to 1 GB, with a soft bandwidth limit of 100 GB per month. Plenty for simple practice and small-business sites.", src: "GitHub Docs: GitHub Pages limits", url: "https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits" }],
   goal: "Finish a small 2–4 hour practice project for your path and write down what you learned.",
   terms: [
     ["Practice project", "A small project nobody is paying for, made to learn. You may show it as a sample, labeled as practice."],
@@ -185,7 +193,7 @@ var LESSONS = [
     note: "Save a link or description of your project in your notes. You will reuse it in the final project." },
   quiz: [
     q("Your FAQ assistant answers a question that is not in the FAQ with a confident guess. Best fix?", ["Add more friendly wording", "Tell it to say “I do not know” and give a contact when the FAQ has no answer", "Hope customers do not ask that"], 1,
-      ["Friendlier guesses are still guesses.", "Right. Clear limits plus a human fallback keep the assistant honest.", "They will ask. Test for it."]),
+      ["Friendlier guesses are still guesses.", "Right. Clear limits plus a human fallback keep the assistant honest.", "Customers will ask unexpected questions. Test them before launch so the assistant does not invent answers."]),
     q("How should you show a practice project in a portfolio?", ["As paid client work", "Clearly labeled as a practice or sample project", "Hide it, practice does not count"], 1,
       ["Calling it client work would be misleading.", "Right. Practice projects are good proof of skill when labeled honestly.", "It does count as a sample of your skill."]),
     q("What makes a good practice project size?", ["Something you can finish in 2–4 hours", "A full online store with payments", "As big as possible, to impress"], 0,
@@ -194,6 +202,8 @@ var LESSONS = [
 
 /* ---------------- MODULE 3 ---------------- */
 { id: "m3l1", module: "m3", title: "Talk to potential customers", minutes: 20,
+  mistake: "Describing your idea in the first few minutes. From then on, people talk about your idea instead of their problem.",
+  facts: [],
   goal: "Run a 15-minute problem conversation that learns about past behavior without pitching.",
   terms: [
     ["Potential customer", "Someone who might have the problem and might pay to fix it."],
@@ -215,13 +225,15 @@ var LESSONS = [
     note: "Write each person’s main problem and how they handle it today in your notes (no private details)." },
   quiz: [
     q("Which question gives the most reliable information?", ["“Would you pay for a tool that does this?”", "“Tell me about the last time this happened.”", "“Don’t you think this is annoying?”"], 1,
-      ["People guess badly about future buying.", "Right. Real past events reveal real problems and real costs.", "This is a leading question."]),
+      ["People guess badly about future buying.", "Right. Real past events reveal real problems and real costs.", "This is a leading question: it pushes them to agree, so the answer tells you little."]),
     q("Someone says “What a great idea, I’d totally use that!” What does that tell you?", ["They will buy it", "Very little: compliments are not commitment", "You should start building today"], 1,
-      ["Kind words often do not turn into purchases.", "Right. Look for past behavior and real commitments instead.", "Not on a compliment alone."]),
+      ["Kind words often do not turn into purchases.", "Right. Look for past behavior and real commitments instead.", "Not on a compliment alone. Wait for real behavior or a commitment before building."]),
     q("What is a respectful way to ask for a conversation?", ["Message strangers again and again until they answer", "Ask for 15 minutes, explain you want to learn, not sell", "Start with your price"], 1,
       ["Repeated messages after no reply are pushy.", "Right. Specific, short and honest about the purpose.", "This is a learning conversation, not a pitch."])
   ]},
 { id: "m3l2", module: "m3", title: "Check if the problem is worth solving", minutes: 20,
+  mistake: "Counting compliments as proof. Only actions (time, examples, introductions, money) count.",
+  facts: [],
   goal: "Score a problem on five factors and test it with a small real commitment.",
   terms: [
     ["Validate", "Check with real evidence that people want something before you spend a lot of time on it."],
@@ -231,7 +243,7 @@ var LESSONS = [
   ],
   explain: [
     "<p>Not every problem is worth solving. Some are rare, some are mild, and some belong to people who cannot or will not pay. Score each problem before you build.</p>",
-    "<h3>The five-factor scorecard (1–5 each)</h3><ol><li><strong>Frequency:</strong> How often does it happen? Weekly beats yearly.</li><li><strong>Pain:</strong> How much time, money or stress does it cost?</li><li><strong>Current workaround:</strong> Are they already spending money or effort on it? That is a good sign.</li><li><strong>Ability to pay:</strong> Do they have a budget, or is this a hobby with no money?</li><li><strong>Reach:</strong> Can you actually contact people with this problem?</li></ol><p>A problem scoring 18+ out of 25 is a strong start. Under 12, look for another.</p>",
+    "<h3>The five-factor scorecard (1–5 each)</h3><ol><li><strong>Frequency:</strong> How often does it happen? Weekly beats yearly.</li><li><strong>Pain:</strong> How much time, money or stress does it cost?</li><li><strong>Current workaround:</strong> Are they already spending money or effort on it? That is a good sign.</li><li><strong>Ability to pay:</strong> Do they have a budget, or is this a hobby with no money?</li><li><strong>Reach:</strong> Can you actually contact people with this problem?</li></ol><p>A problem scoring 18+ out of 25 is a strong start. Under 12, look for another. (These cut-offs are a rule of thumb, not research.)</p>",
     "<h3>Ask for a small commitment</h3><p>The best check is someone doing something, not just saying something: booking a second meeting to see a rough version, sending you real examples, introducing you to a friend with the same problem, or agreeing to a small paid pilot. If nobody will give even 20 minutes, the problem may not hurt enough.</p>",
     "<h3>Check the solution would actually help</h3><p>Describe your idea in one sentence and ask: “If this existed, what would you stop doing?” If the answer is “nothing”, the idea is not solving the painful part.</p>"
   ],
@@ -246,11 +258,13 @@ var LESSONS = [
     q("You ask “If this existed, what would you stop doing?” and they say “Nothing really.” What does it suggest?", ["Your idea may not solve the painful part", "They will buy it anyway", "Build it bigger"], 0,
       ["Right. Go back and find what actually costs them time or money.", "Unlikely if nothing changes for them.", "Bigger does not fix a mismatch."]),
     q("Which is a small real commitment?", ["“Keep me posted”", "Sending you 20 real examples of the problem", "A thumbs-up emoji"], 1,
-      ["Polite but no effort.", "Right. They spent real effort, which shows real interest.", "Nice, but not a commitment."])
+      ["Polite, but it costs them nothing, so it does not show real interest.", "Right. They spent real effort, which shows real interest.", "Friendly, but it took no time or effort, so it is not a commitment."])
   ]},
 
 /* ---------------- MODULE 4 ---------------- */
 { id: "m4l1", module: "m4", title: "Plan and build a small first version", minutes: 25,
+  mistake: "Adding nice-to-have features before the must-haves work.",
+  facts: [],
   goal: "Write a must-have list for a first version and build it with AI help, checking each part.",
   terms: [
     ["MVP (minimum viable product)", "The smallest version that solves the main problem well enough to test with real people."],
@@ -278,6 +292,8 @@ var LESSONS = [
       ["Using real private data without permission is not okay.", "Right. Test data lets you build safely.", "Never share private data publicly."])
   ]},
 { id: "m4l2", module: "m4", title: "Test it and collect useful feedback", minutes: 20,
+  mistake: "Testing only on your own computer with normal inputs. Real people use phones and type unexpected things.",
+  facts: [],
   goal: "Test your solution with a checklist and collect feedback from three people in a feedback log.",
   terms: [
     ["User test", "Watching a real person try to use your work, without helping them."],
@@ -300,13 +316,15 @@ var LESSONS = [
     q("A tester gets stuck. What should you do during the test?", ["Explain right away how it works", "Stay quiet, note where they got stuck, and ask afterward", "Tell them they are using it wrong"], 1,
       ["Helping hides the problem you need to see.", "Right. Their confusion shows you what to fix.", "Confusion usually means the design needs work."]),
     q("Which feedback should you fix first?", ["Anything that stops the main job from working", "One person’s favorite color", "Features nobody asked for"], 0,
-      ["Right. If the main job fails, nothing else matters.", "Taste can wait.", "Not until the main job works well."]),
+      ["Right. If the main job fails, nothing else matters.", "One person\u2019s taste can wait until the main job works for everyone.", "Not until the main job works well."]),
     q("Which is an edge case?", ["Submitting a form with every field empty", "A normal booking", "Reading the homepage"], 0,
-      ["Right. Unusual inputs often reveal bugs.", "That is the normal path.", "That is normal use."])
+      ["Right. Unusual inputs often reveal bugs.", "That is the normal path. Edge cases are unusual inputs, like an empty form.", "That is normal use. Edge cases are the unusual inputs that are easy to forget."])
   ]},
 
 /* ---------------- MODULE 5 ---------------- */
 { id: "m5l1", module: "m5", title: "Explain your offer and set a clear scope", minutes: 20,
+  mistake: "Starting work before the scope and payment terms are agreed in writing.",
+  facts: [],
   goal: "Write a one-sentence offer, show proof of your work honestly, and write a clear project scope.",
   terms: [
     ["Offer", "What you do, for whom, the result, the time and the price, in plain words."],
@@ -326,13 +344,15 @@ var LESSONS = [
     note: "Save your one-sentence offer in your notes." },
   quiz: [
     q("Which offer sentence is best?", ["“I revolutionize businesses with cutting-edge AI.”", "“I help tutors stop double-bookings with a simple booking page, in one week.”", "“I do AI stuff.”"], 1,
-      ["Hype words, no specific result.", "Right. Who, result, what and time are clear.", "Too vague."]),
+      ["Hype words, no specific result.", "Right. Who, result, what and time are clear.", "Too vague: it does not say who you help, what result they get, or by when."]),
     q("You have no paid clients yet. How should you show your work?", ["Make up a few positive reviews", "Show practice projects clearly labeled as practice", "Say you have worked with big brands"], 1,
       ["Fake reviews are deceptive and can be illegal.", "Right. Honest samples build real trust.", "False claims destroy trust and may be illegal."]),
     q("Why write “Not included” in a scope?", ["To prevent misunderstandings about extra work", "To look professional only", "It is not needed"], 0,
       ["Right. Clear limits prevent most project arguments.", "It is more than looks: it protects both sides.", "Skipping it is a common source of disputes."])
   ]},
 { id: "m5l2", module: "m5", title: "Price your work and approach people respectfully", minutes: 25,
+  mistake: "Pricing only the build hours and forgetting messages, fixes, payment fees and taxes.",
+  facts: [{ text: "Stripe\u2019s standard US rate for domestic online card payments is 2.9% + 30\u00a2 per successful payment, with no setup or monthly fee. International cards and currency conversion cost extra.", src: "Stripe pricing (confirm the current rate)", url: "https://stripe.com/pricing" }, { text: "US self-employment tax is 15.3% (12.4% Social Security + 2.9% Medicare), generally on 92.35% of net self-employment earnings, and usually applies once net earnings reach $400 in a year.", src: "IRS: Self-employment tax", url: "https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes" }, { text: "CAN-SPAM (US commercial email): accurate header and subject, a valid physical postal address, a clear opt-out, and opt-outs honored within 10 business days. You may not charge a fee or ask for extra personal details to opt out.", src: "FTC: CAN-SPAM Act compliance guide", url: "https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business" }],
   goal: "Calculate a price that covers your time, costs, fees and taxes, and write a respectful outreach message.",
   terms: [
     ["Revenue", "All the money customers pay you."],
@@ -342,26 +362,30 @@ var LESSONS = [
     ["Outreach", "Contacting people who might want your offer."]
   ],
   explain: [
-    "<h3>Price from your costs up</h3><ol><li><strong>Hours:</strong> estimate honestly, then add 30% for messages, fixes and surprises. Beginners usually under-estimate.</li><li><strong>Hourly target:</strong> what your time is worth to you right now.</li><li><strong>Direct costs:</strong> tools or services used only for this project.</li><li><strong>Payment fees:</strong> check your payment provider’s current fee on its official pricing page.</li><li><strong>Tax set-aside:</strong> money you keep aside for taxes. Rules depend on your country. In the US, self-employed people may owe self-employment tax on top of income tax; check irs.gov or a tax professional.</li></ol><p>Use the <strong>Price Calculator</strong> in Resources to do the math. It is math only, not advice about what the market will pay.</p>",
-    "<h3>Approach people respectfully</h3><ul><li>Start with people you know, introductions, and local groups where offers are allowed.</li><li>Make it about them: mention something specific and true about their business.</li><li>One clear, low-pressure ask: “Would a 10-minute look be useful?”</li><li>Follow up once or twice at most, then stop. A “no” is a complete answer.</li><li>Follow platform rules, and for commercial email follow anti-spam laws (in the US, the CAN-SPAM Act: honest subject, your real identity and address, an easy way to opt out).</li></ul>",
+    "<h3>Price from your costs up</h3><ol><li><strong>Hours:</strong> estimate honestly, then add 30% for messages, fixes and surprises. Beginners usually under-estimate.</li><li><strong>Hourly target:</strong> what your time is worth to you right now.</li><li><strong>Direct costs:</strong> tools or services used only for this project.</li><li><strong>Payment fees:</strong> check your payment provider’s current fee on its official pricing page.</li><li><strong>Tax set-aside:</strong> money you keep aside for taxes. Rules depend on your country. In the US, once your net self-employment earnings reach $400 in a year you generally owe self-employment tax (15.3%, applied to 92.35% of net earnings) on top of income tax. Other countries differ; check your tax authority or a tax professional.</li></ol><p>Use the <strong>Price Calculator</strong> in Resources to do the math. It is math only, not advice about what the market will pay.</p>",
+    "<h3>Approach people respectfully</h3><ul><li>Start with people you know, introductions, and local groups where offers are allowed.</li><li>Make it about them: mention something specific and true about their business.</li><li>One clear, low-pressure ask: “Would a 10-minute look be useful?”</li><li>Follow up once or twice at most, then stop. A “no” is a complete answer.</li><li>Follow platform rules, and for commercial email follow anti-spam laws (in the US, the CAN-SPAM Act: accurate sender details and subject line, a valid physical postal address, a clear way to opt out, and opt-outs honored within 10 business days).</li></ul>",
     "<p><strong>Never</strong> pretend to be a customer, invent urgency (“only 2 spots left!” when it is not true), or promise results you cannot control.</p>"
   ],
   example: { title: "Hypothetical: pricing a booking page",
-    body: "<p>Morgan (made up) estimates 8 hours for a booking page, adds 30% (10.4 hours), and sets a beginner hourly target of $30: <strong>$312</strong>. Direct costs: $0 (free hosting). Morgan assumes a payment fee of about 3% for the estimate (a guess to check on the provider’s pricing page): about $10. Morgan rounds the price to <strong>$325</strong> and sets aside 25% of profit for taxes (a personal choice, not a rule).</p><p><strong>Outreach message:</strong> “Hi Dana, I noticed the studio’s class times are only in Instagram posts. I build simple booking pages and made a rough sample for you (attached, just a draft). Would a 10-minute call this week be useful? If not, no worries at all. — Morgan”</p>" },
+    body: "<p>Morgan (made up) estimates 8 hours for a booking page, adds 30% (10.4 hours), and sets a beginner hourly target of $30: <strong>$312</strong>. Direct costs: $0 (free hosting). Morgan will be paid by card through Stripe, whose standard US rate is 2.9% + 30\u00a2 per successful card payment (confirm the current rate on Stripe\u2019s pricing page): about $10 on this price. Morgan rounds the price to <strong>$325</strong> and sets aside 25% of profit for taxes (a personal choice, not a rule).</p><p><strong>Outreach message:</strong> “Hi Dana, I noticed the studio’s class times are only in Instagram posts. I build simple booking pages and made a rough sample for you (attached, just a draft). Would a 10-minute call this week be useful? If not, no worries at all. — Morgan”</p>" },
   task: { title: "Price one project and write one message",
     steps: ["Open the Price Calculator and price the project from your scope.", "Look up your payment provider’s real fee on its official page and enter it.", "Write one outreach message using the Outreach Message template.", "Check it: specific, true, one low-pressure ask, easy to say no.", "Send it to one person you know or were introduced to, and log what happened."],
     note: "Write your price, how you calculated it, and the message you sent." },
   quiz: [
     q("Revenue is $500 and expenses are $120. What is the profit (before personal taxes)?", ["$500", "$380", "$620"], 1,
-      ["That is revenue, not profit.", "Right. $500 − $120 = $380.", "You subtract expenses, not add them."]),
+      ["That is revenue, not profit.", "Right. Profit is revenue minus expenses: $500 − $120 = $380.", "You subtract expenses, not add them."]),
     q("Someone did not reply to your first message. What is respectful?", ["Message them every day until they answer", "Follow up once or twice, then stop", "Post about them publicly"], 1,
-      ["That is pushy and can break platform rules.", "Right. One or two polite follow-ups, then accept the silence.", "Never."]),
+      ["That is pushy and can break platform rules.", "Right. One or two polite follow-ups, then accept the silence.", "Publicly shaming someone for not replying is disrespectful, can break platform rules, and damages your reputation."]),
+    q("Under the US CAN-SPAM Act, someone replies \u201cplease stop emailing me\u201d to your marketing email. What must you do?", ["Stop within 10 business days, without asking for a fee or extra details", "Send one last offer first", "Keep emailing, because they run a business"], 0,
+      ["Right. Opt-outs must be honored within 10 business days, with no fee or extra personal information required.", "More marketing email after an opt-out is exactly what the law prohibits.", "CAN-SPAM covers commercial email to businesses too."]),
     q("Why add about 30% to your hour estimate?", ["To trick the customer", "Messages, fixes and surprises usually take extra time", "It is required by law"], 1,
       ["It is not a trick: it covers real work.", "Right. Beginners usually under-estimate.", "It is a rule of thumb, not a law."])
   ]},
 
 /* ---------------- MODULE 6 ---------------- */
 { id: "m6l1", module: "m6", title: "Deliver well, support customers, track money", minutes: 20,
+  mistake: "Mixing personal and business money, then guessing at tax time.",
+  facts: [{ text: "US self-employment tax is 15.3% (12.4% Social Security + 2.9% Medicare), generally on 92.35% of net self-employment earnings, and usually applies once net earnings reach $400 in a year.", src: "IRS: Self-employment tax", url: "https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes" }, { text: "Stripe\u2019s standard US rate for domestic online card payments is 2.9% + 30\u00a2 per successful payment, with no setup or monthly fee. International cards and currency conversion cost extra.", src: "Stripe pricing (confirm the current rate)", url: "https://stripe.com/pricing" }],
   goal: "Plan a clean handoff, a support window, and a simple expense and profit tracker.",
   terms: [
     ["Handoff", "The moment you give the finished work to the customer, with instructions."],
@@ -376,19 +400,21 @@ var LESSONS = [
     "<h3>Track expenses simply</h3><p>One spreadsheet or the tracker in Resources: date, what, amount, category, receipt saved (yes/no). Keep business and personal money separate if you can, for example a separate account. Tax rules vary by country; ask a tax professional what you can deduct.</p>"
   ],
   example: { title: "Hypothetical: a month of numbers",
-    body: "<p>Riley (made up) has one month of small projects: revenue $650 (two projects). Expenses: AI tool $20, domain for a client (billed to the client) $15, payment fees about $20 (estimated), a template pack $25. <strong>Total expenses $80. Profit $570.</strong> Margin about 88%.</p><p>Riley also notices 3 hours went to unpaid revisions on one project, because “two revision rounds” was not written in the scope. Next month the scope says it clearly.</p>" },
+    body: "<p>Riley (made up) has one month of small projects: revenue $650 (two projects). Expenses: AI tool $20, card payment fees $19.45 (2.9% + 30\u00a2 on each of the two payments, Stripe\u2019s standard US rate), a template pack $25. <strong>Total expenses $64.45. Profit $585.55.</strong> Margin about 90%.</p><p><strong>Tax check (US):</strong> if Riley\u2019s net self-employment earnings for the year reach $400 or more, self-employment tax applies. On this month\u2019s profit that is about $82.74 ($585.55 \u00d7 92.35% \u00d7 15.3%), plus any income tax. So Riley moves about a quarter of the profit to a separate savings account each month. The quarter is Riley\u2019s own cushion, not a rule.</p><p>Riley also notices 3 hours went to unpaid revisions on one project, because “two revision rounds” was not written in the scope. Next month the scope says it clearly.</p>" },
   task: { title: "Set up your handoff and money tracker",
     steps: ["Write a one-page handoff template (use the Handoff Checklist in Resources).", "Decide your support window and write it into your scope.", "Open the Expense & Profit tracker and enter every cost you have had so far, even $0 months.", "Save your receipts in one folder.", "Write your current monthly revenue, expenses and profit, even if they are all zero. Honest numbers only."],
     note: "Note your support window and where you keep receipts." },
   quiz: [
     q("A customer asks for a new feature after delivery. In most cases it is…", ["Free forever, as part of support", "A new small project with its own scope and price", "Something to ignore"], 1,
-      ["Support covers fixing what was promised, not new work.", "Right. New requests get a new scope and price.", "Always reply politely."]),
+      ["Support covers fixing what was promised, not new work.", "Right. New requests get a new scope and price.", "Ignoring them loses trust. Reply politely and offer it as a new, separately priced piece of work."]),
     q("Revenue is $1,000 and expenses are $700. Which is true?", ["You made $1,000", "Profit is $300", "Profit is $1,700"], 1,
-      ["You received $1,000 but spent $700 of it.", "Right. Revenue minus expenses.", "Expenses are subtracted."]),
+      ["You received $1,000 but spent $700 of it.", "Right. Revenue minus expenses.", "Expenses are subtracted from revenue, not added: $1,000 \u2212 $700 = $300."]),
     q("You made a mistake in delivered work. Best response?", ["Hope they do not notice", "Tell them quickly, fix it, and explain how you will prevent it", "Blame the AI tool"], 1,
       ["They usually notice, and trust drops.", "Right. Fast, honest fixes keep trust.", "You chose to deliver it; it is your responsibility."])
   ]},
 { id: "m6l2", module: "m6", title: "Improve quality, earn repeat work, and decide when to grow", minutes: 20,
+  mistake: "Celebrating revenue growth while profit quietly shrinks.",
+  facts: [{ text: "The FTC rule on consumer reviews and testimonials took effect October 21, 2024. It targets fake reviews and testimonials, and courts can impose civil penalties for knowing violations.", src: "FTC: Consumer Reviews and Testimonials Rule Q&A", url: "https://www.ftc.gov/business-guidance/resources/consumer-reviews-testimonials-rule-questions-answers" }],
   goal: "Turn feedback into improvements, offer a sensible repeat service, and check if you are ready to expand.",
   terms: [
     ["Repeat business", "A past customer buying again."],
@@ -398,7 +424,7 @@ var LESSONS = [
   ],
   explain: [
     "<h3>Improve quality on purpose</h3><p>After each project, write a short review: what went well, what took longer than expected, what the customer was confused by. Pick <em>one</em> improvement for next time. Turn repeated steps into a checklist.</p>",
-    "<h3>Earn repeat work</h3><ul><li><strong>Ask:</strong> 30 days after delivery, check in. “Is it still working? Anything new that’s slowing you down?”</li><li><strong>Offer something sensible:</strong> monthly upkeep, a second automation, a new product in a series. Only if it truly helps them.</li><li><strong>Testimonials:</strong> ask for honest words and permission to share them. Never write them yourself, pay for positive ones, or edit their meaning. In the US, the FTC has rules against fake reviews and testimonials.</li></ul>",
+    "<h3>Earn repeat work</h3><ul><li><strong>Ask:</strong> 30 days after delivery, check in. “Is it still working? Anything new that’s slowing you down?”</li><li><strong>Offer something sensible:</strong> monthly upkeep, a second automation, a new product in a series. Only if it truly helps them.</li><li><strong>Testimonials:</strong> ask for honest words and permission to share them. Never write them yourself, pay for positive ones, or edit their meaning. In the US, the FTC\u2019s rule on consumer reviews and testimonials has been in effect since October 21, 2024, and courts can impose civil penalties for knowing violations.</li></ul>",
     "<h3>When to expand</h3><p>Good signs: steady demand for a few months, a waiting list, a written process, healthy profit (not just revenue), and work that someone else could do with your checklist. Warning signs: you are always behind, refunds or complaints are rising, or you would need to borrow money to grow.</p><p>Expanding can mean raising prices, adding a related offer, using a helper for specific tasks, or turning your process into a product. Each adds cost or risk, so change one thing at a time and watch your profit.</p>"
   ],
   example: { title: "Hypothetical: Jordan’s growth check",
@@ -410,9 +436,9 @@ var LESSONS = [
     q("What is an honest way to get testimonials?", ["Write some and ask friends to post them", "Ask real customers for their words and permission to share", "Offer a discount only for 5-star reviews"], 1,
       ["Fake testimonials are deceptive and can be illegal.", "Right. Real words, real permission.", "Paying only for positive reviews makes them misleading."]),
     q("Which is the strongest sign you are ready to expand?", ["One very good month", "Steady demand for months and a written process", "You feel excited"], 1,
-      ["One month can be luck.", "Right. Repeated demand plus a process means growth is manageable.", "Excitement is great, but check the numbers."]),
+      ["One good month can be luck or a one-off. Look for steady demand over several months.", "Right. Repeated demand plus a process means growth is manageable.", "Excitement is great, but check the numbers."]),
     q("Your revenue went up but profit went down. What should you look at first?", ["Your expenses and time per project", "Nothing, revenue matters most", "Your logo"], 0,
-      ["Right. Rising costs or slower work can eat your profit.", "Profit is what you keep. It matters more.", "Unlikely to be the cause."])
+      ["Right. Rising costs or slower work can eat your profit.", "Profit is what you keep. It matters more.", "A logo does not change your costs or how long each project takes, so it is unlikely to be the cause."])
   ]}
 ];
 
@@ -463,15 +489,26 @@ var PROJECT = {
 
 /* ---------------- SOURCES / FACT STATUS ---------------- */
 var SOURCES = [
-  { claim: "Language models can state false information confidently (“hallucinations”).", status: "General, widely documented behavior. Major AI providers warn about it in their own product help pages.", url: "" },
-  { claim: "US self-employment tax (Social Security + Medicare) applies to self-employment earnings above a small threshold.", status: "Not re-checked in this build: irs.gov could not be reached from the build environment on Nov 7, 2026. Read the official page before relying on any rate.", url: "https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes" },
-  { claim: "Commercial email in the US must follow the CAN-SPAM Act (honest headers and subject, identify yourself, include a postal address, honor opt-outs).", status: "Not re-checked in this build: ftc.gov could not be reached on Nov 7, 2026. Read the FTC guide.", url: "https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business" },
-  { claim: "The FTC has a rule against fake reviews and testimonials.", status: "Not re-checked in this build: ftc.gov could not be reached on Nov 7, 2026. Search ftc.gov for its rule on consumer reviews and testimonials.", url: "https://www.ftc.gov/" },
-  { claim: "Payment processing fees (Stripe and others) are usually a percent plus a fixed amount per payment.", status: "Not verified: stripe.com could not be reached. The 3% in a lesson example is labeled as a guess. Check the provider’s pricing page.", url: "https://stripe.com/pricing" },
-  { claim: "Free hosting exists for simple static websites (for example GitHub Pages for public repositories).", status: "Not verified in this build: docs.github.com could not be reached. This course itself is hosted on GitHub Pages.", url: "https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" },
-  { claim: "Tool prices, free tiers and limits for AI assistants, automation tools and marketplaces.", status: "Deliberately not listed: they change often. Every lesson tells students to check the official pricing page.", url: "" },
-  { claim: "Problem-interview approach (ask about past behavior, not future guesses).", status: "Described in the book The Mom Test by Rob Fitzpatrick.", url: "" }
+  { claim: "US self-employment tax: 15.3% (12.4% Social Security + 2.9% Medicare), generally on 92.35% of net earnings, usually owed once net self-employment earnings reach $400 a year.", status: "Checked Nov 7, 2026 through web search limited to irs.gov (direct page access was blocked from the build machine). Used in Modules 5 and 6.", url: "https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes" },
+  { claim: "CAN-SPAM: accurate headers and subject, a valid physical postal address, a clear opt-out honored within 10 business days, no fee or extra details to opt out, and no exception for business-to-business email.", status: "Checked Nov 7, 2026 through web search limited to ftc.gov. Used in Module 5.", url: "https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business" },
+  { claim: "The FTC rule on consumer reviews and testimonials has been in effect since October 21, 2024; courts can impose civil penalties for knowing violations.", status: "Checked Nov 7, 2026 through web search limited to ftc.gov. Used in Module 6.", url: "https://www.ftc.gov/business-guidance/resources/consumer-reviews-testimonials-rule-questions-answers" },
+  { claim: "Stripe standard US pricing: 2.9% + 30\u00a2 per successful domestic online card payment; no setup or monthly fee.", status: "Seen in web search results limited to stripe.com on Nov 7, 2026. The search index copy may be old, so confirm on the live pricing page before you rely on it. Used in Modules 5 and 6 and as the calculator hint.", url: "https://stripe.com/pricing" },
+  { claim: "GitHub Pages: published sites up to 1 GB; soft bandwidth limit of 100 GB per month.", status: "Checked Nov 7, 2026 through web search limited to docs.github.com. Used in Module 2.", url: "https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits" },
+  { claim: "Language models can state false information confidently (\u201challucinations\u201d).", status: "General, widely documented behavior; AI providers warn about it in their own help pages. Not tied to one source.", url: "" },
+  { claim: "Prices, free tiers and limits of specific AI assistants, automation tools and marketplaces.", status: "Deliberately not listed: they change often. Lessons tell students to check each official pricing page.", url: "" },
+  { claim: "Problem-interview approach (ask about past behavior, not future guesses).", status: "Described in the book The Mom Test by Rob Fitzpatrick. A teaching method, not a statistic.", url: "" },
+  { claim: "Rules of thumb in lessons (add 30% to hour estimates, a 1\u20135 problem scorecard with 18+ as a strong start, follow up once or twice).", status: "From common practice, not official rules or research. Labeled as guidance.", url: "" }
 ];
 
-window.ACADEMY = { PATHS: PATHS, QUESTIONS: QUESTIONS, MODULES: MODULES, LESSONS: LESSONS, WORKSHEETS: WORKSHEETS, PROJECT: PROJECT, SOURCES: SOURCES };
+/* Stable shuffled display order for quiz options, so the right answer is not always in the same place. */
+function optionOrder(seed, n) {
+  var h = 2166136261;
+  for (var i = 0; i < seed.length; i++) { h ^= seed.charCodeAt(i); h = Math.imul(h, 16777619); }
+  var rnd = function () { h = Math.imul(h ^ (h >>> 15), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; };
+  var a = []; for (var k = 0; k < n; k++) a.push(k);
+  for (var j = n - 1; j > 0; j--) { var r = Math.floor(rnd() * (j + 1)); var t = a[j]; a[j] = a[r]; a[r] = t; }
+  return a;
+}
+
+window.ACADEMY = { optionOrder: optionOrder, PATHS: PATHS, QUESTIONS: QUESTIONS, MODULES: MODULES, LESSONS: LESSONS, WORKSHEETS: WORKSHEETS, PROJECT: PROJECT, SOURCES: SOURCES };
 })();

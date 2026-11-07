@@ -24,7 +24,8 @@
 [hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
-a{color:var(--blue)}
+a{color:#1D4ED8}
+.h3{font-size:1.1rem;font-weight:700;margin:0 0 .5em}
 h1,h2,h3{line-height:1.2;margin:0 0 .5em;letter-spacing:-.01em}
 h1{font-size:clamp(1.8rem,4.6vw,2.8rem);font-weight:800}
 h2{font-size:clamp(1.3rem,3vw,1.7rem);font-weight:800}
@@ -88,7 +89,7 @@ footer a{color:var(--muted)}
 .hypo{display:inline-block;background:var(--orange);color:var(--ink);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:6px;margin-bottom:8px}
 .bar-track{height:10px;background:var(--soft);border-radius:99px;overflow:hidden}
 .bar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:99px;transition:width .5s}
-.accent-blue{--a:var(--blue);--as:var(--blue-soft)}.accent-purple{--a:var(--purple);--as:var(--purple-soft)}
+.accent-blue{--a:#1D4ED8;--as:var(--blue-soft)}.accent-purple{--a:var(--purple);--as:var(--purple-soft)}
 .accent-mint{--a:var(--mint-ink);--as:var(--mint-soft)}.accent-orange{--a:var(--orange-ink);--as:var(--orange-soft)}
 
 /* home */
@@ -138,7 +139,8 @@ section.block{margin:36px 0}
 
 /* lesson */
 .lesson{display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:start}
-@media (max-width:1000px){.lesson{grid-template-columns:1fr}.side{display:none}}
+.mobile-only{display:none}
+@media (max-width:1000px){.lesson{grid-template-columns:1fr}.side{display:none}.mobile-only{display:block}}
 .side{position:sticky;top:76px;max-height:calc(100vh - 96px);overflow:auto}
 .side a{display:flex;gap:8px;align-items:flex-start;color:var(--ink);text-decoration:none;padding:6px 8px;border-radius:8px;font-size:.92rem}
 .side a[aria-current="page"]{background:var(--purple-soft);font-weight:700}
@@ -155,16 +157,23 @@ section.block{margin:36px 0}
 .terms div{background:var(--soft);border-radius:12px;padding:12px}
 .terms dt{font-weight:800}.terms dd{margin:2px 0 0;font-size:.95rem}
 .example{background:var(--orange-soft);border:1px solid #FBD5B5}
+.facts{border-left:6px solid var(--mint-ink)}.factlist{margin:0 0 10px}.factlist li{margin:.5em 0}
+.note.mistake{border-color:var(--bad);background:var(--bad-soft);margin:0 0 18px}
 .tasklist{list-style:none;padding:0}
 .tasklist label{display:flex;gap:10px;align-items:flex-start;padding:8px;border-radius:10px;cursor:pointer}
 .tasklist label:hover{background:var(--soft)}
 .tasklist input,.chk input{width:20px;height:20px;margin-top:2px;accent-color:var(--mint-ink);flex:none}
 .yourpath{margin-left:8px}
 fieldset.qq{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:0 0 12px}
-fieldset.qq legend{font-weight:700;padding:0 6px}
+fieldset.qq legend{font-weight:700;padding:0;float:left;width:100%;margin-bottom:4px}
+fieldset.qq legend+*{clear:both}
 .qq .opt{padding:10px 12px;font-weight:500}
 .qq.right{border-color:var(--mint-ink);background:#F4FDF9}
 .qq.wrong{border-color:var(--bad);background:#FFF8F8}
+.opt.is-answer{border-color:var(--mint-ink);background:var(--mint-soft)}
+.ans-tag{font-size:.75rem;font-weight:800;color:var(--mint-ink);white-space:nowrap}
+.qq:not(.checked) .ans-tag{display:none}
+.ans-tag{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:99px;background:#fff;border:1px solid var(--mint-ink)}
 .fb{margin-top:8px;padding:10px 12px;border-radius:10px;font-size:.95rem}
 .fb.ok{background:var(--mint-soft)}.fb.no{background:var(--bad-soft)}
 textarea,input[type=text],input[type=number],input[type=date],select{width:100%;font:inherit;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:12px;padding:10px 12px;font-size:16px}
@@ -217,8 +226,8 @@ th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertic
 </style>
 </head>
 <body>
-<a class="skip" href="#/" id="skip">Skip to content</a>
 <header class="top">
+  <a class="skip" href="#/" id="skip">Skip to content</a>
   <div class="bar">
     <a class="logo" href="#/" aria-label="Home">
       <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#7C3AED"/><path d="M14 46 L28 18 L36 34 L42 26 L50 46" fill="none" stroke="#34D399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="16" r="6" fill="#FB923C"/></svg>
@@ -401,7 +410,7 @@ function pageResult(){
 
 function moduleCards(){
   return '<div class="grid g3">'+MODULES.map(function(m){var ls=lessonsOf(m.id),d=modDone(m.id);
-    return '<article class="card mod accent-'+m.color+'"><div class="row" style="justify-content:space-between"><div class="num">'+m.n+'</div><span class="tag '+(d===ls.length?"mint":m.color)+'">'+(d===ls.length?"Complete":d+" of "+ls.length+" done")+'</span></div><h3 style="margin-top:0">'+esc(m.title)+'</h3><p class="small muted">'+esc(m.sub)+'</p><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:'+(d/ls.length*100)+'%"></div></div><ul>'+ls.map(function(l){return '<li><a href="#/lesson/'+l.id+'"><span class="dot'+(isDone(l.id)?" done":"")+'" aria-hidden="true"></span><span>'+esc(l.title)+'<span class="sr">'+(isDone(l.id)?" (completed)":"")+'</span><br><span class="small muted">'+l.minutes+' min'+(S.marks.indexOf(l.id)>=0?" &middot; bookmarked":"")+'</span></span></a></li>'}).join("")+'</ul></article>'}).join("")+'</div>';
+    return '<article class="card mod accent-'+m.color+'"><div class="row" style="justify-content:space-between"><div class="num">'+m.n+'</div><span class="tag '+(d===ls.length?"mint":m.color)+'">'+(d===ls.length?"Complete":d+" of "+ls.length+" done")+'</span></div><h2 class="h3">'+esc(m.title)+'</h2><p class="small muted">'+esc(m.sub)+'</p><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:'+(d/ls.length*100)+'%"></div></div><ul>'+ls.map(function(l){return '<li><a href="#/lesson/'+l.id+'"><span class="dot'+(isDone(l.id)?" done":"")+'" aria-hidden="true"></span><span>'+esc(l.title)+'<span class="sr">'+(isDone(l.id)?" (completed)":"")+'</span><br><span class="small muted">'+l.minutes+' min'+(S.marks.indexOf(l.id)>=0?" &middot; bookmarked":"")+'</span></span></a></li>'}).join("")+'</ul></article>'}).join("")+'</div>';
 }
 function pageCourse(){
   return '<p class="kicker">Course map</p><h1>Six modules, twelve lessons</h1><p class="muted">Go in order the first time. Each lesson ends with a practical task and a short knowledge check.</p><div class="card" style="margin:16px 0">'+pathMap(true)+'</div>'+moduleCards();
@@ -436,13 +445,15 @@ function pageLesson(id){
   var explain=l.explain.join("");
   if(path) explain=explain.replace(new RegExp("<h3>("+path.name.replace(/[&]/g,"&amp;").replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")</h3>"),'<h3>$1 <span class="tag mint yourpath">Your path</span></h3>');
   var h='<div class="lesson">'+side+'<article class="accent-'+m.color+'">';
-  h+='<div class="lhead"><div class="row" style="justify-content:space-between"><span class="tag '+m.color+'">Module '+m.n+': '+esc(m.title)+' &middot; Lesson '+(lessonsOf(m.id).indexOf(l)+1)+' of '+lessonsOf(m.id).length+'</span><button class="btn ghost small bm noprint" id="bm" aria-pressed="'+marked+'">'+(marked?"Bookmarked":"Bookmark")+'</button></div><h1 style="margin-top:12px">'+esc(l.title)+'</h1><p class="small muted" style="margin:0">'+l.minutes+' min'+(isDone(id)?' &middot; <b style="color:var(--mint-ink)">Completed</b>':'')+'</p><div class="goal"><span aria-hidden="true" style="font-size:1.3rem">&#127919;</span><div><b>Learning goal</b><br>'+esc(l.goal)+'</div></div></div>';
+  h+='<div class="lhead"><div class="row" style="justify-content:space-between"><span class="tag '+m.color+'">Module '+m.n+': '+esc(m.title)+' &middot; Lesson '+(lessonsOf(m.id).indexOf(l)+1)+' of '+lessonsOf(m.id).length+'</span><button class="btn ghost small bm noprint" id="bm" aria-pressed="'+marked+'">'+(marked?"Bookmarked":"Bookmark")+'</button></div><h1 style="margin-top:12px">'+esc(l.title)+'</h1><p class="small muted" style="margin:0">Lesson '+(l.i+1)+' of '+LESSONS.length+' &middot; '+l.minutes+' min'+(isDone(id)?' &middot; <b style="color:var(--mint-ink)">Completed</b>':'')+'</p><div class="bar-track" style="margin-top:10px" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="'+LESSONS.length+'" aria-valuenow="'+doneCount()+'"><div class="bar-fill" style="width:'+pct()+'%"></div></div><p class="small muted mobile-only" style="margin:6px 0 0">'+doneCount()+' of '+LESSONS.length+' lessons complete &middot; <a href="#/course">All lessons</a></p><div class="goal"><span aria-hidden="true" style="font-size:1.3rem">&#127919;</span><div><b>Learning goal</b><br>'+esc(l.goal)+'</div></div></div>';
   h+='<section class="lsec card"><h2><span class="ic" aria-hidden="true">Aa</span>Words in plain English</h2><dl class="terms">'+l.terms.map(function(t){return '<div><dt>'+esc(t[0])+'</dt><dd>'+esc(t[1])+'</dd></div>'}).join("")+'</dl></section>';
   h+='<section class="lsec card"><h2><span class="ic" aria-hidden="true">&#9673;</span>Explanation</h2>'+explain+'</section>';
-  h+='<section class="lsec card example"><h2><span class="ic" aria-hidden="true">&#9998;</span>Worked example</h2><span class="hypo">Hypothetical example</span><h3 style="margin-top:4px">'+esc(l.example.title.replace(/^Hypothetical:\s*/,""))+'</h3>'+l.example.body+'</section>';
+  if(l.facts&&l.facts.length) h+='<section class="lsec card facts"><h2><span class="ic" aria-hidden="true">&#10004;</span>Checked facts</h2><ul class="factlist">'+l.facts.map(function(f){return '<li>'+esc(f.text)+' <a href="'+esc(f.url)+'" rel="noopener" target="_blank">'+esc(f.src)+'<span class="sr"> (opens in a new tab)</span></a></li>'}).join("")+'</ul><p class="small muted" style="margin:0">Checked November 7, 2026. Rules and prices change: open the source before relying on a number.</p></section>';
+  if(l.mistake) h+='<p class="note mistake"><b>Common mistake:</b> '+esc(l.mistake)+'</p>';
+  h+='<section class="lsec card example"><h2><span class="ic" aria-hidden="true">&#9998;</span>Worked example</h2><span class="hypo">Hypothetical example</span><h3 style="margin-top:4px">'+esc(l.example.title.replace(/^Hypothetical:\s*/,"").replace(/^./,function(c){return c.toUpperCase()}))+'</h3>'+l.example.body+'</section>';
   h+='<section class="lsec card"><h2><span class="ic" aria-hidden="true">&#10003;</span>Your task: '+esc(l.task.title)+'</h2><ul class="tasklist">'+l.task.steps.map(function(s,i){return '<li><label><input type="checkbox" data-step="'+i+'"'+(steps[i]?" checked":"")+'> <span>'+esc(s)+'</span></label></li>'}).join("")+'</ul><p class="note blue small" style="margin-bottom:0">'+esc(l.task.note)+'</p></section>';
   h+='<section class="lsec card" id="kc"><h2><span class="ic" aria-hidden="true">?</span>Knowledge check</h2><p class="small muted">'+l.quiz.length+' questions. You get an explanation for every answer. '+(qz?'Best score so far: <b>'+qz.best+' of '+qz.of+'</b>.':'')+'</p><form id="quiz">';
-  l.quiz.forEach(function(qq,qi){h+='<fieldset class="qq" data-q="'+qi+'"><legend>'+(qi+1)+'. '+esc(qq.q)+'</legend><div class="opts" style="margin:8px 0 0">'+qq.options.map(function(o,oi){return '<label class="opt"><input type="radio" name="q'+qi+'" value="'+oi+'"> '+esc(o)+'</label>'}).join("")+'</div><div class="fbx" aria-live="polite"></div></fieldset>';});
+  l.quiz.forEach(function(qq,qi){h+='<fieldset class="qq" data-q="'+qi+'"><legend>'+(qi+1)+'. '+esc(qq.q)+'</legend><div class="opts" style="margin:8px 0 0">'+A.optionOrder(l.id+":"+qi,qq.options.length).map(function(oi){return '<label class="opt"><input type="radio" name="q'+qi+'" value="'+oi+'"> <span class="ot">'+esc(qq.options[oi])+'</span></label>'}).join("")+'</div><div class="fbx" aria-live="polite"></div></fieldset>';});
   h+='<div class="row"><button class="btn blue" type="submit">Check my answers</button><button class="btn ghost" type="button" id="qreset" hidden>Try again</button></div><p id="qmsg" class="small" role="status" style="margin-top:8px"></p></form></section>';
   h+='<section class="lsec card"><h2><span class="ic" aria-hidden="true">&#9776;</span>My notes</h2><label class="sr" for="note">Notes for this lesson</label><textarea id="note" placeholder="Write what you tried, what worked and what you will do next.">'+esc(S.notes[id]||"")+'</textarea><div class="saved" id="nsaved" aria-live="polite"></div></section>';
   h+='<div class="donebox noprint" id="donebox">'+doneBoxInner(id,next)+'</div>';
@@ -466,7 +477,8 @@ function wireLesson(l,next){
     l.quiz.forEach(function(qq,qi){var fs=$('fieldset[data-q="'+qi+'"]',form),v=$('input[name="q'+qi+'"]:checked',form),box=$(".fbx",fs);
       fs.classList.remove("right","wrong");
       if(!v){missing++;box.innerHTML='<div class="fb no">Choose an answer.</div>';return;}
-      var c=+v.value===qq.answer;if(c)score++;fs.classList.add(c?"right":"wrong");
+      var c=+v.value===qq.answer;if(c)score++;fs.classList.add(c?"right":"wrong","checked");
+      var cl=$('input[value="'+qq.answer+'"]',fs).closest(".opt");cl.classList.add("is-answer");if(!$(".ans-tag",cl))$(".ot",cl).insertAdjacentHTML("beforeend",'<span class="ans-tag">Correct answer</span>');
       box.innerHTML='<div class="fb '+(c?"ok":"no")+'"><b>'+(c?"Correct.":"Not quite.")+'</b> '+esc(qq.explain[+v.value])+(c?"":'<br><b>Best answer:</b> '+esc(qq.options[qq.answer])+'. '+esc(qq.explain[qq.answer].replace(/^Right\.\s*/,"")))+'</div>';});
     if(missing){$("#qmsg").textContent="Answer all "+l.quiz.length+" questions to get your score.";return;}
     var prevBest=S.quiz[id]?S.quiz[id].best:-1;
@@ -476,7 +488,7 @@ function wireLesson(l,next){
     if(score===l.quiz.length){$("#kc").classList.add("pop");}
     $("#donebox").innerHTML=doneBoxInner(id,next);wireDone(l,next);
   });
-  $("#qreset").addEventListener("click",function(){$$("input",form).forEach(function(i){i.disabled=false;i.checked=false});$$("fieldset",form).forEach(function(f){f.classList.remove("right","wrong");$(".fbx",f).innerHTML=""});$("#qmsg").textContent="";this.hidden=true;$("button[type=submit]",form).hidden=false;var f=$("input",form);if(f)f.focus();});
+  $("#qreset").addEventListener("click",function(){$$("input",form).forEach(function(i){i.disabled=false;i.checked=false});$$("fieldset",form).forEach(function(f){f.classList.remove("right","wrong","checked");$(".fbx",f).innerHTML="";$$(".is-answer",f).forEach(function(o){o.classList.toggle("is-answer",false)})});$("#qmsg").textContent="";this.hidden=true;$("button[type=submit]",form).hidden=false;var f=$("input",form);if(f)f.focus();});
   wireDone(l,next);
 }
 function wireDone(l,next){
@@ -528,7 +540,7 @@ function pageWorksheet(id){
   if(w.kind==="checklist") h+='<div role="group" aria-label="'+esc(w.title)+'">'+w.items.map(function(it,i){return '<label class="chk"><input type="checkbox" data-k="c'+i+'"'+(d["c"+i]?" checked":"")+'> <span>'+esc(it)+'</span></label>'}).join("")+'</div><p id="ckc" class="small muted"></p>';
   if(w.kind==="template") h+='<label class="f" for="tpl">Template (edit freely)</label><textarea id="tpl" data-k="text" style="min-height:260px">'+esc(d.text!=null?d.text:w.text)+'</textarea><div class="row" style="margin-top:8px"><button class="btn ghost small" id="tplReset">Reset to template</button></div>';
   if(w.kind==="score") h+='<div id="scoreRows"></div><button class="btn ghost small" id="addRow" style="margin-top:10px">+ Add a problem</button>';
-  if(w.kind==="price"){var fl=[["hours","Estimated hours","8"],["buffer","Extra time buffer (%)","30"],["rate","Your hourly target ("+CUR+")","30"],["costs","Direct project costs ("+CUR+")","0"],["feep","Payment fee (%) \u2013 check your provider","3"],["feef","Payment fixed fee per payment ("+CUR+")","0.30"],["tax","Tax set-aside (% of profit)","25"]];
+  if(w.kind==="price"){var fl=[["hours","Estimated hours","8"],["buffer","Extra time buffer (%)","30"],["rate","Your hourly target ("+CUR+")","30"],["costs","Direct project costs ("+CUR+")","0"],["feep","Payment fee (%) \u2013 e.g. Stripe US cards 2.9","2.9"],["feef","Fixed fee per payment ("+CUR+") \u2013 e.g. 0.30","0.30"],["tax","Tax set-aside (% of profit)","25"]];
     h+='<div class="calc">'+fl.map(function(f){return '<div><label class="f" for="p_'+f[0]+'">'+esc(f[1])+'</label><input type="number" inputmode="decimal" min="0" step="any" id="p_'+f[0]+'" data-k="'+f[0]+'" placeholder="'+f[2]+'" value="'+esc(d[f[0]]!=null?d[f[0]]:"")+'"></div>'}).join("")+'</div><div class="results" id="pres" aria-live="polite"></div><p class="note small">The fee and tax boxes start empty on purpose. The grey numbers are only examples. Look up your payment provider\u2019s real fee and your local tax rules (a tax professional can help). This is math only: it does not tell you what customers will pay.</p>';}
   if(w.kind==="money") h+='<div class="tbl"><table><thead><tr><th scope="col">Date</th><th scope="col">Money in / out</th><th scope="col">What</th><th scope="col">Category</th><th scope="col">Amount ('+CUR+')</th><th scope="col"><span class="sr">Remove</span></th></tr></thead><tbody id="mrows"></tbody></table></div><button class="btn ghost small" id="addM" style="margin-top:10px">+ Add a line</button><div class="results" id="mres" aria-live="polite"></div><p class="small muted">Enter only real payments and real costs. Tracker stays on this device: download it often.</p>';
   h+='</div><div class="saved" id="wsaved" aria-live="polite"></div><div class="row noprint" style="margin-top:14px;border-top:1px solid var(--line);padding-top:14px"><button class="btn ghost small" id="wsCopy">Copy as text</button><button class="btn ghost small" id="wsDl">Download .txt</button><button class="btn ghost small" id="wsPrint">Print</button><button class="btn ghost small" id="wsClear">Clear</button></div></div>';
@@ -631,7 +643,7 @@ function pagePricing(){
 
 /* ---------- facts & owner ---------- */
 function pageFacts(){
-  return '<p class="kicker">Facts &amp; sources</p><h1>What was checked, and what was not</h1><p class="muted" style="max-width:48em">This first version was written on November 7, 2026. The build environment could not reach official sites like irs.gov, ftc.gov, stripe.com and docs.github.com, so <b>no tool price, fee or legal detail was verified for this build</b>. Lessons avoid specific numbers for that reason and tell you to check the official page. Examples with names are hypothetical.</p><div class="grid">'+A.SOURCES.map(function(s){return '<div class="card"><b>'+esc(s.claim)+'</b><p class="small" style="margin:6px 0 0">'+esc(s.status)+(s.url?' <a href="'+esc(s.url)+'" rel="noopener">Official page</a>':'')+'</p></div>'}).join("")+'</div>';
+  return '<p class="kicker">Facts &amp; sources</p><h1>What was checked, and what was not</h1><p class="muted" style="max-width:48em">Written and checked on November 7, 2026. Each fact below says how it was checked. The build machine could not open the official pages directly, so facts were confirmed through web searches limited to the official site (irs.gov, ftc.gov, stripe.com, docs.github.com). Tool prices and free tiers change often, so the lessons do not list them. Examples with names are hypothetical. This is general education, not tax or legal advice.</p><div class="grid">'+A.SOURCES.map(function(s){return '<div class="card"><b>'+esc(s.claim)+'</b><p class="small" style="margin:6px 0 0">'+esc(s.status)+(s.url?' <a href="'+esc(s.url)+'" rel="noopener">Official page</a>':'')+'</p></div>'}).join("")+'</div>';
 }
 function pageOwner(){
   var plans=(C.plans||[]).filter(function(p){return p.price>0}),goal=+C.revenueGoal||0;
