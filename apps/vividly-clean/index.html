@@ -199,12 +199,82 @@ textarea.t{min-height:84px;resize:vertical}
 .req .tag{font-size:11.5px;font-weight:700;background:var(--gold-t);color:#7a5a12;border-radius:6px;padding:2px 7px;margin-left:6px;letter-spacing:.3px}
 .sbtn{min-height:38px;padding:7px 14px;font-size:14px}
 .hide{display:none!important}
+
+/* ---- rich color theme ---- */
+:root{--deep:#0c2f36;--deep2:#10272f;--mint:#9fe3d7;--blush:#f7e6dc;--mintbg:#e4f1ed}
+body{background:linear-gradient(180deg,#e9f2ef 0%,#f6eee5 100%);background-attachment:scroll}
+.demo{background:#081d22;color:#a9c4c0;border:0}
+.headband{background:var(--deep2);color:#f3efe8}
+.headband .top{border:0}
+.headband .logo small{color:#8fb3ad}
+.headband .tbtn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16);color:#f3efe8}
+.headband .tbtn.solid{background:var(--mint);border-color:var(--mint);color:var(--deep2)}
+.headband .logo svg rect{fill:#173b44}
+.band{position:relative;overflow:hidden}
+.b-hero{background:linear-gradient(160deg,#10272f 0%,#0d3b42 55%,#145049 100%);color:#f6f1e9}
+.glow{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none}
+.g1{width:520px;height:520px;left:-160px;top:-180px;background:rgba(45,212,191,.28)}
+.g2{width:460px;height:460px;right:-140px;bottom:-200px;background:rgba(240,138,108,.30)}
+.b-hero .wrap{position:relative}
+.b-hero .eyebrow{color:var(--mint)}
+.b-hero h1 em{color:var(--mint)}
+.b-hero p.lead{color:#c9dcd8}
+.b-hero .big{border-color:transparent;box-shadow:0 14px 34px rgba(0,0,0,.22)}
+.b-hero .big:hover{border-color:var(--mint)}
+.b-hero .facts{color:#b9d0cc}
+.b-hero .facts span::before{background:#f0a98f}
+.hero{padding:52px 0 56px}
+.art{background:linear-gradient(150deg,rgba(159,227,215,.22),rgba(240,169,143,.22));border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.art::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 70%,rgba(255,255,255,.18) 0 2px,transparent 3px) 0 0/38px 38px;opacity:.6}
+.art .card{color:var(--ink)}
+.b-mint{background:linear-gradient(180deg,#e2f0ec,#edf5f2)}
+.b-blush{background:linear-gradient(180deg,#f8e9df,#f4efe6)}
+.b-ink{background:var(--deep2);color:#efeae2}
+.b-foot{background:#081d22}
+.b-foot .foot{color:#86a39e;border:0}
+.sec{border:0;padding:56px 20px}
+@media(max-width:620px){.sec{padding:40px 16px}}
+.b-mint .tabs{background:#fff;border-color:#cfe3dd}
+.tabs button[aria-selected=true]{background:var(--teal)}
+.svc{position:relative;background:#fff;border:0;box-shadow:0 6px 20px rgba(16,39,47,.07);padding:20px 18px;transition:transform .15s,box-shadow .15s;overflow:hidden}
+.svc::before{content:"";position:absolute;left:0;top:0;right:0;height:4px;background:var(--bar,var(--teal))}
+.svc:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(16,39,47,.12)}
+.svc .dot{width:42px;height:42px;border-radius:12px}
+.area div{background:#fff;border:0;box-shadow:0 6px 20px rgba(120,60,30,.08);display:flex;gap:14px;align-items:flex-start}
+.area div svg{flex:none;margin-top:2px}
+.b-ink h2{color:#fff}
+.b-ink .sub,.b-ink .src{color:#9fb8b3}
+.b-ink .src a{color:#cfe7e2}
+.b-ink .cbox,.b-ink .duo>div{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12);color:#efeae2}
+.b-ink a.cbox:hover{border-color:var(--mint);background:rgba(159,227,215,.08)}
+.b-ink .cbox .k{color:#8fb3ad}
+.b-ink .cbox .a{color:var(--mint)}
+.b-ink .duo p{color:#a9c0bb}
+.b-ink .btn.ghost{background:transparent;border-color:rgba(255,255,255,.28);color:#fff}
+/* flow */
+.wrap{padding-bottom:0}
+.wrap.sec{padding-bottom:60px}
+@media(max-width:620px){.wrap.sec{padding-bottom:44px}}
+.b-hero .big{color:var(--ink)}
+#flow{padding-bottom:130px}
+#mine{padding-bottom:40px}
+.panel{border:0;box-shadow:0 18px 50px rgba(16,39,47,.10);position:relative;overflow:hidden}
+.panel::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:linear-gradient(90deg,var(--teal),#2dd4bf 50%,#f0a98f)}
+.bar i.on{background:linear-gradient(90deg,var(--teal),#2dd4bf)}
+.opt[aria-pressed=true]{border-color:var(--teal);background:#eef8f5;box-shadow:inset 0 0 0 1px var(--teal)}
+.opt[aria-pressed=true] .chk{border-color:var(--teal);background-color:var(--teal)}
+.seg button[aria-pressed=true]{background:var(--teal);border-color:var(--teal)}
+.day[aria-pressed=true]{background:var(--teal)}
+.side .pk div i{background:var(--teal)}
+.btn.main{background:linear-gradient(135deg,#0f766e,#10272f);box-shadow:0 8px 20px rgba(15,118,110,.28)}
+.nav{background:rgba(255,255,255,.88)}
+.done .mark{background:linear-gradient(135deg,#2dd4bf,#0f766e);box-shadow:0 12px 28px rgba(15,118,110,.35)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div class="demo">Demo booking app made by AdSharp for Vividly Clean LLC. Not their official app. <span id="demoSend"></span></div>
-<div class="wrap">
+<div class="headband"><div class="wrap">
   <header class="top">
     <button class="logo" type="button" id="logoBtn" aria-label="Vividly Clean home">
       <svg width="38" height="38" viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="#10272f"/><path d="M20 8c.9 6 3.6 8.7 9.6 9.6-6 .9-8.7 3.6-9.6 9.6-.9-6-3.6-8.7-9.6-9.6 6-.9 8.7-3.6 9.6-9.6z" fill="#9fe3d7"/><circle cx="29" cy="29" r="2.6" fill="#f0c9b8"/></svg>
@@ -214,9 +284,10 @@ textarea.t{min-height:84px;resize:vertical}
     <button class="tbtn" type="button" id="mineBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg><span class="t">My requests</span></button>
     <a class="tbtn solid" id="callTop" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.4 1.8.7 2.7a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.5c.9.3 1.8.6 2.7.7a2 2 0 011.7 2z"/></svg><span class="t" id="callTopT"></span></a>
   </header>
+</div></div>
 
   <main id="home">
-    <section class="hero">
+    <section class="band b-hero"><div class="glow g1"></div><div class="glow g2"></div><div class="wrap"><div class="hero">
       <div>
         <div class="eyebrow">Home &amp; business cleaning</div>
         <h1>A clean you can <em>count on</em>, booked in a minute.</h1>
@@ -231,25 +302,25 @@ textarea.t{min-height:84px;resize:vertical}
         <div class="card c1"><div class="k">Pick your days</div><div class="mini7"><i>9</i><i class="on">10</i><i>11</i><i class="on">12</i><i>13</i><i class="on2">14</i><i>15</i></div></div>
         <div class="card c2"><div class="k">Your request</div><div class="row"><b>Deep clean</b><span>✓</span></div><div class="row"><b>Tue · Morning</b><span>✓</span></div><div class="row"><b>Blaine 55449</b><span>✓</span></div></div>
       </div>
-    </section>
+    </div></div></section>
 
-    <section class="sec" id="services">
+    <section class="band b-mint" id="services"><div class="wrap sec">
       <h2>What they clean</h2>
       <p class="sub">Every service listed on vividlyclean.com, in one place.</p>
       <div class="tabs" role="tablist"><button type="button" role="tab" data-tab="home" aria-selected="true">Home</button><button type="button" role="tab" data-tab="biz" aria-selected="false">Business</button></div>
       <div class="svcs" id="svcList"></div>
-    </section>
+    </div></section>
 
-    <section class="sec">
+    <section class="band b-blush"><div class="wrap sec">
       <h2>Where they go</h2>
       <p class="sub">Service areas as listed on their website. Not sure about your address? Send a request and they will tell you.</p>
       <div class="area">
-        <div><b>Homes</b><span>Minneapolis, St. Paul and the north suburbs</span></div>
-        <div><b>Businesses</b><span>The entire Twin Cities metro area</span></div>
+        <div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2"><path d="M12 22s7-6.3 7-12a7 7 0 10-14 0c0 5.7 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><span><b>Homes</b><span>Minneapolis, St. Paul and the north suburbs</span></span></div>
+        <div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b85c3e" stroke-width="2"><path d="M12 22s7-6.3 7-12a7 7 0 10-14 0c0 5.7 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><span><b>Businesses</b><span>The entire Twin Cities metro area</span></span></div>
       </div>
-    </section>
+    </div></section>
 
-    <section class="sec" id="contactSec">
+    <section class="band b-ink" id="contactSec"><div class="wrap sec">
       <h2>Contact Vividly Clean</h2>
       <p class="sub">Everything you need to reach them, without digging.</p>
       <div class="cgrid" id="contact"></div>
@@ -258,10 +329,11 @@ textarea.t{min-height:84px;resize:vertical}
         <div><b>Work with them</b><p>Openings listed: residential home cleaner, commercial cleaner, janitorial cleaner, janitorial supervisor, residential manager. Day and evening, part and full time.</p><a class="btn ghost sbtn" href="https://vividlyclean.com/careers" target="_blank" rel="noopener" style="align-self:flex-start">See careers ↗</a></div>
       </div>
       <p class="src" id="srcLine"></p>
-    </section>
+    </div></section>
 
-    <p class="foot">Demo booking app made by AdSharp to show Vividly Clean LLC what online booking could look like. It is not their official app. Services, contact details, service areas and job openings come from vividlyclean.com (read Nov 7, 2026). No prices are shown: Vividly Clean gives every quote. Requests are confirmed by Vividly Clean, not booked automatically.</p>
+    <div class="band b-foot"><div class="wrap"><p class="foot">Demo booking app made by AdSharp to show Vividly Clean LLC what online booking could look like. It is not their official app. Services, contact details, service areas and job openings come from vividlyclean.com (read Nov 7, 2026). No prices are shown: Vividly Clean gives every quote. Requests are confirmed by Vividly Clean, not booked automatically.</p></div></div>
   </main>
+<div class="wrap">
 
   <section id="flow" class="hide">
     <div class="flowtop"><div class="bar" id="bar"></div><div class="what" id="stepName"></div></div>
@@ -569,7 +641,7 @@ function svcList(tab){
   const items = tab === 'home' ? HOME_SVC.map(s => [s.ic, s.c, s.name, s.inc, `data-bk="home" data-id="${s.id}"`, 'Book this →'])
     : BIZ_TYPE.filter(s => s.id !== 'other').map(s => [s.ic, s.c, s.name, s.inc, `data-bk="biz" data-id="${s.id}"`, 'Get a quote →'])
       .concat([['spark','clay','Project work', PROJECTS.join(', ') + '.', 'data-bk="biz" data-id="other"', 'Get a quote →']]);
-  $('#svcList').innerHTML = items.map(([i,c,n,d,a,l]) => `<div class="svc">${ico(i, c, c+'-t', 16)}<b>${n}</b><p>${d}</p><button type="button" ${a}>${l}</button></div>`).join('');
+  $('#svcList').innerHTML = items.map(([i,c,n,d,a,l]) => `<div class="svc" style="--bar:var(--${c})">${ico(i, c, c+'-t', 16)}<b>${n}</b><p>${d}</p><button type="button" ${a}>${l}</button></div>`).join('');
   document.querySelectorAll('[data-bk]').forEach(b => b.onclick = () => start(b.dataset.bk, b.dataset.id));
 }
 
