@@ -797,20 +797,43 @@ table.cheat td{vertical-align:top;font-size:.82rem;line-height:1.4}table.cheat t
 @media (min-width:901px){.pwrap>.pplay{right:-25px}}
 .pl-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;align-items:start}
 @media (max-width:900px){.pl-grid{grid-template-columns:minmax(0,1fr)}}
-.pl-time{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
-.pl-time li{display:grid;grid-template-columns:70px minmax(0,1fr) auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 10px}
-.pl-time li:not(.next):not(.open) div>span{display:none}.pl-time li{cursor:pointer}.pl-time li.next{border-color:var(--accent);background:var(--accent-s)}.pl-time li.next time::after{content:' · next';color:var(--muted)}
-.pl-time li.ok{opacity:.55}.pl-time li.ok b{text-decoration:line-through}
-.pl-time time{font-family:var(--f-mono);font-size:.78rem;color:var(--accent)}
-.pl-time li div{display:flex;flex-direction:column;gap:1px;min-width:0}.pl-time li b{font-size:.9rem}.pl-time li span{font-size:.78rem;color:var(--muted)}
-.pl-act{display:flex;gap:6px;align-items:center}.pl-n{display:flex;gap:4px;align-items:center}.pl-n input{width:56px;padding:5px 6px}
+.pl-time{--ck:22px;list-style:none;margin:0;padding:0;display:flex;flex-direction:column;position:relative}
+@media (pointer:coarse){.pl-time{--ck:30px}}
+.pl-time::before{content:'';position:absolute;left:calc(var(--ck) / 2);top:18px;bottom:18px;width:1px;background:var(--line2)}
+.pl-time li{position:relative;display:grid;grid-template-columns:var(--ck) 62px minmax(0,1fr) auto;gap:12px;align-items:start;padding:11px 4px 11px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.pl-time li:last-child{border-bottom:0}
+.pl-chk{all:unset;box-sizing:border-box;width:var(--ck);height:var(--ck);border-radius:50%;border:1.5px solid var(--dim);background:var(--panel);cursor:pointer;display:grid;place-items:center;position:relative;z-index:1;transition:border-color .15s,background .15s}
+.pl-chk:hover{border-color:var(--accent)}.pl-chk:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pl-chk.on{background:var(--accent);border-color:var(--accent)}
+.pl-chk.on::after{content:'';width:8px;height:4px;border-left:2px solid var(--accent-ink);border-bottom:2px solid var(--accent-ink);transform:translateY(-1px) rotate(-45deg)}
+.pl-time time{font-family:var(--f-mono);font-size:.74rem;color:var(--muted);display:flex;flex-direction:column;gap:3px;padding-top:2px;white-space:nowrap}
+.pl-time time small{color:var(--dim);font-size:.66rem}
+.pl-time li>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pl-time li b{font-size:.9rem;font-weight:600;letter-spacing:-.005em;line-height:1.35}
+.pl-time li>div>span{font-size:.8rem;color:var(--muted);line-height:1.45}
+.pl-time li:not(.next):not(.open)>div>span{display:none}
+.pl-time li.next .pl-chk{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-s)}.pl-time li.next time{color:var(--accent)}
+.pl-tag{font-style:normal;font-family:var(--f-mono);font-size:.6rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(212,255,58,.35);border-radius:4px;padding:1px 5px;margin-left:8px;vertical-align:2px;white-space:nowrap}
+.pl-time li.ok b{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--dim)}.pl-time li.ok time{color:var(--dim)}
+.pl-act{display:flex;gap:12px;align-items:center;padding-top:1px}
+.pl-open{font-size:.78rem;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line2);padding:2px 0;white-space:nowrap}.pl-open:hover{color:var(--text);border-color:var(--text)}
+.pl-n{display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:.68rem;color:var(--dim);cursor:text}.pl-n input{width:50px;padding:4px 6px;font-size:.8rem}
+@media (pointer:coarse){.pl-open{padding:9px 0}}
 .pl-warn{font-style:normal;color:var(--gold)}
-@media (max-width:560px){.pl-time li{grid-template-columns:minmax(0,1fr)}.pl-act{justify-content:flex-start}}
+@media (min-width:901px) and (max-height:860px){.pl-time li{padding:7px 4px 7px 0;grid-template-columns:var(--ck) 104px minmax(0,1fr) auto}.pl-time time small::before{content:'· '}.pl-time time{flex-direction:row;gap:6px}.pl-brief{padding-bottom:7px}#v-plan .panel{padding-top:12px;padding-bottom:12px}}
+@media (max-width:560px){.pl-time li{grid-template-columns:var(--ck) minmax(0,1fr);grid-template-areas:"c t" "c d" "c a";row-gap:4px}.pl-chk{grid-area:c}.pl-time time{grid-area:t;flex-direction:row;gap:8px}.pl-time li>div{grid-area:d}.pl-act{grid-area:a}.pl-act:empty{display:none}}
+.pl-brief{display:flex;justify-content:space-between;align-items:baseline;gap:6px 14px;flex-wrap:wrap;padding:2px 0 10px;border-bottom:1px solid var(--line);font-size:.86rem;color:var(--muted)}.pl-brief b{color:var(--text);font-weight:600}.pl-brief .mono{font-family:var(--f-mono);font-size:.72rem;color:var(--dim)}
+.pl-goal{margin:0;font-size:1.15rem;font-weight:600;letter-spacing:-.01em}
+.pl-prog{height:4px;border-radius:4px;background:var(--line2);overflow:hidden;margin-top:10px}.pl-prog i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.pl-pc{margin:6px 0 0;font-family:var(--f-mono);font-size:.7rem;color:var(--dim)}
+.pl-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:10px}
+.pl-stats>div{padding:10px 12px;display:flex;flex-direction:column;gap:4px}.pl-stats>div+div{border-left:1px solid var(--line)}
+.pl-stats small{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}.pl-stats b{font-family:var(--f-mono);font-size:1.25rem;font-weight:500}
 .pl-q{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px}.pl-q>span:first-child{font-weight:500}
 .pl-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
 @media (max-width:900px){.pl-days{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.pl-d{border:1px solid var(--line);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:3px;min-height:76px}.pl-d small{font-family:var(--f-mono);color:var(--dim);font-size:.7rem}.pl-d b{font-size:.8rem;font-weight:500}
-.pl-d.on{border-color:var(--accent);background:var(--accent-s)}.pl-d.past{opacity:.5}.pl-d.off b{color:var(--dim)}
+.pl-d{border-top:2px solid var(--line2);padding:8px 2px 4px;display:flex;flex-direction:column;gap:4px;min-height:72px}.pl-d small{font-family:var(--f-mono);color:var(--dim);font-size:.66rem;letter-spacing:.04em}.pl-d b{font-size:.8rem;font-weight:500;line-height:1.35}
+.pl-d.on{border-top-color:var(--accent)}.pl-d.on small{color:var(--accent)}.pl-d.past{opacity:.45}.pl-d.off b{color:var(--dim);font-weight:400}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -1186,17 +1209,17 @@ table.cheat td{vertical-align:top;font-size:.82rem;line-height:1.4}table.cheat t
 </section>
 <section class="view" id="v-plan" hidden>
   <div class="vhead">
-    <div><span class="eyebrow">Made for you</span><h1>My Plan</h1><p class="sub" id="plSub">Tell it what you do once. It plans your day for that work.</p></div>
+    <div><span class="eyebrow" id="plDate">Made for you</span><h1>My Plan</h1><p class="sub" id="plSub">Tell it what you do once. It plans your day for that work.</p></div>
     <div class="tabs" id="plTabs"><button data-t="today" class="on">Today</button><button data-t="days">14 days</button><button data-t="setup">My answers</button></div>
   </div>
   <div data-pane="today" class="pl-grid">
     <div class="panel stack" style="gap:8px">
-      <div class="mbub" id="plCoach"></div>
+      <div class="pl-brief" id="plCoach"></div>
       <ol class="pl-time" id="plTime"></ol>
     </div>
     <div class="panel stack" style="gap:10px">
-      <span class="eyebrow">Today's target</span><div id="plTarget"></div>
-      <span class="eyebrow" style="margin-top:4px">Done today</span><div class="kpis" id="plK"></div>
+      <span class="eyebrow">Today's goal</span><div id="plTarget"></div>
+      <span class="eyebrow" style="margin-top:6px">Logged today</span><div class="pl-stats" id="plK"></div>
       <p class="dim" style="font-size:.76rem" id="plNote"></p>
     </div>
   </div>
@@ -4297,6 +4320,8 @@ let PLD = store.get('plandone', {});
 const plMin = t => { const [h, m] = String(t || '09:00').split(':').map(Number); return (h || 0) * 60 + (m || 0); };
 const plFmt = m => { m = Math.round(m / 5) * 5; const h = Math.floor(m / 60) % 24, mm = m % 60; return `${(h % 12) || 12}:${String(mm).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`; };
 const plDay = () => PL.start ? Math.max(1, Math.floor((new Date(isoDay() + 'T12:00:00') - new Date(PL.start + 'T12:00:00')) / 864e5) + 1) : 1;
+const plOff = d => { const wk = +PL.days; if (wk >= 7) return false; const wd = new Date(new Date((PL.start || isoDay()) + 'T12:00:00').getTime() + (d - 1) * 864e5).getDay(), wkend = ['local', 'food', 'products', 'creator'].includes(PL.job);
+  return wk === 5 ? (wkend ? wd === 1 || wd === 2 : wd === 0 || wd === 6) : !(wkend ? [5, 6, 0] : [1, 3, 5]).includes(wd); };
 const plMapsQ = q => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
 const COTTAGE = 'https://www.nal.usda.gov/aglaw/local-foods', FTC_INF = 'https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers';
 // the different jobs people do as entrepreneurs; each one only talks about its own work
@@ -4327,8 +4352,8 @@ function plBlocks() {
   const sc = base => Math.max(1, Math.round(base * ({ 1: .5, 2: 1, 4: 1.5, 6: 2 }[h] || 1))), what = plWhat(), city = PL.city || 'your city';
   const due = dueLeads().filter(l => !/^Example:/.test(l.biz)), calls = realLeads().filter(l => l.st === 2), B = [];
   // add(id, minutes, title, detail, link, logs-as, count, needs-open-hours, priority (lower = more important), order in the day)
-  const add = (id, min, t, sub, link, act, n, open, p, q) => B.push({ id, min, t, sub, link, act, n, when: open ? 'open' : 'any', p, q });
-  add('set', 10, 'Get set', `Open your plan and check who is waiting on you.`, J.b2b || job === 'freelance' ? '#clients' : '', '', 0, false, 0, 0);
+  const add = (id, min, t, sub, link, act, n, open, p, q) => B.push({ id, min: Math.max(5, Math.round(min / 5) * 5), t, sub, link, act, n, when: open ? 'open' : 'any', p, q });
+  add('set', 10, 'Plan check', `See who is waiting on you and what is due today.`, J.b2b || job === 'freelance' ? '#clients' : '', '', 0, false, 0, 0);
   calls.forEach(l => add('call-' + l.id, 20, `Call ${l.biz}`, 'Call booked. Ask, listen, then offer one clear next step.', '#clients', 'call', 1, true, 1, 5));
   if (due.length) add('fu', Math.min(30, 5 + due.length * 5), `Follow up: ${due.slice(0, 3).map(l => l.biz).join(', ')}${due.length > 3 ? ` +${due.length - 3} more` : ''}`, `${due.length} follow-up${due.length > 1 ? 's' : ''} due today. A short, friendly nudge.`, '#clients', 'fu', due.length, true, 2, 8);
   const kind = (NICHES[PL.niche] || NICHES.restaurant).kind + 's';
@@ -4404,22 +4429,26 @@ function renderPlan() {
     <div class="pl-q"><span>Days a week</span>${segHTML('days', [['3', 3], ['5', 5], ['7', 7]], +PL.days)}</div>
     <div class="pl-q"><span id="plWhereL">${J.b2b ? 'Businesses you sell to, and your city' : 'Your city'}</span><span class="row" style="gap:6px"><span id="plNicheW" ${J.b2b ? '' : 'hidden'}>${nicheSelect('plNiche', PL.niche)}</span><input type="text" id="plCity" placeholder="Your city" value="${esc(PL.city)}" style="width:150px"></span></div>
     <div class="row" style="justify-content:flex-end"><button class="btn" id="plGo">${set ? 'Update my plan' : 'Build my plan'}</button></div>`;
-  if (!set) { $$('#plTabs [data-t]').forEach(b => b.classList.toggle('on', b.dataset.t === 'setup')); $$('#v-plan [data-pane]').forEach(p => p.hidden = p.dataset.pane !== 'setup'); $('#plSub').textContent = 'Answer 6 quick questions. Your plan is ready right after.'; return; }
+  if (!set) { $$('#plTabs [data-t]').forEach(b => b.classList.toggle('on', b.dataset.t === 'setup')); $$('#v-plan [data-pane]').forEach(p => p.hidden = p.dataset.pane !== 'setup'); $('#plSub').textContent = 'Answer 6 quick questions. Your plan is ready right after.'; $('#plDate').textContent = 'Set up'; return; }
   const what = J.b2b ? `${(NICHES[PL.niche] || NICHES.restaurant).kind}s in ${PL.city || 'your city'}` : `${plWhat() || J.label.split(' (')[0].toLowerCase()}${PL.city ? ' in ' + PL.city : ''}`;
   $('#plSub').textContent = `Day ${plDay()} · ${+PL.hours} hour${+PL.hours > 1 ? 's' : ''} a day from ${plFmt(plMin(PL.wake))} · ${what}`;
   const blocks = plBlocks(), due = dueLeads().filter(l => !/^Example:/.test(l.biz)), calls = realLeads().filter(l => l.st === 2);
-  $('#plCoach').innerHTML = `<span class="mav" aria-hidden="true">M</span><p>${calls.length ? `You have ${calls.length === 1 ? 'a call' : calls.length + ' calls'} booked (${esc(calls.map(l => l.biz).join(', '))}). That comes first today. ` : due.length ? `${due.length} follow-up${due.length > 1 ? 's are' : ' is'} due, so do those first. ` : ''}Want more ${J.people}? Here is today, step by step. Tick each block when it is done.</p>`;
+  const mins = blocks.reduce((a, b) => a + b.min, 0), end = blocks.length ? blocks[blocks.length - 1].at + blocks[blocks.length - 1].min : plMin(PL.wake);
+  $('#plDate').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  $('#plCoach').innerHTML = `<span>${calls.length ? `<b>First:</b> call ${esc(calls.map(l => l.biz).join(', '))} (booked).` : due.length ? `<b>First:</b> ${due.length} follow-up${due.length > 1 ? 's' : ''} due today.` : `<b>${blocks.length} blocks today.</b> Start at the top.`}${plOff(plDay()) ? ' Today is a rest day in your plan: take it off or do a short day.' : ''}</span><span class="mono">${Math.floor(mins / 60)}h ${String(mins % 60).padStart(2, '0')}m · ends ${plFmt(end)}</span>`;
   const nextId = (blocks.find(b => !done[b.id]) || {}).id;
-  $('#plTime').innerHTML = blocks.map(b => { const ok = !!done[b.id], ext = /^https?:/.test(b.link);
-    return `<li class="${ok ? 'ok' : ''} ${b.id === nextId ? 'next' : ''}"><time>${plFmt(b.at)}</time><div><b>${esc(b.t)}</b><span>${esc(b.sub)}${b.late ? ' <em class="pl-warn">Many businesses close around 5 PM: try this one earlier tomorrow.</em>' : ''}</span></div>
-      <span class="pl-act">${b.link ? `<a class="btn sm ghost" href="${b.link}" ${ext ? 'target="_blank" rel="noopener"' : ''}>Open</a>` : ''}${ok ? `<button class="btn sm ghost" data-pundo="${b.id}">Undo</button>` : b.act && b.n ? `<span class="pl-n"><input type="number" min="0" value="${b.n}" aria-label="How many did you do" data-pn="${b.id}"><button class="btn sm" data-pdone="${b.id}">Done</button></span>` : `<button class="btn sm" data-pdone="${b.id}">Done</button>`}</span></li>`; }).join('');
+  $('#plTime').innerHTML = blocks.map(b => { const ok = !!done[b.id], ext = /^https?:/.test(b.link), nx = b.id === nextId;
+    return `<li class="${ok ? 'ok' : ''} ${nx ? 'next' : ''}">${ok ? `<button class="pl-chk on" data-pundo="${b.id}" title="Undo" aria-label="Undo: ${esc(b.t)}"></button>` : `<button class="pl-chk" data-pdone="${b.id}" title="Done" aria-label="Done: ${esc(b.t)}"></button>`}<time>${plFmt(b.at)}<small>${b.min} min</small></time><div><b>${esc(b.t)}${nx ? '<em class="pl-tag">Up next</em>' : ''}</b><span>${esc(b.sub)}${b.late ? ' <em class="pl-warn">Many businesses close around 5 PM: try this one earlier tomorrow.</em>' : ''}</span></div>
+      <span class="pl-act">${!ok && b.act && b.n ? `<label class="pl-n"><input type="number" min="0" value="${b.n}" aria-label="How many did you do" data-pn="${b.id}">done</label>` : ''}${b.link ? `<a class="pl-open" href="${b.link}" ${ext ? 'target="_blank" rel="noopener"' : ''}>Open ${ext ? '↗' : '→'}</a>` : ''}</span></li>`; }).join('');
   const tdy = acts[today] || {};
-  $('#plTarget').innerHTML = `<p style="margin:0;font-size:.95rem"><b>${plBusy() ? 'Take care of current ' + J.people + ' first, then: ' : ''}${J.target}</b></p><p class="dim" style="font-size:.8rem;margin:4px 0 0">${J.why}</p>`;
-  $('#plK').innerHTML = [['Blocks done', `${blocks.filter(b => done[b.id]).length}/${blocks.length}`], ['Messages', (tdy.msg || 0) + (tdy.fu || 0)], ['Replies', tdy.rep || 0], ['Sales', tdy.sale || 0]].map(k => `<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('');
+  const nd = blocks.filter(b => done[b.id]).length, pc = blocks.length ? Math.round(nd / blocks.length * 100) : 0;
+  $('#plTarget').innerHTML = `<p class="pl-goal">${J.target}</p>${plBusy() ? `<p class="dim" style="font-size:.8rem;margin:2px 0 0">Current ${J.people} come first.</p>` : ''}<p class="dim" style="font-size:.8rem;margin:4px 0 0">${J.why}</p>
+    <div class="pl-prog" role="progressbar" aria-valuenow="${pc}" aria-valuemin="0" aria-valuemax="100" aria-label="Blocks done"><i style="width:${pc}%"></i></div><p class="pl-pc">${nd} of ${blocks.length} blocks done · ${pc}%</p>`;
+  $('#plK').innerHTML = [['Messages', (tdy.msg || 0) + (tdy.fu || 0)], ['Replies', tdy.rep || 0], ['Sales', tdy.sale || 0]].map(k => `<div><small>${k[0]}</small><b>${k[1]}</b></div>`).join('');
   $('#plNote').textContent = 'Your mentor is this app, not a person. It plans your time; it cannot promise anyone will call or buy. Log replies and sales on Make Money when they come in.';
   const D = Array.from({ length: 14 }, (_, k) => k + 1), cur = plDay(), wk = +PL.days;
   const focus = d => PL.stage === 'clients' ? (d % 7 === 1 ? `Current ${J.people} first + ask for referrals` : `Work for ${J.people}, then 1 hour of finding more`) : PL.stage === 'new' && d <= 2 ? J.setupF : d % 7 === 0 ? 'Review: what worked? Do more of that' : d <= 7 ? J.mainF : `Follow-ups + ${J.mainF.toLowerCase()}`;
-  $('#plDays').innerHTML = D.map(d => { const off = wk < 7 && ((d - 1) % 7) >= wk; return `<div class="pl-d ${d === cur ? 'on' : ''} ${d < cur ? 'past' : ''} ${off ? 'off' : ''}"><small>Day ${d}</small><b>${off ? 'Rest day' : focus(d)}</b></div>`; }).join('');
+  $('#plDays').innerHTML = D.map(d => { const off = plOff(d); const dt = new Date(new Date((PL.start || isoDay()) + 'T12:00:00').getTime() + (d - 1) * 864e5).toLocaleDateString('en-US', { weekday: 'short' }); return `<div class="pl-d ${d === cur ? 'on' : ''} ${d < cur ? 'past' : ''} ${off ? 'off' : ''}"><small>Day ${d} · ${dt}${d === cur ? ' · today' : ''}</small><b>${off ? 'Rest day' : focus(d)}</b></div>`; }).join('');
 }
 const plBusy = () => PL.stage === 'clients';
 function planInit() {
