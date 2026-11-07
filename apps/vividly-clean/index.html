@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vividly Clean Booking</title>
+<meta name="description" content="Demo booking app for Vividly Clean in Blaine, MN: pick a cleaning, your days and time, and send a request. Not the official app.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f6f3ff">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Vividly Clean">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#f6f3ff;--ink:#16163a;--dim:#5d5b7d;--line:rgba(40,30,110,.12);--card:rgba(255,255,255,.78);
+  --teal:#0fb5a2;--violet:#7c5cff;--pink:#ff6f96;--sun:#ffb938;--sky:#3aa8ff;
+  --grad:linear-gradient(120deg,#14c8b4 0%,#7c5cff 55%,#ff7a9a 100%);
+  --disp:"Outfit",system-ui,sans-serif;--r:20px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,-apple-system,sans-serif;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none;
+  background:radial-gradient(40% 35% at 12% 10%,rgba(20,200,180,.28),transparent 70%),
+  radial-gradient(38% 34% at 92% 18%,rgba(124,92,255,.26),transparent 70%),
+  radial-gradient(45% 40% at 80% 95%,rgba(255,122,154,.26),transparent 70%),
+  radial-gradient(30% 30% at 8% 85%,rgba(255,185,56,.22),transparent 70%)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.demo{display:flex;gap:6px 10px;align-items:center;justify-content:center;flex-wrap:wrap;padding:8px 16px;background:#16163a;color:#fff;font-size:12.5px;text-align:center}
+.demo b{color:#9ff5e8}
+.wrap{max-width:760px;margin:0 auto;padding:18px 16px 120px}
+header.top{display:flex;align-items:center;gap:12px;margin:4px 0 18px}
+header.top img{width:46px;height:46px;border-radius:13px;box-shadow:0 6px 18px rgba(124,92,255,.35)}
+.brand{min-width:0;font-family:var(--disp);font-weight:800;font-size:22px;letter-spacing:-.3px;line-height:1.1}
+.brand small{display:block;font:500 13px Inter,sans-serif;color:var(--dim);letter-spacing:0}
+.top .mine{margin-left:auto;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;font-weight:600;font-size:14px;white-space:nowrap;flex:none;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.hero{border-radius:28px;padding:26px 22px;background:var(--grad);color:#fff;position:relative;overflow:hidden;box-shadow:0 18px 40px rgba(124,92,255,.28)}
+.hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(28px,7vw,42px);line-height:1.05;margin:0 0 8px;letter-spacing:-.8px;max-width:15ch}
+.hero p{margin:0 0 16px;max-width:42ch;opacity:.95}
+.hero .go{background:#fff;color:var(--ink);border:0;border-radius:999px;padding:13px 22px;font-weight:700;font-size:16px;box-shadow:0 8px 20px rgba(22,22,58,.2)}
+.sparkle{position:absolute;color:#fff;opacity:.85;pointer-events:none}
+.sparkle svg{display:block}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:600}
+/* progress */
+.steps{display:flex;gap:6px;margin:22px 0 6px}
+.steps i{flex:1;height:6px;border-radius:9px;background:rgba(40,30,110,.1);overflow:hidden;position:relative}
+.steps i.on::after{content:"";position:absolute;inset:0;background:var(--grad)}
+.stepname{font-size:13px;color:var(--dim);font-weight:600;margin-bottom:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:22px 18px;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 10px 30px rgba(40,30,110,.08);animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h2{font-family:var(--disp);font-weight:700;font-size:26px;letter-spacing:-.4px;margin:0 0 4px;line-height:1.15}
+.sub{color:var(--dim);margin:0 0 18px;font-size:15px}
+h3{font-family:var(--disp);font-weight:700;font-size:17px;margin:20px 0 10px}
+/* service tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.tile{position:relative;text-align:left;border:2px solid transparent;background:#fff;border-radius:20px;padding:16px 14px 14px;box-shadow:0 4px 14px rgba(40,30,110,.07);transition:transform .15s,box-shadow .15s,border-color .15s;min-height:132px;display:flex;flex-direction:column;gap:6px}
+.tile:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(40,30,110,.12)}
+.tile .ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:#fff}
+.tile b{font-family:var(--disp);font-size:17px;font-weight:700;line-height:1.2}
+.tile span{font-size:13px;color:var(--dim);line-height:1.35}
+.tile[aria-pressed=true]{border-color:var(--violet);box-shadow:0 10px 24px rgba(124,92,255,.22)}
+.tile[aria-pressed=true]::after{content:"✓";position:absolute;top:10px;right:10px;width:24px;height:24px;border-radius:50%;background:var(--violet);color:#fff;font-size:13px;font-weight:800;display:grid;place-items:center}
+/* pills */
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;font-weight:600;font-size:15px;min-height:44px;transition:all .15s}
+.pill[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pill small{font-weight:500;opacity:.7;margin-left:4px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:520px){.row2{grid-template-columns:1fr}}
+label.f{display:block;font-weight:600;font-size:14px;margin:14px 0 6px}
+label.f em{font-style:normal;font-weight:500;color:var(--dim)}
+input.t,select.t,textarea.t{width:100%;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:12px 14px;font-size:16px;outline:none;transition:border-color .15s,box-shadow .15s}
+input.t:focus,select.t:focus,textarea.t:focus{border-color:var(--violet);box-shadow:0 0 0 4px rgba(124,92,255,.15)}
+textarea.t{min-height:84px;resize:vertical}
+.err{color:#d0335c;font-size:13.5px;font-weight:600;margin-top:6px;min-height:0}
+/* stepper */
+.cnt{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:8px 8px 8px 14px}
+.cnt b{font-weight:600}
+.cnt .ctl{display:flex;align-items:center;gap:10px}
+.cnt button{width:40px;height:40px;border-radius:12px;border:0;background:#efeaff;color:var(--violet);font-size:22px;font-weight:700;line-height:1}
+.cnt output{min-width:28px;text-align:center;font-family:var(--disp);font-weight:700;font-size:20px}
+/* calendar */
+.cal{background:#fff;border-radius:22px;padding:14px;border:1px solid var(--line)}
+.calhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.calhead b{font-family:var(--disp);font-size:19px}
+.calhead button{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:18px}
+.calhead button:disabled{opacity:.3;cursor:default}
+.grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.dow{font-size:12px;color:var(--dim);font-weight:700;text-align:center;padding:4px 0}
+.day{aspect-ratio:1;min-width:0;padding:0;border:0;border-radius:14px;background:transparent;font-weight:600;font-size:15px;position:relative;transition:background .12s}
+.day:not(:disabled):hover{background:#f1edff}
+.day:disabled{color:#c3c0d6;cursor:default}
+.day.today{box-shadow:inset 0 0 0 1.5px var(--line)}
+.day[aria-pressed=true]{background:var(--grad);color:#fff}
+.day .n{position:absolute;top:3px;right:5px;font-size:10px;font-weight:800}
+.note{font-size:13px;color:var(--dim);margin-top:10px}
+.picked{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.picked span{background:#efeaff;color:#4b33c9;border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:600}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:520px){.slots{grid-template-columns:1fr}}
+.slot{border:2px solid transparent;background:#fff;border-radius:18px;padding:14px;text-align:left;box-shadow:0 3px 10px rgba(40,30,110,.06)}
+.slot b{display:block;font-family:var(--disp);font-size:17px}
+.slot span{font-size:13.5px;color:var(--dim)}
+.slot[aria-pressed=true]{border-color:var(--teal);background:#eafffb}
+/* nav */
+.nav{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(246,243,255,.86);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);z-index:5}
+.nav .in{max-width:760px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.nav .sum{flex:1;min-width:0;font-size:13.5px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav .sum b{color:var(--ink)}
+.btn{border:0;border-radius:999px;padding:14px 24px;font-weight:700;font-size:16px;min-height:50px}
+.btn.main{background:var(--grad);color:#fff;box-shadow:0 8px 20px rgba(124,92,255,.32)}
+.btn.main:disabled{opacity:.45;box-shadow:none;cursor:default}
+.btn.ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+/* review */
+.rev{display:grid;gap:10px}
+.rev .it{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:16px;padding:12px 14px;border:1px solid var(--line)}
+.rev .it .k{font-size:12.5px;color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.rev .it .v{font-weight:600}
+.rev .it .dot{width:12px;height:12px;border-radius:50%;margin-top:5px;flex:none}
+.rev .it button{margin-left:auto;border:0;background:none;color:var(--violet);font-weight:700;font-size:14px;padding:4px}
+.honest{background:#fff8e8;border:1px solid #ffe2a8;border-radius:16px;padding:12px 14px;font-size:14px;margin-top:14px}
+.done{text-align:center;padding:30px 18px}
+.done .big{width:84px;height:84px;border-radius:50%;margin:0 auto 14px;background:var(--grad);display:grid;place-items:center;color:#fff;font-size:40px;box-shadow:0 14px 30px rgba(124,92,255,.35);animation:pop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{transform:scale(.3)}to{transform:none}}
+.done .code{display:inline-block;font-family:ui-monospace,Menlo,monospace;background:#efeaff;border-radius:10px;padding:4px 10px;font-weight:700;color:#4b33c9}
+.acts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px}
+.list .req{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:10px}
+.list .req b{font-family:var(--disp);font-size:17px}
+.list .req .m{font-size:14px;color:var(--dim)}
+.list .req .tag{display:inline-block;font-size:12px;font-weight:700;background:#fff3d6;color:#8a5a00;border-radius:999px;padding:2px 9px;margin-left:6px}
+.foot{font-size:12.5px;color:var(--dim);text-align:center;margin-top:26px;line-height:1.55}
+.hide{display:none!important}
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+@media(max-width:560px){.why{grid-template-columns:1fr}}
+.why div{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px}
+.why b{font-family:var(--disp);display:block;font-size:16px}
+.why span{font-size:13.5px;color:var(--dim)}
+.why .num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:9px;color:#fff;font-weight:800;font-size:14px;margin-bottom:6px}
+@media(max-width:380px){.card{padding:18px 12px}.cal{padding:10px 6px}.grid7{gap:2px}.day{font-size:14px;border-radius:10px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (pointer:coarse){.tile:hover{transform:none}}
+</style>
+</head>
+<body>
+<div class="demo"><span><b>Demo booking app</b> made by AdSharp. Not Vividly Clean's official app.</span><span id="demoSend">Requests are not sent yet.</span></div>
+<div class="wrap">
+  <header class="top">
+    <img src="icon.svg" alt="">
+    <div class="brand">Vividly Clean<small>Home &amp; office cleaning · Blaine, MN</small></div>
+    <button class="mine" id="mineBtn" type="button">My requests</button>
+  </header>
+
+  <section id="home">
+    <div class="hero">
+      <span class="sparkle" style="top:16px;right:22px"><svg width="38" height="38" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z"/></svg></span>
+      <span class="sparkle" style="bottom:26px;right:70px;opacity:.6"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z"/></svg></span>
+      <h1>A fresh, sparkling home. Pick your day.</h1>
+      <p>Choose your cleaning, the days that work for you and a time window. Vividly Clean confirms your time and price.</p>
+      <button class="go" type="button" id="startBtn">Book a cleaning →</button>
+      <div class="chips"><span class="chip">Takes about 1 minute</span><span class="chip">Blaine &amp; nearby</span><span class="chip">One time or repeat</span></div>
+    </div>
+    <div class="why">
+      <div><span class="num" style="background:var(--teal)">1</span><b>Pick a cleaning</b><span>Home, deep, move-out, apartment or office.</span></div>
+      <div><span class="num" style="background:var(--violet)">2</span><b>Choose your days</b><span>Up to 3 days that work, plus a time window.</span></div>
+      <div><span class="num" style="background:var(--pink)">3</span><b>Send your request</b><span>They reply to confirm the time and price.</span></div>
+    </div>
+  </section>
+
+  <section id="flow" class="hide">
+    <div class="steps" id="bar"></div>
+    <div class="stepname" id="stepName"></div>
+    <div id="stage"></div>
+  </section>
+
+  <section id="mine" class="hide"></section>
+
+  <p class="foot">Demo app made by AdSharp to show Vividly Clean what online booking could look like. Not their official app. Services come from public listings and may not match what they offer today. Prices are not shown because they were not checked: Vividly Clean gives the price.</p>
+</div>
+
+<nav class="nav hide" id="nav"><div class="in">
+  <button class="btn ghost" id="backBtn" type="button">Back</button>
+  <div class="sum" id="sum"></div>
+  <button class="btn main" id="nextBtn" type="button">Next</button>
+</div></nav>
+
+<script>
+// ---- Setup: put the business's real phone (digits) and email here once they agree. Empty = demo mode (nothing is sent).
+const BUSINESS = { name: 'Vividly Clean', phone: '', email: '' };
+
+const ICON = {
+  home:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>',
+  deep:'<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c.7 5 3 7.3 8 8-5 .7-7.3 3-8 8-.7-5-3-7.3-8-8 5-.7 7.3-3 8-8z"/><circle cx="19" cy="19" r="2"/></svg>',
+  move:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 8l9-4 9 4-9 4-9-4z"/><path d="M3 8v8l9 4 9-4V8"/><path d="M12 12v8"/></svg>',
+  apt:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"/></svg>',
+  office:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2M3 13h18"/></svg>'
+};
+const SERVICES = [
+  {id:'home', name:'Home clean', desc:'Regular cleaning to keep it fresh.', color:'var(--teal)'},
+  {id:'deep', name:'Deep clean', desc:'Top to bottom, the spots that get missed.', color:'var(--violet)'},
+  {id:'move', name:'Move-in / move-out', desc:'Empty home, ready for keys.', color:'var(--pink)'},
+  {id:'apt', name:'Apartment clean', desc:'Sized for apartments and condos.', color:'var(--sky)'},
+  {id:'office', name:'Office clean', desc:'Small offices and workspaces.', color:'var(--sun)'}
+];
+const OFTEN = [['once','One time'],['weekly','Every week'],['biweekly','Every 2 weeks'],['monthly','Every month']];
+const EXTRAS = ['Inside fridge','Inside oven','Inside windows','Baseboards','Inside cabinets','Laundry fold','Garage sweep'];
+const SLOTS = [['morning','Morning','8 am – 11 am'],['midday','Midday','11 am – 2 pm'],['afternoon','Afternoon','2 pm – 5 pm'],['any','Any time','Whatever is open']];
+const CITIES = ['Blaine','Coon Rapids','Ham Lake','Lino Lakes','Spring Lake Park','Andover','Circle Pines','Lexington','Mounds View','Fridley','Anoka','Other'];
+const STEPS = ['Cleaning','Your space','Days & time','Address','Your info','Review'];
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+const blank = () => ({service:'', often:'once', beds:2, baths:1, sqft:'', pets:false, extras:[], days:[], slot:'', street:'', city:'Blaine', zip:'', entry:'', name:'', phone:'', email:'', contact:'text', notes:''});
+let B = Object.assign(blank(), store.get('vc_draft', {}));
+B.days = (B.days || []).filter(d => d >= iso(minDay()));
+let step = 0, viewMonth = null;
+
+function iso(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function fromIso(s){ const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); }
+function minDay(){ const d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()+2); return d; }
+function maxDay(){ const d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()+60); return d; }
+const fmtDay = s => fromIso(s).toLocaleDateString('en-US',{weekday:'short', month:'short', day:'numeric'});
+const svc = () => SERVICES.find(s => s.id === B.service);
+const save = () => store.set('vc_draft', B);
+
+function show(id){ ['home','flow','mine'].forEach(x => $('#'+x).classList.toggle('hide', x !== id)); $('#nav').classList.toggle('hide', id !== 'flow'); window.scrollTo(0,0); }
+function start(){ step = 0; show('flow'); render(); }
+
+function render(){
+  $('#bar').innerHTML = STEPS.map((s,i) => `<i class="${i<=step?'on':''}"></i>`).join('');
+  $('#stepName').textContent = `Step ${step+1} of ${STEPS.length} · ${STEPS[step]}`;
+  const st = $('#stage');
+  st.innerHTML = '<div class="card">' + [vService, vSpace, vDays, vAddress, vYou, vReview][step]() + '</div>';
+  $('#backBtn').textContent = step === 0 ? 'Home' : 'Back';
+  $('#nextBtn').textContent = step === STEPS.length-1 ? 'Send request' : 'Next';
+  bind(); update();
+}
+
+function pill(group, val, label, on){ return `<button type="button" class="pill" data-g="${group}" data-v="${esc(val)}" aria-pressed="${on}">${label}</button>`; }
+
+function vService(){
+  return `<h2>What should we clean?</h2><p class="sub">Pick one. You can add details next.</p>
+  <div class="tiles">${SERVICES.map(s => `<button type="button" class="tile" data-svc="${s.id}" aria-pressed="${B.service===s.id}">
+    <span class="ic" style="background:${s.color}">${ICON[s.id]}</span><b>${s.name}</b><span>${s.desc}</span></button>`).join('')}</div>
+  <h3>How often?</h3><div class="pills">${OFTEN.map(([v,l]) => pill('often', v, l, B.often===v)).join('')}</div>`;
+}
+function cnt(key, label, min, max){ return `<div class="cnt"><b>${label}</b><div class="ctl"><button type="button" data-c="${key}" data-d="-1" aria-label="Fewer ${label}">−</button><output id="o_${key}">${B[key]}${B[key]>=max?'+':''}</output><button type="button" data-c="${key}" data-d="1" aria-label="More ${label}">+</button></div></div>`; }
+function vSpace(){
+  const office = B.service === 'office';
+  return `<h2>${office ? 'Tell us about the office' : 'Tell us about your place'}</h2><p class="sub">This helps them plan the time and give you a price.</p>
+  <div class="row2">${office ? cnt('beds','Rooms',1,10) + cnt('baths','Restrooms',1,6) : cnt('beds','Bedrooms',0,6) + cnt('baths','Bathrooms',1,5)}</div>
+  <label class="f" for="sqft">Size <em>(square feet, if you know it)</em></label>
+  <input class="t" id="sqft" data-k="sqft" inputmode="numeric" placeholder="e.g. 1,800" value="${esc(B.sqft)}">
+  <h3>Add extras <span style="font:500 14px Inter;color:var(--dim)">(optional)</span></h3>
+  <div class="pills">${EXTRAS.map(x => pill('extra', x, x, B.extras.includes(x))).join('')}</div>
+  <h3>Pets at home?</h3><div class="pills">${pill('pets','no','No pets',!B.pets)}${pill('pets','yes','Yes, pets',B.pets)}</div>`;
+}
+function vDays(){
+  const min = minDay(), max = maxDay();
+  if (!viewMonth) viewMonth = new Date(min.getFullYear(), min.getMonth(), 1);
+  const y = viewMonth.getFullYear(), m = viewMonth.getMonth();
+  const first = new Date(y, m, 1).getDay(), n = new Date(y, m+1, 0).getDate();
+  const today = iso(new Date());
+  let cells = '';
+  for (let i = 0; i < first; i++) cells += '<span></span>';
+  for (let d = 1; d <= n; d++){
+    const dt = new Date(y, m, d), s = iso(dt), idx = B.days.indexOf(s);
+    const off = dt < min || dt > max || dt.getDay() === 0;
+    cells += `<button type="button" class="day${s===today?' today':''}" data-day="${s}" ${off?'disabled':''} aria-pressed="${idx>=0}" aria-label="${fmtDay(s)}">${d}${idx>=0?`<span class="n">${idx+1}</span>`:''}</button>`;
+  }
+  const prevOk = new Date(y, m, 1) > new Date(min.getFullYear(), min.getMonth(), 1);
+  const nextOk = new Date(y, m+1, 1) <= max;
+  return `<h2>Which days work for you?</h2><p class="sub">Tap up to 3 days, your favorite first. They pick one and confirm.</p>
+  <div class="cal"><div class="calhead"><button type="button" id="pm" ${prevOk?'':'disabled'} aria-label="Previous month">‹</button><b>${viewMonth.toLocaleDateString('en-US',{month:'long', year:'numeric'})}</b><button type="button" id="nm" ${nextOk?'':'disabled'} aria-label="Next month">›</button></div>
+  <div class="grid7">${['S','M','T','W','T','F','S'].map(x => `<span class="dow">${x}</span>`).join('')}${cells}</div></div>
+  <div class="picked">${B.days.map((d,i) => `<span>${i+1}. ${fmtDay(d)}</span>`).join('') || '<span style="background:#f1f0f7;color:var(--dim)">No days picked yet</span>'}</div>
+  <p class="note">Demo: Monday to Saturday, from 2 days out. Vividly Clean sets their real working days.</p>
+  <h3>What time of day?</h3>
+  <div class="slots">${SLOTS.map(([v,l,t]) => `<button type="button" class="slot" data-slot="${v}" aria-pressed="${B.slot===v}"><b>${l}</b><span>${t}</span></button>`).join('')}</div>`;
+}
+function vAddress(){
+  return `<h2>Where is the cleaning?</h2><p class="sub">Blaine and nearby cities. Not sure they come to you? Send it anyway, they will tell you.</p>
+  <label class="f" for="street">Street address</label><input class="t" id="street" data-k="street" autocomplete="street-address" placeholder="1234 Main St NE, Apt 5" value="${esc(B.street)}">
+  <div class="row2"><div><label class="f" for="city">City</label><select class="t" id="city" data-k="city">${CITIES.map(c => `<option ${B.city===c?'selected':''}>${c}</option>`).join('')}</select></div>
+  <div><label class="f" for="zip">ZIP code</label><input class="t" id="zip" data-k="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="55449" value="${esc(B.zip)}"></div></div>
+  <label class="f" for="entry">How do they get in? <em>(optional)</em></label><input class="t" id="entry" data-k="entry" placeholder="I'll be home / door code / lockbox" value="${esc(B.entry)}">
+  <div class="err" id="err"></div>`;
+}
+function vYou(){
+  return `<h2>How can they reach you?</h2><p class="sub">To confirm your time and send the price.</p>
+  <label class="f" for="name">Your name</label><input class="t" id="name" data-k="name" autocomplete="name" value="${esc(B.name)}">
+  <div class="row2"><div><label class="f" for="phone">Phone</label><input class="t" id="phone" data-k="phone" type="tel" autocomplete="tel" placeholder="(763) 555-0123" value="${esc(B.phone)}"></div>
+  <div><label class="f" for="email">Email <em>(optional)</em></label><input class="t" id="email" data-k="email" type="email" autocomplete="email" value="${esc(B.email)}"></div></div>
+  <h3>Best way to reach you</h3><div class="pills">${pill('contact','text','Text me',B.contact==='text')}${pill('contact','call','Call me',B.contact==='call')}${pill('contact','email','Email me',B.contact==='email')}</div>
+  <label class="f" for="notes">Anything else? <em>(optional)</em></label><textarea class="t" id="notes" data-k="notes" placeholder="Focus on the kitchen, allergies, parking...">${esc(B.notes)}</textarea>
+  <div class="err" id="err"></div>`;
+}
+function summaryLines(){
+  const s = svc(), office = B.service === 'office';
+  return [
+    ['Cleaning', `${s ? s.name : '-'} · ${OFTEN.find(o=>o[0]===B.often)[1]}`, s ? s.color : '#ccc', 0],
+    ['Space', `${office ? `${B.beds} rooms, ${B.baths} restrooms` : `${B.beds} bed, ${B.baths} bath`}${B.sqft ? ` · ${B.sqft} sq ft` : ''}${B.pets ? ' · pets' : ''}${B.extras.length ? ' · extras: ' + B.extras.join(', ') : ''}`, 'var(--violet)', 1],
+    ['Days', `${B.days.map(fmtDay).join(' / ')} · ${SLOTS.find(x=>x[0]===B.slot)?.[1] || ''} (${SLOTS.find(x=>x[0]===B.slot)?.[2] || ''})`, 'var(--pink)', 2],
+    ['Address', `${B.street}, ${B.city}, MN ${B.zip}${B.entry ? ' · entry: ' + B.entry : ''}`, 'var(--sky)', 3],
+    ['You', `${B.name} · ${B.phone}${B.email ? ' · ' + B.email : ''} · prefers ${B.contact}`, 'var(--sun)', 4]
+  ];
+}
+function vReview(){
+  return `<h2>Look good?</h2><p class="sub">Check your request, then send it.</p>
+  <div class="rev">${summaryLines().map(([k,v,c,i]) => `<div class="it"><span class="dot" style="background:${c}"></span><div><div class="k">${k}</div><div class="v">${esc(v)}</div></div><button type="button" data-edit="${i}">Edit</button></div>`).join('')}
+  ${B.notes ? `<div class="it"><span class="dot" style="background:var(--teal)"></span><div><div class="k">Notes</div><div class="v">${esc(B.notes)}</div></div></div>` : ''}</div>
+  <div class="honest"><b>This is a request, not a confirmed booking.</b> Vividly Clean replies to confirm the day, time and price. ${BUSINESS.phone || BUSINESS.email ? '' : '<br>In this demo nothing is sent: your request is saved on this device only.'}</div>`;
+}
+
+function bind(){
+  document.querySelectorAll('[data-svc]').forEach(b => b.onclick = () => { B.service = b.dataset.svc; save(); render(); });
+  document.querySelectorAll('[data-g]').forEach(b => b.onclick = () => {
+    const g = b.dataset.g, v = b.dataset.v;
+    if (g === 'extra') B.extras = B.extras.includes(v) ? B.extras.filter(x => x !== v) : B.extras.concat(v);
+    else if (g === 'pets') B.pets = v === 'yes';
+    else B[g] = v;
+    save(); render();
+  });
+  document.querySelectorAll('[data-c]').forEach(b => b.onclick = () => {
+    const k = b.dataset.c, office = B.service === 'office';
+    const lim = k === 'beds' ? (office ? [1,10] : [0,6]) : (office ? [1,6] : [1,5]);
+    B[k] = Math.min(lim[1], Math.max(lim[0], B[k] + Number(b.dataset.d)));
+    save(); $('#o_'+k).textContent = B[k] + (B[k] >= lim[1] ? '+' : ''); update();
+  });
+  document.querySelectorAll('[data-day]').forEach(b => b.onclick = () => {
+    const d = b.dataset.day, i = B.days.indexOf(d);
+    if (i >= 0) B.days.splice(i, 1); else if (B.days.length < 3) B.days.push(d); else { B.days.shift(); B.days.push(d); }
+    save(); render();
+  });
+  document.querySelectorAll('[data-slot]').forEach(b => b.onclick = () => { B.slot = b.dataset.slot; save(); render(); });
+  document.querySelectorAll('[data-k]').forEach(el => el.oninput = el.onchange = () => { B[el.dataset.k] = el.value; save(); update(); const e = $('#err'); if (e) e.textContent = ''; });
+  document.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => { step = Number(b.dataset.edit); render(); window.scrollTo(0,0); });
+  const pm = $('#pm'), nm = $('#nm');
+  if (pm) pm.onclick = () => { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth()-1, 1); render(); };
+  if (nm) nm.onclick = () => { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth()+1, 1); render(); };
+  if (B.service === 'office' && B.beds < 1) B.beds = 1;
+}
+
+function problem(){
+  if (step === 0 && !B.service) return 'Pick a cleaning';
+  if (step === 2 && !B.days.length) return 'Pick at least 1 day';
+  if (step === 2 && !B.slot) return 'Pick a time of day';
+  if (step === 3 && B.street.trim().length < 5) return 'Add your street address';
+  if (step === 3 && !/^\d{5}$/.test(B.zip.trim())) return 'Add a 5-digit ZIP code';
+  if (step === 4 && B.name.trim().length < 2) return 'Add your name';
+  if (step === 4 && B.phone.replace(/\D/g,'').length < 10) return 'Add a 10-digit phone number';
+  if (step === 4 && B.email && !/^\S+@\S+\.\S+$/.test(B.email)) return 'Check your email address';
+  return '';
+}
+function update(){
+  const p = problem(), s = svc();
+  const n = $('#nextBtn');
+  n.disabled = !!p && (step === 0 || step === 2);
+  $('#sum').innerHTML = p ? esc(p) : s ? `<b>${esc(s.name)}</b>${B.days.length ? ' · ' + esc(fmtDay(B.days[0])) : ''}` : '';
+}
+function next(){
+  const p = problem();
+  if (p){ const e = $('#err'); if (e) e.textContent = p; update(); return; }
+  if (step < STEPS.length-1){ step++; render(); window.scrollTo(0,0); return; }
+  send();
+}
+function requestText(r){
+  return `Cleaning request (${r.code})\n` + summaryLines().map(([k,v]) => `${k}: ${v}`).join('\n') + (B.notes ? `\nNotes: ${B.notes}` : '') + `\nSent from the booking app. Please confirm day, time and price.`;
+}
+function send(){
+  const r = Object.assign({}, B, {code: 'VC-' + Math.random().toString(36).slice(2,7).toUpperCase(), at: Date.now()});
+  const text = requestText(r);
+  r.text = text;
+  const list = store.get('vc_requests', []); list.unshift(r); store.set('vc_requests', list);
+  const keep = {name:B.name, phone:B.phone, email:B.email, contact:B.contact, street:B.street, city:B.city, zip:B.zip, entry:B.entry};
+  B = Object.assign(blank(), keep); save();
+  const live = BUSINESS.phone || BUSINESS.email;
+  const sms = BUSINESS.phone ? `sms:${BUSINESS.phone}?&body=${encodeURIComponent(text)}` : '';
+  const mail = BUSINESS.email ? `mailto:${BUSINESS.email}?subject=${encodeURIComponent('Cleaning request ' + r.code)}&body=${encodeURIComponent(text)}` : '';
+  $('#nav').classList.add('hide');
+  $('#bar').innerHTML = ''; $('#stepName').textContent = '';
+  $('#stage').innerHTML = `<div class="card done"><div class="big">✓</div><h2>${live ? 'Almost there!' : 'Request ready!'}</h2>
+    <p class="sub">${live ? 'Tap below to send it. Vividly Clean will reply to confirm your day, time and price.' : 'Demo: your request is saved on this device only. When Vividly Clean turns this app on, it goes straight to them.'}</p>
+    <p>Request <span class="code">${r.code}</span></p>
+    <div class="acts">${sms ? `<a class="btn main" href="${sms}" style="text-decoration:none">Send by text</a>` : ''}${mail ? `<a class="btn ${sms?'ghost':'main'}" href="${mail}" style="text-decoration:none">Send by email</a>` : ''}
+    <button class="btn ghost" type="button" id="copyBtn">Copy request</button><button class="btn ghost" type="button" id="againBtn">Book another</button></div></div>`;
+  $('#copyBtn').onclick = () => copy(text, $('#copyBtn'));
+  $('#againBtn').onclick = start;
+  window.scrollTo(0,0);
+}
+function copy(text, btn){
+  const ok = () => { btn.textContent = 'Copied ✓'; setTimeout(() => btn.textContent = 'Copy request', 1800); };
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
+  function fallback(){ const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); ok(); } catch(e){} t.remove(); }
+}
+function mine(){
+  const list = store.get('vc_requests', []);
+  $('#mine').innerHTML = `<div class="card list"><h2>My requests</h2><p class="sub">Saved on this device. Waiting for Vividly Clean to confirm.</p>
+  ${list.length ? list.map((r,i) => `<div class="req"><b>${esc(SERVICES.find(s=>s.id===r.service)?.name || 'Cleaning')}</b><span class="tag">Requested</span>
+    <div class="m">${esc(r.days.map(fmtDay).join(' / '))} · ${esc(SLOTS.find(x=>x[0]===r.slot)?.[1] || '')}</div><div class="m">${esc(r.code)} · ${esc(r.city)}</div>
+    <div class="acts" style="justify-content:flex-start;margin-top:10px"><button class="btn ghost" style="min-height:40px;padding:8px 16px;font-size:14px" type="button" data-cp="${i}">Copy</button><button class="btn ghost" style="min-height:40px;padding:8px 16px;font-size:14px" type="button" data-rm="${i}">Remove</button></div></div>`).join('')
+  : '<p>No requests yet.</p>'}
+  <div class="acts" style="justify-content:flex-start"><button class="btn main" type="button" id="newBtn">Book a cleaning</button><button class="btn ghost" type="button" id="homeBtn">Home</button></div></div>`;
+  show('mine');
+  $('#newBtn').onclick = start; $('#homeBtn').onclick = () => show('home');
+  document.querySelectorAll('[data-cp]').forEach(b => b.onclick = () => { copy(list[b.dataset.cp].text, b); });
+  document.querySelectorAll('[data-rm]').forEach(b => b.onclick = () => { list.splice(Number(b.dataset.rm),1); store.set('vc_requests', list); mine(); });
+}
+
+if (BUSINESS.phone || BUSINESS.email) $('#demoSend').textContent = 'Vividly Clean confirms each request.';
+$('#startBtn').onclick = start;
+$('#mineBtn').onclick = mine;
+$('#backBtn').onclick = () => { if (step === 0) show('home'); else { step--; render(); window.scrollTo(0,0); } };
+$('#nextBtn').onclick = next;
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('input.t') && !$('#flow').classList.contains('hide')) { e.preventDefault(); e.target.blur(); next(); } });
+if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
