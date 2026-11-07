@@ -25,7 +25,7 @@ Working name, changeable in `config.js`. Source: Yaya's course brief (Nov 7, 202
 | F8 | Resources | Practical worksheets and templates (fill in, save, copy, download, print). |
 | F9 | Final project | Portfolio case study the student can export and share, with an honesty check. |
 | F10 | Pricing | Plans and prices from a config file; clear message while payments are not set up. |
-| F11 | Facts & owner pages | Sources with check status; owner launch checklist and goal math. |
+| F11 | Facts & owner pages | Sources with check status; owner launch checklist (unlinked from student pages). The revenue goal stays in PROGRESS.md, not on the site. |
 
 ## 4. Design direction
 - Colorful but readable: bright blue, purple, mint and orange accents on a light background; text contrast at least 4.5:1 (WCAG AA).
@@ -51,5 +51,6 @@ Working name, changeable in `config.js`. Source: Yaya's course brief (Nov 7, 202
 - **Colorful vs. earlier "professional dark, no candy colors" rule:** that rule was for AdSharp. This brief asks for color; resolved as bright accents on a light, readable base.
 - **"Course/lesson/quiz" words vs. AdSharp's no-school-words rule:** that rule is AdSharp-only; this product is a course.
 - **Paid course vs. static site:** content cannot be locked or paid for yet. Prices are placeholders; buttons say payments are not set up. Owner page lists what is needed.
+- **Hosting a paid course:** GitHub's terms do not allow Pages to run an online business or store. The free/preview version can stay on Pages; the paid version needs another host or course platform (owner task).
 - **Country:** facts are US-based and labeled "US"; other countries differ.
 - **"Verify tool info with official sources":** the build machine cannot open official pages directly; facts were confirmed through web search limited to the official domain and are labeled that way. Tool prices and free tiers are not listed because they change often.

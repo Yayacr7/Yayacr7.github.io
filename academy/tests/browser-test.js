@@ -27,7 +27,7 @@ const server = http.createServer((req, res) => {
   const L = await (async () => { await p.goto(U); return p.evaluate(() => ACADEMY.LESSONS.map(l => ({ id: l.id, a: l.quiz.map(q => q.answer), n: l.quiz.length }))); })();
 
   // 1. Learning path: home -> questionnaire -> recommendation
-  ok((await p.locator("h1").first().innerText()).includes("Learn to earn"), "home page renders");
+  ok((await p.locator("h1").first().innerText()).includes("Learn practical AI skills"), "home page renders");
   await p.click("text=Find my starting path");
   for (const v of ["save", "ok", "mid", "more", "like"]) { await p.check(`input[value="${v}"]`); await p.keyboard.press("Enter"); await p.waitForTimeout(50); }
   ok((await p.locator("h1").innerText()) === "AI assistants & automations", "questionnaire recommends a path from answers");
@@ -47,6 +47,8 @@ const server = http.createServer((req, res) => {
   ok(await p.locator("#complete").isDisabled(), "cannot complete before the knowledge check");
   await p.click("text=Check my answers");
   ok((await p.locator("#qmsg").innerText()).includes("Answer all"), "quiz asks for all answers");
+  await p.check(`input[name=q0][value="${(L[0].a[0] + 1) % 3}"]`); await p.click("text=Check my answers");
+  ok(await p.locator(".ans-tag:visible, .fb.ok, .qq.wrong").count() === 0 && !(await p.locator("#kc").innerText()).includes("Best answer"), "partial answers reveal no correct answers");
   const wrong = L[0].a.map((a, i) => i === 0 ? (a + 1) % 3 : a);
   for (let i = 0; i < 3; i++) await p.check(`input[name=q${i}][value="${wrong[i]}"]`);
   await p.click("text=Check my answers");
@@ -60,12 +62,14 @@ const server = http.createServer((req, res) => {
   for (let i = 0; i < 3; i++) await p.check(`input[name=q${i}][value="${L[0].a[i]}"]`);
   await p.locator("form#quiz button[type=submit]").focus(); await p.keyboard.press("Enter");
   ok((await p.locator("#qmsg").innerText()).includes("3 of 3"), "retry by keyboard scores 3 of 3");
+  ok(await p.evaluate(() => document.activeElement && document.activeElement.id) === "qmsg", "keyboard focus moves to the score after checking");
 
   // 4. Notes, bookmark, task ticks, completion, then reload
   await p.fill("#note", "Bakery bio invented a founding year."); await p.waitForTimeout(600);
   await p.click("#bm"); await p.check('[data-step="1"]');
   await p.click("#complete");
   ok((await p.locator("#donebox").innerText()).includes("Lesson complete"), "lesson completes");
+  ok((await p.locator("#lmeta").innerText()).includes("Completed"), "lesson header shows Completed right away");
   await p.reload(); await p.waitForTimeout(150);
   ok((await p.inputValue("#note")).includes("founding year"), "note survives reload");
   ok((await p.getAttribute("#bm", "aria-pressed")) === "true", "bookmark survives reload");
@@ -84,9 +88,10 @@ const server = http.createServer((req, res) => {
   await p.goto(U + "#/lesson/zzz"); ok((await p.locator("h1").innerText()) === "Page not found", "unknown lesson shows Not found");
 
   // 6. Dashboard continue
+  await p.goto(U + "#/lesson/m5l1"); await p.waitForSelector("#quiz");
   await p.goto(U + "#/dashboard");
   const cont = await p.locator(".continue").innerText();
-  ok(cont.includes("Continue learning") && cont.includes("Write useful prompts"), "dashboard Continue learning goes to next lesson");
+  ok(cont.includes("Continue learning") && cont.includes("Write useful prompts"), "dashboard Continue learning goes to next lesson in order (even after peeking at Module 5)");
   ok(cont.includes("8%"), "progress ring shows 8%");
   ok((await p.locator("main").innerText()).includes("Digital products"), "dashboard shows the chosen path");
 
@@ -99,6 +104,10 @@ const server = http.createServer((req, res) => {
   await p.reload(); ok((await p.locator("#mres").innerText()).includes("$380"), "tracker survives reload");
   await p.goto(U + "#/resources/score"); for (let i = 0; i < 5; i++) await p.selectOption("#s0_" + i, "4");
   ok((await p.locator("#scoreRows").innerText()).includes("20 / 25"), "problem scorecard totals");
+  await p.goto(U + "#/resources/growth"); await p.goto(U + "#/resources");
+  ok(!(await p.locator('a[href="#/resources/growth"]').innerText()).includes("Started"), "opening a worksheet does not mark it Started");
+  await p.goto(U + "#/resources/price"); await p.fill("#p_hours", "-10");
+  ok((await p.locator("#pres").innerText()).includes("cannot be negative"), "price calculator rejects negative numbers"); await p.fill("#p_hours", "8");
   await p.goto(U + "#/resources/prompt"); await p.fill("#f_goal", "welcome email");
   ok((await p.locator("#pout").innerText()).includes("Goal: welcome email"), "prompt builder assembles prompt");
 
@@ -109,7 +118,11 @@ const server = http.createServer((req, res) => {
 
   // 9. Pricing, owner, facts
   await p.goto(U + "#/pricing"); await p.click("[data-nopay] >> nth=0"); ok(await p.locator("#paymsg").isVisible(), "unpaid plan explains payments are not set up");
-  await p.goto(U + "#/owner"); ok((await p.locator("main").innerText()).includes("10,310"), "owner goal math ($1M / $97)");
+  await p.goto(U + "#/owner"); ok(!/1,000,000|10,310/.test(await p.locator("main").innerText()), "revenue goal is not shown on the site");
+  ok(await p.locator('footer a[href="#/owner"]').count() === 0, "no owner link in the student footer");
+  // Long unbroken text must not push the page sideways
+  await p.goto(U + "#/lesson/m6l2"); await p.waitForSelector("#note"); await p.fill("#note", "https://example.com/" + "a".repeat(400)); await p.waitForTimeout(600);
+  for (const rt of ["notes", "dashboard"]) { await p.goto(U + "#/" + rt); ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), "long note does not cause sideways scroll on " + rt); }
   await p.goto(U + "#/lesson/m5l2"); ok((await p.locator(".facts").innerText()).includes("10 business days"), "checked facts box with source on lesson");
 
   // 10. All lessons complete
@@ -137,6 +150,8 @@ const server = http.createServer((req, res) => {
   const rm = await b.newContext({ reducedMotion: "reduce" }); const r = await rm.newPage(); await r.goto(U + "#/lesson/m1l1");
   for (let i = 0; i < 3; i++) await r.check(`input[name=q${i}][value="${L[0].a[i]}"]`); await r.click("text=Check my answers"); await r.click("#complete");
   ok(await r.locator(".confetti").count() === 0, "reduced motion: no confetti"); await rm.close();
+  await p.goto(U); await p.check("#reduceToggle");
+  ok(await p.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior) === "auto", "Reduce motion switch turns off smooth scrolling"); await p.uncheck("#reduceToggle");
 
   // 14. Devices: no sideways scroll, no errors, tap targets
   const routes = ["", "dashboard", "course", "start", "start/result", "lesson/m1l1", "lesson/m5l2", "resources", "resources/money", "resources/price", "resources/score", "project", "notes", "pricing", "facts", "owner"];
@@ -148,7 +163,9 @@ const server = http.createServer((req, res) => {
     const q = await c.newPage(); const e = []; q.on("pageerror", x => e.push(x.message)); const bad = [], small = [];
     for (const rt of routes) {
       await q.goto(U + "#/" + rt); await q.waitForTimeout(40);
-      const sw = await q.evaluate(() => document.documentElement.scrollWidth - innerWidth); if (sw > 1) bad.push(rt + ":" + sw);
+      if (rt === "resources/money") { await q.click("#addM"); }
+      const vw = (d.viewport || {}).width || 1280;
+      const sw = await q.evaluate(w => Math.max(document.documentElement.scrollWidth, innerWidth) - w, vw); if (sw > 1) bad.push(rt + ":" + sw);
       if (d.hasTouch) { const s = await q.evaluate(() => [...document.querySelectorAll("main .btn, main .opt, nav.main a, #menuBtn")].filter(el => el.offsetParent && el.getBoundingClientRect().height < 40).map(el => el.textContent.trim().slice(0, 20))); if (s.length) small.push(rt + ":" + s.join("/")); }
     }
     ok(!bad.length && !e.length, `${name}: ${routes.length} pages, no sideways scroll, no errors ${bad.join(",")} ${e.join("|")}`);

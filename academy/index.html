@@ -196,7 +196,13 @@ label.f{display:block;font-weight:700;margin:12px 0 6px}
 .results b{display:block;font-size:1.3rem}
 table{width:100%;border-collapse:collapse;font-size:.95rem}
 th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
-.tbl{overflow-x:auto}
+.tbl{overflow-x:auto;position:relative}
+main{overflow-wrap:anywhere}
+html.reduce{scroll-behavior:auto}
+.row:has(#imp:focus-visible) label[for=imp]{box-shadow:var(--focus)}
+#qmsg:focus{outline:none}
+.calc-warn{color:var(--bad);font-weight:700}
+@media (pointer:coarse){footer a,footer label{display:inline-flex;align-items:center;min-height:44px}footer input{width:22px;height:22px}}
 .tbl input,.tbl select{min-width:90px;padding:8px}
 .chk{display:flex;gap:10px;align-items:flex-start;padding:8px;border-radius:10px;cursor:pointer}
 .chk:hover{background:var(--soft)}
@@ -251,7 +257,6 @@ th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertic
   <div class="in">
     <span>Progress, notes and answers are saved <strong>only in this browser on this device</strong>. Use <a href="#/notes">Notes &rarr; Back up</a> to move them.</span>
     <a href="#/facts">Facts &amp; sources</a>
-    <a href="#/owner">Owner setup</a>
     <label class="row small" style="gap:6px"><input type="checkbox" id="reduceToggle"> Reduce motion</label>
   </div>
 </footer>
@@ -291,7 +296,7 @@ function doneCount(){return LESSONS.filter(function(l){return isDone(l.id)}).len
 function pct(){return Math.round(doneCount()/LESSONS.length*100)}
 function modDone(mid){var ls=lessonsOf(mid);return ls.filter(function(l){return isDone(l.id)}).length}
 function nextLesson(){
-  if(S.last && LMAP[S.last] && !isDone(S.last)) return LMAP[S.last];
+  // Continue = first lesson not yet completed, in course order (not whatever was opened last).
   for(var i=0;i<LESSONS.length;i++) if(!isDone(LESSONS[i].id)) return LESSONS[i];
   return null;
 }
@@ -355,10 +360,10 @@ function pageHome(){
   var ps=["web","assist","products"].map(function(k){var p=PATHS[k];return '<div class="card pathcard accent-'+p.color+'"><span class="tag '+p.color+'">Path</span><h3>'+esc(p.name)+'</h3><p>'+esc(p.short)+'</p><p class="small muted"><strong>Example work:</strong> '+esc(p.makes)+'</p></div>'}).join("");
   var steps=[["Learn","Understand what AI does well and where it slips."],["Choose","Pick one realistic skill for your time and budget."],["Find","Talk to people and find a real problem."],["Build","Make a small first version and test it."],["Sell","Explain, scope and price your offer honestly."],["Grow","Deliver well, track profit, improve."]];
   var cols=["blue","purple","mint","orange","blue","purple"];
-  return '<section class="hero"><div><p class="kicker">For complete beginners</p><h1>Learn to earn with AI, <span class="grad">one clear step at a time.</span></h1><p class="lead">'+esc(C.tagline||"")+' Six short modules take you from understanding AI to finding a real problem, building something useful, and approaching your first customer.</p><div class="row"><a class="btn primary" href="#/start">Find my starting path</a><a class="btn ghost" href="#/dashboard">'+(doneCount()?"Continue learning":"Go to my dashboard")+'</a></div><p class="small muted" style="margin-top:14px">About 4 hours of reading plus practical tasks. No income is promised: what you earn depends on your work, your market and luck.</p></div><div class="hero-art">'+pathMap(false)+'</div></section>'+
+  return '<section class="hero"><div><p class="kicker">For complete beginners</p><h1>Learn practical AI skills people pay for, <span class="grad">one clear step at a time.</span></h1><p class="lead">'+esc(C.tagline||"")+' Six short modules take you from understanding AI to finding a real problem, building something useful, and approaching your first customer.</p><div class="row"><a class="btn primary" href="#/start">Find my starting path</a><a class="btn ghost" href="#/dashboard">'+(doneCount()?"Continue learning":"Go to my dashboard")+'</a></div><p class="small muted" style="margin-top:14px">About 4 hours of reading plus practical tasks. No income is promised: what you earn depends on your work, your market and luck.</p></div><div class="hero-art">'+pathMap(false)+'</div></section>'+
   '<section class="block"><h2>The path</h2><ol class="steps6">'+steps.map(function(s,i){return '<li class="accent-'+cols[i]+'"><span class="tag '+cols[i]+'">Module '+(i+1)+'</span><b style="margin-top:6px">'+s[0]+'</b><span class="small muted">'+s[1]+'</span></li>'}).join("")+'</ol></section>'+
   '<section class="block"><h2>Three practical paths</h2><p class="muted">The starting questionnaire suggests one. Each path explains its skills, costs and limits honestly.</p><div class="grid g3">'+ps+'</div></section>'+
-  '<section class="block grid g2"><div class="card"><h2>Who it helps</h2><ul><li>Complete beginners who want a practical, honest starting point.</li><li>People with a few hours a week and a small or $0 budget.</li><li>Anyone who prefers doing real tasks over watching theory.</li></ul></div><div class="card"><h2>Who it is not for</h2><ul><li>People looking for quick or guaranteed money. This course does not promise income.</li><li>Experienced developers (it starts from zero).</li><li>Anyone wanting AI advertising or brand-scaling training: those topics are not covered here.</li></ul></div></section>'+
+  '<section class="block grid g2"><div class="card"><h2>Who it helps</h2><ul><li>Complete beginners who want a practical, honest starting point.</li><li>People with a few hours a week and a small or $0 budget.</li><li>Teens too: if you are under 18, involve a parent or guardian for payments, agreements and taxes. Payment providers set their own age rules.</li><li>Anyone who prefers doing real tasks over watching theory.</li></ul></div><div class="card"><h2>Who it is not for</h2><ul><li>People looking for quick or guaranteed money. This course does not promise income.</li><li>Experienced developers (it starts from zero).</li><li>Anyone wanting AI advertising or brand-scaling training: those topics are not covered here.</li></ul></div></section>'+
   '<section class="block card"><h2>What you get</h2><div class="grid g3"><div><b>12 written lessons</b><p class="small muted">Each with a goal, plain explanation, worked example, task and knowledge check.</p></div><div><b>13 worksheets and calculators</b><p class="small muted">Prompt builder, problem scorecard, price calculator, expense tracker and more.</p></div><div><b>A portfolio project</b><p class="small muted">A true one-page case study you can download and share.</p></div></div><p class="note blue small" style="margin-bottom:0">All examples with names are <strong>hypothetical</strong> and labeled. There are no invented testimonials or student results on this site.</p></section>';
 }
 
@@ -445,7 +450,7 @@ function pageLesson(id){
   var explain=l.explain.join("");
   if(path) explain=explain.replace(new RegExp("<h3>("+path.name.replace(/[&]/g,"&amp;").replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")</h3>"),'<h3>$1 <span class="tag mint yourpath">Your path</span></h3>');
   var h='<div class="lesson">'+side+'<article class="accent-'+m.color+'">';
-  h+='<div class="lhead"><div class="row" style="justify-content:space-between"><span class="tag '+m.color+'">Module '+m.n+': '+esc(m.title)+' &middot; Lesson '+(lessonsOf(m.id).indexOf(l)+1)+' of '+lessonsOf(m.id).length+'</span><button class="btn ghost small bm noprint" id="bm" aria-pressed="'+marked+'">'+(marked?"Bookmarked":"Bookmark")+'</button></div><h1 style="margin-top:12px">'+esc(l.title)+'</h1><p class="small muted" style="margin:0">Lesson '+(l.i+1)+' of '+LESSONS.length+' &middot; '+l.minutes+' min'+(isDone(id)?' &middot; <b style="color:var(--mint-ink)">Completed</b>':'')+'</p><div class="bar-track" style="margin-top:10px" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="'+LESSONS.length+'" aria-valuenow="'+doneCount()+'"><div class="bar-fill" style="width:'+pct()+'%"></div></div><p class="small muted mobile-only" style="margin:6px 0 0">'+doneCount()+' of '+LESSONS.length+' lessons complete &middot; <a href="#/course">All lessons</a></p><div class="goal"><span aria-hidden="true" style="font-size:1.3rem">&#127919;</span><div><b>Learning goal</b><br>'+esc(l.goal)+'</div></div></div>';
+  h+='<div class="lhead"><div class="row" style="justify-content:space-between"><span class="tag '+m.color+'">Module '+m.n+': '+esc(m.title)+' &middot; Lesson '+(lessonsOf(m.id).indexOf(l)+1)+' of '+lessonsOf(m.id).length+'</span><button class="btn ghost small bm noprint" id="bm" aria-pressed="'+marked+'">'+(marked?"Bookmarked":"Bookmark")+'</button></div><h1 style="margin-top:12px">'+esc(l.title)+'</h1><p class="small muted" style="margin:0" id="lmeta">'+lessonMeta(l)+'</p><div class="bar-track" style="margin-top:10px" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="'+LESSONS.length+'" aria-valuenow="'+doneCount()+'"><div class="bar-fill" style="width:'+pct()+'%"></div></div><p class="small muted mobile-only" style="margin:6px 0 0">'+doneCount()+' of '+LESSONS.length+' lessons complete &middot; <a href="#/course">All lessons</a></p><div class="goal"><span aria-hidden="true" style="font-size:1.3rem">&#127919;</span><div><b>Learning goal</b><br>'+esc(l.goal)+'</div></div></div>';
   h+='<section class="lsec card"><h2><span class="ic" aria-hidden="true">Aa</span>Words in plain English</h2><dl class="terms">'+l.terms.map(function(t){return '<div><dt>'+esc(t[0])+'</dt><dd>'+esc(t[1])+'</dd></div>'}).join("")+'</dl></section>';
   h+='<section class="lsec card"><h2><span class="ic" aria-hidden="true">&#9673;</span>Explanation</h2>'+explain+'</section>';
   if(l.facts&&l.facts.length) h+='<section class="lsec card facts"><h2><span class="ic" aria-hidden="true">&#10004;</span>Checked facts</h2><ul class="factlist">'+l.facts.map(function(f){return '<li>'+esc(f.text)+' <a href="'+esc(f.url)+'" rel="noopener" target="_blank">'+esc(f.src)+'<span class="sr"> (opens in a new tab)</span></a></li>'}).join("")+'</ul><p class="small muted" style="margin:0">Checked November 7, 2026. Rules and prices change: open the source before relying on a number.</p></section>';
@@ -462,6 +467,8 @@ function pageLesson(id){
   setTimeout(function(){wireLesson(l,next)});
   return h;
 }
+function lessonMeta(l){return 'Lesson '+(l.i+1)+' of '+LESSONS.length+' &middot; '+l.minutes+' min'+(isDone(l.id)?' &middot; <b style="color:var(--mint-ink)">Completed</b>':'');}
+function refreshLessonHead(l){var m=$("#lmeta");if(m)m.innerHTML=lessonMeta(l);var f=$(".lhead .bar-fill");if(f)f.style.width=pct()+"%";}
 function doneBoxInner(id,next){
   if(isDone(id)) return '<div><b>Lesson complete.</b> <span class="muted">'+(next?"Next up: "+esc(next.title):"That was the last lesson. Time for the final project.")+'</span></div><div class="row"><button class="btn ghost small" id="undone">Mark as not complete</button><a class="btn primary" href="'+(next?"#/lesson/"+next.id:"#/project")+'">'+(next?"Next lesson":"Final project")+'</a></div>';
   var hasQ=!!S.quiz[id];
@@ -474,17 +481,19 @@ function wireLesson(l,next){
   var nt;$("#note").addEventListener("input",function(){var v=this.value;clearTimeout(nt);setText("#nsaved","Saving\u2026");nt=setTimeout(function(){if(v.trim())S.notes[id]=v;else delete S.notes[id];save();setText("#nsaved",storeOK?"Saved on this device":"Not saved: browser storage is blocked");},400);});
   var form=$("#quiz");
   form.addEventListener("submit",function(e){e.preventDefault();var score=0,missing=0;
+    // No feedback at all until every question has an answer, so answers are not revealed early.
+    l.quiz.forEach(function(qq,qi){var fs=$('fieldset[data-q="'+qi+'"]',form),v=$('input[name="q'+qi+'"]:checked',form);$(".fbx",fs).innerHTML=v?"":'<div class="fb no">Choose an answer.</div>';if(!v)missing++;});
+    if(missing){$("#qmsg").textContent="Answer all "+l.quiz.length+" questions to get your score.";var first=$('.fbx .fb',form);if(first){var q1=first.closest("fieldset");$("input",q1).focus();}return;}
     l.quiz.forEach(function(qq,qi){var fs=$('fieldset[data-q="'+qi+'"]',form),v=$('input[name="q'+qi+'"]:checked',form),box=$(".fbx",fs);
       fs.classList.remove("right","wrong");
-      if(!v){missing++;box.innerHTML='<div class="fb no">Choose an answer.</div>';return;}
       var c=+v.value===qq.answer;if(c)score++;fs.classList.add(c?"right":"wrong","checked");
       var cl=$('input[value="'+qq.answer+'"]',fs).closest(".opt");cl.classList.add("is-answer");if(!$(".ans-tag",cl))$(".ot",cl).insertAdjacentHTML("beforeend",'<span class="ans-tag">Correct answer</span>');
       box.innerHTML='<div class="fb '+(c?"ok":"no")+'"><b>'+(c?"Correct.":"Not quite.")+'</b> '+esc(qq.explain[+v.value])+(c?"":'<br><b>Best answer:</b> '+esc(qq.options[qq.answer])+'. '+esc(qq.explain[qq.answer].replace(/^Right\.\s*/,"")))+'</div>';});
-    if(missing){$("#qmsg").textContent="Answer all "+l.quiz.length+" questions to get your score.";return;}
     var prevBest=S.quiz[id]?S.quiz[id].best:-1;
     S.quiz[id]={best:Math.max(prevBest,score),of:l.quiz.length,last:score,at:Date.now()};save();
     $("#qmsg").innerHTML='<b>You scored '+score+' of '+l.quiz.length+'.</b> '+(score===l.quiz.length?"Excellent. You can complete the lesson below.":"Read the explanations above, then try again if you like. You can still complete the lesson.");
     $$("input",form).forEach(function(i){i.disabled=true});$("#qreset").hidden=false;$("button[type=submit]",form).hidden=true;
+    var qm=$("#qmsg");qm.setAttribute("tabindex","-1");qm.focus({preventScroll:true});
     if(score===l.quiz.length){$("#kc").classList.add("pop");}
     $("#donebox").innerHTML=doneBoxInner(id,next);wireDone(l,next);
   });
@@ -496,11 +505,11 @@ function wireDone(l,next){
     var m=l.module;S.done[l.id]=Date.now();save();
     var full=modDone(m)===lessonsOf(m).length;
     celebrate();toast(full?"Module "+MMAP[m].n+" complete!":"Lesson complete. Nice work.");
-    $("#donebox").innerHTML=doneBoxInner(l.id,next);$("#donebox").classList.add("pop");wireDone(l,next);
+    $("#donebox").innerHTML=doneBoxInner(l.id,next);$("#donebox").classList.add("pop");wireDone(l,next);refreshLessonHead(l);
     var a=$("#donebox a.btn");if(a)a.focus();
     $$('.side a[href="#/lesson/'+l.id+'"] .dot').forEach(function(d){d.classList.add("done")});
   });
-  var u=$("#undone");if(u)u.addEventListener("click",function(){delete S.done[l.id];save();$("#donebox").innerHTML=doneBoxInner(l.id,next);wireDone(l,next);$$('.side a[href="#/lesson/'+l.id+'"] .dot').forEach(function(d){d.classList.remove("done")});});
+  var u=$("#undone");if(u)u.addEventListener("click",function(){delete S.done[l.id];save();$("#donebox").innerHTML=doneBoxInner(l.id,next);wireDone(l,next);refreshLessonHead(l);$$('.side a[href="#/lesson/'+l.id+'"] .dot').forEach(function(d){d.classList.remove("done")});});
 }
 
 /* ---------- resources ---------- */
@@ -512,7 +521,7 @@ function pageResources(sub){
   h+='<h2 style="margin-top:24px">Helpful habits</h2><div class="card"><ul style="margin:0"><li>Keep one folder for each project: scope, notes, receipts, feedback.</li><li>Before any tool or price goes into your work, check it on the tool\u2019s official page. See <a href="#/facts">Facts &amp; sources</a> for what this course could and could not verify.</li></ul></div>';
   return h;
 }
-function wsData(id){return S.ws[id]||(S.ws[id]={})}
+function hasContent(v){if(v==null||v===""||v===false)return false;if(Array.isArray(v))return v.some(hasContent);if(typeof v==="object")return Object.keys(v).some(function(k){return hasContent(v[k])});return true;}
 function wsText(w){
   var d=S.ws[w.id]||{},out=w.title+"\n"+"=".repeat(w.title.length)+"\n\n";
   if(w.kind==="form"||w.kind==="prompt") w.fields.forEach(function(f){out+=f[1]+":\n"+(d[f[0]]||"")+"\n\n";});
@@ -526,7 +535,9 @@ function wsText(w){
 }
 function buildPrompt(d){var p=[];if(d.goal)p.push("Goal: "+d.goal);if(d.context)p.push("Context: "+d.context);if(d.task)p.push("Task: "+d.task);if(d.format)p.push("Format: "+d.format);if(d.limits)p.push("Limits: "+d.limits);if(p.length)p.push("If you need information I did not give you, ask me instead of guessing.");return p.join("\n");}
 function scoreTotal(r){return (r.s||[]).reduce(function(a,b){return a+(+b||0)},0)}
-function priceCalc(d){var h=+d.hours||0,buf=d.buffer===undefined||d.buffer===""?30:+d.buffer,rate=+d.rate||0,costs=+d.costs||0,fp=(+d.feep||0)/100,ff=+d.feef||0,tp=(+d.tax||0)/100;
+function priceCalc(d){var bad=[];["hours","buffer","rate","costs","feep","feef","tax"].forEach(function(k){if(d[k]!==undefined&&d[k]!==""&&+d[k]<0)bad.push(k)});if((+d.feep||0)>=100)bad.push("feep");if((+d.tax||0)>100)bad.push("tax");
+  if(bad.length)return {bad:bad,h:0,buf:0,rate:0,costs:0,price:0,fees:0,profit:0,tax:0,keep:0,eff:0};
+  var h=+d.hours||0,buf=d.buffer===undefined||d.buffer===""?30:+d.buffer,rate=+d.rate||0,costs=+d.costs||0,fp=(+d.feep||0)/100,ff=+d.feef||0,tp=(+d.tax||0)/100;
   var base=h*(1+buf/100)*rate+costs;var price=fp<1?(base+ff)/(1-fp):0;var fees=price*fp+(price?ff:0);var profit=price-fees-costs;var tax=Math.max(0,profit*tp);var keep=profit-tax;var hrs=h*(1+buf/100);
   return {h:h,buf:buf,rate:rate,costs:costs,price:price,fees:fees,profit:profit,tax:tax,keep:keep,eff:hrs?keep/hrs:0};}
 function moneyTotals(d){var rev=0,exp=0;(d.rows||[]).forEach(function(r){var a=+r.amt||0;if(r.type==="in")rev+=a;else exp+=a;});return {rev:rev,exp:exp,profit:rev-exp,margin:rev?Math.round((rev-exp)/rev*100):null};}
@@ -548,12 +559,13 @@ function pageWorksheet(id){
   return h;
 }
 function wireWorksheet(w){
-  var d=wsData(w.id),body=$("#wsbody"),st;
-  function saved(){save();clearTimeout(st);setText("#wsaved",storeOK?"Saved on this device":"Not saved: storage blocked");st=setTimeout(function(){setText("#wsaved","")},1800);}
+  var d=S.ws[w.id]||{},body=$("#wsbody"),st;
+  // A worksheet only counts as "Started" once something has really been typed or ticked.
+  function saved(){if(hasContent(d))S.ws[w.id]=d;else delete S.ws[w.id];save();clearTimeout(st);setText("#wsaved",storeOK?"Saved on this device":"Not saved: storage blocked");st=setTimeout(function(){setText("#wsaved","")},1800);}
   function upd(){
     if(w.kind==="prompt"){var p=buildPrompt(d);$("#pout").textContent=p||"Fill in the boxes above to build your prompt.";}
     if(w.kind==="checklist"){var n=w.items.filter(function(_,i){return d["c"+i]}).length;$("#ckc").textContent=n+" of "+w.items.length+" ticked";}
-    if(w.kind==="price"){var r=priceCalc(d);$("#pres").innerHTML=[["Suggested price",money(r.price)],["Payment fees",money(r.fees)],["Profit before tax",money(r.profit)],["Tax set-aside",money(r.tax)],["You keep",money(r.keep)],["Effective hourly",money(r.eff)+"/h"]].map(function(x){return '<div><span class="small muted">'+x[0]+'</span><b>'+x[1]+'</b></div>'}).join("");}
+    if(w.kind==="price"){var r=priceCalc(d);if(r.bad){$("#pres").innerHTML='<p class="calc-warn" role="alert">Check your numbers: values cannot be negative, the payment fee must be under 100% and the tax set-aside at most 100%.</p>';return;}$("#pres").innerHTML=[["Suggested price",money(r.price)],["Payment fees",money(r.fees)],["Profit before tax",money(r.profit)],["Tax set-aside",money(r.tax)],["You keep",money(r.keep)],["Effective hourly",money(r.eff)+"/h"]].map(function(x){return '<div><span class="small muted">'+x[0]+'</span><b>'+x[1]+'</b></div>'}).join("");}
     if(w.kind==="money"){var t=moneyTotals(d);$("#mres").innerHTML='<div><span class="small muted">Revenue</span><b>'+money(t.rev)+'</b></div><div><span class="small muted">Expenses</span><b>'+money(t.exp)+'</b></div><div><span class="small muted">Profit</span><b style="color:'+(t.profit<0?"var(--bad)":"var(--good)")+'">'+money(t.profit)+'</b></div><div><span class="small muted">Profit margin</span><b>'+(t.margin==null?"\u2013":t.margin+"%")+'</b></div>';}
   }
   $$("[data-k]",body).forEach(function(el){el.addEventListener(el.type==="checkbox"?"change":"input",function(){d[el.dataset.k]=el.type==="checkbox"?el.checked:el.value;saved();upd();});});
@@ -633,7 +645,7 @@ function pagePricing(){
   var plans=C.plans||[];
   var h='<p class="kicker">Pricing</p><h1>Choose how you learn</h1><p class="muted">Prices are one-time. The course teaches skills and gives you tools; it does not promise that you will earn money.</p>';
   h+='<div class="grid g3" style="margin-top:16px">'+plans.map(function(p,i){var col=["mint","purple","orange","blue"][i%4];var live=p.checkoutUrl&&p.checkoutUrl.length;
-    return '<article class="card plan accent-'+col+(p.highlight?" hl":"")+'">'+(p.highlight?'<span class="tag purple" style="align-self:flex-start">Most complete for the price</span>':'')+'<h2 style="margin-top:8px">'+esc(p.name)+'</h2><div class="price">'+(p.price?money(p.price):"Free")+' <span class="small muted" style="font-weight:600">'+esc(p.period||"")+'</span></div><p class="small muted">'+esc(p.blurb||"")+'</p><ul>'+(p.features||[]).map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul>'+(live?'<a class="btn '+(p.highlight?"primary":"ghost")+'" href="'+esc(p.checkoutUrl)+'"'+(/^https?:/.test(p.checkoutUrl)?' rel="noopener"':'')+'>'+esc(p.cta||"Choose")+'</a>':'<button class="btn ghost" data-nopay="1">'+esc(p.cta||"Choose")+'</button>')+'</article>'}).join("")+'</div>';
+    return '<article class="card plan accent-'+col+(p.highlight?" hl":"")+'">'+(p.highlight?'<span class="tag purple" style="align-self:flex-start">Recommended</span>':'')+'<h2 style="margin-top:8px">'+esc(p.name)+'</h2><div class="price">'+(p.price?money(p.price):"Free")+' <span class="small muted" style="font-weight:600">'+esc(p.period||"")+'</span></div><p class="small muted">'+esc(p.blurb||"")+'</p><ul>'+(p.features||[]).map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul>'+(live?'<a class="btn '+(p.highlight?"primary":"ghost")+'" href="'+esc(p.checkoutUrl)+'"'+(/^https?:/.test(p.checkoutUrl)?' rel="noopener"':'')+'>'+esc(p.cta||"Choose")+'</a>':'<button class="btn ghost" data-nopay="1">'+esc(p.cta||"Choose")+'</button>')+'</article>'}).join("")+'</div>';
   h+='<p id="paymsg" class="note" role="status" hidden>Online payment is not set up yet, so nothing can be bought here today. You can use everything for free while the course is in its first version.</p>';
   if(C.refundNote) h+='<p class="small muted">'+esc(C.refundNote)+'</p>';
   h+='<div class="card" style="margin-top:20px"><h2>Good to know</h2><ul style="margin:0"><li>Progress is saved on your device, not in an account. Use Notes &rarr; Download backup to move it.</li><li>The project review plan includes a review from the course owner. It is a real person reading your work, not an AI score.</li><li>Tool costs (AI assistants, hosting, payments) are separate from the course price and change over time: check official pricing pages.</li></ul></div>';
@@ -647,9 +659,8 @@ function pageFacts(){
 }
 function pageOwner(){
   var plans=(C.plans||[]).filter(function(p){return p.price>0}),goal=+C.revenueGoal||0;
-  var h='<p class="kicker">Owner setup (not for students)</p><h1>Before a paid launch</h1><div class="grid g2"><div class="card"><h2>Still needed</h2><ol><li><b>Payments:</b> create a checkout link with a payment provider (for example a Stripe Payment Link) and paste it into <code>checkoutUrl</code> in <code>academy/config.js</code>. Check fees on the provider\u2019s official page.</li><li><b>Access control:</b> today every lesson is open to anyone with the link. To sell it, you need accounts or a course platform that unlocks content after payment. A static site alone cannot keep paid content private.</li><li><b>Accounts and sync:</b> progress is saved per browser. Accounts would need a backend (for example a hosted database with sign-in).</li><li><b>Legal pages:</b> terms, privacy policy, refund policy. Have them checked for your country.</li><li><b>Fact check:</b> re-check every item on <a href="#/facts">Facts &amp; sources</a> with the official pages.</li><li><b>Support email:</b> set <code>supportEmail</code> in config and answer it.</li><li><b>Real testers:</b> have 3\u20135 beginners take Module 1\u20132 and tell you where they got stuck. Do not publish testimonials until real students give them, with permission.</li><li><b>Review plan:</b> only sell \u201cproject review\u201d if you will actually do the reviews.</li></ol></div>';
-  h+='<div class="card"><h2>Revenue goal math</h2><p class="small muted">Your long-term goal: '+money(goal)+' in course revenue. This is arithmetic, not a forecast. It ignores refunds, fees, taxes and costs.</p>'+(plans.length?'<table><thead><tr><th scope="col">If every sale were</th><th scope="col">Sales needed</th></tr></thead><tbody>'+plans.map(function(p){return '<tr><td>'+esc(p.name)+' ('+money(p.price)+')</td><td>'+Math.ceil(goal/p.price).toLocaleString("en-US")+'</td></tr>'}).join("")+'</tbody></table>':'<p>No paid plans in config.</p>')+'<label class="f" for="mix">Try your own average price per sale ('+CUR+')</label><input type="number" id="mix" min="1" step="any" placeholder="e.g. 120"><p id="mixout" class="small" aria-live="polite"></p><p class="small muted">Change prices, plan names and the goal in <code>academy/config.js</code>.</p></div></div>';
-  setTimeout(function(){$("#mix").addEventListener("input",function(){var v=+this.value;$("#mixout").textContent=v>0?Math.ceil(goal/v).toLocaleString("en-US")+" sales at "+money(v)+" each (before fees, refunds and costs).":"";})});
+  var h='<p class="kicker">Owner setup (not for students)</p><h1>Before a paid launch</h1><div class="grid g2"><div class="card"><h2>Still needed</h2><ol><li><b>Hosting for a paid course:</b> GitHub\u2019s terms do not allow GitHub Pages to run an online business or a site mainly for commercial transactions. Move the paid version to a host or course platform that allows selling.</li><li><b>Payments:</b> create a checkout link with a payment provider (for example a Stripe Payment Link) and paste it into <code>checkoutUrl</code> in <code>academy/config.js</code>. Check fees on the provider\u2019s official page.</li><li><b>Access control:</b> today every lesson is open to anyone with the link. To sell it, you need accounts or a course platform that unlocks content after payment. A static site alone cannot keep paid content private.</li><li><b>Accounts and sync:</b> progress is saved per browser. Accounts would need a backend (for example a hosted database with sign-in).</li><li><b>Legal pages:</b> terms, privacy policy, refund policy. Have them checked for your country.</li><li><b>Fact check:</b> re-check every item on <a href="#/facts">Facts &amp; sources</a> with the official pages.</li><li><b>Support email:</b> set <code>supportEmail</code> in config and answer it.</li><li><b>Real testers:</b> have 3\u20135 beginners take Module 1\u20132 and tell you where they got stuck. Do not publish testimonials until real students give them, with permission.</li><li><b>Review plan:</b> only sell \u201cproject review\u201d if you will actually do the reviews.</li></ol></div>';
+  h+='<div class="card"><h2>Prices and plans</h2><p class="small">Change names, prices, features and checkout links in <code>academy/config.js</code>. Revenue goal math is kept in <code>academy/PROGRESS.md</code>, not on the site.</p></div></div>';
   return h;
 }
 function notFound(){return '<h1>Page not found</h1><p><a href="#/">Go home</a></p>'}
@@ -669,6 +680,7 @@ function render(){
   render.started=true;
 }
 $("#menuBtn").addEventListener("click",function(){var n=$("#nav"),o=n.classList.toggle("open");this.setAttribute("aria-expanded",o);if(o)$("a",n).focus();});
+document.addEventListener("click",function(e){var n=$("#nav");if(n.classList.contains("open")&&!n.contains(e.target)&&!$("#menuBtn").contains(e.target)){n.classList.toggle("open",false);$("#menuBtn").setAttribute("aria-expanded","false");}});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("#nav").classList.contains("open")){$("#nav").classList.remove("open");$("#menuBtn").setAttribute("aria-expanded","false");$("#menuBtn").focus();}});
 $("#skip").addEventListener("click",function(e){e.preventDefault();var m=$("#main");m.focus();});
 window.addEventListener("hashchange",render);

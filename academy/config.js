@@ -6,7 +6,7 @@
    when you have one. While it is empty the button says payments are not set up. */
 window.ACADEMY_CONFIG = {
   courseName: "AI Income Academy",
-  tagline: "A practical path from “What is AI?” to your first paying customer.",
+  tagline: "A practical path from “What is AI?” toward your first paying customer.",
   currencySymbol: "$",
   plans: [
     {
@@ -26,7 +26,7 @@ window.ACADEMY_CONFIG = {
       price: 97,
       period: "one-time",
       blurb: "All six modules, every worksheet and the final project.",
-      features: ["All 6 modules, 12 lessons", "13 worksheets and calculators", "Final portfolio project", "Lifetime updates to the course"],
+      features: ["All 6 modules, 12 lessons", "13 worksheets and calculators", "Final portfolio project", "Course updates while it is offered"],
       cta: "Get the full course",
       checkoutUrl: "",
       highlight: true
@@ -47,6 +47,6 @@ window.ACADEMY_CONFIG = {
   // Shown under the plans. Keep it true. Leave "" to hide.
   refundNote: "",
   supportEmail: "",
-  // Owner-only goal used on the #/owner page. Never shown to students.
+  // Owner-only goal ($1,000,000 in course revenue). Kept out of the site; see PROGRESS.md.
   revenueGoal: 1000000
 };
