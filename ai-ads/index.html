@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="AdSharp.ai: type the ad you want and it makes it. Plus tools to make brands, check businesses, find clients and track your money.">
+<meta name="description" content="AdSharp.ai: make ads for local businesses and get paid for it. Type the ad you want and it makes it, then find clients and track your money.">
 <title>AdSharp.ai</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -834,6 +834,24 @@ table.cheat td{vertical-align:top;font-size:.82rem;line-height:1.4}table.cheat t
 @media (max-width:900px){.pl-days{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .pl-d{border-top:2px solid var(--line2);padding:8px 2px 4px;display:flex;flex-direction:column;gap:4px;min-height:72px}.pl-d small{font-family:var(--f-mono);color:var(--dim);font-size:.66rem;letter-spacing:.04em}.pl-d b{font-size:.8rem;font-weight:500;line-height:1.35}
 .pl-d.on{border-top-color:var(--accent)}.pl-d.on small{color:var(--accent)}.pl-d.past{opacity:.45}.pl-d.off b{color:var(--dim);font-weight:400}
+/* ---------- who it's for, Start here, first look test ---------- */
+.mk-who{margin:0 0 -4px;font-size:.95rem;color:var(--muted)}
+.mk-start{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;border-top:1px solid var(--line);padding-top:12px;font-size:.84rem}
+.mk-sl{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.mk-start ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 14px}
+.mk-start li a{display:inline-flex;align-items:center;gap:7px;color:var(--text);text-decoration:none;padding:3px 0}
+.mk-start li a:hover{color:var(--accent)}
+.mk-start li i{font-style:normal;font-family:var(--f-mono);font-size:.68rem;width:18px;height:18px;border-radius:50%;border:1px solid var(--dim);display:grid;place-items:center;color:var(--muted)}
+.mk-start li.ok i{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-size:0}.mk-start li.ok i::after{content:'';width:7px;height:3px;border-left:2px solid var(--accent-ink);border-bottom:2px solid var(--accent-ink);transform:translateY(-1px) rotate(-45deg)}
+.mk-start li.ok a{color:var(--muted)}
+.mk-plan{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line2);font-size:.8rem}.mk-plan:hover{color:var(--text)}
+@media (pointer:coarse){.mk-start li a{padding:8px 0}.mk-plan{padding:8px 0}}
+.lk-wrap{z-index:120;background:rgba(8,8,6,.97)}
+.lk-bar{position:fixed;z-index:110;left:50%;transform:translateX(-50%);bottom:max(14px,env(safe-area-inset-bottom,0px));width:min(600px,calc(100% - 24px));display:flex;align-items:center;gap:12px;background:var(--raise);border:1px solid var(--accent);border-radius:14px;padding:10px 12px;box-shadow:0 20px 50px -20px rgba(0,0,0,.9)}
+.lk-bt{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}.lk-bt small{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}.lk-bt b{font-size:.88rem;line-height:1.35}
+.lk-tm{font-size:.8rem;color:var(--muted)}.lk-bb{display:flex;gap:6px}
+@media (max-width:560px){.lk-bar{flex-wrap:wrap}.lk-bb{width:100%}.lk-bb .btn{flex:1}}
+.lk-res{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:4px}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -1001,6 +1019,7 @@ table.cheat td{vertical-align:top;font-size:.82rem;line-height:1.4}table.cheat t
 <section class="view" id="v-studio">
   <div class="maker">
     <div class="stack mk-left" style="gap:14px">
+      <p class="mk-who">Make ads for local businesses and get paid for it.</p>
       <h1 class="mk-title">What ad do you want?</h1>
       <div class="mk-box">
         <textarea id="dsT" enterkeyhint="go" aria-label="Describe the ad you want" placeholder="e.g. A bold red Instagram ad for Joe's Pizza in Dallas. 20% off this weekend."></textarea>
@@ -1022,6 +1041,9 @@ table.cheat td{vertical-align:top;font-size:.82rem;line-height:1.4}table.cheat t
           <div class="row" id="optBtns" style="gap:6px"></div>
           <div class="adcheck" id="adCheck"></div></div>
       </div>
+      <div class="mk-start" id="mkStart" aria-label="Start here"><span class="mk-sl">Start here</span>
+        <ol><li data-st="1"><a href="#studio" data-stfocus><i>1</i>Make a sample ad</a></li><li data-st="2"><a href="#clients"><i>2</i>Show it to a local business</a></li><li data-st="3"><a href="#earn"><i>3</i>Get paid</a></li></ol>
+        <a class="mk-plan" href="#plan">Then follow My Plan each day →</a></div>
       <details class="mk-more" id="adInputs"><summary>Edit details</summary>
         <div class="stack" style="gap:10px;margin-top:10px">
           <div class="nichegrid" id="nicheGrid"></div>
@@ -1157,7 +1179,7 @@ table.cheat td{vertical-align:top;font-size:.82rem;line-height:1.4}table.cheat t
 <section class="view" id="v-test" hidden>
   <div class="vhead">
     <div><span class="eyebrow">Mentorship</span><h1>Tester program</h1><p class="sub">Does this app really teach a beginner to earn money? A 14-day test with real people answers that honestly.</p></div>
-    <div class="tabs" id="tsTabs"><button data-t="do" class="on">For testers</button><button data-t="send">Send results</button><button data-t="find">Find testers</button></div>
+    <div class="tabs" id="tsTabs"><button data-t="do" class="on">For testers</button><button data-t="send">Send results</button><button data-t="find">Find testers</button><button data-t="look">First look test</button></div>
   </div>
   <div data-pane="do" class="ts-grid">
     <div class="panel stack" style="gap:10px">
@@ -1204,6 +1226,22 @@ table.cheat td{vertical-align:top;font-size:.82rem;line-height:1.4}table.cheat t
         <tr><td><b>Someone got paid</b></td><td class="muted">Ask what made the difference, and ask before sharing it.</td></tr>
       </tbody></table></div>
       <p class="dim" style="font-size:.78rem">5 to 10 testers show what works and what to fix. They cannot prove the app works for everyone, so never advertise it that way.</p>
+    </div>
+  </div>
+  <div data-pane="look" class="ts-grid" hidden>
+    <div class="panel stack" style="gap:8px">
+      <span class="tag acc">For you, Yaya</span><h3 style="margin:0">5-minute first look test</h3>
+      <p class="muted" style="margin:0;font-size:.86rem">3 people who have never seen the app open the link and do 3 small tasks alone: say what the app is for after a 10-second look, make an ad, and find today's plan. The app times each task and writes up their answers. They send it back to you.</p>
+      <ul class="check"><li><span>Pick 3 people who have never seen AdSharp, ideally people who want a side hustle.</span></li><li><span>Do not explain the app first, and do not help. Where they get stuck is the result.</span></li><li><span>Ask them to send back the message the test makes at the end.</span></li></ul>
+      <div class="outhead" style="margin:0"><span class="muted" style="font-size:.84rem">Text to send</span><button class="btn sm" data-copy="lkInv">Copy</button></div>
+      <div class="out" id="lkInv"></div>
+      <a class="btn sm ghost" href="#look" style="align-self:flex-start">Try the test yourself</a>
+    </div>
+    <div class="panel stack" style="gap:8px">
+      <h3 style="margin:0">Their results</h3>
+      <div class="row" style="flex-wrap:nowrap;gap:6px"><textarea id="lkPaste" rows="2" aria-label="Paste a result message" placeholder="Paste a tester's result message here"></textarea><button class="btn sm" id="lkAdd">Add</button></div>
+      <div id="lkSum"></div><div id="lkList" class="stack" style="gap:8px"></div>
+      <p class="dim" style="font-size:.76rem">3 people show the biggest problems; they cannot prove the app is easy for everyone. Results stay on this device.</p>
     </div>
   </div>
 </section>
@@ -1282,6 +1320,8 @@ table.cheat td{vertical-align:top;font-size:.82rem;line-height:1.4}table.cheat t
 <div class="helpwrap" id="mAsk" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-label="Ask your mentor"><div class="row" style="justify-content:space-between"><h2>Ask your mentor</h2><button class="btn sm ghost" id="mAskClose">Close</button></div>
   <div class="row" style="flex-wrap:nowrap;gap:6px"><input type="text" id="mAskQ" aria-label="Your question" placeholder="e.g. What do I say when they ask for results?"><button class="btn sm" id="mAskGo">Ask</button></div>
   <div id="mAskOut" class="stack" style="gap:8px;margin-top:6px"></div></div></div>
+<div class="lk-bar" id="lkBar" hidden role="region" aria-label="First look test"><div class="lk-bt"><small id="lkStep"></small><b id="lkTask"></b></div><span class="lk-tm mono" id="lkTime"></span><span class="lk-bb" id="lkBtns"></span></div>
+<div class="helpwrap lk-wrap" id="lkDlg" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-labelledby="lkT" style="width:min(560px,100%);gap:10px" id="lkBox"></div></div>
 <div class="helpwrap" id="help" hidden><div class="helpbox" role="dialog" aria-modal="true" aria-labelledby="helpT"><button class="btn sm ghost" id="helpClose" style="align-self:flex-end">Got it</button><div id="helpBody" class="stack" style="gap:12px"></div></div></div>
 <script>
 // ---------- helpers ----------
@@ -2664,7 +2704,7 @@ function renderEarn() {
 // ================= HELP: "How this page works" guides + plain-English glossary =================
 const HELP = {
   plan: ['Your own daily plan for the work you do: ads, brand work, freelance, a local service, products, food, content, tutoring or something else.', ['Pick what you do and answer 6 quick questions once.', 'Follow today\'s timed blocks. They only talk about your kind of work.', 'Tick each block when it is done; counts go to Make Money.']],
-  test: ['A 14-day test to see if the app really teaches someone to earn money.', ['Testers press Start and follow the plan.', 'They log real work on Make Money; their numbers fill in here.', 'On day 14 they answer 6 questions and send you the results.']],
+  test: ['A 14-day test to see if the app really teaches someone to earn money.', ['Testers press Start and follow the plan.', 'They log real work on Make Money; their numbers fill in here.', 'On day 14 they answer 6 questions and send you the results.', 'First look test: 3 new people try the app alone for 5 minutes; paste what they send back to see where they got stuck.']],
   local: ['“Your list” has a ready ad for each of your 25 businesses, made only from their real hours, phone and years. “Find businesses” opens Google Maps to find more. “Ready ads” has a sample ad for every type of business.', ['In “Your list”, tap an ad to edit it, Copy its text, or + Lead to add it to your Lead tracker. Confirm hours and phone with the owner.', 'Pick a city. In “Find businesses”, open Google Maps for a business type.', 'Type a business name from the map and tap “Make their ad”. It also goes into your Lead tracker.', 'Use “New designs” for fresh looks. Show the ad to the owner as a free sample.']],
   course: ['A 10-step playbook for making and running ads for a business, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
   bcourse: ['An 8-step playbook for growing a business’s brand, with a tool at every step.', ['Read what to do.', 'Use the tool next to it.', 'Click “Done, next step” at the bottom.']],
@@ -4471,6 +4511,126 @@ function planInit() {
   addEventListener('hashchange', () => { if (location.hash === '#plan') renderPlan(); });
   renderPlan();
 }
+
+// ================= FIRST LOOK TEST: 3 tasks, timed, done alone; answers are only shared if the tester copies or shares them =================
+let LK = store.get('look', null);
+const LK_TASKS = [
+  { k: 'see', t: 'Look at this screen for 10 seconds.', s: 'Task 1 of 3' },
+  { k: 'ad', t: 'Make an ad for a coffee shop called Bean There.', s: 'Task 2 of 3' },
+  { k: 'plan', t: 'Find where the app tells you what to do today to get your first client.', s: 'Task 3 of 3' }
+];
+let lkTick = null;
+const lkSave = () => store.set('look', LK);
+const lkSec = ms => Math.max(0, Math.round(ms / 1000));
+const lkFmt = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+const lkPage = () => (location.hash || '#studio').slice(1) || 'studio';
+const lkPageName = v => { const a = $(`#nav a[data-v="${v}"]`); return a ? a.textContent.trim() : v; };
+function lkDlg(html) { $('#lkBox').innerHTML = html; $('#lkDlg').hidden = false; const f = $('#lkBox input, #lkBox textarea, #lkBox .btn'); if (f) f.focus(); }
+function lkBar(i) {
+  const T = LK_TASKS[i]; $('#lkBar').hidden = false; $('#lkStep').textContent = T.s; $('#lkTask').textContent = T.t;
+  $('#lkBtns').innerHTML = T.k === 'see' ? '' : '<button class="btn sm" data-lk="done">Done</button><button class="btn sm ghost" data-lk="stuck">I\'m stuck</button>';
+  clearInterval(lkTick);
+  lkTick = setInterval(() => { const el = lkSec(Date.now() - LK.t0); if (T.k === 'see') { $('#lkTime').textContent = `${Math.max(0, 10 - el)}s`; if (el >= 10) { clearInterval(lkTick); lkAfterSee(); } } else $('#lkTime').textContent = lkFmt(el); }, 250);
+}
+function lkStart() {
+  LK = { v: 1, name: ($('#lkName') && $('#lkName').value.trim()) || '', used: LK && LK.used || '', step: 0, t0: Date.now(), r: {}, pages: [] };
+  $('#lkDlg').hidden = true; location.hash = '#studio'; scrollTo(0, 0); lkSave(); lkBar(0);
+}
+function lkAfterSee() {
+  $('#lkBar').hidden = true; LK.step = 0.5; lkSave();
+  lkDlg(`<small class="mono dim">Task 1 of 3</small><h2 id="lkT" style="margin:0">From what you just saw…</h2>
+    <label class="f">What is this app for, and who is it for?<textarea id="lkSee" rows="3" placeholder="Your best guess is fine"></textarea></label>
+    <div class="row" style="justify-content:flex-end"><button class="btn" data-lk="see">Next task</button></div>`);
+}
+function lkNext(k, status) {
+  const T = LK_TASKS[LK.step], secs = lkSec(Date.now() - LK.t0);
+  if (k === 'ad') LK.r.ad = { status, secs, made: !!(B.made && /bean/i.test(B.name || '')) };
+  if (k === 'plan') LK.r.plan = { status, secs, page: lkPage(), found: lkPage() === 'plan', pages: LK.pages.slice(0, 8) };
+  clearInterval(lkTick);
+  if (k === 'ad') { LK.step = 2; LK.t0 = Date.now(); LK.pages = []; lkSave(); lkBar(2); return; }
+  $('#lkBar').hidden = true; LK.step = 3; lkSave(); lkQuestions();
+}
+function lkQuestions() {
+  lkDlg(`<small class="mono dim">Last part · 1 minute</small><h2 id="lkT" style="margin:0">A few quick questions</h2>
+    <div class="stack" style="gap:6px"><span class="muted" style="font-size:.86rem">How easy was the app to understand?</span>${segHTML('lkEase', [['1 Hard', 1], ['2', 2], ['3', 3], ['4', 4], ['5 Easy', 5]], 0)}</div>
+    <label class="f">What confused you the most?<input type="text" id="lkConf"></label>
+    <div class="stack" style="gap:6px"><span class="muted" style="font-size:.86rem">Would you use it to make money?</span>${segHTML('lkUse', [['Yes', 'yes'], ['Maybe', 'maybe'], ['No', 'no']], '')}</div>
+    <label class="f">One thing that would make it easier<input type="text" id="lkFix"></label>
+    <div class="stack" style="gap:6px"><span class="muted" style="font-size:.86rem">Can Yaya quote your answers?</span>${segHTML('lkQuote', [['No', 'no'], ['First name only', 'first'], ['Yes', 'yes']], '')}</div>
+    <div class="row" style="justify-content:flex-end"><button class="btn" data-lk="finish">See my answers</button></div>`);
+}
+function lkText(R) {
+  const yn = { yes: 'Yes', maybe: 'Maybe', no: 'No' }, q = { no: 'No', first: 'First name only', yes: 'Yes' };
+  const ad = R.r.ad || {}, pl = R.r.plan || {};
+  const code = btoa(unescape(encodeURIComponent(JSON.stringify(R))));
+  return `AdSharp.ai first look test\n\nName: ${R.name || '(not given)'}\nUsed AdSharp before: ${R.used === 'yes' ? 'Yes' : 'No'}\n\n1. After a 10-second look, what the app is for:\n"${R.r.see || ''}"\n\n2. Make an ad for Bean There: ${ad.status === 'done' ? 'said done' : 'got stuck'} after ${lkFmt(ad.secs || 0)} · ad made: ${ad.made ? 'yes' : 'no'}\n3. Find today's plan: ${pl.status === 'done' ? 'said done' : 'got stuck'} after ${lkFmt(pl.secs || 0)} · ended on: ${lkPageName(pl.page || '')}${pl.found ? ' (right page)' : ''}\n   Pages tried: ${(pl.pages || []).map(lkPageName).join(' → ') || 'none'}\n\nHow easy (1-5): ${R.r.ease || '-'}\nMost confusing: ${R.r.conf || '-'}\nWould use it to make money: ${yn[R.r.use] || '-'}\nOne thing to make it easier: ${R.r.fix || '-'}\nYaya may quote me: ${q[R.r.quote] || 'No'}\n\nLOOK1:${code}`;
+}
+function lkFinish() {
+  LK.r.ease = +(($('#lkBox .seg[data-g="lkEase"] .on') || {}).dataset || {}).v || 0; LK.r.use = (($('#lkBox .seg[data-g="lkUse"] .on') || {}).dataset || {}).v || '';
+  LK.r.quote = (($('#lkBox .seg[data-g="lkQuote"] .on') || {}).dataset || {}).v || 'no'; LK.r.conf = $('#lkConf').value.trim(); LK.r.fix = $('#lkFix').value.trim(); LK.step = 4; lkSave(); lkResult();
+}
+function lkResult() {
+  lkDlg(`<small class="mono dim">Done · thank you</small><h2 id="lkT" style="margin:0">Send this to Yaya</h2>
+    <p class="muted" style="margin:0;font-size:.86rem">Nothing is sent by itself. Copy or share it, then send it back by text or DM.</p>
+    <div class="out scroll" id="lkOut" style="max-height:38vh;white-space:pre-wrap">${esc(lkText(LK))}</div>
+    <div class="row" style="justify-content:space-between"><button class="btn sm ghost" data-lk="quit">Close</button><span class="row" style="gap:6px">${navigator.share ? '<button class="btn sm ghost" data-lk="share">Share</button>' : ''}<button class="btn sm" data-lk="copy">Copy</button></span></div>`);
+}
+function lkIntro() {
+  lkDlg(`<small class="mono dim">AdSharp.ai · 5 minutes</small><h2 id="lkT" style="margin:0">First look test</h2>
+    <p style="margin:0">You are testing the app, not yourself. There are no wrong answers.</p>
+    <ul class="check" style="margin:0"><li><span>3 small tasks, then 5 quick questions.</span></li><li><span>Please do it alone. If you get stuck, press <b>I'm stuck</b>; that helps the most.</span></li><li><span>Nothing is sent by itself. At the end you copy your answers and send them back.</span></li></ul>
+    <label class="f">Your first name (optional)<input type="text" id="lkName"></label>
+    <div class="stack" style="gap:6px"><span class="muted" style="font-size:.86rem">Have you used AdSharp before?</span>${segHTML('lkUsed', [['No', 'no'], ['Yes', 'yes']], 'no')}</div>
+    <div class="row" style="justify-content:space-between"><button class="btn sm ghost" data-lk="quit">Not now</button><button class="btn" data-lk="start">Start the test</button></div>`);
+  LK = { used: 'no' };
+}
+function lkResume() {
+  if (!LK || LK.step == null || LK.step >= 4) return false;
+  if (LK.step === 0 || LK.step === 0.5) { LK.step = 0.5; lkAfterSee(); } else if (LK.step === 3) lkQuestions(); else lkBar(LK.step);
+  return true;
+}
+// Yaya's side: paste results, see them side by side
+let LKR = store.get('lookres', []);
+function lkRenderRes() {
+  $('#lkInv').textContent = `Hey [name]! Can you do a 5-minute test of an app I built? Open this link and follow the steps. Please do it alone and don't ask me anything until you're done; where you get stuck is exactly what I need to know. At the end it makes a message: just send it back to me. https://yayacr7.github.io/ai-ads/#look`;
+  const n = LKR.length, avg = n ? (LKR.reduce((a, x) => a + (x.r.ease || 0), 0) / n).toFixed(1) : 0;
+  $('#lkSum').innerHTML = n ? `<div class="pl-stats" style="grid-template-columns:repeat(4,minmax(0,1fr))">${[['Testers', n], ['Made the ad', `${LKR.filter(x => x.r.ad && x.r.ad.made).length}/${n}`], ['Found the plan', `${LKR.filter(x => x.r.plan && x.r.plan.found).length}/${n}`], ['Ease', `${avg}/5`]].map(k => `<div><small>${k[0]}</small><b>${k[1]}</b></div>`).join('')}</div>
+    <p class="dim" style="font-size:.78rem;margin:6px 0 0">Read their task 1 answers: if most can't say "ads for local businesses, to get paid", the top of the first screen is not working yet.</p>` : '<p class="dim" style="font-size:.84rem;margin:0">No results yet. Paste the message a tester sends you.</p>';
+  $('#lkList').innerHTML = LKR.map((x, i) => { const ad = x.r.ad || {}, pl = x.r.plan || {};
+    return `<div class="lk-res"><div class="row" style="justify-content:space-between"><b>${esc(x.name || 'Tester ' + (i + 1))}</b><button class="btn sm ghost" data-lkrm="${i}">Remove</button></div>
+      <p style="margin:0;font-size:.84rem">“${esc(x.r.see || '')}”</p>
+      <p class="mono dim" style="margin:0;font-size:.72rem">Ad: ${ad.made ? 'made' : 'not made'} · ${lkFmt(ad.secs || 0)} · Plan: ${pl.found ? 'found' : 'not found (' + esc(lkPageName(pl.page || '')) + ')'} · ${lkFmt(pl.secs || 0)} · Ease ${x.r.ease || '-'}/5</p>
+      ${x.r.conf ? `<p class="dim" style="margin:0;font-size:.8rem">Confused by: ${esc(x.r.conf)}</p>` : ''}${x.r.fix ? `<p class="dim" style="margin:0;font-size:.8rem">Would make it easier: ${esc(x.r.fix)}</p>` : ''}</div>`; }).join('');
+}
+function lookInit() {
+  $('#lkBox').addEventListener('click', e => {
+    const sg = e.target.closest('.seg[data-g] button'); if (sg) { $$('button', sg.parentElement).forEach(x => x.classList.toggle('on', x === sg)); if (sg.parentElement.dataset.g === 'lkUsed') LK.used = sg.dataset.v; return; }
+    const b = e.target.closest('[data-lk]'); if (!b) return; const a = b.dataset.lk;
+    if (a === 'start') lkStart();
+    else if (a === 'see') { LK.r.see = $('#lkSee').value.trim(); LK.step = 1; LK.t0 = Date.now(); $('#lkDlg').hidden = true; lkSave(); lkBar(1); }
+    else if (a === 'finish') lkFinish();
+    else if (a === 'copy') { copyText($('#lkOut').textContent); }
+    else if (a === 'share') navigator.share({ title: 'AdSharp.ai first look test', text: $('#lkOut').textContent }).catch(() => {});
+    else if (a === 'quit') { $('#lkDlg').hidden = true; if (location.hash === '#look') location.hash = '#studio'; }
+  });
+  $('#lkDlg').addEventListener('keydown', e => { if (e.key === 'Escape') e.stopPropagation(); });
+  $('#lkBtns').addEventListener('click', e => { const b = e.target.closest('[data-lk]'); if (b) lkNext(LK_TASKS[LK.step].k, b.dataset.lk); });
+  addEventListener('hashchange', () => { if (location.hash === '#look') { lkIntro(); return; } if (LK && LK.step === 2) { const p = lkPage(); if (LK.pages[LK.pages.length - 1] !== p) { LK.pages.push(p); lkSave(); } } if (location.hash === '#test') lkRenderRes(); });
+  $('#lkAdd').addEventListener('click', () => { const m = $('#lkPaste').value.match(/LOOK1:([A-Za-z0-9+/=]+)/);
+    if (!m) { toast('No test result found in that text'); return; }
+    try { const R = JSON.parse(decodeURIComponent(escape(atob(m[1])))); if (!R.r) throw 0; LKR.push(R); store.set('lookres', LKR); $('#lkPaste').value = ''; lkRenderRes(); toast('Result added'); } catch (err) { toast('That result looks broken. Ask them to copy it again.'); } });
+  $('#lkList').addEventListener('click', e => { const b = e.target.closest('[data-lkrm]'); if (b) { LKR.splice(+b.dataset.lkrm, 1); store.set('lookres', LKR); lkRenderRes(); } });
+  lkRenderRes();
+  if (location.hash === '#look') lkIntro(); else lkResume();
+}
+// Start here: each step ticks from real activity in the app
+function startInit() {
+  const upd = () => { const a = Object.values(acts).reduce((t, v) => t + (v.msg || 0) + (v.aud || 0), 0);
+    const done = { 1: !!B.made || store.get('gallery', []).length > 0, 2: a > 0 || realLeads().length > 0, 3: income.length > 0 };
+    $$('#mkStart li').forEach(li => li.classList.toggle('ok', !!done[li.dataset.st])); };
+  $('#mkStart').addEventListener('click', e => { if (e.target.closest('[data-stfocus]')) { e.preventDefault(); $('#dsT').focus(); } });
+  document.addEventListener('click', () => setTimeout(upd, 0)); document.addEventListener('keyup', e => { if (e.key === 'Enter') setTimeout(upd, 50); }); addEventListener('hashchange', upd); upd();
+}
 const VIEWS = ['studio', 'local', 'plan', 'brand', 'audit', 'clients', 'earn', 'pricing', 'prompts', 'course', 'bcourse', 'first', 'grow', 'business', 'test'];
 const ALIAS = { builder: 'studio', home: 'studio', learn: 'course' };
 function show(v) {
@@ -4483,7 +4643,7 @@ function show(v) {
 }
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 
-studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit(); mentorInit(); localInit(); testInit(); cheatInit(); calmInit(); planInit();
+studioInit(); describeInit(); optInit(); motionInit(); photoInit(); courseInit(); firstInit(); growInit(); brandCourseInit(); brandInit(); auditInit(); pricingInit(); clientsInit(); earnInit(); helpInit(); businessInit(); promptsInit(); mentorInit(); localInit(); testInit(); cheatInit(); calmInit(); planInit(); lookInit(); startInit();
 show(location.hash.slice(1));
 </script>
 </body>
