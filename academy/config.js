@@ -26,7 +26,7 @@ window.ACADEMY_CONFIG = {
       price: 97,
       period: "one-time",
       blurb: "All six modules, every worksheet and the final project.",
-      features: ["All 6 modules, 12 lessons", "12 worksheets and calculators", "Final portfolio project", "Lifetime updates to the course"],
+      features: ["All 6 modules, 12 lessons", "13 worksheets and calculators", "Final portfolio project", "Lifetime updates to the course"],
       cta: "Get the full course",
       checkoutUrl: "",
       highlight: true
