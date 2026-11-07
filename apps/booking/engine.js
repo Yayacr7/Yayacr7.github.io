@@ -44,7 +44,7 @@ function status(){
       if (n.min < o) return {cls:'', t:`Closed now · opens ${fmt(a)} today`};
     }
   }
-  if (!(n.day in H) || (typeof today === 'string')) return {cls:'', t: typeof today === 'string' ? `Today: ${today}` : 'Today’s hours are not listed · call to check'};
+  if (!(n.day in H) || (typeof today === 'string')) return {cls:'', t: typeof today === 'string' ? 'Call to check today’s hours' : 'Today’s hours are not listed · call to check'};
   for (let i = 1; i <= 7; i++){
     const d = (n.day + i) % 7, v = H[d];
     if (!(d in H)) return {cls:'', t:`Closed now · ${DAYS[d]}: not listed, call to check`};
@@ -61,7 +61,7 @@ const maps = A.address ? 'https://www.google.com/maps/search/?api=1&query=' + en
 const primary = A.mode === 'request' ? {label: A.cta || 'Request an appointment', start:true} : (A.links || []).find(l => l.primary);
 
 function header(){
-  return `<div class="demo">Demo app made by AdSharp for ${esc(A.name)}. Not their official app. ${A.mode === 'request' ? (A.email || A.text ? 'Requests go straight to them to confirm.' : 'Requests are sent by you, by text or call.') : 'Booking happens on their own booking system.'}</div>
+  return `<div class="demo">Demo by AdSharp · not the official ${esc(A.name)} app</div>
   <div class="headband"><div class="wrap"><header class="top">
     <button class="logo" type="button" id="logoBtn" aria-label="${esc(A.name)} home"><span class="mk">${A.mark}</span><span><b>${esc(A.name)}</b><small>${esc(A.kicker)}</small></span></button>
     <span class="sp"></span>
@@ -69,16 +69,21 @@ function header(){
     ${tel ? `<a class="tbtn solid" href="${tel}">${svg('phone')}<span class="t">${esc(A.phoneShow)}</span></a>` : ''}
   </header></div></div>`;
 }
-function weekCard(){
+function todayCard(){
   const st = status();
-  if (!A.hours) return `<div class="week"><div class="k">Hours</div><p style="margin:8px 0 0">${esc(A.hoursNote || 'Hours are not listed. Call to check.')}</p></div>`;
   const n = mnNow();
-  const order = [1,2,3,4,5,6,0];
-  return `<div class="week"><div class="st"><span class="dotlive ${st.cls}"></span><span>${esc(st.t)}</span></div>
-    <div class="k">This week${A.hoursLabel ? ' · ' + esc(A.hoursLabel) : ''}</div>
-    <div class="rows">${order.map(d => `<div class="${d === n.day ? 'today' : ''}"><span>${DAYS[d]}</span><span>${esc(dayText(d))}</span></div>`).join('')}</div>
-    ${A.hoursNote ? `<div class="note">${esc(A.hoursNote)}</div>` : ''}</div>`;
+  const row = (k, v) => `<div><span>${k}</span><span>${v}</span></div>`;
+  return `<div class="week">
+    ${st ? `<div class="st"><span class="dotlive ${st.cls}"></span><span>${esc(st.t)}</span></div>` : `<div class="st"><span class="dotlive"></span><span>Hours not listed · call to check</span></div>`}
+    <div class="rows">
+      ${A.hours ? row('Today', esc(dayText(n.day))) : ''}
+      ${A.phoneShow ? row('Phone', `<a href="tel:${A.phone}" style="text-decoration:none">${esc(A.phoneShow)}</a>`) : ''}
+      ${row('Address', A.address ? esc(A.address.replace(/, MN \d{5}$/, '')) : 'Call to confirm')}
+    </div></div>`;
 }
+const autoLead = () => A.mode === 'request'
+  ? `Pick what you need and the days that work. ${A.email || A.text ? 'Your request goes straight to them' : 'Then call them with your request ready'}, and they confirm.`
+  : `See their services and hours, then tap “${primary.label}” to book on their own booking page.`;
 function ctaButtons(){
   const out = [];
   if (primary) out.push(primary.start ? `<button class="btn hero1" type="button" data-start="">${esc(primary.label)} →</button>` : `<a class="btn hero1" href="${esc(primary.url)}" target="_blank" rel="noopener">${esc(primary.label)} ${svg('ext')}</a>`);
@@ -99,10 +104,9 @@ function home(){
   const groups = [...new Set(A.services.map(s => s.group).filter(Boolean))];
   return `<main id="home">
   <section class="band b-hero"><div class="glow g1"></div><div class="glow g2"></div><div class="wrap"><div class="hero">
-    <div><div class="eyebrow">${esc(A.eyebrow)}</div><h1>${A.headline}</h1><p class="lead">${esc(A.lead)}</p>
-      <div class="ctas">${ctaButtons()}</div>
-      ${A.facts && A.facts.length ? `<div class="facts">${A.facts.map(f => `<span>${esc(f)}</span>`).join('')}</div>` : ''}</div>
-    ${weekCard()}
+    <div><div class="eyebrow">${esc(A.eyebrow)}</div><h1>${esc(A.name)}</h1><p class="lead">${esc(autoLead())}</p>
+      <div class="ctas">${ctaButtons()}</div></div>
+    ${todayCard()}
   </div></div></section>
   <section class="band b-s1"><div class="wrap sec">
     <h2>${esc(A.servicesTitle || 'What they offer')}</h2><p class="sub">${esc(A.servicesSub || '')}</p>

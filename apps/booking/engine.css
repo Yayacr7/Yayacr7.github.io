@@ -48,7 +48,9 @@ h1,h2,.disp{font-family:var(--disp)}
 .dotlive{width:10px;height:10px;border-radius:50%;background:#9aa;flex:none}
 .dotlive.open{background:#4ade80;box-shadow:0 0 0 4px rgba(74,222,128,.2)}
 .dotlive.soon{background:#fbbf24;box-shadow:0 0 0 4px rgba(251,191,36,.2)}
-.week .rows div{display:flex;justify-content:space-between;gap:12px;padding:7px 10px;border-radius:9px;font-size:14.5px;color:var(--lead-on-deep)}
+.week .rows div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;text-align:right;padding:7px 10px;border-radius:9px;font-size:14.5px;color:var(--lead-on-deep)}
+.week .rows div span:first-child{text-align:left;color:var(--muted-on-deep);flex:none}
+.week .rows a{color:var(--on-deep);font-weight:700}
 .week .rows div.today{background:rgba(255,255,255,.1);color:var(--on-deep);font-weight:700}
 .week .k{font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted-on-deep);font-weight:700}
 .week .note{font-size:12.5px;color:var(--muted-on-deep);margin-top:10px}
