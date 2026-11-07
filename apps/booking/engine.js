@@ -354,7 +354,7 @@ function mine(){
 }
 
 // ---------- boot ----------
-document.body.innerHTML = header() + home();
+const root = document.createElement('div'); root.id = 'app'; document.body.appendChild(root); root.innerHTML = header() + home();
 document.querySelectorAll('[data-start]').forEach(b => b.onclick = () => start(b.dataset.start));
 document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => {
   document.querySelectorAll('[data-tab]').forEach(x => x.setAttribute('aria-selected', x === b));
