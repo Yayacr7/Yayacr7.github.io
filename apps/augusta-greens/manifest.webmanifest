@@ -1,16 +1,33 @@
 {
   "name": "Augusta Greens",
   "short_name": "Augusta Greens",
-  "description": "Get a lawn care or snow removal estimate from Augusta Greens LLC, Andover, MN (demo).",
+  "description": "Pick snow removal or lawn and yard work, answer a few questions, and get a written estimate by email. Demo app for Augusta Greens, not their official app.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f3f1e9",
-  "theme_color": "#f3f1e9",
+  "background_color": "#12261b",
+  "theme_color": "#12261b",
   "icons": [
-    {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml"},
-    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
-    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
-    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

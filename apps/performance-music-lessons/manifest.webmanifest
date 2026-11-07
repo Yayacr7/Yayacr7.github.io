@@ -1,0 +1,33 @@
+{
+  "name": "Performance Music Lessons",
+  "short_name": "Performance Mu",
+  "description": "Private and group lessons for all ages and styles. Pick an instrument and the days that work, then call with your request ready. Demo app for Performance Music Lessons, not their official app.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0c1f26",
+  "theme_color": "#0c1f26",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

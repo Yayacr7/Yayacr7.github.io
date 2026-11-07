@@ -1,0 +1,33 @@
+{
+  "name": "TC Medspa",
+  "short_name": "TC Medspa",
+  "description": "Medical-based aesthetic treatments in Blaine. See what they offer, then book on their real booking page. Demo app for TC Medspa, not their official app.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#131b1b",
+  "theme_color": "#131b1b",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

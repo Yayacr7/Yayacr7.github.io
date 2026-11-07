@@ -1,0 +1,33 @@
+{
+  "name": "Fairy Tails Grooming",
+  "short_name": "Fairy Tails Gr",
+  "description": "Tell them about your dog and the days that work, then call them with your request ready. Demo app for Fairy Tails Grooming, not their official app.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1c1930",
+  "theme_color": "#1c1930",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
