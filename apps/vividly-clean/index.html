@@ -349,6 +349,7 @@ body{background:linear-gradient(180deg,#e9f2ef 0%,#f6eee5 100%);background-attac
   <button class="btn main" id="nextBtn" type="button">Continue</button>
 </div></nav>
 
+<script src="../booking/amy.js"></script>
 <script>
 // Business contact info, from vividlyclean.com/contact-us (read Nov 7, 2026). Empty phone/email = demo mode (nothing is sent).
 const BUSINESS = { name: 'Vividly Clean LLC', phone: '7634340206', phoneShow: '763.434.0206', email: 'Jenni@vividlyclean.com',
@@ -665,6 +666,17 @@ $('#mineBtn').onclick = mine;
 $('#backBtn').onclick = () => { if (step === 0) show('home'); else { step--; render(); window.scrollTo(0,0); } };
 $('#nextBtn').onclick = next;
 document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('input.t') && !$('#flow').classList.contains('hide')) { e.preventDefault(); e.target.blur(); next(); } });
+if (window.Amy) {
+  window.Amy.init({
+    biz: {name:'Vividly Clean', phone:BUSINESS.phone, phoneShow:BUSINESS.phoneShow, email:BUSINESS.email, address:BUSINESS.address + ', ' + BUSINESS.cityLine, site:BUSINESS.site,
+      hours:null, hoursNote:'Their office hours are ' + BUSINESS.hours + '. Their website does not say which days.', mode:'request', bookLabel:'Book a cleaning',
+      services: HOME_SVC.map(x => ({name:x.name, desc:x.inc, syn:'home house'})).concat(BIZ_TYPE.filter(x => x.id !== 'other').map(x => ({name:x.name, desc:x.inc + ' (business quote)', syn:'business commercial'}))).concat(PROJECTS.map(p => ({name:p, desc:'Project work for businesses.', syn:'business'}))),
+      notes:['Homes: they serve Minneapolis, St. Paul and the north suburbs. Businesses: the whole Twin Cities metro.', 'Gift cards: their site says to contact them to buy one. Use the gift card button on this page.', 'Commercial cleaning can be 1 to 7 times a week, or one-off projects.', 'They are hiring: residential home cleaner, commercial cleaner, janitorial cleaner, janitorial supervisor, residential manager.'],
+      links:[{label:'Ask about a gift card', url:'mailto:' + BUSINESS.email + '?subject=Gift%20card'}]},
+    accent:'#0f766e',
+    onBook: svc => { const h = HOME_SVC.find(x => x.name === svc), b = BIZ_TYPE.find(x => x.name === svc); if (b) start('biz', b.id); else if (PROJECTS.includes(svc)) start('biz', 'other'); else start('home', h ? h.id : undefined); }
+  });
+}
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>

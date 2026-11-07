@@ -8,6 +8,7 @@ const list = require('./businesses.js');
 const css = fs.readFileSync(path.join(__dirname, 'engine.css'), 'utf8')
   .replace('.wrap{max-width:1000px;margin:0 auto;padding:0 20px}', '.wrap{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}')
   .replace('padding:12px 20px calc(12px + env(safe-area-inset-bottom));', 'padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));');
+const amyJs = fs.readFileSync(path.join(__dirname, 'amy.js'), 'utf8');
 const js = fs.readFileSync(path.join(__dirname, 'engine.js'), 'utf8')
   .replace(/if \('serviceWorker' in navigator[^\n]*\n/, '');
 const FONT = {
@@ -35,6 +36,9 @@ input.t,select.t,textarea.t,.btn.ghost,.opt,.seg button,.cal,.cnt,.panel,.card,.
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 <script>window.APP=${JSON.stringify(app).replace(/</g, '\\u003c')};</script>
+<script>
+${amyJs}
+</script>
 <script>
 ${js}
 </script>
