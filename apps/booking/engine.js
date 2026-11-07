@@ -366,16 +366,5 @@ if ($('#mineBtn')) $('#mineBtn').onclick = mine;
 $('#backBtn').onclick = () => { if (step === 0) show('home'); else { step--; render(); window.scrollTo(0,0); } };
 $('#nextBtn').onclick = next;
 document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('input.t') && !$('#flow').classList.contains('hide')) { e.preventDefault(); e.target.blur(); next(); } });
-if (window.Amy) {
-  const first = STEPS[0] || {};
-  const opts = first.type === 'service' ? (first.options || A.services).map(o => o.name) : [];
-  window.Amy.init({
-    biz: {name:A.name, phone:A.phone, phoneShow:A.phoneShow, text:A.text, textShow:A.textShow, email:A.email, address:A.address, addressNote:A.addressNote, site:A.site,
-      hours:A.hours, hoursNote:A.hoursNote, services:A.services, notes:A.notes, links:A.links, mode:A.mode, priceNote:A.priceNote, emergency:!!A.emergency,
-      bookLabel: primary ? primary.label : '', bookUrl: primary && primary.url},
-    accent: getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(),
-    onBook: svc => { if (A.mode === 'request') start(svc && opts.includes(svc) ? svc : undefined); }
-  });
-}
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 })();

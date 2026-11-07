@@ -42,7 +42,6 @@ for (const b of list){
 <body>
 <noscript><p style="padding:20px">${esc(b.name)} · ${esc(b.phoneShow || '')}</p></noscript>
 <script>window.APP=${JSON.stringify(app).replace(/</g, '\\u003c')};</script>
-<script src="../booking/amy.js"></script>
 <script src="../booking/engine.js"></script>
 </body>
 </html>
@@ -53,7 +52,7 @@ for (const b of list){
     icons: [{src:'icon.svg', sizes:'any', type:'image/svg+xml'}, {src:'icon-192.png', sizes:'192x192', type:'image/png'}, {src:'icon-512.png', sizes:'512x512', type:'image/png'}, {src:'icon-512.png', sizes:'512x512', type:'image/png', purpose:'maskable'}]}, null, 2) + '\n');
   fs.writeFileSync(path.join(dir, 'sw.js'), `// keeps the app working with no signal (shows the last saved copy)
 const C = 'bk-${b.slug}-v1';
-self.addEventListener('install', e => { e.waitUntil(caches.open(C).then(c => c.addAll(['./', 'manifest.webmanifest', 'icon.svg', '../booking/engine.js', '../booking/engine.css', '../booking/amy.js']))); self.skipWaiting(); });
+self.addEventListener('install', e => { e.waitUntil(caches.open(C).then(c => c.addAll(['./', 'manifest.webmanifest', 'icon.svg', '../booking/engine.js', '../booking/engine.css']))); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('bk-${b.slug}') && k !== C).map(k => caches.delete(k))))); self.clients.claim(); });
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;

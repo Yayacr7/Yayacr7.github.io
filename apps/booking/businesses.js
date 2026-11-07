@@ -238,7 +238,7 @@ module.exports = [
     ]} },
 
 // ---------------- REQUEST MODE: no website found ----------------
-{ slug:'walsh-plumbing', emergency:true, name:'Walsh Plumbing', kicker:'Blaine, MN', theme:T.plumb, mark:M.drop, mode:'request', code:'WP', cta:'Request service', cardCta:'Request',
+{ slug:'walsh-plumbing', name:'Walsh Plumbing', kicker:'Blaine, MN', theme:T.plumb, mark:M.drop, mode:'request', code:'WP', cta:'Request service', cardCta:'Request',
   phone:'7637846156', phoneShow:'(763) 784-6156', email:'walshplumbinginc@aol.com', address:'9711 6th St NE, Blaine, MN 55434',
   source: dir('Phone and email come from Yaya’s list; the address and services come from public listings (Birdeye, HomeAdvisor). Note: walshplumbinginc.com is a different Walsh Plumbing in Florida.'),
   eyebrow:'Residential & commercial plumbing', headline:'North metro plumbing, <em>since 1978.</em>', lead:'Describe the problem, pick a few days, and your request goes straight to them by email.',
@@ -256,7 +256,7 @@ module.exports = [
       contactStep('Parking, pets, gate code...')
     ]} },
 
-{ slug:'mns-all-seasons-comforts', emergency:true, name:'MN’s All Seasons Comforts', kicker:'Heating & cooling · Coon Rapids', theme:T.hvac, mark:M.flame, mode:'request', code:'AS', cta:'Request service', cardCta:'Request',
+{ slug:'mns-all-seasons-comforts', name:'MN’s All Seasons Comforts', kicker:'Heating & cooling · Coon Rapids', theme:T.hvac, mark:M.flame, mode:'request', code:'AS', cta:'Request service', cardCta:'Request',
   phone:'7632911615', phoneShow:'(763) 291-1615', address:'4151 Coon Rapids Blvd NW, Coon Rapids, MN 55433',
   source: dir('Phone from Yaya’s list; address and services from their BBB business profile.'),
   eyebrow:'Heating · cooling · water heaters', headline:'Warm in winter, <em>cool in summer.</em>', lead:'Tell them what’s wrong, pick a few days, and call or text them your request. For no heat, call right away.',
@@ -292,7 +292,7 @@ module.exports = [
       contactStep('Anything else?')
     ]} },
 
-{ slug:'kristinas-cleaning-company', addressNote:'they come to your home', name:'Kristina’s Cleaning Company', kicker:'Coon Rapids, MN', theme:T.clean, mark:M.home, mode:'request', code:'KC', cta:'Request a cleaning', cardCta:'Request',
+{ slug:'kristinas-cleaning-company', name:'Kristina’s Cleaning Company', kicker:'Coon Rapids, MN', theme:T.clean, mark:M.home, mode:'request', code:'KC', cta:'Request a cleaning', cardCta:'Request',
   phone:'7633771402', phoneShow:'(763) 377-1402',
   source: dir('Phone from Yaya’s list (from a directory); services from their Care.com listing.'),
   eyebrow:'Home cleaning · Coon Rapids', headline:'Come home to <em>clean.</em>', lead:'Pick your cleaning and the days that work, then call them with your request ready.',
@@ -310,7 +310,7 @@ module.exports = [
       contactStep('Focus areas, allergies, entry...')
     ]} },
 
-{ slug:'fairy-tails-grooming', addressNote:'listings show two different addresses', name:'Fairy Tails Grooming', kicker:'Blaine, MN', theme:T.pet3, mark:M.paw, mode:'request', code:'FT', cta:'Request a groom', cardCta:'Request',
+{ slug:'fairy-tails-grooming', name:'Fairy Tails Grooming', kicker:'Blaine, MN', theme:T.pet3, mark:M.paw, mode:'request', code:'FT', cta:'Request a groom', cardCta:'Request',
   phone:'7633187685', phoneShow:'(763) 318-7685',
   source: dir('Phone from Yaya’s list (from a directory). Listings show two different Blaine addresses, so the address is left off: call to confirm.'),
   eyebrow:'Dog grooming · Blaine', headline:'A fresh groom, <em>booked your way.</em>', lead:'Tell them about your dog and the days that work, then call them with your request ready.',
@@ -344,7 +344,7 @@ module.exports = [
       contactStep('Matting, behavior, the look you want...')
     ]} },
 
-{ slug:'performance-music-lessons', addressNote:'listings show different addresses', name:'Performance Music Lessons', kicker:'Coon Rapids, MN', theme:T.music2, mark:M.note, mode:'request', code:'PM', cta:'Request a lesson', cardCta:'Request',
+{ slug:'performance-music-lessons', name:'Performance Music Lessons', kicker:'Coon Rapids, MN', theme:T.music2, mark:M.note, mode:'request', code:'PM', cta:'Request a lesson', cardCta:'Request',
   phone:'6513034810', phoneShow:'(651) 303-4810',
   source: dir('Phone from Yaya’s list; lessons and teacher from public listings (PlayGuitar.com, LessonRating). Listings show different addresses, so the address is left off.'),
   eyebrow:'Music lessons · all ages', headline:'Find your <em>instrument.</em>', lead:'Private and group lessons for all ages and styles. Pick an instrument and the days that work, then call with your request ready.',
