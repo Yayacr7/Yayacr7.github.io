@@ -27,8 +27,9 @@ const server = http.createServer((req, res) => {
   const L = await (async () => { await p.goto(U); return p.evaluate(() => ACADEMY.LESSONS.map(l => ({ id: l.id, a: l.quiz.map(q => q.answer), n: l.quiz.length }))); })();
 
   // 1. Learning path: home -> questionnaire -> recommendation
-  ok((await p.locator("h1").first().innerText()).includes("Learn practical AI skills"), "home page renders");
-  await p.click("text=Find my starting path");
+  ok((await p.locator("h1").first().innerText()).includes("Learn to run ads"), "home page renders as a coaching program");
+  ok((await p.locator("main").innerText()).includes("How the program works") && (await p.locator(".disc").count()) === 1, "home explains the program and shows the earnings disclaimer");
+  await p.click("text=Take the 1-minute questionnaire");
   for (const v of ["save", "ok", "mid", "more", "like"]) { await p.check(`input[value="${v}"]`); await p.keyboard.press("Enter"); await p.waitForTimeout(50); }
   ok((await p.locator("h1").innerText()) === "AI assistants & automations", "questionnaire recommends a path from answers");
   ok(await p.locator("text=We suggest this because").count() === 1, "recommendation is explained");
@@ -81,7 +82,7 @@ const server = http.createServer((req, res) => {
   await p.click("#donebox a.btn"); await p.waitForSelector("text=Write useful prompts"); ok(p.url().endsWith("#/lesson/m1l2"), "Next lesson button");
   await p.click(".pn a >> nth=0"); ok(p.url().endsWith("#/lesson/m1l1"), "Previous link");
   await p.goBack(); ok(p.url().endsWith("#/lesson/m1l2"), "browser Back works");
-  for (const [label, hash] of [["Dashboard", "#/dashboard"], ["Course", "#/course"], ["Resources", "#/resources"], ["Final project", "#/project"], ["Notes", "#/notes"], ["Pricing", "#/pricing"], ["Home", "#/"]]) {
+  for (const [label, hash] of [["Dashboard", "#/dashboard"], ["Course", "#/course"], ["Resources", "#/resources"], ["Final project", "#/project"], ["Notes", "#/notes"], ["Free training", "#/free"], ["Coaching", "#/coaching"], ["Home", "#/"]]) {
     await p.click(`nav.main a:text-is("${label}")`); await p.waitForFunction(h => location.hash === h || (h === "#/" && location.hash === "#/"), hash); await p.waitForTimeout(50); ok(p.url().endsWith(hash) && (await p.getAttribute(`nav.main a:text-is("${label}")`, "aria-current")) === "page", "menu: " + label);
   }
   await p.goto(U + "#/nope"); ok((await p.locator("h1").innerText()) === "Page not found", "unknown page shows Not found");
@@ -92,7 +93,7 @@ const server = http.createServer((req, res) => {
   await p.goto(U + "#/dashboard");
   const cont = await p.locator(".continue").innerText();
   ok(cont.includes("Continue learning") && cont.includes("Write useful prompts"), "dashboard Continue learning goes to next lesson in order (even after peeking at Module 5)");
-  ok(cont.includes("8%"), "progress ring shows 8%");
+  ok(cont.includes("4%"), "progress ring shows 4% (1 of 24)");
   ok((await p.locator("main").innerText()).includes("Digital products"), "dashboard shows the chosen path");
 
   // 7. Worksheets and calculators
@@ -117,7 +118,22 @@ const server = http.createServer((req, res) => {
   const html = fs.readFileSync(await dl.path(), "utf8"); ok(html.includes("Demo &lt;b&gt;x") && !html.includes("<b>x"), "project page download escapes text");
 
   // 9. Pricing, owner, facts
-  await p.goto(U + "#/pricing"); await p.click("[data-nopay] >> nth=0"); ok(await p.locator("#paymsg").isVisible(), "unpaid plan explains payments are not set up");
+  // Coaching and application funnel
+  await p.goto(U + "#/pricing"); ok((await p.locator(".plan").count()) === 3 && (await p.locator("main").innerText()).includes("$1,500") && (await p.locator("main").innerText()).includes("From $4,800"), "old pricing link shows the 3 coaching tiers ($1,500 to From $4,800)");
+  ok((await p.locator(".disc").count()) === 1 && !/\d+ spots left|guaranteed income|act now/i.test(await p.locator("main").innerText()), "coaching page: disclaimer, no fake urgency");
+  await p.click('a[href="#/apply/mentor"]'); await p.waitForSelector("#apf");
+  ok((await p.inputValue("#ap_tier")) === "mentor", "Apply button preselects the tier");
+  await p.click("#apf button[type=submit]"); ok((await p.locator("#aperr").innerText()).includes("Please fill in"), "application requires the key fields");
+  await p.fill("#ap_name", "Test Student"); await p.fill("#ap_contact", "test@example.com"); await p.fill("#ap_hours", "6"); await p.fill("#ap_goal", "Land a first brand client");
+  await p.click("#apf button[type=submit]"); ok((await p.locator("#aperr").innerText()).includes("no income promise"), "application requires the no-income-promise acknowledgment");
+  await p.check("#ap_ok"); await p.click("#apf button[type=submit]");
+  ok(await p.locator("#apout").isVisible() && (await p.locator("#aptext").innerText()).includes("Mentorship") && (await p.locator("#aptext").innerText()).includes("Test Student"), "application message is prepared with tier and answers");
+  await p.reload(); await p.waitForSelector("#apf"); ok((await p.inputValue("#ap_name")) === "Test Student", "application draft survives reload");
+  // Brand-scaling calculators
+  await p.goto(U + "#/resources/roas"); for (const [k, v] of [["aov", "60"], ["cost", "22"], ["ship", "8"], ["feep", "2.9"], ["feef", "0.30"]]) await p.fill("#r_" + k, v);
+  const rr = await p.locator("#rres").innerText(); ok(rr.includes("$27.96") && rr.includes("2.15"), "break-even ROAS calculator: margin $27.96, break-even 2.15");
+  await p.goto(U + "#/resources/retainer"); for (const [k, v] of [["spend", "3000"], ["hrs", "16"], ["flat", "800"], ["pct", "15"], ["rev", "9000"], ["rs", "5"]]) await p.fill("#t_" + k, v);
+  const tr = await p.locator("#tres").innerText(); ok(tr.includes("$800") && tr.includes("$50/h") && tr.includes("$450"), "retainer calculator compares the three models");
   await p.goto(U + "#/owner"); ok(!/1,000,000|10,310/.test(await p.locator("main").innerText()), "revenue goal is not shown on the site");
   ok(await p.locator('footer a[href="#/owner"]').count() === 0, "no owner link in the student footer");
   // Long unbroken text must not push the page sideways
@@ -127,16 +143,24 @@ const server = http.createServer((req, res) => {
 
   // 10. All lessons complete
   for (const l of L) { await p.goto(U + "#/lesson/" + l.id); if (!(await p.locator("#complete").count())) continue; for (let i = 0; i < l.n; i++) await p.check(`input[name=q${i}][value="${l.a[i]}"]`); await p.click("text=Check my answers"); await p.click("#complete"); }
-  await p.goto(U + "#/dashboard"); ok((await p.locator(".continue").innerText()).includes("All 12 lessons complete"), "all-complete state points to final project");
+  await p.goto(U + "#/dashboard"); ok((await p.locator(".continue").innerText()).includes("All 24 lessons complete"), "all-complete state points to final project");
 
   // 11. Backup and restore
   await p.goto(U + "#/notes");
   const [bk] = await Promise.all([p.waitForEvent("download"), p.click("#exp")]); const bkPath = await bk.path();
   await p.evaluate(k => localStorage.removeItem(k), KEY); await p.reload();
   await p.goto(U + "#/notes"); await p.setInputFiles("#imp", bkPath); await p.waitForTimeout(200);
-  await p.goto(U + "#/dashboard"); ok((await p.locator(".continue").innerText()).includes("All 12 lessons complete"), "backup file restores progress");
+  await p.goto(U + "#/dashboard"); ok((await p.locator(".continue").innerText()).includes("All 24 lessons complete"), "backup file restores progress");
   ok(errs.length === 0, "no JavaScript errors in main journey " + errs.join(" | "));
   const state = await p.evaluate(k => localStorage.getItem(k), KEY);
+
+  // 11b. Brand path: questionnaire -> brand scaling -> free lesson s1l1
+  const cb = await b.newContext(); const pb = await cb.newPage(); await pb.goto(U + "#/start");
+  for (const v of ["brands", "ok", "high", "zero", "like"]) { await pb.check(`input[value="${v}"]`); await pb.click("#qform button[type=submit]"); await pb.waitForTimeout(50); }
+  ok((await pb.locator("h1").innerText()).startsWith("Brand scaling"), "questionnaire can recommend brand scaling");
+  await pb.click("text=Start lesson 1"); await pb.waitForSelector("#quiz"); ok(pb.url().endsWith("#/lesson/s1l1") && (await pb.locator(".lhead").innerText()).includes("Free training"), "brand path starts at free lesson s1l1");
+  await pb.goto(U + "#/free"); ok((await pb.locator("main").innerText()).includes("0 of 4 done"), "free training page lists 4 free lessons");
+  await pb.goto(U + "#/dashboard"); ok((await pb.locator(".continue").innerText()).includes("Brand Scaling"), "dashboard continues in the Brand Scaling track"); await cb.close();
 
   // 12. Damaged and blocked storage
   const c2 = await b.newContext(); await c2.addInitScript(k => localStorage.setItem(k, "{broken"), KEY);
@@ -154,7 +178,7 @@ const server = http.createServer((req, res) => {
   ok(await p.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior) === "auto", "Reduce motion switch turns off smooth scrolling"); await p.uncheck("#reduceToggle");
 
   // 14. Devices: no sideways scroll, no errors, tap targets
-  const routes = ["", "dashboard", "course", "start", "start/result", "lesson/m1l1", "lesson/m5l2", "resources", "resources/money", "resources/price", "resources/score", "project", "notes", "pricing", "facts", "owner"];
+  const routes = ["", "dashboard", "course", "start", "start/result", "free", "coaching", "apply", "lesson/m1l1", "lesson/m5l2", "lesson/s3l1", "lesson/s5l2", "resources/roas", "resources/retainer", "resources", "resources/money", "resources/price", "resources/score", "project", "notes", "pricing", "facts", "owner"];
   const devs = [["iPhone SE", devices["iPhone SE"]], ["iPhone 13", devices["iPhone 13"]], ["Pixel 7", devices["Pixel 7"]], ["iPad Mini", devices["iPad Mini"]], ["iPad Pro 11 landscape", devices["iPad Pro 11 landscape"]], ["Laptop 1366x768", { viewport: { width: 1366, height: 768 } }], ["Desktop 1920x1080", { viewport: { width: 1920, height: 1080 } }]];
   const axe = process.env.AXE_PATH && fs.existsSync(process.env.AXE_PATH) ? fs.readFileSync(process.env.AXE_PATH, "utf8") : null;
   for (const [name, d] of devs) {

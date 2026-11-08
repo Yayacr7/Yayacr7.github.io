@@ -1,56 +1,57 @@
 # AI Income Academy: Specification
 
-Working name, changeable in `config.js`. Source: Yaya's course brief (Nov 7, 2026) plus project rules in `/CLAUDE.md`.
+Working name, changeable in `config.js`. Sources: Yaya's course brief (Nov 7, 2026), Yaya's brand-scaling and coaching update (Nov 8, 2026), and project rules in `/CLAUDE.md`.
 
 ## 1. Purpose and audience
-- **Who:** complete beginners (teens and adults) who want a practical, honest path toward earning income with AI skills, products and services. Little or no technical experience, a few hours a week, a small or $0 budget.
-- **Not for:** people wanting guaranteed or fast money; experienced developers.
-- **Business goal (owner only):** $1M in course revenue over time. An ambition, never shown to students as a result or promise.
+- **What it is:** an online coaching and mentorship program. Main track: **freelance brand scaling** (acting as a small marketing agency that runs paid ads on Instagram, TikTok and Google for e-commerce and clothing/streetwear brands). Optional extra tracks: the original AI income foundations with 3 paths.
+- **Who:** beginners (adults, and teens with a parent or guardian for money matters) who want to learn a practical skill and are willing to do outreach and client work. Little experience needed; a few hours a week.
+- **Not for:** people wanting guaranteed or fast money.
+- **Coach:** Yaya runs the live coaching (group calls, 1-on-1 calls, feedback). The course content is the self-paced part.
+- **Business goal (owner only):** $1M in program revenue over time. Never shown to students as a result or promise.
 
-## 2. Scope decisions (fixed)
-- **Excluded:** AI advertising and freelance brand scaling. No lessons, examples or worksheets about them.
-- **Three paths:** (1) websites and simple tools with AI assistance, (2) AI assistants and business automations, (3) digital products with AI assistance. Each path explains its skills, work, expenses and limits.
-- **Honesty:** no invented testimonials, student earnings, sales numbers, completed tests or sources. Hypothetical examples are labeled. Facts are sourced and dated; anything unverified is labeled. General education, not tax or legal advice.
+## 2. Scope decisions
+- **Nov 8, 2026 change (replaces the earlier exclusion):** freelance brand scaling and AI ad management are now the main program. Covered: the agency/middleman model, setting up and accessing ad accounts, tracking, audiences and targeting, AI-driven ad tools, creative, launching and optimizing campaigns, reporting, pitching brands (cold outreach), and retainer models (flat monthly fee, % of ad spend, revenue share).
+- **Kept:** the 6 foundation modules and 3 paths (websites/tools, AI assistants/automations, digital products) as optional extra tracks.
+- **Program structure (funnel):** free training (mini-course) -> application -> application-based coaching tiers priced $1,500 to $4,800+ (Yaya's decision). Each tier lists exactly what is delivered.
+- **Honesty (unchanged, stricter for high-ticket):** no income claims, no invented testimonials, student results, sales numbers or sources. A clear earnings disclaimer on the free training, application and pricing pages. Hypothetical examples labeled. Facts sourced and dated. No fake scarcity or countdowns. General education, not tax or legal advice.
 
 ## 3. Essential features
 | # | Feature | Must do |
 |---|---------|---------|
-| F1 | Homepage | Explains the course, who it helps and who it is not for, the 6-step path, the 3 paths, and that no income is promised. |
-| F2 | Starting questionnaire | Asks about interests, experience, time, budget (and comfort with customers). Recommends one path, explains why, and lets the student pick another. |
-| F3 | Dashboard | One clear "Continue learning" action, overall progress, chosen path, bookmarks, module cards. |
-| F4 | Course content | 6 modules (Understand AI; Choose a useful skill; Find a problem worth solving; Build a first solution; Work toward a first sale; Deliver, improve, and grow), at least 2 full lessons each. |
-| F5 | Lesson pages | Learning goal, plain-English word list, explanation, labeled worked example, practical task, knowledge check, notes, bookmark, complete, previous/next. |
-| F6 | Quizzes | Score, an explanation for the chosen answer, the correct answer shown, retry. |
-| F7 | Progress | Completion, quiz scores, notes, bookmarks, task ticks, worksheets saved; survive reload; device-only storage stated clearly; backup/restore. |
-| F8 | Resources | Practical worksheets and templates (fill in, save, copy, download, print). |
-| F9 | Final project | Portfolio case study the student can export and share, with an honesty check. |
-| F10 | Pricing | Plans and prices from a config file; clear message while payments are not set up. |
-| F11 | Facts & owner pages | Sources with check status; owner launch checklist (unlinked from student pages). The revenue goal stays in PROGRESS.md, not on the site. |
+| F1 | Homepage | Says it is a coaching and mentorship program for brand scaling, who it helps and who it is not for, what is free, how the program works (free training -> apply -> coaching), and that no income is promised. |
+| F2 | Starting questionnaire | Asks about interests, experience, time, budget, comfort with customers. Recommends a starting track (brand scaling or one of 3 paths), explains why, lets the student choose another. |
+| F3 | Dashboard | One clear "Continue learning" action that follows the chosen track, progress, chosen track, bookmarks, module cards. |
+| F4 | Course content | Brand Scaling track: 6 modules x 2 full lessons. Foundations track: 6 modules x 2 full lessons. |
+| F5 | Lesson pages | Learning goal, plain-English words, explanation, labeled worked example, practical task, knowledge check, notes, bookmark, complete, previous/next; free-training lessons labeled. |
+| F6 | Quizzes | Score only when all answered, explanation for every option, correct answer shown, retry. |
+| F7 | Progress | Completion, quiz scores, notes, bookmarks, ticks, worksheets saved; survive reload and return; device-only storage stated; backup/restore. |
+| F8 | Resources | Worksheets and templates, including brand-scaling tools (break-even ROAS, retainer pricing, outreach, onboarding, weekly report). |
+| F9 | Final project | Portfolio case study with an honesty check, exportable. |
+| F10 | Coaching & pricing | Free training, 3 coaching tiers from `config.js` ($1,500-$4,800+) with exact deliverables, earnings disclaimer, application form; clear message while payments and the application link are not set up. |
+| F11 | Facts & owner pages | Sources with check status; owner launch checklist (unlinked). Revenue goal only in PROGRESS.md. |
 
 ## 4. Design direction
-- Colorful but readable: bright blue, purple, mint and orange accents on a light background; text contrast at least 4.5:1 (WCAG AA).
+- Colorful but readable: bright blue, purple, mint and orange accents on a light background; text contrast at least 4.5:1.
 - Illustrated learning path, clear module cards, progress indicators, subtle completion celebrations.
-- Comfortable on phone, iPad and computer: no sideways scrolling, tap targets about 40px+, 16px inputs.
-- Keyboard navigation (skip link, visible focus, real buttons/radios), reduced-motion support.
-- Plain English, one clear next step at a time. Welcoming, not childish.
+- Phone, iPad and computer: no sideways scrolling, tap targets about 40px+, 16px inputs.
+- Keyboard navigation, visible focus, reduced-motion support. Plain English, one clear next step.
 
 ## 5. Technical decisions
-- Static HTML/CSS/JS in `academy/`, hosted on GitHub Pages like the rest of the repo; no build step. Content in `content.js`, settings in `config.js`.
-- No accounts or payments in this version (needs a backend and owner keys). The site says so.
+- Static HTML/CSS/JS in `academy/`; no build step. Content in `content.js`, settings in `config.js`.
+- No accounts, payments, locked content or form submission yet. The application form builds a message to send (or uses `applicationUrl` from config). Owner page lists what is needed.
 
 ## 6. Completion criteria
-1. A new student can go home -> questionnaire -> recommended path -> lesson 1 -> quiz -> complete -> dashboard shows "Continue learning" to lesson 2.
-2. Every lesson has all F5 parts; every quiz question has an explanation for every option.
-3. Progress (F7) survives a reload and returning later in a new browser tab.
-4. All navigation works: menu, previous/next, browser Back, unknown pages.
-5. No sideways scroll or JS errors on phone, iPad (portrait and landscape) and desktop sizes; automated accessibility scan clean.
-6. No AI advertising or brand-scaling content; no hype or income promises; every fact has a source and check date or is labeled.
+1. New student: home -> questionnaire -> recommended track -> first lesson -> quiz -> complete -> dashboard "Continue learning" goes to the next lesson in that track.
+2. Every lesson in both tracks has all F5 parts; every quiz option has an explanation.
+3. Progress survives reload and a full browser restart.
+4. Navigation works: menu, previous/next, Back, unknown pages; free training -> apply flow works.
+5. No sideways scroll or JS errors on phone, iPad and desktop; accessibility scan clean.
+6. No income promises or hype; earnings disclaimer on free training, apply and pricing; every platform fact has an official source and check date or is labeled; coaching tiers list concrete deliverables.
 7. `node academy/tests/content-check.js` and `node academy/tests/browser-test.js` pass.
 
-## 7. Gaps and conflicts (resolved without asking)
-- **Colorful vs. earlier "professional dark, no candy colors" rule:** that rule was for AdSharp. This brief asks for color; resolved as bright accents on a light, readable base.
-- **"Course/lesson/quiz" words vs. AdSharp's no-school-words rule:** that rule is AdSharp-only; this product is a course.
-- **Paid course vs. static site:** content cannot be locked or paid for yet. Prices are placeholders; buttons say payments are not set up. Owner page lists what is needed.
-- **Hosting a paid course:** GitHub's terms do not allow Pages to run an online business or store. The free/preview version can stay on Pages; the paid version needs another host or course platform (owner task).
-- **Country:** facts are US-based and labeled "US"; other countries differ.
-- **"Verify tool info with official sources":** the build machine cannot open official pages directly; facts were confirmed through web search limited to the official domain and are labeled that way. Tool prices and free tiers are not listed because they change often.
+## 7. Gaps and conflicts
+- **Earlier exclusion of brand scaling:** replaced by Yaya's Nov 8 decision (asked and confirmed).
+- **High-ticket pricing:** Claude rated $1,500-$4,800 at launch 5/10 (no student results yet, FTC scrutiny of money-making coaching) and suggested founding prices; Yaya chose $1,500-$4,800 with live coaching. Safeguards: concrete deliverables, no income claims, disclaimer, application instead of instant purchase pressure.
+- **Platform features change often:** ad tool names (Advantage+, Smart+, Performance Max) are dated and sourced; lessons teach the principle first.
+- **Paid program vs. static site and GitHub Pages terms:** the paid program needs a host or course platform that allows selling, with accounts and locked content (owner task).
+- **Country:** legal and tax facts are US-based and labeled.

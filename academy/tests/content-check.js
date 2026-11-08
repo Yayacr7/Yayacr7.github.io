@@ -5,17 +5,20 @@ const path = require("path");
 global.window = {};
 require(path.join(__dirname, "..", "config.js"));
 require(path.join(__dirname, "..", "content.js"));
+require(path.join(__dirname, "..", "content-scale.js"));
 const A = window.ACADEMY, C = window.ACADEMY_CONFIG;
 let fails = 0, passes = 0;
 function check(cond, msg) { if (cond) passes++; else { fails++; console.log("FAIL " + msg); } }
 const strip = s => String(s).replace(/<[^>]+>/g, " ");
 
 // Structure
-check(A.MODULES.length === 6, "6 modules");
+check(A.MODULES.length === 12, "12 modules (6 per track)");
+["scale", "found"].forEach(t => check(A.MODULES.filter(m => m.track === t).length === 6, t + " track has 6 modules"));
+check(A.TRACKS && A.TRACKS.scale && A.TRACKS.found, "two tracks defined");
 const ids = new Set();
 A.LESSONS.forEach(l => { check(!ids.has(l.id), "unique lesson id " + l.id); ids.add(l.id); });
 A.MODULES.forEach(m => check(A.LESSONS.filter(l => l.module === m.id).length >= 2, "module " + m.n + " has 2+ lessons"));
-check(Object.keys(A.PATHS).length === 3, "3 paths");
+check(Object.keys(A.PATHS).length === 4 && A.PATHS.brand, "4 paths including brand scaling");
 Object.values(A.PATHS).forEach(p => ["makes", "work", "expenses", "limits", "first"].forEach(k => check(p[k] && p[k].length > 40, p.id + " has " + k)));
 
 A.LESSONS.forEach(l => {
@@ -49,7 +52,11 @@ check(counts.every(c => c >= pos.length / 6), "correct answers spread across dis
 
 // Scope and honesty rules
 const all = JSON.stringify(A);
-check(!/advertis|brand[- ]scal|facebook ads|google ads|\bad campaign/i.test(all), "no AI advertising or brand-scaling content");
+// Nov 8, 2026: brand scaling is now the main program (scope change confirmed by Yaya).
+const scaleText = JSON.stringify(A.LESSONS.filter(l => /^s/.test(l.id)));
+["agency", "retainer", "ad spend", "Meta Ads Manager", "TikTok", "Performance Max", "cold", "AI"].forEach(k => check(scaleText.includes(k), "brand track covers: " + k));
+check(A.LESSONS.filter(l => l.free).length >= 3, "free training has 3+ lessons");
+check(A.LESSONS.filter(l => l.free).every(l => ["s1", "m1"].includes(l.module)), "free training = Brand Scaling module 1 + Understand AI");
 check(!/get rich|passive income|financial freedom|\b10x\b(?! your income)|guaranteed (income|results)/i.test(all.replace(/“10x your income”/g, "")), "no hype or income promises");
 check(!/\d+\s*(students|graduates)\s+(earned|made)|testimonial from/i.test(all), "no invented student results");
 A.SOURCES.forEach(s => check(s.status && s.status.length > 20, "source has a check status: " + s.claim.slice(0, 40)));
@@ -63,11 +70,20 @@ const fee = +(0.029 * 650 + 0.60).toFixed(2), exp = +(20 + fee + 25).toFixed(2),
 const m6 = A.LESSONS.find(l => l.id === "m6l1").example.body;
 [fee, exp, prof, se].forEach(n => check(m6.includes("$" + n.toFixed(2)), "Riley example contains $" + n.toFixed(2)));
 
-// Config
+// Hoodie example arithmetic (Brand Scaling module 1)
+const hf = +(0.029 * 60 + 0.30).toFixed(2), hm = +(60 - 22 - 8 - hf).toFixed(2), hbe = (60 / hm).toFixed(2);
+const s1 = A.LESSONS.find(l => l.id === "s1l2").example.body;
+check(s1.includes("$" + hf.toFixed(2)) && s1.includes("$" + hm.toFixed(2)) && s1.includes(hbe), "hoodie example: fees $" + hf + ", margin $" + hm + ", break-even " + hbe);
+
+// Config: coaching tiers (Yaya chose $1,500-$4,800+)
 check(typeof C.courseName === "string" && C.courseName, "config course name");
-C.plans.forEach(p => check(typeof p.price === "number" && p.price >= 0 && Array.isArray(p.features), "plan " + p.id + " valid"));
-const wsCount = A.WORKSHEETS.length;
-check(C.plans.every(p => !/\d+ worksheets/.test(p.features.join(" ")) || p.features.join(" ").includes(wsCount + " worksheets")), "plan worksheet count matches (" + wsCount + ")");
+check(Array.isArray(C.tiers) && C.tiers.length === 3, "3 coaching tiers");
+C.tiers.forEach(t => {
+  check(typeof t.price === "number" && t.price >= 1500 && t.price <= 4800, t.id + " price in $1,500-$4,800");
+  check(Array.isArray(t.features) && t.features.length >= 3, t.id + " lists 3+ concrete deliverables");
+  check(!/guarantee|earn|income|\$\d+k|six figures|spots left|only \d+/i.test(t.features.join(" ") + " " + t.fits), t.id + " has no income claims or scarcity");
+});
+check(/does not promise income/.test(C.earningsDisclaimer || ""), "earnings disclaimer says it does not promise income");
 
 console.log(`\n${passes} passed, ${fails} failed`);
 process.exit(fails ? 1 : 0);

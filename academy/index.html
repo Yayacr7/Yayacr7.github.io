@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>AI Income Academy</title>
-<meta name="description" content="A practical beginner course: learn useful AI skills, find real problems, build a solution, find customers and deliver good work. No income promises.">
+<meta name="description" content="Online coaching and mentorship for freelance brand scaling: learn to run paid ads on Instagram, TikTok and Google for clothing and e-commerce brands. Free training first. No income promises.">
 <meta name="theme-color" content="#F6F7FF">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,6 +101,11 @@ footer a{color:var(--muted)}
 .steps6{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:12px;list-style:none;padding:0}
 .steps6 li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0;border-top:5px solid var(--a)}
 .steps6 b{display:block}
+.steps3{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.side .tt{font-weight:800;font-size:.85rem;color:var(--ink);margin:14px 8px 0;padding-top:10px;border-top:1px solid var(--line)}
+.side .tt:first-child{border-top:0;margin-top:0;padding-top:0}
+.free-dot{font-size:.68rem;font-weight:800;color:var(--mint-ink);background:var(--mint-soft);padding:1px 6px;border-radius:99px;white-space:nowrap}
+.note.disc{border-color:var(--purple);background:var(--purple-soft)}
 section.block{margin:36px 0}
 
 /* learning path svg */
@@ -242,12 +247,13 @@ html.reduce{scroll-behavior:auto}
     <button class="btn ghost small menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="main" id="nav" aria-label="Main">
       <a href="#/">Home</a>
+      <a href="#/free">Free training</a>
       <a href="#/dashboard">Dashboard</a>
       <a href="#/course">Course</a>
       <a href="#/resources">Resources</a>
       <a href="#/project">Final project</a>
       <a href="#/notes">Notes</a>
-      <a href="#/pricing">Pricing</a>
+      <a href="#/coaching">Coaching</a>
     </nav>
   </div>
 </header>
@@ -264,6 +270,7 @@ html.reduce{scroll-behavior:auto}
 
 <script src="config.js"></script>
 <script src="content.js"></script>
+<script src="content-scale.js"></script>
 <script>
 (function(){
 "use strict";
@@ -291,13 +298,20 @@ document.title = NAME; $("#brandName").textContent = NAME;
 var LMAP={}; LESSONS.forEach(function(l,i){l.i=i; LMAP[l.id]=l;});
 var MMAP={}; MODULES.forEach(function(m){MMAP[m.id]=m;});
 function lessonsOf(mid){return LESSONS.filter(function(l){return l.module===mid})}
+var TRACKS=A.TRACKS||{};
+function trackOf(l){return MMAP[l.module].track}
+function trackOrder(){return S.path&&S.path!=="brand"?["found","scale"]:["scale","found"]}
+function ordered(){var o=trackOrder();return LESSONS.slice().sort(function(a,b){return (o.indexOf(trackOf(a))-o.indexOf(trackOf(b)))||(a.i-b.i)})}
+function trackLessons(t){return LESSONS.filter(function(l){return trackOf(l)===t})}
+function modsOf(t){return MODULES.filter(function(m){return !t||m.track===t})}
+function firstLessonOf(t){return trackLessons(t)[0]}
 function isDone(id){return !!S.done[id]}
 function doneCount(){return LESSONS.filter(function(l){return isDone(l.id)}).length}
 function pct(){return Math.round(doneCount()/LESSONS.length*100)}
 function modDone(mid){var ls=lessonsOf(mid);return ls.filter(function(l){return isDone(l.id)}).length}
 function nextLesson(){
   // Continue = first lesson not yet completed, in course order (not whatever was opened last).
-  for(var i=0;i<LESSONS.length;i++) if(!isDone(LESSONS[i].id)) return LESSONS[i];
+  var o=ordered();for(var i=0;i<o.length;i++) if(!isDone(o[i].id)) return o[i];
   return null;
 }
 var reduceMQ = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : {matches:false};
@@ -328,14 +342,15 @@ function slug(s){return String(s).toLowerCase().replace(/[^a-z0-9]+/g,"-").repla
 
 /* ---------- illustrated learning path ---------- */
 var MCOL={blue:"#2563EB",purple:"#7C3AED",mint:"#10B981",orange:"#F97316"};
-function pathMap(showProgress){
+function pathMap(showProgress,track){
+  var MODS=modsOf(track||"scale");
   var pts=[[70,170],[220,100],[370,170],[520,100],[670,170],[810,100]];
   var d="M"+pts[0][0]+" "+pts[0][1];
   for(var i=1;i<pts.length;i++){var p=pts[i-1],c=pts[i],mx=(p[0]+c[0])/2;d+=" C"+mx+" "+p[1]+" "+mx+" "+c[1]+" "+c[0]+" "+c[1];}
-  var s='<svg class="pathmap" viewBox="0 0 880 250" role="img" aria-label="Learning path with six stops: '+MODULES.map(function(m){return m.n+" "+m.title+(showProgress?(modDone(m.id)===lessonsOf(m.id).length?" (done)":""):"")}).join(", ")+'">';
+  var s='<svg class="pathmap" viewBox="0 0 880 250" role="img" aria-label="Learning path with six stops: '+MODS.map(function(m){return m.n+" "+m.title+(showProgress?(modDone(m.id)===lessonsOf(m.id).length?" (done)":""):"")}).join(", ")+'">';
   s+='<path d="'+d+'" fill="none" stroke="#E3E5F3" stroke-width="22" stroke-linecap="round"/>';
   s+='<path d="'+d+'" fill="none" stroke="#C7CBF0" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/>';
-  MODULES.forEach(function(m,i){
+  MODS.forEach(function(m,i){
     var p=pts[i],col=MCOL[m.color],full=showProgress&&modDone(m.id)===lessonsOf(m.id).length,part=showProgress&&modDone(m.id)>0;
     s+='<g aria-hidden="true"><circle cx="'+p[0]+'" cy="'+p[1]+'" r="30" fill="'+(full?col:"#fff")+'" stroke="'+col+'" stroke-width="5"/>';
     if(full) s+='<path d="M'+(p[0]-11)+' '+p[1]+' l7 8 l15 -16" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>';
@@ -356,15 +371,17 @@ function ring(p){
 }
 
 /* ---------- pages ---------- */
+function disclaimer(){return '<p class="note disc small"><b>No income promise.</b> '+esc(C.earningsDisclaimer||"This program teaches skills; it does not promise income.")+'</p>'}
 function pageHome(){
-  var ps=["web","assist","products"].map(function(k){var p=PATHS[k];return '<div class="card pathcard accent-'+p.color+'"><span class="tag '+p.color+'">Path</span><h3>'+esc(p.name)+'</h3><p>'+esc(p.short)+'</p><p class="small muted"><strong>Example work:</strong> '+esc(p.makes)+'</p></div>'}).join("");
-  var steps=[["Learn","Understand what AI does well and where it slips."],["Choose","Pick one realistic skill for your time and budget."],["Find","Talk to people and find a real problem."],["Build","Make a small first version and test it."],["Sell","Explain, scope and price your offer honestly."],["Grow","Deliver well, track profit, improve."]];
-  var cols=["blue","purple","mint","orange","blue","purple"];
-  return '<section class="hero"><div><p class="kicker">For complete beginners</p><h1>Learn practical AI skills people pay for, <span class="grad">one clear step at a time.</span></h1><p class="lead">'+esc(C.tagline||"")+' Six short modules take you from understanding AI to finding a real problem, building something useful, and approaching your first customer.</p><div class="row"><a class="btn primary" href="#/start">Find my starting path</a><a class="btn ghost" href="#/dashboard">'+(doneCount()?"Continue learning":"Go to my dashboard")+'</a></div><p class="small muted" style="margin-top:14px">About 4 hours of reading plus practical tasks. No income is promised: what you earn depends on your work, your market and luck.</p></div><div class="hero-art">'+pathMap(false)+'</div></section>'+
-  '<section class="block"><h2>The path</h2><ol class="steps6">'+steps.map(function(s,i){return '<li class="accent-'+cols[i]+'"><span class="tag '+cols[i]+'">Module '+(i+1)+'</span><b style="margin-top:6px">'+s[0]+'</b><span class="small muted">'+s[1]+'</span></li>'}).join("")+'</ol></section>'+
-  '<section class="block"><h2>Three practical paths</h2><p class="muted">The starting questionnaire suggests one. Each path explains its skills, costs and limits honestly.</p><div class="grid g3">'+ps+'</div></section>'+
-  '<section class="block grid g2"><div class="card"><h2>Who it helps</h2><ul><li>Complete beginners who want a practical, honest starting point.</li><li>People with a few hours a week and a small or $0 budget.</li><li>Teens too: if you are under 18, involve a parent or guardian for payments, agreements and taxes. Payment providers set their own age rules.</li><li>Anyone who prefers doing real tasks over watching theory.</li></ul></div><div class="card"><h2>Who it is not for</h2><ul><li>People looking for quick or guaranteed money. This course does not promise income.</li><li>Experienced developers (it starts from zero).</li><li>Anyone wanting AI advertising or brand-scaling training: those topics are not covered here.</li></ul></div></section>'+
-  '<section class="block card"><h2>What you get</h2><div class="grid g3"><div><b>12 written lessons</b><p class="small muted">Each with a goal, plain explanation, worked example, task and knowledge check.</p></div><div><b>13 worksheets and calculators</b><p class="small muted">Prompt builder, problem scorecard, price calculator, expense tracker and more.</p></div><div><b>A portfolio project</b><p class="small muted">A true one-page case study you can download and share.</p></div></div><p class="note blue small" style="margin-bottom:0">All examples with names are <strong>hypothetical</strong> and labeled. There are no invented testimonials or student results on this site.</p></section>';
+  var sm=modsOf("scale");
+  var ps=["web","assist","products"].map(function(k){var p=PATHS[k];return '<div class="card pathcard accent-'+p.color+'"><span class="tag '+p.color+'">Extra track</span><h3>'+esc(p.name)+'</h3><p class="small">'+esc(p.short)+'</p></div>'}).join("");
+  var tiers=(C.tiers||[]);var lo=tiers.length?Math.min.apply(null,tiers.map(function(t){return t.price})):0;
+  return '<section class="hero"><div><p class="kicker">Online coaching &amp; mentorship</p><h1>Learn to run ads that help clothing brands grow, <span class="grad">with a coach in your corner.</span></h1><p class="lead">'+esc(C.tagline||"")+'</p><div class="row"><a class="btn primary" href="#/free">Start the free training</a><a class="btn ghost" href="#/coaching">See coaching</a></div><p style="margin:12px 0 0"><a href="#/start">Not sure it&rsquo;s for you? Take the 1-minute questionnaire</a></p><p class="small muted" style="margin-top:14px">Free training first. Coaching is by application'+(lo?' and starts at '+money(lo):'')+'. No income is promised.</p></div><div class="hero-art">'+pathMap(false,"scale")+'</div></section>'+
+  '<section class="block"><h2>How the program works</h2><ol class="steps6 steps3"><li class="accent-mint"><span class="tag mint">Step 1</span><b style="margin-top:6px">Free training</b><span class="small muted">Two short modules: how brand scaling works, the store numbers that matter, and how AI tools help. Free, no account.</span></li><li class="accent-purple"><span class="tag purple">Step 2</span><b style="margin-top:6px">Apply</b><span class="small muted">A short application and a call with '+esc(C.coachName||"the coach")+' to check it fits. No pressure; you can say no.</span></li><li class="accent-orange"><span class="tag orange">Step 3</span><b style="margin-top:6px">Coaching</b><span class="small muted">The full program plus live group or 1-on-1 coaching, depending on the tier you choose.</span></li></ol></section>'+
+  '<section class="block"><h2>What you will learn</h2><p class="muted">The main track: freelance brand scaling. You act as a small agency that runs paid ads on Instagram, TikTok and Google for e-commerce and clothing brands.</p><ol class="steps6">'+sm.map(function(m){return '<li class="accent-'+m.color+'"><span class="tag '+m.color+'">Module '+m.n+'</span><b style="margin-top:6px">'+esc(m.title)+'</b><span class="small muted">'+esc(m.sub)+'</span></li>'}).join("")+'</ol></section>'+
+  '<section class="block"><h2>Optional extra tracks</h2><p class="muted">Included in the program: AI basics plus three other ways to earn with AI.</p><div class="grid g3">'+ps+'</div></section>'+
+  '<section class="block grid g2"><div class="card"><h2>Who it helps</h2><ul><li>Beginners who want a practical skill and are ready to do outreach and client work.</li><li>People with a few hours a week. You do not need your own ad money: clients pay their own ad spend.</li><li>Teens with a parent or guardian involved in payments, agreements and taxes.</li></ul></div><div class="card"><h2>Who it is not for</h2><ul><li>People looking for quick or guaranteed money.</li><li>Anyone who does not want to contact businesses or handle client work.</li><li>Anyone looking for shortcuts around platform rules.</li></ul></div></section>'+
+  '<section class="block card"><h2>What you get</h2><div class="grid g3"><div><b>'+LESSONS.length+' written lessons</b><p class="small muted">Each with a goal, plain explanation, worked example, task and knowledge check.</p></div><div><b>'+WS.length+' worksheets and calculators</b><p class="small muted">Break-even ROAS, retainer pricing, launch checklist, weekly report, outreach templates and more.</p></div><div><b>Live coaching</b><p class="small muted">Group and 1-on-1 calls with '+esc(C.coachName||"the coach")+', depending on your tier.</p></div></div><p class="note blue small" style="margin-bottom:0">All examples with names are <strong>hypothetical</strong> and labeled. There are no invented testimonials or student results on this site.</p></section>'+disclaimer();
 }
 
 function pageStart(sub){
@@ -389,10 +406,10 @@ function pageStart(sub){
   return h;
 }
 function recommend(){
-  var sc={web:0,assist:0,products:0},why={web:[],assist:[],products:[]};
+  var keys=["brand","web","assist","products"].filter(function(k){return PATHS[k]});var sc={},why={};keys.forEach(function(k){sc[k]=0;why[k]=[]});
   A.QUESTIONS.forEach(function(q){var o=q.opts.filter(function(o){return o.v===S.answers[q.id]})[0];if(!o)return;
     Object.keys(o.pts).forEach(function(k){sc[k]+=o.pts[k];if(o.pts[k]>=2)why[k].push(o.why);});});
-  var order=["web","assist","products"].sort(function(a,b){return sc[b]-sc[a]});
+  var order=keys.slice().sort(function(a,b){return (sc[b]-sc[a])||(keys.indexOf(a)-keys.indexOf(b))});
   return {best:order[0],order:order,sc:sc,why:why};
 }
 function pathDetails(p){
@@ -404,56 +421,62 @@ function pageResult(){
   var reasons=r.why[r.best].length?r.why[r.best]:["your answers were balanced, and this path had the highest total"];
   var h='<p class="kicker">Your suggested starting path</p><h1>'+esc(p.name)+'</h1><p class="lead muted" style="font-size:1.1rem">We suggest this because '+reasons.map(esc).join("; ")+'.</p>';
   h+='<div class="grid g2" style="margin-top:16px"><div class="card pathcard accent-'+p.color+'"><span class="tag '+p.color+'">'+(S.path===r.best?"Your path":"Suggested")+'</span><h2 style="margin-top:8px">'+esc(p.name)+'</h2>'+pathDetails(p)+'</div><div>';
-  h+='<div class="card"><h2>Your one next step</h2><p>Start Module 1. It is the same for every path and takes about 15 minutes.</p><a class="btn primary" href="#/lesson/m1l1">Start lesson 1</a></div>';
+  var tk=S.path==="brand"?"scale":"found",fl=firstLessonOf(tk);
+  h+='<div class="card"><h2>Your one next step</h2><p>Start the '+esc(TRACKS[tk].long)+' track with &ldquo;'+esc(fl.title)+'&rdquo;. It is part of the free training and takes about '+fl.minutes+' minutes.</p><a class="btn primary" href="#/lesson/'+fl.id+'">Start lesson 1</a>'+(tk==="found"?'<p class="small muted" style="margin:10px 0 0">Brand scaling stays the main program; it comes after this track in your plan.</p>':'')+'</div>';
   h+='<div class="card" style="margin-top:16px"><h3 style="margin-top:0">Other paths</h3><p class="small muted">The suggestion is not a rule. Pick a different path if it fits you better.</p>';
   r.order.forEach(function(k){var o=PATHS[k];h+='<div class="row" style="justify-content:space-between;border-top:1px solid var(--line);padding:10px 0"><div><b>'+esc(o.name)+'</b><div class="small muted">Match score '+r.sc[k]+'</div></div>'+(S.path===k?'<span class="tag mint">Chosen</span>':'<button class="btn ghost small" data-choose="'+k+'">Choose this path</button>')+'</div>';});
   h+='<div class="row" style="margin-top:8px"><a class="btn ghost small" href="#/start/0" id="retake">Change my answers</a></div></div></div></div>';
-  h+='<details class="card" style="margin-top:16px"><summary><b>Compare all three paths</b></summary><div class="grid g3" style="margin-top:12px">'+["web","assist","products"].map(function(k){var o=PATHS[k];return '<div class="pathcard accent-'+o.color+'" style="border-top:6px solid var(--a);padding-top:10px"><h3 style="margin-top:0">'+esc(o.name)+'</h3>'+pathDetails(o)+'</div>'}).join("")+'</div></details>';
+  h+='<details class="card" style="margin-top:16px"><summary><b>Compare all four paths</b></summary><div class="grid g2" style="margin-top:12px">'+["brand","web","assist","products"].map(function(k){var o=PATHS[k];return '<div class="pathcard accent-'+o.color+'" style="border-top:6px solid var(--a);padding-top:10px"><h3 style="margin-top:0">'+esc(o.name)+'</h3>'+pathDetails(o)+'</div>'}).join("")+'</div></details>';
   setTimeout(function(){$$("[data-choose]").forEach(function(b){b.addEventListener("click",function(){S.path=b.dataset.choose;save();toast("Path set: "+PATHS[S.path].name);render();})});});
   return h;
 }
 
-function moduleCards(){
-  return '<div class="grid g3">'+MODULES.map(function(m){var ls=lessonsOf(m.id),d=modDone(m.id);
+function moduleCards(track){
+  return '<div class="grid g3">'+modsOf(track).map(function(m){var ls=lessonsOf(m.id),d=modDone(m.id);
     return '<article class="card mod accent-'+m.color+'"><div class="row" style="justify-content:space-between"><div class="num">'+m.n+'</div><span class="tag '+(d===ls.length?"mint":m.color)+'">'+(d===ls.length?"Complete":d+" of "+ls.length+" done")+'</span></div><h2 class="h3">'+esc(m.title)+'</h2><p class="small muted">'+esc(m.sub)+'</p><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:'+(d/ls.length*100)+'%"></div></div><ul>'+ls.map(function(l){return '<li><a href="#/lesson/'+l.id+'"><span class="dot'+(isDone(l.id)?" done":"")+'" aria-hidden="true"></span><span>'+esc(l.title)+'<span class="sr">'+(isDone(l.id)?" (completed)":"")+'</span><br><span class="small muted">'+l.minutes+' min'+(S.marks.indexOf(l.id)>=0?" &middot; bookmarked":"")+'</span></span></a></li>'}).join("")+'</ul></article>'}).join("")+'</div>';
 }
 function pageCourse(){
-  return '<p class="kicker">Course map</p><h1>Six modules, twelve lessons</h1><p class="muted">Go in order the first time. Each lesson ends with a practical task and a short knowledge check.</p><div class="card" style="margin:16px 0">'+pathMap(true)+'</div>'+moduleCards();
+  var h='<p class="kicker">Program map</p><h1>Two tracks, '+LESSONS.length+' lessons</h1><p class="muted">Go in order the first time. Each lesson ends with a practical task and a short knowledge check. Lessons marked Free are part of the free training.</p>';
+  trackOrder().forEach(function(t){var T=TRACKS[t],n=trackLessons(t).length,d=trackLessons(t).filter(function(l){return isDone(l.id)}).length;
+    h+='<section class="block"><div class="row" style="justify-content:space-between"><h2 style="margin:0">'+esc(T.long)+'</h2><span class="tag '+(t==="scale"?"mint":"blue")+'">'+esc(T.badge)+' &middot; '+d+' of '+n+' done</span></div><p class="muted">'+esc(T.desc)+'</p><div class="card" style="margin:12px 0 16px">'+pathMap(true,t)+'</div>'+moduleCards(t)+'</section>';});
+  return h;
 }
 
 function pageDashboard(){
-  var n=nextLesson(),p=pct(),path=S.path&&PATHS[S.path];
+  var n=nextLesson(),p=pct(),path=S.path&&PATHS[S.path];var tk=trackOrder()[0];
   var h='<p class="kicker">Your dashboard</p><h1>'+(doneCount()?"Welcome back":"Welcome")+'</h1>';
-  if(n){h+='<section class="continue">'+ring(p)+'<div><p class="small" style="margin:0;opacity:.9">'+(doneCount()?"Continue learning":"Start learning")+' &middot; Module '+MMAP[n.module].n+'</p><h2>'+esc(n.title)+'</h2><p class="muted small" style="margin:4px 0 0">'+n.minutes+' min &middot; '+esc(n.goal)+'</p></div><a class="btn" href="#/lesson/'+n.id+'">'+(doneCount()?"Continue learning":"Start lesson")+'</a></section>';}
-  else {h+='<section class="continue">'+ring(100)+'<div><h2>All 12 lessons complete</h2><p class="muted small" style="margin:4px 0 0">Your next step: finish the final project and add it to your portfolio.</p></div><a class="btn" href="#/project">Open final project</a></section>';}
+  if(n){h+='<section class="continue">'+ring(p)+'<div><p class="small" style="margin:0;opacity:.9">'+(doneCount()?"Continue learning":"Start learning")+' &middot; '+esc(TRACKS[trackOf(n)].name)+' &middot; Module '+MMAP[n.module].n+'</p><h2>'+esc(n.title)+'</h2><p class="muted small" style="margin:4px 0 0">'+n.minutes+' min &middot; '+esc(n.goal)+'</p></div><a class="btn" href="#/lesson/'+n.id+'">'+(doneCount()?"Continue learning":"Start lesson")+'</a></section>';}
+  else {h+='<section class="continue">'+ring(100)+'<div><h2>All '+LESSONS.length+' lessons complete</h2><p class="muted small" style="margin:4px 0 0">Your next step: finish the final project and add it to your portfolio.</p></div><a class="btn" href="#/project">Open final project</a></section>';}
   h+='<div class="grid g3" style="margin-top:16px">';
   h+='<div class="card"><p class="kicker" style="color:var(--blue)">Progress</p><div class="stat">'+doneCount()+' / '+LESSONS.length+'</div><p class="small muted">lessons complete</p><div class="bar-track"><div class="bar-fill" style="width:'+p+'%"></div></div></div>';
   var qs=Object.keys(S.quiz).length,avg=qs?Math.round(Object.keys(S.quiz).reduce(function(a,k){return a+S.quiz[k].best/S.quiz[k].of},0)/qs*100):0;
   h+='<div class="card"><p class="kicker" style="color:var(--mint-ink)">Knowledge checks</p><div class="stat">'+qs+'</div><p class="small muted">taken'+(qs?" &middot; best scores average "+avg+"%":"")+'</p></div>';
   h+='<div class="card"><p class="kicker" style="color:var(--orange-ink)">Your path</p>'+(path?'<h3 style="margin:4px 0">'+esc(path.name)+'</h3><p class="small muted">'+esc(path.short)+'</p><a class="small" href="#/start/result">See details or change</a>':'<p>Not chosen yet.</p><a class="btn primary small" href="#/start">Take the 1-minute questionnaire</a>')+'</div>';
   h+='</div>';
-  var nm=S.notes.m6l2;
+  var nm=S.notes.s6l2||S.notes.m6l2;
   if(nm) h+='<div class="note mint"><b>Your one next move</b> (from Module 6): '+esc(nm.split("\n")[0].slice(0,200))+'</div>';
   if(S.marks.length) h+='<section class="block"><h2>Bookmarks</h2><div class="row">'+S.marks.filter(function(id){return LMAP[id]}).map(function(id){return '<a class="btn ghost small" href="#/lesson/'+id+'">'+esc(LMAP[id].title)+'</a>'}).join("")+'</div></section>';
-  h+='<section class="block"><h2>Modules</h2>'+moduleCards()+'</section>';
+  trackOrder().forEach(function(t){h+='<section class="block"><h2>'+esc(TRACKS[t].long)+' <span class="tag '+(t==="scale"?"mint":"blue")+'">'+esc(TRACKS[t].badge)+'</span></h2>'+moduleCards(t)+'</section>';});
+  var fr=LESSONS.filter(function(l){return l.free}),fd=fr.filter(function(l){return isDone(l.id)}).length;
+  h+='<div class="note mint"><b>Free training:</b> '+fd+' of '+fr.length+' lessons done. '+(fd===fr.length?'<a href="#/apply">Apply for coaching</a> when you are ready.':'<a href="#/free">See the free training</a>.')+'</div>';
   h+='<section class="block grid g2"><a class="card" href="#/resources" style="text-decoration:none;color:var(--ink)"><h3 style="margin-top:0">Resources</h3><p class="small muted">Worksheets, templates and calculators. '+Object.keys(S.ws).length+' started.</p></a><a class="card" href="#/project" style="text-decoration:none;color:var(--ink)"><h3 style="margin-top:0">Final project</h3><p class="small muted">'+projectFilled()+' of '+A.PROJECT.fields.length+' sections written.</p></a></section>';
   return h;
 }
 
 function pageLesson(id){
   var l=LMAP[id]; if(!l) return notFound();
-  var m=MMAP[l.module], prev=LESSONS[l.i-1], next=LESSONS[l.i+1];
+  var m=MMAP[l.module], O=ordered(), oi=O.indexOf(l), prev=O[oi-1], next=O[oi+1];
   S.last=id; save();
   var path=S.path&&PATHS[S.path];
   var marked=S.marks.indexOf(id)>=0, steps=S.steps[id]||[], qz=S.quiz[id];
-  var side='<nav class="side card" aria-label="All lessons">'+MODULES.map(function(mm){return '<div class="mt">'+mm.n+'. '+esc(mm.title)+'</div>'+lessonsOf(mm.id).map(function(x){return '<a href="#/lesson/'+x.id+'"'+(x.id===id?' aria-current="page"':'')+'><span class="dot'+(isDone(x.id)?" done":"")+'" aria-hidden="true"></span>'+esc(x.title)+'</a>'}).join("")}).join("")+'</nav>';
+  var side='<nav class="side card" aria-label="All lessons">'+trackOrder().map(function(t){return '<div class="tt">'+esc(TRACKS[t].name)+'</div>'+modsOf(t).map(function(mm){return '<div class="mt">'+mm.n+'. '+esc(mm.title)+'</div>'+lessonsOf(mm.id).map(function(x){return '<a href="#/lesson/'+x.id+'"'+(x.id===id?' aria-current="page"':'')+'><span class="dot'+(isDone(x.id)?" done":"")+'" aria-hidden="true"></span>'+esc(x.title)+(x.free?' <span class="free-dot">Free</span>':'')+'</a>'}).join("")}).join("")}).join("")+'</nav>';
   var explain=l.explain.join("");
   if(path) explain=explain.replace(new RegExp("<h3>("+path.name.replace(/[&]/g,"&amp;").replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")</h3>"),'<h3>$1 <span class="tag mint yourpath">Your path</span></h3>');
   var h='<div class="lesson">'+side+'<article class="accent-'+m.color+'">';
-  h+='<div class="lhead"><div class="row" style="justify-content:space-between"><span class="tag '+m.color+'">Module '+m.n+': '+esc(m.title)+' &middot; Lesson '+(lessonsOf(m.id).indexOf(l)+1)+' of '+lessonsOf(m.id).length+'</span><button class="btn ghost small bm noprint" id="bm" aria-pressed="'+marked+'">'+(marked?"Bookmarked":"Bookmark")+'</button></div><h1 style="margin-top:12px">'+esc(l.title)+'</h1><p class="small muted" style="margin:0" id="lmeta">'+lessonMeta(l)+'</p><div class="bar-track" style="margin-top:10px" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="'+LESSONS.length+'" aria-valuenow="'+doneCount()+'"><div class="bar-fill" style="width:'+pct()+'%"></div></div><p class="small muted mobile-only" style="margin:6px 0 0">'+doneCount()+' of '+LESSONS.length+' lessons complete &middot; <a href="#/course">All lessons</a></p><div class="goal"><span aria-hidden="true" style="font-size:1.3rem">&#127919;</span><div><b>Learning goal</b><br>'+esc(l.goal)+'</div></div></div>';
+  h+='<div class="lhead"><div class="row" style="justify-content:space-between"><span class="row" style="gap:6px"><span class="tag '+m.color+'">'+esc(TRACKS[m.track].name)+' &middot; Module '+m.n+': '+esc(m.title)+'</span>'+(l.free?'<span class="tag mint">Free training</span>':'')+'</span><button class="btn ghost small bm noprint" id="bm" aria-pressed="'+marked+'">'+(marked?"Bookmarked":"Bookmark")+'</button></div><h1 style="margin-top:12px">'+esc(l.title)+'</h1><p class="small muted" style="margin:0" id="lmeta">'+lessonMeta(l)+'</p><div class="bar-track" style="margin-top:10px" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="'+LESSONS.length+'" aria-valuenow="'+doneCount()+'"><div class="bar-fill" style="width:'+pct()+'%"></div></div><p class="small muted mobile-only" style="margin:6px 0 0">'+doneCount()+' of '+LESSONS.length+' lessons complete &middot; <a href="#/course">All lessons</a></p><div class="goal"><span aria-hidden="true" style="font-size:1.3rem">&#127919;</span><div><b>Learning goal</b><br>'+esc(l.goal)+'</div></div></div>';
   h+='<section class="lsec card"><h2><span class="ic" aria-hidden="true">Aa</span>Words in plain English</h2><dl class="terms">'+l.terms.map(function(t){return '<div><dt>'+esc(t[0])+'</dt><dd>'+esc(t[1])+'</dd></div>'}).join("")+'</dl></section>';
   h+='<section class="lsec card"><h2><span class="ic" aria-hidden="true">&#9673;</span>Explanation</h2>'+explain+'</section>';
-  if(l.facts&&l.facts.length) h+='<section class="lsec card facts"><h2><span class="ic" aria-hidden="true">&#10004;</span>Checked facts</h2><ul class="factlist">'+l.facts.map(function(f){return '<li>'+esc(f.text)+' <a href="'+esc(f.url)+'" rel="noopener" target="_blank">'+esc(f.src)+'<span class="sr"> (opens in a new tab)</span></a></li>'}).join("")+'</ul><p class="small muted" style="margin:0">Checked November 7, 2026. Rules and prices change: open the source before relying on a number.</p></section>';
+  if(l.facts&&l.facts.length) h+='<section class="lsec card facts"><h2><span class="ic" aria-hidden="true">&#10004;</span>Checked facts</h2><ul class="factlist">'+l.facts.map(function(f){return '<li>'+esc(f.text)+' <a href="'+esc(f.url)+'" rel="noopener" target="_blank">'+esc(f.src)+'<span class="sr"> (opens in a new tab)</span></a></li>'}).join("")+'</ul><p class="small muted" style="margin:0">Checked November '+(trackOf(l)==="scale"?8:7)+', 2026 through searches limited to the official site. Rules, tools and prices change: open the source before relying on a number.</p></section>';
   if(l.mistake) h+='<p class="note mistake"><b>Common mistake:</b> '+esc(l.mistake)+'</p>';
   h+='<section class="lsec card example"><h2><span class="ic" aria-hidden="true">&#9998;</span>Worked example</h2><span class="hypo">Hypothetical example</span><h3 style="margin-top:4px">'+esc(l.example.title.replace(/^Hypothetical:\s*/,"").replace(/^./,function(c){return c.toUpperCase()}))+'</h3>'+l.example.body+'</section>';
   h+='<section class="lsec card"><h2><span class="ic" aria-hidden="true">&#10003;</span>Your task: '+esc(l.task.title)+'</h2><ul class="tasklist">'+l.task.steps.map(function(s,i){return '<li><label><input type="checkbox" data-step="'+i+'"'+(steps[i]?" checked":"")+'> <span>'+esc(s)+'</span></label></li>'}).join("")+'</ul><p class="note blue small" style="margin-bottom:0">'+esc(l.task.note)+'</p></section>';
@@ -467,7 +490,7 @@ function pageLesson(id){
   setTimeout(function(){wireLesson(l,next)});
   return h;
 }
-function lessonMeta(l){return 'Lesson '+(l.i+1)+' of '+LESSONS.length+' &middot; '+l.minutes+' min'+(isDone(l.id)?' &middot; <b style="color:var(--mint-ink)">Completed</b>':'');}
+function lessonMeta(l){var tl=trackLessons(trackOf(l));return 'Lesson '+(tl.indexOf(l)+1)+' of '+tl.length+' in '+esc(TRACKS[trackOf(l)].name)+' &middot; '+l.minutes+' min'+(isDone(l.id)?' &middot; <b style="color:var(--mint-ink)">Completed</b>':'');}
 function refreshLessonHead(l){var m=$("#lmeta");if(m)m.innerHTML=lessonMeta(l);var f=$(".lhead .bar-fill");if(f)f.style.width=pct()+"%";}
 function doneBoxInner(id,next){
   if(isDone(id)) return '<div><b>Lesson complete.</b> <span class="muted">'+(next?"Next up: "+esc(next.title):"That was the last lesson. Time for the final project.")+'</span></div><div class="row"><button class="btn ghost small" id="undone">Mark as not complete</button><a class="btn primary" href="'+(next?"#/lesson/"+next.id:"#/project")+'">'+(next?"Next lesson":"Final project")+'</a></div>';
@@ -516,8 +539,8 @@ function wireDone(l,next){
 function pageResources(sub){
   if(sub) return pageWorksheet(sub);
   var h='<p class="kicker">Resources</p><h1>Worksheets, templates and calculators</h1><p class="muted">Everything you type is saved on this device. Each one can be copied, downloaded as a text file, or printed.</p>';
-  MODULES.forEach(function(m){var list=WS.filter(function(w){return w.module===m.id});if(!list.length)return;
-    h+='<h2 style="margin-top:24px">Module '+m.n+': '+esc(m.title)+'</h2><div class="grid g3">'+list.map(function(w){return '<a class="card mod accent-'+m.color+'" style="text-decoration:none;color:var(--ink)" href="#/resources/'+w.id+'"><span class="tag '+m.color+'">'+({form:"Worksheet",prompt:"Tool",checklist:"Checklist",score:"Scorecard",price:"Calculator",template:"Template",money:"Tracker"})[w.kind]+'</span><h3>'+esc(w.title)+'</h3><p class="small muted" style="margin:0">'+esc(w.desc)+'</p>'+(S.ws[w.id]?'<p class="small" style="color:var(--mint-ink);font-weight:700;margin:8px 0 0">Started</p>':'')+'</a>'}).join("")+'</div>';});
+  trackOrder().forEach(function(tk){h+='<h2 style="margin-top:28px">'+esc(TRACKS[tk].long)+'</h2>';modsOf(tk).forEach(function(m){var list=WS.filter(function(w){return w.module===m.id});if(!list.length)return;
+    h+='<h3 style="margin-top:18px">Module '+m.n+': '+esc(m.title)+'</h3><div class="grid g3">'+list.map(function(w){return '<a class="card mod accent-'+m.color+'" style="text-decoration:none;color:var(--ink)" href="#/resources/'+w.id+'"><span class="tag '+m.color+'">'+({form:"Worksheet",prompt:"Tool",checklist:"Checklist",score:"Scorecard",price:"Calculator",template:"Template",money:"Tracker",roas:"Calculator",retainer:"Calculator"})[w.kind]+'</span><h3>'+esc(w.title)+'</h3><p class="small muted" style="margin:0">'+esc(w.desc)+'</p>'+(S.ws[w.id]?'<p class="small" style="color:var(--mint-ink);font-weight:700;margin:8px 0 0">Started</p>':'')+'</a>'}).join("")+'</div>';});});
   h+='<h2 style="margin-top:24px">Helpful habits</h2><div class="card"><ul style="margin:0"><li>Keep one folder for each project: scope, notes, receipts, feedback.</li><li>Before any tool or price goes into your work, check it on the tool\u2019s official page. See <a href="#/facts">Facts &amp; sources</a> for what this course could and could not verify.</li></ul></div>';
   return h;
 }
@@ -530,6 +553,8 @@ function wsText(w){
   if(w.kind==="score") (d.rows||[]).forEach(function(r){out+=(r.name||"(unnamed)")+": "+w.factors.map(function(f,i){return f+" "+(r.s[i]||"-")}).join(", ")+" = "+scoreTotal(r)+"/25\n";});
   if(w.kind==="template") out+=(d.text!=null?d.text:w.text)+"\n";
   if(w.kind==="price"){var r=priceCalc(d);out+="Hours "+r.h+" (+"+r.buf+"% buffer), rate "+money(r.rate)+"/h, costs "+money(r.costs)+"\nSuggested price: "+money(r.price)+"\nFees: "+money(r.fees)+"\nProfit before tax: "+money(r.profit)+"\nTax set-aside: "+money(r.tax)+"\nKeep: "+money(r.keep)+"\nEffective hourly: "+money(r.eff)+"\n(Math only, not a market price.)\n";}
+  if(w.kind==="roas"){var rr=roasCalc(d);out+="AOV "+money(rr.aov)+" | fees "+money(rr.fees)+" | margin per order "+money(rr.margin)+"\nBreak-even ROAS: "+(rr.be?rr.be.toFixed(2):"not reachable (no margin)")+" | Break-even CPA: "+money(Math.max(0,rr.margin))+"\n(Math only.)\n";}
+  if(w.kind==="retainer"){var rt=retainerCalc(d);out+="Flat: "+money(rt.a)+" ("+money(rt.ha)+"/h)\n% of ad spend: "+money(rt.b)+" ("+money(rt.hb)+"/h)\nRevenue share: "+money(rt.c)+" ("+money(rt.hc)+"/h)\n(Math only, not market rates.)\n";}
   if(w.kind==="money"){var t=moneyTotals(d);(d.rows||[]).forEach(function(r){out+=(r.date||"")+"\t"+(r.type==="in"?"IN ":"OUT")+"\t"+money(r.amt)+"\t"+(r.item||"")+"\t"+(r.cat||"")+"\n";});out+="\nRevenue "+money(t.rev)+" | Expenses "+money(t.exp)+" | Profit "+money(t.profit)+"\n";}
   return out;
 }
@@ -540,12 +565,14 @@ function priceCalc(d){var bad=[];["hours","buffer","rate","costs","feep","feef",
   var h=+d.hours||0,buf=d.buffer===undefined||d.buffer===""?30:+d.buffer,rate=+d.rate||0,costs=+d.costs||0,fp=(+d.feep||0)/100,ff=+d.feef||0,tp=(+d.tax||0)/100;
   var base=h*(1+buf/100)*rate+costs;var price=fp<1?(base+ff)/(1-fp):0;var fees=price*fp+(price?ff:0);var profit=price-fees-costs;var tax=Math.max(0,profit*tp);var keep=profit-tax;var hrs=h*(1+buf/100);
   return {h:h,buf:buf,rate:rate,costs:costs,price:price,fees:fees,profit:profit,tax:tax,keep:keep,eff:hrs?keep/hrs:0};}
+function roasCalc(d){var aov=+d.aov||0,cost=+d.cost||0,ship=+d.ship||0,fp=(+d.feep||0)/100,ff=+d.feef||0;var fees=aov?aov*fp+ff:0;var margin=aov-cost-ship-fees;return {aov:aov,fees:fees,margin:margin,be:margin>0?aov/margin:null,bad:[aov,cost,ship,+d.feep||0,ff].some(function(x){return x<0})||fp>=1};}
+function retainerCalc(d){var spend=+d.spend||0,flat=+d.flat||0,pct=(+d.pct||0)/100,rs=(+d.rs||0)/100,rev=+d.rev||0,hrs=+d.hrs||0;var a=flat,b=spend*pct,c=rev*rs;return {a:a,b:b,c:c,ha:hrs?a/hrs:0,hb:hrs?b/hrs:0,hc:hrs?c/hrs:0,bad:[spend,flat,+d.pct||0,+d.rs||0,rev,hrs].some(function(x){return x<0})};}
 function moneyTotals(d){var rev=0,exp=0;(d.rows||[]).forEach(function(r){var a=+r.amt||0;if(r.type==="in")rev+=a;else exp+=a;});return {rev:rev,exp:exp,profit:rev-exp,margin:rev?Math.round((rev-exp)/rev*100):null};}
 
 function pageWorksheet(id){
   var w=WS.filter(function(x){return x.id===id})[0]; if(!w) return notFound();
   var m=MMAP[w.module],d=S.ws[w.id]||{};
-  var h='<p class="small"><a href="#/resources">&larr; All resources</a></p><div class="card accent-'+m.color+'" style="border-top:6px solid var(--a)"><span class="tag '+m.color+'">Module '+m.n+'</span><h1 style="margin-top:8px;font-size:clamp(1.5rem,3.6vw,2.2rem)">'+esc(w.title)+'</h1><p class="muted">'+esc(w.desc)+'</p><div id="wsbody">';
+  var h='<p class="small"><a href="#/resources">&larr; All resources</a></p><div class="card accent-'+m.color+'" style="border-top:6px solid var(--a)"><span class="tag '+m.color+'">'+esc(TRACKS[m.track].name)+' &middot; Module '+m.n+'</span><h1 style="margin-top:8px;font-size:clamp(1.5rem,3.6vw,2.2rem)">'+esc(w.title)+'</h1><p class="muted">'+esc(w.desc)+'</p><div id="wsbody">';
   if(w.kind==="form"||w.kind==="prompt"){w.fields.forEach(function(f){var fid="f_"+f[0];h+='<label class="f" for="'+fid+'">'+esc(f[1])+'</label>'+(f[2]==="area"?'<textarea id="'+fid+'" data-k="'+f[0]+'">'+esc(d[f[0]]||"")+'</textarea>':'<input type="text" id="'+fid+'" data-k="'+f[0]+'" value="'+esc(d[f[0]]||"")+'">');});
     if(w.kind==="prompt") h+='<h3>Your full prompt</h3><div class="ws-out" id="pout" aria-live="polite"></div><div class="row" style="margin-top:10px"><button class="btn blue small" id="copyPrompt">Copy prompt</button></div>';}
   if(w.kind==="checklist") h+='<div role="group" aria-label="'+esc(w.title)+'">'+w.items.map(function(it,i){return '<label class="chk"><input type="checkbox" data-k="c'+i+'"'+(d["c"+i]?" checked":"")+'> <span>'+esc(it)+'</span></label>'}).join("")+'</div><p id="ckc" class="small muted"></p>';
@@ -553,6 +580,10 @@ function pageWorksheet(id){
   if(w.kind==="score") h+='<div id="scoreRows"></div><button class="btn ghost small" id="addRow" style="margin-top:10px">+ Add a problem</button>';
   if(w.kind==="price"){var fl=[["hours","Estimated hours","8"],["buffer","Extra time buffer (%)","30"],["rate","Your hourly target ("+CUR+")","30"],["costs","Direct project costs ("+CUR+")","0"],["feep","Payment fee (%) \u2013 e.g. Stripe US cards 2.9","2.9"],["feef","Fixed fee per payment ("+CUR+") \u2013 e.g. 0.30","0.30"],["tax","Tax set-aside (% of profit)","25"]];
     h+='<div class="calc">'+fl.map(function(f){return '<div><label class="f" for="p_'+f[0]+'">'+esc(f[1])+'</label><input type="number" inputmode="decimal" min="0" step="any" id="p_'+f[0]+'" data-k="'+f[0]+'" placeholder="'+f[2]+'" value="'+esc(d[f[0]]!=null?d[f[0]]:"")+'"></div>'}).join("")+'</div><div class="results" id="pres" aria-live="polite"></div><p class="note small">The fee and tax boxes start empty on purpose. The grey numbers are only examples. Look up your payment provider\u2019s real fee and your local tax rules (a tax professional can help). This is math only: it does not tell you what customers will pay.</p>';}
+  if(w.kind==="roas"){var rf=[["aov","Average order value ("+CUR+")","60"],["cost","Product cost per order ("+CUR+")","22"],["ship","Shipping and packing per order ("+CUR+")","8"],["feep","Payment fee (%), e.g. Stripe US cards 2.9","2.9"],["feef","Fixed fee per payment ("+CUR+"), e.g. 0.30","0.30"]];
+    h+='<div class="calc">'+rf.map(function(f){return '<div><label class="f" for="r_'+f[0]+'">'+esc(f[1])+'</label><input type="number" inputmode="decimal" min="0" step="any" id="r_'+f[0]+'" data-k="'+f[0]+'" placeholder="'+f[2]+'" value="'+esc(d[f[0]]!=null?d[f[0]]:"")+'"></div>'}).join("")+'</div><div class="results" id="rres" aria-live="polite"></div><p class="note small">Break-even ROAS = average order value &divide; margin per order. Grey numbers are examples only. Use real store numbers from the client.</p>';}
+  if(w.kind==="retainer"){var tf=[["spend","Client monthly ad spend ("+CUR+")","3000"],["hrs","Your hours per month on this client","16"],["flat","Flat monthly fee ("+CUR+")","800"],["pct","Percent of ad spend (%)","15"],["rev","Revenue the platforms credit to ads, per month ("+CUR+")","9000"],["rs","Revenue share (%)","5"]];
+    h+='<div class="calc">'+tf.map(function(f){return '<div><label class="f" for="t_'+f[0]+'">'+esc(f[1])+'</label><input type="number" inputmode="decimal" min="0" step="any" id="t_'+f[0]+'" data-k="'+f[0]+'" placeholder="'+f[2]+'" value="'+esc(d[f[0]]!=null?d[f[0]]:"")+'"></div>'}).join("")+'</div><div class="results" id="tres" aria-live="polite"></div><p class="note small">Math only. Grey numbers are examples, not market rates. A revenue share depends on how revenue is tracked and defined: write that into the agreement.</p>';}
   if(w.kind==="money") h+='<div class="tbl"><table><thead><tr><th scope="col">Date</th><th scope="col">Money in / out</th><th scope="col">What</th><th scope="col">Category</th><th scope="col">Amount ('+CUR+')</th><th scope="col"><span class="sr">Remove</span></th></tr></thead><tbody id="mrows"></tbody></table></div><button class="btn ghost small" id="addM" style="margin-top:10px">+ Add a line</button><div class="results" id="mres" aria-live="polite"></div><p class="small muted">Enter only real payments and real costs. Tracker stays on this device: download it often.</p>';
   h+='</div><div class="saved" id="wsaved" aria-live="polite"></div><div class="row noprint" style="margin-top:14px;border-top:1px solid var(--line);padding-top:14px"><button class="btn ghost small" id="wsCopy">Copy as text</button><button class="btn ghost small" id="wsDl">Download .txt</button><button class="btn ghost small" id="wsPrint">Print</button><button class="btn ghost small" id="wsClear">Clear</button></div></div>';
   setTimeout(function(){wireWorksheet(w)});
@@ -566,6 +597,8 @@ function wireWorksheet(w){
     if(w.kind==="prompt"){var p=buildPrompt(d);$("#pout").textContent=p||"Fill in the boxes above to build your prompt.";}
     if(w.kind==="checklist"){var n=w.items.filter(function(_,i){return d["c"+i]}).length;$("#ckc").textContent=n+" of "+w.items.length+" ticked";}
     if(w.kind==="price"){var r=priceCalc(d);if(r.bad){$("#pres").innerHTML='<p class="calc-warn" role="alert">Check your numbers: values cannot be negative, the payment fee must be under 100% and the tax set-aside at most 100%.</p>';return;}$("#pres").innerHTML=[["Suggested price",money(r.price)],["Payment fees",money(r.fees)],["Profit before tax",money(r.profit)],["Tax set-aside",money(r.tax)],["You keep",money(r.keep)],["Effective hourly",money(r.eff)+"/h"]].map(function(x){return '<div><span class="small muted">'+x[0]+'</span><b>'+x[1]+'</b></div>'}).join("");}
+    if(w.kind==="roas"){var rr=roasCalc(d);$("#rres").innerHTML=rr.bad?'<p class="calc-warn" role="alert">Check your numbers: values cannot be negative and the fee must be under 100%.</p>':[["Payment fees per order",money(rr.fees)],["Margin per order",money(rr.margin)],["Break-even ROAS",rr.be?rr.be.toFixed(2):"No margin left"],["Break-even CPA",money(Math.max(0,rr.margin))]].map(function(x){return '<div><span class="small muted">'+x[0]+'</span><b>'+x[1]+'</b></div>'}).join("");}
+    if(w.kind==="retainer"){var rt=retainerCalc(d);$("#tres").innerHTML=rt.bad?'<p class="calc-warn" role="alert">Check your numbers: values cannot be negative.</p>':[["Flat fee",money(rt.a)+" &middot; "+money(rt.ha)+"/h"],["% of ad spend",money(rt.b)+" &middot; "+money(rt.hb)+"/h"],["Revenue share",money(rt.c)+" &middot; "+money(rt.hc)+"/h"]].map(function(x){return '<div><span class="small muted">'+x[0]+'</span><b>'+x[1]+'</b></div>'}).join("");}
     if(w.kind==="money"){var t=moneyTotals(d);$("#mres").innerHTML='<div><span class="small muted">Revenue</span><b>'+money(t.rev)+'</b></div><div><span class="small muted">Expenses</span><b>'+money(t.exp)+'</b></div><div><span class="small muted">Profit</span><b style="color:'+(t.profit<0?"var(--bad)":"var(--good)")+'">'+money(t.profit)+'</b></div><div><span class="small muted">Profit margin</span><b>'+(t.margin==null?"\u2013":t.margin+"%")+'</b></div>';}
   }
   $$("[data-k]",body).forEach(function(el){el.addEventListener(el.type==="checkbox"?"change":"input",function(){d[el.dataset.k]=el.type==="checkbox"?el.checked:el.value;saved();upd();});});
@@ -640,16 +673,49 @@ function pageNotes(){
   return h;
 }
 
-/* ---------- pricing ---------- */
-function pagePricing(){
-  var plans=C.plans||[];
-  var h='<p class="kicker">Pricing</p><h1>Choose how you learn</h1><p class="muted">Prices are one-time. The course teaches skills and gives you tools; it does not promise that you will earn money.</p>';
-  h+='<div class="grid g3" style="margin-top:16px">'+plans.map(function(p,i){var col=["mint","purple","orange","blue"][i%4];var live=p.checkoutUrl&&p.checkoutUrl.length;
-    return '<article class="card plan accent-'+col+(p.highlight?" hl":"")+'">'+(p.highlight?'<span class="tag purple" style="align-self:flex-start">Recommended</span>':'')+'<h2 style="margin-top:8px">'+esc(p.name)+'</h2><div class="price">'+(p.price?money(p.price):"Free")+' <span class="small muted" style="font-weight:600">'+esc(p.period||"")+'</span></div><p class="small muted">'+esc(p.blurb||"")+'</p><ul>'+(p.features||[]).map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul>'+(live?'<a class="btn '+(p.highlight?"primary":"ghost")+'" href="'+esc(p.checkoutUrl)+'"'+(/^https?:/.test(p.checkoutUrl)?' rel="noopener"':'')+'>'+esc(p.cta||"Choose")+'</a>':'<button class="btn ghost" data-nopay="1">'+esc(p.cta||"Choose")+'</button>')+'</article>'}).join("")+'</div>';
-  h+='<p id="paymsg" class="note" role="status" hidden>Online payment is not set up yet, so nothing can be bought here today. You can use everything for free while the course is in its first version.</p>';
-  if(C.refundNote) h+='<p class="small muted">'+esc(C.refundNote)+'</p>';
-  h+='<div class="card" style="margin-top:20px"><h2>Good to know</h2><ul style="margin:0"><li>Progress is saved on your device, not in an account. Use Notes &rarr; Download backup to move it.</li><li>The project review plan includes a review from the course owner. It is a real person reading your work, not an AI score.</li><li>Tool costs (AI assistants, hosting, payments) are separate from the course price and change over time: check official pricing pages.</li></ul></div>';
-  setTimeout(function(){$$("[data-nopay]").forEach(function(b){b.addEventListener("click",function(){var m=$("#paymsg");m.hidden=false;m.focus&&m.setAttribute("tabindex","-1");m.focus();})})});
+/* ---------- free training ---------- */
+function pageFree(){
+  var fr=ordered().filter(function(l){return l.free}),fd=fr.filter(function(l){return isDone(l.id)}).length,nx=fr.filter(function(l){return !isDone(l.id)})[0];
+  var h='<p class="kicker">Free training</p><h1>Start the free training</h1><p class="lead muted" style="max-width:44em">'+fr.length+' short lessons, free and with no account: how brand scaling works, the store numbers brand owners care about, and how to use AI tools well and check their output.</p>';
+  h+='<div class="card"><div class="row" style="justify-content:space-between"><b>'+fd+' of '+fr.length+' done</b>'+(nx?'<a class="btn primary" href="#/lesson/'+nx.id+'">'+(fd?"Continue":"Start")+' the free training</a>':'<a class="btn primary" href="#/apply">Apply for coaching</a>')+'</div><div class="bar-track" style="margin-top:12px"><div class="bar-fill" style="width:'+(fd/fr.length*100)+'%"></div></div><ul class="tasklist" style="margin-top:12px">'+fr.map(function(l){return '<li><a class="row" style="gap:10px;text-decoration:none;color:var(--ink);padding:8px" href="#/lesson/'+l.id+'"><span class="dot'+(isDone(l.id)?" done":"")+'" aria-hidden="true"></span><span><b>'+esc(l.title)+'</b><span class="sr">'+(isDone(l.id)?" (completed)":"")+'</span><br><span class="small muted">'+esc(TRACKS[trackOf(l)].name)+' &middot; '+l.minutes+' min</span></span></a></li>'}).join("")+'</ul></div>';
+  h+='<div class="grid g2" style="margin-top:16px"><div class="card"><h2>After the free training</h2><p>If brand scaling feels right, apply for coaching. You will get a reply within '+(C.replyDays||3)+' business days and, if it looks like a fit, a short call with '+esc(C.coachName||"the coach")+'. If it is not a fit, you will be told honestly.</p><a class="btn ghost" href="#/coaching">See coaching tiers</a></div><div class="card"><h2>Not sure yet?</h2><p>Take the 1-minute questionnaire. It suggests brand scaling or one of three other AI paths, and explains why.</p><a class="btn ghost" href="#/start">Find my starting track</a></div></div>'+disclaimer();
+  return h;
+}
+
+/* ---------- coaching ---------- */
+function pageCoaching(){
+  var T=C.tiers||[];
+  var h='<p class="kicker">Coaching &amp; mentorship</p><h1>Coaching with '+esc(C.coachName||"the coach")+'</h1><p class="muted" style="max-width:48em">Coaching is by application, so we can check it fits before you pay. Every tier lists exactly what you get. There are no countdowns and no fake &ldquo;spots left&rdquo;.</p>';
+  h+='<div class="grid g3" style="margin-top:16px">'+T.map(function(t,i){var col=["mint","purple","orange"][i%3];return '<article class="card plan accent-'+col+(t.highlight?" hl":"")+'"><h2 style="margin-top:4px">'+esc(t.name)+'</h2><div class="price">'+esc(t.priceLabel||money(t.price))+'</div><p class="small muted">'+esc(t.length||"")+'</p><p class="small"><b>Fits if:</b> '+esc(t.fits||"")+'</p><ul>'+(t.features||[]).map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul><a class="btn '+(t.highlight?"primary":"ghost")+'" href="#/apply/'+esc(t.id)+'">Apply for '+esc(t.name)+'</a></article>'}).join("")+'</div>';
+  if(C.paymentPlans) h+='<p class="small muted">'+esc(C.paymentPlans)+'</p>';
+  h+='<div class="grid g2" style="margin-top:20px"><div class="card"><h2>What happens after you apply</h2><ol><li>You send a short application (about 5 minutes).</li><li>'+esc(C.coachName||"The coach")+' replies within '+(C.replyDays||3)+' business days.</li><li>If it looks like a fit, you book a short call to talk it through.</li><li>If you both want to go ahead, you get a payment link and a written agreement. You can say no at any point.</li></ol></div><div class="card"><h2>Questions people ask</h2><p><b>Do I need money for ads?</b> No. Clients pay their own ad spend directly to Meta, TikTok or Google.</p><p><b>Is income guaranteed?</b> No. You learn a skill and get coaching; results depend on many things.</p><p><b>Under 18?</b> A parent or guardian must join the call and agree to any payment.</p><p><b>Refunds?</b> '+(C.refundNote?esc(C.refundNote):'The refund policy will be shown here and in your agreement before you pay. Ask about it on your call.')+'</p></div></div>'+disclaimer();
+  return h;
+}
+
+/* ---------- apply ---------- */
+var APPLY_FIELDS=[["name","Your name","text"],["contact","Email or phone (how to reach you)","text"],["now","What do you do now? (work, school, other)","area"],["hours","Hours a week you can give for the next 2-3 months","text"],["exp","Any experience with ads, social media or selling? (none is fine)","area"],["goal","What do you want from the program in the next 3 months?","area"],["why","Why now?","area"]];
+function applyText(d){var t=(C.tiers||[]).filter(function(x){return x.id===d.tier})[0];var o="Coaching application: "+NAME+"\n\nTier I am interested in: "+(t?t.name+" ("+(t.priceLabel||money(t.price))+")":"Not sure yet")+"\n";APPLY_FIELDS.forEach(function(f){o+="\n"+f[1]+":\n"+(d[f[0]]||"")+"\n";});o+="\nAge: "+(d.adult==="no"?"Under 18 (a parent or guardian will join the call)":"18 or older")+"\nI understand the program does not promise income: yes\n";return o;}
+function pageApply(sub){
+  var d=S.apply||(S.apply={});if(sub)d.tier=sub;
+  var T=C.tiers||[];
+  var h='<p class="kicker">Apply for coaching</p><h1>Coaching application</h1><p class="muted" style="max-width:46em">About 5 minutes. Be honest: this is to check the program fits you, not a test. Your answers stay on this device until you send them.</p><form id="apf" class="card" novalidate>';
+  h+='<label class="f" for="ap_tier">Tier you are interested in</label><select id="ap_tier" data-a="tier"><option value="">Not sure yet</option>'+T.map(function(t){return '<option value="'+esc(t.id)+'"'+(d.tier===t.id?" selected":"")+'>'+esc(t.name)+' ('+esc(t.priceLabel||money(t.price))+')</option>'}).join("")+'</select>';
+  APPLY_FIELDS.forEach(function(f){var id="ap_"+f[0];h+='<label class="f" for="'+id+'">'+esc(f[1])+'</label>'+(f[2]==="area"?'<textarea id="'+id+'" data-a="'+f[0]+'" style="min-height:80px">'+esc(d[f[0]]||"")+'</textarea>':'<input type="text" id="'+id+'" data-a="'+f[0]+'" value="'+esc(d[f[0]]||"")+'">');});
+  h+='<fieldset class="qq" style="margin-top:14px"><legend>Are you 18 or older?</legend><div class="opts" style="margin:8px 0 0"><label class="opt"><input type="radio" name="adult" value="yes"'+(d.adult!=="no"?" checked":"")+'> <span class="ot">Yes</span></label><label class="opt"><input type="radio" name="adult" value="no"'+(d.adult==="no"?" checked":"")+'> <span class="ot">No: a parent or guardian will join the call and agree to any payment</span></label></div></fieldset>';
+  h+='<label class="chk" style="margin-top:8px"><input type="checkbox" id="ap_ok"'+(d.ok?" checked":"")+'> <span>I understand this program teaches skills and gives coaching, and does not promise any income.</span></label>';
+  h+='<div class="row" style="margin-top:12px"><button class="btn primary" type="submit">Prepare my application</button></div><p id="aperr" class="small" role="alert" style="color:var(--bad)"></p></form>';
+  h+='<div id="apout" class="card" hidden style="margin-top:16px"><h2>Send your application</h2><p class="small muted">Nothing is sent automatically from this page.</p><div class="ws-out" id="aptext"></div><div class="row" style="margin-top:12px"><button class="btn blue" id="apcopy" type="button">Copy application</button>'+(C.applicationUrl?'<a class="btn primary" href="'+esc(C.applicationUrl)+'" target="_blank" rel="noopener">Open the application form</a>':'')+'</div><p class="small" style="margin-top:10px">'+(C.applicationUrl?'Paste it into the application form, or answer the same questions there.':(C.supportEmail?'Send it to <b>'+esc(C.supportEmail)+'</b>. ':'The coach has not added an application link yet. Keep your copied application and check back soon.'))+(C.bookingUrl?' You can also <a href="'+esc(C.bookingUrl)+'" target="_blank" rel="noopener">book a fit call</a>.':'')+'</p></div>'+disclaimer();
+  setTimeout(function(){
+    var f=$("#apf");
+    $$("[data-a]",f).forEach(function(el){el.addEventListener(el.tagName==="SELECT"?"change":"input",function(){d[el.dataset.a]=el.value;save();})});
+    $$('input[name=adult]',f).forEach(function(el){el.addEventListener("change",function(){d.adult=el.value;save();})});
+    $("#ap_ok").addEventListener("change",function(){d.ok=this.checked;save();});
+    f.addEventListener("submit",function(e){e.preventDefault();var miss=["name","contact","hours","goal"].filter(function(k){return !(d[k]||"").trim()});
+      if(miss.length){$("#aperr").textContent="Please fill in: "+miss.map(function(k){return APPLY_FIELDS.filter(function(x){return x[0]===k})[0][1]}).join(", ")+".";$("#ap_"+miss[0]).focus();return;}
+      if(!d.ok){$("#aperr").textContent="Please tick the box to confirm you understand there is no income promise.";$("#ap_ok").focus();return;}
+      $("#aperr").textContent="";$("#aptext").textContent=applyText(d);$("#apout").hidden=false;var b=$("#apcopy");b.focus();});
+    $("#apcopy").addEventListener("click",function(){copy(applyText(d))});
+  });
   return h;
 }
 
@@ -659,7 +725,7 @@ function pageFacts(){
 }
 function pageOwner(){
   var plans=(C.plans||[]).filter(function(p){return p.price>0}),goal=+C.revenueGoal||0;
-  var h='<p class="kicker">Owner setup (not for students)</p><h1>Before a paid launch</h1><div class="grid g2"><div class="card"><h2>Still needed</h2><ol><li><b>Hosting for a paid course:</b> GitHub\u2019s terms do not allow GitHub Pages to run an online business or a site mainly for commercial transactions. Move the paid version to a host or course platform that allows selling.</li><li><b>Payments:</b> create a checkout link with a payment provider (for example a Stripe Payment Link) and paste it into <code>checkoutUrl</code> in <code>academy/config.js</code>. Check fees on the provider\u2019s official page.</li><li><b>Access control:</b> today every lesson is open to anyone with the link. To sell it, you need accounts or a course platform that unlocks content after payment. A static site alone cannot keep paid content private.</li><li><b>Accounts and sync:</b> progress is saved per browser. Accounts would need a backend (for example a hosted database with sign-in).</li><li><b>Legal pages:</b> terms, privacy policy, refund policy. Have them checked for your country.</li><li><b>Fact check:</b> re-check every item on <a href="#/facts">Facts &amp; sources</a> with the official pages.</li><li><b>Support email:</b> set <code>supportEmail</code> in config and answer it.</li><li><b>Real testers:</b> have 3\u20135 beginners take Module 1\u20132 and tell you where they got stuck. Do not publish testimonials until real students give them, with permission.</li><li><b>Review plan:</b> only sell \u201cproject review\u201d if you will actually do the reviews.</li></ol></div>';
+  var h='<p class="kicker">Owner setup (not for students)</p><h1>Before a paid launch</h1><div class="grid g2"><div class="card"><h2>Still needed</h2><ol><li><b>Coaching delivery:</b> confirm you can deliver every item in each tier in <code>config.js</code> (calls, reviews, reply times) before taking payment. Remove anything you cannot keep.</li><li><b>Application and booking:</b> set <code>applicationUrl</code> (a real form) and optionally <code>bookingUrl</code> and <code>supportEmail</code>.</li><li><b>Earnings claims:</b> no income claims anywhere (site, calls, social posts). The FTC warns that false or unsupported earnings claims, results shown as typical when they are not, and fake urgency are unlawful for money-making opportunities. Keep the earnings disclaimer.</li><li><b>Coaching agreement and refund policy:</b> write them (ideally reviewed by a lawyer) and set <code>refundNote</code>.</li><li><b>Hosting for a paid course:</b> GitHub\u2019s terms do not allow GitHub Pages to run an online business or a site mainly for commercial transactions. Move the paid version to a host or course platform that allows selling.</li><li><b>Payments:</b> create a checkout link with a payment provider (for example a Stripe Payment Link) and paste it into <code>checkoutUrl</code> in <code>academy/config.js</code>. Check fees on the provider\u2019s official page.</li><li><b>Access control:</b> today every lesson is open to anyone with the link. To sell it, you need accounts or a course platform that unlocks content after payment. A static site alone cannot keep paid content private.</li><li><b>Accounts and sync:</b> progress is saved per browser. Accounts would need a backend (for example a hosted database with sign-in).</li><li><b>Legal pages:</b> terms, privacy policy, refund policy. Have them checked for your country.</li><li><b>Fact check:</b> re-check every item on <a href="#/facts">Facts &amp; sources</a> with the official pages.</li><li><b>Support email:</b> set <code>supportEmail</code> in config and answer it.</li><li><b>Real testers:</b> have 3\u20135 beginners take Module 1\u20132 and tell you where they got stuck. Do not publish testimonials until real students give them, with permission.</li><li><b>Review plan:</b> only sell \u201cproject review\u201d if you will actually do the reviews.</li></ol></div>';
   h+='<div class="card"><h2>Prices and plans</h2><p class="small">Change names, prices, features and checkout links in <code>academy/config.js</code>. Revenue goal math is kept in <code>academy/PROGRESS.md</code>, not on the site.</p></div></div>';
   return h;
 }
@@ -668,10 +734,10 @@ function notFound(){return '<h1>Page not found</h1><p><a href="#/">Go home</a></
 /* ---------- router ---------- */
 function render(){
   var hsh=location.hash.replace(/^#\/?/,""),parts=hsh.split("/"),r=parts[0]||"",sub=parts[1];
-  var map={"":pageHome,dashboard:pageDashboard,course:pageCourse,start:pageStart,lesson:pageLesson,resources:pageResources,project:pageProject,notes:pageNotes,pricing:pagePricing,facts:pageFacts,owner:pageOwner};
+  var map={"":pageHome,dashboard:pageDashboard,course:pageCourse,start:pageStart,lesson:pageLesson,resources:pageResources,project:pageProject,notes:pageNotes,pricing:pageCoaching,coaching:pageCoaching,free:pageFree,apply:pageApply,facts:pageFacts,owner:pageOwner};
   var fn=map[r]||notFound;
   var main=$("#main");main.innerHTML=fn(sub);
-  var navKey=r==="lesson"?"course":r==="start"?"dashboard":r;
+  var navKey=r==="lesson"?"course":r==="start"?"dashboard":r==="pricing"||r==="apply"?"coaching":r;
   $$("nav.main a").forEach(function(a){var k=a.getAttribute("href").replace(/^#\/?/,"");if(k===navKey)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
   $("#nav").classList.remove("open");$("#menuBtn").setAttribute("aria-expanded","false");
   var h1=$("h1",main);document.title=(h1&&r?h1.textContent+" \u00b7 ":"")+NAME;
