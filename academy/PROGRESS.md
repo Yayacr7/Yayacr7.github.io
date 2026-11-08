@@ -16,6 +16,8 @@ Read this and `SPEC.md` first when continuing in a new session.
 
 - Nov 8, 2026 (round 6): Assistant as the first step (focus -> problem -> experience -> plan -> book a call). Guided on GitHub Pages, real Claude on the claude.ai link. Needs bookingUrl in config.js.
 
+- Nov 8, 2026 (round 7): Tools page with Brand Review, Brand lead tracker, Ad Decision practice, Weekly check-in, Call prep sheet, Words explained. Waiting on Yaya for: real AI on the live site (API key + server) and email sign-up (email service).
+
 ## Owner notes (not on the site)
 - Revenue goal: $1,000,000 in program revenue. Arithmetic only: about 667 sales at $1,500, 345 at $2,900 or 209 at $4,800, before fees, refunds, taxes and costs.
 - Note: this repository is public, so this file, SPEC.md and CLAUDE.md can be read by anyone at github.com and on the live site. Keep private notes somewhere private.
