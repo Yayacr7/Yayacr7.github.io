@@ -15,7 +15,7 @@ window.ACADEMY_CONFIG = {
   coachName: "Yaya",
   currencySymbol: "$",
   applicationUrl: "",
-  bookingUrl: "",
+  bookingUrl: "",       // your scheduling link (Calendly, Google Calendar booking page...). The assistant's "Book a call" button uses it.
   supportEmail: "",
   replyDays: 3,          // how many business days until you answer an application
   tiers: [

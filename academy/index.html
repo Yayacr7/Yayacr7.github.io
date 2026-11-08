@@ -161,6 +161,20 @@ footer a{color:var(--muted)}
   footer .in{padding:8px 16px 10px}
 }
 @media (max-width:899px){.hero .hero-art{display:none}}
+.chatbox{max-width:780px;margin:8px auto 0;display:flex;flex-direction:column;padding:12px}
+.chatlog{height:min(52vh,460px);overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:6px;overscroll-behavior:contain}
+.msg{max-width:88%;display:flex;flex-direction:column;gap:6px}
+.msg .bt{padding:10px 14px;border-radius:16px;line-height:1.5;white-space:pre-wrap}
+.msg.bot{align-self:flex-start}.msg.bot .bt{background:var(--soft);border-bottom-left-radius:4px}
+.msg.me{align-self:flex-end}.msg.me .bt{background:var(--purple);color:#fff;border-bottom-right-radius:4px}
+.planbox{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--mint-ink);border-radius:12px;padding:10px 14px}
+.planbox ul{margin:6px 0;padding-left:1.1em}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--purple);background:var(--card);color:var(--ink);border-radius:99px;padding:8px 14px;font:inherit;font-weight:700;cursor:pointer;min-height:40px;text-align:left}
+.chip:hover{background:var(--purple-soft)}
+.chatin{display:flex;gap:8px;margin-top:10px;align-items:flex-end}
+.chatin textarea{min-height:44px;height:44px;resize:none;flex:1}
+@media (max-width:600px){.chatlog{height:max(240px,calc(100vh - 330px));height:max(240px,calc(100dvh - 330px))}.msg{max-width:96%}}
 /* home */
 .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:12px 0 28px}
 @media (max-width:880px){.hero{grid-template-columns:1fr}}
@@ -318,6 +332,7 @@ html.reduce{scroll-behavior:auto}
     <button class="btn ghost small menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="main" id="nav" aria-label="Main">
       <a href="#/">Home</a>
+      <a href="#/assistant">Assistant</a>
       <a href="#/free">Free training</a>
       <a href="#/dashboard">Dashboard</a>
       <a href="#/course">Course</a>
@@ -457,7 +472,7 @@ function pageHome(){
   var learn='<ol class="steps6">'+sm.map(function(m){return '<li class="accent-'+m.color+'"><span class="tag '+m.color+'">Module '+m.n+'</span><b style="margin-top:6px">'+esc(m.title)+'</b><span class="small muted">'+esc(m.sub)+'</span></li>'}).join("")+'</ol>';
   var who='<div class="grid g2"><div class="card"><h2 class="h3" style="margin-top:0">Who it helps</h2><ul style="margin:0"><li>Beginners ready to do outreach and client work.</li><li>People with a few hours a week. Clients pay their own ad spend.</li><li>Teens, with a parent or guardian involved in payments, agreements and taxes.</li></ul></div><div class="card"><h2 class="h3" style="margin-top:0">Who it is not for</h2><ul style="margin:0"><li>People looking for quick or guaranteed money.</li><li>Anyone who does not want to contact businesses.</li><li>Anyone looking for shortcuts around platform rules.</li></ul></div></div>';
   var get='<div class="grid g3"><div class="card"><b>'+LESSONS.length+' written lessons</b><p class="small muted" style="margin:0">Goal, plain explanation, worked example, task and knowledge check.</p></div><div class="card"><b>'+WS.length+' worksheets and calculators</b><p class="small muted" style="margin:0">Break-even ROAS, retainer pricing, launch checklist, weekly report and more.</p></div><div class="card"><b>Live coaching</b><p class="small muted" style="margin:0">Group and 1-on-1 calls with '+esc(C.coachName||"the coach")+', depending on your tier.</p></div></div><p class="note blue small" style="margin-bottom:0">All examples with names are <strong>hypothetical</strong> and labeled. There are no invented testimonials or student results on this site.</p>';
-  return '<section class="hero"><div><p class="kicker">Online coaching &amp; mentorship</p><h1>Learn to run ads that help clothing brands grow, <span class="grad">with a coach in your corner.</span></h1><p class="lead">'+esc(C.tagline||"")+'</p><div class="row"><a class="btn primary" href="#/free">Start the free training</a><a class="btn ghost" href="#/coaching">See coaching</a></div><p style="margin:12px 0 0"><a href="#/start">Not sure it&rsquo;s for you? Take the 1-minute questionnaire</a></p></div><div class="hero-art mapwrap" role="region" aria-label="Program map" tabindex="0">'+pathMap(false,"scale")+'</div></section>'+
+  return '<section class="hero"><div><p class="kicker">Online coaching &amp; mentorship</p><h1>Learn to run ads that help clothing brands grow, <span class="grad">with a coach in your corner.</span></h1><p class="lead">'+esc(C.tagline||"")+'</p><div class="row"><a class="btn primary" href="#/assistant">'+(S.chat&&S.chat.msgs&&S.chat.msgs.length?'Continue with the assistant':'Start with the assistant')+'</a><a class="btn ghost" href="#/free">Free training</a><a class="btn ghost" href="#/coaching">Coaching</a></div><p class="small muted" style="margin:8px 0 0">Answer 3 quick questions, get the lessons that fit your problem, then book a call with '+esc(C.coachName||"the coach")+'.</p><p style="margin:12px 0 0"><a href="#/start">Not sure it&rsquo;s for you? Take the 1-minute questionnaire</a></p></div><div class="hero-art mapwrap" role="region" aria-label="Program map" tabindex="0">'+pathMap(false,"scale")+'</div></section>'+
   tabs("home",[["how","How it works",how],["learn","What you will learn",learn],["who","Who it&rsquo;s for",who],["extra","Extra tracks",'<div class="grid g3">'+ps+'</div>'],["get","What you get",get]])+
   '<p class="note disc small"><b>No income promise.</b> Free training first. Coaching is by application'+(lo?' and starts at '+money(lo):'')+'. '+esc(C.earningsDisclaimer||"")+'</p>';
 }
@@ -787,6 +802,94 @@ function pageNotes(){
   return h;
 }
 
+/* ---------- assistant (first step for new visitors) ---------- */
+var SAMPLE=null;
+if(window.claude&&typeof window.claude.use==="function"){try{window.claude.use("sample").then(function(s){if(s){SAMPLE=s;if(/assistant/.test(location.hash))render();}}).catch(function(){});}catch(e){}}
+var AFOCUS=[["money","Making money with AI (where to start)"],["freelance","Freelance marketing (getting clients)"],["ads","AI advertising (running ads for brands)"]];
+var APROB={
+  money:[["skill","I don’t know which skill to start with"],["time","I don’t have much time or money to start"],["tried","I tried things before and nothing worked"]],
+  freelance:[["clients","I can’t find clients"],["replies","People don’t reply to my messages"],["price","I don’t know what to charge"]],
+  ads:[["setup","I don’t know how to set up ads"],["nosales","My ads spend money but don’t sell"],["noclients","I have no clients to run ads for"]]
+};
+var ALEVEL=[["new","Brand new"],["some","Tried a little"],["clients","I already have clients"]];
+var APLAN={
+  skill:{say:"Most people stall because they try three things at once. Pick one skill for 30 days. If helping brands sell with ads interests you, that is the main program here; if not, the questionnaire suggests another path.",ls:["s1l1","m2l1"],tool:"skill"},
+  time:{say:"You can start small. In brand scaling, clients pay their own ad spend, so you don’t need ad money of your own. A few focused hours a week is enough to begin learning.",ls:["s1l1","m2l1"],tool:"roas"},
+  tried:{say:"When things didn’t work before, it is often because nobody checked the problem was real or the numbers worked. Start with the basics and the math, then talk to real businesses before building anything.",ls:["s1l2","m3l1"],tool:"score"},
+  clients:{say:"Clients usually come from specific, researched messages to businesses that are a good fit, not from mass messages. Start with a short list of brands and one true observation about each.",ls:["s5l1","s5l2"],tool:"brandmsg"},
+  replies:{say:"Low replies usually mean the message is generic or asks for too much. Lead with one specific, true observation and a small, easy-to-say-yes offer like a free 10-minute review.",ls:["s5l1","m5l1"],tool:"brandmsg"},
+  price:{say:"Price from your time and costs, then compare a flat fee, a percent of ad spend and a revenue share so you know your real hourly rate.",ls:["s5l2","m5l2"],tool:"retainer"},
+  setup:{say:"Setup has an order: get partner access (never passwords), check tracking, then launch one simple test. The lessons walk you through each step.",ls:["s2l1","s2l2","s4l1"],tool:"launch"},
+  nosales:{say:"First check the numbers: is the ROAS above that product’s break-even, and is tracking correct? Then look at creatives and the offer before spending more.",ls:["s1l2","s4l2","s3l2"],tool:"roas"},
+  noclients:{say:"You can practice on a real brand from public info, then pitch with a free review. Every step of finding and pitching brands is in Module 5.",ls:["s5l1","s5l2","s1l1"],tool:"brandmsg"}
+};
+function aGuess(t){t=(t||"").toLowerCase();
+  if(/client|customer|find|lead/.test(t))return ["freelance","clients"];
+  if(/repl|respon|ghost|ignore|dm|message/.test(t))return ["freelance","replies"];
+  if(/charge|price|pricing|rate|how much/.test(t))return ["freelance","price"];
+  if(/no sale|not sell|don.t sell|roas|spend|waste|lose money/.test(t))return ["ads","nosales"];
+  if(/set ?up|account|pixel|track|start ad|launch|meta|tiktok|google|instagram/.test(t))return ["ads","setup"];
+  if(/ad|advertis|campaign/.test(t))return ["ads","noclients"];
+  if(/time|busy|money|budget|broke/.test(t))return ["money","time"];
+  if(/tried|fail|nothing work|scam/.test(t))return ["money","tried"];
+  return [null,"skill"];}
+function aState(){S.chat=S.chat||{msgs:[],stage:0};return S.chat;}
+function aSay(who,text,extra){var c=aState();c.msgs.push({who:who,text:text,x:extra||null});save();}
+function aStart(){var c=aState();if(!c.msgs.length){aSay("bot","Hi! I’m the "+NAME+" assistant. I’ll ask three quick questions, point you to the right lessons, and then you can book a call with "+(C.coachName||"the coach")+".");aSay("bot","What’s the main thing you want to learn about? Pick one, or type it in your own words.",{chips:"focus"});}}
+function aLabel(list,v){var x=list.filter(function(o){return o[0]===v})[0];return x?x[1]:v;}
+function aNext(input,val){var c=aState();
+  if(c.stage===0){var f=val||aGuess(input)[0]||"money";c.focus=f;if(!val)c.focusText=input;aSay("me",val?aLabel(AFOCUS,val):input);
+    aSay("bot",{money:"Good place to start.",freelance:"Getting clients is the part most people find hardest.",ads:"Great: that is the main program here."}[f]+" What’s the main problem you’re stuck on right now?",{chips:"prob"});c.stage=1;}
+  else if(c.stage===1){var p=val||aGuess(input)[1];c.prob=p;c.probText=val?aLabel(APROB[c.focus]||[],val):input;aSay("me",c.probText);
+    aSay("bot","Thanks, that helps. How much experience do you have?",{chips:"level"});c.stage=2;}
+  else if(c.stage===2){c.level=val||"new";aSay("me",aLabel(ALEVEL,c.level));c.stage=3;aPlan();}
+  else {aSay("me",input);aReply(input);return;}
+  save();}
+function aPlan(){var c=aState(),pl=APLAN[c.prob]||APLAN.skill;
+  var lv={new:" Since you’re brand new, go in order and don’t skip the free training.",some:" Since you’ve tried a little, use the knowledge checks to find gaps fast.",clients:" Since you already have clients, jump straight to the lessons below and bring real numbers to your call."}[c.level]||"";
+  aSay("bot",pl.say+lv,{plan:{ls:pl.ls,tool:pl.tool}});
+  aSay("bot","Want to talk it through with "+(C.coachName||"the coach")+"? A call is the best place for advice about your situation.",{book:true});
+  if(SAMPLE)aAI("Write one short, warm, personal sentence (max 35 words) that responds to my main problem. Do not repeat the lesson list.");
+  S.apply=S.apply||{};if(!S.apply.goal)S.apply.goal=c.probText||"";save();}
+var ARULES="You are the "+NAME+" assistant on a beginner coaching website. The program teaches freelance brand scaling (running Instagram, TikTok and Google ads for clothing and e-commerce brands), getting clients, and AI basics. Coaching is by application with "+(C.coachName||"the coach")+". Rules: plain, friendly, short (under 90 words). Never promise or estimate income or results. Never invent facts, prices, rules, testimonials or student results. You are an AI, not "+(C.coachName||"the coach")+". For personal advice, money or legal questions, suggest the call. Only recommend lessons from this list by their exact title: ";
+function aCatalog(){return ordered().map(function(l){return l.title}).join("; ")}
+function aAI(extra){var c=aState();if(!SAMPLE)return false;var idx=c.msgs.length;aSay("bot","…",{ai:true});renderChat();
+  var convo=c.msgs.slice(0,idx).map(function(m){return (m.who==="me"?"Visitor: ":"Assistant: ")+m.text.replace(/<[^>]+>/g,"")}).join("\n");
+  var prompt=ARULES+aCatalog()+".\n\nConversation so far:\n"+convo+"\n\n"+(extra||"Reply to the visitor’s last message as the assistant.");
+  try{SAMPLE(prompt,{modelTier:"quick",cache:false,onText:function(o){c.msgs[idx].text=o.text||"…";var b=$('#chatlog [data-i="'+idx+'"] .bt');if(b)b.textContent=c.msgs[idx].text;}}).then(function(r){c.msgs[idx].text=(r&&r.text)||c.msgs[idx].text;save();renderChat();}).catch(function(e){if(e&&e.code==="not_granted")SAMPLE=null;c.msgs[idx].text=e&&e.text?e.text:"Sorry, I couldn’t answer that just now. You can ask "+(C.coachName||"the coach")+" on your call.";c.msgs[idx].x=null;save();renderChat();});}catch(e){return false;}
+  return true;}
+function aReply(t){if(aAI())return;var s=(t||"").toLowerCase(),r;
+  if(/guarantee|promise|how much (can|will|do)|make (money|\$|\d)|income|earn|\$\s?\d|\d+\s?k\b|rich|profit|six figure|quit my job/.test(s))r="Nobody can promise income, and this program doesn’t. What you earn depends on your effort, your clients and many things outside anyone’s control. The lessons and coaching help you build the skill.";
+  else if(/price|cost|how much is|pay for|fee/.test(s))r="The free training costs nothing. Coaching tiers are on the Coaching page, with exactly what each includes.";
+  else if(/ad money|ad budget|own money|spend/.test(s))r="You don’t need your own ad money: clients pay their own ad spend directly to Meta, TikTok or Google. You charge for managing the ads.";
+  else if(/under 18|teen|young|age/.test(s))r="Teens are welcome. If you’re under 18, a parent or guardian needs to be involved in payments, agreements and taxes, and joins the call.";
+  else if(/time|hours|how long/.test(s))r="A few focused hours a week is enough to start. Each lesson takes 15 to 25 minutes plus a practical task.";
+  else if(/refund/.test(s))r="Ask about the refund policy on your call; it will be written in your agreement before you pay.";
+  else r="Good question. That’s a great one to bring to your call with "+(C.coachName||"the coach")+", who can answer it for your situation.";
+  aSay("bot",r,{book:/price|cost|refund|good question/i.test(r)});}
+function bookHtml(){var c=aState();var msg="Hi "+(C.coachName||"")+", I’d like to book a call.\nMain focus: "+aLabel(AFOCUS,c.focus||"")+"\nMain problem: "+(c.probText||"")+"\nExperience: "+aLabel(ALEVEL,c.level||"")+"\n";
+  return C.bookingUrl?'<a class="btn primary small" href="'+esc(C.bookingUrl)+'" target="_blank" rel="noopener">Book a call with '+esc(C.coachName||"the coach")+'</a> <a class="btn ghost small" href="#/apply">Apply for coaching</a>'
+    :'<span class="small">Online booking isn’t set up yet.'+(C.supportEmail?' Send this to <b>'+esc(C.supportEmail)+'</b>:':' Copy this message to send when it opens, or apply now:')+'</span><div class="ws-out small" style="margin:6px 0">'+esc(msg)+'</div><button class="btn ghost small" type="button" data-copybook="1">Copy message</button> <a class="btn primary small" href="#/apply">Apply for coaching</a>';}
+function bookMsg(){var c=aState();return "Hi "+(C.coachName||"")+", I’d like to book a call.\nMain focus: "+aLabel(AFOCUS,c.focus||"")+"\nMain problem: "+(c.probText||"")+"\nExperience: "+aLabel(ALEVEL,c.level||"")+"\n";}
+function chatHtml(){var c=aState(),last=c.msgs.length-1;
+  return c.msgs.map(function(m,i){var x=m.x||{},h='<div class="msg '+(m.who==="me"?"me":"bot")+'" data-i="'+i+'"><div class="bt">'+esc(m.text)+'</div>';
+    if(x.plan) h+='<div class="planbox"><b>Start here</b><ul>'+x.plan.ls.filter(function(id){return LMAP[id]}).map(function(id){var l=LMAP[id];return '<li><a href="#/lesson/'+id+'">'+esc(l.title)+'</a> <span class="small muted">&middot; '+esc(TRACKS[trackOf(l)].name)+' &middot; '+l.minutes+' min'+(l.free?' &middot; Free':'')+'</span></li>'}).join("")+'</ul>'+(x.plan.tool?'<span class="small">Tool: <a href="#/resources/'+x.plan.tool+'">'+esc((WS.filter(function(w){return w.id===x.plan.tool})[0]||{}).title||"")+'</a></span>':'')+'</div>';
+    if(x.book) h+='<div class="planbox">'+bookHtml()+'</div>';
+    if(i===last&&x.chips){var list=x.chips==="focus"?AFOCUS:x.chips==="prob"?(APROB[c.focus]||APROB.money):ALEVEL;h+='<div class="chips">'+list.map(function(o){return '<button type="button" class="chip" data-v="'+o[0]+'">'+esc(o[1])+'</button>'}).join("")+'</div>';}
+    return h+'</div>';}).join("");}
+function renderChat(){var log=$("#chatlog");if(!log)return;log.innerHTML=chatHtml();log.scrollTop=log.scrollHeight;}
+function pageAssistant(){aStart();
+  var h='<div class="pagehead"><p class="kicker">Start here</p><h1>Talk to the assistant</h1><p class="small muted">'+(SAMPLE?'AI assistant (Claude). It can make mistakes and it isn’t '+esc(C.coachName||"the coach")+'. No income is promised.':'Guided assistant: automatic answers, not a live AI. '+esc(C.coachName||"The coach")+' answers personally on the call. No income is promised.')+'</p></div>';
+  h+='<section class="chatbox card" aria-label="Assistant chat"><div id="chatlog" class="chatlog" role="log" aria-live="polite">'+chatHtml()+'</div><form id="chatf" class="chatin"><label class="sr" for="chatt">Your message</label><textarea id="chatt" rows="1" placeholder="Type your answer or a question…"></textarea><button class="btn primary" type="submit">Send</button></form><div class="row small" style="justify-content:space-between;margin-top:6px"><span class="muted">Saved on this device.</span><button type="button" class="btn ghost small" id="chatreset">Start over</button></div></section>';
+  setTimeout(function(){var log=$("#chatlog");log.scrollTop=log.scrollHeight;
+    log.addEventListener("click",function(e){var b=e.target.closest(".chip");if(b){aNext(b.textContent,b.dataset.v);renderChat();$("#chatt").focus();return;}if(e.target.closest("[data-copybook]"))copy(bookMsg());});
+    var t=$("#chatt");t.addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("#chatf").requestSubmit?$("#chatf").requestSubmit():$("#chatf button").click();}});
+    $("#chatf").addEventListener("submit",function(e){e.preventDefault();var v=t.value.trim();if(!v)return;t.value="";aNext(v,null);renderChat();});
+    $("#chatreset").addEventListener("click",function(){S.chat={msgs:[],stage:0};save();aStart();renderChat();t.focus();});
+  });
+  return h;
+}
+
 function applyReady(){return !!(C.applicationUrl||C.supportEmail)}
 function notReady(){return applyReady()?'':'<p class="note small notready"><b>Applications are not open yet.</b> You can still fill in and copy your application to send when it opens.</p>'}
 /* ---------- free training ---------- */
@@ -854,7 +957,7 @@ function notFound(){return '<h1>Page not found</h1><p><a href="#/">Go home</a></
 /* ---------- router ---------- */
 function render(){
   var hsh=location.hash.replace(/^#\/?/,""),parts=hsh.split("/"),r=parts[0]||"",sub=parts[1];
-  var map={"":pageHome,dashboard:pageDashboard,course:pageCourse,start:pageStart,lesson:pageLesson,resources:pageResources,project:pageProject,notes:pageNotes,pricing:pageCoaching,coaching:pageCoaching,free:pageFree,apply:pageApply,facts:pageFacts,owner:pageOwner};
+  var map={"":pageHome,dashboard:pageDashboard,course:pageCourse,start:pageStart,lesson:pageLesson,resources:pageResources,project:pageProject,notes:pageNotes,pricing:pageCoaching,coaching:pageCoaching,assistant:pageAssistant,free:pageFree,apply:pageApply,facts:pageFacts,owner:pageOwner};
   var fn=map[r]||notFound;
   var main=$("#main");main.innerHTML=fn(sub);
   var navKey=r==="lesson"?"course":r==="start"?"dashboard":r==="pricing"||r==="apply"?"coaching":r;
