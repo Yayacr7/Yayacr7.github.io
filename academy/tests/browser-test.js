@@ -8,6 +8,9 @@ const ROOT = path.join(__dirname, "..", "..");
 const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".png": "image/png" };
 const results = []; const ok = (c, m) => results.push((c ? "PASS " : "FAIL ") + m);
 const KEY = "aiacademy.v1";
+async function stepTo(pg, k) { await pg.click(`.stepnav button[data-goto="${k}"]`); }
+async function answerQuiz(pg, arr) { await stepTo(pg, 5); for (let i = 0; i < arr.length; i++) { await pg.click(`.qnav button[data-qi="${i}"]`); await pg.check(`input[name=q${i}][value="${arr[i]}"]`); } }
+async function finishLesson(pg, arr) { await answerQuiz(pg, arr); await pg.click("#qsubmit"); await stepTo(pg, 6); await pg.click("#complete"); }
 
 const server = http.createServer((req, res) => {
   const p = path.join(ROOT, decodeURIComponent(req.url.split("?")[0]).replace(/\/$/, "/index.html"));
@@ -28,7 +31,9 @@ const server = http.createServer((req, res) => {
 
   // 1. Learning path: home -> questionnaire -> recommendation
   ok((await p.locator("h1").first().innerText()).includes("Learn to run ads"), "home page renders as a coaching program");
-  ok((await p.locator("main").innerText()).includes("How the program works") && (await p.locator(".disc").count()) === 1, "home explains the program and shows the earnings disclaimer");
+  ok((await p.locator('[role="tab"]').count()) >= 4 && (await p.locator(".tabpanel:visible").innerText()).includes("Free training") && (await p.locator(".disc").count()) === 1, "home: tabs (How it works first) and the earnings disclaimer");
+  await p.click('[role="tab"][data-tab="learn"]'); ok((await p.locator(".tabpanel:visible").innerText()).includes("Ad accounts and tracking"), "home tab switches to What you will learn");
+  await p.keyboard.press("ArrowRight"); ok((await p.getAttribute('[role="tab"][data-tab="who"]', "aria-selected")) === "true", "tabs work with arrow keys");
   await p.click("text=Take the 1-minute questionnaire");
   for (const v of ["save", "ok", "mid", "more", "like"]) { await p.check(`input[value="${v}"]`); await p.keyboard.press("Enter"); await p.waitForTimeout(50); }
   ok((await p.locator("h1").innerText()) === "AI assistants & automations", "questionnaire recommends a path from answers");
@@ -37,50 +42,59 @@ const server = http.createServer((req, res) => {
   await p.click('[data-choose="products"]');
   ok(await p.locator(".tag:has-text('Chosen')").count() === 1, "student can choose another path");
   await p.click("text=Start lesson 1");
-  await p.waitForSelector("#quiz");
+  await p.waitForSelector("#quiz", { state: "attached" });
   ok(p.url().endsWith("#/lesson/m1l1"), "result page leads to lesson 1");
 
-  // 2. Lesson parts
-  const main = await p.locator("main").innerText();
-  ["Learning goal", "Words in plain English", "Explanation", "Worked example", "HYPOTHETICAL EXAMPLE", "Your task", "Knowledge check", "My notes", "Common mistake"].forEach(t => ok(main.toUpperCase().includes(t.toUpperCase()), "lesson shows: " + t));
+  // 2. Lesson parts: one step per screen
+  ok(await p.locator(".lstep:visible").count() === 1 && (await p.locator(".stepnav button").count()) === 7, "lesson shows one step at a time (7 steps)");
+  const texts = await p.evaluate(() => document.querySelector("main").textContent.toUpperCase());
+  ["Learning goal", "Words in plain English", "Explanation", "Worked example", "HYPOTHETICAL EXAMPLE", "Your task", "Knowledge check", "My notes", "Common mistake"].forEach(t => ok(texts.includes(t.toUpperCase()), "lesson has: " + t));
+  await p.click("#snext"); ok(await p.locator('.lstep[data-ls="1"]').isVisible() && (await p.locator("#scount").innerText()) === "Step 2 of 7", "Next button moves to step 2");
+  await p.locator("body").focus(); await p.keyboard.press("ArrowRight"); await p.waitForTimeout(50);
+  ok(await p.locator('.lstep[data-ls="2"]').isVisible() || await p.locator('.lstep[data-ls="1"] .xcount').innerText() !== "", "arrow key moves forward");
+  await stepTo(p, 0); ok(await p.locator('.lstep[data-ls="0"]').isVisible(), "step buttons jump to a step");
 
-  // 3. Quiz feedback
-  ok(await p.locator("#complete").isDisabled(), "cannot complete before the knowledge check");
-  await p.click("text=Check my answers");
+  // 3. Quiz feedback (one question at a time)
+  await stepTo(p, 6); ok(await p.locator("#complete").isDisabled(), "cannot complete before the knowledge check");
+  await stepTo(p, 5);
+  ok(await p.locator("#quiz fieldset:visible").count() === 1, "quiz shows one question at a time");
+  await p.click('.qnav button[data-qi="2"]'); await p.click("#qsubmit");
   ok((await p.locator("#qmsg").innerText()).includes("Answer all"), "quiz asks for all answers");
-  await p.check(`input[name=q0][value="${(L[0].a[0] + 1) % 3}"]`); await p.click("text=Check my answers");
-  ok(await p.locator(".ans-tag:visible, .fb.ok, .qq.wrong").count() === 0 && !(await p.locator("#kc").innerText()).includes("Best answer"), "partial answers reveal no correct answers");
+  ok(await p.locator('#quiz fieldset[data-q="0"]').isVisible(), "missing answer: jumps back to the first unanswered question");
+  await p.check(`input[name=q0][value="${(L[0].a[0] + 1) % 3}"]`); await p.click('.qnav button[data-qi="2"]'); await p.click("#qsubmit");
+  ok(await p.locator(".fb.ok, .qq.wrong").count() === 0 && !(await p.evaluate(() => document.querySelector("#kc").textContent)).includes("Best answer"), "partial answers reveal no correct answers");
   const wrong = L[0].a.map((a, i) => i === 0 ? (a + 1) % 3 : a);
-  for (let i = 0; i < 3; i++) await p.check(`input[name=q${i}][value="${wrong[i]}"]`);
-  await p.click("text=Check my answers");
+  await answerQuiz(p, wrong); await p.click("#qsubmit");
   ok((await p.locator("#qmsg").innerText()).includes("2 of 3"), "score is correct (2 of 3)");
-  const fb = await p.locator(".fb.no").innerText();
+  await p.click('.qnav button[data-qi="0"]');
+  const fb = await p.locator('#quiz fieldset[data-q="0"] .fb').innerText();
   ok(fb.includes("Not quite") && fb.includes("Best answer"), "wrong answer gets an explanation and the best answer");
   ok(await p.locator(".fb.ok").count() === 2, "right answers get explanations");
   ok(await p.locator(".qq.checked .opt.is-answer .ans-tag").count() === 3, "correct option is highlighted in every question");
+  ok(await p.locator(".qnav button.wrong").count() === 1 && await p.locator(".qnav button.right").count() === 2, "question buttons show right and wrong");
   await p.click("#qreset");
-  // keyboard-only answering: focus first radio of each group, then arrow keys
-  for (let i = 0; i < 3; i++) await p.check(`input[name=q${i}][value="${L[0].a[i]}"]`);
-  await p.locator("form#quiz button[type=submit]").focus(); await p.keyboard.press("Enter");
+  // keyboard: arrow keys inside each question, Enter on the submit button
+  for (let i = 0; i < 3; i++) { await p.click(`.qnav button[data-qi="${i}"]`); await p.check(`input[name=q${i}][value="${L[0].a[i]}"]`); }
+  await p.locator("#qsubmit").focus(); await p.keyboard.press("Enter");
   ok((await p.locator("#qmsg").innerText()).includes("3 of 3"), "retry by keyboard scores 3 of 3");
-  ok(await p.evaluate(() => document.activeElement && document.activeElement.id) === "qmsg", "keyboard focus moves to the score after checking");
 
   // 4. Notes, bookmark, task ticks, completion, then reload
-  await p.fill("#note", "Bakery bio invented a founding year."); await p.waitForTimeout(600);
-  await p.click("#bm"); await p.check('[data-step="1"]');
-  await p.click("#complete");
+  await stepTo(p, 6); await p.fill("#note", "Bakery bio invented a founding year."); await p.waitForTimeout(600);
+  await p.click("#bm"); await stepTo(p, 4); await p.check('[data-step="1"]');
+  await stepTo(p, 6); await p.click("#complete");
   ok((await p.locator("#donebox").innerText()).includes("Lesson complete"), "lesson completes");
   ok((await p.locator("#lmeta").innerText()).includes("Completed"), "lesson header shows Completed right away");
   await p.reload(); await p.waitForTimeout(150);
+  ok(await p.locator('.lstep[data-ls="6"]').isVisible(), "lesson reopens on the step you were on");
   ok((await p.inputValue("#note")).includes("founding year"), "note survives reload");
   ok((await p.getAttribute("#bm", "aria-pressed")) === "true", "bookmark survives reload");
   ok(await p.isChecked('[data-step="1"]'), "task tick survives reload");
   ok((await p.locator("#donebox").innerText()).includes("Lesson complete"), "completion survives reload");
-  ok((await p.locator("main").innerText()).includes("Best score so far: 3 of 3"), "quiz best score survives reload");
+  ok((await p.evaluate(() => document.querySelector("#kc").textContent)).includes("Best so far: 3 of 3"), "quiz best score survives reload");
 
   // 5. Navigation
-  await p.click("#donebox a.btn"); await p.waitForSelector("text=Write useful prompts"); ok(p.url().endsWith("#/lesson/m1l2"), "Next lesson button");
-  await p.click(".pn a >> nth=0"); ok(p.url().endsWith("#/lesson/m1l1"), "Previous link");
+  await p.click("#snext"); await p.waitForSelector("text=Write useful prompts"); ok(p.url().endsWith("#/lesson/m1l2"), "Next lesson button on the last step");
+  await p.click("#sback"); ok(p.url().endsWith("#/lesson/m1l1"), "Previous lesson from step 1");
   await p.goBack(); ok(p.url().endsWith("#/lesson/m1l2"), "browser Back works");
   for (const [label, hash] of [["Dashboard", "#/dashboard"], ["Course", "#/course"], ["Resources", "#/resources"], ["Final project", "#/project"], ["Notes", "#/notes"], ["Free training", "#/free"], ["Coaching", "#/coaching"], ["Home", "#/"]]) {
     await p.click(`nav.main a:text-is("${label}")`); await p.waitForFunction(h => location.hash === h || (h === "#/" && location.hash === "#/"), hash); await p.waitForTimeout(50); ok(p.url().endsWith(hash) && (await p.getAttribute(`nav.main a:text-is("${label}")`, "aria-current")) === "page", "menu: " + label);
@@ -89,7 +103,7 @@ const server = http.createServer((req, res) => {
   await p.goto(U + "#/lesson/zzz"); ok((await p.locator("h1").innerText()) === "Page not found", "unknown lesson shows Not found");
 
   // 6. Dashboard continue
-  await p.goto(U + "#/lesson/m5l1"); await p.waitForSelector("#quiz");
+  await p.goto(U + "#/lesson/m5l1"); await p.waitForSelector("#quiz", { state: "attached" });
   await p.goto(U + "#/dashboard");
   const cont = await p.locator(".continue").innerText();
   ok(cont.includes("Continue learning") && cont.includes("Write useful prompts"), "dashboard Continue learning goes to next lesson in order (even after peeking at Module 5)");
@@ -140,12 +154,12 @@ const server = http.createServer((req, res) => {
   await p.goto(U + "#/owner"); ok(!/1,000,000|10,310/.test(await p.locator("main").innerText()), "revenue goal is not shown on the site");
   ok(await p.locator('footer a[href="#/owner"]').count() === 0, "no owner link in the student footer");
   // Long unbroken text must not push the page sideways
-  await p.goto(U + "#/lesson/m6l2"); await p.waitForSelector("#note"); await p.fill("#note", "https://example.com/" + "a".repeat(400)); await p.waitForTimeout(600);
+  await p.goto(U + "#/lesson/m6l2"); await p.waitForSelector("#note", { state: "attached" }); await stepTo(p, 6); await p.fill("#note", "https://example.com/" + "a".repeat(400)); await p.waitForTimeout(600);
   for (const rt of ["notes", "dashboard"]) { await p.goto(U + "#/" + rt); ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), "long note does not cause sideways scroll on " + rt); }
   await p.goto(U + "#/lesson/m5l2"); ok((await p.locator(".facts").innerText()).includes("10 business days"), "checked facts box with source on lesson");
 
   // 10. All lessons complete
-  for (const l of L) { await p.goto(U + "#/lesson/" + l.id); if (!(await p.locator("#complete").count())) continue; for (let i = 0; i < l.n; i++) await p.check(`input[name=q${i}][value="${l.a[i]}"]`); await p.click("text=Check my answers"); await p.click("#complete"); }
+  for (const l of L) { await p.goto(U + "#/lesson/" + l.id); await p.waitForSelector("#quiz", { state: "attached" }); if (!(await p.locator("#complete").count())) continue; await finishLesson(p, l.a); }
   await p.goto(U + "#/dashboard"); ok((await p.locator(".continue").innerText()).includes("All 24 lessons complete"), "all-complete state points to final project");
 
   // 11. Backup and restore
@@ -161,7 +175,7 @@ const server = http.createServer((req, res) => {
   const cb = await b.newContext(); const pb = await cb.newPage(); await pb.goto(U + "#/start");
   for (const v of ["brands", "ok", "high", "zero", "like"]) { await pb.check(`input[value="${v}"]`); await pb.click("#qform button[type=submit]"); await pb.waitForTimeout(50); }
   ok((await pb.locator("h1").innerText()).startsWith("Brand scaling"), "questionnaire can recommend brand scaling");
-  await pb.click("text=Start lesson 1"); await pb.waitForSelector("#quiz"); ok(pb.url().endsWith("#/lesson/s1l1") && (await pb.locator(".lhead").innerText()).includes("Free training"), "brand path starts at free lesson s1l1");
+  await pb.click("text=Start lesson 1"); await pb.waitForSelector("#quiz", { state: "attached" }); ok(pb.url().endsWith("#/lesson/s1l1") && (await pb.locator(".lhead2").innerText()).includes("Free training"), "brand path starts at free lesson s1l1");
   await pb.goto(U + "#/free"); ok((await pb.locator("main").innerText()).includes("0 of 4 done"), "free training page lists 4 free lessons");
   await pb.goto(U + "#/dashboard"); ok((await pb.locator(".continue").innerText()).includes("Brand Scaling"), "dashboard continues in the Brand Scaling track"); await cb.close();
 
@@ -175,7 +189,7 @@ const server = http.createServer((req, res) => {
 
   // 13. Reduced motion: no confetti
   const rm = await b.newContext({ reducedMotion: "reduce" }); const r = await rm.newPage(); await r.goto(U + "#/lesson/m1l1");
-  for (let i = 0; i < 3; i++) await r.check(`input[name=q${i}][value="${L[0].a[i]}"]`); await r.click("text=Check my answers"); await r.click("#complete");
+  await r.waitForSelector("#quiz", { state: "attached" }); await finishLesson(r, L[0].a);
   ok(await r.locator(".confetti").count() === 0, "reduced motion: no confetti"); await rm.close();
   await p.goto(U); await p.check("#reduceToggle");
   ok(await p.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior) === "auto", "Reduce motion switch turns off smooth scrolling"); await p.uncheck("#reduceToggle");
