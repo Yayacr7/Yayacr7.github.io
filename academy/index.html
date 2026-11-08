@@ -175,6 +175,24 @@ footer a{color:var(--muted)}
 .chatin{display:flex;gap:8px;margin-top:10px;align-items:flex-end}
 .chatin textarea{min-height:44px;height:44px;resize:none;flex:1}
 @media (max-width:600px){.chatlog{height:max(240px,calc(100vh - 330px));height:max(240px,calc(100dvh - 330px))}.msg{max-width:96%}}
+.toolgrid{max-width:1040px;margin:0 auto;width:100%}
+.toolcard{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--ink);border-top:5px solid var(--a)}
+.toolcard:hover{box-shadow:0 0 0 2px var(--a)}
+.toolcard .tag{align-self:flex-start;margin-top:8px}
+.tdot{width:10px;height:10px;border-radius:50%;background:var(--a);margin-bottom:6px}
+.split2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:860px){.split2{grid-template-columns:1fr}}
+.leadadd{display:flex;gap:8px;flex-wrap:wrap;margin:12px auto;max-width:860px;width:100%}
+.leadadd input{flex:1 1 200px;width:auto}
+tr.due td{background:var(--orange-soft)}
+.wordlist{margin:0;max-height:min(58vh,560px);overflow-y:auto;display:grid;gap:6px}
+.wordlist>div{padding:8px 10px;border-radius:10px;background:var(--soft)}
+.wordlist dt{font-weight:800}.wordlist dd{margin:2px 0 0}
+#prf th{white-space:nowrap}#prf select{min-width:190px}
+#prf tr.prrow td{border-bottom:0}#prf tr.fbrow td{padding-top:0}#prf tr.fbrow .fb{margin-top:0}
+@media (min-width:861px){.split2>.card:last-child{position:sticky;top:76px}}
+#rvf .chk{padding:5px 8px}
+@media (min-width:1100px){#rvf .rvgrp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}}
 /* home */
 .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:12px 0 28px}
 @media (max-width:880px){.hero{grid-template-columns:1fr}}
@@ -336,9 +354,7 @@ html.reduce{scroll-behavior:auto}
       <a href="#/free">Free training</a>
       <a href="#/dashboard">Dashboard</a>
       <a href="#/course">Course</a>
-      <a href="#/resources">Resources</a>
-      <a href="#/project">Final project</a>
-      <a href="#/notes">Notes</a>
+      <a href="#/tools">Tools</a>
       <a href="#/coaching">Coaching</a>
     </nav>
   </div>
@@ -890,6 +906,172 @@ function pageAssistant(){aStart();
   return h;
 }
 
+/* ---------- tools: shared helpers ---------- */
+function todayISO(){var d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10);}
+function addDays(iso,n){var d=new Date(iso+"T12:00:00");d.setDate(d.getDate()+n);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10);}
+function isoWeek(iso){var d=new Date(iso+"T12:00:00");var day=(d.getDay()+6)%7;d.setDate(d.getDate()-day+3);var y=d.getFullYear();var j=new Date(y,0,4);var w=1+Math.round(((d-j)/864e5-3+((j.getDay()+6)%7))/7);return y+"-W"+(w<10?"0":"")+w;}
+function prevWeek(wk){var p=wk.split("-W"),y=+p[0],w=+p[1];if(w>1)return y+"-W"+(w-1<10?"0":"")+(w-1);var d=new Date(y-1,11,28,12);return isoWeek(d.toISOString().slice(0,10));}
+function niceDate(iso){if(!iso)return "";var d=new Date(iso+"T12:00:00");return d.toLocaleDateString("en-US",{month:"short",day:"numeric"});}
+
+/* ---------- Tools hub ---------- */
+var TOOLS=[
+  ["review","Brand Review","Check a real brand and write a short, honest free review to send.","purple"],
+  ["leads","Brand lead tracker","Every brand you contact, its status and the next follow-up.","blue"],
+  ["practice","Ad Decision practice","Made-up campaign numbers: decide stop, keep, grow or refresh.","orange"],
+  ["checkin","Weekly check-in","Log this week’s real actions and keep your streak.","mint"],
+  ["prep","Call prep sheet","One page for your coaching call: progress, numbers, questions.","purple"],
+  ["words","Words explained","Every term from all lessons, in plain English.","blue"],
+  ["resources","Worksheets & calculators","Break-even ROAS, retainer pricing, templates and more.","mint"],
+  ["project","Final project","Your portfolio case study.","orange"],
+  ["notes","Notes & backup","All your notes and bookmarks; back up your progress.","blue"]
+];
+function pageTools(){
+  var due=(S.leads||[]).filter(function(l){return l.next&&l.next<=todayISO()&&!/client|not now/i.test(l.status)}).length;
+  return '<div class="pagehead"><p class="kicker">Tools</p><h1>Tools for the real work</h1><p class="muted">Use these alongside the lessons. Everything saves on this device.</p></div><div class="grid g3 toolgrid">'+TOOLS.map(function(t){
+    var extra=t[0]==="leads"&&due?'<span class="tag orange">'+due+' follow-up'+(due>1?"s":"")+' due</span>':'';
+    return '<a class="card toolcard accent-'+t[3]+'" href="#/'+t[0]+'"><span class="tdot" aria-hidden="true"></span><h2 class="h3" style="margin:0">'+esc(t[1])+'</h2><p class="small muted" style="margin:4px 0 0">'+esc(t[2])+'</p>'+extra+'</a>';}).join("")+'</div>';
+}
+
+/* ---------- 1. Brand Review ---------- */
+var RV_ITEMS=[
+  ["Website",[
+    ["photos","Products shown mostly flat or on hangers","Your product pages mostly show items flat. On-body photos or short try-on clips often help people judge fit."],
+    ["size","Size chart hard to find on a phone","The size chart was hard to find on my phone. Putting it one tap away could reduce sizing doubts."],
+    ["ship","Shipping and returns info hard to find","Shipping and returns info took a while to find. Making it visible near the Add to cart button can reduce hesitation."],
+    ["slow","Site felt slow or clunky on a phone","The site felt a bit slow on my phone. Most shoppers browse on phones, so speed is worth checking."],
+    ["reviews","Few or no customer reviews shown","I didn’t see many customer reviews on product pages. Showing real reviews (never invented ones) helps new visitors trust you."]]],
+  ["Social",[
+    ["video","Mostly still photos, few videos","Your feed is mostly photos. Short videos showing fit and fabric tend to stop the scroll for clothing."],
+    ["irregular","Posting is irregular","Posting looks irregular. A simple weekly rhythm (drops, styling, behind the scenes) keeps people coming back."]]],
+  ["Ads (check the Meta Ad Library)",[
+    ["noads","No active Meta ads right now","I couldn’t find active Meta ads in the Ad Library, so there may be room to test paid ads with a small budget."],
+    ["oneformat","Ads all use the same image or format","Your current ads use the same image or format. Testing a few different formats (try-on, styling, close-up) shows what people respond to."],
+    ["nooffer","Ads give no clear reason to act now","The ads don’t give a clear reason to act now. A real drop date, restock or bundle can give one, without fake urgency."]]]
+];
+var RV_IDEAS=[["tryon","Test 3 try-on videos against your current ad"],["bundle","Test a bundle offer to raise the order value"],["drop","Test an ad announcing your next real drop or restock"],["retarget","Show ads to people who viewed products but didn’t buy"]];
+function rvText(d){var ticks=[];RV_ITEMS.forEach(function(g){g[1].forEach(function(it){if(d.t&&d.t[it[0]])ticks.push(it[2]);});});
+  var idea=(RV_IDEAS.filter(function(x){return x[0]===d.idea})[0]||[])[1];
+  var brand=(d.brand||"").trim()||"[brand]";
+  var o="Hi "+((d.owner||"").trim()||"[name]")+",\n\nI’m "+((d.me||"").trim()||"[your name]")+". I took a quick look at "+brand+" from the outside (your site, Instagram and the Meta Ad Library). "+(ticks.length?"Here "+(ticks.length===1?"is one thing":"are "+ticks.length+" things")+" I noticed:\n\n"+ticks.map(function(t){return "• "+t}).join("\n"):"[Tick what you noticed above.]")+"\n";
+  if(idea)o+="\nOne idea I’d test first: "+idea.toLowerCase()+".\n";
+  o+="\nThese are observations from public info, not promises of results. Want me to walk you through it in 10 minutes? No worries if not.\n\n"+((d.me||"").trim()||"[your name]");
+  return o;}
+function pageReview(){var d=S.review||(S.review={t:{}});d.t=d.t||{};
+  var h='<div class="pagehead"><p class="kicker">Tools &middot; Brand Review</p><h1>Brand Review</h1><p class="muted">Look at a real brand from the outside, tick what you notice, and get a short free review to send. Lesson: <a href="#/lesson/s5l1">Find brands and pitch with cold outreach</a>.</p></div>';
+  h+='<div class="split2"><form class="card" id="rvf" onsubmit="return false"><div class="calc">'+[["brand","Brand name"],["owner","Owner’s first name"],["site","Website or store link"],["ig","Instagram or TikTok handle"],["me","Your name"]].map(function(f){return '<div><label class="f" for="rv_'+f[0]+'">'+f[1]+'</label><input type="text" id="rv_'+f[0]+'" data-rv="'+f[0]+'" value="'+esc(d[f[0]]||"")+'"></div>'}).join("")+'</div>';
+  RV_ITEMS.forEach(function(g){h+='<h2 class="h3" style="margin:12px 0 2px">'+esc(g[0])+'</h2><div class="rvgrp">'+g[1].map(function(it){return '<label class="chk"><input type="checkbox" data-rvt="'+it[0]+'"'+(d.t[it[0]]?" checked":"")+'> <span>'+esc(it[1])+'</span></label>'}).join("")+'</div>';});
+  h+='<label class="f" for="rv_idea">One idea to suggest</label><select id="rv_idea" data-rv="idea"><option value="">Choose one</option>'+RV_IDEAS.map(function(x){return '<option value="'+x[0]+'"'+(d.idea===x[0]?" selected":"")+'>'+esc(x[1])+'</option>'}).join("")+'</select></form>';
+  h+='<div class="card"><h2 class="h3" style="margin-top:0">Your review message</h2><div class="ws-out" id="rvout" aria-live="polite"></div><div class="row" style="margin-top:10px"><button class="btn primary small" type="button" id="rvcopy">Copy message</button><button class="btn ghost small" type="button" id="rvlead">Add brand to lead tracker</button><button class="btn ghost small" type="button" id="rvclear">Start a new review</button></div><p class="small muted" style="margin:10px 0 0">Only write what you really saw. For marketing emails in the US, add a clear note that it is an offer, your postal address and an opt-out line (CAN-SPAM).</p></div></div>';
+  setTimeout(function(){var f=$("#rvf");function upd(){$("#rvout").textContent=rvText(d);}
+    $$("[data-rv]",f).forEach(function(el){el.addEventListener(el.tagName==="SELECT"?"change":"input",function(){d[el.dataset.rv]=el.value;save();upd();})});
+    $$("[data-rvt]",f).forEach(function(el){el.addEventListener("change",function(){d.t[el.dataset.rvt]=el.checked;save();upd();})});
+    $("#rvcopy").addEventListener("click",function(){copy(rvText(d))});
+    $("#rvlead").addEventListener("click",function(){var n=(d.brand||"").trim();if(!n){toast("Type the brand name first");$("#rv_brand").focus();return;}
+      S.leads=S.leads||[];var ex=S.leads.filter(function(l){return l.name.toLowerCase()===n.toLowerCase()})[0];
+      if(ex){toast(n+" is already in your lead tracker");return;}
+      S.leads.push({id:Date.now(),name:n,link:d.site||d.ig||"",channel:"",status:"To contact",last:"",next:todayISO(),notes:"Brand Review prepared"});save();toast("Added "+n+" to your lead tracker");});
+    $("#rvclear").addEventListener("click",function(){S.review={t:{},me:d.me||""};save();render();});
+    upd();});
+  return h;}
+
+/* ---------- 2. Brand lead tracker ---------- */
+var LSTAT=["To contact","Messaged","Replied","Call booked","Client","Not now"];
+function pageLeads(){S.leads=S.leads||[];var t=todayISO();
+  var due=S.leads.filter(function(l){return l.next&&l.next<=t&&!/Client|Not now/.test(l.status)});
+  var cnt=function(s){return S.leads.filter(function(l){return l.status===s}).length};
+  var h='<div class="pagehead"><p class="kicker">Tools &middot; Lead tracker</p><h1>Brand lead tracker</h1><p class="muted">Track every brand you contact. Follow up once or twice, then stop (<a href="#/lesson/s5l1">why</a>).</p></div>';
+  h+='<div class="stats"><div class="card"><span class="kicker" style="color:var(--orange-ink)">Due today</span><b class="stat">'+due.length+'</b><span class="small muted">follow-ups</span></div><div class="card"><span class="kicker" style="color:var(--blue)">Messaged</span><b class="stat">'+(cnt("Messaged")+cnt("Replied")+cnt("Call booked")+cnt("Client"))+'</b><span class="small muted">brands contacted</span></div><div class="card"><span class="kicker" style="color:var(--mint-ink)">Replies</span><b class="stat">'+(cnt("Replied")+cnt("Call booked")+cnt("Client"))+'</b><span class="small muted">'+cnt("Call booked")+' calls booked &middot; '+cnt("Client")+' clients</span></div></div>';
+  h+='<form class="card leadadd" id="laf"><label class="sr" for="la_name">Brand name</label><input type="text" id="la_name" placeholder="Brand name"><label class="sr" for="la_link">Link</label><input type="text" id="la_link" placeholder="Instagram, TikTok or store link"><button class="btn primary" type="submit">Add brand</button></form>';
+  if(!S.leads.length) h+='<p class="muted" style="text-align:center">No brands yet. Add one above, or use the <a href="#/review">Brand Review</a>.</p>';
+  else h+='<div class="tbl card" style="padding:8px"><table><thead><tr><th scope="col">Brand</th><th scope="col">Status</th><th scope="col">Last contact</th><th scope="col">Next follow-up</th><th scope="col">Notes</th><th scope="col"><span class="sr">Actions</span></th></tr></thead><tbody>'+S.leads.map(function(l,i){var od=l.next&&l.next<=t&&!/Client|Not now/.test(l.status);
+    return '<tr'+(od?' class="due"':'')+'><td><b>'+esc(l.name)+'</b>'+(l.link?'<br><span class="small muted">'+esc(l.link)+'</span>':'')+'</td><td><label class="sr" for="ls'+i+'">Status for '+esc(l.name)+'</label><select id="ls'+i+'" data-li="'+i+'" data-lk="status">'+LSTAT.map(function(s){return '<option'+(l.status===s?" selected":"")+'>'+s+'</option>'}).join("")+'</select></td><td><label class="sr" for="ll'+i+'">Last contact</label><input type="date" id="ll'+i+'" data-li="'+i+'" data-lk="last" value="'+esc(l.last||"")+'"></td><td><label class="sr" for="ln'+i+'">Next follow-up</label><input type="date" id="ln'+i+'" data-li="'+i+'" data-lk="next" value="'+esc(l.next||"")+'">'+(od?'<span class="tag orange">Due</span>':'')+'</td><td><label class="sr" for="lt'+i+'">Notes</label><input type="text" id="lt'+i+'" data-li="'+i+'" data-lk="notes" value="'+esc(l.notes||"")+'"></td><td><button class="btn ghost small" type="button" data-ldel="'+i+'" aria-label="Remove '+esc(l.name)+'">Remove</button></td></tr>'}).join("")+'</tbody></table></div><div class="row" style="justify-content:center;margin-top:8px"><button class="btn ghost small" type="button" id="lcsv">Copy as a spreadsheet (CSV)</button></div>';
+  setTimeout(function(){
+    $("#laf").addEventListener("submit",function(e){e.preventDefault();var n=$("#la_name").value.trim();if(!n){$("#la_name").focus();return;}S.leads.push({id:Date.now(),name:n,link:$("#la_link").value.trim(),channel:"",status:"To contact",last:"",next:todayISO(),notes:""});save();render();setTimeout(function(){var x=$("#la_name");if(x)x.focus();});});
+    $$("[data-lk]").forEach(function(el){el.addEventListener(el.tagName==="SELECT"||el.type==="date"?"change":"input",function(){var l=S.leads[+el.dataset.li];l[el.dataset.lk]=el.value;
+      if(el.dataset.lk==="status"&&el.value==="Messaged"){l.last=todayISO();l.next=addDays(l.last,4);save();render();toast("Follow-up set for "+niceDate(l.next));return;}
+      if(el.dataset.lk==="status"&&/Client|Not now/.test(el.value)){l.next="";save();render();return;}
+      save();if(el.type==="date")render();});});
+    $$("[data-ldel]").forEach(function(b){b.addEventListener("click",function(){if(b.dataset.sure){S.leads.splice(+b.dataset.ldel,1);save();render();}else{b.dataset.sure="1";b.textContent="Sure? Tap again";}});});
+    var c=$("#lcsv");if(c)c.addEventListener("click",function(){var q=function(v){return '"'+String(v||"").replace(/"/g,'""')+'"'};copy(["Brand,Link,Status,Last contact,Next follow-up,Notes"].concat(S.leads.map(function(l){return [l.name,l.link,l.status,l.last,l.next,l.notes].map(q).join(",")})).join("\n"));});
+  });
+  return h;}
+
+/* ---------- 3. Ad Decision practice ---------- */
+var PR_ACT=[["stop","Stop it"],["keep","Keep testing"],["grow","Grow the budget"],["refresh","Refresh the creative"]];
+var PR_SC=[
+  {id:"p1",brand:"Hoodie brand",be:28,note:"Break-even cost per purchase: $28.",ads:[
+    {n:"Try-on video",spend:140,buys:7,ctr:"1.9%",freq:"1.6",a:"grow",why:"Cost per purchase is $20, below the $28 break-even, after spending 5× the break-even. That is enough data to grow it step by step."},
+    {n:"Studio photo",spend:84,buys:0,ctr:"0.6%",freq:"1.4",a:"stop",why:"It spent 3× the break-even cost per purchase with no sales. It had a fair chance; replace it with a new test."},
+    {n:"Founder story",spend:30,buys:1,ctr:"1.2%",freq:"1.2",a:"keep",why:"Only about 1× the break-even spent so far. Too little data to judge either way: keep testing."}]},
+  {id:"p2",brand:"Cap brand",be:15,note:"Break-even cost per purchase: $15.",ads:[
+    {n:"Unboxing video",spend:90,buys:4,ctr:"1.1%",freq:"1.8",a:"stop",why:"Cost per purchase is $22.50, well above the $15 break-even, after spending 6× the break-even. Each sale loses money."},
+    {n:"Color carousel",spend:60,buys:5,ctr:"1.7%",freq:"1.5",a:"grow",why:"Cost per purchase is $12, below the $15 break-even, with 5 sales. Grow it in small steps."},
+    {n:"Meme video",spend:20,buys:0,ctr:"2.3%",freq:"1.1",a:"keep",why:"It spent only about 1.3× the break-even, and the click rate is strong. Not enough data yet."}]},
+  {id:"p3",brand:"T-shirt brand, week 4",be:24,note:"Break-even cost per purchase: $24. The first ad has run for 4 weeks.",ads:[
+    {n:"Best seller ad (4 weeks old)",spend:220,buys:8,ctr:"0.9% (was 2.1%)",freq:"4.1",a:"refresh",why:"Frequency is high and the click rate halved while cost per purchase rose to $27.50. Classic creative fatigue: make new versions of this idea."},
+    {n:"New styling video",spend:70,buys:4,ctr:"1.8%",freq:"1.3",a:"grow",why:"Cost per purchase is $17.50, below the $24 break-even, after almost 3× the break-even spent."},
+    {n:"Discount image",spend:50,buys:1,ctr:"0.8%",freq:"1.6",a:"stop",why:"Cost per purchase is $50, about twice the break-even, after spending 2× the break-even. Stop and test something else."}]},
+  {id:"p4",brand:"Jacket brand",be:60,note:"Break-even cost per purchase: $60.",ads:[
+    {n:"Weather-proof test video",spend:90,buys:1,ctr:"1.4%",freq:"1.2",a:"keep",why:"Only 1.5× the break-even spent and one sale. Expensive products need more data: keep testing."},
+    {n:"Outfit carousel",spend:250,buys:6,ctr:"1.6%",freq:"1.7",a:"grow",why:"Cost per purchase is about $41.67, below the $60 break-even, with 6 sales."},
+    {n:"Logo close-up",spend:180,buys:0,ctr:"0.5%",freq:"1.9",a:"stop",why:"3× the break-even spent with no sales and a weak click rate. Stop it."}]}
+];
+function pagePractice(sub){S.practice=S.practice||{};var sc=PR_SC.filter(function(x){return x.id===sub})[0];
+  if(!sc){return '<div class="pagehead"><p class="kicker">Tools &middot; Ad Decision practice</p><h1>Ad Decision practice</h1><p class="muted">Practice reading campaign numbers before you manage a client’s money. All brands and numbers are made up. Decisions follow the rules of thumb from <a href="#/lesson/s4l2">Optimize and report every week</a> (common practice, not official rules).</p></div><div class="grid g2">'+PR_SC.map(function(x,i){var r=S.practice[x.id];return '<a class="card toolcard accent-'+["orange","purple","blue","mint"][i%4]+'" href="#/practice/'+x.id+'"><span class="tag">Hypothetical</span><h2 class="h3" style="margin:6px 0 0">Scenario '+(i+1)+': '+esc(x.brand)+'</h2><p class="small muted" style="margin:4px 0 0">'+esc(x.note)+'</p>'+(r&&r.done?'<span class="tag mint">Best score '+r.best+' of '+x.ads.length+'</span>':'<span class="tag blue">Not tried yet</span>')+'</a>'}).join("")+'</div>';}
+  var st=S.practice[sc.id]||(S.practice[sc.id]={ans:{},best:0});var idx=PR_SC.indexOf(sc),nx=PR_SC[idx+1];
+  var h='<div class="pagehead"><p class="kicker"><a href="#/practice">Ad Decision practice</a> &middot; Scenario '+(idx+1)+' of '+PR_SC.length+'</p><h1>'+esc(sc.brand)+'</h1><p class="muted"><span class="tag">Hypothetical numbers</span> '+esc(sc.note)+' For each ad, choose what you would do.</p></div>';
+  h+='<form class="card" id="prf"><div class="tbl"><table><thead><tr><th scope="col">Ad</th><th scope="col">Spend</th><th scope="col">Purchases</th><th scope="col">Cost per purchase</th><th scope="col">Click rate</th><th scope="col">Frequency</th><th scope="col">Your decision</th></tr></thead><tbody>'+sc.ads.map(function(a,i){var cpa=a.buys?money(a.spend/a.buys):"no sales";
+    return '<tr class="prrow"><td><b>'+esc(a.n)+'</b></td><td>'+money(a.spend)+'</td><td>'+a.buys+'</td><td>'+cpa+'</td><td>'+esc(a.ctr)+'</td><td>'+esc(a.freq)+'</td><td><label class="sr" for="pa'+i+'">Decision for '+esc(a.n)+'</label><select id="pa'+i+'" data-pa="'+i+'"><option value="">Choose</option>'+PR_ACT.map(function(o){return '<option value="'+o[0]+'"'+(st.ans[i]===o[0]?" selected":"")+'>'+o[1]+'</option>'}).join("")+'</select></td></tr><tr class="fbrow"><td colspan="7"><div class="fbx small" id="pfb'+i+'" aria-live="polite"></div></td></tr>'}).join("")+'</tbody></table></div>';
+  h+='<div class="row" style="justify-content:space-between;margin-top:10px"><button class="btn blue" type="submit">Check my decisions</button>'+(nx?'<a class="btn ghost" href="#/practice/'+nx.id+'">Next scenario &rarr;</a>':'<a class="btn ghost" href="#/practice">All scenarios</a>')+'</div><p id="prmsg" class="small" role="status" style="margin-top:8px"></p></form>';
+  setTimeout(function(){var f=$("#prf");
+    $$("[data-pa]",f).forEach(function(el){el.addEventListener("change",function(){st.ans[+el.dataset.pa]=el.value;save();})});
+    f.addEventListener("submit",function(e){e.preventDefault();var miss=sc.ads.filter(function(a,i){return !st.ans[i]}).length;
+      if(miss){$("#prmsg").textContent="Choose a decision for every ad first.";var m=$$("[data-pa]",f).filter(function(s){return !s.value})[0];if(m)m.focus();return;}
+      var score=0;sc.ads.forEach(function(a,i){var ok=st.ans[i]===a.a;if(ok)score++;var lab=(PR_ACT.filter(function(o){return o[0]===a.a})[0]||[])[1];
+        $("#pfb"+i).innerHTML='<div class="fb '+(ok?"ok":"no")+'"><b>'+(ok?"Good call.":"Better: "+esc(lab)+".")+'</b> '+esc(a.why)+'</div>';});
+      st.best=Math.max(st.best||0,score);st.done=true;save();
+      $("#prmsg").innerHTML='<b>'+score+' of '+sc.ads.length+' decisions match the rules of thumb.</b> '+(score===sc.ads.length?"Nicely done.":"Read the notes under each ad, then try again or move on.");});
+  });
+  return h;}
+
+/* ---------- 4. Weekly check-in ---------- */
+var CK_F=[["msgs","Brands messaged"],["fups","Follow-ups sent"],["replies","Replies"],["calls","Calls held"],["clients","New clients"],["hours","Hours learning"]];
+function ckStreak(){var list=S.checkins||[],have={};list.forEach(function(c){have[c.week]=1});var wk=isoWeek(todayISO());if(!have[wk])wk=prevWeek(wk);var n=0;while(have[wk]){n++;wk=prevWeek(wk);}return n;}
+function pageCheckin(){S.checkins=S.checkins||[];var wk=isoWeek(todayISO());var cur=S.checkins.filter(function(c){return c.week===wk})[0]||{};
+  var h='<div class="pagehead"><p class="kicker">Tools &middot; Weekly check-in</p><h1>Weekly check-in</h1><p class="muted">Log what you really did this week. Only real numbers: they are for you and your coach, not for show.</p></div>';
+  h+='<div class="split2"><form class="card" id="ckf" novalidate><h2 class="h3" style="margin-top:0">This week ('+wk.replace("-W"," week ")+')</h2><div class="calc">'+CK_F.map(function(f){return '<div><label class="f" for="ck_'+f[0]+'">'+f[1]+'</label><input type="number" inputmode="numeric" min="0" step="1" id="ck_'+f[0]+'" value="'+esc(cur[f[0]]!=null?cur[f[0]]:"")+'"></div>'}).join("")+'</div><label class="f" for="ck_win">One win (even a small one)</label><input type="text" id="ck_win" value="'+esc(cur.win||"")+'"><label class="f" for="ck_block">What got in the way?</label><input type="text" id="ck_block" value="'+esc(cur.block||"")+'"><div class="row" style="margin-top:12px"><button class="btn primary" type="submit">'+(cur.week?"Update this week":"Save this week")+'</button></div><p class="small" id="ckmsg" role="status"></p></form>';
+  var past=S.checkins.slice().sort(function(a,b){return a.week<b.week?1:-1}).slice(0,8);
+  h+='<div class="card"><div class="row" style="justify-content:space-between"><h2 class="h3" style="margin:0">Your weeks</h2><span class="tag mint">Streak: '+ckStreak()+' week'+(ckStreak()===1?"":"s")+'</span></div>'+(past.length?'<div class="tbl"><table><thead><tr><th scope="col">Week</th><th scope="col">Messaged</th><th scope="col">Replies</th><th scope="col">Calls</th><th scope="col">Clients</th></tr></thead><tbody>'+past.map(function(c){return '<tr><td>'+esc(c.week.replace("-W"," wk "))+'</td><td>'+(+c.msgs||0)+'</td><td>'+(+c.replies||0)+'</td><td>'+(+c.calls||0)+'</td><td>'+(+c.clients||0)+'</td></tr>'}).join("")+'</tbody></table></div>':'<p class="small muted">No check-ins yet. Your first one starts the streak.</p>')+'</div></div>';
+  setTimeout(function(){$("#ckf").addEventListener("submit",function(e){e.preventDefault();var c={week:wk,date:todayISO()};var bad=false;
+    CK_F.forEach(function(f){var v=$("#ck_"+f[0]).value;if(v!==""&&(+v<0||isNaN(+v)))bad=true;c[f[0]]=v===""?0:Math.round(+v);});
+    if(bad){$("#ckmsg").textContent="Numbers cannot be negative.";return;}
+    c.win=$("#ck_win").value.trim();c.block=$("#ck_block").value.trim();
+    S.checkins=S.checkins.filter(function(x){return x.week!==wk});S.checkins.push(c);save();render();toast("Week saved");});});
+  return h;}
+
+/* ---------- 5. Call prep sheet ---------- */
+function prepText(){var n=nextLesson(),qs=Object.keys(S.quiz),avg=qs.length?Math.round(qs.reduce(function(a,k){return a+S.quiz[k].best/S.quiz[k].of},0)/qs.length*100):null;
+  var L=S.leads||[],cnt=function(re){return L.filter(function(l){return re.test(l.status)}).length};
+  var wk=(S.checkins||[]).slice().sort(function(a,b){return a.week<b.week?1:-1})[0];var c=S.chat||{};
+  var o="Call prep: "+NAME+"\nDate: "+todayISO()+"\n\nPROGRESS\n- Lessons complete: "+doneCount()+" of "+LESSONS.length+"\n- Next lesson: "+(n?n.title:"All done")+"\n- Knowledge checks: "+qs.length+" taken"+(avg!=null?", best scores average "+avg+"%":"")+"\n";
+  if(c.focus)o+="\nWHAT I’M WORKING ON\n- Focus: "+aLabel(AFOCUS,c.focus)+"\n- Main problem: "+(c.probText||"")+"\n";
+  o+="\nOUTREACH (from my lead tracker)\n- Brands in tracker: "+L.length+"\n- Contacted: "+cnt(/Messaged|Replied|Call booked|Client/)+"\n- Replies: "+cnt(/Replied|Call booked|Client/)+"\n- Calls booked: "+cnt(/Call booked/)+"\n- Clients: "+cnt(/Client/)+"\n";
+  if(wk)o+="\nLAST CHECK-IN ("+wk.week+")\n- Messaged "+wk.msgs+", follow-ups "+wk.fups+", replies "+wk.replies+", calls "+wk.calls+", clients "+wk.clients+", hours "+wk.hours+"\n"+(wk.win?"- Win: "+wk.win+"\n":"")+(wk.block?"- In the way: "+wk.block+"\n":"");
+  o+="\nMY QUESTIONS\n"+((S.prepQ||"").trim()||"- [write your questions]")+"\n";return o;}
+function pagePrep(){var h='<div class="pagehead"><p class="kicker">Tools &middot; Call prep</p><h1>Call prep sheet</h1><p class="muted">One page for your coaching call. It fills itself from your progress, lead tracker and check-ins. Add your questions, then copy or send it before the call.</p></div>';
+  h+='<div class="split2"><div class="card"><label class="f" for="prepq" style="margin-top:0">Your questions for the call</label><textarea id="prepq" style="min-height:160px" placeholder="What do you want help with?">'+esc(S.prepQ||"")+'</textarea><div class="row" style="margin-top:10px"><button class="btn primary small" type="button" id="prepcopy">Copy sheet</button><button class="btn ghost small" type="button" id="prepdl">Download .txt</button></div><p class="small muted" style="margin:8px 0 0">'+(C.supportEmail?'Send it to <b>'+esc(C.supportEmail)+'</b> before your call.':'Bring it to your call or paste it into your call booking.')+'</p></div><div class="card"><div class="ws-out small" id="prepout" aria-live="polite"></div></div></div>';
+  setTimeout(function(){var t;function upd(){$("#prepout").textContent=prepText();}
+    $("#prepq").addEventListener("input",function(){S.prepQ=this.value;clearTimeout(t);t=setTimeout(function(){save();upd();},250);});
+    $("#prepcopy").addEventListener("click",function(){copy(prepText())});$("#prepdl").addEventListener("click",function(){download("call-prep-"+todayISO()+".txt",prepText())});upd();});
+  return h;}
+
+/* ---------- 6. Words explained ---------- */
+function allTerms(){var seen={},out=[];ordered().forEach(function(l){l.terms.forEach(function(t){var k=t[0].toLowerCase();if(!seen[k]){seen[k]=1;out.push({w:t[0],d:t[1],l:l});}});});return out.sort(function(a,b){return a.w.localeCompare(b.w)});}
+function pageWords(){var T=allTerms();
+  var h='<div class="pagehead"><p class="kicker">Tools &middot; Words explained</p><h1>Words explained</h1><p class="muted">'+T.length+' terms from all lessons, in plain English.</p></div><div class="card" style="max-width:860px;margin:0 auto;width:100%"><label class="sr" for="wq">Search words</label><input type="search" id="wq" placeholder="Search a word, e.g. ROAS"><p class="small muted" id="wcount" aria-live="polite" style="margin:6px 0"></p><dl class="wordlist" id="wl">'+T.map(function(t){return '<div data-w="'+esc((t.w+" "+t.d).toLowerCase())+'"><dt>'+esc(t.w)+'</dt><dd>'+esc(t.d)+' <a class="small" href="#/lesson/'+t.l.id+'">'+esc(t.l.title)+'</a></dd></div>'}).join("")+'</dl></div>';
+  setTimeout(function(){var q=$("#wq");function f(){var v=q.value.trim().toLowerCase(),n=0;$$("#wl > div").forEach(function(d){var on=!v||d.dataset.w.indexOf(v)>=0;d.hidden=!on;if(on)n++;});$("#wcount").textContent=v?n+" match"+(n===1?"":"es"):"";}q.addEventListener("input",f);});
+  return h;}
+
 function applyReady(){return !!(C.applicationUrl||C.supportEmail)}
 function notReady(){return applyReady()?'':'<p class="note small notready"><b>Applications are not open yet.</b> You can still fill in and copy your application to send when it opens.</p>'}
 /* ---------- free training ---------- */
@@ -957,10 +1139,10 @@ function notFound(){return '<h1>Page not found</h1><p><a href="#/">Go home</a></
 /* ---------- router ---------- */
 function render(){
   var hsh=location.hash.replace(/^#\/?/,""),parts=hsh.split("/"),r=parts[0]||"",sub=parts[1];
-  var map={"":pageHome,dashboard:pageDashboard,course:pageCourse,start:pageStart,lesson:pageLesson,resources:pageResources,project:pageProject,notes:pageNotes,pricing:pageCoaching,coaching:pageCoaching,assistant:pageAssistant,free:pageFree,apply:pageApply,facts:pageFacts,owner:pageOwner};
+  var map={"":pageHome,dashboard:pageDashboard,course:pageCourse,start:pageStart,lesson:pageLesson,resources:pageResources,project:pageProject,notes:pageNotes,pricing:pageCoaching,coaching:pageCoaching,assistant:pageAssistant,tools:pageTools,review:pageReview,leads:pageLeads,practice:pagePractice,checkin:pageCheckin,prep:pagePrep,words:pageWords,free:pageFree,apply:pageApply,facts:pageFacts,owner:pageOwner};
   var fn=map[r]||notFound;
   var main=$("#main");main.innerHTML=fn(sub);
-  var navKey=r==="lesson"?"course":r==="start"?"dashboard":r==="pricing"||r==="apply"?"coaching":r;
+  var navKey=r==="lesson"?"course":r==="start"?"dashboard":r==="pricing"||r==="apply"?"coaching":/^(resources|project|notes|review|leads|practice|checkin|prep|words)$/.test(r)?"tools":r;
   $$("nav.main a").forEach(function(a){var k=a.getAttribute("href").replace(/^#\/?/,"");if(k===navKey)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
   $("#nav").classList.remove("open");$("#menuBtn").setAttribute("aria-expanded","false");
   var h1=$("h1",main);document.title=(h1&&r?h1.textContent+" \u00b7 ":"")+NAME;

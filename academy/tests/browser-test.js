@@ -96,7 +96,7 @@ const server = http.createServer((req, res) => {
   await p.click("#snext"); await p.waitForSelector("text=Write useful prompts"); ok(p.url().endsWith("#/lesson/m1l2"), "Next lesson button on the last step");
   await p.click("#sback"); ok(p.url().endsWith("#/lesson/m1l1"), "Previous lesson from step 1");
   await p.goBack(); ok(p.url().endsWith("#/lesson/m1l2"), "browser Back works");
-  for (const [label, hash] of [["Dashboard", "#/dashboard"], ["Course", "#/course"], ["Resources", "#/resources"], ["Final project", "#/project"], ["Notes", "#/notes"], ["Assistant", "#/assistant"], ["Free training", "#/free"], ["Coaching", "#/coaching"], ["Home", "#/"]]) {
+  for (const [label, hash] of [["Dashboard", "#/dashboard"], ["Course", "#/course"], ["Tools", "#/tools"], ["Assistant", "#/assistant"], ["Free training", "#/free"], ["Coaching", "#/coaching"], ["Home", "#/"]]) {
     await p.click(`nav.main a:text-is("${label}")`); await p.waitForFunction(h => location.hash === h || (h === "#/" && location.hash === "#/"), hash); await p.waitForTimeout(50); ok(p.url().endsWith(hash) && (await p.getAttribute(`nav.main a:text-is("${label}")`, "aria-current")) === "page", "menu: " + label);
   }
   await p.goto(U + "#/nope"); ok((await p.locator("h1").innerText()) === "Page not found", "unknown page shows Not found");
@@ -171,6 +171,51 @@ const server = http.createServer((req, res) => {
   ok(errs.length === 0, "no JavaScript errors in main journey " + errs.join(" | "));
   const state = await p.evaluate(k => localStorage.getItem(k), KEY);
 
+  // 11c. Tools
+  const ct = await b.newContext(); const pt = await ct.newPage(); const et = []; pt.on("pageerror", e => et.push(e.message));
+  await pt.goto(U); await pt.click('nav.main a:text-is("Tools")'); await pt.waitForSelector(".toolcard");
+  ok(await pt.locator(".toolcard").count() === 9, "Tools page lists 9 tools (incl. worksheets, final project, notes)");
+  // Brand Review
+  await pt.click("text=Brand Review"); await pt.waitForSelector("#rvf");
+  await pt.fill("#rv_brand", "Northside Threads"); await pt.fill("#rv_owner", "Jay"); await pt.fill("#rv_me", "Kim");
+  await pt.check('[data-rvt="photos"]'); await pt.check('[data-rvt="noads"]'); await pt.selectOption("#rv_idea", "tryon");
+  const rv = await pt.locator("#rvout").innerText();
+  ok(rv.includes("Hi Jay") && rv.includes("Northside Threads") && rv.includes("2 things I noticed") && rv.includes("try-on videos") && rv.includes("not promises of results"), "Brand Review writes an honest review from the ticks");
+  await pt.click("#rvlead"); await pt.click("#rvlead");
+  // Lead tracker
+  await pt.goto(U + "#/leads"); await pt.waitForSelector("#laf");
+  ok((await pt.locator("tbody tr").count()) === 1 && (await pt.locator("tbody").innerText()).includes("Northside Threads"), "review added the brand to the lead tracker once (no duplicate)");
+  await pt.fill("#la_name", "Corner Caps"); await pt.press("#la_name", "Enter"); await pt.waitForTimeout(80);
+  ok((await pt.locator("tbody tr").count()) === 2, "lead tracker adds a brand");
+  await pt.selectOption("#ls1", "Messaged"); await pt.waitForTimeout(80);
+  const nextVal = await pt.inputValue("#ln1"); const expect = await pt.evaluate(() => { const d = new Date(); d.setDate(d.getDate() + 4); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); });
+  ok(nextVal === expect, "status Messaged sets a follow-up in 4 days (" + nextVal + ")");
+  ok((await pt.locator(".stats").innerText()).includes("1\nfollow-ups") || (await pt.locator(".stats .stat").first().innerText()) === "1", "due-today count shows the brand due today");
+  await pt.click('[data-ldel="0"]'); ok((await pt.locator("tbody tr").count()) === 2, "remove asks to confirm first");
+  await pt.click('[data-ldel="0"]'); ok((await pt.locator("tbody tr").count()) === 1, "remove works on the second tap");
+  await pt.reload(); await pt.waitForSelector("#laf"); ok((await pt.locator("tbody").innerText()).includes("Corner Caps"), "leads survive reload");
+  // Ad Decision practice
+  await pt.goto(U + "#/practice"); ok(await pt.locator(".toolcard").count() === 4 && (await pt.locator("main").innerText()).includes("made up"), "practice lists 4 labeled made-up scenarios");
+  await pt.goto(U + "#/practice/p1"); await pt.waitForSelector("#prf");
+  await pt.click("#prf button[type=submit]"); ok((await pt.locator("#prmsg").innerText()).includes("every ad"), "practice asks for every decision");
+  await pt.selectOption("#pa0", "grow"); await pt.selectOption("#pa1", "stop"); await pt.selectOption("#pa2", "grow");
+  await pt.click("#prf button[type=submit]");
+  ok((await pt.locator("#prmsg").innerText()).includes("2 of 3") && (await pt.locator("#pfb2").innerText()).includes("Better: Keep testing"), "practice scores decisions and explains the better choice");
+  // Weekly check-in
+  await pt.goto(U + "#/checkin"); await pt.waitForSelector("#ckf");
+  await pt.fill("#ck_msgs", "12"); await pt.fill("#ck_replies", "2"); await pt.fill("#ck_win", "First reply from a brand"); await pt.click("#ckf button[type=submit]"); await pt.waitForTimeout(80);
+  ok((await pt.locator("main").innerText()).includes("Streak: 1 week") && (await pt.locator("tbody").innerText()).includes("12"), "check-in saves the week and starts a streak");
+  await pt.fill("#ck_msgs", "-3"); await pt.click("#ckf button[type=submit]"); ok((await pt.locator("#ckmsg").innerText()).includes("negative"), "check-in rejects negative numbers");
+  // Call prep
+  await pt.goto(U + "#/prep"); await pt.waitForSelector("#prepq"); await pt.fill("#prepq", "How do I price my first retainer?"); await pt.waitForTimeout(400);
+  const prep = await pt.locator("#prepout").innerText();
+  ok(prep.includes("Brands in tracker: 1") && prep.includes("Messaged 12") && prep.includes("How do I price my first retainer?"), "call prep sheet fills from tracker, check-in and questions");
+  // Words explained
+  await pt.goto(U + "#/words"); await pt.waitForSelector("#wq"); const total = await pt.locator("#wl > div").count();
+  await pt.fill("#wq", "roas"); const shown = await pt.locator("#wl > div:visible").count();
+  ok(total > 40 && shown >= 1 && shown < 5, "Words explained lists " + total + " terms and search filters (" + shown + " for roas)");
+  ok(et.length === 0, "tools: no JavaScript errors " + et.join("|")); await ct.close();
+
   // 11a. Assistant: first step for new visitors
   const ca = await b.newContext(); const pa = await ca.newPage(); const ea = []; pa.on("pageerror", e => ea.push(e.message));
   await pa.goto(U); await pa.click("text=Start with the assistant"); await pa.waitForSelector(".chip");
@@ -215,7 +260,7 @@ const server = http.createServer((req, res) => {
   ok(await p.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior) === "auto", "Reduce motion switch turns off smooth scrolling"); await p.uncheck("#reduceToggle");
 
   // 14. Devices: no sideways scroll, no errors, tap targets
-  const routes = ["", "assistant", "dashboard", "course", "start", "start/result", "free", "coaching", "apply", "lesson/m1l1", "lesson/m5l2", "lesson/s3l1", "lesson/s5l2", "resources/roas", "resources/retainer", "resources", "resources/money", "resources/price", "resources/score", "project", "notes", "pricing", "facts", "owner"];
+  const routes = ["", "assistant", "tools", "review", "leads", "practice", "practice/p3", "checkin", "prep", "words", "dashboard", "course", "start", "start/result", "free", "coaching", "apply", "lesson/m1l1", "lesson/m5l2", "lesson/s3l1", "lesson/s5l2", "resources/roas", "resources/retainer", "resources", "resources/money", "resources/price", "resources/score", "project", "notes", "pricing", "facts", "owner"];
   const devs = [["iPhone SE", devices["iPhone SE"]], ["iPhone 13", devices["iPhone 13"]], ["Pixel 7", devices["Pixel 7"]], ["iPad Mini", devices["iPad Mini"]], ["iPad Pro 11 landscape", devices["iPad Pro 11 landscape"]], ["Laptop 1366x768", { viewport: { width: 1366, height: 768 } }], ["Desktop 1920x1080", { viewport: { width: 1920, height: 1080 } }]];
   const axe = process.env.AXE_PATH && fs.existsSync(process.env.AXE_PATH) ? fs.readFileSync(process.env.AXE_PATH, "utf8") : null;
   for (const [name, d] of devs) {
