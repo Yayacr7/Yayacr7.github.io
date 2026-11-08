@@ -49,6 +49,9 @@ A.LESSONS.forEach(l => {
 const pos = A.LESSONS.flatMap(l => l.quiz.map((q, i) => A.optionOrder(l.id + ":" + i, q.options.length).indexOf(q.answer)));
 const counts = [0, 1, 2].map(k => pos.filter(p => p === k).length);
 check(counts.every(c => c >= pos.length / 6), "correct answers spread across displayed positions " + JSON.stringify(counts));
+const longest = A.LESSONS.flatMap(l => l.quiz).filter(q => { const L = q.options.map(o => o.length); return L[q.answer] === Math.max(...L); }).length;
+const totalQ = A.LESSONS.flatMap(l => l.quiz).length;
+check(longest <= totalQ * 0.4, "correct answer is not usually the longest option (" + longest + " of " + totalQ + ")");
 
 // Scope and honesty rules
 const all = JSON.stringify(A);

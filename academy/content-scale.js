@@ -9,7 +9,7 @@ function q(text, options, answer, explain) { return { q: text, options: options,
 
 /* ---------- tracks ---------- */
 A.TRACKS = {
-  scale: { id: "scale", name: "Brand Scaling", long: "Brand Scaling Mentorship", badge: "Main program",
+  scale: { id: "scale", name: "Brand Scaling", long: "Brand Scaling track", badge: "Main program",
     desc: "Run paid ads on Instagram, TikTok and Google for clothing and e-commerce brands, as a freelancer or small agency." },
   found: { id: "found", name: "AI Income Foundations", long: "AI Income Foundations", badge: "Optional extra track",
     desc: "Core AI skills plus three other ways to earn: websites and tools, AI assistants and automations, digital products." }
@@ -95,11 +95,11 @@ var L = [
     steps: ["List 10 clothing or streetwear brands that sell online (Instagram, TikTok or their own store).", "For each, search the Meta Ad Library and note if they run ads right now.", "Write one thing each brand does well and one thing their ads or page could improve.", "Star the 3 brands you would most like to work with."],
     note: "Keep this list in your notes. Module 5 turns it into outreach." },
   quiz: [
-    q("In this model, who usually pays the ad spend?", ["You pay it and send the brand a bill", "The brand pays the platform directly with its own card", "The platforms pay you"], 1,
+    q("In this model, who usually pays the ad spend?", ["You pay the platforms from your own account each month, then invoice the brand for it", "The brand pays the platform directly with its own card", "The platforms pay you"], 1,
       ["Paying ad spend on your own card puts your money at risk if a client pays late or disputes it.", "Right. The brand pays Meta, TikTok or Google directly; you charge for managing the ads.", "Platforms do not pay agencies for running a client’s ads in this model."]),
-    q("A brand owner asks you to guarantee 4x ROAS. What is the honest answer?", ["Agree, so you win the client", "Explain you cannot promise results, and describe exactly what you will deliver", "Promise 2x to be safe"], 1,
+    q("A brand owner asks you to guarantee 4x ROAS. What is the honest answer?", ["Agree, so you win the client", "Explain you cannot promise results, and describe exactly what you will deliver", "Promise a lower number like 2x so the guarantee feels safe, then explain your plan"], 1,
       ["A results promise you cannot control is misleading and loses trust when it fails.", "Right. Promise your process (setup, number of ads, reports), never the outcome.", "Any results promise has the same problem, whatever the number."]),
-    q("Where are Instagram ads created and managed?", ["In the Instagram app only", "In Meta Ads Manager, the same tool as Facebook ads", "In Google Ads"], 1,
+    q("Where are Instagram ads created and managed?", ["In the Instagram app only, using the Boost button on each post you want to promote", "In Meta Ads Manager, the same tool as Facebook ads", "In Google Ads"], 1,
       ["The app has a simple Boost button, but agencies manage Instagram ads in Meta Ads Manager.", "Right. Instagram and Facebook ads share Meta Ads Manager.", "Google Ads runs Google’s channels, not Instagram."])
   ]},
 { id: "s1l2", module: "s1", free: true, title: "The numbers every brand owner cares about", minutes: 20,
@@ -121,16 +121,16 @@ var L = [
     "<p>Ask every new client for: average order value, product cost, shipping cost and their payment fees. If they do not know, work it out together. It is the most useful first conversation you can have.</p>"
   ],
   example: { title: "Hypothetical: a $60 hoodie",
-    body: "<p>A made-up brand sells a hoodie: AOV $60, product cost $22, shipping and packing $8. Card fees at Stripe’s standard US rate (2.9% + 30¢) are $2.04. Margin per order = 60 − 22 − 8 − 2.04 = <strong>$27.96</strong>.</p><p><strong>Break-even ROAS</strong> = 60 ÷ 27.96 ≈ <strong>2.15</strong>. <strong>Break-even CPA</strong> = <strong>$27.96</strong>.</p><p>Last week: $700 of ad spend, 25 purchases, $1,500 revenue. ROAS = 1,500 ÷ 700 ≈ 2.14 and CPA = 700 ÷ 25 = $28. Both are right at break-even: the ads paid for themselves but made almost no profit on first orders. Next step: test new creatives and a bundle that raises the AOV.</p>" },
+    body: "<p>A made-up brand sells a hoodie: AOV $60, product cost $22, shipping and packing $8. Card fees at Stripe’s standard US rate (2.9% + 30¢) are $2.04. Margin per order = 60 − 22 − 8 − 2.04 = <strong>$27.96</strong>.</p><p><strong>Break-even ROAS</strong> = 60 ÷ 27.96 ≈ <strong>2.15</strong>. <strong>Break-even CPA</strong> = <strong>$27.96</strong>.</p><p>Last week: $700 of ad spend, 25 purchases, $1,500 revenue. ROAS = 1,500 ÷ 700 ≈ 2.14 and CPA = 700 ÷ 25 = $28. Both sit just past break-even (ROAS 2.14 vs 2.15, CPA $28 vs $27.96): the ads roughly paid for themselves, with a tiny loss on each first order. Next step: test new creatives and a bundle that raises the AOV.</p>" },
   task: { title: "Run the numbers on two products",
     steps: ["Pick two products from a brand on your list and note their prices.", "Estimate product cost and shipping (label them as guesses).", "Open the Break-even ROAS calculator in Resources and enter both products.", "Write one sentence each: what ROAS would this product need to be profitable?"],
     note: "Save your results. Real numbers from a real client replace the guesses later." },
   quiz: [
     q("A brand spent $1,000 on ads and the ads brought $3,000 in revenue. What is the ROAS?", ["0.33", "3", "$2,000"], 1,
       ["That is spend divided by revenue, the wrong way round.", "Right. ROAS = revenue ÷ spend = 3,000 ÷ 1,000 = 3.", "$2,000 is revenue minus spend, not ROAS, and it ignores product costs."]),
-    q("Product A has a break-even ROAS of 1.6 and Product B of 3.2. Both get a ROAS of 2.5. Which is true?", ["Both are profitable", "A is profitable on first orders, B is losing money on them", "Neither is profitable"], 1,
+    q("Product A has a break-even ROAS of 1.6 and Product B of 3.2. Both get a ROAS of 2.5. Which is true?", ["Both are profitable, because any ROAS above 2 means ads make money for every brand", "A is profitable on first orders, B is losing money on them", "Neither is profitable"], 1,
       ["2.5 is below B’s break-even of 3.2, so B loses money on each first order.", "Right. Compare each ROAS to that product’s own break-even.", "2.5 is above A’s break-even of 1.6, so A makes a profit on first orders."]),
-    q("Meta reports 40 sales, TikTok reports 30, but the store shows 55 orders from all sources. What should you do?", ["Add them up: 70 sales from ads", "Treat platform numbers as estimates and check them against the store’s real orders", "Trust whichever number is highest"], 1,
+    q("Meta reports 40 sales, TikTok reports 30, but the store shows 55 orders from all sources. What should you do?", ["Add the platform numbers together: 70 sales came from ads, more than the store even shows", "Treat platform numbers as estimates and check them against the store’s real orders", "Trust whichever number is highest"], 1,
       ["Platforms can count the same order, so adding them overstates results.", "Right. Platform reports overlap and miss some activity; the store’s orders are the reality check.", "Picking the highest number is how agencies mislead clients."])
   ]},
 
@@ -143,7 +143,8 @@ var L = [
     ["Partner access", "Permission a business gives another business (your agency) to work on its assets."],
     ["Ad account", "The account where ads are created and billed. It should belong to the brand."],
     ["Manager account (MCC)", "A Google Ads account that lets an agency manage several client accounts."],
-    ["Business Center", "TikTok’s tool for managing ad accounts, pixels and team access."]
+    ["Business Center", "TikTok’s tool for managing ad accounts, pixels and team access."],
+    ["Dataset", "Meta\u2019s name for where a brand\u2019s website events (from the Pixel and Conversions API) are stored."]
   ],
   explain: [
     "<p>The golden rule: <strong>the client owns everything, you get access.</strong> The ad account, Page, Instagram account, pixel, product catalog and payment method all stay in the brand’s name. If you ever part ways, they keep their data and you simply lose access. That protects both of you.</p>",
@@ -158,11 +159,11 @@ var L = [
     steps: ["Create your own Meta business portfolio, TikTok Business Center and Google Ads manager account (follow each official help page).", "Write down each ID in a private note (not in this course).", "Write a client access message like Sam’s, with links to each official guide.", "List the exact access you will request on each platform and why."],
     note: "Do not paste account IDs into public places. Your notes here stay on this device." },
   quiz: [
-    q("A new client offers to text you their Facebook password. What should you do?", ["Accept, it is faster", "Thank them and ask them to add your business portfolio as a partner instead", "Ask for their email password too"], 1,
+    q("A new client offers to text you their Facebook password. What should you do?", ["Accept it, because logging in as the owner is the fastest way to start work today", "Thank them and ask them to add your business portfolio as a partner instead", "Ask for their email password too"], 1,
       ["Shared passwords are a security risk and make it unclear who did what.", "Right. Partner access keeps assets in their name and needs no passwords.", "Never ask for more personal access than the job needs."]),
     q("Who should own the ad account and its payment method?", ["The agency", "The brand", "Whoever set it up first"], 1,
       ["If the agency owns it, the brand can lose its ad history and data when you part ways.", "Right. The brand owns its assets; the agency gets access.", "Ownership should be clear and in the brand’s name from the start."]),
-    q("How does an agency usually get access to a client’s Google Ads account?", ["The client shares a password", "The agency’s manager account sends a link request that the client accepts", "Google assigns an agency automatically"], 1,
+    q("How does an agency usually get access to a client’s Google Ads account?", ["The client shares their account password so you can log in as them whenever needed", "The agency’s manager account sends a link request that the client accepts", "Google assigns an agency automatically"], 1,
       ["Password sharing is not needed and is less safe.", "Right. A manager account link keeps control with the client.", "Google never assigns agencies on its own."])
   ]},
 { id: "s2l2", module: "s2", title: "Tracking: pixels, server events and checks", minutes: 20,
@@ -187,11 +188,11 @@ var L = [
     steps: ["Open the Launch Checklist worksheet and read the tracking items.", "On a store you can test (yours, a friend’s or a demo store), list which events you would check and where.", "Write how you would compare platform purchases with store orders each week.", "Note what you would do if numbers differ by more than you expect."],
     note: "Keep the checklist. You will run it for every client." },
   quiz: [
-    q("Why use a server connection (Conversions API) as well as the pixel?", ["It replaces the need for a website", "It sends events from the store’s server, so fewer are lost to ad blockers and browser settings", "It doubles the number of sales"], 1,
+    q("Why use a server connection (Conversions API) as well as the pixel?", ["It replaces the need for a website", "It sends events from the store’s server, so fewer are lost to ad blockers and browser settings", "It doubles the number of sales the platform reports, which makes results look better to clients"], 1,
       ["You still need the website; this only changes how events are sent.", "Right. Browser and server events together give more complete tracking, with duplicates removed.", "It should not double sales; matching IDs let the platform remove duplicates."]),
-    q("The ad platform reports far more purchases than the store’s real orders. What is a likely cause to check first?", ["The ads are working too well", "A duplicate pixel or missing deduplication", "The store is hiding orders"], 1,
+    q("The ad platform reports far more purchases than the store’s real orders. What is a likely cause to check first?", ["The ads are working so well that the platform sees sales the store has not recorded yet", "A duplicate pixel or missing deduplication", "The store is hiding orders"], 1,
       ["More reported sales than real orders is a tracking problem, not success.", "Right. Duplicate pixels or events without matching IDs often double count.", "The store’s order list is the most reliable number you have."]),
-    q("When should you run the tracking check?", ["Once a year", "Before every launch and whenever the store changes", "Only if the client complains"], 1,
+    q("When should you run the tracking check?", ["Once a year", "Before every launch and whenever the store changes", "Only if the client complains about the numbers in a weekly report, to save time"], 1,
       ["Stores and apps change much more often than that.", "Right. New themes, apps and checkouts can break tracking at any time.", "By then you may have spent weeks optimizing on bad data."])
   ]},
 
@@ -204,13 +205,14 @@ var L = [
     ["Custom audience", "People who already interacted with the brand, such as site visitors or customers."],
     ["Lookalike audience", "New people the platform thinks are similar to a custom audience."],
     ["Advantage+ / Smart+ / Performance Max", "The AI-driven campaign types on Meta, TikTok and Google."],
-    ["Learning phase", "The early period when the platform is still figuring out who to show an ad to."]
+    ["Learning phase", "The early period when the platform is still figuring out who to show an ad to."],
+    ["Optimization event", "The action you ask the platform to get more of, usually a purchase."]
   ],
   explain: [
     "<p>Years ago, ad managers picked narrow interests by hand. Today the platforms’ AI usually finds buyers better than manual guesses, <em>if</em> it gets good inputs: working purchase tracking, strong creatives, a clear offer and enough budget.</p>",
-    "<h3>The AI campaign types</h3><ul><li><strong>Meta Advantage+ sales campaigns</strong> (formerly “shopping” campaigns) automate audience, placements and budget.</li><li><strong>TikTok Smart+</strong> automates targeting, bidding and creative choices from your goals and creatives.</li><li><strong>Google Performance Max</strong> runs one campaign across Google’s channels and uses a Merchant Center product feed for stores. Classic Shopping campaigns also need Google Ads linked to Merchant Center.</li></ul>",
+    "<h3>The AI campaign types</h3><ul><li><strong>Meta Advantage+ sales campaigns</strong> (formerly “shopping” campaigns) automate audience, placements (where ads appear: feeds, Stories, Reels) and budget.</li><li><strong>TikTok Smart+</strong> automates targeting, bidding (how much to offer for each ad view) and creative choices from your goals and creatives.</li><li><strong>Google Performance Max</strong> runs one campaign across Google’s channels and uses a Merchant Center product feed for stores. Classic Shopping campaigns also need Google Ads linked to Merchant Center.</li></ul>",
     "<h3>Your job when the AI targets</h3><p>You still decide the offer, the creatives, the budget, which event to optimize for, which countries to show ads in, and who to exclude (for example, recent buyers). Your creatives become your targeting: a video for runners finds runners.</p>",
-    "<h3>Budget and the learning phase</h3><p>Meta says ad sets usually leave learning after about 50 optimization events in 7 days. Divide that by your expected cost per purchase to see the weekly budget one ad set needs. If that is too much for the client, use fewer ad sets, or consider a higher-funnel event while purchase volume is low (a trade-off to discuss with the client).</p>",
+    "<h3>Budget and the learning phase</h3><p>Meta says ad sets usually leave learning after about 50 optimization events in 7 days. Multiply 50 by your expected cost per purchase to see the weekly budget one ad set needs. If that is too much for the client, use fewer ad sets, or consider optimizing for an earlier step such as add-to-cart while purchases are few (a trade-off to discuss with the client).</p>",
     "<p>Rule of thumb (from common practice, not an official rule): start simple, with one AI-driven campaign and a few creatives, and add complexity only when you have data.</p>"
   ],
   example: { title: "Hypothetical: does the budget fit?",
@@ -219,11 +221,11 @@ var L = [
     steps: ["Pick a brand from your list and estimate its break-even CPA.", "Work out the weekly budget one ad set would need for 50 purchases in 7 days.", "Choose one AI campaign type per platform you would start with, and write why.", "List 3 audiences you would exclude or retarget (for example, recent buyers)."],
     note: "Write your plan in notes. It feeds the launch plan in Module 4." },
   quiz: [
-    q("What did Meta rename Advantage+ shopping campaigns to?", ["Advantage+ sales campaigns", "Smart+ campaigns", "Performance Max"], 0,
+    q("What did Meta rename Advantage+ shopping campaigns to?", ["Advantage+ sales campaigns", "Smart+ campaigns", "Performance Max shopping campaigns"], 0,
       ["Right. Meta now calls them Advantage+ sales campaigns.", "Smart+ is TikTok’s AI campaign type.", "Performance Max is Google’s AI campaign type."]),
-    q("A client has a small budget. Which setup gives the platform the best chance to learn?", ["Five ad sets with different interests", "One campaign with one ad set and a few strong creatives", "Ten ads in ten campaigns"], 1,
+    q("A client has a small budget. Which setup gives the platform the best chance to learn?", ["Five ad sets, each with different interests, so you learn which audience is best", "One campaign with one ad set and a few strong creatives", "Ten ads in ten campaigns"], 1,
       ["Splitting a small budget means no ad set gets enough results to learn.", "Right. Fewer, better-funded ad sets reach the learning threshold sooner.", "Spreading thin across campaigns has the same problem."]),
-    q("If AI picks the audience, what still matters most from you?", ["Nothing, it is fully automatic", "The offer, creatives, tracking and budget you give it", "Choosing 30 interests"], 1,
+    q("If AI picks the audience, what still matters most from you?", ["Nothing, it is fully automatic", "The offer, creatives, tracking and budget you give it", "Choosing 30 detailed interests, because the AI needs a narrow audience to start"], 1,
       ["The AI only works with the inputs you give it.", "Right. Good inputs drive good results; bad tracking or weak creatives limit any AI.", "With AI audiences, interests are suggestions at most."])
   ]},
 { id: "s3l2", module: "s3", title: "Creative that sells clothes, made faster with AI", minutes: 25,
@@ -249,11 +251,11 @@ var L = [
     steps: ["Pick one product from a brand on your list.", "Use an AI tool to draft 20 hooks, then keep and rewrite the best 5.", "Write a short creator brief: format, shots, message, music source, disclosure line.", "Check every claim: can the brand prove it? Delete anything it cannot."],
     note: "Save the brief and hooks in your notes as a portfolio sample (labeled practice)." },
   quiz: [
-    q("A creator got free hoodies and posts about them for the brand’s ads. What is required?", ["Nothing, it was free", "A clear disclosure of the connection, like “Gifted by” the brand", "Only a hashtag at the very end of a long caption"], 1,
+    q("A creator got free hoodies and posts about them for the brand’s ads. What is required?", ["Nothing, it was free", "A clear disclosure of the connection, like “Gifted by” the brand", "Only a hashtag at the very end of a long caption, after all the other hashtags"], 1,
       ["Gifts count as a connection under the FTC Endorsement Guides.", "Right. Paid or gifted posts must clearly disclose the connection.", "A disclosure buried where people may miss it is not clear enough."]),
-    q("Can you use a popular song from your music app in a TikTok ad?", ["Yes, if it is trending", "Use tracks from TikTok’s Commercial Music Library for TikTok ads", "Yes, if you credit the artist"], 1,
+    q("Can you use a popular song from your music app in a TikTok ad?", ["Yes, if it is trending", "Use tracks from TikTok’s Commercial Music Library for TikTok ads", "Yes, as long as you credit the artist’s name in the caption of the ad"], 1,
       ["Trending does not mean licensed for business use.", "Right. The Commercial Music Library is pre-cleared for ads on TikTok only.", "Crediting the artist is not a license to use the song in an ad."]),
-    q("An AI draft says “voted best streetwear brand 2026”. What do you do?", ["Keep it, it sounds good", "Delete it unless the brand can prove it", "Change it to “one of the best”"], 1,
+    q("An AI draft says “voted best streetwear brand 2026”. What do you do?", ["Keep it, it sounds good", "Delete it unless the brand can prove it", "Change it to “one of the best streetwear brands” so it is less specific"], 1,
       ["Unproven claims break ad policies and trust.", "Right. Every claim needs proof; AI often invents them.", "A softer unproven claim is still unproven."])
   ]},
 
@@ -279,11 +281,11 @@ var L = [
     steps: ["Open the Launch Checklist worksheet and tick through it for a practice brand.", "Write the test question, budget, length and review date.", "Name the campaign and ads with your naming pattern.", "Write the one-paragraph approval message you would send the client."],
     note: "Keep the plan in notes. It becomes part of your final project." },
   quiz: [
-    q("Which is a good test question for a first campaign?", ["Will we go viral?", "Which of these 4 creatives gets purchases below our break-even CPA in 10 days?", "Can we get the best ROAS in the industry?"], 1,
+    q("Which is a good test question for a first campaign?", ["Will we go viral?", "Which of these 4 creatives gets purchases below our break-even CPA in 10 days?", "Can we get the best ROAS in the whole clothing industry within our first month?"], 1,
       ["Virality is not a measurable plan.", "Right. Clear question, measure, budget and end date.", "Comparing to vague industry claims tells you nothing about this brand."]),
-    q("The ad links to a page with a different price than the ad shows. What should you do?", ["Launch anyway", "Fix it before launch: offer and price must match exactly", "Make the ad price lower to get clicks"], 1,
+    q("The ad links to a page with a different price than the ad shows. What should you do?", ["Launch anyway", "Fix it before launch: offer and price must match exactly", "Lower the price in the ad to get more clicks, and fix the page price later"], 1,
       ["Mismatched prices mislead customers and can break ad policies.", "Right. Ads and pages must match.", "Advertising a price that is not real is deceptive."]),
-    q("Why avoid big daily edits after launch?", ["Platforms charge for edits", "Big edits restart the learning phase", "Edits delete the ads"], 1,
+    q("Why avoid big daily edits after launch?", ["Platforms charge a fee for every edit you make to a live campaign", "Big edits restart the learning phase", "Edits delete the ads"], 1,
       ["Edits are free, but they have a cost in learning.", "Right. Significant edits reset learning, so results stay unstable.", "Edits do not delete ads, but they do reset learning."])
   ]},
 { id: "s4l2", module: "s4", title: "Optimize and report every week", minutes: 25,
@@ -308,11 +310,11 @@ var L = [
     steps: ["Open the Weekly Client Report worksheet.", "Fill it with made-up numbers for a practice brand, clearly labeled as an example.", "Decide which ad to stop, keep and grow, and explain why in one line each.", "Read it as the brand owner: is anything unclear or overstated?"],
     note: "Add the sample report to your portfolio, labeled “example numbers”." },
   quiz: [
-    q("An ad has spent 3× the break-even CPA with zero purchases. What is a sensible move?", ["Double its budget", "Turn it off and test a new creative", "Wait three more months"], 1,
+    q("An ad has spent 3× the break-even CPA with zero purchases. What is a sensible move?", ["Double its budget", "Turn it off and test a new creative", "Wait three more months, because ads always need a long time before they work"], 1,
       ["More budget on a clear loser wastes the client’s money.", "Right. It had a fair chance; replace it with a new test.", "Waiting that long burns budget with no learning."]),
     q("Frequency is rising and CTR is falling on your best ad. What is most likely happening?", ["Creative fatigue", "Tracking broke", "The product sold out"], 0,
       ["Right. The same people have seen it too often; refresh the creative.", "Broken tracking shows up as missing purchases, not falling CTR.", "A sellout shows up as zero purchases and stock issues, not this pattern."]),
-    q("Last week’s results were poor. What should the report do?", ["Leave the numbers out", "Show the real numbers, explain what you think happened, and say what you will change", "Blame the platform"], 1,
+    q("Last week’s results were poor. What should the report do?", ["Leave the weak numbers out and focus the report only on the good parts of the week instead", "Show the real numbers, explain what you think happened, and say what you will change", "Blame the platform"], 1,
       ["Hiding numbers destroys trust when the client checks their own data.", "Right. Honest reporting with a plan keeps clients.", "Blaming others without a plan does not help the client."])
   ]},
 
@@ -338,11 +340,11 @@ var L = [
     steps: ["Turn your Module 1 brand list into a lead list with contact channel and one observation each.", "Use the Brand Outreach template to write 5 messages, each with a different specific observation.", "Send them from a professional account (or save them if you are not ready).", "Log each message and set a follow-up date."],
     note: "Log replies honestly, including no replies. That is your real data." },
   quiz: [
-    q("Which opening is best for a cold DM to a clothing brand?", ["“I can double your sales overnight with AI ads!”", "“Love the washed cargos. Your Ad Library ads all use one studio photo; try-on videos could be worth testing.”", "“Hey, do you need marketing?”"], 1,
+    q("Which opening is best for a cold DM to a clothing brand?", ["“I can double your sales overnight with AI ads! Reply YES and I will send you my results from other brands.”", "“Love the washed cargos. Your Ad Library ads all use one studio photo; try-on videos could be worth testing.”", "“Hey, do you need marketing?”"], 1,
       ["Hype and promises get ignored and can be misleading.", "Right. Specific, true and useful, with a testable idea.", "Too vague; it gives them no reason to reply."]),
-    q("How can you see if a brand is running Meta ads right now?", ["Ask Meta support", "Search the brand in the Meta Ad Library", "You cannot know"], 1,
+    q("How can you see if a brand is running Meta ads right now?", ["Ask Meta support to tell you which brands are running ads right now", "Search the brand in the Meta Ad Library", "You cannot know"], 1,
       ["Meta support does not share other businesses’ data.", "Right. The Ad Library shows ads currently running on Meta’s apps.", "You can: the Ad Library is public."]),
-    q("A brand has not replied to two messages. What next?", ["Message daily", "Stop, and maybe try again months later with something new", "Post about them"], 1,
+    q("A brand has not replied to two messages. What next?", ["Message them every day until they answer, because persistence shows you care", "Stop, and maybe try again months later with something new", "Post about them"], 1,
       ["Daily messages after silence are spam.", "Right. Two polite tries, then respect the silence.", "Public pressure is disrespectful and damages your reputation."])
   ]},
 { id: "s5l2", module: "s5", title: "Sales calls, proposals and retainer pricing", minutes: 25,
@@ -367,11 +369,11 @@ var L = [
     steps: ["Open the Retainer calculator and compare the three models for a realistic practice client.", "Choose your model and write why in two sentences.", "Draft a one-page proposal with every part listed above.", "Ask a friend to read it: what would they expect to get each month?"],
     note: "Keep the proposal. Real clients will ask for one." },
   quiz: [
-    q("Why can a revenue share be risky for a beginner?", ["It is illegal", "It depends on tracking, which revenue counts, data access and trust", "It always pays less"], 1,
+    q("Why can a revenue share be risky for a beginner?", ["It is illegal", "It depends on tracking, which revenue counts, data access and trust", "It always pays less than a flat fee, so it is never worth offering to clients"], 1,
       ["Revenue shares are legal when clearly agreed.", "Right. Without clear definitions and data access, payment disputes are likely.", "It can pay more or less; the risk is in the definitions."]),
-    q("What must the proposal say about ad spend?", ["Nothing", "That the client pays ad spend directly to the platforms, separate from your fee", "That ad spend is included in your fee"], 1,
+    q("What must the proposal say about ad spend?", ["Nothing", "That the client pays ad spend directly to the platforms, separate from your fee", "That the ad spend is included in your monthly fee and you pay the platforms for them"], 1,
       ["Leaving it out causes surprises and disputes.", "Right. Fee and ad spend are separate and both should be clear.", "Bundling ad spend into your fee puts your money at risk."]),
-    q("On a discovery call you learn the brand has no sales yet and no budget for ads. What is honest?", ["Sign them anyway", "Say they may not be ready for paid ads yet and suggest what to do first", "Promise ads will fix it"], 1,
+    q("On a discovery call you learn the brand has no sales yet and no budget for ads. What is honest?", ["Sign them anyway, because ads will create the first sales and then they can afford you", "Say they may not be ready for paid ads yet and suggest what to do first", "Promise ads will fix it"], 1,
       ["Taking money from a brand that cannot benefit damages them and your reputation.", "Right. Honest fit checks build long-term trust and referrals.", "No ad manager can promise that."])
   ]},
 
@@ -397,11 +399,11 @@ var L = [
     steps: ["Open the Client Onboarding checklist worksheet and adapt it to your offer.", "Write the welcome email you would send on day one.", "Decide your report day, reply time and approval process.", "Write how you will set money aside for taxes each month."],
     note: "Your onboarding kit is reusable. Keep it in one folder." },
   quiz: [
-    q("A client asks for extra work that is not in your agreement. What is the best response?", ["Do it for free to be nice", "Offer it as a separate addition with its own price", "Ignore the request"], 1,
+    q("A client asks for extra work that is not in your agreement. What is the best response?", ["Do it for free to be nice, because extra favors always lead to bigger contracts", "Offer it as a separate addition with its own price", "Ignore the request"], 1,
       ["Free extras pile up and quietly lower your rate.", "Right. Kindly treat it as new scope with its own price.", "Ignoring clients damages trust."]),
-    q("When should an ad go live?", ["As soon as you finish it", "After the client approves it in writing", "When the platform suggests it"], 1,
+    q("When should an ad go live?", ["As soon as you finish it", "After the client approves it in writing", "When the platform suggests it in the recommendations tab of Ads Manager"], 1,
       ["Launching without approval risks off-brand or wrong ads.", "Right. Written approval protects both sides.", "Platforms do not approve content for the client."]),
-    q("In the US, when are quarterly estimated tax payments generally expected?", ["Never for freelancers", "If you expect to owe $1,000 or more in tax for the year", "Only above $100,000 income"], 1,
+    q("In the US, when are quarterly estimated tax payments generally expected?", ["Never for freelancers", "If you expect to owe $1,000 or more in tax for the year", "Only once your yearly income is above $100,000, like a large business"], 1,
       ["Freelancers often must pay estimated tax.", "Right. That is the IRS’s general threshold; check irs.gov or a tax professional.", "The threshold is about tax owed, and it is much lower than that."])
   ]},
 { id: "s6l2", module: "s6", title: "Keep clients, get referrals, grow your agency", minutes: 20,
@@ -426,11 +428,11 @@ var L = [
     steps: ["Write a quarterly review template for a client.", "Draft a permission request for using a client’s results (or practice results, labeled).", "Write your first two SOPs: tracking check and weekly report.", "List the signs you will wait for before hiring help."],
     note: "Save your next growth move in notes. Your dashboard shows it." },
   quiz: [
-    q("You got one client an excellent result. How can you use it in marketing?", ["Say all clients get this result", "Share it with permission, with context, and make clear it is one client, not typical", "Round the numbers up"], 1,
+    q("You got one client an excellent result. How can you use it in marketing?", ["Say all clients can expect this result, because it shows what your service can really do", "Share it with permission, with context, and make clear it is one client, not typical", "Round the numbers up"], 1,
       ["Presenting an unusual result as typical is misleading.", "Right. Permission, real numbers, context and no “typical” implication.", "Inflating numbers is deceptive."]),
-    q("Which is the strongest sign you are ready to hire help?", ["One big month", "Several months of steady clients, written SOPs and healthy profit", "Feeling busy for a day"], 1,
+    q("Which is the strongest sign you are ready to hire help?", ["One big month of sales, because it proves the demand is there for good", "Several months of steady clients, written SOPs and healthy profit", "Feeling busy for a day"], 1,
       ["One big month can be a one-off; look for steady demand over months.", "Right. Steady demand plus systems makes hiring manageable.", "A single busy day is not a trend you can hire around."]),
-    q("Is it okay to write a few testimonials yourself to get started?", ["Yes, everyone does it", "No. Testimonials must be real, from real clients, shared with permission", "Yes, if you use first names only"], 1,
+    q("Is it okay to write a few testimonials yourself to get started?", ["Yes, everyone does it", "No. Testimonials must be real, from real clients, shared with permission", "Yes, as long as you only use first names so nobody can check who wrote them"], 1,
       ["Fake testimonials are deceptive and covered by the FTC rule.", "Right. Only real words from real clients, with permission.", "First names do not make a fake testimonial real."])
   ]}
 ];
