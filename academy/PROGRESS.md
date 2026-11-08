@@ -12,6 +12,8 @@ Read this and `SPEC.md` first when continuing in a new session.
 
 - Nov 8, 2026 (round 4): scope change from Yaya: brand scaling coaching program is the main track (content-scale.js, coaching tiers, free training, apply). Tests 1,112 + 104 pass. Merged live (PR #52). Independent review found 14 issues; fixed: FTC screening wording softened (no suitability-screening claim), revenue goal removed from config.js, s3l1 formula (multiply, not divide), quiz answers no longer given away by length (65 of 73 were longest, now 3), jargon defined, hoodie example wording, Applications-not-open notice, age answer required, tier names and deliverables clearer, Facts header, stale owner items, empty ROAS calculator, phone path-map labels. Tests: 1,113 content + 106 browser checks pass.
 
+- Nov 8, 2026 (round 5): no long scrolling: lessons are 7 centered steps with Back/Next, one quiz question at a time; other pages use a centered top plus tabs. Fits one screen on 1440x900 desktops (coaching 19px over); phones still scroll inside a step.
+
 ## Owner notes (not on the site)
 - Revenue goal: $1,000,000 in program revenue. Arithmetic only: about 667 sales at $1,500, 345 at $2,900 or 209 at $4,800, before fees, refunds, taxes and costs.
 - Note: this repository is public, so this file, SPEC.md and CLAUDE.md can be read by anyone at github.com and on the live site. Keep private notes somewhere private.

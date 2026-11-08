@@ -55,10 +55,12 @@ h1[tabindex="-1"]:focus{box-shadow:none;outline:none}
   nav.main.open{display:flex}
   nav.main a{padding:12px}
 }
-main{max-width:1160px;margin:0 auto;padding:24px 16px 64px}
+main{max-width:1160px;margin:0 auto;padding:16px 16px 24px;min-height:calc(100vh - 124px);min-height:calc(100dvh - 124px);display:flex;flex-direction:column;justify-content:center}
+main>*{width:100%}
+.pagehead{text-align:center;margin-bottom:6px}.pagehead h1{font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:.3em}.pagehead p{margin-bottom:.4em}.pagehead .muted{max-width:44em;margin-left:auto;margin-right:auto}
 main:focus{outline:none}
 footer{border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
-footer .in{max-width:1160px;margin:0 auto;padding:20px 16px 40px;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
+footer .in{max-width:1160px;margin:0 auto;padding:12px 16px 16px;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
 footer a{color:var(--muted)}
 
 /* bits */
@@ -92,6 +94,73 @@ footer a{color:var(--muted)}
 .accent-blue{--a:#1D4ED8;--as:var(--blue-soft)}.accent-purple{--a:var(--purple);--as:var(--purple-soft)}
 .accent-mint{--a:var(--mint-ink);--as:var(--mint-soft)}.accent-orange{--a:var(--orange-ink);--as:var(--orange-soft)}
 
+/* centered one-screen views */
+.lessonv{max-width:900px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:12px}
+.lhead2 h1{font-size:clamp(1.4rem,3.2vw,2rem);margin:8px 0 4px}
+@media (max-width:600px){
+  .lhead2 .tag:not(.mint){display:none}
+  .lhead2 h1{font-size:1.2rem;margin:4px 0 2px}
+  .lhead2 .btn.small{min-height:40px;padding:4px 10px;font-size:.82rem}
+  .lessonv{gap:8px}.lstep{padding:14px}
+  main{padding-top:8px}
+}
+.stepnav{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
+.stepnav button{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--line);background:var(--card);border-radius:99px;padding:5px 12px 5px 6px;font:inherit;font-size:.88rem;font-weight:700;color:var(--muted);cursor:pointer;min-height:36px}
+.stepnav .sn{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--soft);font-size:.8rem}
+.stepnav button[aria-current="step"]{border-color:var(--a);color:var(--ink)}.stepnav button[aria-current="step"] .sn{background:var(--a);color:#fff}
+@media (max-width:700px){.stepnav .sl{display:none}.stepnav button{padding:4px}}
+.lstep{min-height:min(48vh,420px)}
+.lstep h2{display:flex;align-items:center;gap:10px}
+.lstep .ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--as);color:var(--a);font-size:1rem;flex:none}
+@media (min-width:1100px){.lstep .cols{columns:2;column-gap:36px}.lstep .cols>*{break-inside:avoid}.lstep .cols h3:first-child{margin-top:0}}
+.stepbar{display:flex;justify-content:space-between;align-items:center;gap:10px;position:sticky;bottom:0;background:rgba(246,247,255,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:10px 0;z-index:5}
+.qnav{display:flex;gap:8px;margin:12px 0}
+.qnav button{width:40px;height:40px;border-radius:50%;border:2px solid var(--line);background:var(--card);font:inherit;font-weight:800;cursor:pointer;color:var(--ink)}
+.qnav button.answered{border-color:var(--blue)}.qnav button[aria-current="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.qnav button.right{border-color:var(--mint-ink);box-shadow:inset 0 -4px 0 var(--mint)}.qnav button.wrong{border-color:var(--bad);box-shadow:inset 0 -4px 0 var(--bad)}
+.tabs{width:100%}
+.tablist{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:8px 0 14px}
+.tablist [role="tab"]{border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;padding:8px 14px;border-radius:99px;cursor:pointer;min-height:40px}
+.tablist [role="tab"][aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tcount{font-size:.78rem;opacity:.75;margin-left:4px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.mapslim{padding:8px 16px;margin-bottom:12px}.mapslim .pathmap{max-height:170px}
+.hero{padding:0 0 12px}
+.hero-art .pathmap{max-height:220px}
+.modrows{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.modrow{display:grid;grid-template-columns:40px minmax(160px,1fr) minmax(0,2.2fr);gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--a);border-radius:14px;padding:8px 12px;margin:0}
+.modrow .num{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-weight:800;background:var(--as);color:var(--a)}
+.modrow .mt2{display:grid;gap:6px}.modrow .bar-track{height:6px}
+.lchips{display:flex;flex-wrap:wrap;gap:6px}
+.lchip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px 5px 6px;border:1px solid var(--line);border-radius:99px;text-decoration:none;color:var(--ink);font-size:.88rem;min-height:36px}
+.lchip:hover{background:var(--soft)}.lchip .dot{width:18px;height:18px}
+@media (max-width:760px){.modrow{grid-template-columns:36px 1fr}.lchips{grid-column:1/-1}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px;margin-top:12px}
+.stats .card{padding:12px 16px;display:flex;flex-direction:column;gap:2px}.stats .stat{font-size:1.4rem}
+.tiers .plan{padding:16px}.tiers .price{font-size:2rem;margin:4px 0}.tiers ul{margin:0 0 10px;padding-left:1.1em}.tiers li{margin:.15em 0}
+.wst{margin:6px 0 0;font-size:1rem}.wsdesc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:4px!important}
+.hero h1{font-size:clamp(1.7rem,3.6vw,2.5rem)}
+.hero .lead{font-size:1.02rem}
+@media (min-width:1100px){.lessonv:has(.lstep[data-ls="1"]:not([hidden])){max-width:1100px}}
+@media (min-width:1100px){.lstep.facts .factlist{columns:2;column-gap:32px}.lstep.facts .factlist li{break-inside:avoid}}
+.freelist{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:4px 16px}
+.notready{margin:0 auto 8px;max-width:760px;padding:8px 12px}
+@media (max-height:820px) and (min-width:700px){
+  .bar{padding-top:6px;padding-bottom:6px}
+  main{padding-top:8px;padding-bottom:12px}
+  .pagehead h1,.lhead2 h1{font-size:clamp(1.3rem,2.6vw,1.8rem)}
+  .kicker{margin-bottom:2px}
+  .hero h1{font-size:clamp(1.5rem,3vw,2.1rem)}.hero-art .pathmap{max-height:170px}.hero .lead{margin-bottom:10px}
+  .mapslim .pathmap{max-height:130px}
+  .lstep{min-height:0;padding:16px}
+  .tablist{margin:4px 0 10px}
+  .tiers .plan{padding:12px 14px}.tiers .price{font-size:1.7rem}
+  .card{padding:14px 16px}
+  .stats .card{padding:10px 14px}
+  .modrow{padding:6px 10px}
+  footer .in{padding:8px 16px 10px}
+}
+@media (max-width:899px){.hero .hero-art{display:none}}
 /* home */
 .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:12px 0 28px}
 @media (max-width:880px){.hero{grid-template-columns:1fr}}
@@ -136,7 +205,7 @@ section.block{margin:36px 0}
 .pathcard dl{margin:0}.pathcard dt{font-weight:800;margin-top:12px;font-size:.9rem;color:var(--a)}.pathcard dd{margin:2px 0 0}
 
 /* dashboard */
-.continue{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;background:linear-gradient(120deg,var(--purple),var(--blue));color:#fff;border-radius:22px;padding:22px;border:0}
+.continue{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 20px!important;background:linear-gradient(120deg,var(--purple),var(--blue));color:#fff;border-radius:22px;padding:22px;border:0}
 .continue h2{margin:0}
 .continue .muted{color:#E5E7FF}
 .continue .btn{background:#fff;color:var(--ink)}
@@ -373,17 +442,24 @@ function ring(p){
 }
 
 /* ---------- pages ---------- */
+function tabs(key,items){S.tab=S.tab||{};var cur=S.tab[key];if(!items.some(function(x){return x[0]===cur}))cur=items[0][0];
+  return '<div class="tabs" data-tabs="'+key+'"><div class="tablist" role="tablist" aria-label="Sections">'+items.map(function(x){return '<button type="button" role="tab" id="t-'+key+'-'+x[0]+'" aria-controls="p-'+key+'-'+x[0]+'" aria-selected="'+(x[0]===cur)+'" tabindex="'+(x[0]===cur?0:-1)+'" data-tab="'+x[0]+'">'+x[1]+'</button>'}).join("")+'</div>'+items.map(function(x){return '<div class="tabpanel" role="tabpanel" id="p-'+key+'-'+x[0]+'" aria-labelledby="t-'+key+'-'+x[0]+'"'+(x[0]===cur?'':' hidden')+'>'+x[2]+'</div>'}).join("")+'</div>';}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest('[role="tab"]');if(!b)return;var box=b.closest("[data-tabs]");selectTab(box,b);});
+document.addEventListener("keydown",function(e){var b=e.target.closest&&e.target.closest('[role="tab"]');if(!b||!/^(ArrowLeft|ArrowRight|Home|End)$/.test(e.key))return;var box=b.closest("[data-tabs]"),all=$$('[role="tab"]',box),k=all.indexOf(b);
+  k=e.key==="Home"?0:e.key==="End"?all.length-1:(k+(e.key==="ArrowRight"?1:-1)+all.length)%all.length;e.preventDefault();selectTab(box,all[k]);all[k].focus();});
+function selectTab(box,b){var key=box.dataset.tabs;S.tab=S.tab||{};S.tab[key]=b.dataset.tab;save();$$('[role="tab"]',box).forEach(function(t){var on=t===b;t.setAttribute("aria-selected",on);t.tabIndex=on?0:-1;});$$('.tabpanel',box).forEach(function(p){p.hidden=p.id!=="p-"+key+"-"+b.dataset.tab;});}
 function disclaimer(){return '<p class="note disc small"><b>No income promise.</b> '+esc(C.earningsDisclaimer||"This program teaches skills; it does not promise income.")+'</p>'}
 function pageHome(){
   var sm=modsOf("scale");
-  var ps=["web","assist","products"].map(function(k){var p=PATHS[k];return '<div class="card pathcard accent-'+p.color+'"><span class="tag '+p.color+'">Extra track</span><h3>'+esc(p.name)+'</h3><p class="small">'+esc(p.short)+'</p></div>'}).join("");
+  var ps=["web","assist","products"].map(function(k){var p=PATHS[k];return '<div class="card pathcard accent-'+p.color+'"><span class="tag '+p.color+'">Extra track</span><h3>'+esc(p.name)+'</h3><p class="small" style="margin:0">'+esc(p.short)+'</p></div>'}).join("");
   var tiers=(C.tiers||[]);var lo=tiers.length?Math.min.apply(null,tiers.map(function(t){return t.price})):0;
-  return '<section class="hero"><div><p class="kicker">Online coaching &amp; mentorship</p><h1>Learn to run ads that help clothing brands grow, <span class="grad">with a coach in your corner.</span></h1><p class="lead">'+esc(C.tagline||"")+'</p><div class="row"><a class="btn primary" href="#/free">Start the free training</a><a class="btn ghost" href="#/coaching">See coaching</a></div><p style="margin:12px 0 0"><a href="#/start">Not sure it&rsquo;s for you? Take the 1-minute questionnaire</a></p><p class="small muted" style="margin-top:14px">Free training first. Coaching is by application'+(lo?' and starts at '+money(lo):'')+'. No income is promised.</p></div><div class="hero-art mapwrap" role="region" aria-label="Program map" tabindex="0">'+pathMap(false,"scale")+'</div></section>'+
-  '<section class="block"><h2>How the program works</h2><ol class="steps6 steps3"><li class="accent-mint"><span class="tag mint">Step 1</span><b style="margin-top:6px">Free training</b><span class="small muted">Two short modules: how brand scaling works, the store numbers that matter, and how AI tools help. Free, no account.</span></li><li class="accent-purple"><span class="tag purple">Step 2</span><b style="margin-top:6px">Apply</b><span class="small muted">A short application and a call with '+esc(C.coachName||"the coach")+' to check it fits. No pressure; you can say no.</span></li><li class="accent-orange"><span class="tag orange">Step 3</span><b style="margin-top:6px">Coaching</b><span class="small muted">The full program plus live group or 1-on-1 coaching, depending on the tier you choose.</span></li></ol></section>'+
-  '<section class="block"><h2>What you will learn</h2><p class="muted">The main track: freelance brand scaling. You act as a small agency that runs paid ads on Instagram, TikTok and Google for e-commerce and clothing brands.</p><ol class="steps6">'+sm.map(function(m){return '<li class="accent-'+m.color+'"><span class="tag '+m.color+'">Module '+m.n+'</span><b style="margin-top:6px">'+esc(m.title)+'</b><span class="small muted">'+esc(m.sub)+'</span></li>'}).join("")+'</ol></section>'+
-  '<section class="block"><h2>Optional extra tracks</h2><p class="muted">Included in the program: AI basics plus three other ways to earn with AI.</p><div class="grid g3">'+ps+'</div></section>'+
-  '<section class="block grid g2"><div class="card"><h2>Who it helps</h2><ul><li>Beginners who want a practical skill and are ready to do outreach and client work.</li><li>People with a few hours a week. You do not need your own ad money: clients pay their own ad spend.</li><li>Teens with a parent or guardian involved in payments, agreements and taxes.</li></ul></div><div class="card"><h2>Who it is not for</h2><ul><li>People looking for quick or guaranteed money.</li><li>Anyone who does not want to contact businesses or handle client work.</li><li>Anyone looking for shortcuts around platform rules.</li></ul></div></section>'+
-  '<section class="block card"><h2>What you get</h2><div class="grid g3"><div><b>'+LESSONS.length+' written lessons</b><p class="small muted">Each with a goal, plain explanation, worked example, task and knowledge check.</p></div><div><b>'+WS.length+' worksheets and calculators</b><p class="small muted">Break-even ROAS, retainer pricing, launch checklist, weekly report, outreach templates and more.</p></div><div><b>Live coaching</b><p class="small muted">Group and 1-on-1 calls with '+esc(C.coachName||"the coach")+', depending on your tier.</p></div></div><p class="note blue small" style="margin-bottom:0">All examples with names are <strong>hypothetical</strong> and labeled. There are no invented testimonials or student results on this site.</p></section>'+disclaimer();
+  var how='<ol class="steps6 steps3"><li class="accent-mint"><span class="tag mint">Step 1</span><b style="margin-top:6px">Free training</b><span class="small muted">Four short lessons: how brand scaling works, the store numbers that matter, and how to use AI tools well. Free, no account.</span></li><li class="accent-purple"><span class="tag purple">Step 2</span><b style="margin-top:6px">Apply</b><span class="small muted">A short application and a call with '+esc(C.coachName||"the coach")+' to ask questions before you pay. No pressure; you can say no.</span></li><li class="accent-orange"><span class="tag orange">Step 3</span><b style="margin-top:6px">Coaching</b><span class="small muted">The full program plus live group or 1-on-1 coaching, depending on the tier you choose.</span></li></ol>';
+  var learn='<ol class="steps6">'+sm.map(function(m){return '<li class="accent-'+m.color+'"><span class="tag '+m.color+'">Module '+m.n+'</span><b style="margin-top:6px">'+esc(m.title)+'</b><span class="small muted">'+esc(m.sub)+'</span></li>'}).join("")+'</ol>';
+  var who='<div class="grid g2"><div class="card"><h2 class="h3" style="margin-top:0">Who it helps</h2><ul style="margin:0"><li>Beginners ready to do outreach and client work.</li><li>People with a few hours a week. Clients pay their own ad spend.</li><li>Teens, with a parent or guardian involved in payments, agreements and taxes.</li></ul></div><div class="card"><h2 class="h3" style="margin-top:0">Who it is not for</h2><ul style="margin:0"><li>People looking for quick or guaranteed money.</li><li>Anyone who does not want to contact businesses.</li><li>Anyone looking for shortcuts around platform rules.</li></ul></div></div>';
+  var get='<div class="grid g3"><div class="card"><b>'+LESSONS.length+' written lessons</b><p class="small muted" style="margin:0">Goal, plain explanation, worked example, task and knowledge check.</p></div><div class="card"><b>'+WS.length+' worksheets and calculators</b><p class="small muted" style="margin:0">Break-even ROAS, retainer pricing, launch checklist, weekly report and more.</p></div><div class="card"><b>Live coaching</b><p class="small muted" style="margin:0">Group and 1-on-1 calls with '+esc(C.coachName||"the coach")+', depending on your tier.</p></div></div><p class="note blue small" style="margin-bottom:0">All examples with names are <strong>hypothetical</strong> and labeled. There are no invented testimonials or student results on this site.</p>';
+  return '<section class="hero"><div><p class="kicker">Online coaching &amp; mentorship</p><h1>Learn to run ads that help clothing brands grow, <span class="grad">with a coach in your corner.</span></h1><p class="lead">'+esc(C.tagline||"")+'</p><div class="row"><a class="btn primary" href="#/free">Start the free training</a><a class="btn ghost" href="#/coaching">See coaching</a></div><p style="margin:12px 0 0"><a href="#/start">Not sure it&rsquo;s for you? Take the 1-minute questionnaire</a></p></div><div class="hero-art mapwrap" role="region" aria-label="Program map" tabindex="0">'+pathMap(false,"scale")+'</div></section>'+
+  tabs("home",[["how","How it works",how],["learn","What you will learn",learn],["who","Who it&rsquo;s for",who],["extra","Extra tracks",'<div class="grid g3">'+ps+'</div>'],["get","What you get",get]])+
+  '<p class="note disc small"><b>No income promise.</b> Free training first. Coaching is by application'+(lo?' and starts at '+money(lo):'')+'. '+esc(C.earningsDisclaimer||"")+'</p>';
 }
 
 function pageStart(sub){
@@ -433,64 +509,99 @@ function pageResult(){
   return h;
 }
 
+function moduleRows(track){
+  return '<ol class="modrows">'+modsOf(track).map(function(m){var ls=lessonsOf(m.id),d=modDone(m.id);
+    return '<li class="modrow accent-'+m.color+'"><span class="num">'+m.n+'</span><span class="mt2"><b>'+esc(m.title)+'</b><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="display:block;width:'+(d/ls.length*100)+'%"></span></span><span class="sr">'+d+' of '+ls.length+' lessons done</span></span><span class="lchips">'+ls.map(function(l){return '<a href="#/lesson/'+l.id+'" class="lchip'+(isDone(l.id)?" done":"")+'" title="'+esc(l.title)+' ('+l.minutes+' min)"><span class="dot'+(isDone(l.id)?" done":"")+'" aria-hidden="true"></span><span>'+esc(l.title)+(isDone(l.id)?'<span class="sr"> (completed)</span>':'')+(l.free?' <span class="free-dot">Free</span>':'')+'</span></a>'}).join("")+'</span></li>'}).join("")+'</ol>';
+}
 function moduleCards(track){
   return '<div class="grid g3">'+modsOf(track).map(function(m){var ls=lessonsOf(m.id),d=modDone(m.id);
-    return '<article class="card mod accent-'+m.color+'"><div class="row" style="justify-content:space-between"><div class="num">'+m.n+'</div><span class="tag '+(d===ls.length?"mint":m.color)+'">'+(d===ls.length?"Complete":d+" of "+ls.length+" done")+'</span></div><h2 class="h3">'+esc(m.title)+'</h2><p class="small muted">'+esc(m.sub)+'</p><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:'+(d/ls.length*100)+'%"></div></div><ul>'+ls.map(function(l){return '<li><a href="#/lesson/'+l.id+'"><span class="dot'+(isDone(l.id)?" done":"")+'" aria-hidden="true"></span><span>'+esc(l.title)+'<span class="sr">'+(isDone(l.id)?" (completed)":"")+'</span><br><span class="small muted">'+l.minutes+' min'+(S.marks.indexOf(l.id)>=0?" &middot; bookmarked":"")+'</span></span></a></li>'}).join("")+'</ul></article>'}).join("")+'</div>';
+    return '<article class="card mod accent-'+m.color+'"><div class="row" style="justify-content:space-between"><div class="num">'+m.n+'</div><span class="tag '+(d===ls.length?"mint":m.color)+'">'+(d===ls.length?"Complete":d+" of "+ls.length+" done")+'</span></div><h2 class="h3">'+esc(m.title)+'</h2><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:'+(d/ls.length*100)+'%"></div></div><ul>'+ls.map(function(l){return '<li><a href="#/lesson/'+l.id+'"><span class="dot'+(isDone(l.id)?" done":"")+'" aria-hidden="true"></span><span>'+esc(l.title)+'<span class="sr">'+(isDone(l.id)?" (completed)":"")+'</span> <span class="small muted">&middot; '+l.minutes+' min'+(l.free?" &middot; Free":"")+(S.marks.indexOf(l.id)>=0?" &middot; bookmarked":"")+'</span></span></a></li>'}).join("")+'</ul></article>'}).join("")+'</div>';
 }
 function pageCourse(){
-  var h='<p class="kicker">Program map</p><h1>Two tracks, '+LESSONS.length+' lessons</h1><p class="muted">Go in order the first time. Each lesson ends with a practical task and a short knowledge check. Lessons marked Free are part of the free training.</p>';
-  trackOrder().forEach(function(t){var T=TRACKS[t],n=trackLessons(t).length,d=trackLessons(t).filter(function(l){return isDone(l.id)}).length;
-    h+='<section class="block"><div class="row" style="justify-content:space-between"><h2 style="margin:0">'+esc(T.long)+'</h2><span class="tag '+(t==="scale"?"mint":"blue")+'">'+esc(T.badge)+' &middot; '+d+' of '+n+' done</span></div><p class="muted">'+esc(T.desc)+'</p><div class="card mapwrap" style="margin:12px 0 16px" role="region" aria-label="'+esc(T.long)+' map" tabindex="0">'+pathMap(true,t)+'</div>'+moduleCards(t)+'</section>';});
+  var h='<div class="pagehead"><p class="kicker">Program map</p><h1>Two tracks, '+LESSONS.length+' lessons</h1><p class="muted">Go in order the first time. Lessons marked Free are part of the free training.</p></div>';
+  h+=tabs("course",trackOrder().map(function(t){var T=TRACKS[t],n=trackLessons(t).length,d=trackLessons(t).filter(function(l){return isDone(l.id)}).length;
+    return [t,esc(T.name)+' <span class="tcount">'+d+'/'+n+'</span>','<p class="muted small" style="margin:0 0 10px"><span class="tag '+(t==="scale"?"mint":"blue")+'">'+esc(T.badge)+'</span> '+esc(T.desc)+'</p><div class="card mapwrap mapslim" role="region" aria-label="'+esc(T.long)+' map" tabindex="0">'+pathMap(true,t)+'</div>'+moduleRows(t)];}));
   return h;
 }
 
 function pageDashboard(){
   var n=nextLesson(),p=pct(),path=S.path&&PATHS[S.path];var tk=trackOrder()[0];
-  var h='<p class="kicker">Your dashboard</p><h1>'+(doneCount()?"Welcome back":"Welcome")+'</h1>';
+  var h='<div class="pagehead"><h1 class="kicker" style="font-size:.8rem;margin:0">Your dashboard &middot; '+(doneCount()?"Welcome back":"Welcome")+'</h1></div>';
   if(n){h+='<section class="continue">'+ring(p)+'<div><p class="small" style="margin:0;opacity:.9">'+(doneCount()?"Continue learning":"Start learning")+' &middot; '+esc(TRACKS[trackOf(n)].name)+' &middot; Module '+MMAP[n.module].n+'</p><h2>'+esc(n.title)+'</h2><p class="muted small" style="margin:4px 0 0">'+n.minutes+' min &middot; '+esc(n.goal)+'</p></div><a class="btn" href="#/lesson/'+n.id+'">'+(doneCount()?"Continue learning":"Start lesson")+'</a></section>';}
   else {h+='<section class="continue">'+ring(100)+'<div><h2>All '+LESSONS.length+' lessons complete</h2><p class="muted small" style="margin:4px 0 0">Your next step: finish the final project and add it to your portfolio.</p></div><a class="btn" href="#/project">Open final project</a></section>';}
-  h+='<div class="grid g3" style="margin-top:16px">';
-  h+='<div class="card"><p class="kicker" style="color:var(--blue)">Progress</p><div class="stat">'+doneCount()+' / '+LESSONS.length+'</div><p class="small muted">lessons complete</p><div class="bar-track"><div class="bar-fill" style="width:'+p+'%"></div></div></div>';
   var qs=Object.keys(S.quiz).length,avg=qs?Math.round(Object.keys(S.quiz).reduce(function(a,k){return a+S.quiz[k].best/S.quiz[k].of},0)/qs*100):0;
-  h+='<div class="card"><p class="kicker" style="color:var(--mint-ink)">Knowledge checks</p><div class="stat">'+qs+'</div><p class="small muted">taken'+(qs?" &middot; best scores average "+avg+"%":"")+'</p></div>';
-  h+='<div class="card"><p class="kicker" style="color:var(--orange-ink)">Your path</p>'+(path?'<h3 style="margin:4px 0">'+esc(path.name)+'</h3><p class="small muted">'+esc(path.short)+'</p><a class="small" href="#/start/result">See details or change</a>':'<p>Not chosen yet.</p><a class="btn primary small" href="#/start">Take the 1-minute questionnaire</a>')+'</div>';
-  h+='</div>';
+  h+='<div class="stats"><div class="card"><span class="kicker" style="color:var(--blue)">Progress</span><b class="stat">'+doneCount()+' / '+LESSONS.length+'</b><span class="small muted">lessons complete</span></div><div class="card"><span class="kicker" style="color:var(--mint-ink)">Knowledge checks</span><b class="stat">'+qs+'</b><span class="small muted">taken'+(qs?" &middot; best scores average "+avg+"%":"")+'</span></div><div class="card"><span class="kicker" style="color:var(--orange-ink)">Your path</span>'+(path?'<b>'+esc(path.name)+'</b><a class="small" href="#/start/result">See details or change</a>':'<a class="btn primary small" href="#/start">Take the 1-minute questionnaire</a>')+'</div></div>';
   var nm=S.notes.s6l2||S.notes.m6l2;
-  if(nm) h+='<div class="note mint"><b>Your one next move</b> (from Module 6): '+esc(nm.split("\n")[0].slice(0,200))+'</div>';
-  if(S.marks.length) h+='<section class="block"><h2>Bookmarks</h2><div class="row">'+S.marks.filter(function(id){return LMAP[id]}).map(function(id){return '<a class="btn ghost small" href="#/lesson/'+id+'">'+esc(LMAP[id].title)+'</a>'}).join("")+'</div></section>';
-  trackOrder().forEach(function(t){h+='<section class="block"><h2>'+esc(TRACKS[t].long)+' <span class="tag '+(t==="scale"?"mint":"blue")+'">'+esc(TRACKS[t].badge)+'</span></h2>'+moduleCards(t)+'</section>';});
   var fr=LESSONS.filter(function(l){return l.free}),fd=fr.filter(function(l){return isDone(l.id)}).length;
-  h+='<div class="note mint"><b>Free training:</b> '+fd+' of '+fr.length+' lessons done. '+(fd===fr.length?'<a href="#/apply">Apply for coaching</a> when you are ready.':'<a href="#/free">See the free training</a>.')+'</div>';
-  h+='<section class="block grid g2"><a class="card" href="#/resources" style="text-decoration:none;color:var(--ink)"><h3 style="margin-top:0">Resources</h3><p class="small muted">Worksheets, templates and calculators. '+Object.keys(S.ws).length+' started.</p></a><a class="card" href="#/project" style="text-decoration:none;color:var(--ink)"><h3 style="margin-top:0">Final project</h3><p class="small muted">'+projectFilled()+' of '+A.PROJECT.fields.length+' sections written.</p></a></section>';
+  var more='<div class="note mint" style="margin-top:0"><b>Free training:</b> '+fd+' of '+fr.length+' lessons done. '+(fd===fr.length?'<a href="#/apply">Apply for coaching</a> when you are ready.':'<a href="#/free">See the free training</a>.')+'</div>'+(nm?'<div class="note mint"><b>Your one next move</b> (from Module 6): '+esc(nm.split("\n")[0].slice(0,200))+'</div>':'')+
+    '<div class="grid g2"><a class="card" href="#/resources" style="text-decoration:none;color:var(--ink)"><h3 style="margin-top:0">Resources</h3><p class="small muted" style="margin:0">Worksheets, templates and calculators. '+Object.keys(S.ws).length+' started.</p></a><a class="card" href="#/project" style="text-decoration:none;color:var(--ink)"><h3 style="margin-top:0">Final project</h3><p class="small muted" style="margin:0">'+projectFilled()+' of '+A.PROJECT.fields.length+' sections written.</p></a></div>';
+  var items=trackOrder().map(function(t){return [t,esc(TRACKS[t].name),moduleRows(t)]});
+  items.push(["more","Free training &amp; tools",more]);
+  if(S.marks.length) items.push(["marks","Bookmarks",'<div class="row">'+S.marks.filter(function(id){return LMAP[id]}).map(function(id){return '<a class="btn ghost small" href="#/lesson/'+id+'">'+esc(LMAP[id].title)+'</a>'}).join("")+'</div>']);
+  h+='<div style="margin-top:16px">'+tabs("dash",items)+'</div>';
   return h;
 }
 
+var LSTEPS=["Start","Explain","Watch out","Example","Task","Check","Finish"];
 function pageLesson(id){
   var l=LMAP[id]; if(!l) return notFound();
   var m=MMAP[l.module], O=ordered(), oi=O.indexOf(l), prev=O[oi-1], next=O[oi+1];
-  S.last=id; save();
+  S.last=id; S.lstep=S.lstep||{}; var cur=Math.min(+S.lstep[id]||0,LSTEPS.length-1); save();
   var path=S.path&&PATHS[S.path];
   var marked=S.marks.indexOf(id)>=0, steps=S.steps[id]||[], qz=S.quiz[id];
-  var side='<nav class="side card" aria-label="All lessons">'+trackOrder().map(function(t){return '<div class="tt">'+esc(TRACKS[t].name)+'</div>'+modsOf(t).map(function(mm){return '<div class="mt">'+mm.n+'. '+esc(mm.title)+'</div>'+lessonsOf(mm.id).map(function(x){return '<a href="#/lesson/'+x.id+'"'+(x.id===id?' aria-current="page"':'')+'><span class="dot'+(isDone(x.id)?" done":"")+'" aria-hidden="true"></span>'+esc(x.title)+(x.free?' <span class="free-dot">Free</span>':'')+'</a>'}).join("")}).join("")}).join("")+'</nav>';
   var explain=l.explain.join("");
   if(path) explain=explain.replace(new RegExp("<h3>("+path.name.replace(/[&]/g,"&amp;").replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")</h3>"),'<h3>$1 <span class="tag mint yourpath">Your path</span></h3>');
-  var h='<div class="lesson">'+side+'<article class="accent-'+m.color+'">';
-  h+='<div class="lhead"><div class="row" style="justify-content:space-between"><span class="row" style="gap:6px"><span class="tag '+m.color+'">'+esc(TRACKS[m.track].name)+' &middot; Module '+m.n+': '+esc(m.title)+'</span>'+(l.free?'<span class="tag mint">Free training</span>':'')+'</span><button class="btn ghost small bm noprint" id="bm" aria-pressed="'+marked+'">'+(marked?"Bookmarked":"Bookmark")+'</button></div><h1 style="margin-top:12px">'+esc(l.title)+'</h1><p class="small muted" style="margin:0" id="lmeta">'+lessonMeta(l)+'</p><div class="bar-track" style="margin-top:10px" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="'+LESSONS.length+'" aria-valuenow="'+doneCount()+'"><div class="bar-fill" style="width:'+pct()+'%"></div></div><p class="small muted mobile-only" style="margin:6px 0 0">'+doneCount()+' of '+LESSONS.length+' lessons complete &middot; <a href="#/course">All lessons</a></p><div class="goal"><span aria-hidden="true" style="font-size:1.3rem">&#127919;</span><div><b>Learning goal</b><br>'+esc(l.goal)+'</div></div></div>';
-  h+='<section class="lsec card"><h2><span class="ic" aria-hidden="true">Aa</span>Words in plain English</h2><dl class="terms">'+l.terms.map(function(t){return '<div><dt>'+esc(t[0])+'</dt><dd>'+esc(t[1])+'</dd></div>'}).join("")+'</dl></section>';
-  h+='<section class="lsec card"><h2><span class="ic" aria-hidden="true">&#9673;</span>Explanation</h2>'+explain+'</section>';
-  if(l.facts&&l.facts.length) h+='<section class="lsec card facts"><h2><span class="ic" aria-hidden="true">&#10004;</span>Checked facts</h2><ul class="factlist">'+l.facts.map(function(f){return '<li>'+esc(f.text)+' <a href="'+esc(f.url)+'" rel="noopener" target="_blank">'+esc(f.src)+'<span class="sr"> (opens in a new tab)</span></a></li>'}).join("")+'</ul><p class="small muted" style="margin:0">Checked November '+(trackOf(l)==="scale"?8:7)+', 2026 through searches limited to the official site. Rules, tools and prices change: open the source before relying on a number.</p></section>';
-  if(l.mistake) h+='<p class="note mistake"><b>Common mistake:</b> '+esc(l.mistake)+'</p>';
-  h+='<section class="lsec card example"><h2><span class="ic" aria-hidden="true">&#9998;</span>Worked example</h2><span class="hypo">Hypothetical example</span><h3 style="margin-top:4px">'+esc(l.example.title.replace(/^Hypothetical:\s*/,"").replace(/^./,function(c){return c.toUpperCase()}))+'</h3>'+l.example.body+'</section>';
-  h+='<section class="lsec card"><h2><span class="ic" aria-hidden="true">&#10003;</span>Your task: '+esc(l.task.title)+'</h2><ul class="tasklist">'+l.task.steps.map(function(s,i){return '<li><label><input type="checkbox" data-step="'+i+'"'+(steps[i]?" checked":"")+'> <span>'+esc(s)+'</span></label></li>'}).join("")+'</ul><p class="note blue small" style="margin-bottom:0">'+esc(l.task.note)+'</p></section>';
-  h+='<section class="lsec card" id="kc"><h2><span class="ic" aria-hidden="true">?</span>Knowledge check</h2><p class="small muted">'+l.quiz.length+' questions. You get an explanation for every answer. '+(qz?'Best score so far: <b>'+qz.best+' of '+qz.of+'</b>.':'')+'</p><form id="quiz">';
-  l.quiz.forEach(function(qq,qi){h+='<fieldset class="qq" data-q="'+qi+'"><legend>'+(qi+1)+'. '+esc(qq.q)+'</legend><div class="opts" style="margin:8px 0 0">'+A.optionOrder(l.id+":"+qi,qq.options.length).map(function(oi){return '<label class="opt"><input type="radio" name="q'+qi+'" value="'+oi+'"> <span class="ot">'+esc(qq.options[oi])+'</span></label>'}).join("")+'</div><div class="fbx" aria-live="polite"></div></fieldset>';});
-  h+='<div class="row"><button class="btn blue" type="submit">Check my answers</button><button class="btn ghost" type="button" id="qreset" hidden>Try again</button></div><p id="qmsg" class="small" role="status" style="margin-top:8px"></p></form></section>';
-  h+='<section class="lsec card"><h2><span class="ic" aria-hidden="true">&#9776;</span>My notes</h2><label class="sr" for="note">Notes for this lesson</label><textarea id="note" placeholder="Write what you tried, what worked and what you will do next.">'+esc(S.notes[id]||"")+'</textarea><div class="saved" id="nsaved" aria-live="polite"></div></section>';
-  h+='<div class="donebox noprint" id="donebox">'+doneBoxInner(id,next)+'</div>';
-  h+='<nav class="pn" aria-label="Lesson navigation">'+(prev?'<a class="card" href="#/lesson/'+prev.id+'"><small>&larr; Previous</small>'+esc(prev.title)+'</a>':'<span></span>')+(next?'<a class="card next" href="#/lesson/'+next.id+'"><small>Next &rarr;</small>'+esc(next.title)+'</a>':'<a class="card next" href="#/project"><small>Next &rarr;</small>Final project</a>')+'</nav>';
-  h+='</article></div>';
-  setTimeout(function(){wireLesson(l,next)});
+  var sec=function(k,inner,cls){return '<section class="lstep card'+(cls?" "+cls:"")+'" data-ls="'+k+'" aria-label="Step '+(k+1)+': '+LSTEPS[k]+'"'+(k===cur?'':' hidden')+'>'+inner+'</section>';};
+  var h='<article class="lessonv accent-'+m.color+'">';
+  h+='<header class="lhead2"><div class="row" style="justify-content:space-between;gap:8px"><span class="row" style="gap:6px"><span class="tag '+m.color+'">'+esc(TRACKS[m.track].name)+' &middot; Module '+m.n+': '+esc(m.title)+'</span>'+(l.free?'<span class="tag mint">Free training</span>':'')+'</span><span class="row" style="gap:6px"><a class="btn ghost small" href="#/course">All lessons</a><button class="btn ghost small bm noprint" id="bm" aria-pressed="'+marked+'">'+(marked?"Bookmarked":"Bookmark")+'</button></span></div><h1>'+esc(l.title)+'</h1><p class="small muted" style="margin:0" id="lmeta">'+lessonMeta(l)+'</p></header>';
+  h+='<nav class="stepnav" aria-label="Lesson steps">'+LSTEPS.map(function(s,k){return '<button type="button" data-goto="'+k+'" data-step-name="'+s+'"'+(k===cur?' aria-current="step"':'')+'><span class="sn">'+(k+1)+'</span><span class="sl">'+s+'</span></button>'}).join("")+'</nav>';
+  h+=sec(0,'<div class="goal"><span aria-hidden="true" style="font-size:1.3rem">&#127919;</span><div><b>Learning goal</b><br>'+esc(l.goal)+'</div></div><h2 class="h3" style="margin-top:18px">Words in plain English</h2><dl class="terms">'+l.terms.map(function(t){return '<div><dt>'+esc(t[0])+'</dt><dd>'+esc(t[1])+'</dd></div>'}).join("")+'</dl>');
+  var parts=l.explain.map(function(x,i){return '<div class="xp" data-x="'+i+'">'+x+'</div>'});
+  if(path){parts=parts.map(function(x){return x.replace(new RegExp("<h3>("+path.name.replace(/[&]/g,"&amp;").replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")</h3>"),'<h3>$1 <span class="tag mint yourpath">Your path</span></h3>')});}
+  h+=sec(1,'<div class="row" style="justify-content:space-between"><h2 style="margin:0"><span class="ic" aria-hidden="true">&#9673;</span>Explanation</h2><span class="small muted xcount" aria-live="polite"></span></div><div class="cols">'+parts.join("")+'</div>');
+  h+=sec(2,(l.mistake?'<p class="note mistake"><b>Common mistake:</b> '+esc(l.mistake)+'</p>':'')+(l.facts&&l.facts.length?'<h2><span class="ic" aria-hidden="true">&#10004;</span>Checked facts</h2><ul class="factlist">'+l.facts.map(function(f){return '<li>'+esc(f.text)+' <a href="'+esc(f.url)+'" rel="noopener" target="_blank">'+esc(f.src)+'<span class="sr"> (opens in a new tab)</span></a></li>'}).join("")+'</ul><p class="small muted" style="margin:0">Checked November '+(trackOf(l)==="scale"?8:7)+', 2026 through searches limited to the official site. Rules, tools and prices change: open the source before relying on a number.</p>':'<p class="small muted">No official facts to check in this lesson; its advice is labeled as practice or rule of thumb where it applies.</p>'),'facts');
+  h+=sec(3,'<h2><span class="ic" aria-hidden="true">&#9998;</span>Worked example</h2><span class="hypo">Hypothetical example</span><h3 style="margin-top:4px">'+esc(l.example.title.replace(/^Hypothetical:\s*/,"").replace(/^./,function(c){return c.toUpperCase()}))+'</h3>'+l.example.body,'example');
+  h+=sec(4,'<h2><span class="ic" aria-hidden="true">&#10003;</span>Your task: '+esc(l.task.title)+'</h2><ul class="tasklist">'+l.task.steps.map(function(s,i){return '<li><label><input type="checkbox" data-step="'+i+'"'+(steps[i]?" checked":"")+'> <span>'+esc(s)+'</span></label></li>'}).join("")+'</ul><p class="note blue small" style="margin-bottom:0">'+esc(l.task.note)+'</p>');
+  var qh='<div id="kc"><div class="row" style="justify-content:space-between"><h2 style="margin:0"><span class="ic" aria-hidden="true">?</span>Knowledge check</h2><span class="small muted">'+(qz?'Best so far: <b>'+qz.best+' of '+qz.of+'</b>':l.quiz.length+' questions')+'</span></div><div class="qnav" role="group" aria-label="Questions">'+l.quiz.map(function(q,qi){return '<button type="button" data-qi="'+qi+'"'+(qi===0?' aria-current="true"':'')+'>'+(qi+1)+'</button>'}).join("")+'</div><form id="quiz">';
+  l.quiz.forEach(function(qq,qi){qh+='<fieldset class="qq" data-q="'+qi+'"'+(qi?' hidden':'')+'><legend>'+(qi+1)+'. '+esc(qq.q)+'</legend><div class="opts" style="margin:8px 0 0">'+A.optionOrder(l.id+":"+qi,qq.options.length).map(function(oi){return '<label class="opt"><input type="radio" name="q'+qi+'" value="'+oi+'"> <span class="ot">'+esc(qq.options[oi])+'</span></label>'}).join("")+'</div><div class="fbx" aria-live="polite"></div></fieldset>';});
+  qh+='<div class="row" style="justify-content:space-between"><button class="btn ghost" type="button" id="qprev">Previous question</button><span class="row"><button class="btn ghost" type="button" id="qnext">Next question</button><button class="btn blue" type="submit" id="qsubmit">Check my answers</button><button class="btn ghost" type="button" id="qreset" hidden>Try again</button></span></div><p id="qmsg" class="small" role="status" style="margin-top:8px"></p></form></div>';
+  h+=sec(5,qh);
+  h+=sec(6,'<h2><span class="ic" aria-hidden="true">&#9776;</span>My notes</h2><label class="sr" for="note">Notes for this lesson</label><textarea id="note" placeholder="Write what you tried, what worked and what you will do next.">'+esc(S.notes[id]||"")+'</textarea><div class="saved" id="nsaved" aria-live="polite"></div><div class="donebox noprint" id="donebox">'+doneBoxInner(id,next)+'</div>');
+  h+='<div class="stepbar noprint"><button class="btn ghost" type="button" id="sback">'+(cur===0&&prev?'&larr; Previous lesson':'&larr; Back')+'</button><span class="small muted" id="scount">Step '+(cur+1)+' of '+LSTEPS.length+'</span><button class="btn primary" type="button" id="snext">Next &rarr;</button></div>';
+  h+='</article>';
+  setTimeout(function(){wireLesson(l,next);wireSteps(l,prev,next);});
   return h;
+}
+function wireSteps(l,prev,next){
+  var id=l.id,qi=0,xi=0,nx=l.explain.length;
+  var narrow=window.matchMedia?window.matchMedia("(max-width:1099px)"):{matches:false};
+  function showX(n){xi=Math.max(0,Math.min(n,nx-1));var on=narrow.matches;$$(".xp").forEach(function(x,k){x.hidden=on&&k!==xi});var c=$(".xcount");if(c)c.textContent=on?"Part "+(xi+1)+" of "+nx:"";}
+  function showQ(n){var fs=$$("#quiz fieldset");qi=Math.max(0,Math.min(n,fs.length-1));fs.forEach(function(f,k){f.hidden=k!==qi});$$(".qnav button").forEach(function(b,k){if(k===qi)b.setAttribute("aria-current","true");else b.removeAttribute("aria-current")});
+    $("#qprev").disabled=qi===0;var last=qi===fs.length-1;$("#qnext").hidden=last;var checked=!$("#qreset").hidden;$("#qsubmit").hidden=!last||checked;}
+  function markQ(){l.quiz.forEach(function(q,k){var b=$('.qnav button[data-qi="'+k+'"]'),fs=$('#quiz fieldset[data-q="'+k+'"]');if(!b)return;b.classList.toggle("answered",!!$('input:checked',fs));b.classList.toggle("right",fs.classList.contains("right"));b.classList.toggle("wrong",fs.classList.contains("wrong"));});}
+  function go(k,focus){k=Math.max(0,Math.min(k,LSTEPS.length-1));S.lstep[id]=k;save();
+    $$(".lstep").forEach(function(s){s.hidden=+s.dataset.ls!==k});
+    $$(".stepnav button").forEach(function(b){if(+b.dataset.goto===k)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current")});
+    $("#scount").textContent="Step "+(k+1)+" of "+LSTEPS.length;
+    $("#sback").innerHTML=k===0?(prev?"&larr; Previous lesson":"&larr; Back"):"&larr; Back";$("#sback").disabled=k===0&&!prev;
+    if(k===1)showX(0);updNext();
+    window.scrollTo(0,0);if(focus){var s=$('.lstep[data-ls="'+k+'"]');s.setAttribute("tabindex","-1");s.focus({preventScroll:true});}}
+  $$(".stepnav button").forEach(function(b){b.addEventListener("click",function(){go(+b.dataset.goto,true)})});
+  $("#sback").addEventListener("click",function(){var k=+S.lstep[id]||0;if(k===1&&narrow.matches&&xi>0){showX(xi-1);window.scrollTo(0,0);return;}if(k===0&&prev){location.hash="#/lesson/"+prev.id;return;}go(k-1,true)});
+  $("#snext").addEventListener("click",function(){var k=+S.lstep[id]||0;if(k===1&&narrow.matches&&xi<nx-1){showX(xi+1);window.scrollTo(0,0);updNext();return;}if(k===LSTEPS.length-1){location.hash=next?"#/lesson/"+next.id:"#/project";return;}go(k+1,true)});
+  $$(".qnav button").forEach(function(b){b.addEventListener("click",function(){showQ(+b.dataset.qi)})});
+  $("#qprev").addEventListener("click",function(){showQ(qi-1)});
+  $("#qnext").addEventListener("click",function(){showQ(qi+1);var f=$('#quiz fieldset[data-q="'+qi+'"] input');if(f)f.focus();});
+  $("#quiz").addEventListener("change",markQ);
+  // After checking (or when an answer is missing), jump to the first question that needs attention.
+  $("#quiz").addEventListener("submit",function(){markQ();var miss=$$("#quiz fieldset").map(function(f){return !$("input:checked",f)}).indexOf(true);showQ(miss>=0?miss:0);});
+  $("#qreset").addEventListener("click",function(){markQ();showQ(0);});
+  document.addEventListener("keydown",function kh(e){if(!document.body.contains($("#snext"))){document.removeEventListener("keydown",kh);return;}
+    var t=e.target;if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))return;if(e.altKey||e.ctrlKey||e.metaKey)return;
+    if(e.key==="ArrowRight"){e.preventDefault();$("#snext").click();}else if(e.key==="ArrowLeft"){e.preventDefault();$("#sback").click();}});
+  function updNext(){var k=+S.lstep[id]||0,b=$("#snext");if(k===1&&narrow.matches&&xi<nx-1)b.innerHTML="Next part &rarr;";else if(k===LSTEPS.length-1)b.innerHTML=next?"Next lesson &rarr;":"Final project &rarr;";else b.innerHTML="Next: "+LSTEPS[k+1]+" &rarr;";}
+  if(narrow.addEventListener)narrow.addEventListener("change",function(){showX(xi);updNext()});
+  go(+S.lstep[id]||0,false);showX(0);updNext();showQ(0);markQ();
 }
 function lessonMeta(l){var tl=trackLessons(trackOf(l));return 'Lesson '+(tl.indexOf(l)+1)+' of '+tl.length+' in '+esc(TRACKS[trackOf(l)].name)+' &middot; '+l.minutes+' min'+(isDone(l.id)?' &middot; <b style="color:var(--mint-ink)">Completed</b>':'');}
 function refreshLessonHead(l){var m=$("#lmeta");if(m)m.innerHTML=lessonMeta(l);var f=$(".lhead .bar-fill");if(f)f.style.width=pct()+"%";}
@@ -532,17 +643,18 @@ function wireDone(l,next){
     celebrate();toast(full?"Module "+MMAP[m].n+" complete!":"Lesson complete. Nice work.");
     $("#donebox").innerHTML=doneBoxInner(l.id,next);$("#donebox").classList.add("pop");wireDone(l,next);refreshLessonHead(l);
     var a=$("#donebox a.btn");if(a)a.focus();
-    $$('.side a[href="#/lesson/'+l.id+'"] .dot').forEach(function(d){d.classList.add("done")});
+
   });
-  var u=$("#undone");if(u)u.addEventListener("click",function(){delete S.done[l.id];save();$("#donebox").innerHTML=doneBoxInner(l.id,next);wireDone(l,next);refreshLessonHead(l);$$('.side a[href="#/lesson/'+l.id+'"] .dot').forEach(function(d){d.classList.remove("done")});});
+  var u=$("#undone");if(u)u.addEventListener("click",function(){delete S.done[l.id];save();$("#donebox").innerHTML=doneBoxInner(l.id,next);wireDone(l,next);refreshLessonHead(l);});
 }
 
 /* ---------- resources ---------- */
 function pageResources(sub){
   if(sub) return pageWorksheet(sub);
-  var h='<p class="kicker">Resources</p><h1>Worksheets, templates and calculators</h1><p class="muted">Everything you type is saved on this device. Each one can be copied, downloaded as a text file, or printed.</p>';
-  trackOrder().forEach(function(tk){h+='<h2 style="margin-top:28px">'+esc(TRACKS[tk].long)+'</h2>';modsOf(tk).forEach(function(m){var list=WS.filter(function(w){return w.module===m.id});if(!list.length)return;
-    h+='<h3 style="margin-top:18px">Module '+m.n+': '+esc(m.title)+'</h3><div class="grid g3">'+list.map(function(w){return '<a class="card mod accent-'+m.color+'" style="text-decoration:none;color:var(--ink)" href="#/resources/'+w.id+'"><span class="tag '+m.color+'">'+({form:"Worksheet",prompt:"Tool",checklist:"Checklist",score:"Scorecard",price:"Calculator",template:"Template",money:"Tracker",roas:"Calculator",retainer:"Calculator"})[w.kind]+'</span><h3>'+esc(w.title)+'</h3><p class="small muted" style="margin:0">'+esc(w.desc)+'</p>'+(S.ws[w.id]?'<p class="small" style="color:var(--mint-ink);font-weight:700;margin:8px 0 0">Started</p>':'')+'</a>'}).join("")+'</div>';});});
+  var h='<div class="pagehead"><p class="kicker">Resources</p><h1>Worksheets, templates and calculators</h1><p class="muted">Everything you type is saved on this device. Each one can be copied, downloaded as a text file, or printed.</p></div>';
+  var tabItems=[];trackOrder().forEach(function(tk){var th='';modsOf(tk).forEach(function(m){var list=WS.filter(function(w){return w.module===m.id});if(!list.length)return;
+    th+=list.map(function(w){return '<a class="card mod accent-'+m.color+'" style="text-decoration:none;color:var(--ink)" href="#/resources/'+w.id+'"><span class="tag '+m.color+'">'+({form:"Worksheet",prompt:"Tool",checklist:"Checklist",score:"Scorecard",price:"Calculator",template:"Template",money:"Tracker",roas:"Calculator",retainer:"Calculator"})[w.kind]+'</span><h2 class="wst">'+esc(w.title)+'</h2><span class="small muted">Module '+m.n+'</span><p class="small muted wsdesc" style="margin:0">'+esc(w.desc)+'</p>'+(S.ws[w.id]?'<p class="small" style="color:var(--mint-ink);font-weight:700;margin:8px 0 0">Started</p>':'')+'</a>'}).join("");});tabItems.push([tk,esc(TRACKS[tk].name),'<div class="grid g4">'+th+'</div>']);});
+  h+=tabs("res",tabItems);
   h+='<h2 style="margin-top:24px">Helpful habits</h2><div class="card"><ul style="margin:0"><li>Keep one folder for each project: scope, notes, receipts, feedback.</li><li>Before any tool or price goes into your work, check it on the tool\u2019s official page. See <a href="#/facts">Facts &amp; sources</a> for what this course could and could not verify.</li></ul></div>';
   return h;
 }
@@ -676,23 +788,26 @@ function pageNotes(){
 }
 
 function applyReady(){return !!(C.applicationUrl||C.supportEmail)}
-function notReady(){return applyReady()?'':'<p class="note small"><b>Applications are not open yet.</b> The coach has not added an application link. You can still fill in and copy your application to send when it opens.</p>'}
+function notReady(){return applyReady()?'':'<p class="note small notready"><b>Applications are not open yet.</b> You can still fill in and copy your application to send when it opens.</p>'}
 /* ---------- free training ---------- */
 function pageFree(){
   var fr=ordered().filter(function(l){return l.free}),fd=fr.filter(function(l){return isDone(l.id)}).length,nx=fr.filter(function(l){return !isDone(l.id)})[0];
-  var h='<p class="kicker">Free training</p><h1>Start the free training</h1><p class="lead muted" style="max-width:44em">'+fr.length+' short lessons, free and with no account: how brand scaling works, the store numbers brand owners care about, and how to use AI tools well and check their output.</p>';
-  h+='<div class="card"><div class="row" style="justify-content:space-between"><b>'+fd+' of '+fr.length+' done</b>'+(nx?'<a class="btn primary" href="#/lesson/'+nx.id+'">'+(fd?"Continue":"Start")+' the free training</a>':'<a class="btn primary" href="#/apply">Apply for coaching</a>')+'</div><div class="bar-track" style="margin-top:12px"><div class="bar-fill" style="width:'+(fd/fr.length*100)+'%"></div></div><ul class="tasklist" style="margin-top:12px">'+fr.map(function(l){return '<li><a class="row" style="gap:10px;text-decoration:none;color:var(--ink);padding:8px" href="#/lesson/'+l.id+'"><span class="dot'+(isDone(l.id)?" done":"")+'" aria-hidden="true"></span><span><b>'+esc(l.title)+'</b><span class="sr">'+(isDone(l.id)?" (completed)":"")+'</span><br><span class="small muted">'+esc(TRACKS[trackOf(l)].name)+' &middot; '+l.minutes+' min</span></span></a></li>'}).join("")+'</ul></div>';
-  h+='<div class="grid g2" style="margin-top:16px"><div class="card"><h2>After the free training</h2><p>If brand scaling feels right, apply for coaching'+(applyReady()?'. You will get a reply within '+(C.replyDays||3)+' business days and can book a short call with '+esc(C.coachName||"the coach")+' to ask questions.':' when applications open.')+'</p><a class="btn ghost" href="#/coaching">See coaching tiers</a></div><div class="card"><h2>Not sure yet?</h2><p>Take the 1-minute questionnaire. It suggests brand scaling or one of three other AI paths, and explains why.</p><a class="btn ghost" href="#/start">Find my starting track</a></div></div>'+disclaimer();
+  var h='<div class="pagehead"><p class="kicker">Free training</p><h1>Start the free training</h1><p class="muted">'+fr.length+' short lessons, free and with no account: how brand scaling works, the store numbers brand owners care about, and how to use AI tools well and check their output.</p></div>';
+  h+='<div class="card"><div class="row" style="justify-content:space-between"><b>'+fd+' of '+fr.length+' done</b>'+(nx?'<a class="btn primary" href="#/lesson/'+nx.id+'">'+(fd?"Continue":"Start")+' the free training</a>':'<a class="btn primary" href="#/apply">Apply for coaching</a>')+'</div><div class="bar-track" style="margin-top:12px"><div class="bar-fill" style="width:'+(fd/fr.length*100)+'%"></div></div><ul class="tasklist freelist" style="margin-top:12px">'+fr.map(function(l){return '<li><a class="row" style="gap:10px;text-decoration:none;color:var(--ink);padding:8px" href="#/lesson/'+l.id+'"><span class="dot'+(isDone(l.id)?" done":"")+'" aria-hidden="true"></span><span><b>'+esc(l.title)+'</b><span class="sr">'+(isDone(l.id)?" (completed)":"")+'</span><br><span class="small muted">'+esc(TRACKS[trackOf(l)].name)+' &middot; '+l.minutes+' min</span></span></a></li>'}).join("")+'</ul></div>';
+  h+='<div class="grid g2" style="margin-top:12px"><div class="card"><h2 class="h3">After the free training</h2><p>If brand scaling feels right, apply for coaching'+(applyReady()?'. You will get a reply within '+(C.replyDays||3)+' business days and can book a short call with '+esc(C.coachName||"the coach")+' to ask questions.':' when applications open.')+'</p><a class="btn ghost" href="#/coaching">See coaching tiers</a></div><div class="card"><h2 class="h3">Not sure yet?</h2><p>Take the 1-minute questionnaire. It suggests brand scaling or one of three other AI paths, and explains why.</p><a class="btn ghost" href="#/start">Find my starting track</a></div></div>'+disclaimer();
   return h;
 }
 
 /* ---------- coaching ---------- */
 function pageCoaching(){
   var T=C.tiers||[];
-  var h='<p class="kicker">Coaching &amp; mentorship</p><h1>Coaching with '+esc(C.coachName||"the coach")+'</h1><p class="muted" style="max-width:48em">You apply first so we can talk before you pay and answer your questions. Every tier lists exactly what you get. There are no countdowns and no fake &ldquo;spots left&rdquo;.</p>'+notReady();
-  h+='<div class="grid g3" style="margin-top:16px">'+T.map(function(t,i){var col=["mint","purple","orange"][i%3];return '<article class="card plan accent-'+col+(t.highlight?" hl":"")+'"><h2 style="margin-top:4px">'+esc(t.name)+'</h2><div class="price">'+esc(t.priceLabel||money(t.price))+'</div><p class="small muted">'+esc(t.length||"")+(t.priceNote?' &middot; '+esc(t.priceNote):'')+'</p><p class="small"><b>Fits if:</b> '+esc(t.fits||"")+'</p><ul>'+(t.features||[]).map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul><a class="btn '+(t.highlight?"primary":"ghost")+'" href="#/apply/'+esc(t.id)+'">Apply for '+esc(t.name)+'</a></article>'}).join("")+'</div>';
-  if(C.paymentPlans) h+='<p class="small muted">'+esc(C.paymentPlans)+'</p>';
-  h+='<div class="grid g2" style="margin-top:20px"><div class="card"><h2>What happens after you apply</h2><ol><li>You send a short application (about 5 minutes).</li><li>'+esc(C.coachName||"The coach")+' replies'+(applyReady()?' within '+(C.replyDays||3)+' business days':' once applications open')+'.</li><li>You book a short call to ask questions and talk it through.</li><li>If you both want to go ahead, you get a payment link and a written agreement. You can say no at any point.</li></ol></div><div class="card"><h2>Questions people ask</h2><p><b>Do I need money for ads?</b> No. Clients pay their own ad spend directly to Meta, TikTok or Google.</p><p><b>Is income guaranteed?</b> No. You learn a skill and get coaching; results depend on many things.</p><p><b>Under 18?</b> A parent or guardian must join the call and agree to any payment.</p><p><b>Refunds?</b> '+(C.refundNote?esc(C.refundNote):'The refund policy will be shown here and in your agreement before you pay. Ask about it on your call.')+'</p></div></div>'+disclaimer();
+  var h='<div class="pagehead"><p class="kicker">Coaching &amp; mentorship</p><h1>Coaching with '+esc(C.coachName||"the coach")+'</h1><p class="muted">You apply first so we can talk before you pay and answer your questions. Every tier lists exactly what you get. There are no countdowns and no fake &ldquo;spots left&rdquo;.</p></div>'+notReady();
+  var tierHtml='<div class="grid g3 tiers">'+T.map(function(t,i){var col=["mint","purple","orange"][i%3];return '<article class="card plan accent-'+col+(t.highlight?" hl":"")+'"><h2 style="margin-top:4px">'+esc(t.name)+'</h2><div class="price">'+esc(t.priceLabel||money(t.price))+'</div><p class="small muted" style="margin:0 0 6px">'+esc(t.length||"")+(t.priceNote?' &middot; '+esc(t.priceNote):'')+'</p><p class="small" style="margin:0 0 6px"><b>Fits if:</b> '+esc(t.fits||"")+'</p><ul class="small">'+(t.features||[]).map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul><a class="btn '+(t.highlight?"primary":"ghost")+'" href="#/apply/'+esc(t.id)+'">Apply for '+esc(t.name)+'</a></article>'}).join("")+'</div>';
+  if(C.paymentPlans) tierHtml+='<p class="small muted">'+esc(C.paymentPlans)+'</p>';
+  var after='<ol style="margin:0"><li>You send a short application (about 5 minutes).</li><li>'+esc(C.coachName||"The coach")+' replies'+(applyReady()?' within '+(C.replyDays||3)+' business days':' once applications open')+'.</li><li>You book a short call to ask questions and talk it through.</li><li>If you both want to go ahead, you get a payment link and a written agreement. You can say no at any point.</li></ol>';
+  var faq='<p><b>Do I need money for ads?</b> No. Clients pay their own ad spend directly to Meta, TikTok or Google.</p><p><b>Is income guaranteed?</b> No. You learn a skill and get coaching; results depend on many things.</p><p><b>Under 18?</b> A parent or guardian must join the call and agree to any payment.</p><p><b>Refunds?</b> '+(C.refundNote?esc(C.refundNote):'The refund policy will be shown here and in your agreement before you pay. Ask about it on your call.')+'</p>';
+  h+=tabs("coach",[["tiers","Coaching tiers",tierHtml],["after","After you apply",after],["faq","Questions people ask",faq]]);
+  h+='<p class="note disc small" style="margin-top:10px"><b>No income promise.</b> '+esc(C.earningsDisclaimer||"")+'</p>';
   return h;
 }
 
