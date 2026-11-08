@@ -14,11 +14,15 @@ Read this and `SPEC.md` first when continuing in a new session.
 
 - Nov 8, 2026 (round 5): no long scrolling: lessons are 7 centered steps with Back/Next, one quiz question at a time; other pages use a centered top plus tabs. Fits one screen on 1440x900 desktops (coaching 19px over); phones still scroll inside a step.
 
+- Nov 8, 2026 (round 6): Assistant as the first step (focus -> problem -> experience -> plan -> book a call). Guided on GitHub Pages, real Claude on the claude.ai link. Needs bookingUrl in config.js.
+
 ## Owner notes (not on the site)
 - Revenue goal: $1,000,000 in program revenue. Arithmetic only: about 667 sales at $1,500, 345 at $2,900 or 209 at $4,800, before fees, refunds, taxes and costs.
 - Note: this repository is public, so this file, SPEC.md and CLAUDE.md can be read by anyone at github.com and on the live site. Keep private notes somewhere private.
 
 ## Remaining before a paid launch (owner)
+- Add your booking link (bookingUrl in config.js) so the assistant's "Book a call" opens your calendar.
+- Optional: a real AI assistant on the live site needs an Anthropic API key and a small server (for example a serverless function), plus a spending limit.
 - Confirm every coaching deliverable in config.js (calls, reviews, reply times) and remove anything you cannot keep.
 - Set applicationUrl (a real form), bookingUrl and supportEmail in config.js.
 - Coaching agreement + refund policy (ideally lawyer-reviewed); set refundNote.

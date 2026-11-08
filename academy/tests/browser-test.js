@@ -96,7 +96,7 @@ const server = http.createServer((req, res) => {
   await p.click("#snext"); await p.waitForSelector("text=Write useful prompts"); ok(p.url().endsWith("#/lesson/m1l2"), "Next lesson button on the last step");
   await p.click("#sback"); ok(p.url().endsWith("#/lesson/m1l1"), "Previous lesson from step 1");
   await p.goBack(); ok(p.url().endsWith("#/lesson/m1l2"), "browser Back works");
-  for (const [label, hash] of [["Dashboard", "#/dashboard"], ["Course", "#/course"], ["Resources", "#/resources"], ["Final project", "#/project"], ["Notes", "#/notes"], ["Free training", "#/free"], ["Coaching", "#/coaching"], ["Home", "#/"]]) {
+  for (const [label, hash] of [["Dashboard", "#/dashboard"], ["Course", "#/course"], ["Resources", "#/resources"], ["Final project", "#/project"], ["Notes", "#/notes"], ["Assistant", "#/assistant"], ["Free training", "#/free"], ["Coaching", "#/coaching"], ["Home", "#/"]]) {
     await p.click(`nav.main a:text-is("${label}")`); await p.waitForFunction(h => location.hash === h || (h === "#/" && location.hash === "#/"), hash); await p.waitForTimeout(50); ok(p.url().endsWith(hash) && (await p.getAttribute(`nav.main a:text-is("${label}")`, "aria-current")) === "page", "menu: " + label);
   }
   await p.goto(U + "#/nope"); ok((await p.locator("h1").innerText()) === "Page not found", "unknown page shows Not found");
@@ -171,6 +171,26 @@ const server = http.createServer((req, res) => {
   ok(errs.length === 0, "no JavaScript errors in main journey " + errs.join(" | "));
   const state = await p.evaluate(k => localStorage.getItem(k), KEY);
 
+  // 11a. Assistant: first step for new visitors
+  const ca = await b.newContext(); const pa = await ca.newPage(); const ea = []; pa.on("pageerror", e => ea.push(e.message));
+  await pa.goto(U); await pa.click("text=Start with the assistant"); await pa.waitForSelector(".chip");
+  const first = await pa.locator("#chatlog").innerText();
+  ok(/main thing you want to learn about/.test(first) && (await pa.locator(".chip").count()) === 3, "assistant asks the main focus (money, freelance, AI advertising)");
+  ok((await pa.locator(".pagehead").innerText()).includes("not a live AI"), "assistant says it is a guided assistant on the live site");
+  await pa.click('.chip[data-v="freelance"]'); ok(/main problem/.test(await pa.locator("#chatlog").innerText()), "assistant asks for the main problem");
+  await pa.fill("#chatt", "Nobody replies to my DMs"); await pa.press("#chatt", "Enter");
+  await pa.click('.chip[data-v="some"]');
+  const plan = await pa.locator("#chatlog").innerText();
+  ok(plan.includes("Find brands and pitch with cold outreach") && plan.includes("Online booking isn") && plan.includes("Main problem: Nobody replies to my DMs"), "typed problem gets matching lessons and a booking message");
+  await pa.fill("#chatt", "Will I make $10k a month?"); await pa.press("#chatt", "Enter");
+  ok((await pa.locator("#chatlog").innerText()).includes("Nobody can promise income"), "assistant never promises income");
+  await pa.reload(); await pa.waitForSelector("#chatlog");
+  ok((await pa.locator("#chatlog").innerText()).includes("Nobody can promise income"), "conversation survives reload");
+  await pa.click("text=Apply for coaching >> nth=0"); await pa.waitForSelector("#apf");
+  ok((await pa.inputValue("#ap_goal")) === "Nobody replies to my DMs", "apply form is prefilled with the main problem");
+  await pa.goto(U + "#/assistant"); await pa.click("#chatreset"); ok((await pa.locator(".chip").count()) === 3 && !(await pa.locator("#chatlog").innerText()).includes("DMs"), "Start over clears the chat");
+  ok(ea.length === 0, "assistant: no JavaScript errors " + ea.join("|")); await ca.close();
+
   // 11b. Brand path: questionnaire -> brand scaling -> free lesson s1l1
   const cb = await b.newContext(); const pb = await cb.newPage(); await pb.goto(U + "#/start");
   for (const v of ["brands", "ok", "high", "zero", "like"]) { await pb.check(`input[value="${v}"]`); await pb.click("#qform button[type=submit]"); await pb.waitForTimeout(50); }
@@ -195,7 +215,7 @@ const server = http.createServer((req, res) => {
   ok(await p.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior) === "auto", "Reduce motion switch turns off smooth scrolling"); await p.uncheck("#reduceToggle");
 
   // 14. Devices: no sideways scroll, no errors, tap targets
-  const routes = ["", "dashboard", "course", "start", "start/result", "free", "coaching", "apply", "lesson/m1l1", "lesson/m5l2", "lesson/s3l1", "lesson/s5l2", "resources/roas", "resources/retainer", "resources", "resources/money", "resources/price", "resources/score", "project", "notes", "pricing", "facts", "owner"];
+  const routes = ["", "assistant", "dashboard", "course", "start", "start/result", "free", "coaching", "apply", "lesson/m1l1", "lesson/m5l2", "lesson/s3l1", "lesson/s5l2", "resources/roas", "resources/retainer", "resources", "resources/money", "resources/price", "resources/score", "project", "notes", "pricing", "facts", "owner"];
   const devs = [["iPhone SE", devices["iPhone SE"]], ["iPhone 13", devices["iPhone 13"]], ["Pixel 7", devices["Pixel 7"]], ["iPad Mini", devices["iPad Mini"]], ["iPad Pro 11 landscape", devices["iPad Pro 11 landscape"]], ["Laptop 1366x768", { viewport: { width: 1366, height: 768 } }], ["Desktop 1920x1080", { viewport: { width: 1920, height: 1080 } }]];
   const axe = process.env.AXE_PATH && fs.existsSync(process.env.AXE_PATH) ? fs.readFileSync(process.env.AXE_PATH, "utf8") : null;
   for (const [name, d] of devs) {
