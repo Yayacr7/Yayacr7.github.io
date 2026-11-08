@@ -104,9 +104,9 @@ var LESSONS = [
   quiz: [
     q("An AI draft includes a statistic you did not give it. What should you do?", ["Keep it, AI tools are trained on lots of data", "Find a reliable source for it, or remove it", "Change the number slightly so it is your own"], 1,
       ["Training on lots of data does not make each number true. Language models can invent statistics that sound right.", "Right. If you cannot find a reliable source, remove it. You are responsible for what you publish.", "Changing a number you cannot verify just creates a different unverified number."]),
-    q("Which task is AI usually MOST reliable at?", ["Rewriting your own paragraph to be shorter and friendlier", "Telling you today’s exact price of a product", "Quoting a law word for word"], 0,
+    q("Which task is AI usually MOST reliable at?", ["Rewriting your own paragraph to be shorter and friendlier", "Telling you today’s exact price of a product from an online store near you", "Quoting a law word for word"], 0,
       ["Right. Rewriting text you supplied plays to its strength: words and structure, with your facts.", "Prices change, and AI may be out of date or guess. Check the official site.", "AI can misquote or invent legal text. Read the official source."]),
-    q("What is a “hallucination” in AI?", ["When the AI refuses to answer", "When the AI states something false as if it were true", "When the AI is slow"], 1,
+    q("What is a “hallucination” in AI?", ["When the AI refuses to answer a question because it thinks the topic is unsafe", "When the AI states something false as if it were true", "When the AI is slow"], 1,
       ["A refusal is a different behavior. A hallucination is a confident false statement.", "Right. Made-up facts, quotes and links are all hallucinations.", "Speed has nothing to do with it. A hallucination is about accuracy, not timing."])
   ]},
 { id: "m1l2", module: "m1", title: "Write useful prompts and check the output", minutes: 20,
@@ -131,9 +131,9 @@ var LESSONS = [
     steps: ["Pick a real small writing task you have (a message, a description, a plan).", "Write it as a one-line prompt and save the answer.", "Rewrite it with all five parts (use the Prompt Builder worksheet in Resources).", "Compare the two answers and run the four-step check on the better one.", "Note which part of the prompt made the biggest difference."],
     note: "Paste both prompts and your check results in your notes." },
   quiz: [
-    q("Which line most reduces made-up details?", ["“Be creative!”", "“If you need information I did not give you, ask me instead of guessing.”", "“Make it sound professional.”"], 1,
+    q("Which line most reduces made-up details?", ["“Be creative!”", "“If you need information I did not give you, ask me instead of guessing.”", "“Make it sound professional, polished and confident so readers trust every detail.”"], 1,
       ["Asking for creativity invites more invention, not less.", "Right. It gives the AI permission to ask instead of filling gaps.", "Tone instructions help style, not accuracy."]),
-    q("AI wrote some website code for you. What is the most important check?", ["Read it once quickly", "Run it and try it on a phone and a computer", "Ask the AI if the code is correct"], 1,
+    q("AI wrote some website code for you. What is the most important check?", ["Read it once quickly", "Run it and try it on a phone and a computer", "Ask the same AI tool whether the code it wrote is correct"], 1,
       ["A quick read misses many bugs.", "Right. Code is only checked when it runs and you try it where people will use it.", "The AI can say “yes” and still be wrong. Test it yourself."]),
     q("In the five-part prompt, “Under 100 words, no prices” is an example of…", ["Context", "Limits", "Goal"], 1,
       ["Context is background facts. This is a rule for the answer.", "Right. Limits tell the AI what to avoid and how big the answer should be.", "The goal is what you want and why."])
@@ -162,11 +162,11 @@ var LESSONS = [
     steps: ["Open the Skill Picker worksheet in Resources.", "Write your real weekly hours and monthly budget.", "List 5 people or groups you could talk to this month.", "Choose one path for 30 days and write one sentence on why.", "Write the biggest limit of that path and how you will handle it."],
     note: "Save your one-sentence choice in your notes so you can see it each time you return." },
   quiz: [
-    q("Why do services often reach a first payment faster than products?", ["They are always more profitable", "One customer saying yes is enough to get paid", "They need no communication"], 1,
+    q("Why do services often reach a first payment faster than products?", ["They are always more profitable than products, whatever the business", "One customer saying yes is enough to get paid", "They need no communication"], 1,
       ["Not always. Products can be more profitable over time.", "Right. A product usually needs many people to find it; a service needs one yes.", "Services need more communication, not less."]),
-    q("Which is a skill people would pay for?", ["“I know how to use AI”", "“I set up a booking form that fills your calendar automatically”", "“I am good with computers”"], 1,
+    q("Which is a skill people would pay for?", ["“I know how to use AI”", "“I set up a booking form that fills your calendar automatically”", "“I am good with computers and can help with anything technical you need”"], 1,
       ["Too vague: it does not say what result someone gets.", "Right. It names a specific, useful result.", "Too vague to buy: nobody knows what result they would be paying for."]),
-    q("The questionnaire suggested a path you are unsure about. What is best?", ["Switch paths every week until one works", "Pick one path for 30 days, then review honestly", "Do all three paths at once"], 1,
+    q("The questionnaire suggested a path you are unsure about. What is best?", ["Switch paths every week until one works", "Pick one path for 30 days, then review honestly", "Do all three paths at once so you never miss the one that works best"], 1,
       ["Constant switching means never finishing anything.", "Right. A fixed trial period gives you real information.", "Splitting a few hours across three paths makes progress very slow."])
   ]},
 { id: "m2l2", module: "m2", title: "Your first practice project", minutes: 25,
@@ -192,11 +192,11 @@ var LESSONS = [
     steps: ["Choose the version for your path above.", "Set a timer: aim for 2–4 hours total.", "Build it with AI help, checking each fact and testing each feature.", "Test it: on a phone, on a computer, and with one other person if you can.", "Write 3 things you learned and 1 thing you would change."],
     note: "Save a link or description of your project in your notes. You will reuse it in the final project." },
   quiz: [
-    q("Your FAQ assistant answers a question that is not in the FAQ with a confident guess. Best fix?", ["Add more friendly wording", "Tell it to say “I do not know” and give a contact when the FAQ has no answer", "Hope customers do not ask that"], 1,
+    q("Your FAQ assistant answers a question that is not in the FAQ with a confident guess. Best fix?", ["Add friendlier wording so its confident guesses at least sound polite and helpful", "Tell it to say “I do not know” and give a contact when the FAQ has no answer", "Hope customers do not ask that"], 1,
       ["Friendlier guesses are still guesses.", "Right. Clear limits plus a human fallback keep the assistant honest.", "Customers will ask unexpected questions. Test them before launch so the assistant does not invent answers."]),
-    q("How should you show a practice project in a portfolio?", ["As paid client work", "Clearly labeled as a practice or sample project", "Hide it, practice does not count"], 1,
+    q("How should you show a practice project in a portfolio?", ["As paid client work", "Clearly labeled as a practice or sample project", "Hide it, because only paid client work counts as real experience"], 1,
       ["Calling it client work would be misleading.", "Right. Practice projects are good proof of skill when labeled honestly.", "It does count as a sample of your skill."]),
-    q("What makes a good practice project size?", ["Something you can finish in 2–4 hours", "A full online store with payments", "As big as possible, to impress"], 0,
+    q("What makes a good practice project size?", ["Something you can finish in 2–4 hours", "A full online store with payments, accounts and order tracking", "As big as possible, to impress"], 0,
       ["Right. Finishing small beats starting big.", "Payments and stores add security and legal complexity. Not a first project.", "Big projects often stall before they teach you anything."])
   ]},
 
@@ -224,11 +224,11 @@ var LESSONS = [
     steps: ["Pick a group linked to your path (for example local business owners, teachers, hobby groups).", "Message 5–10 people you know or are introduced to, asking for 15 minutes to learn about their work.", "Use the Interview Script worksheet. Ask about the last time, not the future.", "Have 3 conversations. Write notes straight after each one.", "Highlight any problem that came up more than once."],
     note: "Write each person’s main problem and how they handle it today in your notes (no private details)." },
   quiz: [
-    q("Which question gives the most reliable information?", ["“Would you pay for a tool that does this?”", "“Tell me about the last time this happened.”", "“Don’t you think this is annoying?”"], 1,
+    q("Which question gives the most reliable information?", ["“Would you pay for a tool that does this if I built it for you?”", "“Tell me about the last time this happened.”", "“Don’t you think this is annoying?”"], 1,
       ["People guess badly about future buying.", "Right. Real past events reveal real problems and real costs.", "This is a leading question: it pushes them to agree, so the answer tells you little."]),
-    q("Someone says “What a great idea, I’d totally use that!” What does that tell you?", ["They will buy it", "Very little: compliments are not commitment", "You should start building today"], 1,
+    q("Someone says “What a great idea, I’d totally use that!” What does that tell you?", ["They will buy it as soon as it is ready, so you can start planning", "Very little: compliments are not commitment", "You should start building today"], 1,
       ["Kind words often do not turn into purchases.", "Right. Look for past behavior and real commitments instead.", "Not on a compliment alone. Wait for real behavior or a commitment before building."]),
-    q("What is a respectful way to ask for a conversation?", ["Message strangers again and again until they answer", "Ask for 15 minutes, explain you want to learn, not sell", "Start with your price"], 1,
+    q("What is a respectful way to ask for a conversation?", ["Message strangers again and again until they answer", "Ask for 15 minutes, explain you want to learn, not sell", "Start with your price so they know right away what it costs"], 1,
       ["Repeated messages after no reply are pushy.", "Right. Specific, short and honest about the purpose.", "This is a learning conversation, not a pitch."])
   ]},
 { id: "m3l2", module: "m3", title: "Check if the problem is worth solving", minutes: 20,
@@ -253,11 +253,11 @@ var LESSONS = [
     steps: ["Take the problems from your conversations.", "Score each in the Problem Scorecard worksheet.", "Pick the top one and write it in one sentence: “[Who] struggles with [what], which costs them [time/money].”", "Ask one person with that problem for a small commitment (examples, a follow-up meeting, an introduction).", "Write down what they did, not just what they said."],
     note: "Save the one-sentence problem statement in your notes. Module 4 builds on it." },
   quiz: [
-    q("Which is the strongest sign a problem is real?", ["Several people said it sounds interesting", "Someone already pays or spends effort on a workaround", "You think it is a big problem"], 1,
+    q("Which is the strongest sign a problem is real?", ["Several people said it sounds interesting and they would tell their friends", "Someone already pays or spends effort on a workaround", "You think it is a big problem"], 1,
       ["Interest is cheap. Look for behavior.", "Right. Existing spending shows the problem matters to them.", "Your opinion is a starting point, not evidence."]),
-    q("You ask “If this existed, what would you stop doing?” and they say “Nothing really.” What does it suggest?", ["Your idea may not solve the painful part", "They will buy it anyway", "Build it bigger"], 0,
+    q("You ask “If this existed, what would you stop doing?” and they say “Nothing really.” What does it suggest?", ["Your idea may not solve the painful part", "They will probably buy it anyway once they see how good it is", "Build it bigger"], 0,
       ["Right. Go back and find what actually costs them time or money.", "Unlikely if nothing changes for them.", "Bigger does not fix a mismatch."]),
-    q("Which is a small real commitment?", ["“Keep me posted”", "Sending you 20 real examples of the problem", "A thumbs-up emoji"], 1,
+    q("Which is a small real commitment?", ["They say “Keep me posted, sounds great, let me know when it is ready”", "Sending you 20 real examples of the problem", "A thumbs-up emoji"], 1,
       ["Polite, but it costs them nothing, so it does not show real interest.", "Right. They spent real effort, which shows real interest.", "Friendly, but it took no time or effort, so it is not a commitment."])
   ]},
 
@@ -284,9 +284,9 @@ var LESSONS = [
     steps: ["Open the MVP Scope worksheet and fill in Must have / Nice to have / Not now.", "Limit Must have to 3–5 items.", "Build one item at a time with AI help, testing each.", "Keep a “things I checked” list as you go.", "Stop when all must-haves work. Resist adding more."],
     note: "Write your must-have list and your checked list in your notes." },
   quiz: [
-    q("What belongs in a first version (MVP)?", ["Every feature the customer mentioned", "Only what is needed to solve the main problem", "Whatever is fun to build"], 1,
+    q("What belongs in a first version (MVP)?", ["Every feature the customer mentioned, so they get everything at once", "Only what is needed to solve the main problem", "Whatever is fun to build"], 1,
       ["That is usually too much for a first version.", "Right. Small enough to finish and test with real people.", "Fun is good, but focus on the main problem."]),
-    q("Why test after each small step instead of only at the end?", ["It is faster to find which change caused a problem", "It is not needed with AI-written code", "Tests are only for experts"], 0,
+    q("Why test after each small step instead of only at the end?", ["It is faster to find which change caused a problem", "It is not needed when an AI tool wrote the code for you", "Tests are only for experts"], 0,
       ["Right. Small steps mean small, findable bugs.", "AI-written code needs testing as much as any code.", "Basic testing is for everyone."]),
     q("Your automation needs customer data. Before the owner agrees, you should…", ["Use their real customer list to make it realistic", "Use made-up test data", "Post the data in a public forum for help"], 1,
       ["Using real private data without permission is not okay.", "Right. Test data lets you build safely.", "Never share private data publicly."])
@@ -313,11 +313,11 @@ var LESSONS = [
     steps: ["Run the testing checklist yourself and fix what you find.", "Find 3 testers who match your customer.", "Give each a task and watch silently. Then ask the 4 feedback questions.", "Fill in the Feedback Log worksheet: what, how many people, decision.", "Fix the top issues and re-test once."],
     note: "Write the 2 most important things you changed after feedback. These go into your final project." },
   quiz: [
-    q("A tester gets stuck. What should you do during the test?", ["Explain right away how it works", "Stay quiet, note where they got stuck, and ask afterward", "Tell them they are using it wrong"], 1,
+    q("A tester gets stuck. What should you do during the test?", ["Explain right away how it works so they do not waste their time", "Stay quiet, note where they got stuck, and ask afterward", "Tell them they are using it wrong"], 1,
       ["Helping hides the problem you need to see.", "Right. Their confusion shows you what to fix.", "Confusion usually means the design needs work."]),
-    q("Which feedback should you fix first?", ["Anything that stops the main job from working", "One person’s favorite color", "Features nobody asked for"], 0,
+    q("Which feedback should you fix first?", ["Anything that stops the main job from working", "One person’s favorite color for the buttons and background", "Features nobody asked for"], 0,
       ["Right. If the main job fails, nothing else matters.", "One person\u2019s taste can wait until the main job works for everyone.", "Not until the main job works well."]),
-    q("Which is an edge case?", ["Submitting a form with every field empty", "A normal booking", "Reading the homepage"], 0,
+    q("Which is an edge case?", ["Submitting a form with every field empty", "A normal booking made by a customer on a weekday afternoon", "Reading the homepage"], 0,
       ["Right. Unusual inputs often reveal bugs.", "That is the normal path. Edge cases are unusual inputs, like an empty form.", "That is normal use. Edge cases are the unusual inputs that are easy to forget."])
   ]},
 
@@ -343,11 +343,11 @@ var LESSONS = [
     steps: ["Open the Offer & Scope worksheet.", "Write your one-sentence offer. Read it aloud. Remove any hype.", "List your proof: practice projects (labeled) and any real results (with permission).", "Fill in all six scope parts for one realistic project.", "Ask one friend: “What would you expect to get?” If their answer differs from your scope, make it clearer."],
     note: "Save your one-sentence offer in your notes." },
   quiz: [
-    q("Which offer sentence is best?", ["“I revolutionize businesses with cutting-edge AI.”", "“I help tutors stop double-bookings with a simple booking page, in one week.”", "“I do AI stuff.”"], 1,
+    q("Which offer sentence is best?", ["“I revolutionize businesses with cutting-edge AI solutions that transform growth.”", "“I help tutors stop double-bookings with a simple booking page, in one week.”", "“I do AI stuff.”"], 1,
       ["Hype words, no specific result.", "Right. Who, result, what and time are clear.", "Too vague: it does not say who you help, what result they get, or by when."]),
-    q("You have no paid clients yet. How should you show your work?", ["Make up a few positive reviews", "Show practice projects clearly labeled as practice", "Say you have worked with big brands"], 1,
+    q("You have no paid clients yet. How should you show your work?", ["Make up a few positive reviews", "Show practice projects clearly labeled as practice", "Say you have worked with big brands, since you studied their marketing"], 1,
       ["Fake reviews are deceptive and can be illegal.", "Right. Honest samples build real trust.", "False claims destroy trust and may be illegal."]),
-    q("Why write “Not included” in a scope?", ["To prevent misunderstandings about extra work", "To look professional only", "It is not needed"], 0,
+    q("Why write “Not included” in a scope?", ["To prevent misunderstandings about extra work", "Only to make the document look more professional and complete", "It is not needed"], 0,
       ["Right. Clear limits prevent most project arguments.", "It is more than looks: it protects both sides.", "Skipping it is a common source of disputes."])
   ]},
 { id: "m5l2", module: "m5", title: "Price your work and approach people respectfully", minutes: 25,
@@ -376,9 +376,9 @@ var LESSONS = [
       ["That is revenue, not profit.", "Right. Profit is revenue minus expenses: $500 − $120 = $380.", "You subtract expenses, not add them."]),
     q("Someone did not reply to your first message. What is respectful?", ["Message them every day until they answer", "Follow up once or twice, then stop", "Post about them publicly"], 1,
       ["That is pushy and can break platform rules.", "Right. One or two polite follow-ups, then accept the silence.", "Publicly shaming someone for not replying is disrespectful, can break platform rules, and damages your reputation."]),
-    q("Under the US CAN-SPAM Act, someone replies \u201cplease stop emailing me\u201d to your marketing email. What must you do?", ["Stop within 10 business days, without asking for a fee or extra details", "Send one last offer first", "Keep emailing, because they run a business"], 0,
+    q("Under the US CAN-SPAM Act, someone replies \u201cplease stop emailing me\u201d to your marketing email. What must you do?", ["Stop within 10 business days, without asking for a fee or extra details", "Send one last offer first", "Keep emailing, because CAN-SPAM does not apply when they run a business"], 0,
       ["Right. Opt-outs must be honored within 10 business days, with no fee or extra personal information required.", "The law gives you at most 10 business days to stop; sending more marketing after an opt-out is what it prohibits.", "CAN-SPAM covers commercial email to businesses too."]),
-    q("Why add about 30% to your hour estimate?", ["To trick the customer", "Messages, fixes and surprises usually take extra time", "It is required by law"], 1,
+    q("Why add about 30% to your hour estimate?", ["To trick the customer", "Messages, fixes and surprises usually take extra time", "It is required by law for every freelance project estimate"], 1,
       ["It is not a trick: it covers real work.", "Right. Beginners usually under-estimate.", "It is a rule of thumb, not a law."])
   ]},
 
@@ -405,11 +405,11 @@ var LESSONS = [
     steps: ["Write a one-page handoff template (use the Handoff Checklist in Resources).", "Decide your support window and write it into your scope.", "Open the Expense & Profit tracker and enter every cost you have had so far, even $0 months.", "Save your receipts in one folder.", "Write your current monthly revenue, expenses and profit, even if they are all zero. Honest numbers only."],
     note: "Note your support window and where you keep receipts." },
   quiz: [
-    q("A customer asks for a new feature after delivery. In most cases it is…", ["Free forever, as part of support", "A new small project with its own scope and price", "Something to ignore"], 1,
+    q("A customer asks for a new feature after delivery. In most cases it is…", ["Free forever, because support should cover any request after delivery", "A new small project with its own scope and price", "Something to ignore"], 1,
       ["Support covers fixing what was promised, not new work.", "Right. New requests get a new scope and price.", "Ignoring them loses trust. Reply politely and offer it as a new, separately priced piece of work."]),
     q("Revenue is $1,000 and expenses are $700. Which is true?", ["You made $1,000", "Profit is $300", "Profit is $1,700"], 1,
       ["You received $1,000 but spent $700 of it.", "Right. Revenue minus expenses.", "Expenses are subtracted from revenue, not added: $1,000 \u2212 $700 = $300."]),
-    q("You made a mistake in delivered work. Best response?", ["Hope they do not notice", "Tell them quickly, fix it, and explain how you will prevent it", "Blame the AI tool"], 1,
+    q("You made a mistake in delivered work. Best response?", ["Hope they do not notice", "Tell them quickly, fix it, and explain how you will prevent it", "Blame the AI tool, since it wrote that part of the work for you"], 1,
       ["They usually notice, and trust drops.", "Right. Fast, honest fixes keep trust.", "You chose to deliver it; it is your responsibility."])
   ]},
 { id: "m6l2", module: "m6", title: "Improve quality, earn repeat work, and decide when to grow", minutes: 20,
@@ -433,11 +433,11 @@ var LESSONS = [
     steps: ["Write a short review of your last project (or practice project).", "Pick one improvement and add it to your process checklist.", "Draft a 30-day check-in message for a customer.", "Answer the Growth Check worksheet honestly.", "Write your one next move for the coming month."],
     note: "Save your one next move. Your dashboard shows it." },
   quiz: [
-    q("What is an honest way to get testimonials?", ["Write some and ask friends to post them", "Ask real customers for their words and permission to share", "Offer a discount only for 5-star reviews"], 1,
+    q("What is an honest way to get testimonials?", ["Write some and ask friends to post them", "Ask real customers for their words and permission to share", "Offer a discount only to customers who leave 5-star reviews"], 1,
       ["Fake testimonials are deceptive and can be illegal.", "Right. Real words, real permission.", "Paying only for positive reviews makes them misleading."]),
-    q("Which is the strongest sign you are ready to expand?", ["One very good month", "Steady demand for months and a written process", "You feel excited"], 1,
+    q("Which is the strongest sign you are ready to expand?", ["One very good month", "Steady demand for months and a written process", "You feel excited and ready, which is the most important sign"], 1,
       ["One good month can be luck or a one-off. Look for steady demand over several months.", "Right. Repeated demand plus a process means growth is manageable.", "Excitement is great, but check the numbers."]),
-    q("Your revenue went up but profit went down. What should you look at first?", ["Your expenses and time per project", "Nothing, revenue matters most", "Your logo"], 0,
+    q("Your revenue went up but profit went down. What should you look at first?", ["Your expenses and time per project", "Nothing, because higher revenue always means you are doing better", "Your logo"], 0,
       ["Right. Rising costs or slower work can eat your profit.", "Profit is what you keep. It matters more.", "A logo does not change your costs or how long each project takes, so it is unlikely to be the cause."])
   ]}
 ];

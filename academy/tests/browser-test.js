@@ -125,7 +125,10 @@ const server = http.createServer((req, res) => {
   ok((await p.inputValue("#ap_tier")) === "mentor", "Apply button preselects the tier");
   await p.click("#apf button[type=submit]"); ok((await p.locator("#aperr").innerText()).includes("Please fill in"), "application requires the key fields");
   await p.fill("#ap_name", "Test Student"); await p.fill("#ap_contact", "test@example.com"); await p.fill("#ap_hours", "6"); await p.fill("#ap_goal", "Land a first brand client");
+  await p.click("#apf button[type=submit]"); ok((await p.locator("#aperr").innerText()).includes("18 or older"), "application requires an age answer (no default)");
+  await p.check('input[name=adult][value="yes"]');
   await p.click("#apf button[type=submit]"); ok((await p.locator("#aperr").innerText()).includes("no income promise"), "application requires the no-income-promise acknowledgment");
+  ok((await p.locator("main").innerText()).includes("Applications are not open yet"), "apply page says up front when no application link is set");
   await p.check("#ap_ok"); await p.click("#apf button[type=submit]");
   ok(await p.locator("#apout").isVisible() && (await p.locator("#aptext").innerText()).includes("Mentorship") && (await p.locator("#aptext").innerText()).includes("Test Student"), "application message is prepared with tier and answers");
   await p.reload(); await p.waitForSelector("#apf"); ok((await p.inputValue("#ap_name")) === "Test Student", "application draft survives reload");

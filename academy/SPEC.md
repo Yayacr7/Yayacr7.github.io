@@ -53,5 +53,7 @@ Working name, changeable in `config.js`. Sources: Yaya's course brief (Nov 7, 20
 - **Earlier exclusion of brand scaling:** replaced by Yaya's Nov 8 decision (asked and confirmed).
 - **High-ticket pricing:** Claude rated $1,500-$4,800 at launch 5/10 (no student results yet, FTC scrutiny of money-making coaching) and suggested founding prices; Yaya chose $1,500-$4,800 with live coaching. Safeguards: concrete deliverables, no income claims, disclaimer, application instead of instant purchase pressure.
 - **Platform features change often:** ad tool names (Advantage+, Smart+, Performance Max) are dated and sourced; lessons teach the principle first.
+- **Application wording:** the site says you apply so you can talk before paying; it does not claim applicants are screened for suitability (FTC lists misrepresenting screening as unlawful). Add screening claims only with real written criteria.
+- **Public repository:** SPEC.md, PROGRESS.md and CLAUDE.md are public; the site UI never shows the revenue goal.
 - **Paid program vs. static site and GitHub Pages terms:** the paid program needs a host or course platform that allows selling, with accounts and locked content (owner task).
 - **Country:** legal and tax facts are US-based and labeled.
