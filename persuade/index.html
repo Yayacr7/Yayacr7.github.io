@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Persuade · 15-day sales training</title>
+<meta name="description" content="A 15-day training plan for sales, persuasion and convincing: one skill a day, a drill, and one real conversation to practice it. Honest methods only.">
+<meta name="theme-color" content="#0E0D12">
+<style>
+:root{
+  --bg:#0E0D12; --panel:#17161D; --panel2:#1E1D26; --line:#2B2A35;
+  --text:#F3F0EA; --muted:#A9A49B; --acc:#FFA94D; --acc-ink:#1B1206;
+  --good:#6FD39B; --bad:#F2828A; --good-bg:rgba(111,211,155,.1); --bad-bg:rgba(242,130,138,.1);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font:16px/1.5 var(--sans);-webkit-text-size-adjust:100%}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--acc)}
+.app{display:grid;grid-template-columns:232px 1fr;height:100vh;height:100dvh}
+.side{background:var(--panel);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:4px;overflow:auto}
+.logo{font:700 24px/1 var(--serif);letter-spacing:.2px;padding:0 10px}
+.logo i{font-style:normal;color:var(--acc)}
+.tag{color:var(--muted);font-size:12.5px;padding:6px 10px 16px}
+.nav{display:block;width:100%;text-align:left;background:none;border:0;border-radius:9px;padding:9px 10px;color:var(--muted);font-size:15px}
+.nav:hover{color:var(--text);background:var(--panel2)}
+.nav.on{color:var(--acc-ink);background:var(--acc);font-weight:600}
+.sidefoot{margin-top:auto;color:var(--muted);font-size:12px;padding:14px 10px 0;line-height:1.45}
+.main{overflow:auto;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{width:100%;max-width:780px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px 32px}
+.eyebrow{color:var(--acc);font-size:12.5px;font-weight:600;letter-spacing:.9px;text-transform:uppercase}
+h1{font:700 30px/1.15 var(--serif);margin:6px 0 8px;text-wrap:balance}
+h2{font:700 19px/1.25 var(--serif);margin:0 0 8px}
+p{margin:0 0 10px}
+.muted{color:var(--muted)}
+.small{font-size:13.5px}
+.plain{color:var(--muted);font-size:16.5px;margin-bottom:16px;max-width:62ch}
+.tabs{display:flex;gap:6px;margin:0 0 16px;border-bottom:1px solid var(--line)}
+.tab{background:none;border:0;border-bottom:2px solid transparent;padding:9px 12px;color:var(--muted);font-size:15px;margin-bottom:-1px;white-space:nowrap}
+.tab.on{color:var(--text);border-color:var(--acc);font-weight:600}
+.tab .ok{color:var(--good);margin-left:5px}
+.pts{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:9px}
+.pts li{background:var(--panel2);border-radius:11px;padding:11px 14px 11px 44px;position:relative}
+.pts li b.n{position:absolute;left:14px;top:11px;color:var(--acc);font-family:var(--serif)}
+.src{font-size:13px;color:var(--muted)}
+.say{border-radius:11px;padding:12px 14px;margin-bottom:10px;border:1px solid var(--line)}
+.say .lab{font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;display:block;margin-bottom:3px}
+.say.weak{background:var(--bad-bg)} .say.weak .lab{color:var(--bad)}
+.say.strong{background:var(--good-bg)} .say.strong .lab{color:var(--good)}
+.q{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:11px 14px;margin-bottom:8px}
+.opt:hover:not(:disabled){border-color:var(--acc)}
+.opt.right{background:var(--good-bg);border-color:var(--good)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.opt:disabled{cursor:default;opacity:1}
+.why{font-size:14.5px;border-left:3px solid var(--line);padding:4px 0 4px 12px;margin:4px 0 12px}
+.why.g{border-color:var(--good)} .why.b{border-color:var(--bad)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.spread{justify-content:space-between}
+.btn{background:var(--acc);color:var(--acc-ink);border:0;border-radius:10px;padding:10px 18px;font-weight:700}
+.btn:hover{filter:brightness(1.07)}
+.btn.ghost{background:none;color:var(--text);border:1px solid var(--line);font-weight:500}
+.btn.ghost:hover{border-color:var(--muted)}
+.btn:disabled{opacity:.4;cursor:default}
+.foot{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+input[type=number],textarea,input[type=text]{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;font-size:16px}
+input[type=number]{width:84px}
+textarea{resize:none;height:76px}
+input:focus,textarea:focus,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+label{font-size:14px;color:var(--muted);display:block;margin-bottom:4px}
+.mission{background:var(--panel2);border-radius:12px;padding:14px 16px;margin-bottom:14px;font-size:17px}
+.done-note{color:var(--good);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.tile{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:9px 10px;text-align:left;min-height:76px;display:flex;flex-direction:column;gap:2px}
+.tile:hover{border-color:var(--acc)}
+.tile .d{font-size:12px;color:var(--muted)}
+.tile .t{font-size:13.5px;line-height:1.25;font-weight:600}
+.tile.done{border-color:var(--good)} .tile.done .d{color:var(--good)}
+.tile.today{box-shadow:0 0 0 2px var(--acc)}
+.phase{font-size:12px;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;margin:10px 0 6px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0 16px}
+.stat{background:var(--panel2);border-radius:12px;padding:12px 14px}
+.stat b{display:block;font:700 26px/1.1 var(--serif)}
+.stat span{font-size:13px;color:var(--muted)}
+.bar{height:6px;background:var(--panel2);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc);border-radius:6px;transition:width .35s}
+.bubble{background:var(--panel2);border-radius:14px 14px 14px 4px;padding:12px 15px;margin-bottom:12px;font-size:17px}
+.bubble small{display:block;color:var(--muted);font-size:12px;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.meter{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);margin-bottom:14px}
+.meter .bar{flex:1}
+.sheet{display:grid;gap:6px;max-height:54vh;overflow:auto;padding-right:6px}
+.sheet div{display:grid;grid-template-columns:28px 1fr;gap:8px;font-size:14.5px;padding:7px 10px;background:var(--panel2);border-radius:9px}
+.sheet b{color:var(--acc);font-family:var(--serif)}
+.check{display:flex;gap:9px;align-items:flex-start;padding:5px 0;color:var(--text);font-size:15px}
+.check input{margin-top:4px;accent-color:var(--acc);width:17px;height:17px;flex:none}
+.honest{font-size:13.5px;color:var(--muted);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin-top:14px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.three div{background:var(--panel2);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.three b{display:block;color:var(--acc);font-family:var(--serif);font-size:17px;margin-bottom:2px}
+.loglist{max-height:150px;overflow:auto;font-size:14px;display:grid;gap:5px}
+.loglist div{background:var(--panel2);border-radius:8px;padding:6px 10px}
+.topnav{display:none}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .side{display:none}
+  .topnav{display:flex;gap:6px;overflow-x:auto;background:var(--panel);border-bottom:1px solid var(--line);padding:10px 12px;padding-top:max(10px,env(safe-area-inset-top));align-items:center;scrollbar-width:none}
+  .topnav::-webkit-scrollbar{display:none}
+  .topnav .logo{font-size:19px;padding:0 6px 0 2px}
+  .topnav .nav{width:auto;white-space:nowrap;padding:9px 12px;font-size:14.5px}
+  .main{align-items:flex-start;padding:12px}
+  .card{padding:20px 18px;border-radius:14px}
+  h1{font-size:25px}
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .three{grid-template-columns:1fr}
+  .tabs{overflow-x:auto;gap:0}
+  .tab{padding:9px 9px;font-size:14.5px}
+  .foot .btn{padding:10px 12px}
+  .sheet{max-height:none}
+}
+@media (max-height:760px) and (min-width:901px){
+  .card{padding:20px 28px} h1{font-size:26px} .plain{margin-bottom:10px;font-size:15.5px}
+  .pts{gap:7px} .pts li{padding-top:8px;padding-bottom:8px} .pts li b.n{top:8px}
+  .opt{padding:8px 14px;margin-bottom:6px} .tile{min-height:64px} textarea{height:58px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side"></aside>
+  <nav class="topnav" id="topnav" aria-label="Menu"></nav>
+  <main class="main"><div class="card" id="view" tabindex="-1"></div></main>
+</div>
+<script>
+"use strict";
+var PHASES = ["Listen", "Persuade", "Sell", "Keep going"];
+var DAYS = [
+{t:"Listen first", ph:0, n:3,
+ plain:"People are convinced by what they say themselves, not by what you say. So listen more than you talk.",
+ learn:["Ask, then stop talking. Let them finish. Count to two before you answer.",
+  "Repeat their last few words as a question: “Too expensive?” They will tell you more. This is called mirroring.",
+  "Sum up what they said before you offer anything: “So the main thing is the slow weekdays, right?”"],
+ src:"Mirroring: Never Split the Difference (Chris Voss).",
+ bad:"Let me tell you about everything we do. First...",
+ good:"Before I say anything: what is the biggest headache with getting new customers right now?",
+ why:"The first one is about you. The second one gets them talking about their problem, which is the only thing they care about.",
+ drill:[
+  {q:"A shop owner says: “We tried ads before. It didn’t work.” What do you say?",
+   o:["“Ours are different. We’re better.”","“It didn’t work?” Then stay quiet and listen.","“You probably set it up wrong.”"], a:1,
+   w:["You are arguing before you know what happened. They stop listening.","Right. A mirror. They will explain what went wrong, and now you know the real worry.","Blaming them ends the conversation."]},
+  {q:"They just talked for a minute about their problem. What comes next?",
+   o:["Start your pitch right away.","Sum up what they said and ask if you got it right.","Move on to the price."], a:1,
+   w:["Too soon. They don’t know yet that you understood.","Right. When they say “yes, exactly”, they are ready to hear you.","Price before value always feels expensive."]}],
+ mission:"In 3 conversations today (any topic), talk less than the other person and sum up what they said once."},
+
+{t:"Ask better questions", ph:0, n:1,
+ plain:"A good question makes the other person see the problem themselves. That beats any speech.",
+ learn:["Open questions start with What or How. Closed questions get a yes or no and the talk dies.",
+  "Use four kinds, in order: how things are now, what is hard, what that costs them, what fixing it would be worth.",
+  "Swap “Why did you...?” for “What made you...?” Why sounds like blame."],
+ src:"The four question types: SPIN Selling (Neil Rackham): Situation, Problem, Implication, Need-payoff.",
+ bad:"Do you want more customers?",
+ good:"How do new customers find you right now?",
+ why:"Everyone says yes to the first one and nothing happens. The second one starts a real conversation.",
+ drill:[
+  {q:"Which question shows them what the problem costs?",
+   o:["“How many people work here?”","“When Tuesdays are slow, what does that cost you in a month?”","“Do you like your website?”"], a:1,
+   w:["That is a how-things-are question. Useful, but it doesn’t show a cost.","Right. Now they say the number out loud, in their own words.","A yes or no question about a detail."]},
+  {q:"Which one is an open question?",
+   o:["“Is business good?”","“Are you the owner?”","“What is the hardest part of getting new customers?”"], a:2,
+   w:["Closed. You get “fine” and nothing else.","Closed. Useful to know, but it doesn’t open anything.","Right. It starts with What and can’t be answered in one word."]}],
+ mission:"Write 4 questions for something you sell (now, hard, cost, worth). Ask them to one real person."},
+
+{t:"Name the feeling", ph:0, n:3,
+ plain:"When people feel understood, they stop defending and start listening.",
+ learn:["Say what you think they feel: “It sounds like you’ve been burned before.” This is called a label.",
+  "Skip “I understand”. It says nothing. Name the exact worry instead.",
+  "After a label, be quiet. Let them answer. You are looking for “That’s right.”"],
+ src:"Labels: Never Split the Difference (Chris Voss).",
+ bad:"I understand, but our service is really good.",
+ good:"It sounds like you’re worried about paying for something that might not work.",
+ why:"“But” erases whatever came before it. The label shows you heard the real worry, so they don’t have to repeat it.",
+ drill:[
+  {q:"They say: “I don’t have time for this.” Best reply?",
+   o:["“It only takes 5 minutes!”","“It sounds like you have a lot on your plate right now.”","“Everybody has time.”"], a:1,
+   w:["You are arguing with their feeling. They dig in.","Right. They feel heard. Often they say “yeah...” and then give you a minute.","This tells them they are wrong. Conversation over."]},
+  {q:"You just said a label. What now?",
+   o:["Keep talking so there is no awkward gap.","Stay quiet and let them answer.","Say sorry for assuming."], a:1,
+   w:["You talk over the moment the label was meant to create.","Right. The silence is where they open up.","No need. If the label is wrong, they will correct you, and that helps too."]}],
+ mission:"Say “It sounds like...” 3 times in real conversations today. Notice what people say next."},
+
+{t:"Earn trust first", ph:0, n:1,
+ plain:"People say yes to people they trust. Trust comes from being honest, prepared and on their side.",
+ learn:["Three things persuade: who you are, how they feel, and your reasons. Who you are comes first.",
+  "Do your homework. Know one true, specific thing about them before you speak.",
+  "Say a small weakness out loud: “I’m not the cheapest.” Never lie. One caught lie ends everything."],
+ src:"Character, feeling, reasons: Aristotle’s Rhetoric (ethos, pathos, logos). The weakness tip is a rule of thumb.",
+ bad:"We are the best in the business. Guaranteed results.",
+ good:"I’m new, so I can’t show you ten clients. What I can do is show you a sample I made for your shop.",
+ why:"Nobody believes “the best”. An honest limit plus real work is believable, and belief is the whole game.",
+ drill:[
+  {q:"A customer asks something you don’t know. What do you do?",
+   o:["Make up a confident answer.","“I don’t know. I’ll find out and tell you by tomorrow.”","Change the subject."], a:1,
+   w:["If they find out, they will doubt everything else you said.","Right. And then actually do it. Keeping a small promise builds a lot of trust.","They notice. It looks like hiding."]},
+  {q:"What builds the most trust before a pitch?",
+   o:["Saying you are number one.","One true, specific thing you noticed about their business.","Talking fast and with energy."], a:1,
+   w:["Everyone says it. It means nothing.","Right. It proves you prepared and that this is about them.","Speed reads as pressure."]}],
+ mission:"Before you talk to one person today, find one true specific thing about them. Open with it."},
+
+{t:"Give first, show real proof", ph:1, n:1,
+ plain:"People tend to give back, say yes to people they like, and follow what others like them do.",
+ learn:["Give first: something useful, made for them, with no strings. A sample. A tip.",
+  "Be easy to like: find real common ground and give real compliments. Fake ones are easy to spot.",
+  "Show proof only if it is real. A made-up review is a lie, and in the US fake reviews break FTC rules."],
+ src:"Reciprocity, liking, social proof: Influence (Robert Cialdini).",
+ bad:"Buy today and I’ll throw in a bonus.",
+ good:"I made this sample ad for your shop. It’s yours to keep either way.",
+ why:"The first is a trade with a hook. The second is a real gift, and people remember who helped them first.",
+ drill:[
+  {q:"You have no customers yet. What is honest proof?",
+   o:["Write two reviews yourself to get started.","Say you are new and let a free sample be the proof.","Say “hundreds of happy clients”."], a:1,
+   w:["That is lying to buyers. It can also get you in legal trouble.","Right. Work they can see beats claims they can’t check.","A lie that falls apart with one question."]},
+  {q:"A gift works best when it is...",
+   o:["Given only after they buy.","Useful, made for them, and given with no strings.","As expensive as possible."], a:1,
+   w:["That is a reward, not a gift.","Right. Personal and free of pressure.","Cost matters far less than fit."]}],
+ mission:"Give one person something useful today for free and ask for nothing: a tip, a sample, an introduction."},
+
+{t:"Small yes, real urgency", ph:1, n:1,
+ plain:"People like to stay in line with what they already said. So start with a small yes.",
+ learn:["Ask for something tiny first: “Can I show you one sample? Two minutes.” A big yes grows from small ones.",
+  "Sound like you know your stuff by explaining things simply. Never fake a title or experience.",
+  "Only say something is limited when it is true. Fake urgency is a trick, and tricks get found out."],
+ src:"Commitment, authority, scarcity: Influence (Robert Cialdini).",
+ bad:"Only 2 spots left! Offer ends tonight! (when neither is true)",
+ good:"I take 3 clients a month so I can do each one properly. One place is open for June. (only if true)",
+ why:"Both use limits. One is a lie that kills trust the moment it is noticed. The other is a real reason to decide.",
+ drill:[
+  {q:"Which of these is honest?",
+   o:["“Only 2 spots left!” when there is no limit.","“I only take 3 clients a month”, and it is true.","A countdown timer that restarts for every visitor."], a:1,
+   w:["A lie. Persuasion built on a lie is manipulation.","Right. True limits are fine to say out loud.","A fake deadline. Same lie, with a clock."]},
+  {q:"Best first ask for a busy owner?",
+   o:["“Sign up for 12 months.”","“Can I show you one sample? It takes 2 minutes.”","“Can I get your card number?”"], a:1,
+   w:["Far too big for a stranger.","Right. Easy to say yes to, and it leads to the next step.","No trust yet. This scares people off."]}],
+ mission:"Get one small yes today (a 2-minute look, one quick question) before you ask for anything bigger."},
+
+{t:"Tell a short story", ph:1, n:1,
+ plain:"Facts get forgotten. A short story about a person with a problem gets remembered.",
+ learn:["Use this shape: a person, their problem, what they tried, what changed.",
+  "Keep it under 30 seconds. Make the listener the hero, not you.",
+  "Only tell true stories. If it is an example, start with “Imagine...” so nobody is fooled."],
+ src:"Story shape is a rule of thumb. Feeling as a way to persuade: Aristotle’s Rhetoric.",
+ bad:"Our service has 14 features, including scheduling and reports.",
+ good:"Imagine a Tuesday at 2. Empty chairs. Now imagine three people walk in because of an ad they saw at lunch.",
+ why:"A list makes people think. A picture makes them feel, and the word “imagine” keeps it honest.",
+ drill:[
+  {q:"Who is the hero of a good sales story?",
+   o:["You.","Your product.","The customer."], a:2,
+   w:["Then it is bragging.","People don’t care about the tool. They care about their life.","Right. They should see themselves winning."]},
+  {q:"You have no client story yet. What is the honest move?",
+   o:["Invent a client.","Say “Imagine...” and paint a clear picture as an example.","Use someone else’s results as your own."], a:1,
+   w:["A made-up client is a lie.","Right. It works, and nobody is fooled.","That is still lying about who did the work."]}],
+ mission:"Write a 4-sentence story (person, problem, tried, changed). Tell it out loud to someone."},
+
+{t:"Frame it right", ph:1, n:1,
+ plain:"The same fact feels different depending on what you put next to it.",
+ learn:["Losing something hurts more than gaining the same thing feels good. Show what the problem costs, using their own numbers.",
+  "The first number people hear becomes the yardstick. Show the fuller option first.",
+  "Make big numbers small with honest math: “$99 is about $3 a day.”"],
+ src:"Loss aversion and anchoring: Thinking, Fast and Slow (Daniel Kahneman).",
+ bad:"My service is $199 a month.",
+ good:"By your numbers, slow days cost you about $800 a month. This is $199.",
+ why:"Alone, $199 is just money leaving. Next to $800 they told you themselves, it is a fix.",
+ drill:[
+  {q:"The owner said each customer is worth $40 and slow days lose about 5 a week. Best line?",
+   o:["“My service is $199.”","“By your numbers, slow days cost about $800 a month. This is $199.”","“Honestly, it’s really cheap.”"], a:1,
+   w:["No frame. It is only a cost.","Right. 5 x $40 x 4 weeks = $800. Their numbers, honest math.","“Cheap” is your opinion. They need a comparison."]},
+  {q:"You have a small plan and a full plan. Which do you show first?",
+   o:["The cheapest, to be safe.","The full one, then the smaller one.","Neither. Hide the price."], a:1,
+   w:["Then everything after it feels expensive.","Right. After the full plan, the small one feels easy.","Hiding prices makes people nervous."]}],
+ mission:"Take one price or ask of yours. Write it 3 ways: per day, next to the cost of the problem, next to a bigger option. Say the best one to a person."},
+
+{t:"Say it in 30 seconds", ph:1, n:1,
+ plain:"People don’t buy what a thing is. They buy what it does for them.",
+ learn:["Turn every feature into a benefit with the words “which means”.",
+  "Your pitch: “I help [who] get [what they want] without [what they hate].”",
+  "One idea only. End with a question, never with “so... yeah”. Say help, never guarantee."],
+ src:"Rule of thumb from sales practice, not an official rule.",
+ bad:"I use AI tools to make ad creatives for social platforms.",
+ good:"I make ads for local shops so slow days get busier, and you don’t have to learn any of it. Want to see one I made for you?",
+ why:"The first is about your tools. The second is about their slow days, and it ends with an easy next step.",
+ drill:[
+  {q:"Which one is a benefit?",
+   o:["“24/7 support.”","“You never sit stuck waiting when something breaks.”","“Cloud-based.”"], a:1,
+   w:["A feature. Add “which means...” to finish it.","Right. That is what 24/7 support does for them.","A feature, and jargon too."]},
+  {q:"How should a pitch end?",
+   o:["“So... yeah.”","With a question that invites a small next step.","With a list of every price."], a:1,
+   w:["It hands them nothing to do.","Right. Make the next step tiny and clear.","Too much. They will “think about it”."]}],
+ mission:"Write your 30-second pitch. Say it out loud 5 times. Then say it to one real person."},
+
+{t:"Open strong", ph:2, n:3,
+ plain:"The first ten seconds decide if they listen. Be clear, be short, and ask permission.",
+ learn:["Say who you are and why you picked them, in one breath.",
+  "Ask permission: “Do you have 30 seconds? Then you can tell me to go.” People listen more when they are free to say no.",
+  "You will hear no a lot. It is normal and it is not about you."],
+ src:"Rule of thumb from sales practice, not an official rule.",
+ bad:"Hi, how are you today? I’d love to tell you about an amazing opportunity.",
+ good:"Hi, I’m Sam. I made a sample ad for your shop. Can I show you for 30 seconds?",
+ why:"The first sounds like every pitch they have ever dodged. The second is specific, short and gives them control.",
+ drill:[
+  {q:"You walk into a shop. The owner looks up. Best opener?",
+   o:["“How’s your day going? Crazy weather, right?”","“Hi, I’m Sam. I made something for your shop. 30 seconds?”","“I can double your sales.”"], a:1,
+   w:["Small talk from a stranger feels like a setup.","Right. Who, why them, how long.","A promise you can’t keep. They have heard it before."]},
+  {q:"They say “Not interested” right away. You say...",
+   o:["“But you haven’t even seen it.”","“No problem. Can I leave the sample? It’s yours.”","“Why not?” in a sharp tone."], a:1,
+   w:["Arguing makes the no stronger.","Right. No pressure, and the gift stays behind to work for you.","Now it is a fight."]}],
+ mission:"Open 3 real conversations with a permission opener: a business, a stranger, or a message."},
+
+{t:"Handle objections", ph:2, n:1,
+ plain:"An objection is usually not a no. It is a worry they have not explained yet.",
+ learn:["Four steps: listen to all of it, name it, ask about it, then answer only the real worry.",
+  "“Too expensive” often means “I don’t see the value yet.” “Let me think” often means something is unsaid.",
+  "Never argue. You can win the argument and lose the sale."],
+ src:"Rule of thumb, built on the listening and labeling skills from days 1 to 3.",
+ bad:"It’s not expensive at all. You get a lot for that.",
+ good:"It sounds like the price feels big next to what you’d get. What would it need to do to be worth it?",
+ why:"The first tells them they are wrong. The second finds out what “worth it” means to them, so you can answer that.",
+ drill:[
+  {q:"“It’s too expensive.” What do you say?",
+   o:["“OK, I can do half price.”","“Fair. What would it need to do for you to be worth that?”","“It’s really not expensive.”"], a:1,
+   w:["You just told them your price was made up.","Right. Now you learn what value means to them.","You are arguing with their feeling."]},
+  {q:"“I need to think about it.” What do you say?",
+   o:["“OK, bye.”","“Of course. To help you think: what’s the main thing you’re unsure about?”","“The offer ends today.” (it doesn’t)"], a:1,
+   w:["You will likely never hear back.","Right. Kind, and it brings out the real worry.","Fake urgency. A lie."]}],
+ mission:"Write down the 3 objections you hear most. Then answer 5 in the Objections tool, out loud."},
+
+{t:"Negotiate fairly", ph:2, n:1,
+ plain:"A good deal gives both sides what matters most to them. Find out what that is.",
+ learn:["Ask why they want what they ask for. The reason behind it is where deals get made.",
+  "Know your walk-away point before you start: what you will do if there is no deal.",
+  "Never give without getting. Lower price means less work: “$150 if we do 2 ads, not 4.”"],
+ src:"Interests and walk-away point (BATNA): Getting to Yes (Fisher and Ury). “How” questions: Chris Voss.",
+ bad:"OK, fine, I’ll do it for half.",
+ good:"I can lower the price if we lower the work: 2 ads instead of 4. Which matters more to you?",
+ why:"Dropping the price for nothing teaches them to always ask. A trade keeps your price real and still helps them.",
+ drill:[
+  {q:"The client says: “Do it for half.” You say...",
+   o:["“OK.”","“I can do less for less: 2 ads instead of 4. Which matters more, price or amount?”","“No way.”"], a:1,
+   w:["Now your full price means nothing.","Right. A trade, plus a question about what they really need.","A wall. Nowhere to go from here."]},
+  {q:"What must you know before any negotiation?",
+   o:["Their favorite sports team.","Your walk-away point.","Nothing. Go with the flow."], a:1,
+   w:["Nice for small talk only.","Right. Without it, you accept deals you regret.","That is how people agree to bad deals."]}],
+ mission:"Negotiate one small real thing today (a price, a deadline, a chore) with a trade, not by giving in."},
+
+{t:"Ask for the yes", ph:2, n:1,
+ plain:"Closing is just asking clearly for the next step. Most people never ask.",
+ learn:["Ask plainly: “Want to start with the $99 pack?” Then stop talking and wait.",
+  "Or offer two real choices: “Start this week or next?”",
+  "If it is a no, ask: “What would need to be true for this to be a yes?” Always leave with a next step and a date."],
+ src:"Rule of thumb from sales practice, not an official rule.",
+ bad:"So, um, yeah, let me know what you think whenever.",
+ good:"Want to start with the 3 ads for Tuesday? I can have the first one to you Friday.",
+ why:"The first leaves them with nothing to answer. The second is a clear question with a clear next step.",
+ drill:[
+  {q:"You just asked for the sale. What now?",
+   o:["Keep explaining so it isn’t awkward.","Stay quiet and wait for their answer.","Offer a discount before they speak."], a:1,
+   w:["You talk them out of the yes.","Right. Let them think. The silence is doing work.","You just bargained against yourself."]},
+  {q:"They say: “Not right now.” You say...",
+   o:["Nothing. Give up on them.","“Fair. When should I check back, the 1st?”","“You’re making a mistake.”"], a:1,
+   w:["“Not now” is not “never”.","Right. A date turns a soft no into a next step.","Pressure. They will avoid you."]}],
+ mission:"Ask clearly for something today. Then stay silent until they answer."},
+
+{t:"Follow up", ph:3, n:3,
+ plain:"A lot of yeses come after the first message got no reply. Polite follow-up is part of the job.",
+ learn:["Bring something new each time: a new idea, a sample. Never “just checking in”.",
+  "Leave space: a few days, then about a week. This is a rule of thumb.",
+  "Make no easy: “If it’s not for you, just say so and I’ll stop.” Then really stop."],
+ src:"Rule of thumb from sales practice, not an official rule.",
+ bad:"Hi, just checking in to see if you saw my last message.",
+ good:"I had one more idea for your Tuesday special. Want to see it? If it’s not for you, just say so.",
+ why:"The first asks them to do work for you. The second gives something new and an easy way out.",
+ drill:[
+  {q:"Which follow-up is best?",
+   o:["“Just checking in.”","“I had one more idea for your Tuesday special. Want to see it?”","“Why are you ignoring me?”"], a:1,
+   w:["Nothing new. Easy to ignore again.","Right. New value each time.","Guilt never sells."]},
+  {q:"Three follow-ups, no reply. What now?",
+   o:["Send ten more.","One last kind message that makes no easy. Then stop.","Show up and demand an answer."], a:1,
+   w:["Now you are spam.","Right. You keep your good name, and some people reply to this one.","You lose them and everyone they talk to."]}],
+ mission:"Follow up with 3 people who did not reply. Bring each one something new."},
+
+{t:"Put it all together", ph:3, n:1,
+ plain:"One full conversation, start to finish. Then keep doing it. Skill comes from real talks.",
+ learn:["The order: open with permission, ask and listen, sum up, one benefit, handle the worry, ask for the next step, follow up.",
+  "After every real conversation, write one thing that worked and one thing to fix.",
+  "Fifteen days is a strong start, not the finish. Keep logging real conversations."],
+ src:"Review after each try is a rule of thumb. It is how most skills are built.",
+ bad:"Open, pitch everything, argue with the objection, hope they say yes.",
+ good:"Open, ask, listen, sum up, one benefit, name the worry, ask clearly, set a date.",
+ why:"The first is talking at someone. The second is a conversation where they do most of the convincing themselves.",
+ drill:[
+  {q:"What comes right after you open?",
+   o:["Your full pitch.","Questions, then listening.","The price."], a:1,
+   w:["You don’t know yet what they care about.","Right. You can’t persuade someone you don’t understand.","Price with no value around it is just a cost."]},
+  {q:"What makes you better fastest?",
+   o:["Reading more about sales.","Real conversations, with a short review after each.","Waiting until you feel ready."], a:1,
+   w:["Helps a little. Reading is not doing.","Right. Do it, look at it, fix one thing, repeat.","Ready comes from doing it."]}],
+ mission:"Do both Live calls in this app. Then have one full real conversation, start to finish, and write what worked."}
+];
+
+var OBJ = [
+ {o:"It’s too expensive.", a:"Fair. It sounds like the price feels big next to what you’d get. What would it need to do for you to be worth it?"},
+ {o:"I need to think about it.", a:"Of course. So I can help you think: what’s the main thing you’re unsure about?"},
+ {o:"Just send me some info.", a:"Happy to. So I send the right thing: what would you most want to see in it?"},
+ {o:"We already have someone for that.", a:"Good, that means it matters to you. What’s one thing you wish they did better?"},
+ {o:"We tried that before. It didn’t work.", a:"It didn’t work? What happened?"},
+ {o:"I don’t have time.", a:"It sounds like you have a lot on right now. Would 2 minutes on Thursday be easier, or should I leave this with you?"},
+ {o:"I have to ask my partner.", a:"Makes sense. What do you think they will ask about first? I can write that part down for you."},
+ {o:"Can you do it cheaper?", a:"I can do less for less. Which matters more to you: the lower price or the full amount of work?"},
+ {o:"Not interested.", a:"No problem. Can I leave the sample with you? It’s yours either way."},
+ {o:"You’re new. Why should I trust you?", a:"You’re right, I’m new. That’s why I made the sample first, so you can judge the work and not my word."}
+];
+var OBJCHECK = ["I named their worry before I answered","I asked a question","I stayed calm, with no pressure and nothing untrue","I gave a clear, small next step"];
+
+var CALLS = [
+ {id:"a", t:"Walk-in: the coffee shop owner", who:"Owner", sub:"You made a sample ad for a coffee shop. You walk in. Your offer is 3 ads for $99.",
+  turns:[
+   {them:"Yes? I’m kind of busy.", o:[
+     ["I can see that. 30 seconds: I made a sample ad for your shop. Want a look, or should I come back?",15,"Short, specific, and they stay in control."],
+     ["How are you today? I’d love to tell you about my marketing agency.",-10,"Sounds like every pitch they dodge. They brace."],
+     ["Sorry to bother you. I’ll come back another time.",0,"Polite, but you left without asking for anything."]]},
+   {them:"Hm. We tried Facebook ads last year. Waste of money.", o:[
+     ["Ours are totally different. Trust me.",-5,"“Trust me” from a stranger does the opposite."],
+     ["That’s because whoever did it didn’t know what they were doing.",-15,"You just called their choice stupid."],
+     ["It sounds like you paid and saw nothing come back. What happened?",15,"A label and an open question. Now they tell you the real worry."]]},
+   {them:"We paid a guy $500. Got some likes. No customers.", o:[
+     ["I guarantee you’ll get customers with me.",-10,"A promise you can’t keep. It is exactly what the last guy said."],
+     ["So likes, but nobody through the door. If an ad did bring people in, which day would you want them?",15,"You summed it up and moved to what they want."],
+     ["OK. Well, my price is $99.",0,"Price with nothing around it. Not harmful, but it goes nowhere."]]},
+   {them:"Tuesdays are dead. But $99... I don’t know.", o:[
+     ["Fair. What does a Tuesday customer usually spend? Then we can see how many it takes to cover $99.",15,"You let their own numbers do the framing."],
+     ["Fine. $50.",-10,"You cut your price for nothing. Now $99 looks made up."],
+     ["The price goes up tomorrow.",-15,"Not true. Fake urgency is a lie and they can feel it."]]},
+   {them:"About $8 each. So 13 people or so. Hm.", o:[
+     ["So... what do you think?",-5,"Vague. It gives them nothing to say yes to."],
+     ["Trust me, you’ll get way more than 13.",-10,"A promise you can’t keep."],
+     ["Right. I can’t promise 13. What I can do is make 3 ads for Tuesdays, and you approve each one. Start this week or next?",15,"Honest about limits, clear offer, two real choices."]]}
+  ]},
+ {id:"b", t:"The client who wants a discount", who:"Client", sub:"A business likes your $399 monthly plan (10 ads). Then the price comes up.",
+  turns:[
+   {them:"I like it. But $399 a month is a lot. Can you do $200?", o:[
+     ["OK, $200.",-15,"Half off in one second. Your price now means nothing."],
+     ["It sounds like the price feels heavy right now. What is making $399 hard?",15,"You look for the reason behind the ask."],
+     ["No. The price is the price.",-5,"Firm, but a wall. You learn nothing."]]},
+   {them:"Honestly, cash is tight until the holidays.", o:[
+     ["That makes sense. So it’s the timing, not whether it’s worth it?",15,"You sum it up. If they say yes, the worth is settled."],
+     ["Everybody says that.",-10,"Dismissive. They stop being honest with you."],
+     ["I see. Well, think about it.",0,"You gave up just as the real reason showed up."]]},
+   {them:"Right. I want it. Just not $399 right now.", o:[
+     ["Fine. The full plan for $200.",-15,"You gave everything and got nothing."],
+     ["Then maybe wait until January.",-5,"You sent away a client who said “I want it”."],
+     ["Then here is a trade: 4 ads for $199 now, and we move to the full plan in January if you’re happy. Or the full plan at $399. Which fits better?",15,"Less for less, and two real choices."]]},
+   {them:"Could you do all 10 ads for $250?", o:[
+     ["How would I do that and still do good work for you? At $250 I can do 6 ads.",15,"A calm How question, then a trade."],
+     ["OK, deal.",-10,"Ten ads at $250 means rushed work or working for too little."],
+     ["You’re being cheap.",-10,"An insult. The deal may end here."]]},
+   {them:"OK. 4 ads at $199 sounds fair.", o:[
+     ["Great. I’ll be in touch.",0,"A yes with no date often fades."],
+     ["Are you sure? You could still do the big one...",-10,"They said yes. Stop selling."],
+     ["Great. I’ll send the first ad Friday for you to approve. Is Friday morning good for a quick check-in?",15,"Next step, with a date."]]}
+  ]}
+];
+
+/* ---------- state ---------- */
+var KEY = "persuade15.v1";
+var S = {start:null, days:{}, reps:[], obj:0, calls:{}};
+try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && typeof p === "object") { for (var k in S) if (p[k] != null) S[k] = p[k]; } } } catch (e) {}
+if (typeof S.days !== "object" || !S.days) S.days = {};
+if (!Array.isArray(S.reps)) S.reps = [];
+if (typeof S.calls !== "object" || !S.calls) S.calls = {};
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function dayState(i){ if (!S.days[i]) S.days[i] = {pick:{}, first:{}, mission:false, note:""}; var d = S.days[i]; if (!d.pick) d.pick = {}; if (!d.first) d.first = {}; return d; }
+function drillDone(i){ var d = dayState(i); return DAYS[i].drill.every(function(q, qi){ return d.pick[qi] === q.a; }); }
+function dayDone(i){ return drillDone(i) && dayState(i).mission; }
+function doneCount(){ var n = 0; for (var i = 0; i < 15; i++) if (dayDone(i)) n++; return n; }
+function dateKey(d){ return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
+function todayIdx(){
+  if (!S.start) return 0;
+  var a = new Date(S.start), b = new Date();
+  a.setHours(0,0,0,0); b.setHours(0,0,0,0);
+  var n = Math.round((b - a) / 864e5);
+  return Math.max(0, Math.min(14, n));
+}
+function repTotal(){ return S.reps.reduce(function(s, r){ return s + (Number(r.n) || 0); }, 0); }
+function streak(){
+  var set = {}; S.reps.forEach(function(r){ set[r.k] = 1; });
+  var d = new Date(), n = 0;
+  if (!set[dateKey(d)]) d.setDate(d.getDate() - 1);
+  while (set[dateKey(d)]) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+
+/* ---------- routing ---------- */
+var view = document.getElementById("view");
+var route = {page:"home", day:0, tab:0};
+var call = null, objIdx = 0, objShown = false, objDraft = "";
+function parse(){
+  var h = location.hash.replace(/^#/, "").split("/");
+  var page = h[0] || (S.start ? "day" : "home");
+  if (["home","day","days","call","obj","sheet","progress","sources"].indexOf(page) < 0) page = "home";
+  route.page = page;
+  if (page === "day") {
+    var n = parseInt(h[1], 10);
+    route.day = (n >= 1 && n <= 15) ? n - 1 : todayIdx();
+    var t = parseInt(h[2], 10);
+    route.tab = (t >= 1 && t <= 4) ? t - 1 : 0;
+  }
+}
+function go(h){ if (location.hash === "#" + h) { parse(); render(); } else location.hash = h; }
+window.addEventListener("hashchange", function(){ parse(); render(); view.focus({preventScroll:true}); document.querySelector(".main").scrollTop = 0; });
+
+var NAV = [["day","Today"],["days","All 15 days"],["call","Live call"],["obj","Objections"],["sheet","Cheat sheet"],["progress","Progress"],["sources","Sources"]];
+function navHtml(){
+  var on = route.page === "home" ? "day" : route.page;
+  return NAV.map(function(n){ return '<button class="nav' + (on === n[0] && !(n[0] === "day" && route.page === "day" && route.day !== todayIdx()) ? " on" : "") + '" data-go="' + n[0] + '">' + n[1] + "</button>"; }).join("");
+}
+function renderNav(){
+  var logo = '<div class="logo">Persuade<i>.</i></div>';
+  document.getElementById("side").innerHTML = logo + '<div class="tag">15-day sales training</div>' + navHtml() +
+    '<div class="sidefoot">Honest methods only. This app trains you. It cannot promise sales or income.</div>';
+  document.getElementById("topnav").innerHTML = logo + navHtml();
+}
+
+/* ---------- pages ---------- */
+function pageHome(){
+  return '<div class="eyebrow">Sales · Persuasion · Convincing</div>' +
+  "<h1>Get good at convincing people in 15 days of practice.</h1>" +
+  '<p class="plain">One skill a day. About 20 minutes: learn it, see it, drill it, then use it on a real person.</p>' +
+  '<div class="three"><div><b>1 Learn</b>Three short points and a weak line next to a strong line.</div><div><b>2 Drill</b>Pick the best reply and see why.</div><div><b>3 Do</b>One real conversation mission every day.</div></div>' +
+  '<div class="row"><button class="btn" data-act="start">Start day 1</button><button class="btn ghost" data-go="days">See the 15 days</button></div>' +
+  '<div class="honest"><b>Honest note.</b> Nobody becomes a master in 15 days. Mastery takes years of real conversations. What 15 days of daily practice can do is give you the core skills and make you clearly better than when you started. Everything here is honest persuasion: no lies, no fake urgency, no pressure tricks.</div>';
+}
+
+function pageDay(){
+  var i = route.day, D = DAYS[i], st = dayState(i), tab = route.tab, ti = todayIdx();
+  var names = ["Learn","Example","Drill","Mission"];
+  var oks = [false, false, drillDone(i), st.mission];
+  var h = '<div class="row spread"><div class="eyebrow">Day ' + (i + 1) + " of 15 · " + PHASES[D.ph] + (S.start && i === ti ? " · Today" : "") + "</div>" +
+    '<div class="small muted">' + doneCount() + " of 15 days done</div></div>" +
+    "<h1>" + D.t + "</h1>" + '<p class="plain">' + D.plain + "</p>" +
+    '<div class="tabs" role="tablist">' + names.map(function(n, x){ return '<button role="tab" aria-selected="' + (x === tab) + '" class="tab' + (x === tab ? " on" : "") + '" data-tab="' + x + '">' + (x + 1) + " " + n + (oks[x] ? '<span class="ok" aria-label="done">✓</span>' : "") + "</button>"; }).join("") + "</div>";
+  if (tab === 0) {
+    h += '<ol class="pts">' + D.learn.map(function(l, x){ return '<li><b class="n">' + (x + 1) + "</b>" + l + "</li>"; }).join("") + "</ol>" +
+      '<p class="src">Where this comes from: ' + D.src + "</p>";
+  } else if (tab === 1) {
+    h += '<div class="say weak"><span class="lab">Weak</span>“' + D.bad + '”</div>' +
+      '<div class="say strong"><span class="lab">Strong</span>“' + D.good + '”</div>' +
+      '<p><b>Why it works.</b> ' + D.why + "</p>" + '<p class="src">The lines are examples to learn from. Use your own words.</p>';
+  } else if (tab === 2) {
+    var qi = 0; while (qi < D.drill.length - 1 && st.pick[qi] === D.drill[qi].a && !(route.q === qi)) qi++;
+    if (route.q != null && route.q < D.drill.length) qi = route.q;
+    var Q = D.drill[qi], pick = st.pick[qi], solved = pick === Q.a;
+    h += '<div class="small muted" style="margin-bottom:4px">Question ' + (qi + 1) + " of " + D.drill.length + "</div>" + '<div class="q">' + Q.q + "</div>";
+    Q.o.forEach(function(o, x){
+      var cls = "opt" + (pick === x ? (x === Q.a ? " right" : " wrong") : "");
+      h += '<button class="' + cls + '" data-pick="' + qi + "," + x + '"' + (solved ? " disabled" : "") + ">" + o + "</button>";
+    });
+    if (pick != null) h += '<div class="why ' + (solved ? "g" : "b") + '" role="status">' + Q.w[pick] + (solved ? "" : " Try again.") + "</div>";
+    if (solved && qi < D.drill.length - 1) h += '<button class="btn" data-q="' + (qi + 1) + '">Next question</button>';
+    if (solved && qi === D.drill.length - 1) h += '<button class="btn" data-tab="3">Go to the mission</button>';
+  } else {
+    h += '<div class="mission"><div class="eyebrow" style="margin-bottom:4px">Your mission today</div>' + D.mission + "</div>";
+    if (st.mission) {
+      h += '<p class="done-note">Mission done. Logged ' + (st.n || 0) + " real conversation" + (st.n === 1 ? "" : "s") + ".</p>" +
+        (st.note ? '<p class="muted">Your note: ' + esc(st.note) + "</p>" : "") +
+        '<div class="row">' + (i < 14 ? '<button class="btn" data-go="day/' + (i + 2) + '">Day ' + (i + 2) + "</button>" : '<button class="btn" data-go="progress">See your progress</button>') +
+        '<button class="btn ghost" data-act="undo">Undo</button></div>';
+    } else {
+      h += '<div class="row" style="align-items:flex-end;margin-bottom:10px"><div><label for="mn">Real conversations</label><input id="mn" type="number" min="0" max="50" value="' + D.n + '"></div>' +
+        '<div style="flex:1;min-width:200px"><label for="mt">What worked? What will you fix? (optional)</label><textarea id="mt"></textarea></div></div>' +
+        '<div class="row"><button class="btn" data-act="mission">I did it</button><span class="small muted">Only tick it if you really did it. The practice is the whole point.</span></div>';
+    }
+  }
+  h += '<div class="row spread foot">' +
+    '<button class="btn ghost" data-go="day/' + i + '"' + (i === 0 ? " disabled" : "") + ">‹ Day " + (i || 1) + "</button>" +
+    (tab < 3 ? '<button class="btn' + (tab === 2 ? " ghost" : "") + '" data-tab="' + (tab + 1) + '">Next: ' + names[tab + 1] + "</button>" : "") +
+    '<button class="btn ghost" data-go="day/' + (i + 2) + '"' + (i === 14 ? " disabled" : "") + ">Day " + Math.min(15, i + 2) + " ›</button></div>";
+  return h;
+}
+
+function pageDays(){
+  var ti = todayIdx(), h = '<div class="eyebrow">The plan</div><h1>All 15 days</h1><p class="plain">Do them in order, one a day. You can open any day to look ahead or go back.</p>';
+  PHASES.forEach(function(p, pi){
+    h += '<div class="phase">Part ' + (pi + 1) + ": " + p + '</div><div class="grid">';
+    DAYS.forEach(function(D, i){ if (D.ph !== pi) return;
+      h += '<button class="tile' + (dayDone(i) ? " done" : "") + (S.start && i === ti ? " today" : "") + '" data-go="day/' + (i + 1) + '"><span class="d">Day ' + (i + 1) + (dayDone(i) ? " ✓" : (S.start && i === ti ? " · today" : "")) + '</span><span class="t">' + D.t + "</span></button>";
+    });
+    h += "</div>";
+  });
+  return h;
+}
+
+function pageCall(){
+  if (!call) {
+    var h = '<div class="eyebrow">Practice</div><h1>Live call</h1><p class="plain">A made-up conversation. Pick what you would say and watch how much they trust you. These people are examples, not real businesses.</p>';
+    CALLS.forEach(function(c){
+      var best = S.calls[c.id];
+      h += '<div class="say"><h2>' + c.t + '</h2><p class="muted">' + c.sub + '</p><div class="row"><button class="btn" data-call="' + c.id + '">Start</button>' + (best != null ? '<span class="small muted">Best trust so far: ' + best + " of 100</span>" : "") + "</div></div>";
+    });
+    return h;
+  }
+  var C = CALLS.filter(function(c){ return c.id === call.id; })[0];
+  var head = '<div class="row spread"><div class="eyebrow">Live call · ' + C.t + '</div><button class="btn ghost" data-act="callquit">Leave</button></div>' +
+    '<div class="meter" style="margin-top:12px"><span>Trust</span><div class="bar" role="progressbar" aria-valuenow="' + call.trust + '" aria-valuemin="0" aria-valuemax="100"><i style="width:' + call.trust + '%"></i></div><span>' + call.trust + "</span></div>";
+  if (call.turn >= C.turns.length) {
+    var t = call.trust, msg = t >= 85 ? "Strong. You listened, stayed honest and asked clearly." : t >= 55 ? "Decent. A few replies cost you trust. Look at which ones and run it again." : "They pulled back. Run it again and pick the replies that ask and listen.";
+    return head + "<h1>Call over: trust " + t + " of 100</h1><p class=\"plain\">" + msg + '</p><p class="muted small">This is a practice score inside a made-up call. It is not a prediction of real sales.</p><div class="row"><button class="btn" data-call="' + C.id + '">Run it again</button><button class="btn ghost" data-act="callquit">All calls</button></div>';
+  }
+  var T = C.turns[call.turn], h2 = head + '<div class="bubble"><small>' + C.who + " · " + (call.turn + 1) + " of " + C.turns.length + "</small>“" + T.them + '”</div>';
+  T.o.forEach(function(o, x){
+    var cls = "opt"; if (call.pick != null && call.pick === x) cls += o[1] > 0 ? " right" : o[1] < 0 ? " wrong" : "";
+    h2 += '<button class="' + cls + '" data-say="' + x + '"' + (call.pick != null ? " disabled" : "") + ">“" + o[0] + "”</button>";
+  });
+  if (call.pick != null) {
+    var o = T.o[call.pick];
+    h2 += '<div class="why ' + (o[1] > 0 ? "g" : "b") + '" role="status">' + (o[1] > 0 ? "Trust +" + o[1] : o[1] < 0 ? "Trust " + o[1] : "Trust stays the same") + ". " + o[2] + "</div>" +
+      '<button class="btn" data-act="callnext">' + (call.turn === C.turns.length - 1 ? "Finish" : "Next") + "</button>";
+  }
+  return h2;
+}
+
+function pageObj(){
+  var O = OBJ[objIdx];
+  var h = '<div class="row spread"><div class="eyebrow">Practice · Objections</div><div class="small muted">' + S.obj + " practiced</div></div>" +
+    '<div class="bubble" style="margin-top:12px"><small>They say · ' + (objIdx + 1) + " of " + OBJ.length + "</small>“" + O.o + '”</div>' +
+    '<label for="oa">Type your reply, or say it out loud first</label><textarea id="oa"' + (objShown ? " readonly" : "") + ">" + esc(objDraft) + "</textarea>";
+  if (!objShown) {
+    h += '<div class="row" style="margin-top:10px"><button class="btn" data-act="objshow">Show a strong reply</button><button class="btn ghost" data-act="objskip">Skip</button></div>' +
+      '<p class="small muted" style="margin-top:10px">This tool can’t grade your words. You compare and check yourself.</p>';
+  } else {
+    h += '<div class="say strong" style="margin-top:10px"><span class="lab">One strong reply</span>“' + O.a + '”</div>' +
+      '<div style="margin-bottom:10px">' + OBJCHECK.map(function(c){ return '<label class="check"><input type="checkbox">' + c + "</label>"; }).join("") + "</div>" +
+      '<button class="btn" data-act="objnext">Next objection</button>';
+  }
+  return h;
+}
+
+function sheetText(){ return DAYS.map(function(D, i){ return "Day " + (i + 1) + " " + D.t + ": " + D.plain; }).join("\n"); }
+function pageSheet(){
+  return '<div class="row spread"><div><div class="eyebrow">Cheat sheet</div><h1>15 skills, one line each</h1></div><button class="btn ghost" data-act="copy">Copy all</button></div>' +
+    '<div class="sheet">' + DAYS.map(function(D, i){ return "<div><b>" + (i + 1) + "</b><span><b style=\"color:var(--text);font-family:var(--sans)\">" + D.t + ".</b> " + D.plain + "</span></div>"; }).join("") + "</div>";
+}
+
+function pageProgress(){
+  var dn = doneCount(), first = 0, tot = 0;
+  for (var i = 0; i < 15; i++) { var d = dayState(i); DAYS[i].drill.forEach(function(q, qi){ if (d.first[qi] != null) { tot++; if (d.first[qi]) first++; } }); }
+  var h = '<div class="eyebrow">Progress</div><h1>Your real numbers</h1>' +
+    '<div class="bar" style="margin-top:10px"><i style="width:' + (dn / 15 * 100) + '%"></i></div>' +
+    '<div class="stats"><div class="stat"><b>' + dn + '/15</b><span>days done</span></div><div class="stat"><b>' + repTotal() + '</b><span>real conversations</span></div>' +
+    '<div class="stat"><b>' + streak() + '</b><span>day streak</span></div><div class="stat"><b>' + (tot ? first + "/" + tot : "0") + "</b><span>drills right first try</span></div></div>" +
+    "<h2>Log a real conversation</h2>" +
+    '<div class="row" style="align-items:flex-end"><div><label for="rn">How many</label><input id="rn" type="number" min="1" max="50" value="1"></div><div style="flex:1;min-width:180px"><label for="rt">One thing that worked, one to fix</label><input id="rt" type="text" maxlength="200"></div><button class="btn" data-act="rep">Log it</button></div>';
+  if (S.reps.length) h += '<div class="loglist" style="margin-top:12px">' + S.reps.slice().reverse().map(function(r){ return "<div><b>" + esc(r.d) + "</b> · " + (Number(r.n) || 0) + (r.note ? " · " + esc(r.note) : "") + "</div>"; }).join("") + "</div>";
+  h += '<div class="row spread foot"><span class="small muted">Only what you log counts. Saved on this device only.</span><button class="btn ghost" data-act="reset">' + (route.confirm ? "Tap again to erase everything" : "Reset") + "</button></div>";
+  return h;
+}
+
+function pageSources(){
+  return '<div class="eyebrow">Sources</div><h1>Where this comes from</h1>' +
+  '<p class="plain">The ideas come from well-known books. They are put in plain words here.</p>' +
+  '<ol class="pts">' + [
+    ["Never Split the Difference", "Chris Voss: mirroring, labels, “How” questions (days 1, 3, 12)"],
+    ["SPIN Selling", "Neil Rackham: the four kinds of questions (day 2)"],
+    ["Influence", "Robert Cialdini: giving first, liking, proof, small yes, authority, limits (days 5, 6)"],
+    ["Thinking, Fast and Slow", "Daniel Kahneman: losses weigh more than gains, first numbers stick (day 8)"],
+    ["Getting to Yes", "Roger Fisher and William Ury: reasons behind demands, walk-away point (day 12)"],
+    ["Rhetoric", "Aristotle: character, feeling, reasons (days 4, 7)"]
+  ].map(function(b, x){ return '<li><b class="n">' + (x + 1) + "</b><b>" + b[0] + ".</b> " + b[1] + "</li>"; }).join("") + "</ol>" +
+  '<div class="honest"><b>How this was checked.</b> The summaries were written from knowledge of these books. They were not checked page by page against the books, so read the book if you want the full method. No statistics are used in this app because none could be verified. Anything marked “rule of thumb” is common sales practice, not a proven fact. The note about fake reviews refers to the US FTC rule on fake reviews and testimonials, in effect since October 21, 2024 (ftc.gov). The people and prices in the examples and Live calls are made up for practice.</div>';
+}
+
+function render(){
+  renderNav();
+  var p = route.page;
+  view.innerHTML = p === "home" ? pageHome() : p === "day" ? pageDay() : p === "days" ? pageDays() : p === "call" ? pageCall() : p === "obj" ? pageObj() : p === "sheet" ? pageSheet() : p === "progress" ? pageProgress() : pageSources();
+}
+
+/* ---------- actions ---------- */
+function logRep(n, note){ var d = new Date(); S.reps.push({k:dateKey(d), d:d.toLocaleDateString(undefined, {month:"short", day:"numeric"}), n:n, note:note}); }
+document.addEventListener("click", function(e){
+  var b = e.target.closest("button"); if (!b || b.disabled) return;
+  var ds = b.dataset;
+  if (ds.act !== "reset") route.confirm = false;
+  if (ds.go) { route.q = null; if (ds.go !== "call") call = null; go(ds.go === "day" ? (S.start ? "day/" + (todayIdx() + 1) : "home") : ds.go); return; }
+  if (ds.tab) { route.q = null; go("day/" + (route.day + 1) + "/" + (Number(ds.tab) + 1)); return; }
+  if (ds.q) { route.q = Number(ds.q); render(); return; }
+  if (ds.pick) {
+    var a = ds.pick.split(","), qi = Number(a[0]), x = Number(a[1]), st = dayState(route.day);
+    if (st.first[qi] == null) st.first[qi] = (x === DAYS[route.day].drill[qi].a);
+    st.pick[qi] = x; route.q = qi; save(); render(); return;
+  }
+  if (ds.call) { call = {id:ds.call, turn:0, trust:40, pick:null}; render(); return; }
+  if (ds.say && call) {
+    var C = CALLS.filter(function(c){ return c.id === call.id; })[0];
+    call.pick = Number(ds.say); call.trust = Math.max(0, Math.min(100, call.trust + C.turns[call.turn].o[call.pick][1])); render(); return;
+  }
+  switch (ds.act) {
+    case "start": if (!S.start) S.start = new Date().toISOString(); save(); go("day/1"); break;
+    case "mission":
+      var st2 = dayState(route.day), n = Math.max(0, Math.min(50, parseInt(document.getElementById("mn").value, 10) || 0));
+      if (!S.start) S.start = new Date().toISOString();
+      st2.mission = true; st2.n = n; st2.note = document.getElementById("mt").value.trim().slice(0, 300);
+      if (n > 0) { logRep(n, "Day " + (route.day + 1) + " mission"); st2.rep = S.reps.length - 1; }
+      save(); render(); break;
+    case "undo":
+      var st3 = dayState(route.day);
+      if (st3.rep != null && S.reps[st3.rep] && S.reps[st3.rep].note === "Day " + (route.day + 1) + " mission") { S.reps.splice(st3.rep, 1); for (var k in S.days) if (S.days[k].rep > st3.rep) S.days[k].rep--; }
+      st3.mission = false; st3.rep = null; save(); render(); break;
+    case "callnext":
+      call.turn++; call.pick = null;
+      var C2 = CALLS.filter(function(c){ return c.id === call.id; })[0];
+      if (call.turn >= C2.turns.length) { S.calls[call.id] = Math.max(S.calls[call.id] || 0, call.trust); save(); }
+      render(); break;
+    case "callquit": call = null; render(); break;
+    case "objshow": objDraft = document.getElementById("oa").value; objShown = true; S.obj++; save(); render(); break;
+    case "objskip": case "objnext": objIdx = (objIdx + 1) % OBJ.length; objShown = false; objDraft = ""; render(); break;
+    case "copy":
+      var txt = sheetText(), ok = function(){ b.textContent = "Copied"; }, fail = function(){ b.textContent = "Could not copy"; };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, fail); else fail();
+      break;
+    case "rep":
+      var rn = Math.max(1, Math.min(50, parseInt(document.getElementById("rn").value, 10) || 1));
+      logRep(rn, document.getElementById("rt").value.trim().slice(0, 200)); save(); render(); break;
+    case "reset":
+      if (!route.confirm) { route.confirm = true; render(); }
+      else { route.confirm = false; S = {start:null, days:{}, reps:[], obj:0, calls:{}}; save(); go("home"); }
+      break;
+  }
+});
+document.addEventListener("keydown", function(e){
+  if (route.page !== "day" || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  if (e.key === "ArrowRight" && route.tab < 3) go("day/" + (route.day + 1) + "/" + (route.tab + 2));
+  if (e.key === "ArrowLeft" && route.tab > 0) go("day/" + (route.day + 1) + "/" + route.tab);
+});
+parse(); render();
+</script>
+</body>
+</html>
