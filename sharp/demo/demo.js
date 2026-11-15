@@ -150,7 +150,76 @@ function rEnd(){
   $('dm-e2s').textContent = s.name + ', ' + st.hours + ' hours a week';
   $('dm-e3').textContent = '"Hi! I\'m starting a small ' + s.name.toLowerCase() + ' business. For ' + money(s.price) + ' I\'ll ' + s.act.replace(/their/g, 'your').replace(/them/g, 'you') + '. Could I help you this week?"';
   $('dm-e4').textContent = st.picked >= 0 && ANSWERS[st.picked].ok ? 'You picked the best reply first time. Nice.' : 'Remember: find the real worry. Don\'t argue or drop your price.';
+  makeShare();
 }
+/* ---------- share my plan: a picture of your own results, drawn on this device ----------
+   Made when the plan shows, so tapping Share opens the share sheet at once (Safari needs that). Nothing leaves the device
+   unless the visitor shares it. Estimates are labelled as estimates. */
+var SHARE = { file: null, url: '' };
+function svgImg(src){
+  // SVGs get a fixed size first so every browser can draw them on a canvas (data: is allowed by the page's CSP).
+  return fetch(src).then(function(r){ return r.text(); }).then(function(t){
+    return new Promise(function(res){ var i = new Image(); i.onload = function(){ res(i); }; i.onerror = function(){ res(null); };
+      i.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(t.replace('<svg ', '<svg width="256" height="256" ')); });
+  }).catch(function(){ return null; });
+}
+function rr(x, l, t, w, h, r){ x.beginPath(); x.moveTo(l + r, t); x.arcTo(l + w, t, l + w, t + h, r); x.arcTo(l + w, t + h, l, t + h, r); x.arcTo(l, t + h, l, t, r); x.arcTo(l, t, l + w, t, r); x.closePath(); }
+function wrapText(x, text, l, t, maxW, lh){
+  var words = text.split(' '), line = '';
+  words.forEach(function(w){ var test = line ? line + ' ' + w : w; if(x.measureText(test).width > maxW && line){ x.fillText(line, l, t); line = w; t += lh; } else line = test; });
+  if(line) x.fillText(line, l, t);
+}
+function drawCard(x, img){
+  var W = 1080, H = 1350, k = keep(), e = earn(), s = SKILLS[st.skill], D = '"Bricolage Grotesque", sans-serif', B = 'Karla, sans-serif';
+  x.fillStyle = '#0b0e1c'; x.fillRect(0, 0, W, H);
+  [[140, 120, 680, 'rgba(31,191,138,.5)'], [980, 200, 600, 'rgba(255,79,154,.4)'], [520, 1340, 700, 'rgba(255,138,61,.28)']].forEach(function(g){
+    var r = x.createRadialGradient(g[0], g[1], 0, g[0], g[1], g[2]); r.addColorStop(0, g[3]); r.addColorStop(1, 'rgba(11,14,28,0)'); x.fillStyle = r; x.fillRect(0, 0, W, H);
+  });
+  x.textBaseline = 'middle';
+  if(img.icon) x.drawImage(img.icon, 80, 78, 76, 76);
+  x.fillStyle = '#fff'; x.font = '800 50px ' + D; x.fillText('Sharp', 176, 118);
+  x.textAlign = 'right'; x.fillStyle = '#c9cde0'; x.font = '800 30px ' + B; x.fillText('sharpbasics.com', W - 80, 118); x.textAlign = 'left';
+  x.textBaseline = 'alphabetic'; x.font = '800 104px ' + D; x.fillStyle = '#fff'; x.fillText('My money', 80, 296);
+  var gr = x.createLinearGradient(80, 0, 480, 0); gr.addColorStop(0, '#ff8a3d'); gr.addColorStop(.55, '#ff4f9a'); gr.addColorStop(1, '#9b8cff'); x.fillStyle = gr; x.fillText('plan.', 80, 400);
+  function card(t, h, label, labelCol, big, bigCol, small){
+    rr(x, 80, t, W - 160, h, 34); x.fillStyle = 'rgba(255,255,255,.07)'; x.fill(); x.strokeStyle = 'rgba(255,255,255,.16)'; x.lineWidth = 2; x.stroke();
+    x.fillStyle = labelCol; x.font = '800 30px ' + B; x.fillText(label.toUpperCase(), 124, t + 70);
+    x.fillStyle = bigCol; x.font = '800 ' + (big.length > 12 ? 92 : 132) + 'px ' + D; x.shadowColor = bigCol; x.shadowBlur = 40; x.fillText(big, 120, t + (big.length > 12 ? 172 : 196)); x.shadowBlur = 0;
+    x.fillStyle = '#dfe3f3'; x.font = '700 34px ' + B; wrapText(x, small, 124, t + 262, W - 260, 42);
+  }
+  card(462, 346, 'I could keep', '#9ff0d0', money(k.year), '#ffd866', 'a year, by spending a third less on ' + CATS[st.cat].name.toLowerCase() + '.');
+  card(832, 296, 'My first ' + money(GOAL), '#ff9fcf', isFinite(e.weeks) ? 'about ' + weeksText(e.weeks) : 'More hours', '#5ff2bf', s.name + ', ' + st.hours + (st.hours === 1 ? ' hour' : ' hours') + ' a week.');
+  if(img.cherry) x.drawImage(img.cherry, 80, 1160, 96, 96);
+  x.fillStyle = '#fff'; x.font = '800 38px ' + B; x.fillText('Made with Cherry, my AI money coach', 196, 1200);
+  x.fillStyle = '#b9bfd8'; x.font = '700 28px ' + B; x.fillText('Estimates, not promises. Free, no sign-up.', 196, 1246);
+}
+function makeShare(){
+  SHARE.file = null; $('dm-share-msg').textContent = '';
+  var fonts = document.fonts ? Promise.all(['800 100px "Bricolage Grotesque"', '800 30px Karla', '700 30px Karla'].map(function(f){ return document.fonts.load(f); })).catch(function(){}) : Promise.resolve();
+  Promise.all([fonts, svgImg('../icon.svg'), svgImg('../assets/cherry.svg')]).then(function(r){
+    var c = document.createElement('canvas'); c.width = 1080; c.height = 1350; var x = c.getContext('2d');
+    drawCard(x, { icon: r[1], cherry: r[2] });
+    var url; try{ url = c.toDataURL('image/jpeg', .9); }catch(err){ x.clearRect(0, 0, 1080, 1350); drawCard(x, {}); url = c.toDataURL('image/jpeg', .9); }   // if a browser won't let the logos in, draw without them
+    var im = $('dm-share-img'); im.src = url; im.hidden = false; SHARE.url = url;
+    c.toBlob(function(blob){ if(blob) SHARE.file = new File([blob], 'my-sharp-plan.jpg', { type: 'image/jpeg' }); }, 'image/jpeg', .9);
+  });
+}
+function shareText(){
+  var k = keep(), e = earn();
+  return 'My money plan from Sharp: I could keep about ' + money(k.year) + ' a year' + (isFinite(e.weeks) ? ' and reach my first ' + money(GOAL) + ' in about ' + weeksText(e.weeks) : '') + ' (estimates). Make yours free in 60 seconds:';
+}
+$('dm-sharebtn').addEventListener('click', function(){
+  var msg = $('dm-share-msg'), link = 'https://sharpbasics.com/demo/';
+  if(!SHARE.url){ msg.textContent = 'One second, your picture is still being made.'; return; }
+  if(SHARE.file && navigator.canShare && navigator.canShare({ files: [SHARE.file] })){
+    navigator.share({ files: [SHARE.file], title: 'My money plan', text: shareText() + ' ' + link }).then(function(){ msg.textContent = 'Shared. Cherry on top!'; if(window.SharpPop) SharpPop($('dm-sharebtn'), { n: 10 }); }).catch(function(){});
+    return;
+  }
+  // No share sheet here (most computers): save the picture instead.
+  var a = document.createElement('a'); a.href = SHARE.url; a.download = 'my-sharp-plan.jpg'; document.body.appendChild(a); a.click(); a.remove();
+  msg.textContent = 'Saved as my-sharp-plan.jpg. Post it anywhere, with sharpbasics.com/demo.';
+});
+
 var order = [0, 1, 2].sort(function(){ return Math.random() - .5; });
 var cur = '1', started = false;
 function go(to){
