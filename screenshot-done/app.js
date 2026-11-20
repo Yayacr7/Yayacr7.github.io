@@ -285,7 +285,8 @@
       var nowIds = overdue.map(function (i) { return i.id; });
       upcoming = upcoming.filter(function (i) { return nowIds.indexOf(i.id) < 0; });
       var waiting = open.filter(function (i) { return i.calendar === 'file' || i.calendar === 'google'; });
-      var recent = items.filter(function (i) { return !i.date; }).sort(function (a, b) { return b.createdAt - a.createdAt; }).slice(0, 4);
+      var shown = upcoming.concat(overdue).map(function (i) { return i.id; });
+      var recent = items.filter(function (i) { return shown.indexOf(i.id) < 0; }).sort(function (a, b) { return b.createdAt - a.createdAt; }).slice(0, 4);
       var html = '<div class="wrap"><div class="hello"><p class="eyebrow">' + greeting() + '</p><h1>What did you screenshot?</h1></div>' +
         '<button class="addcard" type="button" data-add><span class="deco"></span><span class="deco2"></span><span class="big"><span class="plus">' + ic('i-plus') + '</span><span><h2>Add screenshot</h2><p>Pick one from your photos' + (matchMedia('(hover:hover)').matches ? ', drop it here, or paste it' : '') + '.</p></span></span></button>' +
         '<div class="home-tools"><a class="btn btn-ghost btn-sm" href="#/paste">' + ic('i-text') + 'Type or paste text</a><button class="btn btn-ghost btn-sm" type="button" id="h-sample">' + ic('i-image') + 'Try a sample</button></div>';

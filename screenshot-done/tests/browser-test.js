@@ -94,7 +94,8 @@ async function readDownload(dl) { const path = await dl.path(); return fs.readFi
   await p.click('#c-go'); await p.waitForSelector('.success');
   let items = await p.evaluate(() => SDStore.all());
   let rem = items.find(i => i.kind === 'reminder');
-  ok('reminder saved day before', rem && rem.remindDate === '2026-11-26' && rem.remindTime === '18:00', rem);
+  const dayBefore = (x => { const t = new Date(x + 'T12:00'); t.setDate(t.getDate() - 1); return t.toISOString().slice(0, 10); })(rem.date);
+  ok('reminder saved day before', rem && rem.remindDate === dayBefore && rem.remindTime === '18:00', rem);
   ok('no calendar claim for in-app reminder', rem && rem.calendar === null);
 
   // C. Essay as checklist
@@ -124,6 +125,9 @@ async function readDownload(dl) { const path = await dl.path(); return fs.readFi
   const csv = await readDownload(dl);
   ok('csv content', csv.startsWith('Date,Title,Amount') && csv.includes('$9.45'), csv);
   await shot(p, 'iphone-10-saved');
+  await p.goto(URL0 + '#/home'); await p.waitForTimeout(400);
+  ok('saved receipt shows in Recently saved', (await p.textContent('#view')).includes('Receipt: Corner Cafe'));
+  await p.goto(URL0 + '#/saved'); await p.waitForSelector('#q');
   await p.click('[data-cat=all]');
   await p.fill('#q', 'civil');
   ok('search finds essay', (await p.textContent('#list')).includes('Civil War'));
