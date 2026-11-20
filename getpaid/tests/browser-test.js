@@ -34,7 +34,7 @@ const noSideScroll = p => p.evaluate(() => document.documentElement.scrollWidth 
 
   // --- setup ---
   await p.goto(U);
-  ok(await vis(p, "text=Finished the job?"), "welcome shows first");
+  ok(await vis(p, "text=Invoice next."), "welcome shows first");
   await p.click("text=Set up (about 1 minute)");
   await p.fill("[data-set=bizName]", "Shine On Mobile Detailing"); await p.fill("[data-set=yourName]", "Yaya Test");
   await p.fill("[data-set=phone]", "(612) 555-0100"); await p.fill("[data-set=payHow]", "Venmo @shineon or cash");
@@ -149,6 +149,12 @@ const noSideScroll = p => p.evaluate(() => document.documentElement.scrollWidth 
   ok(/\$265\.00/.test(await p.textContent(".sum .stats")), "paid this month = 50 deposit + 215 logged");
   ok(/\$0\.00/.test(await p.textContent(".sum .big")), "owed back to 0");
 
+  // --- Create quote forces a quote even when the words sound like an invoice ---
+  await p.goto(U + "#home"); await p.click("[data-mode=quote]"); await p.waitForSelector("#rectext");
+  ok(await vis(p, "text=New quote"), "Create quote opens a new quote");
+  await p.fill("#rectext", "full detail for Ann Lee"); await p.click("text=Make my draft");
+  ok(await vis(p, '[data-act=settype][data-v="quote"].on'), "Create quote makes a quote");
+  await p.goto(U + "#home");
   // --- quote flow by typing (example chip) ---
   await p.goto(U + "#new"); await p.click('[data-act=example][data-i="2"]'); await p.click("text=Make my draft");
   ok(await vis(p, '[data-act=settype][data-v="quote"].on'), "quote detected");
@@ -230,7 +236,8 @@ const noSideScroll = p => p.evaluate(() => document.documentElement.scrollWidth 
   const id = "drafttest";
   for (const [name, dev] of DEV) for (const scheme of ["light", "dark"]) {
     const q = await newPage(b, { ...dev, colorScheme: scheme });
-    await q.addInitScript(s => localStorage.setItem("getpaid.v1", s), JSON.stringify(snapshot));
+    const snap = JSON.parse(JSON.stringify(snapshot)); snap.settings.theme = scheme === "light" ? "light" : "";
+    await q.addInitScript(s => localStorage.setItem("getpaid.v1", s), JSON.stringify(snap));
     for (const h of ["home", "new", "jobs", "follow", "settings", "settings/prices", "doc/" + id, "edit/" + id, "welcome", "welcome/biz", "welcome/prices"]) {
       await q.goto(U + "#" + h); await q.waitForTimeout(30);
       ok(await noSideScroll(q), name + " " + scheme + " #" + h + " no sideways scroll");

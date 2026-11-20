@@ -26,6 +26,15 @@
     info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.5"/></svg>'
   };
 
+  const MARK = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M12 3h18l-6.5 11H5.5z" fill="#5EEAC4"/><path d="M8.5 18h18L20 29H2z" fill="#3CCBA6"/><path d="M12.5 14 9.5 18h9l3-4z" fill="#2AA88A"/></svg>';
+  const LOGO = '<span class="logo">' + MARK + "GetPaid</span>";
+  const I2 = {
+    quote: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 7c-2.5 1-4 3.2-4 6.5V17h4.5v-4.5H6.5M19 7c-2.5 1-4 3.2-4 6.5V17h4.5v-4.5h-3"/></svg>',
+    list: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 8h1M12 8h4M8 12h1M12 12h4M8 16h1M12 16h4"/></svg>',
+    cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M8.5 14l2.5 2.5 4.5-5"/></svg>'
+  };
+  const SPARK = '<svg class="spark" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4l3.6 12.4L36 20l-12.4 3.6L20 36l-3.6-12.4L4 20l12.4-3.6z" fill="currentColor"/></svg>';
+
   // ---------- storage (device only) ----------
   let storageOk = true;
   function defaults() {
@@ -57,7 +66,7 @@
   const S = () => DB.settings;
   const findDoc = id => DB.docs.find(d => d.id === id);
   const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-  function applyTheme() { if (S().theme) document.documentElement.setAttribute("data-theme", S().theme); else document.documentElement.removeAttribute("data-theme"); }
+  function applyTheme() { if (S().theme === "light") document.documentElement.setAttribute("data-theme", "light"); else document.documentElement.removeAttribute("data-theme"); }
   applyTheme();
 
   // ---------- toast + sheet ----------
@@ -113,8 +122,8 @@
       '<button class="btn pri full" data-act="pricesok">These are my prices</button>' +
       '<button class="btn ghost full" data-act="pricesskip" style="margin-top:6px">Keep the examples for now</button></main>';
     return '<main id="main" class="wrap nonav"><div class="welcome">' +
-      '<img src="icon.svg" alt="" width="64" height="64" style="border-radius:18px">' +
-      "<h1>Finished the job?<br>Get paid for it.</h1>" +
+      LOGO +
+      "<h1>Job done.<br><em class=\"mint\">Invoice next.</em></h1>" +
       '<p class="muted">Talk for 20 seconds about the job. GetPaid writes the invoice, keeps track of who paid, and drafts polite reminders. You check every message before it goes.</p>' +
       '<div class="steps3"><div><span><b>Say what you did.</b><br><span class="muted small">"Full detail on Mike\'s 2019 Pilot, pet hair too, due Friday."</span></span></div>' +
       '<div><span><b>Check the draft and send it.</b><br><span class="muted small">By text or email, from your own phone.</span></span></div>' +
@@ -148,13 +157,20 @@
     followDue().forEach(({ d, p }) => needs.push({ d, av: p.next.id === "thanks" ? "go" : "warn", t: p.next.id === "thanks" ? "Say thanks: " + (d.customer.name || "customer") : "Follow up: " + (d.customer.name || "customer"), s: p.next.label + " · " + docTitle(d), amt: p.next.id === "thanks" ? "" : M(GP.totals(d).balance) }));
     DB.docs.filter(d => GP.status(d) === "draft").forEach(d => needs.push({ d, av: "info", t: "Send: " + (d.customer.name || "customer"), s: docTitle(d) + " is still a draft", amt: M(GP.totals(d).total) }));
     DB.docs.filter(d => GP.status(d) === "approved").forEach(d => needs.push({ d, av: "go", t: "Make the invoice: " + (d.customer.name || "customer"), s: "Quote " + d.number + " was approved", amt: M(GP.totals(d).total) }));
-    const hello = s.yourName ? "Hi " + esc(GP.firstName(s.yourName)) : "GetPaid";
-    return '<main id="main" class="wrap">' + '<header class="top"><div class="brand"><img src="icon.svg" alt=""><div><b>' + hello + "</b><span>" + esc(new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })) + "</span></div></div></header>" +
+    const hello = (s.yourName ? "Hi " + esc(GP.firstName(s.yourName)) + " · " : "") + esc(new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" }));
+    const dueN = followDue().length, unpaidN = DB.docs.filter(d => d.type === "invoice" && ["sent", "partly", "overdue"].includes(GP.status(d))).length;
+    return '<main id="main" class="wrap">' + '<header class="top">' + LOGO + '<span class="tiny muted" style="margin-left:auto;text-align:right">' + hello + "</span></header>" +
+      '<section class="hello">' + SPARK + '<h1>Job done.<br><em>Invoice next.</em></h1><p>Talk about the job. Get the invoice. Polite follow-ups you approve.</p></section>' +
       storageBanner() +
       (s.pricesConfirmed ? "" : '<div class="banner">' + I.warn + '<div>Your prices are still the examples. <a href="#settings/prices">Set your real prices</a></div></div>') +
+      '<ul class="actions" aria-label="Start">' +
+      '<li><a class="act main talk" href="#new" data-act="newvoice"><span class="ic">' + I.mic + '</span><span>Create invoice<small>Tap and talk about the job</small></span><span class="chev">›</span></a></li>' +
+      '<li><a class="act" href="#new" data-act="newvoice" data-mode="quote"><span class="ic">' + I2.quote + '</span><span>Create quote<small>Price a job before you do it</small></span><span class="chev">›</span></a></li>' +
+      '<li><a class="act" href="#jobs"><span class="ic">' + I2.list + '</span><span>Invoices<small>' + (unpaidN ? unpaidN + " waiting for payment" : "All your quotes and invoices") + '</small></span><span class="chev">›</span></a></li>' +
+      '<li><a class="act" href="#follow"><span class="ic">' + I2.cal + '</span><span>Follow-ups<small>' + (dueN ? "Ready for you to review" : "Nothing due right now") + "</small></span>" + (dueN ? '<span class="cnt">' + dueN + "</span>" : "") + '<span class="chev">›</span></a></li></ul>' +
       '<section class="card sum" aria-label="Money summary"><div class="label">Owed to you</div><div class="big">' + M(owed) + '</div><div class="small" style="opacity:.8">' + (unpaid ? unpaid + " unpaid invoice" + (unpaid > 1 ? "s" : "") : "Nothing waiting. Nice.") + "</div>" +
       '<div class="stats"><div><b>' + M(overdue) + "</b><span>Overdue" + (overN ? " (" + overN + ")" : "") + "</span></div><div><b>" + M(paidMonth) + "</b><span>Logged as paid this month</span></div></div></section>" +
-      '<a class="talk" href="#new" data-act="newvoice"><span class="mic">' + I.mic + '</span><span><b>Talk about the job</b><span>Say who, what car, what you did. Get a draft invoice.</span></span></a>' +
+
       '<section class="card"><div class="row between"><h2>Needs you</h2>' + (needs.length > 4 ? '<a class="small" href="#follow">See all</a>' : "") + "</div>" +
       (needs.length ? '<ul class="list">' + needs.slice(0, 4).map(n => '<li><a class="item" href="#doc/' + n.d.id + '"><span class="av ' + n.av + '">' + initials(n.d.customer.name) + '</span><span class="grow"><div class="t">' + esc(n.t) + '</div><div class="s">' + esc(n.s) + '</div></span><span class="amt"><b>' + n.amt + "</b></span></a></li>").join("") + "</ul>"
         : '<div class="empty"><b>All caught up</b>' + (DB.docs.length ? "No reminders due today." : "Finish a job, then tap the mic.") + "</div>") +
@@ -167,11 +183,11 @@
     "Interior detail for Dana Brooks, 2017 Toyota Camry, plus odor removal, charge 45 for the odor. 763-555-0199, due in 3 days.",
     "Quote for Sarah Lee, 2021 Tesla Model Y, ceramic coating and paint correction. Email sarah.lee at gmail dot com."
   ];
-  let recText = "";
+  let recText = "", recMode = "";
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   let rec = null, listening = false, recBase = "";
   function viewNew() {
-    return '<main id="main" class="wrap nonav">' + top("New job", "Talk or type. You'll check everything next.", "home") +
+    return '<main id="main" class="wrap nonav">' + top(recMode === "quote" ? "New quote" : "New invoice", "Talk or type. You'll check everything next.", "home") +
       '<div class="rec">' +
       '<button class="micbig' + (listening ? " on" : "") + '" id="micbtn" data-act="mic" aria-label="' + (listening ? "Stop listening" : "Start talking") + '" aria-pressed="' + listening + '">' + (listening ? I.stop : I.mic) + "</button>" +
       '<div class="micstate" id="micstate" aria-live="polite">' + (SR ? (listening ? "Listening… tap to stop" : "Tap and talk") : "Type, or use your keyboard's mic") + "</div>" +
@@ -217,6 +233,7 @@
   function makeDraft(text) {
     const s = S();
     const r = GP.parseJob(text, { services: s.services, today: today() });
+    if (recMode === "quote" && r.type !== "quote") { r.type = "quote"; r.heard.unshift("Quote, because you tapped Create quote"); }
     const doc = {
       id: "", type: r.type, number: "", date: today(),
       customer: r.customer, vehicle: r.vehicle, big: r.big,
@@ -315,7 +332,7 @@
       d.history = (d.history || []).concat([{ at: new Date().toISOString(), t: "Edited" }]);
       DB.docs[i] = d;
     }
-    save(); const id = d.id; draft = null; recText = "";
+    save(); const id = d.id; draft = null; recText = ""; recMode = "";
     toast("Saved " + docTitle(d)); go("doc/" + id);
   }
 
@@ -354,7 +371,7 @@
   }
   function paperHtml(d) {
     const s = S(), T = GP.totals(d), inv = d.type === "invoice", st = GP.status(d);
-    return '<article class="paper" aria-label="' + (inv ? "Invoice" : "Quote") + ' preview"><div class="ph"><div><div class="biz">' + esc(s.bizName || "Your business name") + '</div><div class="meta">' + [s.yourName, s.phone, s.email].filter(Boolean).map(esc).join("<br>") + "</div></div>" +
+    return '<article class="paper" aria-label="' + (inv ? "Invoice" : "Quote") + ' preview">' + (st === "draft" ? '<div class="chip-d">Draft · Review before sending</div>' : "") + '<div class="ph"><div><div class="biz">' + esc(s.bizName || "Your business name") + '</div><div class="meta">' + [s.yourName, s.phone, s.email].filter(Boolean).map(esc).join("<br>") + "</div></div>" +
       '<div><div class="kind">' + (inv ? "INVOICE" : "QUOTE") + '</div><div class="meta" style="text-align:right">' + esc(d.number) + "<br>" + GP.fmtDate(d.date) + (inv ? "<br>Due " + GP.fmtDate(d.dueDate) : "<br>Good until " + GP.fmtDate(d.validUntil)) + "</div></div></div>" +
       '<div class="meta"><b style="color:#111">' + (inv ? "Bill to" : "For") + "</b><br>" + esc(d.customer.name) + (d.customer.phone ? "<br>" + esc(d.customer.phone) : "") + (d.customer.email ? "<br>" + esc(d.customer.email) : "") + (d.vehicle ? "<br>Vehicle: " + esc(d.vehicle) : "") + "</div>" +
       '<table><thead><tr><th>Service</th><th class="r">Qty</th><th class="r">Amount</th></tr></thead><tbody>' +
@@ -480,14 +497,16 @@
       '<div class="two">' + field("Invoices due after (days)", "dueDays", s.dueDays, "7", "number") + field("Quotes good for (days)", "quoteDays", s.quoteDays, "30", "number") + "</div>" +
       field("Default tax %", "taxRate", s.taxRate || "", "0", "number") + '<label class="field"><span>Default note on invoices</span><textarea class="in" rows="2" data-set="note">' + esc(s.note) + "</textarea></label></section>" +
       '<a class="card" href="#settings/prices" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit"><span class="grow"><h2 style="margin:0">Prices</h2><span class="small muted">' + s.services.length + " services · " + (s.pricesConfirmed ? "your prices" : "still examples") + '</span></span><span class="muted">›</span></a>' +
-      '<section class="card"><h2>Look</h2><div class="seg" role="group" aria-label="Theme"><button data-act="theme" data-v="" class="' + (!s.theme ? "on" : "") + '">Auto</button><button data-act="theme" data-v="light" class="' + (s.theme === "light" ? "on" : "") + '">Light</button><button data-act="theme" data-v="dark" class="' + (s.theme === "dark" ? "on" : "") + '">Dark</button></div></section>' +
+      '<section class="card"><h2>Look</h2><div class="seg" role="group" aria-label="Theme"><button data-act="theme" data-v="" class="' + (s.theme !== "light" ? "on" : "") + '">Indigo (dark)</button><button data-act="theme" data-v="light" class="' + (s.theme === "light" ? "on" : "") + '">Light</button></div></section>' +
       '<section class="card"><h2>Backup</h2><p class="small muted" style="margin:0 0 10px">Everything is saved on this phone only. If you clear your browser or lose the phone, it\'s gone. Download a backup now and then.</p><div class="btns"><button class="btn" data-act="backup">Download backup</button><label class="btn" style="cursor:pointer">Restore<input type="file" id="restore" accept="application/json,.json" class="visually-hidden"></label></div></section>' +
       '<section class="card"><h2>Honest notes</h2><ul class="small muted" style="margin:0;padding-left:18px"><li>GetPaid drafts messages. It never sends anything by itself.</li><li>It does not process payments or hold money.</li><li>It reads your voice notes with simple rules, not AI. Always check the draft.</li><li>Prices it starts with are examples, not market rates.</li><li>Not legal or tax advice. Late fees, tax and collection rules differ by state.</li><li>Install it: in Safari tap Share → Add to Home Screen; in Chrome tap ⋮ → Install app.</li></ul></section>' +
       '<button class="btn danger full" data-act="wipe">Erase everything on this phone</button></main>' + nav("settings");
   }
 
   // ---------- router ----------
-  function go(h) { if (location.hash === "#" + h) render(); else location.hash = h; }
+  // change screen now (not on the async hashchange), so a fast tap can't land on the old screen
+  function go(h) { if (location.hash !== "#" + h) history.pushState(null, "", "#" + h); render(); }
+  window.addEventListener("popstate", render);
   function render() {
     if (listening && !/^#new/.test(location.hash)) stopListening();
     if (sheetOpen()) closeSheet();
@@ -521,7 +540,7 @@
     switch (act) {
       case "newvoice": // start listening right away from the tap (browsers need a tap to use the mic)
         // render now, inside the tap, so the browser lets the mic start
-        e.preventDefault(); recText = ""; draft = null; pendingListen = !!SR;
+        e.preventDefault(); recText = ""; draft = null; pendingListen = !!SR; recMode = el.dataset.mode || "";
         if (location.hash !== "#new") history.pushState(null, "", "#new");
         render(); break;
       case "mic": e.preventDefault(); listening ? stopListening() : startListening(); break;

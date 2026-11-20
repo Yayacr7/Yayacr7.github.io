@@ -1,5 +1,5 @@
 // Keeps GetPaid working with no signal: fresh copy when online, saved copy when offline.
-const C = "getpaid-v1";
+const C = "getpaid-v2";
 const SHELL = ["./", "index.html", "core.js", "app.js", "manifest.webmanifest", "icon.svg", "icon-192.png", "icon-180.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(C).then(c => c.addAll(SHELL))); self.skipWaiting(); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== C).map(k => caches.delete(k))))); self.clients.claim(); });
