@@ -279,7 +279,7 @@
       return { value: 'Receipt: ' + merchant.slice(0, 60), level: 'guess', note: 'Made from the shop name in the screenshot. Rename it if you like.' };
     }
     // Prefer a short line mentioning the main keyword (e.g. "Dental cleaning appointment").
-    var key = { event: /concert|party|festival|show|event|game|night/i, assignment: /essay|assignment|homework|quiz|exam|project|lab|worksheet/i, booking: /reservation|booking|flight|hotel|table/i }[cat];
+    var key = { event: /concert|party|festival|show|event|game|night|practice|rehearsal|meeting|tryout/i, assignment: /essay|assignment|homework|quiz|exam|project|lab|worksheet/i, booking: /reservation|booking|flight|hotel|table/i }[cat];
     if (key) { var k = content.find(function (l) { return key.test(l) && l.length <= 70; }); if (k) pick = k; }
     return { value: pick.replace(/[:\-–]+$/, '').slice(0, 80), level: 'guess', note: 'Taken from the screenshot text. Rename it if you like.' };
   }

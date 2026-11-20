@@ -318,3 +318,8 @@ textarea.paste:focus{outline:none;border-color:var(--purple)}
 .two>*,.cl-row>*{min-width:0}.field input[type=date],.field input[type=time]{min-width:0;max-width:100%;-webkit-appearance:none;appearance:none}
 .homegrid>*,.savedgrid>*,.items>*{min-width:0}.homegrid,.savedgrid{grid-template-columns:minmax(0,1fr)}@media (min-width:1100px){.homegrid{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}.savedgrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 .item .t,.item .s,.item .main{display:block}
+/* time row: keep "4:00 PM" readable on phones */
+.timeinputs input{flex:1 1 0;font-variant-numeric:tabular-nums}
+.timeinputs input::-webkit-calendar-picker-indicator{margin-left:2px;padding:0;width:14px}
+@media (pointer:coarse),(max-width:480px){.timeinputs input::-webkit-calendar-picker-indicator{display:none}.timeinputs input::-webkit-datetime-edit{padding:0}}
+.kind select{max-width:100%;padding-right:4px}

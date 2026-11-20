@@ -367,7 +367,7 @@
     dateField = dateField.slice(0, -6) + opts + confirmBtn + '</div>';
     var guessCount = Object.keys(d.lv).filter(function (k) { return d.lv[k] === 'guess'; }).length;
     var html = '<div class="card">' +
-      '<div class="kind"><span class="ic c-' + f.category + '">' + ic(c.icon) + '</span><div style="flex:1"><p class="eyebrow" style="margin:0">Step 2 of 3 · Looks like</p>' +
+      '<div class="kind"><span class="ic c-' + f.category + '">' + ic(c.icon) + '</span><div style="flex:1"><p class="eyebrow" style="margin:0">Step 2 of 3 · Type</p>' +
       '<label class="sr" for="f-category">Type</label><select id="f-category" style="border:0;background:none;font-size:22px;font-weight:800;padding:0;margin-left:-2px">' + catOpts + '</select></div>' + levelTag(d.lv.category === 'sure' ? 'sure' : 'guess') + '</div>' +
       '<p class="small muted" style="margin:4px 0 0">Read by rules on this device, not AI. ' + (guessCount ? '<b style="color:var(--coral-d)">' + guessCount + ' detail' + (guessCount > 1 ? 's' : '') + ' to check</b> (dashed). ' : '') + 'Tap any detail to change it.</p>' +
       '<div class="fields">' +
