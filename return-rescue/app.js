@@ -60,6 +60,8 @@ function fmtDate(s, opts) {
   return d.toLocaleDateString('en-US', Object.assign({ month: 'short', day: 'numeric' }, sameYear ? {} : { year: 'numeric' }, opts || {}));
 }
 const fmtLong = s => fmtDate(s, { weekday: 'short', year: 'numeric' });
+// Within the next 6 days a weekday name is unambiguous: "Tomorrow", "Friday"
+function dayName(s) { const n = daysBetween(today(), s); if (n === 0) return 'today'; if (n === 1) return 'tomorrow'; return parseISO(s).toLocaleDateString('en-US', { weekday: 'long' }); }
 const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
 
 /* ---------- Storage ---------- */
@@ -166,6 +168,7 @@ function deadlineInfo(p) {
   if (left < 0) return { kind: 'past', text: (est ? 'Estimated deadline passed ' : 'Deadline passed ') + fmtDate(p.deadline), left };
   if (est) return { kind: 'est', text: 'Unconfirmed: ' + fmtDate(p.deadline), left };
   if (left === 0) return { kind: 'soon', text: 'Last day today', left };
+  if (left <= 6) return { kind: 'soon', text: 'Return by ' + dayName(p.deadline) + ' · ' + plural(left, 'day') + ' left', left };
   if (left <= S().actSoon) return { kind: 'soon', text: plural(left, 'day') + ' left · ' + fmtDate(p.deadline), left };
   return { kind: 'ok', text: 'Return by ' + fmtDate(p.deadline) + ' · ' + plural(left, 'day'), left };
 }
@@ -419,7 +422,7 @@ function renderHome() {
     h += rem.map(r => {
       const p = r.p;
       const msg = r.kind === 'deadline'
-        ? (r.left === 0 ? '<b>Last day today</b> to return ' : '<b>' + plural(r.left, 'day') + ' left</b> to return ') + esc(p.item || 'this item') + (p.store ? ' to ' + esc(p.store) : '') + ' (by ' + fmtDate(p.deadline) + '). Status: ' + esc(statusLabel(p.status)) + '.'
+        ? (r.left === 0 ? '<b>Last day today</b> to return ' : '<b>' + plural(r.left, 'day') + ' left</b> to return ') + esc(p.item || 'this item') + (p.store ? ' to ' + esc(p.store) : '') + ' (by ' + (r.left > 0 && r.left <= 6 ? dayName(p.deadline) + ', ' : '') + fmtDate(p.deadline) + '). Status: ' + esc(statusLabel(p.status)) + '.'
         : '<b>No refund recorded yet</b> for ' + esc(p.item || 'this item') + (p.store ? ' from ' + esc(p.store) : '') + '. Check your account or statement. If nothing is there, contact the seller. Refund times vary.';
       return '<div class="remind" data-reminder="' + esc(p.id) + '">' + I.bell.replace('<svg', '<svg style="width:20px;height:20px;color:var(--orange);flex:none;margin-top:2px"') + '<div class="grow">' + msg + '<div class="acts"><a class="btn sm primary" href="#/p/' + esc(p.id) + '">Open</a><button class="btn sm ghost" data-act="dismiss" data-id="' + esc(p.id) + '" data-key="' + esc(r.key) + '">' + (r.kind === 'deadline' ? 'Got it' : 'Remind me in 7 days') + '</button></div></div></div>';
     }).join('');
