@@ -1,0 +1,11 @@
+{
+  "name": "Scam Pause",
+  "short_name": "Scam Pause",
+  "description": "Check before you trust.",
+  "start_url": "./#/home",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FBF8F3",
+  "theme_color": "#FBF8F3",
+  "icons": [{ "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

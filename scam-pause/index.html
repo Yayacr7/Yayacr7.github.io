@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' blob: 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self' https:; img-src 'self' blob: data:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="format-detection" content="telephone=no, email=no, address=no">
+<title>Scam Pause</title>
+<meta name="description" content="Check before you trust. Paste a suspicious text, email, listing or payment request and see the warning signs, explained in plain words, with what to do next.">
+<meta name="theme-color" content="#FBF8F3">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<a class="skip" href="#view">Skip to content</a>
+<header class="top">
+  <a class="brand" href="#/home" aria-label="Scam Pause home"><img src="icons/icon.svg" alt="" width="30" height="30"><span>Scam Pause</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="#/home" data-nav="home">Home</a>
+    <a href="#/check" data-nav="check">Check a message</a>
+    <a href="#/saved" data-nav="saved">Saved checks</a>
+    <a href="#/privacy" data-nav="privacy">Privacy</a>
+    <a href="#/about" data-nav="about">How it works</a>
+  </nav>
+  <button class="textsize" id="textsize" type="button" aria-pressed="false">Larger text</button>
+</header>
+<main id="view" tabindex="-1"></main>
+<nav class="tabbar" aria-label="Main (bottom)">
+  <a href="#/home" data-nav="home">Home</a>
+  <a href="#/check" data-nav="check">Check</a>
+  <a href="#/saved" data-nav="saved">Saved</a>
+  <a href="#/privacy" data-nav="privacy">Privacy</a>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="analyze.js"></script>
+<script src="content.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
