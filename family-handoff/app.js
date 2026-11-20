@@ -29,9 +29,11 @@
     today: '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5V20H4z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M10 20v-5h4v5" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>',
     cal: '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M3.5 10h17M8 3v4m8-4v4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>',
     plus: '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg>',
+    spark: '<svg class="sparks" width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><g fill="none" stroke="#F0A33B" stroke-width="3.4" stroke-linecap="round"><path d="M6 20l3-9"/><path d="M15 22l9-8"/><path d="M18 28h10"/></g></svg>',
+    person: '<svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5" r="3" fill="currentColor"/><path d="M2.5 15a5.5 5.5 0 0 1 11 0z" fill="currentColor"/></svg>',
     hand: '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h12m-3-3 3 3-3 3M20 15H8m3-3-3 3 3 3" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     home: '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="3.2" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="16.5" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M3.5 19c.8-3.4 3-5 5.5-5s4.7 1.6 5.5 5M14.5 14.4c2.6-.5 5 .9 6 4.6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>',
-    logo: '<svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#5B2A86"/><circle cx="23" cy="25" r="8" fill="#F0644B"/><circle cx="41" cy="25" r="8" fill="#35BF98"/><path d="M14 46c2-7 7-10 13-10m23 10c-2-7-7-10-13-10" stroke="#FFF9F3" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M26 44h12m-4-4 4 4-4 4" stroke="#FFF9F3" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>',
+    logo: '<svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#F0A33B" stroke-width="3.2" stroke-linecap="round"><path d="M40 11l2.5-5"/><path d="M46 15l5-3"/><path d="M48 22h5.5"/></g><circle cx="16" cy="25" r="7" fill="#5B2A86"/><path d="M3.5 52a12.5 12.5 0 0 1 25 0z" fill="#5B2A86"/><circle cx="48" cy="31" r="6" fill="#35BF98"/><path d="M37.5 53a10.5 10.5 0 0 1 21 0z" fill="#35BF98"/><circle cx="31" cy="29" r="7.5" fill="#F0644B" stroke="#FFF9F3" stroke-width="2.5"/><path d="M17 56a14 14 0 0 1 28 0z" fill="#F0644B" stroke="#FFF9F3" stroke-width="2.5"/></svg>',
   };
 
   /* ---------- small pieces ---------- */
@@ -42,7 +44,8 @@
     return '<span class="' + cls + '" style="background:' + m.color + '" aria-hidden="true">' + esc(m.name.trim()[0].toUpperCase()) + '</span>';
   }
   function avOpen(size) { return '<span class="av ' + (size || '') + ' open" aria-hidden="true">?</span>'; }
-  function pill(st) { return '<span class="pill p-' + st + '">' + I[st] + C.STATUS_LABEL[st] + '</span>'; }
+  const SHORT = { unassigned: 'Needs someone', awaiting: 'Waiting', accepted: 'Accepted', completed: 'Done', cancelled: 'Cancelled' };
+  function pill(st) { return '<span class="pill p-' + st + '">' + I[st] + SHORT[st] + '</span>'; }
   function nm(id) { return id === actor ? 'You' : C.name(state, id); }
   function ago(ms) {
     const m = Math.round((Date.now() - ms) / 60000);
@@ -50,24 +53,25 @@
     const h = Math.round(m / 60); if (h < 24) return h + ' h ago';
     const d = new Date(ms); return C.fmtDay(C.dateStr(d), today()) + ', ' + C.fmtTime(String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'));
   }
-  function whoLine(t) {
-    const st = C.statusOf(t);
-    if (st === 'unassigned') return pill(st);
-    if (st === 'awaiting') return pill(st) + '<span class="av pending" style="background:' + (C.member(state, t.offer.to) || {}).color + '" aria-hidden="true">' + esc(C.name(state, t.offer.to)[0]) + '</span><span>' + (t.offer.to === actor ? 'Asked you' : 'Asked ' + esc(C.name(state, t.offer.to))) + '</span>';
-    if (st === 'accepted') return pill(st) + av(t.ownerId) + '<span>' + (t.ownerId === actor ? 'You' : esc(C.name(state, t.ownerId))) + (t.offer ? ' · handing off to ' + esc(nm(t.offer.to).replace('You', 'you')) : '') + '</span>';
-    if (st === 'completed') return pill(st) + av(t.ownerId) + '<span>' + (t.ownerId === actor ? 'You' : esc(C.name(state, t.ownerId))) + '</span>';
-    return pill(st);
-  }
   function card(t, opts) {
     opts = opts || {};
     const st = C.statusOf(t);
-    const timeTxt = opts.showDay ? C.fmtDay(t.date, today()) + (t.time ? '<br>' + C.fmtTime(t.time) : '') : (t.time ? C.fmtTime(t.time) : 'Any time');
+    let face, who;
+    if (st === 'unassigned' || st === 'cancelled') { face = avOpen('lg'); who = st === 'cancelled' ? 'Cancelled' : 'Nobody yet'; }
+    else if (st === 'awaiting') { face = av(t.offer.to, 'lg pending'); who = 'Asked ' + (t.offer.to === actor ? 'you' : esc(C.name(state, t.offer.to))); }
+    else {
+      face = av(t.ownerId, 'lg');
+      who = (st === 'completed' ? 'Done by ' : '') + (t.ownerId === actor ? (st === 'completed' ? 'you' : 'You') : esc(C.name(state, t.ownerId)));
+      if (st === 'accepted' && t.offer) who += ' · handing off to ' + (t.offer.to === actor ? 'you' : esc(C.name(state, t.offer.to)));
+    }
+    const whenTxt = opts.showDay ? C.fmtDay(t.date, today()) + (t.time ? ', ' + C.fmtTime(t.time) : '') : (t.time ? C.fmtTime(t.time) : 'Any time');
+    if (opts.ask) { face = av(t.offer.from, 'lg'); }
     return '<div class="card st-' + st + (opts.ask ? ' ask' : '') + '" data-task="' + t.id + '">' +
       '<a class="stretch" href="#/task/' + t.id + '" aria-label="' + esc(t.title + ', ' + C.when(t, today()) + ', ' + C.STATUS_LABEL[st]) + '"></a>' +
-      '<div class="time">' + timeTxt + '</div><div class="body">' +
+      face + '<div class="body">' +
       (opts.ask ? '<div class="from">' + esc(C.name(state, t.offer.from)) + ' asked you' + (t.ownerId && t.ownerId !== actor ? ' to take over from ' + esc(C.name(state, t.ownerId)) : '') + '</div>' : '') +
       '<div class="title">' + esc(t.title) + '</div>' +
-      (opts.ask ? '' : '<div class="who">' + whoLine(t) + '</div>') +
+      '<div class="meta"><span class="when">' + whenTxt + '</span>' + (opts.ask ? '' : (st === 'unassigned' ? '' : '<span class="person">' + I.person + who + '</span>') + pill(st)) + '</div>' +
       (opts.ask && t.offer.note ? '<div class="quote">“' + esc(t.offer.note) + '”</div>' : '') +
       (opts.acts || '') + '</div></div>';
   }
@@ -208,7 +212,7 @@
     const unread = state.notes.filter(n => n.to === actor && !n.read).length;
     top.hidden = false;
     top.innerHTML = '<a class="brandmark" href="#/today" aria-label="Family Handoff, today">' + I.logo + '</a>' +
-      '<div class="grow"><div style="font-weight:700;font-size:15px">Family Handoff</div><div class="hh">' + esc(state.household.name) + '</div></div>' +
+      '<div class="grow"><div class="wm">Family Handoff</div><div class="hh">' + esc(state.household.name) + '</div></div>' +
       '<a class="iconbtn" href="#/inbox" aria-label="Notifications' + (unread ? ', ' + unread + ' new' : '') + '">' + I.bell + (unread ? '<span class="dot">' + unread + '</span>' : '') + '</a>' +
       '<button class="who-btn" id="who" type="button" aria-label="Viewing as ' + esc(m.name) + ', switch person">' + av(m.id) + '<span><span class="n">' + esc(m.name) + '</span><small>Switch</small></span></button>';
   }
@@ -222,7 +226,7 @@
     tabs.innerHTML = '<div class="in">' + items.map(([k, label, ic]) => {
       const cur = route === k || (k === 'household' && ['settings', 'plans', 'about', 'inbox'].includes(route));
       if (k === 'add') return '<a href="#/add" class="add"' + (cur ? ' aria-current="page"' : '') + '><span class="plus">' + ic + '</span>' + label + '</a>';
-      return '<a href="#/' + k + '"' + (cur ? ' aria-current="page"' : '') + '>' + ic + label + (k === 'handoffs' && pend ? '<span class="badge" aria-label="' + pend + ' waiting for you">' + pend + '</span>' : '') + '</a>';
+      return '<a href="#/' + k + '"' + (cur ? ' aria-current="page"' : '') + '><span class="ic">' + ic + '</span>' + label + (k === 'handoffs' && pend ? '<span class="badge" aria-label="' + pend + ' waiting for you">' + pend + '</span>' : '') + '</a>';
     }).join('') + '</div>';
   }
 
@@ -238,7 +242,7 @@
     else if (p.today.length) headline = 'Everything today has someone.';
     else headline = 'Nothing planned for today yet.';
     const rem = C.reminders(state, actor, Date.now());
-    let h = '<h1>Hi ' + esc(m.name) + '</h1><p class="date">' + esc(dateLabel) + '</p>' + flashHtml() +
+    let h = '<h1 class="today-title">Today' + I.spark + '</h1><p class="date">' + esc(dateLabel) + ' · Hi, ' + esc(m.name) + '</p>' + flashHtml() +
       '<p class="lede" id="headline">' + esc(headline) + '</p>';
     if (!kids(m)) h += '<div class="tiles" aria-label="Today at a glance">' +
       '<a class="tile t-open" href="#needs"><b>' + p.counts.needs + '</b><span>Still needs someone</span></a>' +
@@ -517,8 +521,10 @@
   }
 
   function viewWelcome() {
-    return '<div class="hero">' + I.logo.replace('width="30" height="30"', 'width="64" height="64"') +
-      '<h1>Know who\'s doing what.</h1><p>Family Handoff is a shared household plan. Each pickup, appointment or errand has one clear owner, and nothing counts as covered until that person says yes.</p></div>' +
+    return '<div class="hero"><span class="blob b1" aria-hidden="true"></span><span class="blob b2" aria-hidden="true"></span><span class="blob b3" aria-hidden="true"></span>' +
+      '<div class="lockup">' + I.logo.replace('width="34" height="34"', 'width="64" height="64"') + '<span>Family<br>Handoff</span></div>' +
+      '<h1 class="big">Who\'s doing <span class="hl">pickup?<svg class="swash" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14c50-9 120-11 192-4" fill="none" stroke="#35BF98" stroke-width="6" stroke-linecap="round"/></svg></span></h1>' +
+      '<p><b>Know who\'s doing what.</b> Give family tasks a clear owner, and a confirmed handoff. Nothing counts as covered until that person says yes.</p></div>' +
       '<ol class="steps"><li><span class="num" style="background:var(--purple-soft);color:var(--purple)">1</span>Add a responsibility and ask someone to do it.</li>' +
       '<li><span class="num" style="background:var(--mint-soft);color:var(--mint-ink)">2</span>They accept or say they can\'t. Everyone sees the answer.</li>' +
       '<li><span class="num" style="background:var(--coral-soft);color:var(--coral-ink)">3</span>Anything without a yes shows under "Still needs someone".</li></ol>' +
