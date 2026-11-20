@@ -1,0 +1,11 @@
+{
+  "name": "Family Handoff (demo)",
+  "short_name": "Handoff",
+  "description": "Know who's doing what. Local demonstration mode.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FFF9F3",
+  "theme_color": "#5B2A86",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
