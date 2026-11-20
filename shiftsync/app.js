@@ -89,7 +89,7 @@
     var other = shiftById(c.a === selfId ? c.b : c.a), v = other && sv(other);
     var who = v ? v.w.name + ' ' + dShort(v.sd) + ' ' + fmtR(v.st, v.et) : 'another shift';
     if (c.kind === 'overlap') return 'Overlaps ' + who + ' by ' + fmtH(c.minutes);
-    return 'Only ' + fmtH(Math.max(0, c.gapMin)) + ' between this and ' + who + ' (you set ' + fmtH(c.needMin) + ' travel)';
+    return (c.gapMin <= 0 ? 'No gap' : 'Only ' + fmtH(c.gapMin)) + ' between this and ' + who + ' (you set ' + fmtH(c.needMin) + ' travel)';
   }
   function flagsFor(v, cm) {
     var f = '';
@@ -121,11 +121,11 @@
     document.body.classList.toggle('focus-mode', name === 'import' || name === 'welcome');
     $$('#nav [data-nav]', document).forEach(function (a) { var on = a.getAttribute('data-nav') === (name === 'month' ? 'week' : name === 'place' ? 'places' : name); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
     if (name !== 'import' && state.imp) endImport();
+    soonBanner();
     var fn = { home: home, welcome: welcome, week: week, month: month, add: editShift, shift: editShift, import: importView, places: places, place: editPlace, pay: pay, settings: settings }[name] || home;
     fn(r);
     view.focus({ preventScroll: true });
     if (!r.q.keep) window.scrollTo(0, 0);
-    soonBanner();
   }
 
   /* ---------- welcome ---------- */
@@ -839,6 +839,7 @@
     modal('<h2>Add shifts</h2><button class="pick" data-go="#/add"><span class="ico">' + ic('i-plus') + '</span><span><b>Add a shift</b><small>Type the date and times.</small></span></button><button class="pick" data-go="#/import"><span class="ico">' + ic('i-camera') + '</span><span><b>From a schedule photo</b><small>Read on this device, checked by you.</small></span></button><button class="btn ghost block" data-close>Close</button>',
       function (bg, close) { $$('[data-go]', bg).forEach(function (b) { b.onclick = function () { close(); go(b.getAttribute('data-go')); }; }); });
   };
+  try { history.scrollRestoration = 'manual'; } catch (e) { }
   load();
   window.addEventListener('hashchange', render);
   setInterval(function () { soonBanner(); }, 60000);

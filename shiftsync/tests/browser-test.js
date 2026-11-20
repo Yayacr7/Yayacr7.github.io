@@ -185,7 +185,7 @@ async function newPlace(p, name, opts = {}) {
   ok('own-record note', (await p.textContent('#view')).includes('does not change your employer'));
   await shot(p, '11-shift-detail', true);
   await p.click('#f-save'); await p.waitForSelector('#m-anyway');
-  ok('actual hours now leave no travel time: clash shown', (await p.textContent('.modal')).includes('0 h between'), await p.textContent('.modal'));
+  ok('actual hours now leave no travel time: clash shown', (await p.textContent('.modal')).includes('No gap between'), await p.textContent('.modal'));
   await p.click('#m-anyway'); await p.waitForSelector('.days');
   d = await db(p); const mon2 = d.shifts.find(s => s.id === mon.id);
   ok('actual saved, scheduled kept', mon2.worked && mon2.actual.end === '17:00' && mon2.end === '16:00' && !mon2.editedAt);
@@ -228,6 +228,7 @@ async function newPlace(p, name, opts = {}) {
   await p.goto(U + '#/home'); await p.reload(); await p.waitForSelector('.next');
   ok('next shift card', (await p.textContent('.next')).includes('8 AM – 4 PM') && (await p.textContent('.next')).includes('Corner Grocery'), await p.textContent('.next'));
   ok('soon banner', await p.isVisible('#soon a') && (await p.textContent('#soon')).includes('in 1 h'));
+  ok('banner does not cover the heading', await p.evaluate(() => document.querySelector('#soon').getBoundingClientRect().bottom <= document.querySelector('h1').getBoundingClientRect().top), await p.evaluate(() => [scrollY, document.querySelector('#soon').getBoundingClientRect().bottom, document.querySelector('h1').getBoundingClientRect().top, document.querySelector('.hello').getBoundingClientRect().top]));
   await shot(p, '14-home');
   await p.clock.setFixedTime(new Date('2026-11-23T15:00:00Z'));
   await p.reload(); await p.waitForSelector('.next');

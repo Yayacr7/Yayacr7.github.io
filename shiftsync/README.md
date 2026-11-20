@@ -47,7 +47,7 @@ Free: one workplace, shifts, photo import, calendar, overlap check, estimate, 2-
 node shiftsync/tests/engine-test.js     # 82: dates, time zones, overnight, clock changes, breaks, actual hours, overlaps, travel, earnings, replacement, export, colours
 node shiftsync/tests/reader-test.js     # 62: time ranges, dates, grid by position, missing dates, list mode
 npx http-server -p 8765 -c-1 .          # from the repo root, then:
-node shiftsync/tests/browser-test.js    # 145: full journey with real typing + real OCR, replace, pay, export, backup, 7 screen sizes, blocked storage
+node shiftsync/tests/browser-test.js    # 146: full journey with real typing + real OCR, replace, pay, export, backup, 7 screen sizes, blocked storage
 node shiftsync/tests/make-samples.js    # rebuilds the 2 sample schedule pictures (made-up names)
 ```
 Not tested: real Safari / iPhone / Android hardware, photos of real paper schedules, .ics import on a phone, screen readers, real users.
