@@ -20,6 +20,7 @@ const businesses = [
     slug: 'madsen-concrete', name: 'Madsen Concrete Services', city: 'Circle Pines, MN', owner: 'Tom Madsen',
     phone: '(612) 508-2484', trade: 'Concrete',
     headline: 'Concrete driveways, patios and steps in Circle Pines',
+    heroNote: 'Sample photo',
     sub: 'Driveways, patios, sidewalks, steps and garage floors for homes across the north metro.',
     services: [S.driveway, S.patio, S.sidewalk, S.steps, S.garage],
     theme: { font: 'Oswald', fontW: '500;700', body: 'Inter', bg: '#F4F3F0', surface: '#FFFFFF', ink: '#1E1F21', muted: '#5B5D61', accent: '#E8590C', accentInk: '#FFFFFF', dark: '#25272A', grad: 'linear-gradient(135deg,#1c1d1f 0%,#3a3c40 55%,#5a3a26 100%)', radius: '4px', upper: true, align: 'left', card: 'bar' },
@@ -217,7 +218,8 @@ h3{font-size:1.25rem}
 /* Hero */
 .hero{position:relative;min-height:min(92vh,760px);display:flex;align-items:center;color:#fff;
   background-color:var(--dark);background-image:url('images/hero.jpg'),var(--grad);background-size:cover;background-position:center}
-.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.35) 40%,rgba(0,0,0,.7) 100%)}
+.hero::before{content:"";position:absolute;inset:0;background:${t.align === 'center' ? 'radial-gradient(ellipse at center,rgba(0,0,0,.45),rgba(0,0,0,.25) 70%),' : 'linear-gradient(90deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.3) 55%,rgba(0,0,0,0) 100%),'}linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.3) 40%,rgba(0,0,0,.7) 100%)}
+.photo-note{position:absolute;right:12px;bottom:10px;z-index:1;font-size:.72rem;color:rgba(255,255,255,.85);background:rgba(0,0,0,.45);padding:3px 8px;border-radius:4px}
 .hero .wrap{position:relative;padding-top:110px;padding-bottom:70px;width:100%;${t.align === 'center' ? 'text-align:center;' : ''}}
 .kicker{display:inline-block;font-weight:700;font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;
   background:var(--accent);color:var(--accent-ink);padding:6px 12px;border-radius:var(--r);margin-bottom:18px}
@@ -345,6 +347,7 @@ footer .demo{font-size:.8rem;margin-top:6px;opacity:.85}
       <a class="btn btn-ghost" href="#book" data-book>Book an Estimate</a>
     </div>
   </div>
+  ${b.heroNote ? `<span class="photo-note">${esc(b.heroNote)}</span>` : ''}
 </section>
 
 <section id="services">

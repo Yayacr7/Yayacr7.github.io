@@ -43,7 +43,8 @@ h3{font-size:1.25rem}
 /* Hero */
 .hero{position:relative;min-height:min(92vh,760px);display:flex;align-items:center;color:#fff;
   background-color:var(--dark);background-image:url('images/hero.jpg'),var(--grad);background-size:cover;background-position:center}
-.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.35) 40%,rgba(0,0,0,.7) 100%)}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.3) 55%,rgba(0,0,0,0) 100%),linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.3) 40%,rgba(0,0,0,.7) 100%)}
+.photo-note{position:absolute;right:12px;bottom:10px;z-index:1;font-size:.72rem;color:rgba(255,255,255,.85);background:rgba(0,0,0,.45);padding:3px 8px;border-radius:4px}
 .hero .wrap{position:relative;padding-top:110px;padding-bottom:70px;width:100%;}
 .kicker{display:inline-block;font-weight:700;font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;
   background:var(--accent);color:var(--accent-ink);padding:6px 12px;border-radius:var(--r);margin-bottom:18px}
@@ -165,6 +166,7 @@ footer .demo{font-size:.8rem;margin-top:6px;opacity:.85}
       <a class="btn btn-ghost" href="#book" data-book>Book an Estimate</a>
     </div>
   </div>
+  
 </section>
 
 <section id="services">
