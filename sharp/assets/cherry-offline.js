@@ -151,12 +151,13 @@ var L = { money: ['/learn/#money', 'Lesson 1: Your money'], invest: ['/learn/#in
   first: ['/tools/first100/', 'First $100 Plan'], budget: ['/tools/budget/', 'Budget & savings planner'], mplan: ['/tools/money-plan/', 'Money plan'],
   bplan: ['/tools/business-plan/', 'Business plan & pricing'], idea: ['/tools/idea-check/', 'Idea check'], negt: ['/tools/negotiation/', 'Negotiation prep'],
   inv: ['/tools/investors/', 'Investor pressure drill'], pricing: ['/pricing/', 'Pricing'], mkt2: ['/tools/marketing/', 'Marketing calculators'],
-  road: ['/tools/million/', 'Road to $1 million'], practice: ['/tools/practice/', 'Sales practice with Cherry'], ladder: ['/tools/ladder/', 'Money ladder'], wealth: ['/tools/tracker/', 'Wealth tracker'] };
+  road: ['/tools/million/', 'Road to $1 million'], practice: ['/tools/practice/', 'Sales practice with Cherry'], ladder: ['/tools/ladder/', 'Money ladder'], wealth: ['/tools/tracker/', 'Wealth tracker'],
+  worth: ['/tools/worth/', 'Is it worth it?'], scamc: ['/tools/scam/', 'Scam check'] };
 var TOPICS = [
   T('drop', /\bdropship\w*\b/i, [L.first], ['How do I make money as a teen?'], {
     any: [["Not as your first business. Most beginners lose money on ads before they make a sale, and you don't control the product or delivery.", "Start with a service near you instead: you get paid on day one with almost no costs."],
           ["If you try it later, test with a tiny ad budget you can afford to lose, and work out your profit per order after ads and refunds first."]] }),
-  T('scam', /\b(scam|pyramid|mlm|forex|get paid to|too good to be true|passive income|course that|guru)\b/i, [L.money], ['How do I make money as a teen?'], {
+  T('scam', /\b(scam|pyramid|mlm|forex|get paid to|too good to be true|passive income|course that|guru)\b/i, [L.scamc, L.money], ['How do I make money as a teen?'], {
     should: [["No. If someone needs you to pay first to \"unlock\" earnings, it's a scam. Real businesses pay you for work.", "Rule of thumb: guaranteed returns, pressure to decide now, or \"recruit your friends\" means walk away."]],
     what: [["A scam promises easy money and takes yours. The signs: you pay first, results are \"guaranteed\", and they rush you.", "If it sounds too good to be true, it is. Tell a parent before you send anyone money."]],
     any: [["Stay away. Most \"make money online fast\" offers make money for the person selling them, not for you.", "A boring service business beats every get-rich scheme: someone pays you, you do the job, you keep the profit."],
@@ -219,7 +220,7 @@ var TOPICS = [
     should: [["Yes. Start small this month. A tiny business teaches you more than any class, and it costs almost nothing."]],
     any: [["Start a service, not a product. You need almost no money and you get paid on day one."],
           ["Go with what people already ask you to help with. If neighbours ask you to fix their phone, that's your business."]] }),
-  T('buy', /\b(should i buy|should i get (a|an|the|new|this|that|some) (?!loan|credit)|worth buying|can i afford|buy (a|an|the|new)|spend (my )?(money )?on|want to buy)\b/i, [L.budget, L.mplan], ['How do I save money?'], {
+  T('buy', /\b(should i buy|should i get (a|an|the|new|this|that|some) (?!loan|credit)|worth buying|can i afford|buy (a|an|the|new)|spend (my )?(money )?on|want to buy)\b/i, [L.worth, L.budget], ['How do I save money?'], {
     should: [["Wait 48 hours first. If you still want it, it fits your budget, and you can pay cash, buy it. If you'd need credit, don't."],
              ["Ask: will I use it every week? If not, skip it. Things you use daily are worth paying for; things you'll forget aren't."]],
     any: [["Use the 48-hour rule: wait two days before any purchase over $30. Most of the urge goes away."],
