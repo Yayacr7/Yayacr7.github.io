@@ -75,10 +75,10 @@ function chart(){
   var id = 'dmc' + (++CH.n), url = function(k){ return 'url(#' + id + k + ')'; };
   var svg = svgEl('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, 'aria-hidden': 'true', class: 'fl-svg pc' }, box), defs = svgEl('defs', {}, svg);
   // Green at month 1, gold by the end of the year.
-  grad(defs, id + 'l', { gradientUnits: 'userSpaceOnUse', x1: X(0), x2: X(11), y1: 0, y2: 0 }, [[0, '#3ddba5'], [.6, '#8ff7cf'], [1, '#ffd866']]);
-  grad(defs, id + 'b', { x1: 0, x2: 0, y1: 0, y2: 1 }, [[0, '#a5fcdb'], [.45, '#3ddba5'], [1, '#12946a']]);
-  grad(defs, id + 'g', { x1: 0, x2: 1, y1: 0, y2: 0 }, [[0, '#3ddba5', .05], [1, '#ffd866', .12]]);
-  grad(defs, id + 'c', { x1: 0, x2: 0, y1: 0, y2: 1 }, [[0, '#3ddba5', .5], [1, '#3ddba5', .04]]);
+  grad(defs, id + 'l', { gradientUnits: 'userSpaceOnUse', x1: X(0), x2: X(11), y1: 0, y2: 0 }, [[0, '#22d3ee'], [.6, '#a5f3fc'], [1, '#ffd43b']]);
+  grad(defs, id + 'b', { x1: 0, x2: 0, y1: 0, y2: 1 }, [[0, '#a5f3fc'], [.45, '#22d3ee'], [1, '#0e7490']]);
+  grad(defs, id + 'g', { x1: 0, x2: 1, y1: 0, y2: 0 }, [[0, '#22d3ee', .05], [1, '#ffd43b', .12]]);
+  grad(defs, id + 'c', { x1: 0, x2: 0, y1: 0, y2: 1 }, [[0, '#22d3ee', .5], [1, '#22d3ee', .04]]);
   svgEl('rect', { x: 0, y: T - 12, width: W - AX, height: PH + 12, rx: 12, fill: url('g') }, svg);
   var g = svgEl('g', { class: 'fl-grid' }, svg);
   for(var i = 0; i <= 3; i++){ var v = top / 1.15 * i / 3; svgEl('line', { x1: 0, x2: W - AX, y1: Y(v), y2: Y(v) }, g); if(i && i < 3) svgEl('text', { x: W - AX + 8, y: Y(v) + 4, class: 'fl-ax' }, svg).textContent = money(v); }
@@ -98,10 +98,10 @@ function chart(){
     if(i === 2 || i === 5 || i === 8 || i === 11) svgEl('text', { x: Math.min(X(i), W - AX - 14), y: H - 5, class: 'fl-x' }, svg).textContent = i === 11 ? '1 yr' : (i + 1) + ' mo';
   }
   var line = svgEl('polyline', { points: pts.join(' '), class: 'fl-trend pc-line' + (anim ? ' draw' : ''), pathLength: 1 }, svg);
-  line.style.stroke = url('l'); line.style.filter = 'drop-shadow(0 0 7px rgba(255,216,102,.55))';
+  line.style.stroke = url('l'); line.style.filter = 'drop-shadow(0 0 7px rgba(255,212,59,.55))';
   var ex = X(11), ey = Y(m * 12);
-  svgEl('circle', { cx: ex, cy: ey, r: 5, fill: '#ffd866', class: 'pc-pulse' }, svg);
-  var dot = svgEl('circle', { cx: ex, cy: ey, r: 5, class: 'pc-end' }, svg); dot.style.stroke = '#ffd866'; dot.style.filter = 'drop-shadow(0 0 6px #ffd866)';
+  svgEl('circle', { cx: ex, cy: ey, r: 5, fill: '#ffd43b', class: 'pc-pulse' }, svg);
+  var dot = svgEl('circle', { cx: ex, cy: ey, r: 5, class: 'pc-end' }, svg); dot.style.stroke = '#ffd43b'; dot.style.filter = 'drop-shadow(0 0 6px #ffd43b)';
   var tg = svgEl('g', { class: 'pc-tag gold', transform: 'translate(' + (W - AX + 1) + ',' + ey + ')' }, svg);
   svgEl('path', { d: 'M0 0L7-10H' + (AX - 4) + 'V10H7Z' }, tg); svgEl('text', { x: (AX + 3) / 2, y: 4 }, tg).textContent = money(m * 12);
 }
@@ -172,7 +172,7 @@ function wrapText(x, text, l, t, maxW, lh){
 function drawCard(x, img){
   var W = 1080, H = 1350, k = keep(), e = earn(), s = SKILLS[st.skill], D = '"Bricolage Grotesque", sans-serif', B = 'Karla, sans-serif';
   x.fillStyle = '#0b0e1c'; x.fillRect(0, 0, W, H);
-  [[140, 120, 680, 'rgba(31,191,138,.5)'], [980, 200, 600, 'rgba(255,79,154,.4)'], [520, 1340, 700, 'rgba(255,138,61,.28)']].forEach(function(g){
+  [[140, 120, 680, 'rgba(16,175,205,.5)'], [980, 200, 600, 'rgba(59,130,246,.42)'], [520, 1340, 700, 'rgba(34,211,238,.28)']].forEach(function(g){
     var r = x.createRadialGradient(g[0], g[1], 0, g[0], g[1], g[2]); r.addColorStop(0, g[3]); r.addColorStop(1, 'rgba(11,14,28,0)'); x.fillStyle = r; x.fillRect(0, 0, W, H);
   });
   x.textBaseline = 'middle';
@@ -180,15 +180,15 @@ function drawCard(x, img){
   x.fillStyle = '#fff'; x.font = '800 50px ' + D; x.fillText('Sharp', 176, 118);
   x.textAlign = 'right'; x.fillStyle = '#c9cde0'; x.font = '800 30px ' + B; x.fillText('sharpbasics.com', W - 80, 118); x.textAlign = 'left';
   x.textBaseline = 'alphabetic'; x.font = '800 104px ' + D; x.fillStyle = '#fff'; x.fillText('My money', 80, 296);
-  var gr = x.createLinearGradient(80, 0, 480, 0); gr.addColorStop(0, '#ff8a3d'); gr.addColorStop(.55, '#ff4f9a'); gr.addColorStop(1, '#9b8cff'); x.fillStyle = gr; x.fillText('plan.', 80, 400);
+  var gr = x.createLinearGradient(80, 0, 480, 0); gr.addColorStop(0, '#22d3ee'); gr.addColorStop(1, '#ffd43b'); x.fillStyle = gr; x.fillText('plan.', 80, 400);
   function card(t, h, label, labelCol, big, bigCol, small){
     rr(x, 80, t, W - 160, h, 34); x.fillStyle = 'rgba(255,255,255,.07)'; x.fill(); x.strokeStyle = 'rgba(255,255,255,.16)'; x.lineWidth = 2; x.stroke();
     x.fillStyle = labelCol; x.font = '800 30px ' + B; x.fillText(label.toUpperCase(), 124, t + 70);
     x.fillStyle = bigCol; x.font = '800 ' + (big.length > 12 ? 92 : 132) + 'px ' + D; x.shadowColor = bigCol; x.shadowBlur = 40; x.fillText(big, 120, t + (big.length > 12 ? 172 : 196)); x.shadowBlur = 0;
     x.fillStyle = '#dfe3f3'; x.font = '700 34px ' + B; wrapText(x, small, 124, t + 262, W - 260, 42);
   }
-  card(462, 346, 'I could keep', '#9ff0d0', money(k.year), '#ffd866', 'a year, by spending a third less on ' + CATS[st.cat].name.toLowerCase() + '.');
-  card(832, 296, 'My first ' + money(GOAL), '#ff9fcf', isFinite(e.weeks) ? 'about ' + weeksText(e.weeks) : 'More hours', '#5ff2bf', s.name + ', ' + st.hours + (st.hours === 1 ? ' hour' : ' hours') + ' a week.');
+  card(462, 346, 'I could keep', '#a5f3fc', money(k.year), '#ffd43b', 'a year, by spending a third less on ' + CATS[st.cat].name.toLowerCase() + '.');
+  card(832, 296, 'My first ' + money(GOAL), '#ffe27a', isFinite(e.weeks) ? 'about ' + weeksText(e.weeks) : 'More hours', '#67e8f9', s.name + ', ' + st.hours + (st.hours === 1 ? ' hour' : ' hours') + ' a week.');
   if(img.cherry) x.drawImage(img.cherry, 80, 1160, 96, 96);
   x.fillStyle = '#fff'; x.font = '800 38px ' + B; x.fillText('Made with Cherry, my AI money coach', 196, 1200);
   x.fillStyle = '#b9bfd8'; x.font = '700 28px ' + B; x.fillText('Estimates, not promises. Free, no sign-up.', 196, 1246);

@@ -25,27 +25,27 @@
 <meta name="description" content="Plain-English lessons on personal finance, business finance and negotiation — with calculators, practice problems that check your work, and ready-to-use AI prompts.">
 <link rel="stylesheet" href="../assets/fonts.css">
 <style>/* Cherry's tip (same look as assets/sharp.css, which this page does not load) */
-.ch-tip{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px 14px;margin:16px 0 4px;max-width:900px;padding:14px 16px;border-radius:16px;background:#0d2a22;border:1px solid #1d5a4a;box-shadow:0 0 40px -18px rgba(61,219,165,.6)}
-.ch-tip .ch-face{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#3ddba5,#1d8f6a);color:#05221a;font:800 14px/1 var(--f-display,inherit);box-shadow:0 0 22px -4px rgba(61,219,165,.8)}
-.ch-tip .ch-face{background:url(../assets/cherry.svg) center/cover no-repeat,#1d8f6a;color:transparent}.ch-tip p{margin:0;color:#d6f7ea;line-height:1.55}.ch-tip p b{color:#5fe0b0}.ch-tip a{color:#9ff0d0}
-.ch-tip .ch-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border:0;border-radius:999px;background:#3ddba5;color:#05221a;font:700 .95rem inherit;cursor:pointer;white-space:nowrap;box-shadow:0 0 26px -6px rgba(61,219,165,.8)}
+.ch-tip{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px 14px;margin:16px 0 4px;max-width:900px;padding:14px 16px;border-radius:16px;background:#0a2530;border:1px solid #17566a;box-shadow:0 0 40px -18px rgba(34,211,238,.6)}
+.ch-tip .ch-face{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#0891b2);color:#04202a;font:800 14px/1 var(--f-display,inherit);box-shadow:0 0 22px -4px rgba(34,211,238,.8)}
+.ch-tip .ch-face{background:url(../assets/cherry.svg) center/cover no-repeat,#0891b2;color:transparent}.ch-tip p{margin:0;color:#d4f6fb;line-height:1.55}.ch-tip p b{color:#67e8f9}.ch-tip a{color:#a5f3fc}
+.ch-tip .ch-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border:0;border-radius:999px;background:#22d3ee;color:#04202a;font:700 .95rem inherit;cursor:pointer;white-space:nowrap;box-shadow:0 0 26px -6px rgba(34,211,238,.8)}
 .ch-tip .ch-btn[hidden]{display:none}.ch-tip .ch-btn .ch-face{width:20px;height:20px;font-size:8px;box-shadow:none}.ch-tip .ch-btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @media (max-width:700px){.ch-tip{grid-template-columns:auto minmax(0,1fr)}.ch-tip .ch-btn{grid-column:1/-1;justify-self:start}}</style>
 <style>
 /* Layout concept: Sharp courses. Structured learning layout, white cards on cool grey,
-   four colour-coded topics, one hot orange accent for action. */
+   five colour-coded topics, one glowing cyan accent for action, yellow for money. */
 :root{
   --paper:#0d1020;   --paper-2:#1e2442;  --card:#151a30;
   --ink:#f2f3f9;     --muted:#a4aac4;    --rule:#283050;
-  --note:#ff6a2b;    --note-ink:#ffffff; --note-soft:#3a1d18;
-  --engrave:#ff8f5e; --gold:#a4aac4;     --gold-soft:#ffb37a; --hl-ink:#0d1020;
-  --good:#5fd99a;    --good-soft:#123326;
+  --note:#22d3ee;    --note-ink:#03222b; --note-soft:#0a2530;
+  --engrave:#67e8f9; --gold:#a4aac4;     --gold-soft:#a5f3fc; --hl-ink:#0d1020;
+  --good:#5fd99a;    --good-soft:#10332a;
   --bad:#ff8d7d;     --bad-soft:#3d1d1d;
   --ledger-line:#1e2442; --ledger-margin:#283050;
   --readout-bg:#090b17;  --readout-fg:#ffffff; --readout-dim:#a4aac4;
-  --finance:#3ddba5; --business:#8ea4ff; --marketing:#ff8f5e; --negotiation:#c3a2ff;
-  --finance-soft:#10302a; --business-soft:#1c2550; --marketing-soft:#3a1d18; --negotiation-soft:#2b1e4a;
-  --investors:#ff7fb6; --investors-soft:#3d1830;
+  --finance:#ffd43b; --business:#22d3ee; --marketing:#bef264; --negotiation:#7aa7ff;
+  --finance-soft:#2a230c; --business-soft:#0a2530; --marketing-soft:#1f2a0e; --negotiation-soft:#172146;
+  --investors:#5eead4; --investors-soft:#0d2b28;
   --shadow:0 18px 40px -24px rgba(0,0,0,.8);
   --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
   --f-body:"Karla","Helvetica Neue",Arial,system-ui,sans-serif;
@@ -289,8 +289,8 @@ h2{font-weight:800}
 .btn{border-radius:12px}
 .btn:hover{background:var(--note);border-color:var(--note);color:var(--note-ink)}
 .stamp{font-family:var(--f-display)}
-nav.side a.active{background:var(--note);color:#1a0b04}
-nav.side a.active .n,nav.side a.active .tick{color:#1a0b04}
+nav.side a.active{background:var(--note);color:#041a21}
+nav.side a.active .n,nav.side a.active .tick{color:#041a21}
 @media (max-width:860px){ .note-inner{padding:32px 20px 26px} }
 
 /* ---- Sharp skin ---- */
@@ -428,19 +428,19 @@ html:not(.ai-on) [data-ai]{display:none!important}html.ai-on [data-ai-off]{displ
 .site-head .top-links a:hover,.site-head .top-links a[aria-current="page"]{background:rgba(255,255,255,.1)}
 .site-head .icon-btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.25)}
 .dash{position:relative;overflow:hidden;background:#151a30;border:1px solid var(--rule)!important;color:#fff;border:0;box-shadow:0 24px 50px -28px rgba(13,16,32,.8);background-image:none}
-.dash::before{content:"";position:absolute;inset:-30%;background:radial-gradient(35% 45% at 85% 20%,rgba(255,79,154,.45),transparent 70%),radial-gradient(35% 45% at 10% 90%,rgba(40,200,150,.35),transparent 70%),radial-gradient(30% 40% at 55% 0%,rgba(80,110,255,.35),transparent 70%);pointer-events:none}
+.dash::before{content:"";position:absolute;inset:-30%;background:radial-gradient(35% 45% at 85% 20%,rgba(59,130,246,.42),transparent 70%),radial-gradient(35% 45% at 10% 90%,rgba(20,190,220,.35),transparent 70%),radial-gradient(30% 40% at 55% 0%,rgba(56,189,248,.35),transparent 70%);pointer-events:none}
 .dash > *{position:relative}
 .dash .eyebrow{color:rgba(255,255,255,.65)}
 .dash h1{color:#fff}
-.dash h1 em{background:linear-gradient(90deg,#ff8a3d,#ff4f9a 55%,#9b8cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dash h1 em{background:linear-gradient(90deg,#22d3ee,#ffd43b);-webkit-background-clip:text;background-clip:text;color:transparent}
 .dash .lede{color:rgba(255,255,255,.78)}
 .dash .tb{color:#fff}
 .dash .tb-track{background:rgba(255,255,255,.12)}
-.dash .tb.t-finance{--t:#3ddba5}.dash .tb.t-business{--t:#7f97ff}.dash .tb.t-marketing{--t:#ff8a57}.dash .tb.t-negotiation{--t:#c39bff}.dash .tb.t-investors{--t:#ff7fb6}
+.dash .tb.t-finance{--t:#ffd43b}.dash .tb.t-business{--t:#22d3ee}.dash .tb.t-marketing{--t:#bef264}.dash .tb.t-negotiation{--t:#7aa7ff}.dash .tb.t-investors{--t:#5eead4}
 .dash .ring-bg{stroke:rgba(255,255,255,.12)}
 .dash .ring-fg{stroke:url(#ringGrad)}
 .dash .ring-txt span{color:rgba(255,255,255,.7)}
-.dash .btn.go{background:linear-gradient(90deg,#ff6a2b,#ff4f9a);border:0;color:#fff;box-shadow:0 10px 30px -10px rgba(255,79,154,.7)}
+.dash .btn.go{background:linear-gradient(135deg,#5ee9fb,#22d3ee 45%,#06b6d4);border:0;color:#03222b;box-shadow:0 10px 30px -10px rgba(34,211,238,.7)}
 .world{background:var(--card)}
 #start .worlds{margin-top:4px}
 
@@ -552,7 +552,7 @@ section.page > .pager a:hover{background:var(--paper-2)}
       <a class="btn go" id="continueBtn" href="#money">Start lesson 1 →</a>
     </div>
     <div class="dash-ring" aria-hidden="true">
-      <svg viewBox="0 0 120 120" width="160" height="160"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8a3d"/><stop offset=".55" stop-color="#ff4f9a"/><stop offset="1" stop-color="#9b8cff"/></linearGradient></defs><circle cx="60" cy="60" r="50" class="ring-bg"/><circle cx="60" cy="60" r="50" class="ring-fg" id="ringFg"/></svg>
+      <svg viewBox="0 0 120 120" width="160" height="160"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#ffd43b"/><stop offset="1" stop-color="#38bdf8"/></linearGradient></defs><circle cx="60" cy="60" r="50" class="ring-bg"/><circle cx="60" cy="60" r="50" class="ring-fg" id="ringFg"/></svg>
       <div class="ring-txt"><b id="ringNum">0</b><span>of 22 done</span></div>
     </div>
   </div>

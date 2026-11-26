@@ -63,7 +63,7 @@
 .steps div::before{content:counter(s);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--ink);color:var(--bg);font:800 1.1rem var(--f-display);margin-bottom:14px}
 .steps h3{margin-bottom:6px}
 .steps p{color:var(--muted)}
-.trial{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center;background:linear-gradient(135deg,#2b1e4a,#3d1830 55%,#3a1d18);color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:44px;box-shadow:var(--shadow)}
+.trial{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center;background:linear-gradient(135deg,#172146,#0d2b28 55%,#0a2530);color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:44px;box-shadow:var(--shadow)}
 .trial .eyebrow{color:var(--accent-text)}
 .trial h2{margin-top:10px;color:#fff}
 .trial p{margin-top:12px;opacity:.85;max-width:46ch}
@@ -75,10 +75,10 @@
 .plans{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:stretch}
 @media (max-width:1100px){ .plans{grid-template-columns:repeat(2,minmax(0,1fr))} }
 .plan{position:relative;display:flex;flex-direction:column;gap:14px}
-.plan.best{border:2px solid var(--accent);box-shadow:0 0 0 6px rgba(255,106,43,.08),0 24px 60px -20px rgba(255,79,154,.45);background:linear-gradient(180deg,rgba(255,106,43,.13),var(--surface) 42%)}
+.plan.best{border:2px solid var(--accent);box-shadow:0 0 0 6px rgba(34,211,238,.08),0 24px 60px -20px rgba(255,212,59,.45);background:linear-gradient(180deg,rgba(34,211,238,.13),var(--surface) 42%)}
 .plan.best li b{color:var(--ink)}
 .plan .value{margin:0;font-weight:700;font-size:.92rem;color:var(--accent-text);text-align:center}
-.plan .flag{position:absolute;top:-13px;left:22px;font:700 .7rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;background:var(--accent);color:#1a0b04;padding:5px 10px;border-radius:999px}
+.plan .flag{position:absolute;top:-13px;left:22px;font:700 .7rem var(--f-body);text-transform:uppercase;letter-spacing:.12em;background:var(--accent);color:#041a21;padding:5px 10px;border-radius:999px}
 .plan .name{font:800 1.25rem var(--f-display)}
 .plan .price{display:flex;align-items:baseline;gap:8px}
 .plan .price b{font:800 3rem/1 var(--f-display);letter-spacing:-.03em}
@@ -89,7 +89,7 @@
 .plan .btn{width:100%}
 .depth{display:flex;align-items:center;gap:5px;font:700 .8rem var(--f-body);color:var(--muted)}
 .depth i{width:22px;height:7px;border-radius:4px;background:var(--surface-2)}
-.depth i.on{background:linear-gradient(90deg,#ff6a2b,#ff4f9a)}
+.depth i.on{background:linear-gradient(90deg,#22d3ee,#ffd43b)}
 .depth span{margin-left:6px}
 .plan .note{font-size:.82rem;color:var(--muted);text-align:center;min-height:1.2em}
 .faq{border-top:2px solid var(--ink)}
@@ -111,30 +111,30 @@
 /* ---- bold opening + colour bands ---- */
 .hero{position:relative;overflow:hidden;background:var(--hero-bg);color:#fff;padding-block:72px 84px}
 .hero::before{content:"";position:absolute;inset:-20%;background:
-  radial-gradient(35% 45% at 80% 30%,rgba(255,79,154,.45),transparent 70%),
-  radial-gradient(30% 40% at 65% 85%,rgba(255,106,43,.42),transparent 70%),
-  radial-gradient(35% 45% at 15% 20%,rgba(80,110,255,.40),transparent 70%),
-  radial-gradient(30% 40% at 30% 95%,rgba(40,200,150,.30),transparent 70%);filter:blur(10px);pointer-events:none}
+  radial-gradient(35% 45% at 80% 30%,rgba(59,130,246,.42),transparent 70%),
+  radial-gradient(30% 40% at 65% 85%,rgba(34,211,238,.42),transparent 70%),
+  radial-gradient(35% 45% at 15% 20%,rgba(56,189,248,.40),transparent 70%),
+  radial-gradient(30% 40% at 30% 95%,rgba(20,190,220,.30),transparent 70%);filter:blur(10px);pointer-events:none}
 .hero-in{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:48px;align-items:center}
 .hero h1{font-size:clamp(3rem,8vw,5.6rem);line-height:.98;letter-spacing:-.04em;margin:0 0 20px;color:#fff}
-.grad{background:linear-gradient(90deg,#ff8a3d,#ff4f9a 55%,#9b8cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.grad{background:linear-gradient(90deg,#22d3ee,#ffd43b);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero-sub{font-size:1.25rem;color:rgba(255,255,255,.8);max-width:30ch}
 .hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin:30px 0 26px}
-.hero .btn{background:linear-gradient(90deg,#ff6a2b,#ff4f9a);color:#fff;box-shadow:0 10px 30px -10px rgba(255,79,154,.7)}
+.hero .btn{background:linear-gradient(135deg,#5ee9fb,#22d3ee 45%,#06b6d4);color:#03222b;box-shadow:0 10px 30px -10px rgba(34,211,238,.7)}
 .btn.ghost-light{background:rgba(255,255,255,.08)!important;color:#fff;border-color:rgba(255,255,255,.3);box-shadow:none!important}
 .hpills{display:flex;flex-wrap:wrap;gap:8px}
 .hpill{font:700 .86rem var(--f-body);text-decoration:none;color:#fff;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);display:inline-flex;align-items:center;gap:8px}
 .hpill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--tc)}
 .hpill:hover{background:rgba(255,255,255,.16)}
-.hpill.t-finance{--tc:#3ddba5}.hpill.t-business{--tc:#7f97ff}.hpill.t-marketing{--tc:#ff8a57}.hpill.t-negotiation{--tc:#c39bff}.hpill.t-investors{--tc:#ff7fb6}
+.hpill.t-finance{--tc:#ffd43b}.hpill.t-business{--tc:#22d3ee}.hpill.t-marketing{--tc:#bef264}.hpill.t-negotiation{--tc:#7aa7ff}.hpill.t-investors{--tc:#5eead4}
 .hero-art{position:relative;display:grid;gap:14px;justify-items:center}
 .hcard{width:min(360px,100%);transform:rotate(var(--r));border-radius:18px;padding:16px 20px;color:#fff;box-shadow:0 18px 40px -18px rgba(0,0,0,.6);display:grid;gap:4px}
 .hcard span{font:700 .72rem var(--f-body);text-transform:uppercase;letter-spacing:.14em;opacity:.85}
 .hcard b{font:800 1.3rem/1.2 var(--f-display);letter-spacing:-.01em}
-.hcard.t-finance{background:linear-gradient(135deg,#0f9d74,#1fc79a)}
-.hcard.t-marketing{background:linear-gradient(135deg,#e2560f,#ff8a3d)}
-.hcard.t-negotiation{background:linear-gradient(135deg,#6b3bd6,#9b7bff)}
-.hcard.t-investors{background:linear-gradient(135deg,#c2266f,#ff5a9e)}
+.hcard.t-finance{background:linear-gradient(135deg,#f5c518,#ffe27a);color:#1d1600}
+.hcard.t-marketing{background:linear-gradient(135deg,#a3e635,#d9f99d);color:#142000}
+.hcard.t-negotiation{background:linear-gradient(135deg,#1e40af,#2563eb)}
+.hcard.t-investors{background:linear-gradient(135deg,#0e7490,#0891b2)}
 #topics{background:var(--tint)}
 .tryit{background:var(--bg)}
 #tools.band-dark{background:var(--hero-bg)}
@@ -147,13 +147,13 @@
 .band-dark .btn.ghost{color:#fff;border-color:rgba(255,255,255,.3)}
 .band-dark .tool-card{background:#171b30;border-color:rgba(255,255,255,.1);color:#fff}
 .band-dark .tool-card p{color:rgba(255,255,255,.7)}
-.band-dark .tool-card .go{color:#ff9a6b}
-.band-cta{background:linear-gradient(120deg,#ff6a2b,#ff4f9a 55%,#7d6bff);color:#fff}
-.band-cta h2{color:#fff}
-.band-cta .final p,.band-cta .fine{color:rgba(255,255,255,.88)}
+.band-dark .tool-card .go{color:#67e8f9}
+.band-cta{background:linear-gradient(120deg,#22d3ee,#ffd43b);color:#03222b}
+.band-cta h2{color:#03222b}
+.band-cta .final p,.band-cta .fine{color:rgba(3,34,43,.88)}
 .band-cta input[type=email],.band-cta select{border-color:transparent}
 .band-cta .btn.dark{background:#0d1020;color:#fff}
-.band-cta .msg.ok,.band-cta .msg.err,.band-cta .tier-tag{color:#fff}
+.band-cta .msg.ok,.band-cta .msg.err,.band-cta .tier-tag{color:#03222b}
 #pricing{background:var(--tint)}
 @media (max-width:900px){
   .hero{padding-block:48px 56px}
@@ -175,14 +175,14 @@
 .hero .sc-out,.hero .sc form{color:var(--ink)}
 @media (max-width:900px){ .sc.sc-first{grid-template-columns:1fr} .hc-head{align-items:flex-start} }
 /* Cherry levels up */
-.ch-ladder{margin:28px 0 0;padding:20px;border-radius:var(--radius);background:#0d2a22;border:1px solid #1d5a4a}
-.ch-ladder-top{display:flex;gap:12px;align-items:center}.ch-ladder h2{margin:0;font-size:1.3rem;color:#fff}.ch-ladder-top p{margin:2px 0 0;color:#bfeedd}
+.ch-ladder{margin:28px 0 0;padding:20px;border-radius:var(--radius);background:#0a2530;border:1px solid #17566a}
+.ch-ladder-top{display:flex;gap:12px;align-items:center}.ch-ladder h2{margin:0;font-size:1.3rem;color:#fff}.ch-ladder-top p{margin:2px 0 0;color:#c4f1f9}
 .ch-ladder ol{list-style:none;margin:16px 0 4px;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.ch-ladder li{display:grid;gap:4px;padding:12px;border-radius:12px;background:#0a1f1a}
-.ch-ladder li b{color:#fff;font:800 1.05rem var(--f-display)}.ch-ladder li span{font-size:.8rem;font-weight:700;color:#5fe0b0;text-transform:uppercase;letter-spacing:.08em}
-.ch-ladder li i{display:block;height:6px;border-radius:3px;background:#173d33;position:relative;overflow:hidden}
-.ch-ladder li i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:#3ddba5;border-radius:3px}
-.ch-ladder li small{color:#bfeedd;font-size:.86rem}.ch-ladder .fine{color:#9fd8c2}
+.ch-ladder li{display:grid;gap:4px;padding:12px;border-radius:12px;background:#081d24}
+.ch-ladder li b{color:#fff;font:800 1.05rem var(--f-display)}.ch-ladder li span{font-size:.8rem;font-weight:700;color:#67e8f9;text-transform:uppercase;letter-spacing:.08em}
+.ch-ladder li i{display:block;height:6px;border-radius:3px;background:#123a45;position:relative;overflow:hidden}
+.ch-ladder li i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:#22d3ee;border-radius:3px}
+.ch-ladder li small{color:#c4f1f9;font-size:.86rem}.ch-ladder .fine{color:#9fd6e2}
 @media (max-width:760px){.ch-ladder ol{grid-template-columns:1fr 1fr}}
 </style>
 </head>
@@ -347,7 +347,7 @@
     <div class="signed-out">
       <p class="lead">New here? The same steps create your free account. No password to remember.</p>
       <button class="g-btn" type="button" id="googleBtn">
-        <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+        <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#0891b2" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
         Continue with Google
       </button>
       <div class="or">or</div>

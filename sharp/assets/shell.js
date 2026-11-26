@@ -64,7 +64,7 @@ window.SharpPop = function(from, o){
       '.sp-box i{position:absolute;background:url(' + base + 'assets/cherry-pop.svg) center/contain no-repeat;filter:drop-shadow(0 4px 8px rgba(0,0,0,.45));animation:spPop 1s cubic-bezier(.15,.75,.35,1) both}' +
       '@keyframes spPop{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}12%{opacity:1}55%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1) rotate(var(--r));opacity:1}' +
       '100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy) + 80px)) scale(.8) rotate(calc(var(--r) * 1.7));opacity:0}}' +
-      '.sp-box b{position:absolute;padding:7px 16px;border-radius:999px;background:#0d2a22;border:1px solid #3ddba5;color:#e9fff6;font:800 1rem/1.2 var(--f-display,system-ui),sans-serif;white-space:nowrap;box-shadow:0 0 34px -6px rgba(61,219,165,.85);animation:spSay 1.8s ease both}' +
+      '.sp-box b{position:absolute;padding:7px 16px;border-radius:999px;background:#0a2530;border:1px solid #22d3ee;color:#ecfeff;font:800 1rem/1.2 var(--f-display,system-ui),sans-serif;white-space:nowrap;box-shadow:0 0 34px -6px rgba(34,211,238,.85);animation:spSay 1.8s ease both}' +
       '@keyframes spSay{0%{opacity:0;transform:translate(-50%,-20%) scale(.8)}14%{opacity:1;transform:translate(-50%,-120%) scale(1.04)}24%{transform:translate(-50%,-120%) scale(1)}78%{opacity:1;transform:translate(-50%,-140%)}100%{opacity:0;transform:translate(-50%,-165%)}}' +
       '@keyframes spStill{0%,100%{opacity:0;transform:translate(-50%,-150%)}20%,80%{opacity:1;transform:translate(-50%,-150%)}}' +
       '@media (prefers-reduced-motion:reduce){.sp-box i,.sp-box b{animation:spStill 1.6s ease both}}';

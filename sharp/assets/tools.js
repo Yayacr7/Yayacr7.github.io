@@ -249,7 +249,7 @@ function scInfo(r, inc){
     : r.st === 'good' ? 'Inside the guide. Keep it there.' : r.tip;
   return { title: r.name, line: base + '. ' + tip };
 }
-function scKey(){ return SC_VIEW === 'jar' ? 'Gold = kept · pink = Cherry\'s plan' : SC_VIEW === 'cherry' ? 'Per week · green = spending down' : SC_VIEW === 'blocks' ? 'Bigger block = more money' : 'Line = limit'; }
+function scKey(){ return SC_VIEW === 'jar' ? 'Gold = kept · cyan = Cherry\'s plan' : SC_VIEW === 'cherry' ? 'Per week · cyan = spending down' : SC_VIEW === 'blocks' ? 'Bigger block = more money' : 'Line = limit'; }
 function scShow(r, inc){
   var p = document.querySelector('#s-out .sc-detail'); if(!p) return;
   var info = scInfo(r, inc); p.textContent = '';
@@ -413,7 +413,7 @@ function drawFlow(box, W, H, animate){
 }
 /* ---------- Spending check: the money jar (opens first) ----------
    The jar holds what you keep each month: your pay minus what you spend (so saving + left over). Gold = kept now,
-   the pink layer on top = what Cherry's plan adds, the dashed line = keep 20% of your pay (the same goal as the Wealth
+   the cyan layer on top = what Cherry's plan adds, the dashed line = keep 20% of your pay (the same goal as the Wealth
    tracker). Words always say it too. Worked out on this device; nothing leaves it. Drawing: assets/jar.js. */
 var JAR_LAST = null, JAR_KEPT = 0;   // last fill and amount, so the jar rises or drops from where it was instead of from empty
 function jarData(d){
@@ -464,7 +464,7 @@ function drawJar(box, W, H, animate){
 }
 /* ---------- Spending check: "Cherry's plan" (weekly candles) ----------
    Cherry's weekly plan: each week Cherry changes one thing, biggest overspend first, until every category sits on its limit.
-   Week candles step down from what you spend a week now; a green candle means spending went down that week.
+   Week candles step down from what you spend a week now; a glowing cyan candle means spending went down that week.
    The dashed line is Cherry's goal. It's a plan worked out from fixed guides (a goal, not a forecast), on this device only. */
 
 function dpPlan(d){
@@ -498,12 +498,12 @@ function drawCherry(box, W, H, animate){
   var step = scStep(hi - lo + 2 * pad), yMin = Math.max(0, Math.floor((lo - pad) / step) * step), yMax = Math.ceil((hi + pad) / step) * step;
   var Y = function(v){ return TOP + (yMax - v) / (yMax - yMin) * PH; }, cw = PW / n, bw = Math.max(10, Math.min(46, cw * .48));
   var X = function(i){ return 8 + cw * (i + .5); }, id = 'pc' + (++PC_N), url = function(k){ return 'url(#' + id + k + ')'; };
-  var nowSt = d.left < 0 ? 'bad' : cut ? 'warn' : 'good', nowCol = { bad: '#ff5a6e', warn: '#ff8a3d', good: '#3ddba5' }[nowSt];
+  var nowSt = d.left < 0 ? 'bad' : cut ? 'warn' : 'good', nowCol = { bad: '#ff5a6e', warn: '#ffd43b', good: '#22d3ee' }[nowSt];
   var svg = scEl('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, 'aria-hidden': 'true', class: 'fl-svg pc' }, box), defs = scEl('defs', {}, svg);
   // Colours run from where you are now (orange: spending too much) to Cherry's goal (green).
-  scGrad(defs, id + 'l', { gradientUnits: 'userSpaceOnUse', x1: X(0), x2: X(n - 1), y1: 0, y2: 0 }, cut ? [[0, nowCol], [.35, '#ff4f9a'], [.68, '#a86bff'], [1, '#3ddba5']] : [[0, '#3ddba5'], [1, '#8ff7cf']]);
-  scGrad(defs, id + 'b', { x1: 0, x2: 0, y1: 0, y2: 1 }, [[0, '#a5fcdb'], [.45, '#3ddba5'], [1, '#12946a']]);
-  scGrad(defs, id + 'g', { x1: 0, x2: 1, y1: 0, y2: 0 }, cut ? [[0, nowCol, .1], [.45, '#ff4f9a', .06], [1, '#3ddba5', .13]] : [[0, '#3ddba5', .08], [1, '#3ddba5', .13]]);
+  scGrad(defs, id + 'l', { gradientUnits: 'userSpaceOnUse', x1: X(0), x2: X(n - 1), y1: 0, y2: 0 }, cut ? [[0, nowCol], [.4, '#c6f26b'], [.72, '#5eead4'], [1, '#22d3ee']] : [[0, '#22d3ee'], [1, '#a5f3fc']]);
+  scGrad(defs, id + 'b', { x1: 0, x2: 0, y1: 0, y2: 1 }, [[0, '#a5f3fc'], [.45, '#22d3ee'], [1, '#0e7490']]);
+  scGrad(defs, id + 'g', { x1: 0, x2: 1, y1: 0, y2: 0 }, cut ? [[0, nowCol, .1], [.45, '#c6f26b', .06], [1, '#22d3ee', .13]] : [[0, '#22d3ee', .08], [1, '#22d3ee', .13]]);
   scGrad(defs, id + 'f', { x1: 0, x2: 0, y1: 0, y2: 1 }, [[0, '#fff', .5], [1, '#fff', 0]]);
   var mask = scEl('mask', { id: id + 'm' }, defs); scEl('rect', { x: 0, y: Y(hi), width: W, height: TOP + PH - Y(hi), fill: url('f') }, mask);
   // Backdrop: warm where you are, cool where Cherry takes you.
@@ -563,7 +563,7 @@ function drawCherry(box, W, H, animate){
   var path = scEl('polyline', { points: pts, class: 'fl-trend pc-line', pathLength: 1, style: 'stroke:' + url('l') }, svg);
   if(animate && !reduce) path.classList.add('draw');
   var ex = X(n - 1), ey = Y(ws[n - 1].v);
-  scEl('circle', { cx: ex, cy: ey, r: 5, fill: '#3ddba5', class: 'pc-pulse' }, svg);
+  scEl('circle', { cx: ex, cy: ey, r: 5, fill: '#22d3ee', class: 'pc-pulse' }, svg);
   scEl('circle', { cx: ex, cy: ey, r: 5, class: 'pc-end' }, svg);
   // What each week cuts, under its candle.
   ws.forEach(function(w, i){

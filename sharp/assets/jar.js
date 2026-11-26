@@ -1,5 +1,5 @@
 /* The money jar: a glass jar that fills with the money you keep. Gold coins and green bills = what you keep now;
-   a glowing pink layer on top = what Cherry's plan adds; a dashed line = the goal. The caller works out the numbers
+   a glowing cyan layer on top = what Cherry's plan adds; a dashed line = the goal. The caller works out the numbers
    (home Spending check in tools.js, demo step 1 in demo.js) and writes the words next to it; this file only draws.
    Nothing leaves the device. SharpJar.draw(box, { fill, plan, goal, goalText, ticks, leak, from, animate, coins, icon })
    fill/plan/goal/from are 0..1 of the jar's height. Colour is never the only signal: the caller always says it in words. */
@@ -24,16 +24,16 @@ function draw(box, o){
   box.textContent = '';
   var svg = E('svg', { viewBox: '0 0 200 260', preserveAspectRatio: 'xMidYMid meet', 'aria-hidden': 'true', focusable: 'false', class: 'jar-svg' + (o.leak ? ' leak' : '') }, box);
   var d = E('defs', {}, svg);
-  stops(E('radialGradient', { id: id + 'glow', cx: '.5', cy: '.55', r: '.5' }, d), [[0, '#3ddba5', .55], [.55, '#3ddba5', .16], [1, '#3ddba5', 0]]);
-  stops(E('radialGradient', { id: id + 'pglow', cx: '.5', cy: '.5', r: '.5' }, d), [[0, '#ff5fa2', .6], [1, '#ff5fa2', 0]]);
+  stops(E('radialGradient', { id: id + 'glow', cx: '.5', cy: '.55', r: '.5' }, d), [[0, '#22d3ee', .55], [.55, '#22d3ee', .16], [1, '#22d3ee', 0]]);
+  stops(E('radialGradient', { id: id + 'pglow', cx: '.5', cy: '.5', r: '.5' }, d), [[0, '#22d3ee', .6], [1, '#22d3ee', 0]]);
   stops(E('linearGradient', { id: id + 'glass', x1: 0, x2: 1, y1: 0, y2: 0 }, d), [[0, '#ffffff', .13], [.35, '#ffffff', .03], [.8, '#ffffff', .05], [1, '#ffffff', .14]]);
   stops(E('linearGradient', { id: id + 'gold', x1: 0, x2: 0, y1: 0, y2: 1 }, d), [[0, '#ffe58f'], [.18, '#ffc93d'], [.7, '#f29b16'], [1, '#b8640a']]);
   stops(E('linearGradient', { id: id + 'side', x1: 0, x2: 1, y1: 0, y2: 0 }, d), [[0, '#000', .28], [.22, '#000', 0], [.78, '#000', 0], [1, '#000', .3]]);
   stops(E('linearGradient', { id: id + 'coin', x1: 0, x2: 0, y1: 0, y2: 1 }, d), [[0, '#fff3b8'], [.5, '#ffcf4a'], [1, '#d98a12']]);
-  stops(E('linearGradient', { id: id + 'plan', x1: 0, x2: 1, y1: 0, y2: 1 }, d), [[0, '#ff7ab8', .9], [.55, '#ff4f9a', .75], [1, '#a86bff', .8]]);
+  stops(E('linearGradient', { id: id + 'plan', x1: 0, x2: 1, y1: 0, y2: 1 }, d), [[0, '#a5f3fc', .9], [.55, '#22d3ee', .78], [1, '#0891b2', .85]]);
   stops(E('linearGradient', { id: id + 'lid', x1: 0, x2: 0, y1: 0, y2: 1 }, d), [[0, '#fff0b3'], [.3, '#f6c454'], [.62, '#c98a2e'], [1, '#7a4e12']]);
   stops(E('linearGradient', { id: id + 'streak', x1: 0, x2: 0, y1: 0, y2: 1 }, d), [[0, '#fff', .7], [.6, '#fff', .18], [1, '#fff', 0]]);
-  stops(E('linearGradient', { id: id + 'bill', x1: 0, x2: 1, y1: 0, y2: 1 }, d), [[0, '#6ff0c0'], [1, '#22a878']]);
+  stops(E('linearGradient', { id: id + 'bill', x1: 0, x2: 1, y1: 0, y2: 1 }, d), [[0, '#67e8f9'], [1, '#0ea5c4']]);
   // Coins seen from the side: rows of thin ellipses.
   var pat = E('pattern', { id: id + 'coins', width: 26, height: 8, patternUnits: 'userSpaceOnUse' }, d);
   E('ellipse', { cx: 13, cy: 4, rx: 12, ry: 3.4, fill: 'none', stroke: '#8a4d06', 'stroke-opacity': .45, 'stroke-width': 1 }, pat);
@@ -62,8 +62,8 @@ function draw(box, o){
     E('rect', { x: 10, y: yp, width: 180, height: yf - yp + 8, fill: 'url(#' + id + 'plan)' }, stuff);
     E('rect', { x: -20, y: yp, width: 230, height: yf - yp + 8, fill: 'url(#' + id + 'stripes)', class: 'jar-shimmer' }, stuff);
     E('rect', { x: 10, y: yp + 3, width: 180, height: yf - yp, fill: 'url(#' + id + 'ghost)' }, stuff);
-    E('line', { x1: 10, x2: 190, y1: yp, y2: yp, stroke: '#ffd1ea', 'stroke-width': 2, 'stroke-dasharray': '6 4' }, stuff);
-    // Its label sits in the middle of the pink layer, but never on top of the goal line and its label.
+    E('line', { x1: 10, x2: 190, y1: yp, y2: yp, stroke: '#a5f3fc', 'stroke-width': 2, 'stroke-dasharray': '6 4' }, stuff);
+    // Its label sits in the middle of the cyan layer, but never on top of the goal line and its label.
     if(o.planText && yf - yp >= 22){
       // Text with baseline y covers y-12..y+2; the goal label covers yg-16..yg+2. Try the middle, then the top, then the bottom.
       var yg0 = o.goal != null && o.goal > 0 && o.goalText ? Y(o.goal) : null, ly = null;
@@ -78,9 +78,9 @@ function draw(box, o){
     [[60, 24, -14], [128, 58, 11], [84, 100, -6], [140, 132, 16]].forEach(function(b){
       var by = BOT - b[1]; if(by - 16 < yf) return;
       var g = E('g', { transform: 'translate(' + b[0] + ' ' + by + ') rotate(' + b[2] + ')' }, stuff);
-      E('rect', { x: -24, y: -11, width: 48, height: 22, rx: 3, fill: 'url(#' + id + 'bill)', stroke: '#0f6a49', 'stroke-width': 1.2 }, g);
-      E('rect', { x: -19, y: -7, width: 38, height: 14, rx: 2, fill: 'none', stroke: '#e9fff6', 'stroke-opacity': .6, 'stroke-width': .9 }, g);
-      E('circle', { cx: 0, cy: 0, r: 5.5, fill: '#0f6a49', 'fill-opacity': .35 }, g);
+      E('rect', { x: -24, y: -11, width: 48, height: 22, rx: 3, fill: 'url(#' + id + 'bill)', stroke: '#0b5c6e', 'stroke-width': 1.2 }, g);
+      E('rect', { x: -19, y: -7, width: 38, height: 14, rx: 2, fill: 'none', stroke: '#ecfeff', 'stroke-opacity': .6, 'stroke-width': .9 }, g);
+      E('circle', { cx: 0, cy: 0, r: 5.5, fill: '#0b5c6e', 'fill-opacity': .35 }, g);
       E('text', { x: 0, y: 4, 'text-anchor': 'middle', class: 'jar-bill-t' }, g).textContent = '$';
     });
     E('rect', { x: 10, y: yf, width: 180, height: 270 - yf, fill: 'url(#' + id + 'side)' }, stuff);
@@ -139,7 +139,7 @@ function draw(box, o){
 
   // A little sparkle around the jar.
   [[24, 30, 1], [182, 66, .8], [176, 18, .6], [16, 120, .55]].forEach(function(s, k){
-    star(svg, s[0], s[1], s[2], k % 2 ? '#ff9fcf' : '#ffe58f', 'jar-twinkle').style.animationDelay = (k * .7) + 's';
+    star(svg, s[0], s[1], s[2], k % 2 ? '#ffe27a' : '#ffe58f', 'jar-twinkle').style.animationDelay = (k * .7) + 's';
   });
   return svg;
 }
