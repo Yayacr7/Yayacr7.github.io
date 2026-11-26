@@ -296,6 +296,24 @@ $('dm-whoami').addEventListener('click', function(){ ['1', '2', '3', 'end'].forE
     if(e.isIntersecting && !stopped) play(); else if(!e.isIntersecting && !v.paused) v.pause();
   }); }, { threshold: .35 }).observe(v);
 });
+/* The 40-second tour: real screens recorded from the app. "Watch" opens it in a player over the page; closing it stops it.
+   Without <dialog> support the link simply opens the video file. */
+(function(){
+  var box = $('dm-tourbox'), vid = $('dm-tourvid'), last = null;
+  if(!box || !vid || typeof box.showModal !== 'function') return;
+  [].forEach.call(document.querySelectorAll('[data-tour]'), function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault(); last = a; box.showModal();
+      var p = vid.play(); if(p && p.catch) p.catch(function(){});
+    });
+  });
+  $('dm-tb-x').addEventListener('click', function(){ box.close(); });
+  box.addEventListener('click', function(e){   // a tap outside the player closes it
+    var r = box.getBoundingClientRect();
+    if(e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) box.close();
+  });
+  box.addEventListener('close', function(){ vid.pause(); if(last) last.focus(); });
+})();
 go('1');
 ask(!WHO);
 })();
