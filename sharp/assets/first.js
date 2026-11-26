@@ -9,6 +9,7 @@
     var n = parseInt(localStorage.getItem('sharp-visits'), 10) || 0;
     if(sessionStorage.getItem('sharp-visit') !== '1'){ n++; localStorage.setItem('sharp-visits', String(n)); sessionStorage.setItem('sharp-visit', '1'); }
     if(n > 3 || sessionStorage.getItem('sharp-demo-visit') === '1') return;
+    window.SharpLeaving = true;   // assets/intro.js waits for the demo page instead of showing here
     location.replace('demo/index.html');
   }catch(e){}
 })();
