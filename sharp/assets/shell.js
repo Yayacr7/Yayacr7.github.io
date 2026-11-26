@@ -98,6 +98,16 @@ ready(function(){
     row.appendChild(b);
   });
   foot.appendChild(row);
+  // How often the intro tour shows (assets/intro.js): every visit, sometimes (about once a week) or never. This device only.
+  var ip = 'always'; try{ ip = localStorage.getItem('sharp-intro-pref') || 'always'; }catch(e){}
+  var r2 = document.createElement('div'); r2.className = 'who-switch'; r2.setAttribute('role', 'group'); r2.setAttribute('aria-label', 'How often to show the intro video');
+  var l2 = document.createElement('span'); l2.textContent = 'Intro video:'; r2.appendChild(l2);
+  var bs = [['always', 'Every visit'], ['sometimes', 'Sometimes'], ['never', 'Never']].map(function(o){
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = o[1]; b.setAttribute('aria-pressed', ip === o[0] ? 'true' : 'false');
+    b.addEventListener('click', function(){ try{ localStorage.setItem('sharp-intro-pref', o[0]); }catch(e){} bs.forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); });
+    r2.appendChild(b); return b;
+  });
+  foot.appendChild(r2);
 });
 // Home: tap Cherry's big face and she hops, pops a few cherries and opens.
 ready(function(){
