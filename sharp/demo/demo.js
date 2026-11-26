@@ -281,6 +281,21 @@ $('dm-whoami').addEventListener('click', function(){ ['1', '2', '3', 'end'].forE
 [].forEach.call(document.querySelectorAll('#dm-who button[data-who]'), function(b){ b.addEventListener('click', function(){
   window.SharpWho.set(b.getAttribute('data-who')); location.reload();   // everything above is set up for the new choice
 }); });
+/* The owner's video: plays silently and loops only while it's on screen (a hidden copy never loads), with a Pause/Play button.
+   With "reduce motion" on it stays on its picture until the visitor taps Play. */
+[].forEach.call(document.querySelectorAll('.dm-tour-v'), function(w){
+  var v = w.querySelector('video'), b = w.querySelector('.dm-vbtn'), stopped = false;
+  if(!v || !b) return;
+  v.muted = true;
+  var say = function(){ var on = !v.paused; b.textContent = on ? 'Pause' : 'Play'; b.setAttribute('aria-label', (on ? 'Pause' : 'Play') + ' the Sharp video'); };
+  var play = function(){ var p = v.play(); if(p && p.catch) p.catch(function(){}); };
+  b.addEventListener('click', function(){ if(v.paused){ stopped = false; play(); } else { stopped = true; v.pause(); } });
+  v.addEventListener('play', say); v.addEventListener('pause', say); say();
+  if(reduce || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function(es){ es.forEach(function(e){
+    if(e.isIntersecting && !stopped) play(); else if(!e.isIntersecting && !v.paused) v.pause();
+  }); }, { threshold: .35 }).observe(v);
+});
 go('1');
 ask(!WHO);
 })();
