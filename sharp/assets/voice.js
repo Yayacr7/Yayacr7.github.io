@@ -8,7 +8,7 @@
 if(window.__sharpVoice) return; window.__sharpVoice = true;
 var me = document.currentScript && document.currentScript.src;
 var base = me ? me.replace(/assets\/voice\.js(\?.*)?$/, '') : '/';
-var ASSISTANT = '39d91e93-6eb5-4bf3-a9a7-82faff683395';     // Rome
+var ASSISTANT = 'f4edd544-1aaa-48c7-bd49-d46314e54e73';     // the owner's Rome assistant in Vapi (config.js VOICE.assistantId wins)
 var vapi = null, state = 'idle', ui = null, timer = 0, started = 0;
 
 function load(src){ return new Promise(function(ok, bad){ var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = bad; document.head.appendChild(s); }); }
@@ -117,8 +117,15 @@ function start(){
         vapi.on('call-end', function(){ ended('Call ended. Tap "Speak with Rome" to call again.'); });
         vapi.on('error', function(e){ console.warn('voice error', e); ended(message(e)); });
       }
-      // Rome is a man: the app picks his voice (a built-in Vapi voice) so it matches, whatever the dashboard says.
-      // His brain too: assets/cherry-voice.json (built from dev/cherry-prompt.txt) is sent with every call.
+      // The owner's own Rome assistant (VOICE.appBrain false): use its prompt, voice and first message exactly as set in Vapi.
+      // The app only fills two optional placeholders the owner can put in the Vapi prompt: {{today}} and {{sharp_who}}
+      // ("teen", "adult" or "not said": the one word the privacy policy says calls are told).
+      if(!c.appBrain){
+        var w = ''; try{ w = localStorage.getItem('sharp-who') || ''; }catch(e){}
+        return vapi.start(c.assistantId || ASSISTANT, { variableValues: { today: new Date().toISOString().slice(0, 10), sharp_who: w === 'teen' || w === 'adult' ? w : 'not said' } });
+      }
+      // appBrain true (the old way): the app picks a built-in man's voice and sends its own brain,
+      // assets/cherry-voice.json (built from dev/cherry-prompt.txt), with every call.
       return fetch(base + 'assets/cherry-voice.json').then(function(r){ return r.json(); }).catch(function(){ return null; }).then(function(b){
         var o = {};
         if(c.voiceId) o.voice = { provider: 'vapi', voiceId: c.voiceId };

@@ -28,8 +28,10 @@ window.NP_CONFIG = {
   CONTACT_EMAIL: "contact.yayabuilds@gmail.com",
 
   /* Rome voice receptionist (Vapi). Vapi dashboard > API Keys: paste the PUBLIC key only.
-     NEVER paste the private key. Blank = the "Speak with Rome" button stays hidden. */
-  VOICE: { vapiPublicKey: "49361516-4f11-447c-bb58-8f4157741d77", assistantId: "39d91e93-6eb5-4bf3-a9a7-82faff683395", voiceId: "Elliot" },
+     NEVER paste the private key. Blank = the "Speak with Rome" button stays hidden.
+     assistantId = the owner's own "Rome" assistant (made in Vapi 2026-11-27). Calls use ITS prompt, voice and first message,
+     exactly as set in the Vapi dashboard. appBrain: true would go back to the app sending its own prompt and voice instead. */
+  VOICE: { vapiPublicKey: "49361516-4f11-447c-bb58-8f4157741d77", assistantId: "f4edd544-1aaa-48c7-bd49-d46314e54e73", appBrain: false, voiceId: "Elliot" },
 
   /* Rome's brain server (cherry-worker/ in the repo), for when the AI can't run on this site's own server.
      The address Cloudflare gives the "cherry" Worker. Blank = off. */
