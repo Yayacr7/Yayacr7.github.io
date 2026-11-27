@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<!-- Rome's win burst: a small gold coin with Sharp's rising line. No background. -->
+<defs><radialGradient id="g" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#fff3b8"/><stop offset=".5" stop-color="#ffd43b"/><stop offset="1" stop-color="#d99a00"/></radialGradient></defs>
+<circle cx="32" cy="33" r="22" fill="#8a5a00" opacity=".35" transform="translate(1.5 2)"/>
+<circle cx="32" cy="32" r="22" fill="url(#g)" stroke="#b07800" stroke-width="2"/>
+<circle cx="32" cy="32" r="16.5" fill="none" stroke="#fff6cc" stroke-opacity=".7" stroke-width="1.6"/>
+<path d="M21 40L28 32L33 36L43 24M37 23H44V30" fill="none" stroke="#7a4e00" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="24" cy="22" rx="5" ry="2.6" fill="#fff" opacity=".7" transform="rotate(-35 24 22)"/>
+</svg>

@@ -1,4 +1,4 @@
-/* Road to $1 million (free). Your age, what you have now and what you put in each week; Cherry works out when
+/* Road to $1 million (free). Your age, what you have now and what you put in each week; Rome works out when
    investing it could reach $10k, $100k and $1 million, in future dollars and in today's money, and the one change
    that gets you there sooner. Monthly compounding, fixed maths, no AI. Saved in this browser only. */
 (function(){

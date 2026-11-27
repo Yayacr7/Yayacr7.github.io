@@ -1,5 +1,5 @@
-/* Sales practice with Cherry. Cherry plays a real customer for your starter business; you practise Sharp's 6-step sale
-   by typing; then she scores it out of 10 with one thing to fix. The server (functions/_lib/practice.js) keeps the
+/* Sales practice with Rome. Rome plays a real customer for your starter business; you practise Sharp's 6-step sale
+   by typing; then he scores it out of 10 with one thing to fix. The server (functions/_lib/practice.js) keeps the
    practice and the daily limits. Your best score stays on this device. Visitor text: textContent only. */
 (function(){
 "use strict";
@@ -34,7 +34,7 @@ function post(body){
   var ctrl = 'AbortController' in window ? new AbortController() : null, timer = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 60000);
   return fetch((window.SharpAPI || base) + 'api/practice', { method: 'POST', headers: hd, body: JSON.stringify(body), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
     .then(function(r){ return r.json().catch(function(){ return { ok: false, message: 'Something went wrong. Please try again.' }; }); })
-    .catch(function(){ return { ok: false, message: navigator.onLine ? 'Cherry took too long. Please try again.' : "You're offline. Connect, then try again." }; })
+    .catch(function(){ return { ok: false, message: navigator.onLine ? 'Rome took too long. Please try again.' : "You're offline. Connect, then try again." }; })
     .then(function(d){ clearTimeout(timer); return d; });
 }
 function busy(on, text){ st.busy = on; ['pr-start', 'pr-send', 'pr-score'].forEach(function(id){ $(id).disabled = on || (id === 'pr-score' && sellerCount() < 2) || (id === 'pr-send' && st.done); }); if(on) say(text); }
@@ -42,7 +42,7 @@ function sellerCount(){ return st.msgs.filter(function(m){ return m.role === 'se
 
 $('pr-start').addEventListener('click', function(){
   if(st.busy) return;
-  busy(true, 'Cherry is getting into character…');
+  busy(true, 'Rome is getting into character…');
   post({ skill: sel.value }).then(function(d){
     busy(false);
     if(!d.ok){ say(d.message || 'Something went wrong. Please try again.', 'err'); return; }
@@ -71,7 +71,7 @@ $('pr-form').addEventListener('submit', function(e){ e.preventDefault(); send();
 $('pr-q').addEventListener('keydown', function(e){ if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
 $('pr-score').addEventListener('click', function(){
   if(st.busy) return;
-  busy(true, 'Cherry is scoring your sale…');
+  busy(true, 'Rome is scoring your sale…');
   post({ session: st.session, messages: st.msgs, score: true }).then(function(d){
     busy(false);
     if(!d.ok){ say(d.message || 'Something went wrong. Please try again.', 'err'); return; }
@@ -85,7 +85,7 @@ $('pr-score').addEventListener('click', function(){
     try{ localStorage.setItem(KEY, JSON.stringify(mine)); }catch(e){}
     best(); st.session = '';
     $('pr-result-h').focus();
-    if(d.score >= 8 && window.SharpPop) SharpPop($('pr-ring'), { n: 16, big: true, say: d.score >= 9 ? 'Great sale. Cherry on top!' : 'Strong sale. Cherry on top!' });
+    if(d.score >= 8 && window.SharpPop) SharpPop($('pr-ring'), { n: 16, big: true, say: d.score >= 9 ? 'Great sale!' : 'Strong sale!' });
   });
 });
 $('pr-again').addEventListener('click', function(){ $('pr-result').hidden = true; $('pr-setup').hidden = false; say(''); $('pr-start').focus(); });

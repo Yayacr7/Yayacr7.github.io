@@ -1,11 +1,11 @@
 /* Runs on every page.
    1) Shows the AI helpers (anything marked data-ai) only when the server says they're switched on.
-   2) Adds the Ask Cherry agent button (assets/agent.js) to the page once the AI is on.
-   3) Adds the Cherry voice button (assets/voice.js; it stays hidden until a Vapi public key is set in config.js).
-   4) Home: when Cherry remembers you (saved on this device only), a small line under "Hi, I'm Cherry." says your name and progress.
+   2) Adds the Ask Rome agent button (assets/agent.js) to the page once the AI is on.
+   3) Adds the Rome voice button (assets/voice.js; it stays hidden until a Vapi public key is set in config.js).
+   4) Home: when Rome remembers you (saved on this device only), a small line under "Hi, I'm Rome." says your name and progress.
    5) Registers the service worker (sw.js), so Sharp can be added to the home screen and works offline.
-   6) Cherry on top: window.SharpPop(element, {n, big, say}) bursts a few little cherries from an element at a real win
-      (best reply, quiz passed, money logged, goal hit). Decoration only; one still cherry when less motion is asked for. */
+   6) Gold coins at real wins: window.SharpPop(element, {n, big, say}) bursts a few little gold coins (assets/rome-pop.svg) from an element
+      (best reply, quiz passed, money logged, goal hit). Decoration only; one still coin when less motion is asked for. */
 (function(){
 "use strict";
 var root = document.documentElement;
@@ -24,7 +24,7 @@ function agent(){
   var s = document.createElement('script'); s.src = base + 'assets/agent.js'; s.defer = true; document.body.appendChild(s);
 }
 function ready(fn){ if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
-// Where the AI lives: this site's own /api/, or Cherry's brain server (CHERRY_API in config.js) when the site's is off.
+// Where the AI lives: this site's own /api/, or Rome's brain server (CHERRY_API in config.js) when the site's is off.
 // AI pages call window.SharpAPI + 'api/...'.
 var brain = null; try{ brain = sessionStorage.getItem('sharp-api'); }catch(e){}
 window.SharpAPI = brain || base;
@@ -54,14 +54,14 @@ ready(function(){ var v = document.createElement('script'); v.src = base + 'asse
 if('serviceWorker' in navigator && window.isSecureContext){
   window.addEventListener('load', function(){ navigator.serviceWorker.register(base + 'sw.js').catch(function(){}); });
 }
-// Cherry on top.
+// Gold coins at a real win.
 var popCss = false;
 window.SharpPop = function(from, o){
   o = o || {}; if(!document.body) return;
   if(!popCss){
     popCss = true; var css = document.createElement('style');
     css.textContent = '.sp-box{position:fixed;inset:0;pointer-events:none;z-index:2147483000;overflow:hidden}' +
-      '.sp-box i{position:absolute;background:url(' + base + 'assets/cherry-pop.svg) center/contain no-repeat;filter:drop-shadow(0 4px 8px rgba(0,0,0,.45));animation:spPop 1s cubic-bezier(.15,.75,.35,1) both}' +
+      '.sp-box i{position:absolute;background:url(' + base + 'assets/rome-pop.svg) center/contain no-repeat;filter:drop-shadow(0 4px 8px rgba(0,0,0,.45));animation:spPop 1s cubic-bezier(.15,.75,.35,1) both}' +
       '@keyframes spPop{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}12%{opacity:1}55%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1) rotate(var(--r));opacity:1}' +
       '100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy) + 80px)) scale(.8) rotate(calc(var(--r) * 1.7));opacity:0}}' +
       '.sp-box b{position:absolute;padding:7px 16px;border-radius:999px;background:#0a2530;border:1px solid #22d3ee;color:#ecfeff;font:800 1rem/1.2 var(--f-display,system-ui),sans-serif;white-space:nowrap;box-shadow:0 0 34px -6px rgba(34,211,238,.85);animation:spSay 1.8s ease both}' +
@@ -109,7 +109,7 @@ ready(function(){
   });
   foot.appendChild(r2);
 });
-// Home: tap Cherry's big face and she hops, pops a few cherries and opens.
+// Home: tap Rome's logo and he hops, pops a few gold coins and opens.
 ready(function(){
   var f = document.querySelector('.hc-cherry .ch-face'); if(!f) return;
   f.addEventListener('click', function(){
@@ -117,7 +117,7 @@ ready(function(){
     setTimeout(function(){ if(window.SharpCherry && window.SharpCherry.open) window.SharpCherry.open(); }, 380);
   });
 });
-// Cherry remembers you: name, business and goal from Cherry's chat ('sharp-cherry-me') and the First $100 Plan ('sharp-first100').
+// Rome remembers you: name, business and goal from Rome's chat ('sharp-cherry-me') and the First $100 Plan ('sharp-first100').
 ready(function(){
   var line = document.querySelector('.hc-me'); if(!line) return;
   var m = null, f = null; try{ m = JSON.parse(localStorage.getItem('sharp-cherry-me') || 'null'); f = JSON.parse(localStorage.getItem('sharp-first100') || 'null'); }catch(e){}

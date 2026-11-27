@@ -163,7 +163,7 @@ function scRows(get){
   total += save;
   return { rows: rows, inc: inc, total: total, left: inc - total };
 }
-// For Cherry's weekly check-in (tools/checkin/): the same plan, from saved monthly numbers ({income, food, ...}).
+// For Rome's weekly check-in (tools/checkin/): the same plan, from saved monthly numbers ({income, food, ...}).
 window.SharpCherryPlan = function(h){
   var d = scRows(function(id){ return Math.max(0, +h[id.slice(2)] || 0); });
   return d.inc > 0 ? { d: d, plan: dpPlan(d) } : null;
@@ -182,7 +182,7 @@ wire('f-spend', function(){
   // Before the line = fine, past the line = too much. Plain dollars, no percent scale.
   // Toolbar: what the colours mean, and a switch between the blocks picture and the bar list.
   html += '<div class="sc-bar-row"><div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Fine</span><span><i class="sc-ic warn">!</i>A bit over</span><span><i class="sc-ic bad">✕</i>Too much</span><span class="sc-size">' + scKey() + '</span></div>' +
-    '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="cherry" aria-pressed="' + (SC_VIEW === 'cherry') + '">Cherry\'s plan</button><button type="button" data-scview="jar" aria-pressed="' + (SC_VIEW === 'jar') + '">Jar</button><button type="button" data-scview="flow" aria-pressed="' + (SC_VIEW === 'flow') + '">Candles</button><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
+    '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="cherry" aria-pressed="' + (SC_VIEW === 'cherry') + '">Rome\'s plan</button><button type="button" data-scview="jar" aria-pressed="' + (SC_VIEW === 'jar') + '">Jar</button><button type="button" data-scview="flow" aria-pressed="' + (SC_VIEW === 'flow') + '">Candles</button><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
   html += '<div class="sc-tree" role="group" aria-label="Where your take-home pay goes"' + (SC_VIEW === 'list' ? ' hidden' : '') + '></div>';
   html += '<div class="sc-listview"' + (SC_VIEW !== 'list' ? ' hidden' : '') + '>';
   html += '<div class="sc-axis" aria-hidden="true"><span></span><span><b style="left:0">$0</b><b class="lim" style="left:50%">Limit</b><b style="left:100%">2× limit</b></span><span>Spent / limit</span><span></span></div>';
@@ -206,20 +206,20 @@ wire('f-spend', function(){
     if(r.saving) todo.push('<li class="' + r.st + '"><b>Saving:</b> aim for about ' + money(r.target / 52 * 12) + ' a week (' + money(r.target) + ' a month, 15% of your pay). Set it to move automatically on payday.</li>');
     else todo.push('<li class="' + r.st + '"><b>' + r.name + ':</b> ' + (r.st === 'bad' ? 'cut back to about ' + money(r.target / 52 * 12) + ' a week (' + money(r.target) + ' a month). ' : 'a little high. ') + r.tip + '</li>');
   });
-  // Cherry gives the opinion. It's worked out right here in the browser from fixed guides; the numbers never leave the device.
-  html += '<div class="ch-take"><span class="ch-face" aria-hidden="true">C</span><div><h3 class="sc-h">Cherry\'s take</h3><p>' + (left < 0 ? 'You\'re spending more than you earn. Let\'s fix the red ones first, one a week.' : todo.length ? 'Here\'s what I\'d change, biggest win first.' : 'Nice. You\'re inside every guide.') + '</p><a class="ch-track" href="tools/checkin/index.html" data-handoff>Track it weekly with Cherry →</a></div><button type="button" class="ch-talk" data-cherry hidden>Talk to Cherry</button></div>';
+  // Rome gives the opinion. It's worked out right here in the browser from fixed guides; the numbers never leave the device.
+  html += '<div class="ch-take"><span class="ch-face" aria-hidden="true">R</span><div><h3 class="sc-h">Rome\'s take</h3><p>' + (left < 0 ? 'You\'re spending more than you earn. Let\'s fix the red ones first, one a week.' : todo.length ? 'Here\'s what I\'d change, biggest win first.' : 'Nice. You\'re inside every guide.') + '</p><a class="ch-track" href="tools/checkin/index.html" data-handoff>Track it weekly with Rome →</a></div><button type="button" class="ch-talk" data-cherry hidden>Talk to Rome</button></div>';
 
   html += todo.length ? '<ul class="sc-todo">' + todo.join('') + '</ul>' : '<p class="sc-ok"><span class="sc-ic good" aria-hidden="true">✓</span> Keep doing what you\'re doing. Got extra? Put it in savings.</p>';
   // Short version for wide screens, where the chart and the boxes share one screen.
   if(todo.length){
-    var mini = bad.map(function(r){ return '<li class="bad"><b>Cherry says cut:</b> ' + (r.saving ? 'save about ' + money(r.target / 52 * 12) + ' a week' : r.name + ' to about ' + money(r.target / 52 * 12) + ' a week') + '.</li>'; });
+    var mini = bad.map(function(r){ return '<li class="bad"><b>Rome says cut:</b> ' + (r.saving ? 'save about ' + money(r.target / 52 * 12) + ' a week' : r.name + ' to about ' + money(r.target / 52 * 12) + ' a week') + '.</li>'; });
     if(warn.length) mini.push('<li class="warn"><b>Think about:</b> ' + warn.map(function(r){ return r.name; }).join(', ') + '.</li>');
     html += '<ul class="sc-mini">' + mini.join('') + '</ul>';
   }
   out.innerHTML = html;
   SC_LAST = { rows: rows, inc: inc, left: left, total: total };
   drawTree(true);
-  if(window.SharpCherry) window.SharpCherry.wire(out);   // the "Talk to Cherry" button (assets/voice.js)
+  if(window.SharpCherry) window.SharpCherry.wire(out);   // the "Talk to Rome" button (assets/voice.js)
 });
 
 /* ---------- Spending check: the "blocks" picture (a treemap) ----------
@@ -249,7 +249,7 @@ function scInfo(r, inc){
     : r.st === 'good' ? 'Inside the guide. Keep it there.' : r.tip;
   return { title: r.name, line: base + '. ' + tip };
 }
-function scKey(){ return SC_VIEW === 'jar' ? 'Gold = kept · cyan = Cherry\'s plan' : SC_VIEW === 'cherry' ? 'Per week · cyan = spending down' : SC_VIEW === 'blocks' ? 'Bigger block = more money' : 'Line = limit'; }
+function scKey(){ return SC_VIEW === 'jar' ? 'Gold = kept · cyan = Rome\'s plan' : SC_VIEW === 'cherry' ? 'Per week · cyan = spending down' : SC_VIEW === 'blocks' ? 'Bigger block = more money' : 'Line = limit'; }
 function scShow(r, inc){
   var p = document.querySelector('#s-out .sc-detail'); if(!p) return;
   var info = scInfo(r, inc); p.textContent = '';
@@ -413,7 +413,7 @@ function drawFlow(box, W, H, animate){
 }
 /* ---------- Spending check: the money jar (opens first) ----------
    The jar holds what you keep each month: your pay minus what you spend (so saving + left over). Gold = kept now,
-   the cyan layer on top = what Cherry's plan adds, the dashed line = keep 20% of your pay (the same goal as the Wealth
+   the cyan layer on top = what Rome's plan adds, the dashed line = keep 20% of your pay (the same goal as the Wealth
    tracker). Words always say it too. Worked out on this device; nothing leaves it. Drawing: assets/jar.js. */
 var JAR_LAST = null, JAR_KEPT = 0;   // last fill and amount, so the jar rises or drops from where it was instead of from empty
 function jarData(d){
@@ -425,9 +425,9 @@ function jarData(d){
   return { kept: kept, extra: extra, withPlan: withPlan, goal: goal, cap: cap, rate: rate, st: st, word: word, save: d.rows.filter(function(r){ return r.saving; })[0].v, plan: plan };
 }
 function jarLine(j, d){
-  if(j.kept < 0) return 'You spend ' + money(-j.kept) + ' a month more than you earn, so your jar is leaking. ' + (j.extra > .5 ? 'My plan fixes the biggest overspends first, one a week. Tap Cherry\'s plan to see it.' : 'Cut the red ones first.');
+  if(j.kept < 0) return 'You spend ' + money(-j.kept) + ' a month more than you earn, so your jar is leaking. ' + (j.extra > .5 ? 'My plan fixes the biggest overspends first, one a week. Tap Rome\'s plan to see it.' : 'Cut the red ones first.');
   var a = 'You keep ' + money(j.kept) + ' a month' + (d.left > 0 && j.save > 0 ? ' (' + money(j.save) + ' saved + ' + money(d.left) + ' left over)' : '') + ': ' + pct(j.rate * 100, 0) + ' of your pay. ';
-  if(j.extra > .5) return a + 'My plan adds ' + money(j.extra) + ' a month, so your jar fills with ' + money(j.withPlan * 12) + ' a year. Tap Cherry\'s plan to see it week by week.';
+  if(j.extra > .5) return a + 'My plan adds ' + money(j.extra) + ' a month, so your jar fills with ' + money(j.withPlan * 12) + ' a year. Tap Rome\'s plan to see it week by week.';
   return a + (j.st === 'good' ? 'That\'s 20% or more. Move it to savings on payday so it stays kept.' : 'Aim for 20% (' + money(j.goal) + ' a month). Spend less or earn more to fill it.');
 }
 function drawJar(box, W, H, animate){
@@ -452,20 +452,20 @@ function drawJar(box, W, H, animate){
   num.__jv = same ? Math.max(0, j.kept) : JAR_KEPT; SharpJar.count(num, Math.max(0, j.kept), money); JAR_KEPT = Math.max(0, j.kept);
   p('jar-sub').textContent = j.kept < 0 ? 'You spend more than you earn' : money(j.kept * 12) + ' a year · ' + pct(j.rate * 100, 0) + ' of your pay';
   var stl = p('jar-st'); line(stl, 'i', 'sc-ic ' + j.st, STATUS[j.st].icon).setAttribute('aria-hidden', 'true'); line(stl, 'span', null, xs ? j.word : j.word + ' · goal 20%');
-  if(j.extra > .5){ var pl = p('jar-plan'); line(pl, 'i').setAttribute('aria-hidden', 'true'); line(pl, 'span', null, sm ? '+' + money(j.extra) + ' a month with Cherry\'s plan' : 'Cherry\'s plan: +' + money(j.extra) + ' a month → ' + money(j.withPlan * 12) + ' a year'); }
+  if(j.extra > .5){ var pl = p('jar-plan'); line(pl, 'i').setAttribute('aria-hidden', 'true'); line(pl, 'span', null, sm ? '+' + money(j.extra) + ' a month with Rome\'s plan' : 'Rome\'s plan: +' + money(j.extra) + ' a month → ' + money(j.withPlan * 12) + ' a year'); }
   if(!same){
     SharpJar.draw(art, { fill: fill, plan: j.extra > .5 ? Math.max(0, j.withPlan) / j.cap : null, goal: j.goal / j.cap, goalText: labels ? '20% goal' : '', planText: labels ? '+' + money(j.extra) : '', leak: j.kept < 0,
-      from: JAR_LAST == null ? 0 : JAR_LAST, animate: animate, coins: JAR_LAST == null || fill > JAR_LAST + .004 ? 5 : 0, icon: 'assets/cherry.svg' });
+      from: JAR_LAST == null ? 0 : JAR_LAST, animate: animate, coins: JAR_LAST == null || fill > JAR_LAST + .004 ? 5 : 0, icon: 'assets/rome.svg' });
     JAR_LAST = fill;
   }
   box.setAttribute('aria-label', 'Your money jar: you keep ' + money(Math.max(0, j.kept)) + ' a month. ' + j.word + '.');
   var dt = document.querySelector('#s-out .sc-detail');
-  if(dt){ dt.textContent = ''; var b = document.createElement('b'); b.textContent = 'Cherry · Your jar: '; dt.appendChild(b); dt.appendChild(document.createTextNode(jarLine(j, d))); }
+  if(dt){ dt.textContent = ''; var b = document.createElement('b'); b.textContent = 'Rome · Your jar: '; dt.appendChild(b); dt.appendChild(document.createTextNode(jarLine(j, d))); }
 }
-/* ---------- Spending check: "Cherry's plan" (weekly candles) ----------
-   Cherry's weekly plan: each week Cherry changes one thing, biggest overspend first, until every category sits on its limit.
+/* ---------- Spending check: "Rome's plan" (weekly candles) ----------
+   Rome's weekly plan: each week Rome changes one thing, biggest overspend first, until every category sits on its limit.
    Week candles step down from what you spend a week now; a glowing cyan candle means spending went down that week.
-   The dashed line is Cherry's goal. It's a plan worked out from fixed guides (a goal, not a forecast), on this device only. */
+   The dashed line is Rome's goal. It's a plan worked out from fixed guides (a goal, not a forecast), on this device only. */
 
 function dpPlan(d){
   var spend = d.rows.filter(function(r){ return !r.saving; }), now = spend.reduce(function(a, r){ return a + r.v; }, 0) * WK;
@@ -483,7 +483,7 @@ function dpLine(w, plan, d){
 function dpShow(w, plan, d){
   var p = document.querySelector('#s-out .sc-detail'); if(!p) return;
   var info = dpLine(w, plan, d); p.textContent = '';
-  var b = document.createElement('b'); b.textContent = 'Cherry · ' + info.t + ': '; p.appendChild(b); p.appendChild(document.createTextNode(info.l));
+  var b = document.createElement('b'); b.textContent = 'Rome · ' + info.t + ': '; p.appendChild(b); p.appendChild(document.createTextNode(info.l));
   Array.prototype.forEach.call(document.querySelectorAll('#s-out .dp-c'), function(g){ g.classList.toggle('on', +g.getAttribute('data-n') === w.n); });
 }
 var PC_N = 0;
@@ -500,13 +500,13 @@ function drawCherry(box, W, H, animate){
   var X = function(i){ return 8 + cw * (i + .5); }, id = 'pc' + (++PC_N), url = function(k){ return 'url(#' + id + k + ')'; };
   var nowSt = d.left < 0 ? 'bad' : cut ? 'warn' : 'good', nowCol = { bad: '#ff5a6e', warn: '#ffd43b', good: '#22d3ee' }[nowSt];
   var svg = scEl('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, 'aria-hidden': 'true', class: 'fl-svg pc' }, box), defs = scEl('defs', {}, svg);
-  // Colours run from where you are now (orange: spending too much) to Cherry's goal (green).
+  // Colours run from where you are now (orange: spending too much) to Rome's goal (green).
   scGrad(defs, id + 'l', { gradientUnits: 'userSpaceOnUse', x1: X(0), x2: X(n - 1), y1: 0, y2: 0 }, cut ? [[0, nowCol], [.4, '#c6f26b'], [.72, '#5eead4'], [1, '#22d3ee']] : [[0, '#22d3ee'], [1, '#a5f3fc']]);
   scGrad(defs, id + 'b', { x1: 0, x2: 0, y1: 0, y2: 1 }, [[0, '#a5f3fc'], [.45, '#22d3ee'], [1, '#0e7490']]);
   scGrad(defs, id + 'g', { x1: 0, x2: 1, y1: 0, y2: 0 }, cut ? [[0, nowCol, .1], [.45, '#c6f26b', .06], [1, '#22d3ee', .13]] : [[0, '#22d3ee', .08], [1, '#22d3ee', .13]]);
   scGrad(defs, id + 'f', { x1: 0, x2: 0, y1: 0, y2: 1 }, [[0, '#fff', .5], [1, '#fff', 0]]);
   var mask = scEl('mask', { id: id + 'm' }, defs); scEl('rect', { x: 0, y: Y(hi), width: W, height: TOP + PH - Y(hi), fill: url('f') }, mask);
-  // Backdrop: warm where you are, cool where Cherry takes you.
+  // Backdrop: warm where you are, cool where Rome takes you.
   scEl('rect', { x: 0, y: TOP - 14, width: W - AX, height: PH + 14, rx: 12, fill: url('g') }, svg);
   var grid = scEl('g', { class: 'fl-grid' }, svg);
   for(var v = yMin; v <= yMax + 1e-6; v += step){
@@ -516,7 +516,7 @@ function drawCherry(box, W, H, animate){
   }
   ws.forEach(function(w, i){ scEl('line', { x1: X(i), x2: X(i), y1: TOP - 6, y2: TOP + PH }, grid); });
   scEl('line', { x1: W - AX, x2: W - AX, y1: 0, y2: H, class: 'fl-edge' }, svg);
-  // Ticker header: how much a week Cherry's plan frees up (big when there's room).
+  // Ticker header: how much a week Rome's plan frees up (big when there's room).
   var head = cut ? '−' + money(plan.saved) + '/wk' : 'On track', sub = cut ? money(plan.saved * 52) + ' a year back' : '';
   var hv = scEl('text', { x: 10, y: big ? 30 : 22, class: 'pc-hd pc-v' + (big ? '' : ' sm') }, svg); hv.textContent = head;
   var hx = 10 + scTW(hv, head.length * (big ? 14 : 9.5)) + 10;
@@ -526,12 +526,12 @@ function drawCherry(box, W, H, animate){
     var cwid = scTW(ct, pc.length * 7) + 16; chip.firstChild.setAttribute('width', cwid); ct.setAttribute('x', cwid / 2);
     hx += cwid + 10;
   }
-  // "Cherry's plan · $5,040 a year back": on its own line when there's room, else beside the number if it fits.
+  // "Rome's plan · $5,040 a year back": on its own line when there's room, else beside the number if it fits.
   var ht = scEl('text', { x: big ? 10 : hx, y: big ? 50 : 22, class: 'pc-sub' }, svg);
-  scEl('tspan', {}, ht).textContent = W < 420 && !big ? '' : 'Cherry\'s plan' + (cut ? ' · ' : '');
+  scEl('tspan', {}, ht).textContent = W < 420 && !big ? '' : 'Rome\'s plan' + (cut ? ' · ' : '');
   if(cut) scEl('tspan', { class: 'pc-gold' }, ht).textContent = W < 420 && !big ? money(plan.saved * 52) + '/yr' : sub;
   if(!big && hx + scTW(ht, 0) > W - AX - 6) ht.remove();
-  // Price tags on the right: where you are now, and Cherry's goal.
+  // Price tags on the right: where you are now, and Rome's goal.
   function tag(v, cls, text){
     var g = scEl('g', { class: 'pc-tag ' + cls, transform: 'translate(' + (W - AX + 1) + ',' + Y(v) + ')' }, svg);
     scEl('path', { d: 'M0 0L7-10H' + (AX - 4) + 'V10H7Z' }, g); scEl('text', { x: (AX + 3) / 2, y: 4 }, g).textContent = text;
@@ -558,7 +558,7 @@ function drawCherry(box, W, H, animate){
     var ist = st === 'hold' ? 'good' : st, ic = scEl('g', { class: 'fl-ic ' + ist, transform: 'translate(' + x + ',' + (H - 12) + ')' }, svg);
     scEl('circle', { r: 7.5 }, ic); scEl('text', { y: 3.5 }, ic).textContent = STATUS[ist].icon;
   });
-  // Trend line through each week's close, ending at Cherry's goal, with a live dot at the end.
+  // Trend line through each week's close, ending at Rome's goal, with a live dot at the end.
   var pts = ws.map(function(w, i){ return X(i).toFixed(1) + ',' + Y(w.v).toFixed(1); }).join(' ');
   var path = scEl('polyline', { points: pts, class: 'fl-trend pc-line', pathLength: 1, style: 'stroke:' + url('l') }, svg);
   if(animate && !reduce) path.classList.add('draw');
@@ -586,7 +586,7 @@ function drawCherry(box, W, H, animate){
   ws.forEach(function(w, i){
     var b = document.createElement('button'); b.type = 'button'; b.className = 'fl-hit';
     b.style.left = (X(i) - cw / 2) + 'px'; b.style.width = cw + 'px'; b.style.top = TOP + 'px'; b.style.height = PH + 'px';
-    var info = dpLine(w, plan, d); b.setAttribute('aria-label', 'Cherry, ' + info.t + ': ' + info.l);
+    var info = dpLine(w, plan, d); b.setAttribute('aria-label', 'Rome, ' + info.t + ': ' + info.l);
     var pick = function(){ dpShow(w, plan, d); };
     b.addEventListener('click', pick); b.addEventListener('focus', pick); b.addEventListener('pointerenter', function(e){ if(e.pointerType === 'mouse') pick(); });
     box.appendChild(b);

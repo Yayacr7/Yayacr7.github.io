@@ -60,8 +60,8 @@ function renderModule(){
   body.innerHTML = row.body_html;
   view.appendChild(body);
   wireFiles(body);
-  if(/^m[1-6]$/.test(slug)) tutor(view, slug);       // Learner and up: Cherry Tutor
-  if(slug === 'f3') launch30(view);                  // Founder: Cherry Pro's 30-day launch tracker
+  if(/^m[1-6]$/.test(slug)) tutor(view, slug);       // Learner and up: Rome Tutor
+  if(slug === 'f3') launch30(view);                  // Founder: Rome Pro's 30-day launch tracker
   var pg = document.createElement('div'); pg.className = 'pager';
   var prev = OUTLINE[idx - 1], next = OUTLINE[idx + 1];
   var l = document.createElement('a'); if(prev){ l.href = '#' + prev[0]; l.textContent = '← ' + prev[1]; } pg.appendChild(l);
@@ -69,12 +69,12 @@ function renderModule(){
   view.appendChild(pg);
   show('module'); window.scrollTo(0, 0);
 }
-/* ---------- Cherry inside the course (progress stays on this device) ---------- */
+/* ---------- Rome inside the course (progress stays on this device) ---------- */
 function store(k, v){ try{ if(v === undefined) return JSON.parse(localStorage.getItem(k) || 'null'); localStorage.setItem(k, JSON.stringify(v)); }catch(e){ return null; } }
 function el(tag, cls, text, parent){ var e = document.createElement(tag); if(cls) e.className = cls; if(text != null) e.textContent = text; if(parent) parent.appendChild(e); return e; }
-function cherryCard(view, level, title){ var c = el('section', 'ch-card', null, view); c.setAttribute('aria-label', 'Cherry ' + level);
+function cherryCard(view, level, title){ var c = el('section', 'ch-card', null, view); c.setAttribute('aria-label', 'Rome ' + level);
   var top = el('div', 'ch-card-top', null, c); el('span', 'ch-face', 'C', top).setAttribute('aria-hidden', 'true');
-  var t = el('div', null, null, top); el('span', 'ch-lvl', 'Cherry ' + level, t); el('h2', null, title, t); return c; }
+  var t = el('div', null, null, top); el('span', 'ch-lvl', 'Rome ' + level, t); el('h2', null, title, t); return c; }
 var TRY = {
   m1: ['Write your idea in one sentence, then score it in the Idea check.', '../tools/idea-check/index.html', 'Open the Idea check'],
   m2: ['Price one real product with the pricing calculator before you move on.', '../tools/business-plan/index.html', 'Open the pricing calculator'],

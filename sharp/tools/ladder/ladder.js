@@ -1,6 +1,6 @@
 /* Money ladder (free): $100 -> $1,000 -> $10,000 -> invest the profit. Reads what you earned in the First $100 Plan
    (and the Wealth tracker), works out the jobs and weeks to the next rung from your own price and hours, and gives
-   Cherry's moves for each rung with tick boxes. Fixed rules, no AI. Saved in this browser only. */
+   Rome's moves for each rung with tick boxes. Fixed rules, no AI. Saved in this browser only. */
 (function(){
 "use strict";
 var R = window.SharpRich, $ = R.$, el = R.el, money = R.money, KEY = 'sharp-ladder';
@@ -96,7 +96,7 @@ function render(){
     if(r.link){ var a = el('a', 'btn ghost ld-link', r.link[1] + ' →', li); a.href = r.link[0]; }
   });
   // A rung reached since the last visit gets its moment, once.
-  if(at > (+s.seen || 0)){ var reached = RUNGS[at - 1]; s.seen = at; R.save(KEY, s); setTimeout(function(){ R.pop($('ld-s1'), { n: 18, big: true, say: 'You reached ' + money(reached.t) + '! Cherry on top.' }); }, 600); }
+  if(at > (+s.seen || 0)){ var reached = RUNGS[at - 1]; s.seen = at; R.save(KEY, s); setTimeout(function(){ R.pop($('ld-s1'), { n: 18, big: true, say: 'You reached ' + money(reached.t) + '! Rome on top.' }); }, 600); }
 }
 render();
 })();

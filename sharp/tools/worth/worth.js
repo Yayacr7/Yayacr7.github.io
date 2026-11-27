@@ -1,6 +1,6 @@
-/* Is it worth it? (free). Before you buy something, Cherry shows what it really costs: the hours of work it takes (at
+/* Is it worth it? (free). Before you buy something, Rome shows what it really costs: the hours of work it takes (at
    the pay from your First $100 Plan, or the pay you type), what the money could grow to if you invested it instead
-   (an estimate: 7% a year, never a promise), and her verdict from three quick questions. A 48-hour wait list counts
+   (an estimate: 7% a year, never a promise), and his verdict from three quick questions. A 48-hour wait list counts
    the money you keep by skipping things. Fixed maths, no AI. Saved in this browser only ('sharp-worth').
    Visitor text (the item's name): textContent only. */
 (function(){

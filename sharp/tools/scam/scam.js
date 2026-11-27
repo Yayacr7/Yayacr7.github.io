@@ -1,4 +1,4 @@
-/* Scam check (free). Paste a message, DM, job offer or "money opportunity", and tick what happened. Cherry looks for
+/* Scam check (free). Paste a message, DM, job offer or "money opportunity", and tick what happened. Rome looks for
    the warning signs money scams use and gives a verdict: Likely scam / Be careful / No big warning signs.
    Fixed rules on this device, no AI: what you paste is never sent anywhere and never saved.
    It spots warning signs; it can't prove a message is safe, and the page says so. Visitor text: textContent only. */

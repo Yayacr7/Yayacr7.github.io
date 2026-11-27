@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Rome">
+<defs>
+<radialGradient id="bg" cx=".32" cy=".26" r=".9"><stop offset="0" stop-color="#3fdcf2"/><stop offset=".6" stop-color="#0891b2"/><stop offset="1" stop-color="#0a4b5a"/></radialGradient>
+<linearGradient id="au" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1a8"/><stop offset=".5" stop-color="#ffd43b"/><stop offset="1" stop-color="#e5a800"/></linearGradient>
+</defs>
+<circle cx="64" cy="64" r="64" fill="url(#bg)"/>
+<circle cx="64" cy="64" r="60" fill="none" stroke="#c8fbff" stroke-opacity=".3" stroke-width="2"/>
+<!-- Rome's mark: a gold laurel wreath (a winner's wreath) around Sharp's rising line -->
+<g fill="none" stroke="#083542" stroke-width="6.5" stroke-linecap="round"><path d="M47.3 103.5A41 41 0 0 1 39.9 32.8"/><path d="M80.7 103.5A41 41 0 0 0 88.1 32.8"/></g>
+<g fill="none" stroke="url(#au)" stroke-width="3.2" stroke-linecap="round"><path d="M47.3 103.5A41 41 0 0 1 39.9 32.8"/><path d="M80.7 103.5A41 41 0 0 0 88.1 32.8"/></g>
+<g fill="url(#au)" stroke="#083542" stroke-width="1.7">
+<ellipse cx="42.8" cy="107.6" rx="9.4" ry="3.9" transform="rotate(-128.0 42.8 107.6)"/>
+<ellipse cx="47.3" cy="97.3" rx="9.4" ry="3.9" transform="rotate(-184.0 47.3 97.3)"/>
+<ellipse cx="25.2" cy="91.1" rx="8.7" ry="3.6" transform="rotate(-98.0 25.2 91.1)"/>
+<ellipse cx="33.6" cy="85.0" rx="8.7" ry="3.6" transform="rotate(-154.0 33.6 85.0)"/>
+<ellipse cx="18.2" cy="68.3" rx="8.0" ry="3.3" transform="rotate(-68.0 18.2 68.3)"/>
+<ellipse cx="27.7" cy="67.3" rx="8.0" ry="3.3" transform="rotate(-124.0 27.7 67.3)"/>
+<ellipse cx="23.6" cy="45.3" rx="7.3" ry="3.0" transform="rotate(-38.0 23.6 45.3)"/>
+<ellipse cx="31.5" cy="48.8" rx="7.3" ry="3.0" transform="rotate(-94.0 31.5 48.8)"/>
+<ellipse cx="39.6" cy="28.2" rx="6.6" ry="2.7" transform="rotate(-8.0 39.6 28.2)"/>
+<ellipse cx="85.2" cy="107.6" rx="9.4" ry="3.9" transform="rotate(-52.0 85.2 107.6)"/>
+<ellipse cx="80.7" cy="97.3" rx="9.4" ry="3.9" transform="rotate(4.0 80.7 97.3)"/>
+<ellipse cx="102.8" cy="91.1" rx="8.7" ry="3.6" transform="rotate(-82.0 102.8 91.1)"/>
+<ellipse cx="94.4" cy="85.0" rx="8.7" ry="3.6" transform="rotate(-26.0 94.4 85.0)"/>
+<ellipse cx="109.8" cy="68.3" rx="8.0" ry="3.3" transform="rotate(-112.0 109.8 68.3)"/>
+<ellipse cx="100.3" cy="67.3" rx="8.0" ry="3.3" transform="rotate(-56.0 100.3 67.3)"/>
+<ellipse cx="104.4" cy="45.3" rx="7.3" ry="3.0" transform="rotate(-142.0 104.4 45.3)"/>
+<ellipse cx="96.5" cy="48.8" rx="7.3" ry="3.0" transform="rotate(-86.0 96.5 48.8)"/>
+<ellipse cx="88.4" cy="28.2" rx="6.6" ry="2.7" transform="rotate(-172.0 88.4 28.2)"/>
+</g>
+<path d="M40 82L55 66L66 75L86 50" fill="none" stroke="#083542" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M75 48H89V62" fill="none" stroke="#083542" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M40 82L55 66L66 75L86 50" fill="none" stroke="#f0fdff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M75 48H89V62" fill="none" stroke="#f0fdff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

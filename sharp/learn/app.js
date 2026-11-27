@@ -230,13 +230,13 @@ function el(tag, attrs, html){ var n = document.createElement(tag); if(attrs) fo
 function fmt(n, d){ return Number(n).toLocaleString(undefined, {minimumFractionDigits:d||0, maximumFractionDigits:d||0}); }
 
 var LESSON_ORDER = ['money','investing','funding','business','statements','why-business','buy-back-time','ai-at-work','automate-ai','mkt-basics','mkt-channels','mkt-measure','mkt-words','mkt-social','negotiation','scripts','persuasion','pitching','pressure','voice','investor-interest','best-of-investors'];
-/* ---------- Ask Cherry: a small "stuck?" box above each lesson's Previous/Next bar ---------- */
+/* ---------- Ask Rome: a small "stuck?" box above each lesson's Previous/Next bar ---------- */
 LESSON_ORDER.concat(['glossary']).forEach(function(id){
   var sec = document.getElementById(id), pager = sec && sec.querySelector(':scope > .pager');
   if(!sec || !pager) return;
-  var box = document.createElement('aside'); box.className = 'ask-cta'; box.setAttribute('aria-label', 'Ask Cherry about this lesson'); box.setAttribute('data-ai', ''); // hidden until Ask Cherry is switched on (assets/shell.js)
+  var box = document.createElement('aside'); box.className = 'ask-cta'; box.setAttribute('aria-label', 'Ask Rome about this lesson'); box.setAttribute('data-ai', ''); // hidden until Ask Rome is switched on (assets/shell.js)
   var t = document.createElement('p'); var b = document.createElement('b'); b.textContent = 'Stuck on something? '; t.appendChild(b);
-  t.appendChild(document.createTextNode('Ask Cherry, our AI helper. It answers from these lessons only.'));
+  t.appendChild(document.createTextNode('Ask Rome, our AI helper. It answers from these lessons only.'));
   var row = document.createElement('div'); row.className = 'ask-cta-row';
   [['', 'Ask a question'], ['simpler', 'Explain it simpler'], ['example', 'Give me an example']].forEach(function(x){
     var a = document.createElement('a'); a.className = 'btn sm ghost';
@@ -388,7 +388,7 @@ function buildQuiz(container){
     stampEl.className = 'stamp ' + (passed ? 'pass' : 'review');
     stampEl.textContent = passed ? 'Passed' : 'Review'; stampEl.appendChild(tx('small', null, right + ' / ' + qs.length + ' correct'));
     stampEl.hidden = false; void stampEl.offsetWidth; stampEl.classList.add('hit');
-    if(passed && window.SharpPop) SharpPop(stampEl, { n: right === qs.length ? 16 : 12, big: true, say: right === qs.length ? 'Perfect score!' : 'Passed. Cherry on top!' });
+    if(passed && window.SharpPop) SharpPop(stampEl, { n: right === qs.length ? 16 : 12, big: true, say: right === qs.length ? 'Perfect score!' : 'Passed. Nice work!' });
     review.textContent = '';
     var missed = []; results.forEach(function(r, i){ if(!r) missed.push(i); });
     if(missed.length){

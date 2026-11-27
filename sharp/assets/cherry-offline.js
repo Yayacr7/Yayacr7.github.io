@@ -1,7 +1,7 @@
-/* Type to Cherry, without the AI: while the AI is switched off, Cherry answers typed questions on this device.
+/* Type to Rome, without the AI: while the AI is switched off, Rome answers typed questions on this device.
    1) small talk, 2) money maths worked out in code ("if I save $20 a week"), 3) short answers in Sharp's own words for the
    most common questions, 4) otherwise a search of Sharp's free lessons and tools (assets/cherry-index.json, built by
-   dev/build_ask_index.py). She remembers the last topic, so "tell me more" and "why?" work. Questions never leave the device.
+   dev/build_ask_index.py). He remembers the last topic, so "tell me more" and "why?" work. Questions never leave the device.
    When the AI is on, voice.js opens the full AI chat (assets/agent.js) instead. Visitor text: textContent only. */
 (function(){
 "use strict";
@@ -27,17 +27,17 @@ function fv(perMonth, rate, years){ var r = rate / 12, n = years * 12; return r 
 
 /* ---------- 1. Small talk ---------- */
 var TALK = [
-  [/^(hi|hey|hello|yo|sup|hiya|good (morning|afternoon|evening))\b[\s!.]*$/i, ['Hey! I\'m Cherry, your money and business coach. What are you working on: saving, making money, or starting a business?'], ['How do I make money as a teen?', 'How do I save money?']],
-  [/\b(who are you|what are you|your name|are you (a )?(bot|ai|real|human))\b/i, ['I\'m Cherry, Sharp\'s helper. Right now I answer from Sharp\'s lessons and do the maths for you on your device. You can also call me and talk out loud.'], ['What can you do?']],
+  [/^(hi|hey|hello|yo|sup|hiya|good (morning|afternoon|evening))\b[\s!.]*$/i, ['Hey! I\'m Rome, your money and business coach. What are you working on: saving, making money, or starting a business?'], ['How do I make money as a teen?', 'How do I save money?']],
+  [/\b(who are you|what are you|your name|are you (a )?(bot|ai|real|human))\b/i, ['I\'m Rome, Sharp\'s helper. Right now I answer from Sharp\'s lessons and do the maths for you on your device. You can also call me and talk out loud.'], ['What can you do?']],
   [/\b(what can you do|help me|how does this work|what do you do)\b/i, ['I can work out money maths (try "if I save $15 a week for 3 years"), help you price your work, plan your first $100, and point you to the right lesson. Ask me anything about money or business.'], ['If I save $15 a week for 3 years?', 'How do I make money as a teen?']],
   [/^(thanks|thank you|thx|ty|cool|ok|okay|nice|great|awesome)\b[\s!.]*$/i, ['Any time. What\'s your next move?'], ['How do I get my first customer?']],
   [/^(bye|goodbye|see you|cya)\b/i, ['See you! Small steps every week beat one big plan.'], []],
   [/\b(scared|nervous|afraid|fail|failing|not good enough|can'?t do (it|this)|bored|unmotivated|lazy)\b|\b(quit|give up|giving up)( on (it|this|my business|everything))?[\s?.!]*$/i,
    ['That feeling is normal. Don\'t let it stop you: everyone starting out feels it, and the ones who win just keep going. Make the first step tiny: one message to one person today. A "no" costs you nothing and teaches you what people want.', 'Want a plan you can finish this week?'], ['Make me a first $100 plan']]
 ];
-// Second replies, so she doesn't repeat herself word for word.
+// Second replies, so he doesn't repeat himself word for word.
 TALK[0][3] = ['Hey again. What do you want to work on: earning, saving or selling?'];
-TALK[1][3] = ['Still Cherry. Ask me a money or business question and I\'ll give you my honest take.'];
+TALK[1][3] = ['Still Rome. Ask me a money or business question and I\'ll give you my honest take.'];
 TALK[2][3] = ['Try me with a real problem: "I want $200 by summer", "how much should I charge for lawn mowing", or "should I invest".'];
 TALK[3][3] = ['Good. Go do one thing from that today, then come back and tell me how it went.'];
 TALK[4][3] = ['Bye. Do one small thing for your goal before tomorrow.'];
@@ -139,9 +139,9 @@ function best(text, q, n){
   return pick.map(function(x){ return x.p.length > 260 ? x.p.slice(0, 257) + '…' : x.p; });
 }
 
-/* ---------- 3. Cherry's own answers ----------
+/* ---------- 3. Rome's own answers ----------
    Each topic has different answers for different kinds of question (what / how / should / why / any), several of each.
-   USED remembers what she already said in this chat, so she never repeats the same words: she picks a fresh answer,
+   USED remembers what he already said in this chat, so he never repeats the same words: he picks a fresh answer,
    then a new passage from the lessons. All in our own words, firm (owner asked), matched to the lessons. */
 var USED = {};
 function T(id, re, links, next, a){ return { id: id, re: re, links: links, next: next, a: a }; }
@@ -151,7 +151,7 @@ var L = { money: ['/learn/#money', 'Lesson 1: Your money'], invest: ['/learn/#in
   first: ['/tools/first100/', 'First $100 Plan'], budget: ['/tools/budget/', 'Budget & savings planner'], mplan: ['/tools/money-plan/', 'Money plan'],
   bplan: ['/tools/business-plan/', 'Business plan & pricing'], idea: ['/tools/idea-check/', 'Idea check'], negt: ['/tools/negotiation/', 'Negotiation prep'],
   inv: ['/tools/investors/', 'Investor pressure drill'], pricing: ['/pricing/', 'Pricing'], mkt2: ['/tools/marketing/', 'Marketing calculators'],
-  road: ['/tools/million/', 'Road to $1 million'], practice: ['/tools/practice/', 'Sales practice with Cherry'], ladder: ['/tools/ladder/', 'Money ladder'], wealth: ['/tools/tracker/', 'Wealth tracker'],
+  road: ['/tools/million/', 'Road to $1 million'], practice: ['/tools/practice/', 'Sales practice with Rome'], ladder: ['/tools/ladder/', 'Money ladder'], wealth: ['/tools/tracker/', 'Wealth tracker'],
   worth: ['/tools/worth/', 'Is it worth it?'], scamc: ['/tools/scam/', 'Scam check'] };
 var TOPICS = [
   T('drop', /\bdropship\w*\b/i, [L.first], ['How do I make money as a teen?'], {
@@ -290,7 +290,7 @@ var TOPICS = [
     any: [["School comes first. Pick a business that fits 3–4 hours a week, like weekend lawn jobs or one babysitting night."],
           ["Block one fixed time each week for your business, like Saturday 10–12. Small and steady beats big and random."]] }),
   T('sharp', /\b(sharp|this app|sharp'?s plans?|paid plans?|pay(ing)? for (the )?plans?|worth (it|paying)|free trial|learner|builder|founder|upgrade|subscription)\b/i, [L.pricing], [], {
-    any: [["All of Sharp's lessons and tools are free. Paid plans add more Cherry and the full courses: Learner $19.99, Builder $29.99, Founder $74.99, paid once. There's a 3-day free trial with no card."]] })
+    any: [["All of Sharp's lessons and tools are free. Paid plans add more Rome and the full courses: Learner $19.99, Builder $29.99, Founder $74.99, paid once. There's a 3-day free trial with no card."]] })
 ];
 function qtype(q){
   if(/^why\b|\bwhy (is|do|does|should|would)\b/i.test(q)) return 'why';
@@ -301,7 +301,7 @@ function qtype(q){
   if(/^how\b|\bhow (do|can|should|to|would)\b|\bways to\b|\btips?\b|\bsteps?\b/i.test(q)) return 'how';
   return 'any';
 }
-// The first answer she hasn't used yet: the question's own kind first, then any other kind.
+// The first answer he hasn't used yet: the question's own kind first, then any other kind.
 function fresh(t, kind){
   var order = [kind, 'any', 'how', 'what', 'should'];
   for(var i = 0; i < order.length; i++){
@@ -356,7 +356,7 @@ function bizReply(q, b){
   return null;
 }
 
-/* Lesson passages she hasn't quoted yet in this chat. */
+/* Lesson passages he hasn't quoted yet in this chat. */
 var SAID = {};
 function freshLesson(q, intro, urls){
   var hits = search(q, true).filter(function(h){ return !urls || urls.some(function(u){ return h.d.url === u[0]; }); });
@@ -375,7 +375,7 @@ function topicOf(q){
   return null;
 }
 
-/* ---------- Cherry remembers you (owner asked 2026-10-25) ----------
+/* ---------- Rome remembers you (owner asked 2026-10-25) ----------
    First name, business and goal, saved only on this device (localStorage 'sharp-cherry-me'), plus progress from the
    First $100 Plan ('sharp-first100'). Never sent anywhere. "What do you know about me?" shows it; "forget me" clears it. */
 var ME_KEY = 'sharp-cherry-me';
@@ -453,7 +453,7 @@ function greeting(){
   var m = mine(), hi = m.name ? 'Hey ' + m.name + '.' : 'Hey, welcome back.';
   if(m.goal) return hi + ' ' + progress(m) + ' What do you want to work on?';
   if(m.biz) return hi + ' Still working on ' + m.biz + '? Ask me anything, or tell me your goal.';
-  return 'Hi, I\'m Cherry. Ask me about money or starting a business, or give me numbers and I\'ll do the maths. Tell me your first name and business and I\'ll remember them on this device.';
+  return 'Hi, I\'m Rome. Ask me about money or starting a business, or give me numbers and I\'ll do the maths. Tell me your first name and business and I\'ll remember them on this device.';
 }
 
 /* ---------- Reply ---------- */
@@ -518,7 +518,7 @@ function chips(next){
 }
 function answer(q){
   say(q, 'me'); chipsBox.hidden = true;
-  var dots = el('div', 'co-msg ch co-dots', null, list); dots.setAttribute('aria-label', 'Cherry is typing'); el('i', null, null, dots); el('i', null, null, dots); el('i', null, null, dots);
+  var dots = el('div', 'co-msg ch co-dots', null, list); dots.setAttribute('aria-label', 'Rome is typing'); el('i', null, null, dots); el('i', null, null, dots); el('i', null, null, dots);
   list.scrollTop = list.scrollHeight;
   var wait = DOCS ? Promise.resolve() : loading;
   Promise.all([wait, new Promise(function(ok){ setTimeout(ok, 120); })]).then(function(){
@@ -534,13 +534,13 @@ function build(){
   panel = el('section', 'co-panel', null, document.body); panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-labelledby', 'co-title'); panel.hidden = true;
   var top = el('div', 'co-top', null, panel);
   el('span', 'ch-face co-face', null, top).setAttribute('aria-hidden', 'true');
-  var tt = el('div', null, null, top); el('p', 'co-title', 'Cherry', tt).id = 'co-title'; el('p', 'co-sub', 'Quick answers and money maths. What I remember stays on this device.', tt);
+  var tt = el('div', null, null, top); el('p', 'co-title', 'Rome', tt).id = 'co-title'; el('p', 'co-sub', 'Quick answers and money maths. What I remember stays on this device.', tt);
   var x = el('button', 'co-x', '✕', top); x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.addEventListener('click', close);
   list = el('div', 'co-list', null, panel); list.setAttribute('aria-live', 'polite');
   say(greeting(), 'ch');
   chipsBox = el('div', 'co-chips', null, panel); chips(SUGGEST);
   var f = el('form', 'co-form', null, panel);
-  input = el('input', null, null, f); input.type = 'text'; input.maxLength = 200; input.placeholder = 'Ask Cherry…'; input.setAttribute('aria-label', 'Ask Cherry a question');
+  input = el('input', null, null, f); input.type = 'text'; input.maxLength = 200; input.placeholder = 'Ask Rome…'; input.setAttribute('aria-label', 'Ask Rome a question');
   var go = el('button', null, 'Ask', f); go.type = 'submit';
   f.addEventListener('submit', function(e){ e.preventDefault(); var q = input.value.trim(); if(!q) return; input.value = ''; answer(q); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !panel.hidden) close(); });

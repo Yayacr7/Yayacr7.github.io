@@ -1,4 +1,4 @@
-/* First $100 Plan (free). Pick a starter business, your free hours and a goal. Cherry works out the price
+/* First $100 Plan (free). Pick a starter business, your free hours and a goal. Rome works out the price
    maths, how many jobs and weeks it takes, gives a 30-day checklist and the exact message to send, then tracks
    the money you really earn on a trading-style chart. Fixed rules, no AI. Everything stays in this browser
    (localStorage). Visitor text: textContent only. */
@@ -11,7 +11,7 @@ var SKILLS = window.SharpBiz.all(WHO);
 var STEPS = [
   ['Week 1 · Get ready', [
     WHO === 'adult' ? 'Check local rules: some jobs need a licence, a permit or insurance.' : 'Ask a parent or guardian first. Agree where you can work and who you work for.',
-    'Write your offer in one line: what you do and the price (use Cherry\'s line below).',
+    'Write your offer in one line: what you do and the price (use Rome\'s line below).',
     'Send your message to 10 people you or your family already know.',
     'Practise a 10-minute sales talk with a friend playing the customer (see "Make the sale").'
   ]],
@@ -134,7 +134,7 @@ function render(){
   $('f1-stw').textContent = t.st === 'good' ? 'On track' : t.st === 'warn' ? 'Slow' : 'Fix this first';
   $('f1-range').textContent = 'Most people charge ' + money(p.k.lo) + ' to ' + money(p.k.hi) + ' for ' + p.k.job + '. About ' + hrs(p.k.hrs) + ' a job.';
   $('f1-s1').textContent = money(earned()); $('f1-s2').textContent = isFinite(p.jobs) ? p.jobs : '–'; $('f1-s3').textContent = isFinite(p.weeks) ? p.weeks : '–';
-  $('f1-who').textContent = 'Who to ask: ' + p.k.who + '.'; $('f1-tip').textContent = 'Cherry\'s tip: ' + p.k.tip;
+  $('f1-who').textContent = 'Who to ask: ' + p.k.who + '.'; $('f1-tip').textContent = 'Rome\'s tip: ' + p.k.tip;
   $('f1-line').textContent = line(); sale();
   var list = $('f1-steps'); list.textContent = ''; var id = 0, done = 0;
   STEPS.forEach(function(w){
@@ -181,7 +181,7 @@ $('f1-log').addEventListener('submit', function(e){
   $('f1-msg').textContent = '';
   s.logs.push({ v: v, note: $('f1-note').value.slice(0, 40), at: new Date().toISOString().slice(0, 10) }); save();
   $('f1-amt').value = ''; $('f1-note').value = ''; render(); $('f1-head').focus();
-  if(window.SharpPop){ var now = earned(); SharpPop($('f1-s1'), now >= s.goal && now - v < s.goal ? { n: 18, big: true, say: 'Goal hit! Cherry on top.' } : { n: 9 }); }
+  if(window.SharpPop){ var now = earned(); SharpPop($('f1-s1'), now >= s.goal && now - v < s.goal ? { n: 18, big: true, say: 'Goal hit! Nice work.' } : { n: 9 }); }
 });
 $('f1-undo').addEventListener('click', function(){ s.logs.pop(); save(); render(); });
 $('f1-next').addEventListener('click', function(){ s.goal = Math.round(Math.max(s.goal, earned()) * 2.5 / 50) * 50; s.done = []; fill(); save(); render(); $('f1-head').focus(); });

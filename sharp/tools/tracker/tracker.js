@@ -1,4 +1,4 @@
-/* Wealth tracker (free). Once a month: what you earned, saved and invested, and what it's all worth now. Cherry shows
+/* Wealth tracker (free). Once a month: what you earned, saved and invested, and what it's all worth now. Rome shows
    how much you kept, your worth month by month on a trading-style chart, and the next milestone. Fixed rules, no AI.
    Saved in this browser only (localStorage 'sharp-wealth'). Visitor text: textContent only. */
 (function(){
@@ -20,7 +20,7 @@ function next(w){ for(var i = 0; i < MILES.length; i++) if(w < MILES[i]) return 
 })();
 
 function take(M){
-  if(!M.length) return { st: 'warn', head: 'Log your first month.', body: 'Write down what you earned, saved and invested this month. One minute a month. Cherry shows your real progress and keeps you honest.' };
+  if(!M.length) return { st: 'warn', head: 'Log your first month.', body: 'Write down what you earned, saved and invested this month. One minute a month. Rome shows your real progress and keeps you honest.' };
   var last = M[M.length - 1], r = rate(last), w = +last.w || 0, nx = next(w), avg = 0;
   M.forEach(function(x){ avg += kept(x); }); avg /= M.length;
   var to = nx && avg > 0 ? Math.ceil((nx - w) / avg) : null;
@@ -72,8 +72,8 @@ $('wt-form').addEventListener('submit', function(e){
   ['wt-e', 'wt-s', 'wt-i', 'wt-w'].forEach(function(id){ $(id).value = ''; });
   render(); $('wt-head').focus();
   var now = R.tracker().worth, crossed = MILES.filter(function(x){ return before < x && now >= x; }).pop(), r = E > 0 ? (S + I) / E : null;
-  if(crossed) R.pop($('wt-s1'), { n: 18, big: true, say: 'You passed ' + money(crossed) + '! Cherry on top.' });
-  else if(r != null && r >= .2) R.pop($('wt-s2'), { n: 10, say: 'Kept ' + Math.round(r * 100) + '%. Cherry on top!' });
+  if(crossed) R.pop($('wt-s1'), { n: 18, big: true, say: 'You passed ' + money(crossed) + '! Nice work.' });
+  else if(r != null && r >= .2) R.pop($('wt-s2'), { n: 10, say: 'Kept ' + Math.round(r * 100) + '%. Nice work!' });
 });
 $('wt-undo').addEventListener('click', function(){ var M = sorted(); M.pop(); d.months = M; R.save(KEY, d); render(); });
 $('wt-reset').addEventListener('click', function(){ if(confirm('Start over? Every month you logged will be cleared from this device.')){ d = { months: [] }; try{ localStorage.removeItem(KEY); }catch(e){} render(); } });

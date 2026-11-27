@@ -62,7 +62,7 @@ function start(){
   var frame = el('div', 'sp-in-box', null, box), v = el('video', null, null, frame);
   v.muted = true; v.setAttribute('muted', ''); v.playsInline = true; v.setAttribute('playsinline', ''); v.preload = 'auto';
   v.poster = base + 'demo/sharp-demo.jpg'; v.src = base + 'demo/sharp-demo.mp4';
-  v.setAttribute('aria-label', 'A 40-second tour of the real app: what you could keep, Cherry\'s plan, asking Cherry, your first $100, making the sale, Scam check and Is it worth it?');
+  v.setAttribute('aria-label', 'A 40-second tour of the real app: what you could keep, Rome\'s plan, asking Rome, your first $100, making the sale, Scam check and Is it worth it?');
   var play = el('button', 'sp-in-play', null, frame); play.type = 'button'; play.hidden = true;
   el('span', null, '▶', play).setAttribute('aria-hidden', 'true'); play.appendChild(document.createTextNode('Play the 40-second tour'));
   var bar = el('div', 'sp-in-bar', null, box); bar.setAttribute('aria-hidden', 'true'); var fill = el('i', null, null, bar);

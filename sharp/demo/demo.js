@@ -1,4 +1,4 @@
-/* 60 seconds with Cherry: a 3-step demo for new visitors.
+/* 60 seconds with Rome: a 3-step demo for new visitors.
    1) Your money: what you could keep this year. 2) Your first $100: how fast. 3) Make the sale: a tough reply.
    Fixed rules, no AI. Nothing leaves the device; "Get my full plan" pre-fills the First $100 Plan (localStorage).
    Business prices match tools/first100/first100.js. Visitor text: textContent only (and there is no free text here). */
@@ -30,7 +30,7 @@ var ANSWERS = [
   { t: 'Honestly, it\'s the best price around. You won\'t find cheaper.', ok: false, why: 'Not quite. That\'s arguing. Pushing makes people defensive, and being the cheapest is rarely why someone says yes.' }
 ];
 var SAY = {
-  1: 'Hi, I\'m Cherry. 60 seconds, 3 steps. First: where does your money go?',
+  1: 'Hi, I\'m Rome. 60 seconds, 3 steps. First: where does your money go?',
   2: 'Now let\'s earn some. Pick something you could do this week.',
   3: 'Last one, and it\'s the hard part: closing the deal.',
   end: 'That\'s your plan. Now come into Sharp. I\'ll be right there with you.'
@@ -140,7 +140,7 @@ function r3(){
     var a = ANSWERS[ix], b = el('button', 'dm-a', null, box); b.type = 'button';
     el('span', 'dm-a-l', String.fromCharCode(65 + n), b); el('span', null, a.t, b);
     if(st.picked >= 0){ b.disabled = true; if(a.ok) b.classList.add('right'); if(ix === st.picked && !a.ok) b.classList.add('wrong'); }
-    b.addEventListener('click', function(){ if(a.ok && window.SharpPop) SharpPop(b, { n: 12, say: 'Best reply. Cherry on top!' }); st.picked = ix; $('dm-why').textContent = a.why; $('dm-why').className = 'dm-why ' + (a.ok ? 'good' : 'bad'); $('dm-to-end').disabled = false; r3(); $('dm-to-end').focus(); });
+    b.addEventListener('click', function(){ if(a.ok && window.SharpPop) SharpPop(b, { n: 12, say: 'Best reply. Nice!' }); st.picked = ix; $('dm-why').textContent = a.why; $('dm-why').className = 'dm-why ' + (a.ok ? 'good' : 'bad'); $('dm-to-end').disabled = false; r3(); $('dm-to-end').focus(); });
   });
 }
 function rEnd(){
@@ -190,13 +190,13 @@ function drawCard(x, img){
   card(462, 346, 'I could keep', '#a5f3fc', money(k.year), '#ffd43b', 'a year, by spending a third less on ' + CATS[st.cat].name.toLowerCase() + '.');
   card(832, 296, 'My first ' + money(GOAL), '#ffe27a', isFinite(e.weeks) ? 'about ' + weeksText(e.weeks) : 'More hours', '#67e8f9', s.name + ', ' + st.hours + (st.hours === 1 ? ' hour' : ' hours') + ' a week.');
   if(img.cherry) x.drawImage(img.cherry, 80, 1160, 96, 96);
-  x.fillStyle = '#fff'; x.font = '800 38px ' + B; x.fillText('Made with Cherry, my AI money coach', 196, 1200);
+  x.fillStyle = '#fff'; x.font = '800 38px ' + B; x.fillText('Made with Rome, my AI money coach', 196, 1200);
   x.fillStyle = '#b9bfd8'; x.font = '700 28px ' + B; x.fillText('Estimates, not promises. Free, no sign-up.', 196, 1246);
 }
 function makeShare(){
   SHARE.file = null; $('dm-share-msg').textContent = '';
   var fonts = document.fonts ? Promise.all(['800 100px "Bricolage Grotesque"', '800 30px Karla', '700 30px Karla'].map(function(f){ return document.fonts.load(f); })).catch(function(){}) : Promise.resolve();
-  Promise.all([fonts, svgImg('../icon.svg'), svgImg('../assets/cherry.svg')]).then(function(r){
+  Promise.all([fonts, svgImg('../icon.svg'), svgImg('../assets/rome.svg')]).then(function(r){
     var c = document.createElement('canvas'); c.width = 1080; c.height = 1350; var x = c.getContext('2d');
     drawCard(x, { icon: r[1], cherry: r[2] });
     var url; try{ url = c.toDataURL('image/jpeg', .9); }catch(err){ x.clearRect(0, 0, 1080, 1350); drawCard(x, {}); url = c.toDataURL('image/jpeg', .9); }   // if a browser won't let the logos in, draw without them
@@ -212,7 +212,7 @@ $('dm-sharebtn').addEventListener('click', function(){
   var msg = $('dm-share-msg'), link = 'https://sharpbasics.com/demo/';
   if(!SHARE.url){ msg.textContent = 'One second, your picture is still being made.'; return; }
   if(SHARE.file && navigator.canShare && navigator.canShare({ files: [SHARE.file] })){
-    navigator.share({ files: [SHARE.file], title: 'My money plan', text: shareText() + ' ' + link }).then(function(){ msg.textContent = 'Shared. Cherry on top!'; if(window.SharpPop) SharpPop($('dm-sharebtn'), { n: 10 }); }).catch(function(){});
+    navigator.share({ files: [SHARE.file], title: 'My money plan', text: shareText() + ' ' + link }).then(function(){ msg.textContent = 'Shared. Nice!'; if(window.SharpPop) SharpPop($('dm-sharebtn'), { n: 10 }); }).catch(function(){});
     return;
   }
   // No share sheet here (most computers): save the picture instead.
@@ -274,7 +274,7 @@ if(ADULT){
 $('dm-go2').textContent = 'Next: your first ' + money(GOAL) + ' →'; $('dm-e2l').textContent = 'Your first ' + money(GOAL); $('dm-plan').textContent = 'Get my full ' + money(GOAL) + ' plan';
 function ask(on){
   $('dm-who').hidden = !on; $('dm-1').hidden = on; $('dm-whoami').hidden = on || !WHO; $('dm-live').hidden = on;   // no numbers until we know who it's for
-  if(on){ $('dm-say').textContent = 'Hi, I\'m Cherry. First, tell me who you are, so my numbers fit you.'; }
+  if(on){ $('dm-say').textContent = 'Hi, I\'m Rome. First, tell me who you are, so my numbers fit you.'; }
 }
 $('dm-whoami').textContent = (ADULT ? 'For adults' : 'For teens') + ' · Change';
 $('dm-whoami').addEventListener('click', function(){ ['1', '2', '3', 'end'].forEach(function(k){ $('dm-' + k).hidden = true; }); ask(true); $('dm-who-h').setAttribute('tabindex', '-1'); $('dm-who-h').focus(); });

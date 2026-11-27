@@ -10,7 +10,7 @@ window.SharpWho = { get: get, set: set, isAdult: function(){ return get() === 'a
 var who = get(); if(who) document.documentElement.setAttribute('data-who', who);
 // Home Spending check: a teen's month (money from jobs and allowance; no rent), before tools.js draws it.
 if(who === 'teen' && document.getElementById('s-income')){
-  // One big overspend (eating out) and two small ones, like the adult example, so Cherry's plan stays short and clear.
+  // One big overspend (eating out) and two small ones, like the adult example, so Rome's plan stays short and clear.
   var T = { 's-income': 400, 's-housing': 0, 's-bills': 30, 's-food': 0, 's-transport': 40, 's-eat': 80, 's-shop': 40, 's-subs': 15, 's-fun': 20, 's-save': 60 };
   var L = { 's-income': 'Money you get a month ($)', 's-bills': 'Phone and bills', 's-food': 'Food at home' };
   Object.keys(T).forEach(function(id){ var i = document.getElementById(id); if(i){ i.value = T[id]; i.defaultValue = T[id]; } });

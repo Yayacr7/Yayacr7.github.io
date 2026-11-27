@@ -1,4 +1,4 @@
-/* Cherry voice receptionist (assets/voice.js). */
+/* Rome voice receptionist (assets/voice.js). */
 .vo-launch{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:max(16px,env(safe-area-inset-bottom));z-index:902;
   display:flex;align-items:center;gap:10px;min-height:54px;padding:0 22px 0 8px;border:0;border-radius:999px;cursor:pointer;
   background:#22d3ee;color:#04202a;font:800 17px/1 "Karla","Helvetica Neue",Arial,system-ui,sans-serif;
@@ -47,17 +47,17 @@ html.vo-on .ag-launch{display:none}
 .vo-hface{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#22d3ee;color:#04202a;font:800 12px/1 "Bricolage Grotesque",system-ui,sans-serif}
 @media (max-width:520px){.vo-head .vo-ht{display:none}.vo-head{padding:0 4px;margin-right:6px}}
 
-/* Cherry's face: drawn portrait instead of a letter. */
-.vo-lface,.vo-hface,.vo-face{background:url(cherry.svg) center/cover no-repeat,#0891b2;color:transparent}.vo-face span{display:none}
+/* Rome's face: drawn portrait instead of a letter. */
+.vo-lface,.vo-hface,.vo-face{background:url(rome.svg) center/cover no-repeat,#0891b2;color:transparent}.vo-face span{display:none}
 
-/* Typed Cherry while the AI is off (assets/cherry-offline.js). */
+/* Typed Rome while the AI is off (assets/cherry-offline.js). */
 .co-panel{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:calc(max(16px,env(safe-area-inset-bottom)) + 64px);z-index:904;
   display:flex;flex-direction:column;width:min(400px,calc(100vw - 32px));max-height:min(560px,calc(100dvh - 120px));padding:14px;border-radius:20px;
   background:#151a30;color:#f2f3f9;border:1px solid #283050;box-shadow:0 24px 60px -20px rgba(0,0,0,.9);font:15px/1.45 "Karla","Helvetica Neue",Arial,system-ui,sans-serif}
 .co-panel[hidden]{display:none!important}
 .co-top{display:flex;align-items:center;gap:12px;padding-bottom:10px;border-bottom:1px solid #283050}
 .co-top>div{flex:1;min-width:0}
-.co-face{width:44px;height:44px;border-radius:50%;flex:none;background:url(cherry.svg) center/cover no-repeat,#0891b2;box-shadow:0 0 22px -4px rgba(34,211,238,.7)}
+.co-face{width:44px;height:44px;border-radius:50%;flex:none;background:url(rome.svg) center/cover no-repeat,#0891b2;box-shadow:0 0 22px -4px rgba(34,211,238,.7)}
 .co-title{margin:0;font:800 17px/1.2 "Bricolage Grotesque",system-ui,sans-serif}
 .co-sub{margin:2px 0 0;color:#a4aac4;font-size:12px}
 .co-x{width:40px;height:40px;border-radius:50%;border:1px solid #283050;background:#1e2442;color:#f2f3f9;font-size:16px;cursor:pointer;flex:none}

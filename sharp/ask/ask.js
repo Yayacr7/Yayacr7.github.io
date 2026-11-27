@@ -1,4 +1,4 @@
-/* Ask Cherry: sends a question to /api/ask and shows the answer.
+/* Ask Rome: sends a question to /api/ask and shows the answer.
    Everything the server sends back is shown with textContent only (never innerHTML). */
 (function(){
 "use strict";
@@ -90,7 +90,7 @@ function ask(){
   try{ for(var i = 0; i < localStorage.length; i++){ var k = localStorage.key(i); if(/^sb-.+-auth-token$/.test(k)){ var v = JSON.parse(localStorage.getItem(k)); if(v && typeof v.access_token === 'string') hd.authorization = 'Bearer ' + v.access_token; } } }catch(e){}   // a signed-in plan gets its own allowance
   fetch((window.SharpAPI || '/') + 'api/ask', { method: 'POST', headers: hd, body: JSON.stringify(asked), signal: ctrl ? ctrl.signal : undefined, credentials: 'same-origin' })
     .then(function(r){
-      return r.json().catch(function(){ return { ok: false, message: r.status === 404 || r.status === 405 ? "Ask Cherry isn't switched on yet. The lessons and tools all still work." : 'Something went wrong. Please try again.' }; });
+      return r.json().catch(function(){ return { ok: false, message: r.status === 404 || r.status === 405 ? "Ask Rome isn't switched on yet. The lessons and tools all still work." : 'Something went wrong. Please try again.' }; });
     })
     .then(function(data){
       if(!data || !data.ok || typeof data.answer !== 'string'){ say((data && data.message) || 'Something went wrong. Please try again.', 'err'); return; }
@@ -101,7 +101,7 @@ function ask(){
     .catch(function(e){
       say(e && e.name === 'AbortError' ? 'That took too long. Please try again.' : "Couldn't reach Sharp. Check your connection and try again.", 'err');
     })
-    .then(function(){ clearTimeout(timer); busy = false; btn.disabled = false; btn.textContent = 'Ask Cherry'; form.removeAttribute('aria-busy'); });
+    .then(function(){ clearTimeout(timer); busy = false; btn.disabled = false; btn.textContent = 'Ask Rome'; form.removeAttribute('aria-busy'); });
 }
 
 form.addEventListener('submit', function(e){ e.preventDefault(); ask(); });
@@ -112,7 +112,7 @@ $('ask-simpler').addEventListener('click', function(){ followUp('simpler'); });
 $('ask-example').addEventListener('click', function(){ followUp('example'); });
 $('ask-copy').addEventListener('click', function(){
   if(!last) return;
-  var text = last.answer + '\n\n(From Ask Cherry, sharpbasics.com. AI can be wrong; check the lesson.)';
+  var text = last.answer + '\n\n(From Ask Rome, sharpbasics.com. AI can be wrong; check the lesson.)';
   var done = function(){ say('Answer copied.', 'ok'); }, failed = function(){ say("Couldn't copy. Select the text and copy it yourself.", 'err'); };
   if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, failed); else failed();
 });

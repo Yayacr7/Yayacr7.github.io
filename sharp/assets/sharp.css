@@ -1,5 +1,5 @@
 /* Sharp design system.
-   Layout concept: one bold look. Deep navy everywhere, glowing cyan for action and Cherry,
+   Layout concept: one bold look. Deep navy everywhere, glowing cyan for action and Rome,
    yellow for money and highlights (owner's colours, 2026-11-26). Dark only, by design. */
 :root{
   --bg:#0d1020;       --surface:#151a30;   --surface-2:#1e2442;
@@ -353,7 +353,7 @@ html.ai-on [data-ai-off]{display:none!important}
 .fl-hit{position:absolute;border:0;background:transparent;padding:0;margin:0;cursor:crosshair}
 .fl-hit:focus-visible{outline:2px solid #fff;outline-offset:-2px;border-radius:6px}
 
-/* Cherry in the spending check (assets/tools.js) */
+/* Rome in the spending check (assets/tools.js) */
 .fl-c.st-hold .body{fill:transparent;stroke:var(--st-good);stroke-width:1.5}
 .ch-take{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:#0a2530;border:1px solid #17566a}
 .ch-take>div{flex:1;min-width:0}.ch-take .sc-h{display:block!important;margin:0;font-size:1rem;color:#ecfeff}
@@ -375,7 +375,7 @@ html[data-who="adult"] .who-teen{display:none!important}html:not([data-who="adul
    when you tap one, and small links get a taller tap area. */
 @media (pointer:coarse){input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea{font-size:16px!important}.ch-track,.dm-skip,.fs-links a,.plan .note a,a.note{display:inline-block;padding-block:4px}summary{padding-block:6px}}
 @media (max-height:800px){.fs .ch-take p{display:none}}
-/* Cherry inside the course (course/course.js) */
+/* Rome inside the course (course/course.js) */
 .ch-card{margin:28px 0;padding:18px 20px;border-radius:16px;background:#0a2530;border:1px solid #17566a;color:#ecfeff}
 .ch-card-top{display:flex;gap:12px;align-items:center;margin-bottom:8px}.ch-card h2{margin:2px 0 0;font-size:1.2rem;color:#fff}
 .ch-card p{color:#c4f1f9;margin:6px 0}.ch-card .fine{color:#9fd6e2}.ch-card .row{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
@@ -387,15 +387,15 @@ html[data-who="adult"] .who-teen{display:none!important}html:not([data-who="adul
 .ch-days button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @media (max-width:520px){.ch-days{grid-template-columns:repeat(6,minmax(0,1fr))}}
 
-/* Cherry's tip: Cherry speaks at the top of every main page. */
+/* Rome's tip: Rome speaks at the top of every main page. */
 .ch-tip{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px 14px;margin-top:18px;max-width:900px;padding:14px 16px;border-radius:16px;background:#0a2530;border:1px solid #17566a;box-shadow:0 0 40px -18px rgba(34,211,238,.6)}
 .ch-tip .ch-face{box-shadow:0 0 22px -4px rgba(34,211,238,.8)}.ch-tip p{margin:0;color:#d4f6fb;line-height:1.55}.ch-tip p b{color:#67e8f9}.ch-tip a{color:#a5f3fc}
 .ch-tip .btn.ch-btn{min-height:40px;padding:8px 14px;white-space:nowrap}
 @media (max-width:700px){.ch-tip{grid-template-columns:auto minmax(0,1fr)}.ch-tip .btn.ch-btn{grid-column:1/-1;justify-self:start}}
 
-/* Cherry's face: a drawn portrait (assets/cherry.svg) instead of a letter. */
-.ch-face{background:url(cherry.svg) center/cover no-repeat,#0891b2;color:transparent!important;overflow:hidden}
-/* Cherry on top: her face gives a little hop (hello on the home page, and on hover over a Cherry button). */
+/* Rome's face: a drawn portrait (assets/rome.svg) instead of a letter. */
+.ch-face{background:url(rome.svg) center/cover no-repeat,#0891b2;color:transparent!important;overflow:hidden}
+/* Rome on top: her face gives a little hop (hello on the home page, and on hover over a Rome button). */
 @keyframes chhop{0%,100%{transform:none}35%{transform:translateY(-9px) rotate(-9deg) scale(1.08)}70%{transform:translateY(0) rotate(4deg)}}
 @media (hover:hover) and (prefers-reduced-motion:no-preference){.ch-btn:hover .ch-face,a:hover>.ch-face,button:hover>.ch-face{animation:chhop .6s cubic-bezier(.3,1.5,.5,1)}}
 
@@ -438,7 +438,7 @@ html[data-who="adult"] .who-teen{display:none!important}html:not([data-who="adul
 .jar-wrap.lg .jar-info{gap:12px}.jar-wrap.lg .jar-k{font-size:.85rem}.jar-wrap.lg .jar-big b{font-size:clamp(2.8rem,6vw,4rem)}
 .jar-wrap.lg .jar-big span,.jar-wrap.lg .jar-sub,.jar-wrap.lg .jar-st,.jar-wrap.lg .jar-plan{font-size:1.02rem}
 
-/* The money chart (home Spending check "Cherry's plan", demo step 1): glowing, colourful, still a real chart. */
+/* The money chart (home Spending check "Rome's plan", demo step 1): glowing, colourful, still a real chart. */
 .pc-hd{font:800 24px var(--f-display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .pc-hd.sm{font-size:16px}
 .pc-v{fill:#67e8f9;filter:drop-shadow(0 0 10px rgba(34,211,238,.6))}

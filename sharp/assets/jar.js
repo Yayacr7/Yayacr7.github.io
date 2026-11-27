@@ -1,5 +1,5 @@
 /* The money jar: a glass jar that fills with the money you keep. Gold coins and green bills = what you keep now;
-   a glowing cyan layer on top = what Cherry's plan adds; a dashed line = the goal. The caller works out the numbers
+   a glowing cyan layer on top = what Rome's plan adds; a dashed line = the goal. The caller works out the numbers
    (home Spending check in tools.js, demo step 1 in demo.js) and writes the words next to it; this file only draws.
    Nothing leaves the device. SharpJar.draw(box, { fill, plan, goal, goalText, ticks, leak, from, animate, coins, icon })
    fill/plan/goal/from are 0..1 of the jar's height. Colour is never the only signal: the caller always says it in words. */
@@ -129,7 +129,7 @@ function draw(box, o){
     E('circle', { r: 5, fill: 'none', stroke: '#fff7d0', 'stroke-opacity': .8, 'stroke-width': 1 }, coin);
   }
 
-  // Neck rim and the gold lid with a coin slot and Cherry's badge.
+  // Neck rim and the gold lid with a coin slot and Rome's badge.
   E('rect', { x: 57, y: 43, width: 86, height: 7, rx: 3.5, fill: '#fff', 'fill-opacity': .16, stroke: '#e8fbff', 'stroke-opacity': .6, 'stroke-width': 1.4 }, svg);
   E('rect', { x: 52, y: 20, width: 96, height: 26, rx: 7, fill: 'url(#' + id + 'lid)', stroke: '#6b420c', 'stroke-width': 1.2 }, svg);
   for(var r = 60; r <= 140; r += 6) if(r < 86 || r > 114) E('line', { x1: r, x2: r, y1: 26, y2: 42, stroke: '#5a3608', 'stroke-opacity': .28, 'stroke-width': 1.4 }, svg);
