@@ -198,10 +198,10 @@
       <a href="../learn/index.html">Courses</a>
       <a href="../tools/index.html">Tools</a>
       <a href="index.html" aria-current="page">Pricing</a>
-      <a href="../trial/index.html">Free trial</a>
+      <a href="../trial/index.html" data-needs-accounts>Free trial</a>
     </nav>
     <div class="spacer"></div>
-    <button class="signin" id="signinBtn" type="button">Sign in</button>
+    <button class="signin" id="signinBtn" type="button" data-needs-accounts>Sign in</button>
   </div>
 </header>
 
@@ -212,7 +212,8 @@
       <div>
         <span class="eyebrow">Pricing</span>
         <h1 style="margin-top:10px">Start free. Pay once if you want the course.</h1>
-        <p>Lessons and tools are free. Pay once for the <a href="../course/index.html">Launch course</a>, or <a href="../trial/index.html">try everything free for 3 days</a>. No card needed.</p>
+        <p>Lessons and tools are free. Pay once for the <a href="../course/index.html">Launch course</a><span data-needs-accounts>, or <a href="../trial/index.html">try everything free for 3 days</a>. No card needed</span>.</p>
+        <p class="pay-open" id="payOpen" hidden><b>Paid plans aren't open yet, so nobody can be charged.</b> Tap Reserve and we'll email you the day they open. Everything in Free works right now, with no account.</p>
       </div>
     </div>
     <div class="plans">
@@ -226,9 +227,11 @@
           <li>All 22 lessons with quizzes</li>
           <li>Every calculator and planner, including the investor drill</li>
           <li>1 sales practice with Rome a day</li>
-          <li>Free account (opens soon)</li>
+          <li data-needs-accounts>Free account to save your progress</li>
+          <li data-no-accounts>No account needed: your progress saves on this device</li>
         </ul>
-        <button class="btn ghost" type="button" data-plan="free">Create free account</button>
+        <button class="btn ghost" type="button" data-plan="free" data-needs-accounts>Create free account</button>
+        <a class="btn ghost" href="../tools/index.html" data-no-accounts>Start free now</a>
         <p class="note">No card needed.</p>
       </article>
       <article class="card plan">
@@ -279,7 +282,7 @@
         <p class="value">One better deal can pay for it many times over.</p>
         <button class="btn" type="button" data-plan="founder">Get Founder</button>
         <p class="note" data-note="founder"></p>
-        <a class="note" href="../trial/index.html" style="margin-top:-8px">Or try it free for 3 days →</a>
+        <a class="note" href="../trial/index.html" style="margin-top:-8px" data-needs-accounts>Or try it free for 3 days →</a>
       </article>
     </div>
     <section class="ch-ladder" aria-labelledby="ch-ladder-h">
@@ -371,12 +374,12 @@
   <div class="wrap cols">
     <div>
       <a class="logo" href="../index.html" style="display:inline-flex;margin-bottom:10px"><img src="../icon.svg" width="24" height="24" alt="" class="logo-mark">Sharp</a>
-      <p>Business school for aspiring entrepreneurs. Education, not financial advice.</p>
+      <p>Earn more. Keep more. A free money and business app for teens and adults. Education, not financial advice.</p>
       <p style="margin-top:8px">© 2026 Sharp</p>
     </div>
     <div><h4>Courses</h4><a href="../learn/index.html#money">Finance</a><a href="../learn/index.html#business">Business</a><a href="../learn/index.html#mkt-basics">Marketing</a><a href="../learn/index.html#negotiation">Negotiation</a><a href="../learn/index.html#pitching">Investors</a></div>
     <div><h4>Tools</h4><a href="../tools/marketing/index.html">Marketing calculators</a><a href="../index.html">Spending check</a><a href="../tools/idea-check/index.html">Idea check</a><a href="../tools/money-plan/index.html">Money plan</a><a href="../tools/budget/index.html">Budget planner</a><a href="../tools/business-plan/index.html">Business plan &amp; pricing</a><a href="../tools/negotiation/index.html">Negotiation prep</a><a href="../tools/investors/index.html">Investor pressure drill</a></div>
-    <div><h4>Sharp</h4><a href="index.html">Pricing</a><a href="../trial/index.html">Free trial</a><a href="../books/index.html">Book notes</a><a href="../learn/index.html#prompts">AI prompts</a><a href="../learn/index.html#glossary">Glossary</a><a href="../about/index.html">About</a><a href="../about/index.html#contact">Contact</a><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a><a href="../refunds/index.html">Refunds</a></div>
+    <div><h4>Sharp</h4><a href="index.html">Pricing</a><a href="../trial/index.html" data-needs-accounts>Free trial</a><a href="../books/index.html">Book notes</a><a href="../learn/index.html#prompts">AI prompts</a><a href="../learn/index.html#glossary">Glossary</a><a href="../about/index.html">About</a><a href="../about/index.html#contact">Contact</a><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a><a href="../refunds/index.html">Refunds</a></div>
   </div>
 </footer>
 

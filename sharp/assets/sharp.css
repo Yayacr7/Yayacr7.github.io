@@ -461,3 +461,10 @@ html[data-who="adult"] .who-teen{display:none!important}html:not([data-who="adul
 @keyframes pcFade{from{opacity:0}to{opacity:1}}
 @keyframes pcPulse{0%{transform:scale(1);opacity:.75}100%{transform:scale(2.8);opacity:0}}
 @media (prefers-reduced-motion:reduce){.pc-area,.pc-pill,.pc-pulse{animation:none}.pc-pulse{opacity:0}}
+
+/* Accounts switch (shell.js sets html.accounts-on when config.js has Supabase): no 'coming soon' doors. */
+html:not(.accounts-on) [data-needs-accounts]{display:none!important}
+html.accounts-on [data-no-accounts]{display:none!important}
+.pay-open{margin-top:12px;max-width:640px;padding:12px 14px;border-radius:12px;background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.35);color:#d4f6fb;line-height:1.5}
+.pay-open b{color:#67e8f9}
+.pay-open[hidden]{display:none}

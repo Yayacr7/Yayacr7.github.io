@@ -30,7 +30,8 @@
 .ch-tip .ch-face{background:url(../assets/rome.svg) center/cover no-repeat,#0891b2;color:transparent}.ch-tip p{margin:0;color:#d4f6fb;line-height:1.55}.ch-tip p b{color:#67e8f9}.ch-tip a{color:#a5f3fc}
 .ch-tip .ch-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border:0;border-radius:999px;background:#22d3ee;color:#04202a;font:700 .95rem inherit;cursor:pointer;white-space:nowrap;box-shadow:0 0 26px -6px rgba(34,211,238,.8)}
 .ch-tip .ch-btn[hidden]{display:none}.ch-tip .ch-btn .ch-face{width:20px;height:20px;font-size:8px;box-shadow:none}.ch-tip .ch-btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
-@media (max-width:700px){.ch-tip{grid-template-columns:auto minmax(0,1fr)}.ch-tip .ch-btn{grid-column:1/-1;justify-self:start}}</style>
+@media (max-width:700px){.ch-tip{grid-template-columns:auto minmax(0,1fr)}.ch-tip .ch-btn{grid-column:1/-1;justify-self:start}}
+html:not(.accounts-on) [data-needs-accounts]{display:none!important}html.accounts-on [data-no-accounts]{display:none!important}</style>
 <style>
 /* Layout concept: Sharp courses. Structured learning layout, white cards on cool grey,
    five colour-coded topics, one glowing cyan accent for action, yellow for money. */
@@ -487,7 +488,7 @@ section.page > .pager a:hover{background:var(--paper-2)}
 <header class="site-head">
   <div class="head-in">
     <a class="brand" href="../index.html"><img src="../icon.svg" width="26" height="26" alt="" class="logo-mark">Sharp</a>
-    <nav class="top-links" aria-label="Main"><a href="index.html" aria-current="page">Courses</a><a href="../tools/index.html">Tools</a><a href="../pricing/index.html">Pricing</a><a href="../trial/index.html">Free trial</a></nav>
+    <nav class="top-links" aria-label="Main"><a href="index.html" aria-current="page">Courses</a><a href="../tools/index.html">Tools</a><a href="../pricing/index.html">Pricing</a><a href="../trial/index.html" data-needs-accounts>Free trial</a></nav>
     <div class="spacer"></div>
     <span id="progressPill" hidden></span>
   </div>
@@ -601,7 +602,7 @@ section.page > .pager a:hover{background:var(--paper-2)}
       <a class="world-tool" href="../tools/negotiation/index.html">Practise: Negotiation prep →</a>
     </section>
     <section class="world t-investors" aria-label="Investors">
-      <header class="world-h"><span class="world-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span><div><h3>Investors</h3><p>Pitch, and stay calm under pressure</p></div><span class="world-count" data-world="investors">0/5</span></header>
+      <header class="world-h"><span class="world-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span><div><h3>Investors</h3><p><b>Advanced.</b> For when you raise money: pitch, and stay calm under pressure</p></div><span class="world-count" data-world="investors">0/5</span></header>
       <div class="path">
         <a class="node" href="#pitching" data-node="pitching"><span class="node-c"><span class="node-n">18</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Pitching investors, simply</span><span class="node-s" data-node-s="pitching">10 min</span></a>
         <a class="node" href="#pressure" data-node="pressure"><span class="node-c"><span class="node-n">19</span><svg class="node-ok" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="node-l">Staying calm under pressure</span><span class="node-s" data-node-s="pressure">10 min</span></a>

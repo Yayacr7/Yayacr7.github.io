@@ -34,10 +34,22 @@ function status(api){
     .then(function(r){ return r.ok ? r.json() : { ai: false }; })
     .then(function(s){ return !!(s && s.ai); }, function(){ return false; });
 }
+var cfgP = null;
 function config(){
   if(window.NP_CONFIG) return Promise.resolve(window.NP_CONFIG);
-  return new Promise(function(ok){ var s = document.createElement('script'); s.src = base + 'config.js'; s.onload = function(){ ok(window.NP_CONFIG || {}); }; s.onerror = function(){ ok({}); }; document.head.appendChild(s); });
+  return cfgP || (cfgP = new Promise(function(ok){ var s = document.createElement('script'); s.src = base + 'config.js'; s.onload = function(){ ok(window.NP_CONFIG || {}); }; s.onerror = function(){ ok({}); }; document.head.appendChild(s); }));
 }
+// Accounts are on only when config.js has the Supabase URL + anon key. Until then, Sign in / Free trial / Create account
+// ([data-needs-accounts]) stay hidden so nobody hits a "coming soon" wall; [data-no-accounts] shows instead.
+(function(){
+  var a = null; try{ a = sessionStorage.getItem('sharp-acct'); }catch(e){}
+  if(a === '1') root.classList.add('accounts-on');
+  config().then(function(c){
+    var on = !!(c && c.AUTH && c.AUTH.supabaseUrl && c.AUTH.supabaseAnonKey);
+    root.classList.toggle('accounts-on', on);
+    try{ sessionStorage.setItem('sharp-acct', on ? '1' : '0'); }catch(e){}
+  });
+})();
 if(window.fetch) status(base).then(function(on){
   if(on) return base;
   return config().then(function(c){

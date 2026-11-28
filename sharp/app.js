@@ -206,6 +206,9 @@ Array.prototype.forEach.call(document.querySelectorAll('[data-plan]'), function(
   }
 });
 
+// Honest note on Pricing: shown while no paid plan can be bought yet.
+var payOpen = document.getElementById('payOpen');
+if(payOpen) payOpen.hidden = ['learner','builder','founder'].some(function(p){ return canSell(p); });
 if(location.hash === '#signin') openAuth();
 render();
 })();
