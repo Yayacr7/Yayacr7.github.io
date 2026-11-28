@@ -176,12 +176,12 @@ wire('f-spend', function(){
   var sr = scRows(pos), rows = sr.rows, total = sr.total, left = sr.left;
 
   // All text below is numbers and fixed wording only (no visitor-typed text), so it is safe as HTML.
-  var html = '<div class="sc-sum"><div><span>' + PAY_NAME + '</span><b>' + money(inc) + '</b></div><div><span>Spent + saved</span><b>' + money(total) + '</b></div><div><span>Left over</span><b class="' + (left < 0 ? 'neg' : '') + '">' + money(left) + '</b></div></div>';
-  if(left < 0) html += '<p class="sc-alert"><span class="sc-ic bad" aria-hidden="true">✕</span><span><b>You spend ' + money(-left) + ' a month more than you earn.</b> Fix the red rows first.</span></p>';
+  var html = '<div class="sc-sum"><div><span>' + PAY_NAME + '</span><b>' + money(inc) + '</b></div><div><span>Spent + saved</span><b>' + money(total) + '</b></div>' + (left < 0 ? '<div class="sc-over"><span><i class="sc-ic bad" aria-hidden="true">✕</i> Over by</span><b class="neg">' + money(-left) + '</b></div>' : '<div><span>Left over</span><b>' + money(left) + '</b></div>') + '</div>';
+  if(left < 0) html += '<p class="sc-alert"><span class="sc-ic bad" aria-hidden="true">✕</span><span><b>You spend ' + money(-left) + ' a month more than you earn.</b> <span class="sc-alert-more">Fix the red rows first.</span></span></p>';
   // Simple limit chart: each row's line in the middle is that category's limit (a goal for saving).
   // Before the line = fine, past the line = too much. Plain dollars, no percent scale.
   // Toolbar: what the colours mean, and a switch between the blocks picture and the bar list.
-  html += '<div class="sc-bar-row"><div class="sc-legend" aria-hidden="true"><span><i class="sc-ic good">✓</i>Fine</span><span><i class="sc-ic warn">!</i>A bit over</span><span><i class="sc-ic bad">✕</i>Too much</span><span class="sc-size">' + scKey() + '</span></div>' +
+  html += '<div class="sc-bar-row"><div class="sc-legend"><span aria-hidden="true"><i class="sc-ic good">✓</i>Fine</span><span aria-hidden="true"><i class="sc-ic warn">!</i>A bit over</span><span aria-hidden="true"><i class="sc-ic bad">✕</i>Too much</span><span class="sc-size">' + scSrc() + '<span class="sc-key" aria-hidden="true">' + scKey() + '</span></span></div>' +
     '<div class="sc-switch" role="group" aria-label="Chart style"><button type="button" data-scview="cherry" aria-pressed="' + (SC_VIEW === 'cherry') + '">Rome\'s plan</button><button type="button" data-scview="jar" aria-pressed="' + (SC_VIEW === 'jar') + '">Jar</button><button type="button" data-scview="flow" aria-pressed="' + (SC_VIEW === 'flow') + '">Candles</button><button type="button" data-scview="blocks" aria-pressed="' + (SC_VIEW === 'blocks') + '">Blocks</button><button type="button" data-scview="list" aria-pressed="' + (SC_VIEW === 'list') + '">List</button></div></div>';
   html += '<div class="sc-tree" role="group" aria-label="Where your take-home pay goes"' + (SC_VIEW === 'list' ? ' hidden' : '') + '></div>';
   html += '<div class="sc-listview"' + (SC_VIEW !== 'list' ? ' hidden' : '') + '>';
@@ -249,6 +249,10 @@ function scInfo(r, inc){
     : r.st === 'good' ? 'Inside the guide. Keep it there.' : r.tip;
   return { title: r.name, line: base + '. ' + tip };
 }
+// Which numbers the chart shows, until the visitor types their own: the example, or the demo's numbers (assets/who.js). Fixed text.
+var SC_EDITED = false;
+(function(){ var f = $('f-spend'); if(f) f.addEventListener('input', function(e){ if(e.isTrusted) SC_EDITED = true; }, true); })();
+function scSrc(){ return SC_EDITED ? '' : window.SharpDemoNums ? '<b class="sc-src">From your demo</b> · ' : '<b class="sc-src">Example numbers</b> · '; }
 function scKey(){ return SC_VIEW === 'jar' ? 'Gold = kept · cyan = Rome\'s plan' : SC_VIEW === 'cherry' ? 'Per week · cyan = spending down' : SC_VIEW === 'blocks' ? 'Bigger block = more money' : 'Line = limit'; }
 function scShow(r, inc){
   var p = document.querySelector('#s-out .sc-detail'); if(!p) return;
@@ -263,7 +267,7 @@ function drawTree(animate){
   SC_SIZE = SC_VIEW + W + 'x' + H;
   if(scRO && box !== scWatched){ if(scWatched) scRO.unobserve(scWatched); scRO.observe(box); scWatched = box; }
   box.classList.toggle('flow', SC_VIEW === 'flow');
-  var key = document.querySelector('#s-out .sc-size'); if(key) key.textContent = scKey();
+  var key = document.querySelector('#s-out .sc-key'); if(key) key.textContent = scKey();
   box.classList.toggle('cherry', SC_VIEW === 'cherry'); box.classList.toggle('jar', SC_VIEW === 'jar'); box.setAttribute('aria-label', 'Where your take-home pay goes');
   if(SC_VIEW === 'jar'){ drawJar(box, W, H, animate); return; }
   if(SC_VIEW === 'cherry'){ drawCherry(box, W, H, animate); return; }

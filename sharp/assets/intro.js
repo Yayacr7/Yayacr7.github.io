@@ -1,16 +1,18 @@
-/* The intro (owner asked 2026-11-26: "make that the main intro every time someone enters the app", then: "give the person the
-   option... every time, sometimes, or never"): the 40-second tour of the real app plays full screen on the front door (home and
-   the demo page). Each person picks how often, saved on this device (localStorage `sharp-intro-pref`):
-     always    = once every visit (a visit = one browser session; the default)
+/* The intro: the 40-second tour of the real app, full screen on the front door (home and the demo page).
+   Owner, 2026-11-26: "make that the main intro every time someone enters the app" and "every time, sometimes, or never".
+   Owner, 2026-11-28 (review: "too much introduction before using it... make the video optional"): it no longer plays by itself.
+   Each person picks, saved on this device (localStorage `sharp-intro-pref`):
+     never     = it doesn't play by itself (the default; "Watch the 40-second tour" on the demo still opens it)
      sometimes = about once a week (`sharp-intro-last` = when it last showed)
-     never     = not again (they can turn it back on at the bottom of any page with a footer; see shell.js)
+     always    = once every visit (a visit = one browser session)
+   Turn it on or off at the bottom of any page with a footer (shell.js).
    "Skip intro" shows from the first second; when the tour ends it goes into the app. Silent. If the device won't autoplay
    (iPhone/iPad Low Power Mode, or "reduce motion"), it waits on the opener picture with a big Play button. Not shown to bots or
    test browsers, and it gets out of the way if the video can't load. Nothing here is sent anywhere. */
 (function(){
 "use strict";
 var PREF = 'sharp-intro-pref', LAST = 'sharp-intro-last', WEEK = 7 * 864e5;
-function pref(){ try{ var p = localStorage.getItem(PREF); return p === 'sometimes' || p === 'never' ? p : 'always'; }catch(e){ return 'always'; } }
+function pref(){ try{ var p = localStorage.getItem(PREF); return p === 'sometimes' || p === 'always' ? p : 'never'; }catch(e){ return 'never'; } }
 try{
   if(window.SharpLeaving || sessionStorage.getItem('sharp-intro') === '1') return;
   if(/bot|crawl|spider|slurp|preview|lighthouse|headless/i.test(navigator.userAgent) || navigator.webdriver) return;
@@ -71,7 +73,7 @@ function start(){
   el('span', null, 'Show this intro:', row);
   var note = el('p', 'sp-in-note', 'A 40-second tour of the real app. No sound. The numbers are examples, not promises.', box);
   note.setAttribute('role', 'status');
-  var SAID = { always: 'Saved: you\'ll see it every visit.', sometimes: 'Saved: you\'ll see it about once a week.', never: 'Saved: you won\'t see it again. Turn it back on at the bottom of the demo or any Tools page.' };
+  var SAID = { always: 'Saved: you\'ll see it every visit.', sometimes: 'Saved: you\'ll see it about once a week.', never: 'Saved: it won\'t play by itself again. Watch it any time from the demo, or turn it back on at the bottom of any page.' };
   var opts = [['always', 'Every visit'], ['sometimes', 'Sometimes'], ['never', 'Never']].map(function(o){
     var b = el('button', null, o[1], row); b.type = 'button'; b.setAttribute('data-pref', o[0]);
     b.addEventListener('click', function(){

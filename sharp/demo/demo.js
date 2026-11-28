@@ -118,6 +118,8 @@ function r1(){
   $('dm-share').textContent = Math.round(share() * 100) + '% of your money goes on ' + CATS[st.cat].name.toLowerCase() + '.';
   $('dm-say').textContent = 'Cut it by a third and you keep ' + money(k.month) + ' a month. My tip: ' + CATS[st.cat].tip;
   chart(); live();
+  // Carry these into the app's Spending check (assets/who.js), so the numbers don't change on the way in. This device only.
+  if(WHO) try{ localStorage.setItem('sharp-demo-nums', JSON.stringify({ who: WHO, inc: st.inc, cat: st.cat, sp: st.sp })); }catch(e){}
 }
 function r2(){
   $('dm-hrs-o').textContent = st.hours + (st.hours === 1 ? ' hour' : ' hours');
@@ -261,10 +263,11 @@ $('dm-plan').addEventListener('click', function(){
     }
   }catch(e){}
 });
-// Seen the demo: the home page won't send them here again. Going into the app skips the intro too.
+// Seen the demo: the home page won't send them here again this visit. Going into the app (Try Sharp now / Go to Sharp)
+// means they've chosen the app: assets/first.js stops sending them to the demo on later visits.
 try{ localStorage.setItem('sharp-demo', '1'); sessionStorage.setItem('sharp-demo-visit', '1'); }catch(e){}
-function intoApp(){ try{ localStorage.setItem('sharp-intro', '1'); }catch(e){} }
-$('dm-sharp').addEventListener('click', intoApp); $('dm-skip').addEventListener('click', intoApp);
+function intoApp(){ try{ localStorage.setItem('sharp-in-app', '1'); }catch(e){} }
+['dm-sharp', 'dm-skip', 'dm-now'].forEach(function(id){ var a = $(id); if(a) a.addEventListener('click', intoApp); });
 addEventListener('resize', function(){ if(cur === '1') chart(); });
 // Teen or adult: the words and sliders that change, then ask first if nothing is picked yet.
 if(ADULT){

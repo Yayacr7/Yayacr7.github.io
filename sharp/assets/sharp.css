@@ -236,7 +236,7 @@ section.block + section.block{border-top:1px solid var(--line)}
 .sc-sum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .sc-sum span{display:block;color:var(--muted);font-size:.8rem;font-weight:700}
 .sc-sum b{font:800 1.35rem var(--f-display)}
-.sc-sum b.neg{color:#ff8a8a}
+.sc-sum b.neg{color:#ff8a8a}.sc-sum .sc-over span{display:flex;align-items:center;gap:5px;color:#ffb4b4}.sc-sum .sc-ic{width:15px;height:15px;font-size:.55rem}
 .sc-legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.84rem;color:var(--muted);font-weight:700}
 .sc-legend span{display:inline-flex;align-items:center;gap:6px}
 .sc-ic{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;font:800 .72rem/1 var(--f-body);font-style:normal;color:#0d1020;flex:none}
@@ -291,7 +291,7 @@ html.ai-on [data-ai-off]{display:none!important}
 .ai-soon{margin-bottom:24px}.ai-soon h2{margin:0 0 8px}.ai-soon p{margin:0 0 12px;line-height:1.55}.ai-soon .btn{margin:4px 8px 4px 0}
 /* Spending check: "blocks" picture (treemap). Block area = money; colour + icon + word = status. */
 .sc-bar-row{display:flex;justify-content:space-between;align-items:center;gap:8px 14px;flex-wrap:wrap}
-.sc-size{color:var(--muted)}
+.sc-size{color:var(--muted)}.sc-src{color:var(--yellow,#ffd43b);font-weight:800}
 .sc-switch{display:inline-flex;background:rgba(255,255,255,.06);border-radius:10px;padding:3px;flex:none}
 .sc-switch button{border:0;background:transparent;color:var(--muted);font:700 .8rem var(--f-body);padding:5px 12px;border-radius:8px;cursor:pointer;min-height:30px}
 .sc-switch button[aria-pressed=true]{background:var(--ink);color:#0d1020}

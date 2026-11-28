@@ -110,8 +110,8 @@ ready(function(){
     row.appendChild(b);
   });
   foot.appendChild(row);
-  // How often the intro tour shows (assets/intro.js): every visit, sometimes (about once a week) or never. This device only.
-  var ip = 'always'; try{ ip = localStorage.getItem('sharp-intro-pref') || 'always'; }catch(e){}
+  // How often the intro tour plays by itself (assets/intro.js): every visit, sometimes (about once a week) or never (the default). This device only.
+  var ip = 'never'; try{ ip = localStorage.getItem('sharp-intro-pref') || 'never'; }catch(e){}
   var r2 = document.createElement('div'); r2.className = 'who-switch'; r2.setAttribute('role', 'group'); r2.setAttribute('aria-label', 'How often to show the intro video');
   var l2 = document.createElement('span'); l2.textContent = 'Intro video:'; r2.appendChild(l2);
   var bs = [['always', 'Every visit'], ['sometimes', 'Sometimes'], ['never', 'Never']].map(function(o){

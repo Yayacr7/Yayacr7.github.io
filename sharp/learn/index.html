@@ -31,7 +31,20 @@
 .ch-tip .ch-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border:0;border-radius:999px;background:#22d3ee;color:#04202a;font:700 .95rem inherit;cursor:pointer;white-space:nowrap;box-shadow:0 0 26px -6px rgba(34,211,238,.8)}
 .ch-tip .ch-btn[hidden]{display:none}.ch-tip .ch-btn .ch-face{width:20px;height:20px;font-size:8px;box-shadow:none}.ch-tip .ch-btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @media (max-width:700px){.ch-tip{grid-template-columns:auto minmax(0,1fr)}.ch-tip .ch-btn{grid-column:1/-1;justify-self:start}}
-html:not(.accounts-on) [data-needs-accounts]{display:none!important}html.accounts-on [data-no-accounts]{display:none!important}</style>
+html:not(.accounts-on) [data-needs-accounts]{display:none!important}html.accounts-on [data-no-accounts]{display:none!important}
+/* Start here: the $20 warm-up (start20.js) */
+.w20{margin:22px 0 6px;padding:24px 26px;border-radius:24px;background:#151a30;border:1px solid #17566a;box-shadow:0 0 50px -24px rgba(34,211,238,.6);color:#f2f3f9}
+.w20-tag{display:inline-block;padding:4px 12px;border-radius:999px;border:1px solid rgba(34,211,238,.55);color:#a5f3fc;font-weight:800;font-size:.8rem;letter-spacing:.02em}
+.w20 h2{margin:12px 0 6px;font-size:clamp(1.35rem,3.2vw,1.8rem);line-height:1.2}.w20-top p{margin:0;color:#a4aac4}
+.w20-range{display:grid;gap:10px;margin:18px 0 6px;font-weight:800;max-width:560px}.w20-range output{color:#ffd43b}.w20-dot{margin:0 8px;color:#a4aac4}
+.w20-range input{width:100%;accent-color:#22d3ee;height:32px;cursor:pointer}
+.w20-res{display:flex;align-items:baseline;gap:6px 12px;flex-wrap:wrap;margin:8px 0}.w20-res b{font-size:clamp(2rem,6vw,2.6rem);color:#ffd43b;line-height:1}.w20-res span{color:#d4f6fb}
+.w20-rule-row{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;margin:6px 0 18px;color:#d4f6fb;line-height:1.5}
+.w20-st{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-weight:800;font-size:.9rem;white-space:nowrap}
+.w20-st i{font-style:normal;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;font-size:.75rem;color:#08101d}
+.w20-st.good{background:rgba(74,222,128,.14);color:#86efac}.w20-st.good i{background:#4ade80}.w20-st.warn{background:rgba(251,191,36,.14);color:#fcd34d}.w20-st.warn i{background:#fbbf24}
+.w20 .btn.go{background:linear-gradient(135deg,#5ee9fb,#22d3ee 45%,#06b6d4);border:0;color:#03222b;box-shadow:0 10px 30px -10px rgba(34,211,238,.7)}
+@media (max-width:700px){.w20{padding:20px 18px}}</style>
 <style>
 /* Layout concept: Sharp courses. Structured learning layout, white cards on cool grey,
    five colour-coded topics, one glowing cyan accent for action, yellow for money. */
@@ -542,7 +555,7 @@ section.page > .pager a:hover{background:var(--paper-2)}
       <span class="eyebrow">Your courses</span>
       <h1>Business, made <em>simple.</em></h1>
       <p class="lede">22 short lessons. Start anywhere.</p>
-      <div class="ch-tip" role="note" aria-label="Rome's tip"><span class="ch-face" aria-hidden="true">R</span><p><b>Rome's tip:</b> New here? Start with <a href="#money">Your money</a>. Do one lesson a day and try its task the same day. That's how it sticks.</p><button class="btn ch-btn" type="button" data-cherry hidden><span class="ch-face sm" aria-hidden="true">R</span>Talk to Rome</button></div>
+      <div class="ch-tip" role="note" aria-label="Rome's tip"><span class="ch-face" aria-hidden="true">R</span><p><b>Rome's tip:</b> New here? Do the 2-minute $20 warm-up just below, then <a href="#money">Your money</a>. Do one lesson a day and try its task the same day. That's how it sticks.</p><button class="btn ch-btn" type="button" data-cherry hidden><span class="ch-face sm" aria-hidden="true">R</span>Talk to Rome</button></div>
       <div class="topic-bars">
         <div class="tb t-finance"><span class="tb-name">Finance</span><span class="tb-track"><i data-bar="finance"></i></span><span class="tb-n" data-world="finance">0/3</span></div>
         <div class="tb t-business"><span class="tb-name">Business</span><span class="tb-track"><i data-bar="business"></i></span><span class="tb-n" data-world="business">0/5</span></div>
@@ -557,6 +570,14 @@ section.page > .pager a:hover{background:var(--paper-2)}
       <div class="ring-txt"><b id="ringNum">0</b><span>of 22 done</span></div>
     </div>
   </div>
+
+  <section class="w20" id="w20" aria-labelledby="w20-h">
+    <div class="w20-top"><span class="w20-tag">Start here · 2 minutes</span><h2 id="w20-h"><span id="w20-h1">You just got $20.</span> What will you save?</h2><p id="w20-lede">You mowed a neighbour's lawn and got $20.</p></div>
+    <label class="w20-range" for="w20-save"><span>Save <output id="w20-o" for="w20-save">$5</output><span class="w20-dot" aria-hidden="true">·</span>spend <output id="w20-sp" for="w20-save">$15</output></span><input type="range" id="w20-save" min="0" max="20" step="1" value="5"></label>
+    <div class="w20-res" aria-live="polite"><b id="w20-year">$260</b><span id="w20-how">saved in a year, if you earn $20 every week and save $5 of it.</span></div>
+    <p class="w20-rule-row"><span class="w20-st good" id="w20-st"><i id="w20-st-i" aria-hidden="true">✓</i><span id="w20-st-w">Good: 25%</span></span><span id="w20-rule">That beats Sharp's 20% rule: save at least 1 dollar in every 5 you earn, before you spend.</span></p>
+    <a class="btn go" href="#money">Next: Lesson 1, Your money →</a>
+  </section>
 
   <h2 class="path-h">The course map</h2>
   <div class="worlds">
@@ -1903,6 +1924,7 @@ Asks:      one specific thing they can help with</div>
 
 <script src="app.js"></script>
 <script src="../config.js"></script><script src="../assets/quotes.js"></script><script src="today.js"></script>
+<script src="start20.js"></script>
 <script src="../assets/shell.js"></script>
 </body>
 </html>

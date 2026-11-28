@@ -105,7 +105,7 @@ function notOpenYet(){
 // Until accounts are switched on, the Sign in window says so plainly instead of showing a form that can't work.
 if(!authReady){
   var so = dlg.querySelector('.signed-out');
-  so.querySelector('.lead').textContent = 'Accounts aren\'t open yet, and you don\'t need one. Every lesson, quiz and tool is free, and your progress is saved on this device.';
+  so.querySelector('.lead').textContent = 'Accounts aren\'t open yet, and you don\'t need one. All 22 lessons, quizzes and the money tools are free, and your progress is saved on this device.';
   document.getElementById('emailForm').hidden = true;
   so.querySelector('.fine').hidden = true;
   authMsg.className = 'msg'; authMsg.textContent = '';
@@ -175,7 +175,7 @@ function reserve(plan){
   setTimeout(function(){ document.getElementById('wl-email-1').focus({ preventScroll: true }); }, 400);
 }
 function choose(plan){
-  if(plan === 'free'){ openAuth(user ? '' : 'Free account: every lesson and tool, under one sign-in.'); return; }
+  if(plan === 'free'){ openAuth(user ? '' : 'Free account: all 22 lessons and the money tools, under one sign-in.'); return; }
   if(!canSell(plan)){ reserve(plan); return; }
   if(authReady && !user){
     pendingPlan = plan;
